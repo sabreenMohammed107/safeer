@@ -7,7 +7,7 @@ use App\Http\Requests\StoreFeatureRequest;
 use App\Http\Requests\UpdateFeatureRequest;
 use App\Models\Features_category;
 use Illuminate\Database\QueryException;
-
+use File;
 class FeatureController extends Controller
 {
     protected $object;
@@ -122,7 +122,11 @@ class FeatureController extends Controller
     public function destroy($id)
     {
         $feature = Feature::where('id', $id)->first();
-        try {
+         // Delete File ..
+         $file = $feature->icon;
+         $file_name = public_path('uploads/features/' . $file);
+         try {
+             File::delete($file_name);
 
             $feature->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');

@@ -198,10 +198,17 @@ class HotelController extends Controller
      */
     public function destroy($id)
     {
-        $Hotel = Hotel::where('id', $id)->first();
+        $hotel = Hotel::where('id', $id)->first();
+        // Delete File ..
+        $file = $hotel->hotel_logo;
+        $file_name = public_path('uploads/hotels/' . $file);
+        $file2 = $hotel->hotel_banner;
+        $file_name2 = public_path('uploads/hotels/' . $file2);
         try {
+            File::delete($file_name);
+            File::delete($file_name2);
 
-            $Hotel->delete();
+            $hotel->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
 
         } catch (QueryException $q) {

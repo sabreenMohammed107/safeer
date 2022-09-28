@@ -137,6 +137,24 @@
                                         <span class="menu-title">Features</span>
                                     </a>
                                 </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('galleries.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Galleries</span>
+                                    </a>
+                                </div>
+
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('blog-categories.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Blog Category</span>
+                                    </a>
+                                </div>
+
 
 
                             </div>
@@ -206,9 +224,38 @@
                                 </div>
                             </div>
                              <!-- end Event -->
-                              <!-- start Doctors -->
+                          <!-- start blog -->
+                          <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                            <span class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Blogs</span>
+                                <span class="menu-arrow"></span>
+                            </span>
+                            <div class="menu-sub menu-sub-accordion">
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('blogs.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Blog list</span>
+                                    </a>
+                                </div>
 
-                             <!-- end Doctors -->
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('blogs.create') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Add Blog</span>
+                                    </a>
+                                </div>
+
+
+                            </div>
+                        </div>
+                         <!-- end blog -->
 
 
                         <div class="menu-item">

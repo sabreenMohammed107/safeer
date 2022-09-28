@@ -7,7 +7,7 @@ use App\Http\Requests\StoreTourRequest;
 use App\Http\Requests\UpdateTourRequest;
 use App\Models\City;
 use Illuminate\Database\QueryException;
-
+use File;
 class TourController extends Controller
 {
     protected $object;
@@ -131,7 +131,11 @@ class TourController extends Controller
     public function destroy($id)
     {
         $tour = Tour::where('id', $id)->first();
+        // Delete File ..
+        $file = $tour->banner;
+        $file_name = public_path('uploads/tours/' . $file);
         try {
+            File::delete($file_name);
 
             $tour->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
