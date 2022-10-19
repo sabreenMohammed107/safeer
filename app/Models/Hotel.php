@@ -23,6 +23,7 @@ class Hotel extends Model
     'details_enaddress',
     'details_araddress',
     'google_map',
+    'hotel_vedio',
     'active',
 
     ];

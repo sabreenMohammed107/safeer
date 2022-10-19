@@ -350,6 +350,16 @@
                             </div>
 
 
+                            <div class="d-flex flex-wrap gap-5">
+                                <div class="fv-row w-100 flex-md-root">
+                                    <label class=" form-label">Url Vedio</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="url"  name="hotel_vedio"
+                                        class="form-control mb-2" placeholder="hotel_vedio"
+                                        value="{{ $hotel->hotel_vedio }}" />
+                                    <!--end::Input-->
+                                </div>
 
 
 
@@ -371,7 +381,7 @@
 
                             </div>
                             <!--end:checkbox-->
-
+                            </div>
                         </div>
                         <!--end::Card header-->
                     </div>

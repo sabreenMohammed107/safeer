@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\BestHotelController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogsCategoryController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\CounterController;
+use App\Http\Controllers\ExploreCityController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +69,13 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
         Route::resource('blog-categories', BlogsCategoryController::class);
           //blogs
           Route::resource('blogs', BlogController::class);
+          //explore
+          Route::resource('explore', ExploreCityController::class);
+          //best-hotel
+          Route::resource('best-hotel', BestHotelController::class);
+          //counter
+          Route::resource('counter', CounterController::class);
+
 });
 
 /*------------------------------------------
