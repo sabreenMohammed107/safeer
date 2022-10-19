@@ -56,7 +56,7 @@ License: For each use you must have a valid license purchased only from above li
                     transform: translate(-50%, -50%);">
    <!--begin::Header-->
    <div
-   style="background-image: url(http://127.0.0.1:8000/img/logo.jpg)
+   style="background-image: url({{asset('img/logo.jpg')}})
 ;background-repeat: no-repeat;background-size: cover;height:300px ">
    <!--begin::Logo-->
 
