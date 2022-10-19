@@ -56,6 +56,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
          Route::resource('tours', TourController::class);
           //hotels
           Route::resource('hotels', HotelController::class);
+          //
+          Route::post('dynamicdependentCat/fetch',[HotelController::class,'fetchCat'] )->name('dynamicdependentCat.fetch');
           //features
           Route::resource('features', FeatureController::class);
            //galleries

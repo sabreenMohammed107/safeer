@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!--
 Author: Keenthemes
@@ -12,93 +11,121 @@ Like: www.facebook.com/keenthemes
 License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
 -->
 <html lang="en">
-	<!--begin::Head-->
-	<head>
-		<title>Safer</title>
-		<meta charset="utf-8" />
-		<meta name="description" content="Craft admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
-		<meta name="keywords" content="Craft, bootstrap, bootstrap 5, admin themes, free admin themes, bootstrap admin, bootstrap dashboard" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta property="og:locale" content="en_US" />
-		<meta property="og:type" content="article" />
-		<meta property="og:title" content="Craft - Bootstrap 5 HTML Admin Dashboard Theme" />
-		<meta property="og:url" content="https://themes.getbootstrap.com/product/craft-bootstrap-5-admin-dashboard-theme" />
-		<meta property="og:site_name" content="Keenthemes | Craft" />
-		<link rel="canonical" href="https://preview.keenthemes.com/craft" />
-		<link rel="shortcut icon" href="{{asset('dist/assets/assets/media/logos/favicon.ico')}}" />
-		<!--begin::Fonts-->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
-		<!--end::Fonts-->
-		<!--begin::Global Stylesheets Bundle(used by all pages)-->
-		<link href="{{asset('dist/assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
-		<link href="{{asset('dist/assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-		<!--end::Global Stylesheets Bundle-->
-	</head>
-	<!--end::Head-->
-	<!--begin::Body-->
-	<body id="kt_body" class="auth-bg">
-		<!--begin::Main-->
-		<div class="d-flex flex-column flex-root">
-			<!--begin::Authentication - Sign-in -->
-			<div class="d-flex flex-column flex-lg-row flex-column-fluid">
+<!--begin::Head-->
 
-				<!--begin::Body-->
-				<div class="d-flex flex-column flex-lg-row-fluid py-10">
-					<!--begin::Content-->
-					<div class="d-flex flex-center flex-column flex-column-fluid">
-						<!--begin::Wrapper-->
-						<div class="w-lg-500px p-10 p-lg-15 mx-auto">
-							<!--begin::Form-->
-							<form class="form w-100" novalidate="novalidate" id="kt_ecommerce_add_category_form" method="POST" action="{{ route('login') }}" >
-								@csrf
-                                <!--begin::Heading-->
-								<div class="text-center mb-10">
-									<!--begin::Title-->
-									<h1 class="text-dark mb-3">Sign In to Safer</h1>
-									<!--end::Title-->
-									<!--begin::Link-->
-									{{-- <div class="text-gray-400 fw-bold fs-4">New Here?
-                                        @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+<head>
+    <title>Safer</title>
+    <meta charset="utf-8" />
+    <meta name="description"
+        content="Craft admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+    <meta name="keywords"
+        content="Craft, bootstrap, bootstrap 5, admin themes, free admin themes, bootstrap admin, bootstrap dashboard" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Craft - Bootstrap 5 HTML Admin Dashboard Theme" />
+    <meta property="og:url" content="https://themes.getbootstrap.com/product/craft-bootstrap-5-admin-dashboard-theme" />
+    <meta property="og:site_name" content="Keenthemes | Craft" />
+    <link rel="canonical" href="https://preview.keenthemes.com/craft" />
+    <link rel="shortcut icon" href="{{ asset('dist/assets/assets/media/logos/favicon.ico') }}" />
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="{{ asset('dist/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('dist/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+</head>
+<!--end::Head-->
+<!--begin::Body-->
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="link-primary fw-bolder">Create an Account</a></div>
-                        @endif
+<body id="kt_body" class="auth-bg">
+    <!--begin::Main-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Authentication - Sign-in -->
+        <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+            <!--begin::Aside-->
+            <div class="d-flex flex-column flex-lg-row-auto bg-primary w-xl-600px positon-xl-relative">
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
+                    <div class="w-50"
+                        style=" position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    -webkit-transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%);">
+   <!--begin::Header-->
+   <div
+   style="background-image: url(http://127.0.0.1:8000/img/logo.jpg)
+;background-repeat: no-repeat;background-size: cover;height:300px ">
+   <!--begin::Logo-->
 
+   <!--end::Description-->
+</div>
+<!--end::Header-->
+                    </div>
+
+                    <!--begin::Illustration-->
+                    <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
+                        style="background-image: url(assets/media/illustrations/sigma-1/17.png)"></div>
+                    <!--end::Illustration-->
                 </div>
-            @endif --}}
+                <!--end::Wrapper-->
+            </div>
+            <!--begin::Aside-->
+            <!--begin::Body-->
+            <div class="d-flex flex-column flex-lg-row-fluid py-10">
+                <!--begin::Content-->
+                <div class="d-flex flex-center flex-column flex-column-fluid">
+                    <!--begin::Wrapper-->
+                    <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+                        <!--begin::Form-->
+                        <form class="form w-100" novalidate="novalidate" id="kt_ecommerce_add_category_form" method="POST" action="{{ route('login') }}" >
+                            @csrf
+                            <!--begin::Heading-->
+                            <div class="text-center mb-10">
+                                <!--begin::Title-->
+                                <h1 class="text-dark mb-3">Sign In to Safer</h1>
+                                <!--end::Title-->
+                                <!--begin::Link-->
+                                {{-- <div class="text-gray-400 fw-bold fs-4">New Here?
+                                    <a href="../dist/authentication/sign-up/basic.html"
+                                        class="link-primary fw-bolder">Create an Account</a>
+                                </div> --}}
+                                <!--end::Link-->
+                            </div>
+                            <!--begin::Heading-->
+                            <!--begin::Input group-->
+                            <div class="fv-row mb-10">
+                                <!--begin::Label-->
+                                <label class="form-label fs-6 fw-bolder text-dark">Email</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off" />
 
-									<!--end::Link-->
-								</div>
-								<!--begin::Heading-->
-								<!--begin::Input group-->
-								<div class="fv-row mb-10">
-									<!--begin::Label-->
-									<label class="form-label fs-6 fw-bolder text-dark">Email</label>
-									<!--end::Label-->
-									<!--begin::Input-->
-									<input class="form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off" />
-									<!--end::Input-->
-								</div>
-								<!--end::Input group-->
-								<!--begin::Input group-->
-								<div class="fv-row mb-10">
-									<!--begin::Wrapper-->
-									<div class="d-flex flex-stack mb-2">
-										<!--begin::Label-->
-										<label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
-										<!--end::Label-->
-										<!--begin::Link-->
-										{{-- <a href="../dist/authentication/sign-in/password-reset.html" class="link-primary fs-6 fw-bolder">Forgot Password ?</a> --}}
-										<!--end::Link-->
-									</div>
-									<!--end::Wrapper-->
-									<!--begin::Input-->
-									<input class="form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" />
-									<!--end::Input-->
-								</div>
-								<!--end::Input group-->
-								<!--begin::Actions-->
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="fv-row mb-10">
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-stack mb-2">
+                                    <!--begin::Label-->
+                                    <label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
+                                    <!--end::Label-->
+                                    <!--begin::Link-->
+                                    {{-- <a href="../dist/authentication/sign-in/password-reset.html"
+                                        class="link-primary fs-6 fw-bolder">Forgot Password ?</a> --}}
+                                    <!--end::Link-->
+                                </div>
+                                <!--end::Wrapper-->
+                                <!--begin::Input-->
+                                <input class="form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" />
+
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                           <!--begin::Actions-->
 								<div class="text-center">
 									<!--begin::Submit button-->
 									<button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
@@ -109,29 +136,32 @@ License: For each use you must have a valid license purchased only from above li
 
 								</div>
 								<!--end::Actions-->
-							</form>
-							<!--end::Form-->
-						</div>
-						<!--end::Wrapper-->
-					</div>
-					<!--end::Content-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Content-->
 
-				</div>
-				<!--end::Body-->
-			</div>
-			<!--end::Authentication - Sign-in-->
-		</div>
-		<!--end::Main-->
-		<!--begin::Javascript-->
-		<script>var hostUrl = "assets/";</script>
-		<!--begin::Global Javascript Bundle(used by all pages)-->
-		<script src="{{asset('dist/assets/plugins/global/plugins.bundle.js')}}"></script>
-		<script src="{{asset('dist/assets/js/scripts.bundle.js')}}"></script>
-		<!--end::Global Javascript Bundle-->
-		<!--begin::Page Custom Javascript(used by this page)-->
-		<script src="{{asset('dist/assets/js/custom/authentication/sign-in/general.js')}}"></script>
-		<!--end::Page Custom Javascript-->
-		<!--end::Javascript-->
-	</body>
-	<!--end::Body-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Authentication - Sign-in-->
+    </div>
+    <!--end::Main-->
+    <!--begin::Javascript-->
+    <script>
+        var hostUrl = "assets/";
+    </script>
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="{{ asset('dist/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('dist/assets/js/scripts.bundle.js') }}"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <script src="{{ asset('dist/assets/js/custom/authentication/sign-in/general.js') }}"></script>
+    <!--end::Page Custom Javascript-->
+    <!--end::Javascript-->
+</body>
+<!--end::Body-->
+
 </html>

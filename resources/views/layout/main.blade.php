@@ -37,7 +37,7 @@ License: For each use you must have a valid license purchased only from above li
          @if(Session::has('flash_del'))
 
          <div class="position-fixed top-0 end-0 p-3 z-index-3">
-        <div class="toast show bg-success"  role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast show "  role="alert" aria-live="assertive" aria-atomic="true">
          <div class="toast-header">
              <span class="svg-icon svg-icon-2 svg-icon-primary me-3"></span>
              <strong class="me-auto">Good job!</strong>
@@ -54,7 +54,7 @@ License: For each use you must have a valid license purchased only from above li
        @if(Session::has('flash_danger'))
 
        <div class="position-fixed top-0 end-0 p-3 z-index-3">
-       <div class="toast show bg-danger"  role="alert" aria-live="assertive" aria-atomic="true">
+       <div class="toast show "  role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <span class="svg-icon svg-icon-2 svg-icon-primary me-3"></span>
             <strong class="me-auto">Error Deleting data !</strong>

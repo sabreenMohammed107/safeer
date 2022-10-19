@@ -36,7 +36,7 @@
  <!--begin::Aside column-->
  <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
     <!--begin::Thumbnail settings-->
-    <div class="card card-flush py-4">
+    {{-- <div class="card card-flush py-4">
         <!--begin::Card header-->
         <div class="card-header">
             <!--begin::Card title-->
@@ -79,7 +79,7 @@
 
         </div>
         <!--end::Card body-->
-    </div>
+    </div> --}}
     <!--end::Thumbnail settings-->
 
 <!--begin::Thumbnail settings-->
@@ -144,7 +144,10 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Input group-->
-                            <div class="mb-10 fv-row">
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-wrap gap-5">
+                                <!--begin::Input group-->
+                                <div class="fv-row w-100 flex-md-root">
                                 <!--begin::Label-->
                                 <label class="required form-label">Hotel En Name</label>
                                 <!--end::Label-->
@@ -157,7 +160,7 @@
                             <!--end::Input-->
 
                                <!--begin::Input group-->
-                               <div class="mb-10 fv-row">
+                               <div class="fv-row w-100 flex-md-root">
                                 <!--begin::Label-->
                                 <label class="required form-label">Hotel Ar Name</label>
                                 <!--end::Label-->
@@ -167,34 +170,49 @@
 
 
                             </div>
+                            </div>
                             <!--end::Input-->
 
-
-
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-7">
-                                <!--begin::Label-->
-                                <label class="fs-6 fw-bold form-label mt-3">
-                                    <option value="">Select City..</option>
-                                    {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
-                                </label>
-                                <!--end::Label-->
-                                <select required class="form-select form-select-solid" name="city_id" data-control="select2"
-                                    data-placeholder="Select an option">
-                                    <option value=""></option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->en_city }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="d-flex flex-wrap gap-5">
+                                <!--begin::Input group-->
+                                <div class="fv-row w-100 flex-md-root">
+                                    <label class="fs-6 fw-bold form-label mt-3">
+                                        <option value="">Select Country..</option>
+                                        {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
+                                    </label>
+                                    <!--end::Label-->
+                                    <select required class="form-select form-select-solid dynamic"  data-control="select2"
+                                        data-placeholder="Select an option" required data-show-subtext="true" data-live-search="true" id="country" data-dependent="sub">
+                                        <option value=""></option>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country->id }}">{{ $country->en_country }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                   <!--begin::Input group-->
+                                   <div class="fv-row w-100 flex-md-root">
+                                    <label class="fs-6 fw-bold form-label mt-3">
+                                        <option value="">Select City..</option>
+                                        {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
+                                    </label>
+                                    <!--end::Label-->
+                                    <select required class="form-select form-select-solid" name="city_id" data-control="select2"
+                                        data-placeholder="Select an option" data-show-subtext="true" data-live-search="true" id="sub">
+                                        <option value="">select....</option>
+                                    </select>
+                                </div>
                             </div>
-                            <!--end::Input group-->
+
+
 
 
                             <!--begin::Input group-->
-                            <div class="fv-row mb-7">
+                            <div class="d-flex flex-wrap gap-5">
+                                <!--begin::Input group-->
+                                <div class="fv-row w-100 flex-md-root">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold form-label mt-3">
-                                    <option value="">Select Type..</option>
+                                    <option value="">Select Room Type..</option>
                                     {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
                                 </label>
                                 <!--end::Label-->
@@ -205,6 +223,24 @@
                                         <option value="{{ $type->id }}">{{ $type->en_room_type }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <!--begin::Input group-->
+                            <div class="fv-row w-100 flex-md-root">
+        <!--begin::Label-->
+        <label class="fs-6 fw-bold form-label mt-3">
+            <span class="required">Add Features</span>
+            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i>
+        </label>
+        <!--end::Label-->
+        <select required class="form-select form-select-solid" name="features[]" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
+            <option></option>
+            @foreach ($features as $feature)
+            <option value="{{$feature->id}}">{{$feature->en_feature}}</option>
+            @endforeach
+
+        </select>
+    </div>
+    <!--end::Input group-->
                             </div>
                             <!--end::Input group-->
 <!--begin::Input group-->
@@ -280,7 +316,7 @@
 
 </div>
 <!--end::Input group-->
-
+<div class="d-flex flex-wrap gap-5">
                             <!--begin::Input group-->
                             <div class="fv-row w-100 flex-md-root">
                                 <label class="required form-label">Hotel Stars</label>
@@ -292,27 +328,19 @@
                             </div>
                             <!--end::Input group-->
 
-	<!--begin::Input group-->
-    <div class="fv-row mb-7">
-        <!--begin::Label-->
-        <label class="fs-6 fw-bold form-label mt-3">
-            <span class="required">Add Features</span>
-            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i>
-        </label>
-        <!--end::Label-->
-        <select required class="form-select form-select-solid" name="features[]" data-control="select2" data-placeholder="Select an option" data-allow-clear="true" multiple="multiple">
-            <option></option>
-            @foreach ($features as $feature)
-            <option value="{{$feature->id}}">{{$feature->en_feature}}</option>
-            @endforeach
-
-        </select>
-    </div>
-    <!--end::Input group-->
 
 
+                            <div class="fv-row w-100 flex-md-root">
+                                <label class=" form-label">Google Map</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text"  name="google_map"
+                                    class="form-control mb-2" placeholder="google_map"
+                                    value="" />
+                                <!--end::Input-->
+                            </div>
 
-
+                        </div>
 
 
 
@@ -377,5 +405,36 @@
             noCalendar: true,
             dateFormat: "H:i",
         });
+
+
+        $(document).ready(function(){
+
+$('.dynamic').change(function(){
+
+ if($(this).val() != '')
+ {
+  var select = $(this).attr("id");
+  var value = $(this).val();
+
+  var _token = $('input[name="_token"]').val();
+
+  $.ajax({
+   url:"{{route('dynamicdependentCat.fetch')}}",
+   method:"POST",
+   data:{select:select, value:value, _token:_token},
+   success:function(result)
+   {
+
+    $('#sub').html(result);
+   }
+
+  })
+ }
+});
+
+
+
+
+});
     </script>
 @endsection

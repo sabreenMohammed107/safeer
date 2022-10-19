@@ -6,9 +6,10 @@ use App\Models\Hotel;
 use App\Http\Requests\StoreHotelRequest;
 use App\Http\Requests\UpdateHotelRequest;
 use App\Models\City;
+use App\Models\Country;
 use App\Models\Feature;
 use App\Models\Room_type;
-
+use Illuminate\Http\Request;
 use File;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +55,8 @@ class HotelController extends Controller
         $cities = City::get();
         $types = Room_type::get();
         $features = Feature::all();
-        return view($this->viewName . 'add', compact(['cities','types','features']));
+        $countries=Country::all();
+        return view($this->viewName . 'add', compact(['cities','types','features','countries']));
     }
 
     /**
@@ -135,7 +137,8 @@ class HotelController extends Controller
         $types = Room_type::get();
         $features = Feature::all();
         $hotelFeatures = $hotel->features->all();
-        return view($this->viewName . 'edit', compact(['hotel','cities','types','features','hotelFeatures']));
+        $countries=Country::all();
+        return view($this->viewName . 'edit', compact(['hotel','cities','countries','types','features','hotelFeatures']));
     }
 
     /**
@@ -262,4 +265,23 @@ class HotelController extends Controller
 
           return $imageName;
       }
+
+       /**
+     * dependace sub category
+     */
+    function fetchCat(Request $request)
+    {
+
+     $select = $request->get('select');
+     $value = $request->get('value');
+
+     $data =City::where('country_id', $value)->get();
+     $output = '<option value="">Select City</option>';
+    foreach($data as $row)
+    {
+     $output .= '<option value="'.$row->id.'">'.$row->en_city.'</option>';
+    }
+    echo $output;
+   }
+
 }
