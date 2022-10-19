@@ -22,7 +22,7 @@
                 <!--end::Aside Toggle-->
                 <!--begin::Logo-->
                 <a href="../dist/index.html" class="d-lg-none">
-                    <img alt="Logo" src="{asset('assets/media/logos/logo-compact.svg')}}" class="mh-40px" />
+                    <img alt="Logo" src="{{asset('assets/media/logos/logo-compact.svg')}}" class="mh-40px" />
                 </a>
                 <!--end::Logo-->
                 <!--begin::Aside toggler-->
