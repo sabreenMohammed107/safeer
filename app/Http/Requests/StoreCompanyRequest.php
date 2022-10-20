@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreBest_hotelRequest extends FormRequest
+class StoreCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class StoreBest_hotelRequest extends FormRequest
      */
     public function authorize()
     {
-        /**
+         /**
          * By default it returns false, change it to
          * something like this if u are checking authentication
          */

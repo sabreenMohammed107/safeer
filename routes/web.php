@@ -4,6 +4,8 @@ use App\Http\Controllers\BestHotelController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogsCategoryController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\CompanyBranchController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CounterController;
 use App\Http\Controllers\ExploreCityController;
 use App\Http\Controllers\FeatureController;
@@ -75,6 +77,13 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
           Route::resource('best-hotel', BestHotelController::class);
           //counter
           Route::resource('counter', CounterController::class);
+
+           //company
+           Route::resource('company', CompanyController::class);
+
+
+            //branch
+          Route::resource('branch', CompanyBranchController::class);
 
 });
 

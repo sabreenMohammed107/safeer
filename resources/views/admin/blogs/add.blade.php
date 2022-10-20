@@ -31,60 +31,64 @@
         <!--begin::Container-->
         <div class="container-xxl">
             <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row"
-                action="{{ route('blogs.store') }}" method="post" enctype="multipart/form-data" >
+                action="{{ route('blogs.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
- <!--begin::Aside column-->
- <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
-    <!--begin::Thumbnail settings-->
-    <div class="card card-flush py-4">
-        <!--begin::Card header-->
-        <div class="card-header">
-            <!--begin::Card title-->
-            <div class="card-title">
-                <h2>Thumbnail</h2>
-            </div>
-            <!--end::Card title-->
-        </div>
-        <!--end::Card header-->
-        <!--begin::Card body-->
-        <div class="card-body text-center pt-0">
-            <!--begin::Image input-->
-            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true" style="background-image: url(assets/media/svg/files/blank-image.svg)">
-                <!--begin::Preview existing avatar-->
-                <div class="image-input-wrapper w-150px h-150px"></div>
-                <!--end::Preview existing avatar-->
-                <!--begin::Label-->
-                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                    <!--begin::Icon-->
-                    <i class="bi bi-pencil-fill fs-7"></i>
-                    <!--end::Icon-->
-                    <!--begin::Inputs-->
-                    <input type="file" name="image" accept=".png, .jpg, .jpeg" />
-                    <input type="hidden" name="avatar_remove" />
-                    <!--end::Inputs-->
-                </label>
-                <!--end::Label-->
-                <!--begin::Cancel-->
-                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
-                    <i class="bi bi-x fs-2"></i>
-                </span>
-                <!--end::Cancel-->
-                <!--begin::Remove-->
-                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                    <i class="bi bi-x fs-2"></i>
-                </span>
-                <!--end::Remove-->
-            </div>
-            <!--end::Image input-->
+                <!--begin::Aside column-->
+                <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+                    <!--begin::Thumbnail settings-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header">
+                            <!--begin::Card title-->
+                            <div class="card-title">
+                                <h2>Thumbnail</h2>
+                            </div>
+                            <!--end::Card title-->
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body text-center pt-0">
+                            <!--begin::Image input-->
+                            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
+                                style="background-image: url(assets/media/svg/files/blank-image.svg)">
+                                <!--begin::Preview existing avatar-->
+                                <div class="image-input-wrapper w-150px h-150px"></div>
+                                <!--end::Preview existing avatar-->
+                                <!--begin::Label-->
+                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                    <!--begin::Icon-->
+                                    <i class="bi bi-pencil-fill fs-7"></i>
+                                    <!--end::Icon-->
+                                    <!--begin::Inputs-->
+                                    <input type="file" name="image" accept=".png, .jpg, .jpeg" />
+                                    <input type="hidden" name="avatar_remove" />
+                                    <!--end::Inputs-->
+                                </label>
+                                <!--end::Label-->
+                                <!--begin::Cancel-->
+                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                    <i class="bi bi-x fs-2"></i>
+                                </span>
+                                <!--end::Cancel-->
+                                <!--begin::Remove-->
+                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                    <i class="bi bi-x fs-2"></i>
+                                </span>
+                                <!--end::Remove-->
+                            </div>
+                            <!--end::Image input-->
 
-        </div>
-        <!--end::Card body-->
-    </div>
-    <!--end::Thumbnail settings-->
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Thumbnail settings-->
 
 
-</div>
-<!--end::Aside column-->
+                </div>
+                <!--end::Aside column-->
                 <!--begin::Main column-->
                 <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                     <!--begin::General options-->
@@ -104,15 +108,15 @@
                                 <label class="required form-label">Blog En Title</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input type="text" required name="en_title" class="form-control mb-2" placeholder="Blog En Title"
-                                    value="" />
+                                <input type="text" required name="en_title" class="form-control mb-2"
+                                    placeholder="Blog En Title" value="" />
 
 
                             </div>
                             <!--end::Input-->
 
-                               <!--begin::Input group-->
-                               <div class="mb-10 fv-row">
+                            <!--begin::Input group-->
+                            <div class="mb-10 fv-row">
                                 <!--begin::Label-->
                                 <label class="required form-label">Blog Ar Title</label>
                                 <!--end::Label-->
@@ -123,18 +127,19 @@
 
                             </div>
                             <!--end::Input-->
-    <!--begin::Input group-->
-    <div class="mb-10 fv-row">
-        <!--begin::Label-->
-        <label class="required form-label">Blog Date</label>
-        <!--end::Label-->
-        <!--begin::Input-->
-        <input  name="blog_date" class="form-control mb-2" class="form-control  form-control-solid dPick" placeholder="Blog date" id="kt_datepicker_1"
-            value="" />
+                            <!--begin::Input group-->
+                            <div class="mb-10 fv-row">
+                                <!--begin::Label-->
+                                <label class="required form-label">Blog Date</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input name="blog_date" class="form-control mb-2"
+                                    class="form-control  form-control-solid dPick" placeholder="Blog date"
+                                    id="kt_datepicker_1" value="" />
 
 
-    </div>
-    <!--end::Input-->
+                            </div>
+                            <!--end::Input-->
 
 
                             <!--begin::Input group-->
@@ -145,8 +150,8 @@
                                     {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
                                 </label>
                                 <!--end::Label-->
-                                <select required class="form-select form-select-solid" name="blog_category_id" data-control="select2"
-                                    data-placeholder="Select an option">
+                                <select required class="form-select form-select-solid" name="blog_category_id"
+                                    data-control="select2" data-placeholder="Select an option">
                                     <option value=""></option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->en_category }}</option>
@@ -157,30 +162,28 @@
 
 
 
-<!--begin::Input group-->
-<div>
-    <!--begin::Label-->
-    <label class="form-label">En Text</label>
-    <!--end::Label-->
-    <!--begin::Editor-->
-    <textarea class="form-select form-select-solid" id="kt_docs_tinymce_basic"  name="en_text"
-        ></textarea>
-    <!--end::Editor-->
+                            <!--begin::Input group-->
+                            <div>
+                                <!--begin::Label-->
+                                <label class="form-label">En Text</label>
+                                <!--end::Label-->
+                                <!--begin::Editor-->
+                                <textarea class="form-select form-select-solid" id="kt_docs_tinymce_basic" name="en_text"></textarea>
+                                <!--end::Editor-->
 
-</div>
-<!--end::Input group-->
-<!--begin::Input group-->
-<div>
-    <!--begin::Label-->
-    <label class="form-label">Ar Text</label>
-    <!--end::Label-->
-    <!--begin::Editor-->
-    <textarea class="tox-target" id="kt_docs_tinymce_basic2"  name="ar_text"
-        ></textarea>
-    <!--end::Editor-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div>
+                                <!--begin::Label-->
+                                <label class="form-label">Ar Text</label>
+                                <!--end::Label-->
+                                <!--begin::Editor-->
+                                <textarea class="tox-target" id="kt_docs_tinymce_basic2" name="ar_text"></textarea>
+                                <!--end::Editor-->
 
-</div>
-<!--end::Input group-->
+                            </div>
+                            <!--end::Input group-->
 
 
 
@@ -236,7 +239,7 @@
     <!--end::Post-->
 @endsection
 @section('scripts')
-<script src="{{asset('dist/assets/plugins/custom/tinymce/tinymce.bundle.js')}}"></script>
+    <script src="{{ asset('dist/assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
     <script>
         $("#kt_datepicker_1").flatpickr();
         $("#kt_datepicker_2").flatpickr();
@@ -253,39 +256,41 @@
         });
 
 
-//         var options = {selector: "#kt_docs_tinymce_basic"};
+        //         var options = {selector: "#kt_docs_tinymce_basic"};
 
-// if (KTApp.isDarkMode()) {
-//     options["skin"] = "oxide-dark";
-//     options["content_css"] = "dark";
-// }
+        // if (KTApp.isDarkMode()) {
+        //     options["skin"] = "oxide-dark";
+        //     options["content_css"] = "dark";
+        // }
 
-// tinymce.init(options);
+        // tinymce.init(options);
 
-// var options2 = {selector: "#kt_docs_tinymce_basic2"};
+        // var options2 = {selector: "#kt_docs_tinymce_basic2"};
 
-// if (KTApp.isDarkMode()) {
-//     options2["skin"] = "oxide-dark";
-//     options2["content_css"] = "dark";
-// }
+        // if (KTApp.isDarkMode()) {
+        //     options2["skin"] = "oxide-dark";
+        //     options2["content_css"] = "dark";
+        // }
 
-// tinymce.init(options2);
-tinymce.init({
-    selector: '#kt_docs_tinymce_basic',
-    menubar: false,
+        // tinymce.init(options2);
+        tinymce.init({
+            selector: '#kt_docs_tinymce_basic',
+            menubar: false,
 
-    toolbar: ["styleselect fontselect fontsizeselect",
-        "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
-        "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code"],
-    plugins : "advlist autolink link image lists charmap print preview code"
-});
-tinymce.init({
-    selector: '#kt_docs_tinymce_basic2',
-    menubar: false,
-    toolbar: ["styleselect fontselect fontsizeselect",
-        "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
-        "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code"],
-    plugins : "advlist autolink link image lists charmap print preview code"
-});
+            toolbar: ["styleselect fontselect fontsizeselect",
+                "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
+                "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code"
+            ],
+            plugins: "advlist autolink link image lists charmap print preview code"
+        });
+        tinymce.init({
+            selector: '#kt_docs_tinymce_basic2',
+            menubar: false,
+            toolbar: ["styleselect fontselect fontsizeselect",
+                "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
+                "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code"
+            ],
+            plugins: "advlist autolink link image lists charmap print preview code"
+        });
     </script>
 @endsection
