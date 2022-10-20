@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Hotel;
 use App\Http\Requests\StoreHotelRequest;
 use App\Http\Requests\UpdateHotelRequest;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Feature;
+use App\Models\Hotel;
+use App\Models\Hotel_room;
+use App\Models\Hotel_type;
 use App\Models\Room_type;
-use Illuminate\Http\Request;
+use App\Models\Room_type_cost;
 use File;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class HotelController extends Controller
 {
     protected $object;
@@ -40,9 +44,9 @@ class HotelController extends Controller
     public function index()
     {
         $rows = Hotel::orderBy("created_at", "Desc")->get();
+        $rooms = Room_type::all();
 
-
-        return view($this->viewName . 'index', compact(['rows']));
+        return view($this->viewName . 'index', compact(['rows', 'rooms']));
     }
 
     /**
@@ -53,10 +57,12 @@ class HotelController extends Controller
     public function create()
     {
         $cities = City::get();
-        $types = Room_type::get();
+        $types = Hotel_type::get();
         $features = Feature::all();
-        $countries=Country::all();
-        return view($this->viewName . 'add', compact(['cities','types','features','countries']));
+        $countries = Country::all();
+        // $eventSpecialzation=[];
+        $types = Room_type::all();
+        return view($this->viewName . 'add', compact(['types', 'cities', 'types', 'features', 'countries']));
     }
 
     /**
@@ -71,48 +77,47 @@ class HotelController extends Controller
         try {
             // Disable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $input = $request->except(['_token','hotel_logo','']);
-        if ($request->hasFile('hotel_logo')) {
-            $attach_image = $request->file('hotel_logo');
+            $input = $request->except(['_token', 'hotel_logo', '']);
+            if ($request->hasFile('hotel_logo')) {
+                $attach_image = $request->file('hotel_logo');
 
-            $input['hotel_logo'] = $this->UplaodImage($attach_image);
+                $input['hotel_logo'] = $this->UplaodImage($attach_image);
+            }
+
+            if ($request->hasFile('hotel_banner')) {
+                $attach_banner = $request->file('hotel_banner');
+
+                $input['hotel_banner'] = $this->UplaodBanner($attach_banner);
+            }
+            if ($request->has('active')) {
+
+                $input['active'] = '1';
+            } else {
+                $input['active'] = '0';
+            }
+
+            $hotel = Hotel::create($input);
+            if (!empty($request->get('features'))) {
+
+                $hotel->features()->attach($request->features);
+
+            }
+            DB::commit();
+            // Enable foreign key checks!
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            return redirect()->route($this->routeName . 'index')->with('flash_success', 'تم الحفظ بنجاح');
+
+        } catch (\Throwable$e) {
+            // throw $th;
+            DB::rollback();
+            return redirect()->route($this->routeName . 'index')->with('flash_danger', $e->getMessage());
+            return redirect()->back()->withInput()->withErrors($e->getMessage());
+
         }
-
-        if ($request->hasFile('hotel_banner')) {
-            $attach_banner = $request->file('hotel_banner');
-
-            $input['hotel_banner'] = $this->UplaodBanner($attach_banner);
-        }
-        if ($request->has('active')) {
-
-            $input['active'] = '1';
-        } else {
-            $input['active'] = '0';
-        }
-
-        $hotel=Hotel::create($input);
-        if (!empty($request->get('features'))) {
-
-            $hotel->features()->attach($request->features);
-
-        }
-        DB::commit();
-        // Enable foreign key checks!
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        return redirect()->route($this->routeName . 'index')->with('flash_success', 'تم الحفظ بنجاح');
-
-    } catch (\Throwable$e) {
-        // throw $th;
-        DB::rollback();
-        return redirect()->route($this->routeName . 'index')->with('flash_danger',$e->getMessage());
-        return redirect()->back()->withInput()->withErrors($e->getMessage());
-
     }
-}
 
-        // return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
-
+    // return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
     /**
      * Display the specified resource.
@@ -134,11 +139,15 @@ class HotelController extends Controller
     public function edit(Hotel $hotel)
     {
         $cities = City::get();
-        $types = Room_type::get();
+        $types = Hotel_type::get();
         $features = Feature::all();
         $hotelFeatures = $hotel->features->all();
-        $countries=Country::all();
-        return view($this->viewName . 'edit', compact(['hotel','cities','countries','types','features','hotelFeatures']));
+        $countries = Country::all();
+        $roomsTypes = Hotel_room::where('hotel_id', $hotel->id)->get();
+        $hotelRoomsCost = Room_type_cost::whereHas('hotelRooms', function ($q) use ($hotel) {
+            $q->where('hotel_id', '=', $hotel->id);
+        })->get();
+        return view($this->viewName . 'edit', compact(['roomsTypes', 'hotelRoomsCost', 'hotel', 'cities', 'countries', 'types', 'features', 'hotelFeatures']));
     }
 
     /**
@@ -150,47 +159,139 @@ class HotelController extends Controller
      */
     public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
+
         DB::beginTransaction();
         try {
             // Disable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        $input = $request->except(['_token','hotel_logo','']);
-        if ($request->hasFile('hotel_logo')) {
-            $attach_image = $request->file('hotel_logo');
+            $input = $request->except(['_token', 'hotel_logo', '']);
+            if ($request->hasFile('hotel_logo')) {
+                $attach_image = $request->file('hotel_logo');
 
-            $input['hotel_logo'] = $this->UplaodImage($attach_image);
+                $input['hotel_logo'] = $this->UplaodImage($attach_image);
+            }
+
+            if ($request->hasFile('hotel_banner')) {
+                $attach_banner = $request->file('hotel_banner');
+
+                $input['hotel_banner'] = $this->UplaodBanner($attach_banner);
+            }
+            if ($request->has('active')) {
+
+                $input['active'] = '1';
+            } else {
+                $input['active'] = '0';
+            }
+            $hotel->update($input);
+            // $hotel=Hotel::create($input);
+            if (!empty($request->get('features'))) {
+
+                $hotel->features()->sync($request->features);
+
+            }
+            //repeat data
+            $pageList = $request->kt_ecommerce_add_product_options;
+
+            $roomsIds = [];
+            foreach ($pageList as $index => $opt) {
+
+                $room_id = (int) $pageList[$index]['room_type_id'];
+                if ($room_id != 0) {
+                    array_push($roomsIds, $room_id);
+                }
+
+            }
+            $hotelIds = [];
+            foreach ($pageList as $index => $opt) {
+
+                $hotel_id = (int) $pageList[$index]['hotel_id'];
+                if ($hotel_id != 0) {
+                    array_push($hotelIds, $hotel_id);
+                }
+
+            }
+
+            //if delete
+            $hotelRoomsCost = Room_type_cost::get();
+            foreach ($hotelRoomsCost as $rCost) {
+                foreach ($pageList as $index => $opt) {
+                    $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
+                        where('room_type_id', $roomsIds)->first();
+
+                    if ($rCost->hotel_room_id != $hotelRoomsId->id) {
+
+
+                        $rCost->delete();
+
+                }
+            }
         }
+            $hotelRoomsIds = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
+                whereIN('room_type_id', $roomsIds)->pluck('id');
 
-        if ($request->hasFile('hotel_banner')) {
-            $attach_banner = $request->file('hotel_banner');
+            foreach ($pageList as $index => $opt) {
 
-            $input['hotel_banner'] = $this->UplaodBanner($attach_banner);
+                $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
+                    where('room_type_id', (int) $pageList[$index]['room_type_id'])->first();
+
+                    $evDay = Room_type_cost::firstOrNew([
+                        'from_date' => $pageList[$index]['from_date'],
+                        'end_date' => $pageList[$index]['end_date'],
+                        'cost' => $pageList[$index]['cost'],
+                        'hotel_room_id' => $hotelRoomsId->id,
+
+
+                    ]);
+
+                    $evDay->from_date = $pageList[$index]['from_date'];
+                    $evDay->end_date =$pageList[$index]['end_date'];
+                    $evDay->cost = $pageList[$index]['cost'];
+                    $evDay->hotel_room_id = $hotelRoomsId->id;
+
+
+                    $evDay->save();
+                // foreach($hotelRoomsIds as $hotelRoomsId){
+                // $obj = Room_type_cost::where('hotel_room_id', $hotelRoomsId)
+                // ->where('from_date','=', $pageList[$index]['from_date'])
+                // ->where('end_date','=', $pageList[$index]['end_date'])
+                // ->where('cost','=', $pageList[$index]['cost'])
+                // ->first();
+                // if ($obj) {
+                //     $obj->from_date = $pageList[$index]['from_date'];
+                //     $obj->end_date = $pageList[$index]['end_date'];
+                //     $obj->cost = $pageList[$index]['cost'];
+                //     $obj->update();
+
+                // }
+                // else {
+
+                //     $newId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
+                //         where('room_type_id', (int) $pageList[$index]['room_type_id'])->first();
+                //     if ($newId) {
+
+                //         $newObj = new Room_type_cost();
+                //         $newObj->from_date = $pageList[$index]['from_date'];
+                //         $newObj->end_date = $pageList[$index]['end_date'];
+                //         $newObj->cost = $pageList[$index]['cost'];
+                //         $newObj->hotel_room_id = $newId->id;
+                    //     $newObj->save();
+                    // }
+
+                // }
+            }
+
+            DB::commit();
+            // Enable foreign key checks!
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            return redirect()->route($this->routeName . 'index')->with('flash_success', 'تم الحفظ بنجاح');
+
+        } catch (\Throwable$e) {
+            // throw $th;
+            DB::rollback();
+            return redirect()->back()->withInput()->withErrors($e->getMessage());
+
         }
-        if ($request->has('active')) {
-
-            $input['active'] = '1';
-        } else {
-            $input['active'] = '0';
-        }
-        $hotel->update($input);
-        // $hotel=Hotel::create($input);
-        if (!empty($request->get('features'))) {
-
-            $hotel->features()->sync($request->features);
-
-        }
-        DB::commit();
-        // Enable foreign key checks!
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        return redirect()->route($this->routeName . 'index')->with('flash_success', 'تم الحفظ بنجاح');
-
-    } catch (\Throwable$e) {
-        // throw $th;
-        DB::rollback();
-        return redirect()->back()->withInput()->withErrors($e->getMessage());
-
-    }
     }
 
     /**
@@ -221,67 +322,78 @@ class HotelController extends Controller
         }
     }
 
+    /* uplaud image
+     */
+    public function UplaodImage($file_request)
+    {
+        //  This is Image Info..
+        $file = $file_request;
+        $name = $file->getClientOriginalName();
+        $ext = $file->getClientOriginalExtension();
+        $size = $file->getSize();
+        $path = $file->getRealPath();
+        $mime = $file->getMimeType();
+
+        // Rename The Image ..
+        $imageName = $name;
+        $uploadPath = public_path('uploads/hotels');
+
+        // Move The image..
+        $file->move($uploadPath, $imageName);
+
+        return $imageName;
+    }
 
     /* uplaud image
-       */
-      public function UplaodImage($file_request)
-      {
-          //  This is Image Info..
-          $file = $file_request;
-          $name = $file->getClientOriginalName();
-          $ext = $file->getClientOriginalExtension();
-          $size = $file->getSize();
-          $path = $file->getRealPath();
-          $mime = $file->getMimeType();
+     */
+    public function UplaodBanner($file_request)
+    {
+        //  This is Image Info..
+        $file = $file_request;
+        $name = $file->getClientOriginalName();
+        $ext = $file->getClientOriginalExtension();
+        $size = $file->getSize();
+        $path = $file->getRealPath();
+        $mime = $file->getMimeType();
 
-          // Rename The Image ..
-          $imageName = $name;
-          $uploadPath = public_path('uploads/hotels');
+        // Rename The Image ..
+        $imageName = $name;
+        $uploadPath = public_path('uploads/hotels');
 
-          // Move The image..
-          $file->move($uploadPath, $imageName);
+        // Move The image..
+        $file->move($uploadPath, $imageName);
 
-          return $imageName;
-      }
+        return $imageName;
+    }
 
-      /* uplaud image
-       */
-      public function UplaodBanner($file_request)
-      {
-          //  This is Image Info..
-          $file = $file_request;
-          $name = $file->getClientOriginalName();
-          $ext = $file->getClientOriginalExtension();
-          $size = $file->getSize();
-          $path = $file->getRealPath();
-          $mime = $file->getMimeType();
-
-          // Rename The Image ..
-          $imageName = $name;
-          $uploadPath = public_path('uploads/hotels');
-
-          // Move The image..
-          $file->move($uploadPath, $imageName);
-
-          return $imageName;
-      }
-
-       /**
+    /**
      * dependace sub category
      */
-    function fetchCat(Request $request)
+    public function fetchCat(Request $request)
     {
 
-     $select = $request->get('select');
-     $value = $request->get('value');
+        $select = $request->get('select');
+        $value = $request->get('value');
 
-     $data =City::where('country_id', $value)->get();
-     $output = '<option value="">Select City</option>';
-    foreach($data as $row)
-    {
-     $output .= '<option value="'.$row->id.'">'.$row->en_city.'</option>';
+        $data = City::where('country_id', $value)->get();
+        $output = '<option value="">Select City</option>';
+        foreach ($data as $row) {
+            $output .= '<option value="' . $row->id . '">' . $row->en_city . '</option>';
+        }
+        echo $output;
     }
-    echo $output;
-   }
+/**
+ *
+ * editingRooms
+ */
+    public function editingRooms(Request $request)
+    {
 
+        $input = [
+            'no_rooms' => $request->get('no_rooms'),
+            'room_type_id' => $request->get('room_type_id'),
+            'hotel_id' => $request->get('hotel_id'),
+        ];
+        Hotel_room::create($input);
+        return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
 }

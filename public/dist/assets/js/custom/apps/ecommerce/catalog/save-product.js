@@ -87,7 +87,8 @@ var KTAppEcommerceSaveProduct = function() {
 
                 // Init select2 on new repeated items
                 initConditionsSelect2();
-                console.log('show');
+                $(".dPick").flatpickr();
+                console.log('show>>');
             },
 
             hide: function(deleteElement) {
@@ -113,11 +114,8 @@ var KTAppEcommerceSaveProduct = function() {
 
                     // Init select2 on new repeated items
                     // initConditionsSelect2();
-                    $(".dPick").flatpickr({
-                        enableTime: true,
-                        dateFormat: "Y-m-d H:i",
+                    $(".dPick").flatpickr();
 
-                    });
 
 
                     console.log('show');

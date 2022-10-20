@@ -35,7 +35,7 @@ class Hotel extends Model
 
     public function type()
     {
-        return $this->belongsTo(Room_type::class,'hotel_type_id');
+        return $this->belongsTo(Hotel_type::class,'hotel_type_id');
     }
 
     //features
