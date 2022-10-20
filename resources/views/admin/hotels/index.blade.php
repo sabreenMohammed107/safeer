@@ -191,7 +191,7 @@
                 <div class="menu-item px-3">
                     <a data-bs-toggle="modal"
                         data-bs-target="#kt_modal_new_targetEdit{{ $row->id }}"
-                        class="menu-link px-3">Add Rooms</a>
+                        class="menu-link px-3">add room type</a>
                 </div>
                 <!--end::Menu item-->
                  <!--begin::Menu item-->

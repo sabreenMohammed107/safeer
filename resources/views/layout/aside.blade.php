@@ -103,22 +103,22 @@
                                         <span class="menu-title">Cities</span>
                                     </a>
                                 </div>
-                                <div class="menu-item">
+                                {{-- <div class="menu-item">
                                     <a class="menu-link" href="{{route('room-types.index')}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Room Types</span>
                                     </a>
-                                </div>
-                                <div class="menu-item">
+                                </div> --}}
+                                {{-- <div class="menu-item">
                                     <a class="menu-link" href="{{route('tours.index')}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Tours</span>
                                     </a>
-                                </div>
+                                </div> --}}
 
                                 {{-- <div class="menu-item">
                                     <a class="menu-link" href="{{ route('countries.index') }}">
@@ -129,31 +129,31 @@
                                     </a>
                                 </div> --}}
 
-                                <div class="menu-item">
+                                {{-- <div class="menu-item">
                                     <a class="menu-link" href="{{ route('features.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Features</span>
                                     </a>
-                                </div>
-                                <div class="menu-item">
+                                </div> --}}
+                                {{-- <div class="menu-item">
                                     <a class="menu-link" href="{{ route('galleries.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Galleries</span>
                                     </a>
-                                </div>
+                                </div> --}}
 
-                                <div class="menu-item">
+                                {{-- <div class="menu-item">
                                     <a class="menu-link" href="{{ route('blog-categories.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Blog Category</span>
                                     </a>
-                                </div>
+                                </div> --}}
 
 
 
@@ -243,6 +243,32 @@
                         </div>
                     </div>
                      <!-- end blog -->
+
+                      <!-- start Event -->
+                      <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Tours</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{route('tours.index')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Tours List</span>
+                                </a>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                     <!-- end Event -->
                        <!-- start Event -->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <span class="menu-link">
@@ -270,6 +296,34 @@
                                             <span class="menu-title">Add Hotel</span>
                                         </a>
                                     </div>
+
+                                    {{-- new --}}
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ route('galleries.index') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Hotel Gallery</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{ route('features.index') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Hotel Features</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="{{route('room-types.index')}}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Room Types</span>
+                                        </a>
+                                    </div>
+                                    {{-- end new --}}
 
 
                                 </div>
@@ -303,7 +357,14 @@
                                     </a>
                                 </div>
 
-
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ route('blog-categories.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Blog Category</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                          <!-- end blog -->
