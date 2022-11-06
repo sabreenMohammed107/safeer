@@ -1,0 +1,130 @@
+.included h5 ,
+.hotels> h5 ,
+.rooms_avaliable h5  {
+    font-size: 25px;
+    color: #1C4482;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 30px;
+}
+.included {
+    padding-top: 0px;
+
+}   
+.images {
+    min-height: 320px;
+    height: fit-content;
+    margin-bottom: 30px;
+}
+.map iframe {
+    width: 100%;
+    height: 371px;
+}
+.hotel_details{
+    box-shadow: 0px 3px 6px #00000029;
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px 20px;
+}
+.hotel_details h5 {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+.hotel_details .main button {
+margin-top: 30px;
+}
+.hotels {
+    padding-bottom: 50px;
+}
+.rooms {
+    box-shadow: 0px 3px 6px #00000029;
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 30px 27px;
+    margin-bottom: 15px;
+}
+.rooms h6 {
+    color: #1C4482;
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 0px;
+}
+.category {
+    font-size: 15px;
+    color: #222222;
+    text-transform: capitalize;
+
+}
+.avaliable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
+.avaliable span:first-of-type {
+    font-size: 17px;
+    color: #1C4482;
+    text-transform: capitalize;
+}
+.avaliable span:last-of-type a {
+    font-size: 12px;
+    color: #7E7E7E;
+    text-transform: capitalize;
+    text-decoration: underline;
+}
+.price_info {
+    font-size: 17px;
+    color: #1C4482;
+}
+.offer_name a {
+    font-size: 17px;
+    color: #1C4482;
+    text-transform: uppercase;
+    font-weight: 700
+}
+.rooms_button {
+    background-color: #1C4482;
+    border-radius: 16px;
+    width: 100%;
+}
+.rooms_button a {
+    color: #FFFFFF;
+    font-size: 17px;
+    font-weight: 400;
+    text-transform: capitalize;
+    text-decoration: none;
+    padding: 2px 15px;
+} 
+.request {
+    color: #FF0000 !important; 
+}
+.rooms_search {
+    background-color:#F6F6F6 ;
+    padding-top: 60px;
+
+    padding-bottom: 160px;
+    position: relative;
+}
+.rooms_search img:first-of-type {
+    position: absolute;
+    top: -60px;
+    left: 0px;
+    width: 100%;
+}
+.rooms_search img:nth-of-type(2) {
+    position: absolute;
+    bottom: -30px;
+    left: 0px;
+    width: 100%;
+}
+.slider_section .slider_details h1 {
+text-transform: capitalize;
+}
+@media (min-width: 320px) and (max-width: 1200px) {
+    .rooms div div {
+        margin-bottom: 15px;
+    }
+}

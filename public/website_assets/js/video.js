@@ -1,0 +1,1 @@
+$(".js-modal-btn").modalVideo();

@@ -13,4 +13,9 @@ class Blogs_category extends Model
         'ar_category',
 
     ];
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class,"blog_category_id","id");
+    }
 }

@@ -1,0 +1,126 @@
+.hotel_details {
+    margin-top: 70px;
+}
+.hotels .hotels_card .hotel_card_info .card_info{
+    flex-direction: column;
+}
+.filtrered_cards .tours_card img {
+    max-height: 257px;
+}
+.hotels .hotels_card .hotel_card_info h5 a {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #2B303C;
+    display: inline-block;
+}
+.pagination {
+    margin-bottom: 40px;
+    padding-left: 12px;
+}
+.categories_section
+{
+    margin-top: 70px;
+}
+.categories_section h6 ,
+.latest_blog h6 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #210D3A;
+    text-transform: capitalize;
+    font-weight: 700;
+}
+.categories {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.categories span {
+    text-transform: capitalize;
+    font-size: 18px;
+    color: #7E7E7E;
+}
+.blog_img img {
+    width: 100%;
+}
+.latest_blog  {
+    margin-top: 50px;
+}
+.blog_details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+.blog_details img {
+    width: 125px;
+    margin-right: 20px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+}
+.blog_details  .blog_info h6 a {
+    color:#000000 ;
+    font-size:14px ;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+}
+.blog_details  .blog_info p {
+    color:#7E7E7E ;
+    font-size: 12px ;
+    margin-bottom: 10px;
+}
+.blog_details  .blog_info span {
+    color:#7E7E7E ;
+    font-size: 13px ;
+    text-transform: capitalize;
+}
+.blog_section {
+    position: relative;
+    background-color: transparent;
+}
+
+.filtered_button {
+    position: absolute;
+    top: 0px;
+    left: 40px;
+}
+.show
+{
+    display: inline-block;
+}
+.hotels .hotels_card {
+    box-shadow: 0px 3px 6px #00000029;
+}
+.hotels .hotels_card .hotel_card_info {
+    background-color: white;
+  
+
+}
+
+@media (max-width: 1200px) and (min-width: 320px) {
+    .categories_section {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: white;
+        width: 85%;
+        padding: 30px;
+        display: none;
+    }
+    .filtered_button {
+    margin-top: 30px;
+    display: inline-block;
+    }
+    .pagination {
+        padding-left: 0px;
+    }
+    .page-item:last-child .page-link{
+        padding-left: 19px;
+        padding-right: 19px;
+
+    }
+} 

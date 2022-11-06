@@ -16,6 +16,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\Website\HotelsController;
+use App\Http\Controllers\Website\MainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +30,9 @@ use App\Http\Controllers\TourController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
@@ -43,6 +45,12 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
+
+/*
+Routes Before Applying Authentication
+*/
+Route::get("/", [MainController::class, 'index']);
+Route::get("/hotels/{id}", [HotelsController::class, 'profile']);
 
 /*------------------------------------------
 --------------------------------------------

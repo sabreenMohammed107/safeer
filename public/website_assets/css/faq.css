@@ -1,0 +1,53 @@
+.faq_detials {
+    margin-top: 65px;
+    margin-bottom: 20px;
+}
+.faq_tabs {
+    align-items: flex-start;
+    box-shadow: 0px 3px 6px #00000029;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+.faq_tabs button{
+    font-size: 22px;
+    font-weight: 400;
+    color: #68C2E5 !important;
+    text-transform: capitalize;
+    padding-left: 25px !important;
+    width: 100%;
+    text-align: left;
+    padding-right: 5px !important;
+ }
+ .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #1C4482 !important;
+ }
+ .faq_tabs button i {
+    font-size: 16px;
+    margin-right: 5px;
+ }
+
+.nav-pills .nav-link::after {
+    display: none;
+}
+.tab-content .div p {
+    color:#7E7E7E;
+}
+.accordion-button span {
+    padding: 10px 15px;
+    font-weight: 800;
+    color: white;
+    font-size: 18px;
+    background-color: #1C4482;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+.accordion-button {
+    color:#1C4482 ;
+    font-size:22px ;
+    text-transform: capitalize;
+
+}
+.tab-content {
+    margin-top: 20px;
+}
