@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('room_type_costs', function (Blueprint $table) {
             $table->id();
+
             $table->date('from_date')->nullable();
             $table->date('end_date')->nullable();
             $table->double('cost',10,2)->nullable();
