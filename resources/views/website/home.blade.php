@@ -246,7 +246,7 @@
                     @for ($i = 1; $i < $AllBlogs->count(); $i++)
                     <div class="col-sm-12 col-xl-12">
                         <div class="blog_side_right">
-                         <div class="blog_image">
+                         <div class="blog_image w-100">
                            <img src="{{ asset("/website_assets/images/homePage/blog/{$AllBlogs[$i]->image}") }}" alt="blog image">
                          </div>
                          <div class="blog_info">
@@ -254,7 +254,8 @@
                              {!! $AllBlogs[$i]->en_title !!}
                            </h5>
                            <p>
-                             {!! $AllBlogs[$i]->en_text !!}
+                            {{ strip_tags(str_limit($AllBlogs[$i]->en_text ?? '', $limit = 100, $end = '...')) }}
+
                             </p>
                            <a href="#" class="stretched-link">
                              Read more <i class="fa-solid fa-angle-right"></i>
