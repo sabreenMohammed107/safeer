@@ -9,6 +9,15 @@ class Company extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'master_page_img_bg',
+        'master_page_entitle',
+        'master_page_artitle',
+        'master_page_ensubtitle',
+        'master_page_arsubtitle',
+        'master_page_entext',
+        'master_page_artext',
+        'limit_offer_endesc',
+        'limit_offer_ardesc',
         'overview_entitle',
         'overview_artitle',
         'overview_ensubtitle',

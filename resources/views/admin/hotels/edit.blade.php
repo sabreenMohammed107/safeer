@@ -90,9 +90,9 @@
                         <div class="card-body text-center pt-0">
                             <!--begin::Image input-->
                             <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
-                                style="background-image: url('{{ asset('uploads/hotels') }}/{{$hotel->hotel_banner }}')">
+                                style="background-image: url('{{ asset('uploads/hotels') }}/{{ $hotel->hotel_banner }}')">
                                 <div class="image-input-wrapper w-150px h-150px"
-                                    style="background-image: url(' {{ asset('uploads/hotels') }}/{{$hotel->hotel_banner }}')">
+                                    style="background-image: url(' {{ asset('uploads/hotels') }}/{{ $hotel->hotel_banner }}')">
 
                                 </div>
                                 <!--end::Preview existing avatar-->
@@ -454,7 +454,8 @@
                                                                     class="form-group d-flex flex-wrap gap-5">
                                                                     <!--begin::Select2-->
                                                                     <div class="form-group row">
-                                                                        <input type="hidden" name="hotel_id" value="{{$hotel->id}}" >
+                                                                        <input type="hidden" name="hotel_id"
+                                                                            value="{{ $hotel->id }}">
                                                                         <div class="col-md-3">
 
                                                                             <select class="form-select"
@@ -464,33 +465,38 @@
                                                                                 <option></option>
 
                                                                                 @foreach ($roomsTypes as $type)
-                                                                                @if($type->room)
-                                                                                <option value="{{ $type->room->id }}"
-                                                                                    {{$specialList->hotelRooms->room_type_id ==$type->room->id ? 'selected' : ''  }}>
-                                                                                    {{ $type->room->en_room_type }}
-                                                                                </option>
-                                                                               @endif
-                                                                            @endforeach
+                                                                                    @if ($type->room)
+                                                                                        <option
+                                                                                            value="{{ $type->room->id }}"
+                                                                                            {{ $specialList->hotelRooms->room_type_id == $type->room->id ? 'selected' : '' }}>
+                                                                                            {{ $type->room->en_room_type }}
+                                                                                        </option>
+                                                                                    @endif
+                                                                                @endforeach
                                                                             </select>
 
                                                                         </div>
                                                                         <div class="col-md-3">
                                                                             <input
                                                                                 class="form-control  form-control-solid dPick"
-                                                                                name="from_date" value="{{ $specialList->from_date}}"
+                                                                                name="from_date"
+                                                                                value="{{ $specialList->from_date }}"
                                                                                 placeholder="Pick date"
                                                                                 id="kt_datepicker_3" />
                                                                         </div>
                                                                         <div class="col-md-3">
                                                                             <input
                                                                                 class="form-control form-control-solid dPick"
-                                                                                name="end_date" value="{{ $specialList->end_date}}"
+                                                                                name="end_date"
+                                                                                value="{{ $specialList->end_date }}"
                                                                                 placeholder="Pick date"
                                                                                 id="kt_datepicker_4" />
                                                                         </div>
                                                                         <div class="col-md-2">
                                                                             <input type="text" placeholder="Cost"
-                                                                                class="form-control" value="{{ $specialList->cost}}" name="cost">
+                                                                                class="form-control"
+                                                                                value="{{ $specialList->cost }}"
+                                                                                name="cost">
                                                                         </div>
 
                                                                         <!--end::Select2-->
@@ -528,7 +534,8 @@
                                                             <div data-repeater-item=""
                                                                 class="form-group d-flex flex-wrap gap-5">
                                                                 <!--begin::Select2-->
-                                                                <input type="hidden" name="hotel_id" value="{{$hotel->id}}" >
+                                                                <input type="hidden" name="hotel_id"
+                                                                    value="{{ $hotel->id }}">
                                                                 <div class="form-group row">
                                                                     <div class="col-md-3">
                                                                         <select class="form-select" name="room_type_id"
@@ -536,12 +543,12 @@
                                                                             data-kt-ecommerce-catalog-add-product="product_option">
                                                                             <option></option>
                                                                             @foreach ($roomsTypes as $type)
-                                                                            @if($type->room)
-                                                                            <option value="{{ $type->room->id }}">
-                                                                                {{ $type->room->en_room_type }}
-                                                                            </option>
-                                                                           @endif
-                                                                        @endforeach
+                                                                                @if ($type->room)
+                                                                                    <option value="{{ $type->room->id }}">
+                                                                                        {{ $type->room->en_room_type }}
+                                                                                    </option>
+                                                                                @endif
+                                                                            @endforeach
 
 
                                                                         </select>
@@ -551,15 +558,13 @@
                                                                         <input
                                                                             class="form-control  form-control-solid dPick"
                                                                             name="from_date" value=""
-                                                                            placeholder="Pick date"
-                                                                             />
+                                                                            placeholder="Pick date" />
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <input
                                                                             class="form-control form-control-solid dPick"
                                                                             name="end_date" value=""
-                                                                            placeholder="Pick date"
-                                                                            />
+                                                                            placeholder="Pick date" />
                                                                     </div>
                                                                     <div class="col-md-2">
                                                                         <input type="text" placeholder="Cost"
@@ -592,11 +597,11 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                                @endif
-
-                                                            </div>
+                                                        @endif
 
                                                     </div>
+
+                                                </div>
 
 
                                                 <!--end::Form group-->
@@ -658,7 +663,7 @@
 @endsection
 @section('scripts')
     <script>
-          $(".dPick").flatpickr();
+        $(".dPick").flatpickr();
         $("#kt_datepicker_1").flatpickr();
         $("#kt_datepicker_2").flatpickr();
         $("#kt_datepicker_8").flatpickr({
