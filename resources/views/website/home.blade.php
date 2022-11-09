@@ -87,7 +87,9 @@
             <div class="col-sm-12 col-md-6 col-xl-3">
                 <div class="card-content">
                   <div class=" card hotels_card">
-                    <img src="{{ asset("/website_assets/images/homePage/hotels/{$Hotel->hotel->hotel_banner}") }}" alt=" hotel image">
+                    {{-- <img src="{{ asset("/website_assets/images/homePage/hotels/{$Hotel->hotel->hotel_banner}") }}" alt=" hotel image"> --}}
+                    <img src="{{  {{ asset('uploads/hotels') }}/{{$Hotel->hotel->hotel_banner}}" alt=" hotel image">
+
                     <div class="card-body hotel_card_info">
                       <div class="card_info">
                         <h5>{{$Hotel->hotel->hotel_enname}} </h5>
