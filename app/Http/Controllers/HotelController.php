@@ -77,7 +77,7 @@ class HotelController extends Controller
         try {
             // Disable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            $input = $request->except(['_token', 'hotel_logo', '']);
+            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner']);
             if ($request->hasFile('hotel_logo')) {
                 $attach_image = $request->file('hotel_logo');
 
@@ -164,18 +164,19 @@ class HotelController extends Controller
         try {
             // Disable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            $input = $request->except(['_token', 'hotel_logo', '']);
+            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner']);
             if ($request->hasFile('hotel_logo')) {
                 $attach_image = $request->file('hotel_logo');
 
                 $input['hotel_logo'] = $this->UplaodImage($attach_image);
             }
-
             if ($request->hasFile('hotel_banner')) {
                 $attach_banner = $request->file('hotel_banner');
 
                 $input['hotel_banner'] = $this->UplaodBanner($attach_banner);
             }
+            if ($request->hasFile('hotel_banner')) {
+
             if ($request->has('active')) {
 
                 $input['active'] = '1';
