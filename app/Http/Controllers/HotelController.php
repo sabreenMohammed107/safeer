@@ -170,12 +170,13 @@ class HotelController extends Controller
 
                 $input['hotel_logo'] = $this->UplaodImage($attach_image);
             }
+
             if ($request->hasFile('hotel_banner')) {
                 $attach_banner = $request->file('hotel_banner');
 
                 $input['hotel_banner'] = $this->UplaodBanner($attach_banner);
             }
-            if ($request->hasFile('hotel_banner')) {
+
 
             if ($request->has('active')) {
 
