@@ -21,7 +21,10 @@
                 @foreach ($ExploreCities as $City)
                 <div class="card-content">
                     <div class=" card explore_main">
-                        <div class="card-body explore_card" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{asset("/website_assets/images/homePage/places/$City->image")}});">
+                        {{-- <div class="card-body explore_card" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{asset("/website_assets/images/homePage/places/$City->image")}});"> --}}
+
+                       <div class="card-body explore_card" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/explore') }}/{{ $City->image }});">
+
                             <div class="header_info">
                             <h5><a href="#" class="stretched-link">{{$City->city->en_city}}</a>
                             </h5>
