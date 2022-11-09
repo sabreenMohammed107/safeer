@@ -246,8 +246,8 @@
                     @for ($i = 1; $i < $AllBlogs->count(); $i++)
                     <div class="col-sm-12 col-xl-12">
                         <div class="blog_side_right">
-                         <div class="blog_image w-100">
-                           <img src="{{ asset("/website_assets/images/homePage/blog/{$AllBlogs[$i]->image}") }}" alt="blog image">
+                         <div class="blog_image ">
+                           <img width="150" src="{{ asset("/website_assets/images/homePage/blog/{$AllBlogs[$i]->image}") }}" alt="blog image">
                          </div>
                          <div class="blog_info">
                            <h5>
