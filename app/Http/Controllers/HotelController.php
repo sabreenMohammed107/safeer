@@ -160,10 +160,10 @@ class HotelController extends Controller
     public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
 
-        DB::beginTransaction();
-        try {
-            // Disable foreign key checks!
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // DB::beginTransaction();
+        // try {
+        //     // Disable foreign key checks!
+        //     DB::statement('SET FOREIGN_KEY_CHECKS=0;');
             $input = $request->except(['_token', 'hotel_logo', 'hotel_banner']);
             if ($request->hasFile('hotel_logo')) {
                 $attach_image = $request->file('hotel_logo');
@@ -176,7 +176,6 @@ class HotelController extends Controller
 
                 $input['hotel_banner'] = $this->UplaodImage($attach_banner);
             }
-
 
             if ($request->has('active')) {
 
@@ -196,7 +195,7 @@ class HotelController extends Controller
             $pageList = $request->kt_ecommerce_add_product_options;
 
             $roomsIds = [];
-            if($pageList){
+            if ($pageList) {
                 foreach ($pageList as $index => $opt) {
 
                     $room_id = (int) $pageList[$index]['room_type_id'];
@@ -208,44 +207,43 @@ class HotelController extends Controller
             }
 
             $hotelIds = [];
-            if($pageList){
-            foreach ($pageList as $index => $opt) {
+            if ($pageList) {
+                foreach ($pageList as $index => $opt) {
 
-                $hotel_id = (int) $pageList[$index]['hotel_id'];
-                if ($hotel_id != 0) {
-                    array_push($hotelIds, $hotel_id);
+                    $hotel_id = (int) $pageList[$index]['hotel_id'];
+                    if ($hotel_id != 0) {
+                        array_push($hotelIds, $hotel_id);
+                    }
+
                 }
-
             }
-        }
 
             //if delete
             $hotelRoomsCost = Room_type_cost::get();
-            if($hotelRoomsCost){
-            foreach ($hotelRoomsCost as $rCost) {
-                if($pageList){
+            if ($hotelRoomsCost) {
+                foreach ($hotelRoomsCost as $rCost) {
+                    if ($pageList) {
+                        foreach ($pageList as $index => $opt) {
+
+                            $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
+                                where('room_type_id', $roomsIds)->first();
+
+                            if ($rCost->hotel_room_id != $hotelRoomsId->id) {
+
+                                $rCost->delete();
+
+                            }
+                        }
+                    }
+                }
+            }
+            $hotelRoomsIds = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
+                whereIN('room_type_id', $roomsIds)->pluck('id');
+            if ($pageList) {
                 foreach ($pageList as $index => $opt) {
 
                     $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
-                        where('room_type_id', $roomsIds)->first();
-
-                    if ($rCost->hotel_room_id != $hotelRoomsId->id) {
-
-
-                        $rCost->delete();
-
-                }
-            }
-        }
-    }
-    }
-            $hotelRoomsIds = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
-                whereIN('room_type_id', $roomsIds)->pluck('id');
-if($pageList){
-            foreach ($pageList as $index => $opt) {
-
-                $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
-                    where('room_type_id', (int) $pageList[$index]['room_type_id'])->first();
+                        where('room_type_id', (int) $pageList[$index]['room_type_id'])->first();
 
                     $evDay = Room_type_cost::firstOrNew([
                         'from_date' => $pageList[$index]['from_date'],
@@ -253,59 +251,30 @@ if($pageList){
                         'cost' => $pageList[$index]['cost'],
                         'hotel_room_id' => $hotelRoomsId->id,
 
-
                     ]);
 
                     $evDay->from_date = $pageList[$index]['from_date'];
-                    $evDay->end_date =$pageList[$index]['end_date'];
+                    $evDay->end_date = $pageList[$index]['end_date'];
                     $evDay->cost = $pageList[$index]['cost'];
                     $evDay->hotel_room_id = $hotelRoomsId->id;
 
-
                     $evDay->save();
-                // foreach($hotelRoomsIds as $hotelRoomsId){
-                // $obj = Room_type_cost::where('hotel_room_id', $hotelRoomsId)
-                // ->where('from_date','=', $pageList[$index]['from_date'])
-                // ->where('end_date','=', $pageList[$index]['end_date'])
-                // ->where('cost','=', $pageList[$index]['cost'])
-                // ->first();
-                // if ($obj) {
-                //     $obj->from_date = $pageList[$index]['from_date'];
-                //     $obj->end_date = $pageList[$index]['end_date'];
-                //     $obj->cost = $pageList[$index]['cost'];
-                //     $obj->update();
 
-                // }
-                // else {
-
-                //     $newId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
-                //         where('room_type_id', (int) $pageList[$index]['room_type_id'])->first();
-                //     if ($newId) {
-
-                //         $newObj = new Room_type_cost();
-                //         $newObj->from_date = $pageList[$index]['from_date'];
-                //         $newObj->end_date = $pageList[$index]['end_date'];
-                //         $newObj->cost = $pageList[$index]['cost'];
-                //         $newObj->hotel_room_id = $newId->id;
-                    //     $newObj->save();
-                    // }
-
-                // }
+                }
             }
-        }
 
-            DB::commit();
-            // Enable foreign key checks!
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            // DB::commit();
+            // // Enable foreign key checks!
+            // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-            return redirect()->route($this->routeName . 'index')->with('flash_success', 'تم الحفظ بنجاح');
+            // return redirect()->route($this->routeName . 'index')->with('flash_success', 'تم الحفظ بنجاح');
 
-        } catch (\Throwable$e) {
-            // throw $th;
-            DB::rollback();
-            return redirect()->back()->withInput()->withErrors($e->getMessage());
+        // } catch (\Throwable$e) {
+        //     // throw $th;
+        //     DB::rollback();
+        //     return redirect()->back()->withInput()->withErrors($e->getMessage());
 
-        }
+        // }
     }
 
     /**
