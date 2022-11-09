@@ -254,7 +254,7 @@
                              {!! $AllBlogs[$i]->en_title !!}
                            </h5>
                            <p>
-                            {{ strip_tags(str_limit($AllBlogs[$i]->en_text ?? '', $limit = 100, $end = '...')) }}
+                            {{ strip_tags(str_limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }}
 
                             </p>
                            <a href="#" class="stretched-link">
