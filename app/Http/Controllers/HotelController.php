@@ -184,7 +184,7 @@ class HotelController extends Controller
             } else {
                 $input['active'] = '0';
             }
-            dd($input);
+
             $hotel->update($input);
             // $hotel=Hotel::create($input);
             if (!empty($request->get('features'))) {

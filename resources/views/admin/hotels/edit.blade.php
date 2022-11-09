@@ -90,9 +90,9 @@
                         <div class="card-body text-center pt-0">
                             <!--begin::Image input-->
                             <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
-                                style="background-image: url('{{ asset('uploads/hotels') }}/{{ $hotel->hotel_banner }}')">
+                                style="background-image: url('{{ asset('uploads/hotels') }}/{{$hotel->hotel_banner }}')">
                                 <div class="image-input-wrapper w-150px h-150px"
-                                    style="background-image: url(' {{ asset('uploads/hotels') }}/{{ $hotel->hotel_banner }}')">
+                                    style="background-image: url(' {{ asset('uploads/hotels') }}/{{$hotel->hotel_banner }}')">
 
                                 </div>
                                 <!--end::Preview existing avatar-->
