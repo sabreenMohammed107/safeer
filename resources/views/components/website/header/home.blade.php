@@ -1,5 +1,5 @@
 <!-- slider -->
-<div class="slider_section" style="background-image: linear-gradient(rgba(28, 69, 130, 0.81),rgba(28, 69, 130, 0.81)) , url({{asset("/website_assets/images/homePage/$company->master_page_img_bg")}});">
+<div class="slider_section" style="background-image: linear-gradient(rgba(28, 69, 130, 0.81),rgba(28, 69, 130, 0.81)) , url({{asset("uploads/company/$company->master_page_img_bg")}});">
     <div class="slider_details">
       <h1> {{$company->master_page_entitle}} {{--title--}} <br> {{$company->master_page_ensubtitle}}  {{--sub-title--}} </h1>
       <p>{{$company->master_page_entext}}</p>
