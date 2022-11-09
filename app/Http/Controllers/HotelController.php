@@ -196,15 +196,19 @@ class HotelController extends Controller
             $pageList = $request->kt_ecommerce_add_product_options;
 
             $roomsIds = [];
-            foreach ($pageList as $index => $opt) {
+            if($pageList){
+                foreach ($pageList as $index => $opt) {
 
-                $room_id = (int) $pageList[$index]['room_type_id'];
-                if ($room_id != 0) {
-                    array_push($roomsIds, $room_id);
+                    $room_id = (int) $pageList[$index]['room_type_id'];
+                    if ($room_id != 0) {
+                        array_push($roomsIds, $room_id);
+                    }
+
                 }
-
             }
+
             $hotelIds = [];
+            if($pageList){
             foreach ($pageList as $index => $opt) {
 
                 $hotel_id = (int) $pageList[$index]['hotel_id'];
@@ -213,11 +217,15 @@ class HotelController extends Controller
                 }
 
             }
+        }
 
             //if delete
             $hotelRoomsCost = Room_type_cost::get();
+            if($hotelRoomsCost){
             foreach ($hotelRoomsCost as $rCost) {
+                if($pageList){
                 foreach ($pageList as $index => $opt) {
+
                     $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
                         where('room_type_id', $roomsIds)->first();
 
@@ -229,9 +237,11 @@ class HotelController extends Controller
                 }
             }
         }
+    }
+    }
             $hotelRoomsIds = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
                 whereIN('room_type_id', $roomsIds)->pluck('id');
-
+if($pageList){
             foreach ($pageList as $index => $opt) {
 
                 $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
@@ -282,6 +292,7 @@ class HotelController extends Controller
 
                 // }
             }
+        }
 
             DB::commit();
             // Enable foreign key checks!
