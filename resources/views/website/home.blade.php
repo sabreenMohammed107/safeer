@@ -229,10 +229,10 @@
                   </div>
                   <div class="blog_info">
                     <h5 class="left_heading">
-                      {{$AllBlogs[0]->en_title}}
+                      {!! $AllBlogs[0]->en_title !!}
                     </h5>
                     <p>
-                      {{$AllBlogs[0]->en_text}}
+                      {!! $AllBlogs[0]->en_text !!}
                     </p>
                     <a href="./single-blog.html" >
                       Read more <i class="fa-solid fa-angle-right"></i>
@@ -251,12 +251,12 @@
                          </div>
                          <div class="blog_info">
                            <h5>
-                             {{$AllBlogs[$i]->en_title}}
+                             {!! $AllBlogs[$i]->en_title !!}
                            </h5>
                            <p>
-                             {{$AllBlogs[$i]->en_text}}
+                             {!! $AllBlogs[$i]->en_text !!}
                             </p>
-                           <a href="./single-blog.html" class="stretched-link">
+                           <a href="#" class="stretched-link">
                              Read more <i class="fa-solid fa-angle-right"></i>
                            </a>
                          </div>
