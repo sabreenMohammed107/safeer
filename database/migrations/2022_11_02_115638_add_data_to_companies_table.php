@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('master_page_arsubtitle', 250)->after('master_page_ensubtitle')->nullable();
             $table->text('master_page_entext')->after('master_page_arsubtitle')->nullable();
             $table->text('master_page_artext')->after('master_page_entext')->nullable();
-            $table->string('limit_offer_endesc', 250)->after('master_page_artext')->nullable();
-            $table->string('limit_offer_ardesc', 250)->after('limit_offer_endesc')->nullable();
+            $table->text('limit_offer_endesc')->after('master_page_artext')->nullable();
+            $table->text('limit_offer_ardesc')->after('limit_offer_endesc')->nullable();
         });
     }
 

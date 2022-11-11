@@ -84,20 +84,20 @@
                         <!--begin:::Tab item-->
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
-                                href="#kt_ecommerce_add_product_general">General</a>
+                                href="#kt_ecommerce_add_product_general">About Us</a>
                         </li>
                         <!--end:::Tab item-->
                         <!--begin:::Tab item-->
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                href="#kt_ecommerce_add_product_advanced">Master Page</a>
+                                href="#kt_ecommerce_add_product_advanced">Home Banner</a>
                         </li>
                         <!--end:::Tab item-->
 
                         <!--begin:::Tab item-->
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                href="#kt_ecommerce_add_fixed_advanced">Fixed Text</a>
+                                href="#kt_ecommerce_add_fixed_advanced">Home Sections</a>
                         </li>
                         <!--end:::Tab item-->
 
@@ -119,7 +119,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>General</h2>
+                                            <h2>About Us</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -363,7 +363,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Master Banner Data</h2>
+                                            <h2>Home Banner</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -509,7 +509,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Fixed Text Data</h2>
+                                            <h2>Home Sections</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
