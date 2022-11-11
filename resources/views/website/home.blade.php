@@ -224,7 +224,7 @@
             <div class="row mx-0">
               <div class="col-sm-12 col-md-12 col-xl-6">
                 <div class="blog_side">
-                  <div class="blog_image left_image" style="background-image: url({{asset("/website_assets/images/homePage/blog/{$AllBlogs[0]->image}")}});">
+                  <div class="blog_image left_image" style="background-image: url({{ asset('uploads/blogs') }}/{{$AllBlogs[0]->image}});">
                     <!-- <img src="./images/homePage/blog/blog-1.webp" alt="blog image"> -->
                   </div>
                   <div class="blog_info">
@@ -247,7 +247,7 @@
                     <div class="col-sm-12 col-xl-12">
                         <div class="blog_side_right">
                          <div class="blog_image ">
-                           <img width="150" src="{{ asset("/website_assets/images/homePage/blog/{$AllBlogs[$i]->image}") }}" alt="blog image">
+                           <img width="150" src="{{{{ asset('uploads/blogs') }}/{{$AllBlogs[$i]->image}}" alt="blog image">
                          </div>
                          <div class="blog_info">
                            <h5>
