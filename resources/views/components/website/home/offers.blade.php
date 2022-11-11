@@ -61,7 +61,7 @@ switch ($offers->count()) {
           <div class="col-md-{{$Map[$key + 2]}} col-sm-12  p-0">
             <div class="card-content">
               <div class=" card">
-                <div class="card-body offers_card offer_place_1" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/explore') }}/{{ $Offer->image }});">
+                <div class="card-body offers_card offer_place_1" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/offers') }}/{{ $Offer->image }});">
                   <div class="header_info">
                     <h5><a href="#" class="stretched-link">{{$Offer->city->en_city ?? ""}}</a>
                     </h5>
