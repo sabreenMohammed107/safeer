@@ -160,10 +160,10 @@ class HotelController extends Controller
     public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
 
-        // DB::beginTransaction();
-        // try {
-        //     // Disable foreign key checks!
-        //     DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::beginTransaction();
+        try {
+            // Disable foreign key checks!
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
             $input = $request->except(['_token', 'hotel_logo', 'hotel_banner']);
             if ($request->hasFile('hotel_logo')) {
                 $attach_image = $request->file('hotel_logo');
@@ -246,7 +246,7 @@ if($hotelRoomsId){
 
                     $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
                         where('room_type_id', (int) $pageList[$index]['room_type_id'])->first();
-
+if($hotelRoomsId){
                     $evDay = Room_type_cost::firstOrNew([
                         'from_date' => $pageList[$index]['from_date'],
                         'end_date' => $pageList[$index]['end_date'],
@@ -264,6 +264,7 @@ if($hotelRoomsId){
 
                 }
             }
+            }
 
             DB::commit();
             // Enable foreign key checks!
@@ -271,12 +272,12 @@ if($hotelRoomsId){
 
             return redirect()->route($this->routeName . 'index')->with('flash_success', 'تم الحفظ بنجاح');
 
-        // } catch (\Throwable$e) {
-        //     // throw $th;
-        //     DB::rollback();
-        //     return redirect()->back()->withInput()->withErrors($e->getMessage());
+        } catch (\Throwable$e) {
+            // throw $th;
+            DB::rollback();
+            return redirect()->back()->withInput()->withErrors($e->getMessage());
 
-        // }
+        }
     }
 
     /**
