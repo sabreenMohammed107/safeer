@@ -247,7 +247,7 @@
                     <div class="col-sm-12 col-xl-12">
                         <div class="blog_side_right">
                          <div class="blog_image ">
-                           <img width="150" src="{{{{ asset('uploads/blogs') }}/{{$AllBlogs[$i]->image}}" alt="blog image">
+                           <img width="150" src="{{ asset('uploads/blogs') }}/{{$AllBlogs[$i]->image}}" alt="blog image">
                          </div>
                          <div class="blog_info">
                            <h5>
