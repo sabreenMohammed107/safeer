@@ -23,8 +23,9 @@ switch ($offers->count()) {
   <!-- offers section -->
 <section class="offers">
 <div class="titles">
-{{-- {!! $title!!} --}}
 <h3>LIMITED TIME OFFERS </h3>
+<p>{!! $title!!}
+</p>
 </div>
 <div class="offers_details container">
 <div class="row mx-0">
