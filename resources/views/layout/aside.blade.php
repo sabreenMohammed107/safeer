@@ -272,11 +272,11 @@
                         </div>
 
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('company.show', 1) }}">
+                            <a class="menu-link" href="{{ route('company.edit', 1) }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Home Sections</span>
+                                <span class="menu-title">About Us</span>
                             </a>
                         </div>
 
