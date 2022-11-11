@@ -5,9 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Offer;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
-
+use App\Models\City;
+use Illuminate\Database\QueryException;
+use File;
 class OfferController extends Controller
 {
+    protected $object;
+    protected $viewName;
+    protected $routeName;
+
+    /**
+     * UserController Constructor.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function __construct(Offer $object)
+    {
+        $this->middleware('auth');
+
+        $this->object = $object;
+        $this->viewName = 'admin.offers.';
+        $this->routeName = 'offers.';
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +34,10 @@ class OfferController extends Controller
      */
     public function index()
     {
-        //
+        $rows = Offer::orderBy("created_at", "Desc")->get();
+        $cities = City::get();
+
+        return view($this->viewName . 'index', compact(['rows', 'cities']));
     }
 
     /**
@@ -36,8 +58,20 @@ class OfferController extends Controller
      */
     public function store(StoreOfferRequest $request)
     {
-        //
-    }
+        $input = $request->except(['_token','image']);
+        if ($request->hasFile('image')) {
+            $attach_image = $request->file('image');
+
+            $input['image'] = $this->UplaodImage($attach_image);
+        }
+        if ($request->has('active')) {
+
+            $input['active'] = '1';
+        } else {
+            $input['active'] = '0';
+        }
+        Offer::create($input);
+        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
     /**
      * Display the specified resource.
@@ -70,8 +104,22 @@ class OfferController extends Controller
      */
     public function update(UpdateOfferRequest $request, Offer $offer)
     {
-        //
-    }
+        $input = $request->except(['_token','offer_id','image']);
+        if ($request->hasFile('image')) {
+            $attach_image = $request->file('image');
+
+            $input['image'] = $this->UplaodImage($attach_image);
+        }
+        if ($request->has('active')) {
+
+            $input['active'] = '1';
+        } else {
+            $input['active'] = '0';
+        }
+
+        // Tour::findOrFail($request->get('tour_id'))->update($input);
+        $offer->update($input);
+        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
     /**
      * Remove the specified resource from storage.
@@ -79,8 +127,45 @@ class OfferController extends Controller
      * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Offer $offer)
+    public function destroy($id)
     {
-        //
+        $tour = Offer::where('id', $id)->first();
+        // Delete File ..
+        $file = $tour->banner;
+        $file_name = public_path('uploads/ofers/' . $file);
+        try {
+            File::delete($file_name);
+
+            $tour->delete();
+            return redirect()->back()->with('flash_del', 'Successfully Delete!');
+
+        } catch (QueryException $q) {
+            // return redirect()->back()->withInput()->with('flash_danger', $q->getMessage());
+            return redirect()->back()->withInput()->with('flash_danger', 'Can’t delete This Row
+            Because it related with another table');
+        }
     }
+
+
+     /* uplaud image
+       */
+      public function UplaodImage($file_request)
+      {
+          //  This is Image Info..
+          $file = $file_request;
+          $name = $file->getClientOriginalName();
+          $ext = $file->getClientOriginalExtension();
+          $size = $file->getSize();
+          $path = $file->getRealPath();
+          $mime = $file->getMimeType();
+
+          // Rename The Image ..
+          $imageName = $name;
+          $uploadPath = public_path('uploads/offers');
+
+          // Move The image..
+          $file->move($uploadPath, $imageName);
+
+          return $imageName;
+      }
 }

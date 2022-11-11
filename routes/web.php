@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\Website\HotelsController;
 use App\Http\Controllers\Website\MainController;
+use App\Models\Offer;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +98,9 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
 
             //branch
           Route::resource('branch', CompanyBranchController::class);
+
+           //tours
+         Route::resource('offers', OfferController::class);
 
 });
 
