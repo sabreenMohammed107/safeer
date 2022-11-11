@@ -246,7 +246,7 @@
                         </div>
 
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('ofers.index') }}">
+                            <a class="menu-link" href="{{ route('offers.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
