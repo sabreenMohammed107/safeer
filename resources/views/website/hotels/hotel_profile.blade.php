@@ -31,7 +31,6 @@
                         </div>
                     @endfor
                 </div>
-                </div>
             @endif
             </div>
             @if (count($HotelTourGallery))
