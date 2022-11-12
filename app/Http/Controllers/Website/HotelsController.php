@@ -37,12 +37,12 @@ class HotelsController extends Controller
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
         $RoomCosts = DB::table("room_type_costs")
-        ->select('hotels.id as hotel_id','hotel_enname','hotel_arname',
+        ->select('room_type_costs.id as id','hotels.id as hotel_id','hotel_enname','hotel_arname',
         'hotel_enoverview','hotel_aroverview','hotel_stars',
         'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
         'city_id','details_enaddress','hotels.active','country_id','en_country',
         'ar_country','en_city','ar_city','from_date','end_date','en_room_type','food_bev_type','ar_room_type','cost')
-        ->leftJoin("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
+        ->leftJoin("hotel_rooms","hotel_rooms.id","=","room_type_costs.hotel_room_id")
         ->leftJoin("room_types","room_types.id","=","hotel_rooms.room_type_id")
         ->leftJoin("food_beverages","food_beverages.id","=","room_type_costs.food_beverage_id")
         ->leftJoin("hotels","hotels.id","=","hotel_rooms.hotel_id")
@@ -70,7 +70,7 @@ class HotelsController extends Controller
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
             'ar_country','en_city','ar_city','from_date','end_date','cost',DB::raw('count(review_text) as totalreviews'))
-            ->leftJoin("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
+            ->leftJoin("hotel_rooms","hotel_rooms.id","=","room_type_costs.hotel_room_id")
             ->leftJoin("hotels","hotels.id","=","hotel_rooms.hotel_id")
             ->leftJoin("reviews","hotels.id","=","reviews.hotel_id")
             ->leftJoin("cities","cities.id","=","hotels.city_id")
