@@ -26,7 +26,10 @@
                         </div>
                         @for ($i = 1; $i < 4; $i++)
                         <div class="col-4">
+                            @if (count($HotelTourGallery) >= $i)
                             <img src="{{ asset("/website_assets/images/tour-details/") }}{{$HotelTourGallery[$i]->img ?? " "}}"  class="w-100" alt=" tour hotel image ">
+
+                            @endif
 
                         </div>
                     @endfor
