@@ -8,6 +8,7 @@ use App\Models\Blog;
 use App\Models\Blogs_category;
 use App\Models\Company;
 use App\Models\Counter;
+use App\Models\Country;
 use App\Models\Explore_city;
 use App\Models\Offer;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class MainController extends Controller
         $ExploreCities = Explore_city::where("active","=", 1)->take(5)->get();
         $Offers = Offer::where("active","=", 1)->get();
         $Counters = Counter::get();
+        $Countries = Country::all();
         $BestHotels = Best_hotel::where('active','=',1)->orderBy("order")->get();
         $BlogsCategories = Blogs_category::all();
         $AllBlogs = Blog::take(4)->get();
@@ -28,6 +30,7 @@ class MainController extends Controller
                 "Company" => $Company,
                 "ExploreCities" => $ExploreCities,
                 "Offers" => $Offers,
+                "Countries" => $Countries,
                 "Counters" => $Counters,
                 "BestHotels" => $BestHotels,
                 "BlogsCategories" => $BlogsCategories,

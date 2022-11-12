@@ -33,6 +33,7 @@ class Hotel extends Model
         return $this->belongsTo(City::class,'city_id');
     }
 
+
     public function type()
     {
         return $this->belongsTo(Hotel_type::class,'hotel_type_id');
@@ -42,6 +43,16 @@ class Hotel extends Model
     public function features()
     {
         return $this->belongsToMany(Feature::class, 'hotels_features');
+    }
+
+    public function hotel_features()
+    {
+        return $this->hasMany(Hotels_feature::class, 'hotel_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
 
