@@ -26,27 +26,27 @@ class HotelsController extends Controller
         $Company = Company::first();
         $BreadCrumb = [["url"=>"/","name"=>"Home"],["url"=>"/hotels","name"=>"Hotels"]];
 
-        $HotelTourGallery = Gallery::where([["hotel_id",'=',$id],["active",'=',1]])->take(4)->get();
+        $HotelTourGallery = Gallery::where([["hotel_id",'=',$RoomCost->hotelRooms->hotel->id],["active",'=',1]])->take(4)->get();
         $FeaturesCategories = DB::table("hotels_features")
         ->select("en_category","features_categories.id")
-        ->join("features","features.id","=","hotels_features.feature_id")
-        ->join("features_categories","features.feature_category_id","=","features_categories.id")
+        ->leftJoin("features","features.id","=","hotels_features.feature_id")
+        ->leftJoin("features_categories","features.feature_category_id","=","features_categories.id")
         ->where("hotel_id",'=',$RoomCost->hotelRooms->hotel->id)
         ->groupBy(["en_category","features_categories.id"])->get();
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
         $RoomCosts = DB::table("room_type_costs")
-        ->select('hotels.id','hotel_enname','hotel_arname',
+        ->select('hotels.id as hotel_id','hotel_enname','hotel_arname',
         'hotel_enoverview','hotel_aroverview','hotel_stars',
         'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
         'city_id','details_enaddress','hotels.active','country_id','en_country',
         'ar_country','en_city','ar_city','from_date','end_date','en_room_type','food_bev_type','ar_room_type','cost')
-        ->join("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
-        ->join("room_types","room_types.id","=","hotel_rooms.room_type_id")
-        ->join("food_beverages","food_beverages.id","=","room_type_costs.food_beverage_id")
-        ->join("hotels","hotels.id","=","hotel_rooms.hotel_id")
-        ->join("cities","cities.id","=","hotels.city_id")
-        ->join("countries","countries.id","=","cities.country_id")
+        ->leftJoin("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
+        ->leftJoin("room_types","room_types.id","=","hotel_rooms.room_type_id")
+        ->leftJoin("food_beverages","food_beverages.id","=","room_type_costs.food_beverage_id")
+        ->leftJoin("hotels","hotels.id","=","hotel_rooms.hotel_id")
+        ->leftJoin("cities","cities.id","=","hotels.city_id")
+        ->leftJoin("countries","countries.id","=","cities.country_id")
         ->where([["hotels.active","=",1],["hotels.id","=", $RoomCost->hotelRooms->hotel->id]])
         ->get();
         return view("website.hotels.hotel_profile",[
@@ -64,18 +64,18 @@ class HotelsController extends Controller
         //return $offers;
         $Hotels = Hotel::all();
         $RoomCosts = DB::table("room_type_costs")
-            ->select('hotels.id','hotel_enname','hotel_arname',
+            ->select('room_type_costs.id as id','hotels.id as hotel_id','hotel_enname','hotel_arname',
             'hotel_enoverview','hotel_aroverview','hotel_stars',
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
             'ar_country','en_city','ar_city','from_date','end_date','cost',DB::raw('count(review_text) as totalreviews'))
-            ->join("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
-            ->join("hotels","hotels.id","=","hotel_rooms.hotel_id")
-            ->join("reviews","hotels.id","=","reviews.hotel_id")
-            ->join("cities","cities.id","=","hotels.city_id")
-            ->join("countries","countries.id","=","cities.country_id")
+            ->leftJoin("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
+            ->leftJoin("hotels","hotels.id","=","hotel_rooms.hotel_id")
+            ->leftJoin("reviews","hotels.id","=","reviews.hotel_id")
+            ->leftJoin("cities","cities.id","=","hotels.city_id")
+            ->leftJoin("countries","countries.id","=","cities.country_id")
             ->where("hotels.active","=",1)
-            ->groupBy('hotels.id','hotel_enname','hotel_arname',
+            ->groupBy('room_type_costs.id','hotels.id','hotel_enname','hotel_arname',
             'hotel_enoverview','hotel_aroverview','hotel_stars',
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
@@ -119,18 +119,18 @@ class HotelsController extends Controller
         //return $offers;
         $Hotels = Hotel::all();
         $RoomCosts = DB::table("room_type_costs")
-            ->select('hotels.id','hotel_enname','hotel_arname',
+            ->select('room_type_costs.id as id','hotels.id as hotel_id','hotel_enname','hotel_arname',
             'hotel_enoverview','hotel_aroverview','hotel_stars',
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
             'ar_country','en_city','ar_city','from_date','end_date','cost',DB::raw('count(review_text) as totalreviews'))
-            ->join("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
-            ->join("hotels","hotels.id","=","hotel_rooms.hotel_id")
-            ->join("reviews","hotels.id","=","reviews.hotel_id")
-            ->join("cities","cities.id","=","hotels.city_id")
-            ->join("countries","countries.id","=","cities.country_id")
+            ->leftJoin("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
+            ->leftJoin("hotels","hotels.id","=","hotel_rooms.hotel_id")
+            ->leftJoin("reviews","hotels.id","=","reviews.hotel_id")
+            ->leftJoin("cities","cities.id","=","hotels.city_id")
+            ->leftJoin("countries","countries.id","=","cities.country_id")
             ->where("hotels.active","=",1)
-            ->groupBy('hotels.id','hotel_enname','hotel_arname',
+            ->groupBy('room_type_costs.id','hotels.id','hotel_enname','hotel_arname',
             'hotel_enoverview','hotel_aroverview','hotel_stars',
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
@@ -146,7 +146,7 @@ class HotelsController extends Controller
         return view("website.hotels.hotels",[
             "Company" => $Company,
             "Hotels"=>$Hotels,
-            "Count"=>$RoomCosts->count(),
+            "Count"=>count($HotelsRecommended),
             "HotelsRecommended"=>$HotelsRecommended,
             "HotelsByPrice"=>$HotelsByPrice,
             "Countries" => $Countries,
@@ -160,18 +160,18 @@ class HotelsController extends Controller
         if($request->ajax()){
 
             $RoomCosts = DB::table("room_type_costs")
-            ->select('hotels.id','hotel_enname','hotel_arname',
+            ->select('room_type_costs.id as id','hotels.id as hotel_id','hotel_enname','hotel_arname',
             'hotel_enoverview','hotel_aroverview','hotel_stars',
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
             'ar_country','en_city','ar_city','from_date','end_date','cost',DB::raw('count(review_text) as totalreviews'))
-            ->join("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
-            ->join("hotels","hotels.id","=","hotel_rooms.hotel_id")
-            ->join("reviews","hotels.id","=","reviews.hotel_id")
-            ->join("cities","cities.id","=","hotels.city_id")
-            ->join("countries","countries.id","=","cities.country_id")
+            ->leftJoin("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
+            ->leftJoin("hotels","hotels.id","=","hotel_rooms.hotel_id")
+            ->leftJoin("reviews","hotels.id","=","reviews.hotel_id")
+            ->leftJoin("cities","cities.id","=","hotels.city_id")
+            ->leftJoin("countries","countries.id","=","cities.country_id")
             ->where("hotels.active","=",1)
-            ->groupBy('hotels.id','hotel_enname','hotel_arname',
+            ->groupBy('room_type_costs.id','hotels.id','hotel_enname','hotel_arname',
             'hotel_enoverview','hotel_aroverview','hotel_stars',
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
@@ -209,19 +209,19 @@ class HotelsController extends Controller
     {
         if($request->ajax()){
             $RoomCosts = DB::table("room_type_costs")
-            ->select('hotels.id','hotel_enname','hotel_arname',
+            ->select('room_type_costs.id as id','hotels.id as hotel_id','hotel_enname','hotel_arname',
             'hotel_enoverview','hotel_aroverview','hotel_stars',
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
             'ar_country','en_city','ar_city','from_date','end_date','cost',DB::raw('count(review_text) as totalreviews, DATEDIFF(end_date, from_date) AS date_difference,
             DATEDIFF(end_date, from_date) + 1 AS days_inclusive'))
-            ->join("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
-            ->join("hotels","hotels.id","=","hotel_rooms.hotel_id")
-            ->join("reviews","hotels.id","=","reviews.hotel_id")
-            ->join("cities","cities.id","=","hotels.city_id")
-            ->join("countries","countries.id","=","cities.country_id")
+            ->leftJoin("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
+            ->leftJoin("hotels","hotels.id","=","hotel_rooms.hotel_id")
+            ->leftJoin("reviews","hotels.id","=","reviews.hotel_id")
+            ->leftJoin("cities","cities.id","=","hotels.city_id")
+            ->leftJoin("countries","countries.id","=","cities.country_id")
             ->where("hotels.active","=",1)
-            ->groupBy('hotels.id','hotel_enname','hotel_arname',
+            ->groupBy('room_type_costs.id','hotels.id','hotel_enname','hotel_arname',
             'hotel_enoverview','hotel_aroverview','hotel_stars',
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
@@ -260,17 +260,17 @@ class HotelsController extends Controller
     {
         if($request->ajax()){
             $RoomCosts = DB::table("room_type_costs")
-            ->select('hotels.id','hotel_enname','hotel_arname',
+            ->select('room_type_costs.id as id','hotels.id as hotel_id','hotel_enname','hotel_arname',
             'hotel_enoverview','hotel_aroverview','hotel_stars',
             'hotel_banner','hotel_logo','hotel_enbrief','hotel_arbrief',
             'city_id','details_enaddress','hotels.active','country_id','en_country',
             'ar_country','en_city','ar_city','from_date','end_date','en_room_type','food_bev_type','ar_room_type','cost')
-            ->join("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
-            ->join("room_types","room_types.id","=","hotel_rooms.room_type_id")
-            ->join("food_beverages","food_beverages.id","=","room_type_costs.food_beverage_id")
-            ->join("hotels","hotels.id","=","hotel_rooms.hotel_id")
-            ->join("cities","cities.id","=","hotels.city_id")
-            ->join("countries","countries.id","=","cities.country_id")
+            ->leftJoin("hotel_rooms","hotel_rooms.room_type_id","=","room_type_costs.id")
+            ->leftJoin("room_types","room_types.id","=","hotel_rooms.room_type_id")
+            ->leftJoin("food_beverages","food_beverages.id","=","room_type_costs.food_beverage_id")
+            ->leftJoin("hotels","hotels.id","=","hotel_rooms.hotel_id")
+            ->leftJoin("cities","cities.id","=","hotels.city_id")
+            ->leftJoin("countries","countries.id","=","cities.country_id")
             ->where([["hotels.active","=",1],["hotels.id","=", $request->hotel_id]]);
             if($request->end_date){
                 $todate = Carbon::createFromFormat('d/m/Y', $request->end_date)->format('Y-m-d');
