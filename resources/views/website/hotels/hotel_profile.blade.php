@@ -15,20 +15,22 @@
     <!-- tour details -->
     <section class="container details_section">
         <div class="row mx-0">
-            @if (count($HotelTourGallery))
-            <div class="col-sm-12 col-xl-6">
-                <div class="row mx-0 left_side_imgages">
-                    <div class="col-12">
+            @if(count($HotelTourGallery))
 
-                        <img src="{{ asset("/website_assets/images/tour-details/{$HotelTourGallery[0]->img}") }}" class="w-100 mb-3" alt=" tour hotel image ">
+                <div class="col-sm-12 col-xl-6">
+                    <div class="row mx-0 left_side_imgages">
+                        <div class="col-12">
 
-                    </div>
-                    @for ($i = 1; $i < 4; $i++)
-                    <div class="col-4">
-                        <img src="{{ asset("/website_assets/images/tour-details/{$HotelTourGallery[$i]->img}") }}"  class="w-100" alt=" tour hotel image ">
+                            <img src="{{ asset("/website_assets/images/tour-details/") }}{{ $HotelTourGallery[0]->img ?? " "}}" class="w-100 mb-3" alt=" tour hotel image ">
 
-                    </div>
+                        </div>
+                        @for ($i = 1; $i < 4; $i++)
+                        <div class="col-4">
+                            <img src="{{ asset("/website_assets/images/tour-details/") }}{{$HotelTourGallery[$i]->img ?? " "}}"  class="w-100" alt=" tour hotel image ">
+
+                        </div>
                     @endfor
+                </div>
                 </div>
             @endif
             </div>

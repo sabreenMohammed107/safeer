@@ -27,6 +27,7 @@ class HotelsController extends Controller
         $BreadCrumb = [["url"=>"/","name"=>"Home"],["url"=>"/hotels","name"=>"Hotels"]];
 
         $HotelTourGallery = Gallery::where([["hotel_id",'=',$RoomCost->hotelRooms->hotel->id],["active",'=',1]])->take(4)->get();
+        // return $HotelTourGallery;
         $FeaturesCategories = DB::table("hotels_features")
         ->select("en_category","features_categories.id")
         ->leftJoin("features","features.id","=","hotels_features.feature_id")
