@@ -52,7 +52,13 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 Routes Before Applying Authentication
 */
 Route::get("/", [MainController::class, 'index']);
+Route::get("/hotels", [HotelsController::class, 'all_hotels']);
+Route::post("/hotels", [HotelsController::class, 'hotels']);
+Route::post("/hotels/retrieve", [HotelsController::class, 'fetch']);
+Route::post("/hotels/search", [HotelsController::class, 'search']);
 Route::get("/hotels/{id}", [HotelsController::class, 'profile']);
+Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
+Route::post("/hotels/review/{id}", [HotelsController::class, 'add_review']);
 
 /*------------------------------------------
 --------------------------------------------

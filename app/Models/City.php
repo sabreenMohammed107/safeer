@@ -20,6 +20,11 @@ class City extends Model
         return $this->hasMany(Tour::class);
     }
 
+    public function country()
+    {
+        return $this->belongsTo(Country::class,'country_id');
+    }
+
 
 
 }

@@ -195,7 +195,7 @@
     color: white;
 }
 .add_comment_button:focus i,
-.add_comment_button:hover i 
+.add_comment_button:hover i
 {
     background-color: white;
     color: #1C4482;
@@ -234,12 +234,12 @@
 .modal-body .rating {
     font-size: 30px;
     margin-top: 10px;
-   
+
 }
-.modal-body .rating i:nth-of-type(4),
+/* .modal-body .rating i:nth-of-type(4),
 .modal-body .rating i:nth-of-type(5){
     color: #DCDCDC;
-}
+} */
 .modal-footer {
     justify-content: center;
     border: none;

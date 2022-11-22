@@ -1,7 +1,7 @@
 @extends("layout.website.layout", ["Company" => $Company,"title"=>"Safeer | Home"])
 
 @section("bottom-header")
-<x-website.header.home :company="$Company" />
+<x-website.header.home :company="$Company" :countries="$Countries" />
 @endsection
 @section("content")
 
@@ -254,7 +254,7 @@
                              {!! $AllBlogs[$i]->en_title !!}
                            </h5>
                            <p>
-                            {{ strip_tags(str_limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }}
+                            {{ strip_tags(Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }}
 
                             </p>
                            <a href="#" class="stretched-link">
