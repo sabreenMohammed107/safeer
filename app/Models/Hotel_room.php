@@ -12,7 +12,6 @@ class Hotel_room extends Model
 
         'hotel_id',
     'room_type_id',
-    'no_rooms',
     ];
 
     public function room(){

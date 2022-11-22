@@ -60,9 +60,10 @@ class HotelController extends Controller
         $types = Hotel_type::get();
         $features = Feature::all();
         $countries = Country::all();
+        $rooms = Room_type::all();
         // $eventSpecialzation=[];
         $types = Room_type::all();
-        return view($this->viewName . 'add', compact(['types', 'cities', 'types', 'features', 'countries']));
+        return view($this->viewName . 'add', compact(['types','rooms', 'cities', 'types', 'features', 'countries']));
     }
 
     /**
@@ -100,6 +101,11 @@ class HotelController extends Controller
             if (!empty($request->get('features'))) {
 
                 $hotel->features()->attach($request->features);
+
+            }
+            if (!empty($request->get('rooms'))) {
+
+                $hotel->rooms()->attach($request->rooms);
 
             }
             DB::commit();
@@ -141,13 +147,15 @@ class HotelController extends Controller
         $cities = City::get();
         $types = Hotel_type::get();
         $features = Feature::all();
+        $rooms = Room_type::all();
         $hotelFeatures = $hotel->features->all();
+        $hotelRooms = $hotel->rooms->all();
         $countries = Country::all();
         $roomsTypes = Hotel_room::where('hotel_id', $hotel->id)->get();
         $hotelRoomsCost = Room_type_cost::whereHas('hotelRooms', function ($q) use ($hotel) {
             $q->where('hotel_id', '=', $hotel->id);
         })->get();
-        return view($this->viewName . 'edit', compact(['roomsTypes', 'hotelRoomsCost', 'hotel', 'cities', 'countries', 'types', 'features', 'hotelFeatures']));
+        return view($this->viewName . 'edit', compact(['roomsTypes','rooms','hotelRooms', 'hotelRoomsCost', 'hotel', 'cities', 'countries', 'types', 'features', 'hotelFeatures']));
     }
 
     /**
@@ -189,6 +197,11 @@ class HotelController extends Controller
             if (!empty($request->get('features'))) {
 
                 $hotel->features()->sync($request->features);
+
+            }
+            if (!empty($request->get('rooms'))) {
+
+                $hotel->rooms()->sync($request->rooms);
 
             }
             //repeat data

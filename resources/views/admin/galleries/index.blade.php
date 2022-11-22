@@ -85,7 +85,7 @@
                                 </th>
                                 <th class="min-w-150px">image</th>
                                 <th class="min-w-250px">hotel</th>
-                                <th class="min-w-150px">tour</th>
+                                {{-- <th class="min-w-150px">tour</th> --}}
 
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
@@ -129,7 +129,7 @@
                                     </td>
 
 
-                                    <td>
+                                    {{-- <td>
 
                                         <div class="d-flex">
                                             <input type="hidden" name="" id=""
@@ -139,7 +139,7 @@
 
                                         </div>
 
-                                    </td>
+                                    </td> --}}
                                     <!--end::Type=-->
                                     <!--begin::Action=-->
                                     <td class="text-end">
@@ -304,7 +304,7 @@
 
                                                         <div class="d-flex flex-column mb-8 fv-row">
 
-                                                            <div>
+                                                            {{-- <div>
                                                                 <label class="fs-6 fw-bold form-label mt-3">
                                                                     <option value="">Select a Tour...</option>
 
@@ -323,7 +323,7 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
+                                                            </div> --}}
                                                             <!--end::Input group-->
 
                                                             <!--begin::Input group-->
@@ -420,7 +420,7 @@
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
-                            <h1 class="mb-3">Set Tours Field</h1>
+                            <h1 class="mb-3">Set Gallery Field</h1>
                             <!--end::Title-->
 
                         </div>
@@ -510,7 +510,7 @@
 
                         <div class="d-flex flex-column mb-8 fv-row">
 
-                            <div>
+                            {{-- <div>
                                 <label class="fs-6 fw-bold form-label mt-3">
                                     <option value="">Select a Tour...</option>
 
@@ -529,7 +529,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             <!--end::Input group-->
                             <!--begin::Input group-->
                             <div class="d-flex flex-column mb-8">

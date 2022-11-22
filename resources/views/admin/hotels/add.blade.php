@@ -244,13 +244,10 @@
                                         <!--begin::Input group-->
                                         <div class="d-flex flex-wrap gap-5">
                                             <!--begin::Input group-->
-                                            <div class="fv-row w-100 flex-md-root">
-                                                <!--begin::Label-->
+                                            {{-- <div class="fv-row w-100 flex-md-root">
                                                 <label class="fs-6 fw-bold form-label mt-3">
                                                     <option value="">Select Hotel Type..</option>
-                                                    {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
                                                 </label>
-                                                <!--end::Label-->
                                                 <select  class="form-select form-select-solid"
                                                     name="hotel_type_id" data-control="select2"
                                                     data-placeholder="Select an option">
@@ -260,7 +257,7 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                            </div>
+                                            </div> --}}
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
                                                 <!--begin::Label-->
@@ -277,6 +274,31 @@
                                                     <option></option>
                                                     @foreach ($features as $feature)
                                                         <option value="{{ $feature->id }}">{{ $feature->en_feature }}
+                                                        </option>
+                                                    @endforeach
+
+                                                </select>
+                                            </div>
+                                            <!--end::Input group-->
+
+
+                                            <!--rooms -->
+                                              <!--begin::Input group-->
+                                              <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                    <span class="required">Add Rooms Types</span>
+                                                    <i class="fas fa-exclamation-circle ms-1 fs-7"
+                                                        data-bs-toggle="tooltip"
+                                                        title="Interviewer who conducts the meeting with the interviewee"></i>
+                                                </label>
+                                                <!--end::Label-->
+                                                <select required class="form-select form-select-solid" name="rooms[]"
+                                                    data-control="select2" data-placeholder="Select an option"
+                                                    data-allow-clear="true" multiple="multiple">
+                                                    <option></option>
+                                                    @foreach ($rooms as $room)
+                                                        <option value="{{ $room->id }}">{{ $room->en_room_type ?? '' }}
                                                         </option>
                                                     @endforeach
 
