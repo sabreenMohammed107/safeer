@@ -68,6 +68,11 @@ Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
 Route::get('/single-blog/{id}',[ContentController::class, 'singleBlog'])->name('single-blog');
 Route::get('/contact', [ContentController::class, 'createForm']);
 Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
+//site-login
+Route::get("/site-login", [ContentController::class, 'loginSite']);
+//signupSite
+Route::get("/site-signup", [ContentController::class, 'signupSite']);
+
 /*------------------------------------------
 --------------------------------------------
 All Admin Routes List

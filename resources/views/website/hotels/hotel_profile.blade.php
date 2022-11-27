@@ -272,7 +272,7 @@
                         </div>
 
                         <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                        <button class="btn rooms_button"> <a href="./booking-hotel.html">book</a> </button>
+                        <button class="btn rooms_button"> <a href="{{url('/site-login')}}">book</a> </button>
                         </div>
 
 
@@ -312,7 +312,7 @@
                         </div>
 
                         <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                        <button class="btn rooms_button"> <a href="./booking-hotel.html">book</a> </button>
+                        <button class="btn rooms_button"> <a href="{{url('/site-login')}}">book</a> </button>
                         </div>
 
 
@@ -350,7 +350,7 @@
                         </div>
 
                         <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                        <button class="btn rooms_button"> <a href="./booking-hotel.html">book</a> </button>
+                        <button class="btn rooms_button"> <a href="{{url('/site-login')}}">book</a> </button>
                         </div>
 
 

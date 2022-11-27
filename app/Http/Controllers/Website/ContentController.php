@@ -110,4 +110,23 @@ class ContentController extends Controller
         //
         return back()->with('flash_success', 'We have received your message and would like to thank you for writing to us.');
     }
+
+
+    public function loginSite(){
+        $Company = Company::first();
+        return view("website.login",
+        [
+            "Company" => $Company,
+
+        ]);
+    }
+
+    public function signupSite(){
+        $Company = Company::first();
+        return view("website.signup",
+        [
+            "Company" => $Company,
+
+        ]);
+    }
 }
