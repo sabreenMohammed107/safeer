@@ -46,7 +46,7 @@ switch ($offers->count()) {
             <h6>start from</h6>
             <span></span>
           </div>
-            <span>699 L.E</span>
+            <span>699 $</span>
             <button class="btn">
               <a href="#"> start trip</a>
             </button>
@@ -70,7 +70,7 @@ switch ($offers->count()) {
                     <span>{{$Offer->subtitle_en}}
                     </span>
                     <span>
-                      220 L.E
+                      220 $
                     </span>
                   </div>
               </div>
