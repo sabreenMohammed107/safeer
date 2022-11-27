@@ -365,6 +365,14 @@
                                 <span class="menu-title">Room Types</span>
                             </a>
                         </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('hotel-price.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Hotel Pricing</span>
+                            </a>
+                        </div>
                         {{-- end new --}}
 
 

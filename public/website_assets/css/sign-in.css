@@ -1,0 +1,193 @@
+
+
+.slider_section {
+min-height: 100vh;
+  background-image: linear-gradient(rgba(28, 69, 130, 0.81),rgba(28, 69, 130, 0.81)) , url("./../images/homePage/turkey-slider-image.webp");
+  background-size:cover;
+  background-repeat: no-repeat;
+  position:relative;
+  background-position:center;
+
+}
+  
+.slider_details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+
+}
+.slider_details >* {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+.slider_details h1 {
+font-size:50px ;
+  color: var(--text-color);
+  text-transform: capitalize;
+  margin-bottom: 15px;
+  font-weight: 500;
+  line-height: 1.8;
+
+}
+.slider_details p {
+  font-size: 20px;
+  color: var(--text-color);
+  margin-bottom: 25px;
+  font-weight: 300;
+}
+.slider_section {
+min-height: 840px;
+}
+.side_right_details {
+  align-items: flex-start;
+  padding: 90px 50px;
+}
+.side_right_details h5 ,
+.side_right_details a {
+  text-align: left;
+}
+
+.side_right_details h5 {
+  font-size: 22px;
+  color:#210D3A;
+  font-weight: 700;  
+}
+.side_right_details span {
+  margin-top: 15px;
+  margin-left: 5px;
+  margin-bottom: 32px;
+  display: inline-block;
+  color: #1C4482;
+}
+.side_right_details form{
+  width: 100%;
+}
+.side_right_details form > input
+{
+  border-radius: 10px;
+  height: 65px;
+  padding: 16px 18px;
+  border-color: #DDDDDD;
+  margin-bottom: 25px;
+}
+.side_right_details form input::placeholder{
+  color:#C5C3C3 ;
+  font-size: 19px;
+  text-transform: capitalize;
+} 
+.side_right_details form  .sign_button{
+  width: 100%;
+  background-color: #1C4482;
+  font-size:19px;
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+.side_right_details form  .sign_button:hover {
+  /* background-color: white;
+  border: 1px solid #1C4482;
+  color: #1C4482; */
+  box-shadow: 0px 2px 20px rgba(0,0,0,0.07)
+}
+.side_right_details form .remember {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+.side_right_details form .remember input{
+  width: 33px;
+ height: 33px; 
+  border-radius: 10px;
+  margin-right: 15px;
+}
+.side_right_details form .remember label {
+  font-size: 19px;
+  color: #210D3A;
+  text-transform: capitalize;
+}
+.side_right_details .or_title {
+  font-size:20px;
+  color:#949494 ;
+  margin-top: 23px;
+  margin-bottom: 23px;
+  position: relative;
+  z-index: 2;
+  background-color: white;
+}
+.side_right_details .or_title:before,
+.side_right_details .or_title:after  {
+  content:"";
+  width:40%;
+  height: 1px;
+  background-color:#DCDCDC;
+  position: absolute;
+
+  top: 17px;
+  z-index: 1  ;
+}
+.side_right_details .or_title:before{
+  left: 0px;
+}
+.side_right_details .or_title:after{
+  right: 0px;
+}
+.sign_socail button {
+  width: 100%;
+  border: 1px solid #DDDDDD;
+  position: relative;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+border-radius: 10px;
+}
+.sign_socail button a {
+  color: #210D3A;
+  font-size: 19px;
+  font-weight: 500; 
+}
+.sign_socail button img {
+  position: absolute;
+  left: 15px;
+  top: 9px;
+  width: 30px;
+  color: #1C4482;
+  font-size: 22px;
+}
+.sign_socail button:hover  {
+  box-shadow: 0px 2px 20px rgba(0,0,0,0.07)
+}
+.sign_socail button:hover a {
+  font-weight: 600;
+}
+.col-sm-12 {
+  padding: 0px;
+}
+.confirmed {
+  text-transform: none !important;
+  font-size: 17px !important;
+}
+.privacy {
+  color: #084586;
+}
+
+@media (min-width:320px) and (max-width:768px) {
+  .slider_details {
+    height: inherit;
+  }
+  .col-sm-12 {
+    padding: 0px;
+  }
+  .side_right_details {
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+  }
+  
+}

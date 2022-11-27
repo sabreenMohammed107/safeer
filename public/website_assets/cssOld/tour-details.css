@@ -1,0 +1,348 @@
+.details_section {
+    margin-top: 50px;
+    padding-bottom: 50px;
+}
+.tour_info .titles  {
+    position: relative;
+    border-bottom:  1px solid #DCDCDC;
+    padding-bottom: 20px;
+}
+.tour_info .titles h6 {
+    font-weight: 700;
+    font-size: 25px;
+    color: #1C4482;
+    text-transform: capitalize;
+    margin-bottom: 2px;
+    margin-top: 10px;
+}
+.tour_info .titles span {
+    font-weight: 300;
+    font-size: 17px;
+    color: #1C4482;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.tour_info .titles span span {
+    padding: 10px;
+}
+.tour_info .titles .rating i {
+    font-size: 15px;
+    color: #F97150;
+}
+.tour_info .titles .rating span {
+    color: #7E7E7E;
+    font-size: 15px;
+    padding-left: 8px;
+}
+.tour_info .titles  .sharing_icons {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+}
+.tour_info .titles  .sharing_icons i {
+    padding:10px 10px;
+    color: #1C4482;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid #1C4482;
+    font-size: 16px;
+    margin-right: 10px;
+
+}
+.tour_info .titles  .sharing_icons i:hover {
+        background-color: #1C4482;
+        color: white;
+
+}
+.tour_info h6 {
+    font-weight: 700;
+    font-size: 17px;
+    color: #1C4482;
+    text-transform: capitalize;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.tour_info p{
+    font-size: 15px;
+    color: #7E7E7E;
+}
+.tour_info_details {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+.tour_info_details  img {
+    width: 50px;
+    margin-left: 15px;
+}
+.tour_info_details h6 {
+    color: #1C4482;
+    font-size:25px;
+    text-transform: capitalize;
+    font-weight: 700;
+    margin-top: 15px;
+}
+.tour_info_details span {
+    color: #3A9DC4;
+    font-size:20px ;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+.included {
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+}
+.included_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.included_info .include-1  {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.included_info .include-1 span {
+    font-size: 13px;
+    color: #7E7E7E;
+    padding-left: 8px;
+
+}
+.accordion-button {
+    font-size: 17px;
+    color:#1C4482 ;
+    font-weight:700 ;
+    text-transform: capitalize;
+}
+.accordion {
+    margin-bottom: 20px;
+}
+.accordion-body {
+    border-top: 1px solid rgba(0,0,0,.125);
+}
+
+.images {
+    background-image: url(./../images/tour-details/video.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    background-position: center;
+    min-height: 350px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+.images button {
+    border-radius: 50%;
+    width: 88px;
+    height: 88px;
+    padding: 0px;
+    border: 2px solid rgba(128, 128, 128, 0.582);
+}
+.images button img {
+    width: 100%;
+    border-radius: 50%;
+
+}
+/* rrom review section */
+.reviews {
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+}
+.review_heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom:40px;
+}
+.review_heading >h5 {
+    font-size: 25px;
+    color:#1C4482 ;
+    font-weight: 700;
+    text-transform: capitalize;
+
+}
+.add_comment_button {
+    color:#1C4482 ;
+    font-size:20px ;
+    text-transform: capitalize;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+.add_comment_button i {
+    background-color: #1C4482;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 6px;
+    margin-right: 5px;
+    font-size: 14px;
+}
+.add_comment_button:focus ,
+.add_comment_button:hover{
+    background-color: #1C4482;
+    color: white;
+}
+.add_comment_button:focus i,
+.add_comment_button:hover i
+{
+    background-color: white;
+    color: #1C4482;
+}
+/* modal styles */
+.modal-dialog {
+    min-width: auto;
+}
+.modal-content {
+    height: fit-content;
+    border-radius: 17px;
+
+}
+.modal-header {
+    padding-left: 35px;
+    padding-right: 35px;
+    border-bottom: 1px solid rgba(126, 126, 126, 0.211);
+}
+.modal-title {
+    font-size: 27px;
+    color:#1C4482 ;
+    font-weight: 700;
+    text-transform: capitalize;
+
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+.modal-body .rating {
+    font-size: 30px;
+    margin-top: 10px;
+
+}
+/* .modal-body .rating i:nth-of-type(4),
+.modal-body .rating i:nth-of-type(5){
+    color: #DCDCDC;
+} */
+.modal-footer {
+    justify-content: center;
+    border: none;
+}
+
+.comment_input {
+    width: 100%;
+    margin-top: 20px;
+}
+.comment_input textarea {
+    border-radius: 15px;
+    font-size: 15px;
+    color:#9393AA ;
+}
+.comment_input  label {
+    font-size: 15px;
+    color:#9393AA ;
+    text-transform: capitalize;
+
+}
+.comment_pop_btn {
+    background-color: #1C4482;
+    color: white;
+    font-weight: 600;
+    text-transform: capitalize;
+    border-radius: 20px;
+
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.review_details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 70px;
+}
+.review_details img {
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.review_details .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.review_details .heading h6 {
+    font-size: 16px;
+    color:#1C4482 ;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom:0px;
+}
+.review_details  p {
+    font-size: 16px;
+    color:#7E7E7E ;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+.review_info {
+    width: 100%;
+}
+.rating i {
+    color: #F97150;
+}
+.comments_button {
+    text-transform: capitalize;
+    color:#7E7E7E ;
+    font-size: 20px;
+    font-weight: 500;
+    border: 1px solid #7E7E7E;
+    margin: auto;
+    display: block;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+    .tour_info .titles .sharing_icons{
+        top: 27%;
+    }
+    .review_details {
+        flex-direction: column;
+    }
+    .review_details img {
+        margin-bottom: 20px;
+        margin-right: 0px;
+    }
+    .review_heading {
+        flex-direction: column;
+        align-items: flex-start;
+
+    }
+    .add_comment_button {
+    margin-left: auto;
+    }
+    .review_details .heading {
+        flex-direction: column;
+    }
+    .review_details .heading h6 {
+        margin-bottom: 10px;
+    }
+    .included_info {
+        flex-direction: column;
+    }
+    .included_info .include-1 {
+        margin-bottom: 15px;
+    }
+}

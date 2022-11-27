@@ -103,11 +103,11 @@ class HotelController extends Controller
                 $hotel->features()->attach($request->features);
 
             }
-            if (!empty($request->get('rooms'))) {
+            // if (!empty($request->get('rooms'))) {
 
-                $hotel->rooms()->attach($request->rooms);
+            //     $hotel->rooms()->attach($request->rooms);
 
-            }
+            // }
             DB::commit();
             // Enable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
@@ -133,7 +133,7 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
-        //
+        return view($this->viewName . 'price');
     }
 
     /**
@@ -149,7 +149,11 @@ class HotelController extends Controller
         $features = Feature::all();
         $rooms = Room_type::all();
         $hotelFeatures = $hotel->features->all();
-        $hotelRooms = $hotel->rooms->all();
+         $hotelRooms=[];
+if($hotel->rooms){
+    $hotelRooms = $hotel->rooms->all();
+}
+
         $countries = Country::all();
         $roomsTypes = Hotel_room::where('hotel_id', $hotel->id)->get();
         $hotelRoomsCost = Room_type_cost::whereHas('hotelRooms', function ($q) use ($hotel) {

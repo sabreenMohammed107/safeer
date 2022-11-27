@@ -172,6 +172,19 @@
   <script src="{{ asset('/website_assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
 <!-- date picker range links -->
   <script src="  https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+  <!-- date picker range links -->
+
+  <!--   double date picker -->
+  <!-- Include Required Prerequisites -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+  <!-- Include Date Range Picker -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+  <script src="{{ asset('/website_assets/js/datepicker.js') }}"></script>
+
   <script src="{{ asset('/website_assets/js/momnet.js') }}"></script>
   <script src="{{ asset('/website_assets/js/bootstrap-datepicker.min.js') }}"></script>
   <script src="{{ asset('/website_assets/js/date_picker.js') }}"></script>
@@ -184,7 +197,12 @@
   <!-- video popup library -->
   <script src="{{ asset('/website_assets/js/appleple-modal-video-78d211f/js/jquery-modal-video.min.js') }}"></script>
   <script src="{{ asset('/website_assets/js/appleple-modal-video-78d211f/js/modal-video.js') }}"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="{{ asset('/website_assets/js/video.js') }}"></script>
+   <!-- image gallery  -->
+   <script src="{{ asset('/website_assets/js/image_gllery.js')}}"></script>
+   <!-- adding room -->
+   <script src="{{ asset('/website_assets/js/add_room.js')}}"></script>
 @yield("adds_js")
 </body>
 </html>

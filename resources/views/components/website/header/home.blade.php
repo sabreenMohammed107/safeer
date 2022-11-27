@@ -37,7 +37,7 @@
                                 </select>
                               </div>
                             </div>
-                            <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                            {{-- <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                                 <h5> check in <span>check </span> </h5>
                                <div class="row mx-0">
                                 <div class="col-6 p-0">
@@ -54,6 +54,14 @@
                                     </div>
                                 </div>
                                </div>
+                            </div> --}}
+                            <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                                <h5> check in <span>check </span> </h5>
+
+                                <div class="datepicker calender">
+                                  <i class="fa-solid fa-calendar-days"></i>
+                                  <input type="text" id="demo" name="from_date" class="demo"  value="" />
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-6 col-xl-2">
                                 <h5> nights</h5>
@@ -105,12 +113,12 @@
                             </div>
                             <div class="col-sm-12 col-md-6 col-xl-1 p-0">
                                 <div class="main">
-                                    <div class="">
-                                        <a href="#">
-                                          <i class="fa-solid fa-circle-plus"></i>
+                                    {{-- <div class="">
+                                        <button id="roomBtn" onclick="addInput()">
+                                            <i class="fa-solid fa-circle-plus"></i>
                                             Add room
-                                        </a>
-                                    </div>
+                                          </button>
+                                    </div> --}}
                                     <button class="btn text-white" type="submit">
                                          Search
                                     </button>
@@ -136,9 +144,9 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                        <div class="col-sm-12 col-md-6 col-xl-3">
                             <h5> check in <span>check </span> </h5>
-                           <div class="row mx-0">
+                           {{-- <div class="row mx-0">
                             <div class="col-6 p-0">
                               <div class="calender">
                                 <i class="fa-solid fa-calendar-days"></i>
@@ -147,9 +155,11 @@
                               </div>
                             </div>
                             <div class="col-6 p-0">
-                              <input type="text" class="end-date form-control" value="2012-04-19">
-                            </div>
-                           </div>
+                              <input type="text" class="end-date form-control" value="2012-04-19"> --}}
+                              <div class="datepicker calender">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <input type="text" id="demo" class="demo" name="datefilter" value="" />
+                              </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-2">
                             <h5> nights</h5>
@@ -232,7 +242,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                  {{-- <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                       <h5> check in <span>check </span> </h5>
                      <div class="row mx-0">
                       <div class="col-6 p-0">
@@ -246,7 +256,15 @@
                         <input type="text" class="end-date form-control" value="2012-04-19">
                       </div>
                      </div>
-                  </div>
+                  </div> --}}
+                  <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                    <h5> check in <span>check </span> </h5>
+
+                    <div class="datepicker calender">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      <input type="text" id="demo" class="demo" name="datefilter" value="" />
+                    </div>
+                </div>
                   <div class="col-sm-12 col-md-6 col-xl-2">
                       <h5> nights</h5>
                       <select class="form-select" aria-label="Default select example">

@@ -1,0 +1,10 @@
+.hotels .hotels_card .hotel_card_info .card_info {
+    align-items: flex-start;
+    margin-top: 30px;
+}
+.hotels .hotels_card .hotel_card_info{
+    background-color: white;
+}
+.hotels .hotels_card:hover {
+    transform: none;
+}

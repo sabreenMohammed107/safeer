@@ -1,0 +1,114 @@
+.passenger_data {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.passenger_data h5 {
+    font-size:24px ;
+    color:#1C4482 ;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 45px;
+}
+.passenger_data .passenger_info  {
+    margin-bottom: 35px;
+}
+.passenger_data .passenger_info h6  {
+    font-size:20px ;
+    color:#1C4482 ;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+}
+.passenger_table {
+    box-shadow: 0px 2px 20px rgba(0,0,0,0.07);
+}
+.passenger_table .info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+.passenger_table .info span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px 15px;
+
+    /* height: 65px; */
+}
+.passenger_table .info .name{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+ 
+
+.passenger_table .info .total {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+.passenger_table .info span:nth-of-type(1) {
+    font-size: 15px;
+    text-transform: capitalize;
+    background-color: #1C4482;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.passenger_table .info span:nth-of-type(2){
+    font-size: 14px;
+    background-color: white;
+    /* box-shadow: 0px 2px 20px rgba(0,0,0,0.07); */
+    color: #1C4482;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.passenger_table tr {
+    border-radius: 10px;
+   line-height: 2.5;
+   height: 50px;
+
+}
+.passenger_table tr td {
+    text-align: center;
+    font-size: 15px;
+    text-transform: capitalize;
+
+}
+.passenger_table tr:first-of-type{
+    background-color: #1C4482;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+/* .passenger_table tr:first-of-type td */
+.passenger_table tr:nth-of-type(2) {
+    background-color: white;
+    box-shadow: 0px 2px 20px rgba(0,0,0,0.07);
+    color: #1C4482;
+    font-weight: 600;
+}
+.grand_total{
+    display: block;
+    text-align: right;
+    text-transform: capitalize;
+    color: #1C4482;
+    font-size: 20px;
+    margin-top: 33px;
+}
+.grand_total span {
+    font-weight: 700;
+}
+@media (min-width:768px) and (max-width:991px) {
+    .info_edit {
+        flex: 1 0 30% !important;
+    }
+} 
+@media (min-width:320px) and (max-width:767px) {
+    .info_edit {
+        flex: 1 0 40% !important;
+    }
+}

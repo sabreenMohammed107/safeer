@@ -1,0 +1,149 @@
+.socail_channels {
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+}
+.socail_channels h5,
+.location h5 {
+    font-size: 38px;
+    color: #1C4482;
+    text-transform: capitalize;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+}
+.socail {
+    height: 280px;
+}
+.card {
+    transition: none;
+}
+.socail_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px 20px;
+    height: 100%;
+    margin-bottom: 20px;
+   
+}
+.socail_card img {
+    width: 60px;
+}
+.socail_card .socail_info  {
+    padding-bottom: 0px;
+}
+.socail_card .socail_info h6 {
+    text-transform: capitalize;
+    font-size:25px ;
+    color: #1C4482;
+    font-weight: 700;
+    margin-bottom: 20px;
+    margin-top: 10px;
+
+}
+.socail_card .socail_info span {
+    color: #3A9DC4;
+    font-size: 20px;
+    text-transform: capitalize;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.info {
+    color: #1C4482 !important;
+}
+.info a {
+    color: #1C4482 !important;
+}
+.offices_info {
+    padding: 20px 5px;
+    background-color: white;
+}
+.help_info {
+    margin-right: 20px;
+}
+.help_info h6 {
+    text-transform: capitalize;
+    font-size:20px ;
+    color: black;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.help_info span {
+    text-transform: capitalize;
+    font-size:17px ;
+    color:#7E7E7E;
+    display: block;
+    margin-bottom: 5px;
+}
+.help_section {
+    background-color: #F6F6F6;
+    padding-top: 100px;
+    padding-bottom: 50px;
+    position: relative;
+}
+.help_section img:nth-of-type(1){
+    position: absolute;
+    top: -30px;
+    left: 0px;
+    width: 100%;
+}
+.help_section img:nth-of-type(2){
+    position: absolute;
+    bottom: -50px;
+    left: 0px;
+    width: 100%;
+}
+.help_section form {
+    margin-right: 20px;
+}
+.help_section form input {
+    height: 45px;
+    background-color: white !important;
+    border-color: #DDDDDD !important;
+}
+.help_section form textarea{
+    height: 110px;
+    background-color: white !important;
+    border-color: #DDDDDD !important;
+}
+.help_section form button {
+    background-color: #1C4482;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 10px 30px;
+    margin-top: 15px;
+}
+.location  {
+    padding-top: 50px;
+}
+.location iframe {
+    width: 100%;
+   height: 541px;
+   padding: 0px;
+   margin: 0px;
+}
+
+@media (min-width:320px) and (max-width:1200px) {
+    .offices_info {
+        margin-top: 30px;
+    }
+}
+
+@media (min-width:320px) and (max-width:767px){
+    .help_info{
+        margin-bottom: 20px;
+    }
+    .socail {
+        height: auto;
+    }
+    .socail_card {
+        margin-bottom: 20px;
+        height: fit-content;
+    }
+
+}

@@ -1,0 +1,146 @@
+.slider_section .slider_details h1{
+    text-transform: capitalize;
+}
+
+.passenger_section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.passenger_section>h5 {
+    font-size:20px ;
+    color:#1C4482 ;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+}
+.passenger_info {
+    border: 1px solid #DDDDDD;
+    padding: 20px 25px;
+    max-height: 392px;
+    height: 100%;
+}
+.passenger_info label {
+    color: #1C4482;
+    font-size: 15px;
+    text-transform: capitalize;
+}
+.passenger_info input,
+.passenger_info textarea {
+    margin-bottom: 10px;
+    border: 1px solid #DDDDDD;
+    border-radius: 10px;
+    color: #C5C3C3;
+    font-size: 15px;
+    height: 47px;
+    padding-left: 20px;
+
+}
+.passenger_info textarea  {
+    height: 93px;
+}
+.passenger_info input::placeholder {
+    text-transform: capitalize;
+}
+
+.booking_info_card_info {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 25px;
+
+}
+.booking_info_card_info .info_image img {
+    width: 142px;
+    height: 107.8px;
+    margin-right: 15px;
+}
+.booking_info_card_info .info_title  {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.booking_info_card_info .info_title h6 {
+    font-size: 15px;
+    color: #1C4482;
+    text-transform: capitalize;
+    font-weight: 700;
+}
+.booking_info_card_info .info_title .card_info span {
+        text-transform: capitalize;
+        margin-bottom: 15px;
+        display: inline-block;
+        font-size: 13px;
+        color: #7E7E7E;
+        font-weight: 700;
+}
+.booking_info_card_info .info_title .card_info span span {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.booking_info_card_info .info_title .rating i {
+    font-size: 15px;
+    color: #F97150;
+}
+.booking_info_card_info .info_title .rating span {
+    color: #7E7E7E;
+    font-size: 10px;
+    padding-left: 8px;
+}
+.remain_info h5 ,
+.grand_total h5 {
+    font-size: 15px;
+    color: #1C4482;
+    text-transform: capitalize;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.remain_info p {
+    font-size: 12px;
+    color:#7E7E7E ;
+    padding-bottom: 15px;
+
+}
+.remain_info {
+    border-bottom: 1px solid #C5C3C3;
+}
+.grand_total {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 15px;
+}
+.grand_total span {
+    font-size: 20px;
+    color: #1C4482;
+    text-transform: capitalize;
+    font-weight: 700;
+
+
+}
+.grand_total h5 {
+    margin-bottom: 0px;
+}
+
+@media (min-width:767px) and (max-width:1200px) {
+    .booking_info_card_info {
+        flex-direction: column;
+    }
+    .booking_info_card_info .info_image img {
+        margin-bottom: 15px;
+        margin-right: 0px;
+    }
+    .grand_total {
+        flex-direction: column;
+    }
+}
+@media (min-width:320px) and (max-width:395px) {
+    .booking_info_card_info {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .booking_info_card_info .info_image img {
+        margin-bottom: 15px;
+        margin-right: 0px;
+    }
+}

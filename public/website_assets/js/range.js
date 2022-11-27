@@ -27,5 +27,5 @@ const setRightValue = () => {
   range.style.right = 100 - percent + "%";
 };
 
-inputLeft.addEventListener("input", setLeftValue);
-inputRight.addEventListener("input", setRightValue);
+// inputLeft.addEventListener("input", setLeftValue);
+// inputRight.addEventListener("input", setRightValue);

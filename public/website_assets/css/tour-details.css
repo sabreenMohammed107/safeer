@@ -2,6 +2,26 @@
     margin-top: 50px;
     padding-bottom: 50px;
 }
+  /* imag gallery  */
+  #mainImage  {
+    max-width: 637px;
+    max-height: 360px;
+}
+.imgStyle {
+    max-width:200px ;
+    max-height: 140px;
+    transition: 0.5s all ease;
+    margin-bottom: 10px;
+    padding-right: 10px;
+  }
+  #divId img:nth-of-type(3) {
+    padding-right: 0px;
+  }
+  /* .imgStyle:hover {
+    /* border: 1px solid grey; */
+    /* transform: scale(1.1);
+  }  */
+   
 .tour_info .titles  {
     position: relative;
     border-bottom:  1px solid #DCDCDC;
@@ -14,14 +34,18 @@
     text-transform: capitalize;
     margin-bottom: 2px;
     margin-top: 10px;
+    cursor: pointer;
 }
-.tour_info .titles span {
+.tour_info .titles:hover h6 {
+   text-decoration: underline;
+}
+.tour_info .titles > span {
     font-weight: 300;
     font-size: 17px;
     color: #1C4482;
     text-transform: capitalize;
     margin-bottom: 5px;
-    display: inline-block;
+    display: block;
 }
 .tour_info .titles span span {
     padding: 10px;
@@ -49,6 +73,7 @@
     border: 1px solid #1C4482;
     font-size: 16px;
     margin-right: 10px;
+    cursor: pointer;
 
 }
 .tour_info .titles  .sharing_icons i:hover {
@@ -74,6 +99,19 @@
     flex-direction: column;
     justify-content: center;
     margin-bottom: 15px;
+    position: relative;
+}
+.tour_info_details::after {
+    content: "";
+    height: 100%;
+    width: 2px;
+    background-color: #7e7e7e2e;
+    position: absolute;
+    right: -10px;
+    top: 0px;
+}
+.after_details:after{
+    display: none;
 }
 .tour_info_details  img {
     width: 50px;
@@ -195,7 +233,7 @@
     color: white;
 }
 .add_comment_button:focus i,
-.add_comment_button:hover i
+.add_comment_button:hover i 
 {
     background-color: white;
     color: #1C4482;
@@ -234,12 +272,12 @@
 .modal-body .rating {
     font-size: 30px;
     margin-top: 10px;
-
+   
 }
-/* .modal-body .rating i:nth-of-type(4),
+.modal-body .rating i:nth-of-type(4),
 .modal-body .rating i:nth-of-type(5){
     color: #DCDCDC;
-} */
+}
 .modal-footer {
     justify-content: center;
     border: none;
@@ -313,7 +351,121 @@
     margin: auto;
     display: block;
 }
+#divId {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* position: relative; */
+}
+.overlay {
+    position: relative;
+}
+/* .overlay::after {
+    content: "";
+    width: 95%;
+    height: 93% ;
+    background-color: #7e7e7e5c;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    display: none;
+}
+.overlay:hover {
+    transition: 1s all ease-in;
+} */
+.overlay:hover::after{
+    display: block;
+}
 
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset, label { margin: 0; padding: 0; }
+/* body{ margin: 20px; } */
+/* h1 { font-size: 1.5em; margin: 10px; } */
+
+/****** Style Star Rating Widget **** */
+
+.rating { 
+  border: none;
+  /* float: left; */
+}
+.rating:hover {
+    cursor: pointer;
+}
+.rating input:hover,
+.rating label:hover  {
+    cursor: pointer;
+}
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+  cursor: default;
+  cursor: pointer; 
+}
+
+.rating > .half:before { 
+  content: "\f089";
+  position: absolute;
+  cursor: pointer; 
+}
+
+.rating > label { 
+  color: #ddd; 
+ float: right; 
+ cursor: pointer; 
+}
+/*  slider */
+.image_cover {
+    position: relative;
+}
+.image_cover #previous ,.image_cover #next {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.385);
+   
+    border: 1px solid #1C4482;
+    padding: 5px 10px;
+    position: absolute;
+    top: 45%;
+} 
+.image_cover #previous {
+    left: 8px;
+}
+.image_cover #next {
+    right: 8px;
+}
+.image_cover #previous ,.image_cover #next i {
+    color: #1C4482;
+}
+.image_cover #previous:hover ,.image_cover #next:hover {
+    background-color: white;
+}
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #F97150; cursor: pointer;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #e37458c0;cursor: pointer;  } 
+
+
+@media (min-width: 991px) and (max-width: 1400px) {
+    .imgStyle {
+        max-width: 166px;
+    }
+}
+@media (min-width: 767px) and (max-width: 1199px) 
+{
+    .second_details::after {
+        display: none;
+    }
+}
 @media (min-width: 320px) and (max-width: 767px) {
     .tour_info .titles .sharing_icons{
         top: 27%;
@@ -339,10 +491,36 @@
     .review_details .heading h6 {
         margin-bottom: 10px;
     }
+    /* .included_info {
+        flex-direction: column;
+    } */
+    .included_info .include-1 {
+        margin-bottom: 30px;
+    }
+    .imgStyle {
+        max-width: 146px;
+    }
+    .tour_info_details {
+        margin-bottom: 40px;
+    }
+    .tour_info_details::after {
+        width: 50%;
+        height: 2px;
+        top: 110%;
+        left: 0px;
+        margin: auto;
+    }
+}
+@media (min-width: 320px)  and (max-width:420px) {
     .included_info {
         flex-direction: column;
     }
-    .included_info .include-1 {
-        margin-bottom: 15px;
+    .imgStyle {
+        max-width: 200px;
+    }
+    #divId {
+        flex-direction: column;
     }
 }
+    
+  

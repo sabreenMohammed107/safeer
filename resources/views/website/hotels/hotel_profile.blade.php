@@ -1,41 +1,51 @@
-@extends("layout.website.layout",["Company"=>$Company, "title"=>"Safeer | {$RoomCost->hotelRooms->hotel->hotel_enname} Room Profile"])
+@extends("layout.website.layout",["Company"=>$Company, "title"=>"Safer | {$Hotel->hotel_enname} Room Profile"])
 
 @section("adds_css")
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
 <link rel="stylesheet" href="{{ asset('/website_assets/css/tour-details.css') }}">
 <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel-details.css') }}">
+<style>
+    #next ,#previous{
+        display: none;
+    }
+
+    </style>
 @endsection
 
 @section("bottom-header")
-<x-website.header.general :title="$RoomCost->hotelRooms->hotel->hotel_enname .' - '. $RoomCost->hotelRooms->room->en_room_type" :breadcrumb="$BreadCrumb" :current="$RoomCost->hotelRooms->hotel->hotel_enname" />
+<x-website.header.general :title="$Hotel->hotel_enname .' - '" :breadcrumb="$BreadCrumb" :current="$Hotel->hotel_enname" />
 @endsection
 @section("content")
 
     <!-- tour details -->
     <section class="container details_section">
         <div class="row mx-0">
-            @if(count($HotelTourGallery))
+        @if(count($HotelTourGallery))
+        <div class="col-sm-12 col-xl-6">
+            <div class="row mx-0 left_side_imgages">
+              <div class="col-12 d-flex align-items-center justify-content-center image_cover ">
+                <img id="mainImage"
+                src="{{ asset('uploads/galleries') }}/{{$HotelTourGallery[0]->img ?? " "}}"  class="w-100 mb-3" alt=" tour hotel image "/>
+                <button id="previous"> <i class="fa-solid fa-angle-left"></i></button>
+                <button id="next"> <i class="fa-solid fa-angle-right"></i></button>
+              </div>
+              <div class="col-12">
+                  <div id="divId" onclick="changeImageOnClick(event)">
+                    @for ($i = 1; $i < 4; $i++)
+                        @if (count($HotelTourGallery) > $i)
 
-                <div class="col-sm-12 col-xl-6">
-                    <div class="row mx-0 left_side_imgages">
-                        <div class="col-12">
+                        <img class="imgStyle" src="{{ asset('uploads/galleries') }}/{{$HotelTourGallery[$i]->img ?? " "}}"   alt=" tour hotel image " />
+                        @endif
 
-                            <img src="{{ asset("/website_assets/images/tour-details/") }}{{ $HotelTourGallery[0]->img ?? " "}}" class="w-100 mb-3" alt=" tour hotel image ">
-
-                        </div>
-                        @for ($i = 1; $i < 4; $i++)
-                        <div class="col-4">
-                            @if (count($HotelTourGallery) > $i)
-                            <img src="{{ asset("/website_assets/images/tour-details/") }}{{$HotelTourGallery[$i]->img ?? " "}}"  class="w-100" alt=" tour hotel image ">
-
-                            @endif
-
-                        </div>
-                    @endfor
-                </div>
-            @endif
+                @endfor
+                     </div>
+              </div>
             </div>
+        </div>
+        @endif
+    {{-- </div> --}}
+
             @if (count($HotelTourGallery))
                 <div class="col-sm-12 col-xl-6">
             @else
@@ -43,17 +53,17 @@
             @endif
                 <div class="tour_info">
                         <div class="titles">
-                            <h6> {{$RoomCost->hotelRooms->hotel->hotel_enname}}</h6>
-                            <span> {{$RoomCost->hotelRooms->hotel->city->country->en_country}}  <span>|</span> {{$RoomCost->hotelRooms->hotel->city->en_city}} </span>
+                            <h6> {{$Hotel->hotel_enname}}</h6>
+                            <span> {{$Hotel->city->country->en_country}}  <span>|</span> {{$Hotel->city->en_city}} </span>
                             <div class="rating">
-                                @for ($i = 0; $i < $RoomCost->hotelRooms->hotel->hotel_stars; $i++)
+                                @for ($i = 0; $i < $Hotel->hotel_stars; $i++)
                                 <i class="fa-solid fa-star"></i>
                                 @endfor
-                                @for ($i = 5; $i > $RoomCost->hotelRooms->hotel->hotel_stars; $i--)
+                                @for ($i = 5; $i > $Hotel->hotel_stars; $i--)
                                     <i class="fa-regular fa-star"></i>
                                 @endfor
 
-                                <span> ( {{count($RoomCost->hotelRooms->hotel->reviews)}} review) </span>
+                                <span> ( {{count($Hotel->reviews)}} review) </span>
                             </div>
                             <div class="sharing_icons">
                               <i class="fa-solid fa-share-nodes"></i>
@@ -63,7 +73,7 @@
 
                         <h6> important note </h6>
                         <p>
-                            {{$RoomCost->hotelRooms->hotel->hotel_enoverview}}
+                            {{$Hotel->hotel_enoverview}}
                         </p>
 
 
@@ -80,7 +90,7 @@
         <h5> hotel facilities</h5>
       <div class="row mx-0">
         <div class="col-sm-12 col-xl-6 pb-5">
-        @if (count($RoomCost->hotelRooms->hotel->features))
+        @if (count($Hotel->features))
             @foreach ($FeaturesCategories as $k => $category)
           <div class="accordion" id="accordionPanelsStayOpenExample{{$k}}">
             <div class="accordion-item">
@@ -92,7 +102,7 @@
                 <div id="panelsStayOpen-collapseTwo{{$k}}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
                   <div class="accordion-body">
                       <div class="included_info">
-                        @foreach ($RoomCost->hotelRooms->hotel->features as $feature)
+                        @foreach ($Hotel->features as $feature)
                             @if ($feature->feature_category_id == $category->id)
                             <div class="include-1">
                                 <img src="{{asset("/website_assets/images/tour-details/included/$feature->icon")}}" alt="">
@@ -113,18 +123,19 @@
         @endif
     </div>
         <div class="col-sm-12 col-xl-6 ">
-            @if ($RoomCost->hotelRooms->hotel->hotel_video)
+
+            @if ($Hotel->hotel_vedio)
             <div class="images image-2">
                 <!-- <img src="./images/tour-details/video.webp" class="w-100" alt="image mask"> -->
-
-                <button type="button" class="btn js-modal-btn "data-video-url="{{$RoomCost->hotelRooms->hotel->hotel_video}}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" class="btn js-modal-btn "data-video-url="{{$Hotel->hotel_vedio}}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                   <img src="{{asset("/website_assets/images/homePage/play_button.webp")}}" alt=" video play button">
                 </button>
+
               </div>
             @endif
-              @if ($RoomCost->hotelRooms->hotel->google_map)
+              @if ($Hotel->google_map)
               <div class="map">
-                <iframe src="{{$RoomCost->hotelRooms->hotel->google_map}}" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="{{$Hotel->google_map}}" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
               @endif
 
@@ -132,6 +143,7 @@
     </section>
     <!-- search hitels and rooms avaliable  section -->
     <section class="rooms_search">
+
       <img src="{{asset("/website_assets/images/hotel-details/slider-mask_top.webp")}}" alt="slider mask">
       <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt="slider mask">
 
@@ -140,7 +152,7 @@
             <section class="booking_hotels_section container">
                 <div class="hotel_details">
                     <div class="row mx-0 p-0 align-items-center">
-                        <input type="hidden" value="{{$RoomCost->hotelRooms->hotel->id}}" name="hotel_id"/>
+                        <input type="hidden" value="{{$Hotel->id}}" name="hotel_id"/>
                         <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                             <h5> check in <span>check </span> </h5>
                            <div class="row mx-0">
@@ -206,12 +218,12 @@
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-1 p-0">
                             <div class="main">
-                                <div class="">
+                                {{-- <div class="">
                                     <a href="#">
                                       <i class="fa-solid fa-circle-plus"></i>
                                         Add room
                                     </a>
-                                </div>
+                                </div> --}}
                                 <button class="btn">
                                     <a onclick="fetch_hotel_rooms()"> search</a>
                                 </button>
@@ -224,37 +236,130 @@
         <div class="rooms_avaliable container">
             <h5> avaliable rooms </h5>
             <div id="rooms_content">
+
                 @foreach ($RoomCosts as $Room)
-                    <div class="rooms">
-                        <div class="row mx-0 align-items-center text-center">
-                            <div class="col-xl-3 col-sm-12 col-md-6">
-                                <h6>{{$Room->en_room_type}}  </h6>
-                            </div>
-                            <div class="col-xl-2 col-sm-12 col-md-6">
-                                <span class="category">
-                                    {{$Room->food_bev_type}}
-                                </span>
-                            </div>
-                            <div class="col-xl-3 col-sm-12 col-md-6">
-                                <div class="avaliable">
-                                    <span> avaliable</span>
-                                    <span><a href="#">Cancellation Policy</a></span>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-sm-12 col-md-6">
-                                <span class="price_info">
-                                    {{$Room->cost}} $
-                                </span>
-                            </div>
-
-                            <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                            <button class="btn rooms_button"> <a href="./booking-hotel.html">book</a> </button>
-                            </div>
 
 
+                @if($Room->single_cost != null)
+                <div class="rooms">
+
+                    <div class="row mx-0 align-items-center text-center">
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <h6>{{$Room->en_room_type}} </h6>
                         </div>
+
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <h6>Single </h6>
+                        </div>
+
+
+
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <span class="category">
+                                {{$Room->food_bev_type}}
+                            </span>
+                        </div>
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <div class="avaliable">
+                                <span> avaliable</span>
+                                <span><a href="#">Cancellation Policy</a></span>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-12 col-md-6">
+                            <span class="price_info">
+                             Cost/Day: {{$Room->single_cost}} $
+                            </span>
+                        </div>
+
+                        <div class="col-xl-1 col-sm-12 col-md-6 p-0">
+                        <button class="btn rooms_button"> <a href="./booking-hotel.html">book</a> </button>
+                        </div>
+
+
                     </div>
+                </div>
+                @endif
+
+                @if($Room->double_cost != null)
+                <div class="rooms">
+
+                    <div class="row mx-0 align-items-center text-center">
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <h6>{{$Room->en_room_type}}  </h6>
+                        </div>
+
+
+
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <h6>Double </h6>
+                        </div>
+
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <span class="category">
+                                {{$Room->food_bev_type}}
+                            </span>
+                        </div>
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <div class="avaliable">
+                                <span> avaliable</span>
+                                <span><a href="#">Cancellation Policy</a></span>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-12 col-md-6">
+                            <span class="price_info">
+                             Cost/Day: {{$Room->double_cost}} $
+                            </span>
+                        </div>
+
+                        <div class="col-xl-1 col-sm-12 col-md-6 p-0">
+                        <button class="btn rooms_button"> <a href="./booking-hotel.html">book</a> </button>
+                        </div>
+
+
+                    </div>
+                </div>
+                @endif
+                @if($Room->triple_cost != null)
+                <div class="rooms">
+
+                    <div class="row mx-0 align-items-center text-center">
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <h6>{{$Room->en_room_type}}  </h6>
+                        </div>
+
+
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <h6>Triple </h6>
+                        </div>
+
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <span class="category">
+                                {{$Room->food_bev_type}}
+                            </span>
+                        </div>
+                        <div class="col-xl-2 col-sm-12 col-md-6">
+                            <div class="avaliable">
+                                <span> avaliable</span>
+                                <span><a href="#">Cancellation Policy</a></span>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-12 col-md-6">
+                            <span class="price_info">
+                             Cost/Day: {{$Room->triple_cost}} $
+                            </span>
+                        </div>
+
+                        <div class="col-xl-1 col-sm-12 col-md-6 p-0">
+                        <button class="btn rooms_button"> <a href="./booking-hotel.html">book</a> </button>
+                        </div>
+
+
+                    </div>
+                </div>
+                @endif
+
                 @endforeach
+
             </div>
            </div>
     </section>
@@ -281,7 +386,7 @@
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">add comment </h5>
-                        <input type="hidden" name="hotel_id" value="{{$RoomCost->hotelRooms->hotel->id}}" />
+                        <input type="hidden" name="hotel_id" value="{{$Hotel->id}}" />
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
@@ -306,7 +411,7 @@
           </div>
         </div>
       </div>
-      @foreach ($RoomCost->hotelRooms->hotel->reviews as $rev)
+      @foreach ($Hotel->reviews as $rev)
       <div class="review_details">
         <img src="{{asset("/website_assets/images/tour-details/profile/profile-1.webp")}}" alt="profile picture ">
         <div class="review_info">
@@ -337,6 +442,7 @@
     <!--  ending page  -->
 @endsection
 @section('adds_js')
+
     <script>
 
         function changeRate(value) {
@@ -364,7 +470,7 @@
             }
         }
         function fetch_hotel_rooms() {
-        var url = "/hotels/"+ {{$RoomCost->hotelRooms->hotel->id}} + "/fetch";
+        var url = "/hotels/"+ {{$Hotel->id}} + "/fetch";
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

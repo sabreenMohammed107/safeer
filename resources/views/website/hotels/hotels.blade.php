@@ -1,4 +1,4 @@
-@extends("layout.website.layout",["Company"=>$Company, "title"=>"Safeer | All Hotels"])
+@extends("layout.website.layout",["Company"=>$Company, "title"=>"Safer | All Hotels"])
 
 @section("adds_css")
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -27,23 +27,31 @@
                 </select>
               </div>
             </div>
-            <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
-                <h5> check in <span>check </span> </h5>
-               <div class="row mx-0">
+            {{-- <div class="col-sm-12 col-md-6 col-xl-3">
+                <h5> check in <span>check </span> </h5> --}}
+               {{-- <div class="row mx-0">
                 <div class="col-6 p-0">
                   <div class="calender">
                     <i class="fa-solid fa-calendar-days"></i>
                     <input type="text" class="start-date form-control" name="from_date" placeholder="ex 2022-12-12">
 
                   </div>
-                </div>
-                <div class="col-6 p-0">
+                </div> --}}
+
+                 {{--<div class="col-6 p-0">
                     <div class="calender">
                         <i class="fa-solid fa-calendar-days"></i>
                         <input type="text" class="end-date form-control" name="end_date" placeholder="ex 2022-12-12">
                     </div>
                 </div>
                </div>
+            </div> --}}
+            <div class="col-sm-12 col-md-6 col-xl-3">
+                <h5> check in <span>check </span> </h5>
+                <div class="datepicker calender">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <input type="text" id="demo" class="demo" name="datefilter" value="" />
+                </div>
             </div>
             <div class="col-sm-12 col-md-6 col-xl-2">
                 <h5> nights</h5>
@@ -95,12 +103,12 @@
             </div>
             <div class="col-sm-12 col-md-6 col-xl-1 p-0">
                 <div class="main">
-                    <div class="">
+                    {{-- <div class="">
                         <a href="#">
                           <i class="fa-solid fa-circle-plus"></i>
                             Add room
                         </a>
-                    </div>
+                    </div> --}}
                     <button class="btn">
                         <a onclick="search_hotels()"> search</a>
                     </button>
@@ -132,7 +140,7 @@
 
 
                 <div class="accordion accordion-flush" id="accordionFlushExample">
-                  <div class="accordion-item">
+                  {{-- <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingOne">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                        country
@@ -151,7 +159,7 @@
                         <input type="hidden" name="hotel_countries_ids" />
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingTwo">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
@@ -237,8 +245,8 @@
                       </div>
                      </div>
                   </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingForth">
+                  {{-- <div class="accordion-item">
+                     <h2 class="accordion-header" id="flush-headingForth">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-colapseForth" aria-expanded="false" aria-controls="flush-colapseForth">
                       price range
                       </button>
@@ -256,7 +264,7 @@
                           </div>
                       </div>
                      </div>
-                  </div>
+                  </div> --}}
                 </div>
               </div>
             </div>
@@ -275,9 +283,13 @@
               <li class="nav-item" role="presentation">
                 <button class="nav-link sort_by" data-val="price" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false"> by price</button>
               </li>
+
+              <li class="nav-item" role="presentation">
+                <button class="nav-link sort_by" data-val="alpha" id="pills-alpha-tab" data-bs-toggle="pill" data-bs-target="#pills-alpha" type="button" role="tab" aria-controls="pills-alpha" aria-selected="false"> alphabitic</button>
+              </li>
               <input type="hidden" name="sort_by" />
             </ul>
-            <div class="dropdown">
+            {{-- <div class="dropdown">
               <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                alphabitic
               </button>
@@ -286,8 +298,8 @@
                 <li><a class="dropdown-item" href="#">B</a></li>
                 <li><a class="dropdown-item" href="#">C</a></li>
               </ul>
-            </div>
-            <div class="dropdown">
+            </div> --}}
+            {{-- <div class="dropdown">
               <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               EUR
               </button>
@@ -296,7 +308,7 @@
                 <li><a class="dropdown-item" href="#">LE</a></li>
                 <li><a class="dropdown-item" href="#">USA</a></li>
               </ul>
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>
@@ -305,10 +317,16 @@
 
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active w-100" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+
                     @foreach ($HotelsRecommended as $HRec)
                     <div class="card-content">
                         <div class=" card setted_tour_cards ">
-                          <img src="{{asset("/website_assets/images/homePage/hotels/$HRec->hotel_banner")}}" alt=" blogimage">
+                            <div class="card_image">
+                                <div class="image_overlay">
+
+                          <img src=" {{ asset('uploads/hotels') }}/{{$HRec->hotel_banner}}" alt=" blogimage">
+                                </div>
+                            </div>
                           <div class="card-body  setted_info">
                             <div class="card_info">
                                 @php
@@ -317,12 +335,12 @@
                                 $interval = $datetime1->diff($datetime2);
                                 $days = $interval->format('%a');
                                 @endphp
-                                <h6> <a href="{{url('/hotels/'.$HRec->id)}}" class="stretched-link">{{$HRec->hotel_enname}} – {{$days}} Days</a></h6>
+                                <h6> <a href="{{url('/hotels/'.$HRec->hotel_id)}}" class="stretched-link">{{$HRec->hotel_enname}} – {{$HRec->hotel_stars}} Stars</a></h6>
                                 <span>
                                   <i class="fa-regular fa-heart"></i>
                                 </span>
                             </div>
-                            <span>     <i class="fa-solid fa-location-dot"></i>  {{$HRec->en_country}}  <span>|</span> {{$HRec->en_city}}</span>
+                            <span>     <i class="fa-solid fa-location-dot"></i>{{$HRec->en_country}}  <span>|</span> {{$HRec->en_city}}</span>
                             <p>
                               {{$HRec->hotel_enoverview}}
                             </p>
@@ -337,7 +355,7 @@
 
                                   <span> ({{$HRec->totalreviews}} review) </span>
                               </div>
-                              <span class="hotels_price"> $ {{$HRec->cost}}</span>
+                              <span class="hotels_price"><span style="color:#5f5858;font-size: 16px;font-weight: 300">start with</span> $ {{$HRec->single_cost}}</span>
                             </div>
                           </div>
                       </div>
@@ -346,10 +364,16 @@
 
                 </div>
                 <div class="tab-pane fade w-100" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+
                     @foreach ($HotelsByPrice as $HPrice)
                     <div class="card-content">
                         <div class=" card setted_tour_cards ">
-                          <img src="{{asset("/website_assets/images/homePage/hotels/$HPrice->hotel_banner")}}" alt=" blogimage">
+                            <div class="card_image">
+                                <div class="image_overlay">
+
+                          <img src="{{ asset('uploads/hotels') }}/{{$HPrice->hotel_banner}}" alt=" blogimage">
+                                </div>
+                            </div>
                           <div class="card-body  setted_info">
                             <div class="card_info">
                                 @php
@@ -358,7 +382,7 @@
                                 $interval = $datetime1->diff($datetime2);
                                 $days = $interval->format('%a');
                                 @endphp
-                                <h6> <a href="./hotel_details.html" class="stretched-link">{{$HPrice->hotel_enname}} – {{$days}} Days</a></h6>
+                                <h6> <a href="./hotel_details.html" class="stretched-link">{{$HPrice->hotel_enname}} – {{$HPrice->hotel_stars}} Stars</a></h6>
                                 <span>
                                   <i class="fa-regular fa-heart"></i>
                                 </span>
@@ -378,7 +402,56 @@
 
                                   <span> ({{$HPrice->totalreviews}} review) </span>
                               </div>
-                              <span class="hotels_price"> $ {{$HPrice->cost}}</span>
+                              <span class="hotels_price"><span style="color:#5f5858;font-size: 16px;font-weight: 300">start with</span> $ {{$HPrice->single_cost}}</span>
+                              {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    @endforeach
+
+                </div>
+                <div class="tab-pane fade w-100" id="pills-alpha" role="tabpanel" aria-labelledby="pills-alpha-tab" tabindex="0">
+
+                    @foreach ($HotelsByAlpha as $HAlpha)
+                    <div class="card-content">
+                        <div class=" card setted_tour_cards ">
+                            <div class="card_image">
+                                <div class="image_overlay">
+
+                          <img src="{{ asset('uploads/hotels') }}/{{$HAlpha->hotel_banner}}" alt=" blogimage">
+                                </div>
+                            </div>
+                          <div class="card-body  setted_info">
+                            <div class="card_info">
+                                @php
+                                $datetime1 = new DateTime($HAlpha->from_date);
+                                $datetime2 = new DateTime($HAlpha->end_date);
+                                $interval = $datetime1->diff($datetime2);
+                                $days = $interval->format('%a');
+                                @endphp
+                                <h6>   <a href="./hotel_details.html" class="stretched-link">{{$HAlpha->hotel_enname}} – {{$HAlpha->hotel_stars}} Stars</a></h6>
+                                <span>
+                                  <i class="fa-regular fa-heart"></i>
+                                </span>
+                            </div>
+                            <span>     <i class="fa-solid fa-location-dot"></i>  {{$HAlpha->en_country}}  <span>|</span> {{$HAlpha->en_city}}</span>
+                            <p>
+                              {{$HAlpha->hotel_enoverview}}
+                            </p>
+                            <div class="price">
+                              <div class="rating">
+                                @for ($i = 0; $i < $HAlpha->hotel_stars; $i++)
+                                    <i class="fa-solid fa-star"></i>
+                                @endfor
+                                @for ($i = 5; $i > $HAlpha->hotel_stars; $i--)
+                                    <i class="fa-regular fa-star"></i>
+                                @endfor
+
+                                  <span> ({{$HAlpha->totalreviews}}  review) </span>
+                              </div>
+                              <span class="hotels_price"><span style="color:#5f5858;font-size: 16px;font-weight: 300">start with</span> $ {{$HAlpha->single_cost}}</span>
+                              {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
                             </div>
                           </div>
                       </div>
@@ -408,6 +481,7 @@
 
 @endsection
 @section('adds_js')
+
 <script src="{{asset("/website_assets/js/hotel_filters.js")}}"></script>
 @endsection
 

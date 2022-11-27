@@ -16,9 +16,11 @@
 .passenger_info {
     border: 1px solid #DDDDDD;
     padding: 20px 25px;
-    max-height: 392px;
+    min-height: 400px;
     height: 100%;
+    margin-bottom: 20px;
 }
+
 .passenger_info label {
     color: #1C4482;
     font-size: 15px;
@@ -36,7 +38,7 @@
 
 }
 .passenger_info textarea  {
-    height: 93px;
+    height: 140px;  
 }
 .passenger_info input::placeholder {
     text-transform: capitalize;
@@ -45,7 +47,7 @@
 .booking_info_card_info {
     display: flex;
     flex-direction: row;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 
 }
 .booking_info_card_info .info_image img {
@@ -120,7 +122,87 @@
 .grand_total h5 {
     margin-bottom: 0px;
 }
+.terms .form-check label {
+    font-size:17px ;
+    color:#210D3A ;
+    padding-left: 20px;
+}
+.terms .form-check label a {
+    color: #084586;
+}
+.terms_info {
+    display: flex;
+    align-items: center;
+}
+.form-check-input {
+    height:33px ;
+    width: 33px;
+    border-radius: 10px !important; 
+    margin-top: 0px;
+}
+.terms .submit  {
+    display: flex;
+    align-items: center;
 
+}
+.terms .submit button:first-of-type{
+    
+    background-color: #1C4482;
+    margin-right: 30px;
+    width: 285px;
+    height: 58px;
+    border-radius: 16px;
+} 
+.terms .submit button:first-of-type a {
+    font-size: 18px;
+    color:white ;
+}
+.terms .submit button:nth-of-type(2){
+    border: none;
+    background-color: transparent;
+}
+.terms .submit button:nth-of-type(2) a {
+    text-decoration: underline;
+    color:#FF0000 ;
+    font-size:18px ;
+}
+.labels {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 15px;
+}
+#demo {
+    padding-left: 35px;
+}
+.calender i {
+    color: #7E7E7E;
+    top: 15px;
+    left: 11px;
+}
+.start-date, .end-date {
+    border: none !important;
+    border-radius: 0 !important;
+    margin-bottom: 0px;
+    position: relative;
+    height: 30px !important;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.labels label {
+    font-size: 10px !important;
+    color: #7E7E7E !important;
+}
+/* .start-date::after{
+    content: "";
+    width: 2px;
+    height: 5px;
+    background-color: #1C4482;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+
+} */
 @media (min-width:767px) and (max-width:1200px) {
     .booking_info_card_info {
         flex-direction: column;
@@ -142,5 +224,22 @@
     .booking_info_card_info .info_image img {
         margin-bottom: 15px;
         margin-right: 0px;
+    }
+}
+@media (min-width:320px) and (max-width:767px) {
+    .terms .submit button{
+        margin-top: 15px;
+    }
+    .terms .submit {
+        justify-content: center;
+        flex-direction: column;
+    }.terms .submit button:first-of-type {
+        margin-right: 0px;
+    }
+    .passenger_info {
+        border: 1px solid #DDDDDD;
+        padding: 20px 25px;
+        min-height: 392px;
+        height: 100%;
     }
 }

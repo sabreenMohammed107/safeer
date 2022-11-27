@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\HotelPricesController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\Website\ContentController;
 use App\Http\Controllers\Website\HotelsController;
 use App\Http\Controllers\Website\MainController;
 use App\Models\Offer;
@@ -59,7 +61,13 @@ Route::post("/hotels/search", [HotelsController::class, 'search']);
 Route::get("/hotels/{id}", [HotelsController::class, 'profile']);
 Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
 Route::post("/hotels/review/{id}", [HotelsController::class, 'add_review']);
-
+//new Routes 23-11
+Route::get("/about", [ContentController::class, 'about']);
+Route::get("/blogs", [ContentController::class, 'blogs']);
+Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
+Route::get('/single-blog/{id}',[ContentController::class, 'singleBlog'])->name('single-blog');
+Route::get('/contact', [ContentController::class, 'createForm']);
+Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
 /*------------------------------------------
 --------------------------------------------
 All Admin Routes List
@@ -95,6 +103,8 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
           Route::resource('explore', ExploreCityController::class);
           //best-hotel
           Route::resource('best-hotel', BestHotelController::class);
+          //hotel-price
+          Route::resource('hotel-price', HotelPricesController::class);
           //counter
           Route::resource('counter', CounterController::class);
 

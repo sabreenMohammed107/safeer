@@ -11,9 +11,22 @@ class Room_type_cost extends Model
     protected $fillable = [
 
         'from_date',
-        'end_date',
-        'cost',
-        'hotel_room_id',
+    'end_date',
+    'cost',
+    'hotel_room_id',
+    'currency_id',
+    'food_beverage_id',
+    'single_cost',
+    'double_cost',
+    'triple_cost',
+    'extra_bed_cost',
+    'child_free_age_from',
+    'child_free_age_to',
+    'child_age_from',
+    'child_age_to',
+    'child_age_cost',
+    'room_type_id',
+    'hotel_id'
     ];
     public function hotelRooms()
     {

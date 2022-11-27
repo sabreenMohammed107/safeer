@@ -1,4 +1,4 @@
-@extends("layout.website.layout", ["Company" => $Company,"title"=>"Safeer | Home"])
+@extends("layout.website.layout", ["Company" => $Company,"title"=>"Safer | Home"])
 
 @section("bottom-header")
 <x-website.header.home :company="$Company" :countries="$Countries" />
@@ -56,7 +56,7 @@
             {{$Company->overview_en}}
           </p>
           <div class="read">
-            <a href="#">Read more
+            <a href="{{url('/about')}}">Read more
               <i class="fa-solid fa-angle-right"></i>
               <i class="fa-solid fa-angle-right"></i>
             </a>
@@ -87,9 +87,11 @@
             <div class="col-sm-12 col-md-6 col-xl-3">
                 <div class="card-content">
                   <div class=" card hotels_card">
-                    {{-- <img src="{{ asset("/website_assets/images/homePage/hotels/{$Hotel->hotel->hotel_banner}") }}" alt=" hotel image"> --}}
+                    <div class="card_image">
+                        <div class="image_overlay">
                     <img src="{{ asset('uploads/hotels') }}/{{$Hotel->hotel->hotel_banner}}" alt=" hotel image">
-
+                        </div>
+                    </div>
                     <div class="card-body hotel_card_info">
                       <div class="card_info">
                         <h5>{{$Hotel->hotel->hotel_enname}} </h5>
@@ -234,7 +236,7 @@
                     <p>
                       {!! $AllBlogs[0]->en_text !!}
                     </p>
-                    <a href="./single-blog.html" >
+                    <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}" >
                       Read more <i class="fa-solid fa-angle-right"></i>
                     </a>
                   </div>
@@ -254,10 +256,11 @@
                              {!! $AllBlogs[$i]->en_title !!}
                            </h5>
                            <p>
-                            {{ strip_tags(Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }}
+                            {!! str_limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...') !!}
+                            {{-- {{ strip_tags(Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }} --}}
 
                             </p>
-                           <a href="#" class="stretched-link">
+                           <a href="{{url('/single-blog/'.$AllBlogs[$i]->id) }}" class="stretched-link">
                              Read more <i class="fa-solid fa-angle-right"></i>
                            </a>
                          </div>
@@ -280,16 +283,18 @@
                     <div class="col-sm-12 col-md-12 col-xl-6">
                         <div class="blog_side">
                         <div class="blog_image left_image" style="background-image: url({{asset("/website_assets/images/homePage/blog/{$blog->image}")}});">
-                            <!-- <img src="/website_assets/images/homePage/blog/blog-1.webp" alt="blog image"> -->
+
                         </div>
                         <div class="blog_info">
                             <h5 class="left_heading">
-                            {{$blog->en_title}}
+                                {!! $blog->en_title !!}
+
                             </h5>
                             <p>
-                            {{$blog->en_text}}
+                                {!! str_limit($blog->en_text ?? '', $limit = 300, $end = '...') !!}
+
                             </p>
-                            <a href="./single-blog.html" class="stretched-link">
+                            <a href="{{url('/single-blog/'.$blog->id) }}" class="stretched-link">
                             Read more <i class="fa-solid fa-angle-right"></i>
                             </a>
                         </div>
@@ -306,16 +311,20 @@
                     <div class="col-sm-12 col-xl-12">
                         <div class="blog_side_right">
                          <div class="blog_image">
-                           <img src="{{ asset("/website_assets/images/homePage/blog/{$category_blog->image}") }}" alt="blog image">
+                            <img width="150" src="{{ asset('uploads/blogs') }}/{{$category_blog->image}}" alt="blog image">
+
                          </div>
                          <div class="blog_info">
                            <h5>
-                             {{$category_blog->en_title}}
+
+                             {!! $category_blog->en_title !!}
                            </h5>
                            <p>
-                             {{$category_blog->en_text}}
+                            {!! str_limit($category_blog->en_text ?? '', $limit = 300, $end = '...') !!}
+
+
                             </p>
-                           <a href="./single-blog.html" class="stretched-link">
+                           <a href="{{url('/single-blog/'.$category_blog->id) }}" class="stretched-link">
                              Read more <i class="fa-solid fa-angle-right"></i>
                            </a>
                          </div>

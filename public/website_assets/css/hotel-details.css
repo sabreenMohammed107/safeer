@@ -98,6 +98,13 @@ margin-top: 30px;
     text-decoration: none;
     padding: 2px 15px;
 } 
+.rooms_button:hover {
+    background-color: white;
+    border: 1px solid #1C4482;
+} 
+.rooms_button:hover a {
+    color: #1C4482;
+}
 .request {
     color: #FF0000 !important; 
 }
@@ -123,8 +130,40 @@ margin-top: 30px;
 .slider_section .slider_details h1 {
 text-transform: capitalize;
 }
+.map {
+    position: relative;
+}
+.map_button {
+
+    width: 165px;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 20px;
+    position: absolute;
+    bottom: 10%;
+    left: 35%;
+}
+.map_button a {
+    color: #68C2E5;
+    font-weight: 500;
+    font-size: 18px;
+}
+.map_button:hover {
+    background-color: #68C2E5;
+}
+.map_button:hover a{
+    color: white;
+} 
 @media (min-width: 320px) and (max-width: 1200px) {
     .rooms div div {
         margin-bottom: 15px;
+    }
+}
+@media (min-width: 320px) and (max-width: 420px) {
+
+    .map_button {
+        left: 25%;
+        width: 140px;
     }
 }

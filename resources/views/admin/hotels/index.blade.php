@@ -189,6 +189,11 @@
                 </div>
 
                 {{-- <div class="menu-item px-3">
+                    <a href="{{ route('hotels.show', $row->id) }}"
+                        class="menu-link px-3">Price</a>
+                </div> --}}
+
+                {{-- <div class="menu-item px-3">
                     <a data-bs-toggle="modal"
                         data-bs-target="#kt_modal_new_targetEdit{{ $row->id }}"
                         class="menu-link px-3">add room type</a>

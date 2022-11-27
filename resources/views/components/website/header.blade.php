@@ -11,13 +11,13 @@
                 <i class="fa-solid fa-xmark"></i>
               </button>
               <button class="offcan_buttons">
-                <a href="./index.html">home</a>
+                <a href="{{url('/')}}">home</a>
               </button>
               <button class="offcan_buttons">
-                <a href="./about.html">about us</a>
+                <a href="{{url('/about')}}">about us</a>
               </button>
               <button class="offcan_buttons">
-                <a href="./hotel.html">hotels</a>
+                <a href="{{url('/hotels')}}">hotels</a>
               </button>
               <button class="offcan_buttons">
                 <a href="./tours.html">tours</a>
@@ -29,7 +29,7 @@
                 <a href="#">visa</a>
               </button>
               <button class="offcan_buttons">
-                <a href="#">contatc</a>
+                <a href="{{url('/contact')}}">contact</a>
               </button>
               <button class="offcan_buttons">
                 <a href="#">sign in</a>
@@ -45,13 +45,13 @@
         <ul class = "navbar-nav ms-auto">
           <!-- first link tab  -->
           <li>
-            <a href = "./index.html" class="links hybrid">home</a>
+            <a href = "{{url('/')}}" class="links hybrid">home</a>
           </li>
           <li>
-            <a href = "./about.html" class="links hybrid">about us </a>
+            <a href = "{{url('/about')}}" class="links hybrid">about us </a>
           </li>
           <li>
-            <a href = "./hotel.html" class="links hybrid">hotels </a>
+            <a href = "{{url('/hotels')}}" class="links hybrid">hotels </a>
           </li>
           <li>
             <a href = "./tours.html" class="links hybrid">tours </a>
@@ -63,7 +63,7 @@
             <a href = "#" class="links hybrid">visa</a>
           </li>
           <li>
-            <a href = "#" class="links hybrid">contact us</a>
+            <a href = "{{url('/contact')}}" class="links hybrid">contact us</a>
           </li>
           <div class="register">
             <ul>
