@@ -89,7 +89,7 @@
                   <div class=" card hotels_card">
                     <div class="card_image">
                         <div class="image_overlay">
-                    <img src="{{ asset('uploads/hotels') }}/{{$Hotel->hotel->hotel_banner}}" alt=" hotel image">
+                    <img src="{{ asset('uploads/hotels') }}/{{$Hotel->hotel->hotel_banner}}" class="w-100" height="250" alt=" hotel image">
                         </div>
                     </div>
                     <div class="card-body hotel_card_info">
