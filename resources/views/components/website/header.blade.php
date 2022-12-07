@@ -1,3 +1,13 @@
+
+
+@if(session()->get("SiteUser"))
+<div class="cartbox">
+    <a href="{{route("get_cart")}}"><i class="fa-solid fa-cart-shopping text-white"></i></a>
+    @if(session()->get("SiteUser") && session()->get("SiteUser")["hasCart"])
+        <div class="cartCount"></div>
+    @endif
+</div>
+@endif
 <div class = "main-wrapper">
     <nav class = "navbar container">
       <img src="{{ asset('/website_assets/images/homePage/logo.webp') }}" alt="logo">
@@ -31,12 +41,18 @@
               <button class="offcan_buttons">
                 <a href="{{url('/contact')}}">contact</a>
               </button>
+              {{-- {{session()->get("SiteUser")["Name"]}} --}}
+              @if(session()->get("SiteUser"))
+              <a href="#">{{session()->get("SiteUser")["Name"]}}</a>
+              @else
               <button class="offcan_buttons">
                 <a href="#">sign in</a>
               </button>
               <button class="offcan_buttons">
                 <a href="#">Sign up</a>
               </button>
+              @endif
+
         </div>
       </div>
         <!-- end of oofcanvas  -->
@@ -66,14 +82,24 @@
             <a href = "{{url('/contact')}}" class="links hybrid">contact us</a>
           </li>
           <div class="register">
+
             <ul>
               <span class="line">  <i class="fa-solid fa-user"></i>  </span>
+              @if(session()->get("SiteUser"))
               <li>
-                <a href = "#" class="links hybrid">sign in</a>
+                <a href="#" class="links hybrid">{{session()->get("SiteUser")["Name"]}}</a>
               </li>
               <li class="sign_up">
-                <a href = "#" class="links hybrid">sign up</a>
+                <a href="{{route("siteLogout")}}" class="links hybrid">Logout</a>
               </li>
+              @else
+              <li>
+                <a href="{{route("siteLogin")}}" class="links hybrid">sign in</a>
+              </li>
+              <li class="sign_up">
+                <a href = "{{route("siteRegister")}}" class="links hybrid">sign up</a>
+              </li>
+              @endif
             </ul>
           </div>
         </ul>

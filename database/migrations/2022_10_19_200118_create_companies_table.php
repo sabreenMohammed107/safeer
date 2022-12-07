@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('oveview_entitle', 250)->nullable();
+            $table->string('overview_entitle', 250)->nullable();
             $table->string('overview_artitle', 250)->nullable();
             $table->string('overview_ensubtitle', 250)->nullable();
             $table->string('overview_arsubtitle', 250)->nullable();

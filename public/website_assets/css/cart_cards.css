@@ -1,0 +1,70 @@
+.setted_tour_cards img {
+    max-width: inherit;
+    width: 417px;
+    height: 210px;
+}
+.setted_info .card_info h6 {
+    font-size: 18px;
+    color: #1C4482;
+    text-transform: capitalize;
+    font-weight: 700;
+}
+.setted_info .card_info span {
+    color: #7E7E7E;
+    z-index: 10;
+}
+.setted_info .card_info span:hover i {
+    color: #1C4482;
+    font-weight: 600;
+
+}
+.setted_info > span span {
+    margin-left: 8px;
+    margin-right: 8px;
+
+}
+.setted_tour_cards:hover .card_info h6 {
+    text-decoration: underline;
+}
+
+.setted_tour_cards:hover .image_overlay::after {
+    display: none;
+}
+.btn:hover {
+    color: inherit;
+}
+.rating i {
+    font-size: 15px;
+    color: #F97150;
+}
+.rating span {
+    color: #7E7E7E;
+    font-size: 15px;
+    padding-left: 8px;
+}
+.hotels_price {
+    font-size: 22px;
+    color: #1C4482;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    font-weight: 700;
+}
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.booking_hotels_section {
+    background-color: white;
+}
+
+.hotel_details{
+    box-shadow: 0px 3px 6px #00000029;
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    z-index: 33;
+    padding: 10px 20px;
+    min-height: 114px;
+    margin-top: -4%;
+}

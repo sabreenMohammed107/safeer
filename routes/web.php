@@ -17,7 +17,9 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\HotelPricesController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\SiteAuth\AuthController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\Website\BookingController;
 use App\Http\Controllers\Website\ContentController;
 use App\Http\Controllers\Website\HotelsController;
 use App\Http\Controllers\Website\MainController;
@@ -68,10 +70,26 @@ Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
 Route::get('/single-blog/{id}',[ContentController::class, 'singleBlog'])->name('single-blog');
 Route::get('/contact', [ContentController::class, 'createForm']);
 Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
-//site-login
-Route::get("/site-login", [ContentController::class, 'loginSite']);
-//signupSite
-Route::get("/site-signup", [ContentController::class, 'signupSite']);
+
+Route::middleware(['prevent-relogin'])->group(function () {
+    //site-login
+    Route::get("/safeer/login", [ContentController::class, 'loginSite'])->name("siteLogin");
+    Route::post("/safeer/login", [AuthController::class, 'Login'])->name("ProceedLogin");
+
+    //signupSite
+    Route::get("/safeer/register", [ContentController::class, 'signupSite'])->name("siteRegister");
+    Route::post("/safeer/register", [AuthController::class, 'Register'])->name("ProceedRegister");
+});
+
+// Logout
+Route::get("/safeer/logout", [AuthController::class, 'Logout'])->name("siteLogout");
+Route::get("/safeer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
+
+Route::middleware(['is-site-auth'])->group(function () {
+    //Route::get("/safeer/test", [AuthController::class, 'testSessions']);
+    Route::get("/cart", [BookingController::class, 'Cart'])->name("get_cart");
+    Route::get("/cart/{id}", [BookingController::class, 'DeleteCartItem'])->name("deleteCartItem");
+});
 
 /*------------------------------------------
 --------------------------------------------

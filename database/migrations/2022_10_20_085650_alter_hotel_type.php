@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('hotels', function (Blueprint $table) {
-
-
-            $table->foreign('hotel_type_id')
+            // AA: Custom name for a foreign as it gives me an error (Duplicate Key)
+            $table->foreign('hotel_type_id',"hotels_type_id_foreign")
                 ->references('id')
                 ->on('hotel_types');
         });

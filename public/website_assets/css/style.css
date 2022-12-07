@@ -13,6 +13,32 @@ html {
 a {
   text-decoration: none;
 }
+.cartbox{
+    position: fixed;
+    z-index: 1000;
+    top: 20vh;
+    right: 0;
+    padding: 20px;
+    background: #1C4482;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    opacity: .8;
+    transition: all .5s;
+
+}
+.cartbox:hover{
+    opacity: 1;
+}
+.cartbox .cartCount{
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #1ed443;
+    color: #fff;
+}
 
 :root {
   /* colors */

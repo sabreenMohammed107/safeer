@@ -15,15 +15,16 @@
     <div class="col-sm-12 col-md-6">
         <div class=" slider_details side_right_details">
                 <h5>Sign up To SAFER</h5>
-                <a href="#">  have an Account ?<span> Sign in</span>   </a>
-                <form action="">
-                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Full Name *" required>
-                  <input type="number" class="form-control" id="exampleFormControlInput2" placeholder="Phone Number*" required>
-                  <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="E-mail or User Name  *" required>
-                  <input type="text" class="form-control" id="exampleFormControlInput4" placeholder=" Password*" required>
+                <a href="{{route("siteLogin")}}">  have an Account ?<span> Sign in</span>   </a>
+                <form action="{{route("ProceedRegister")}}" method="POST">
+                    @csrf
+                  <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Full Name *" required>
+                  <input type="text" name="phone" class="form-control" id="exampleFormControlInput2" placeholder="Phone Number*" required>
+                  <input type="text" name="email" class="form-control" id="exampleFormControlInput3" placeholder="E-mail or User Name  *" required>
+                  <input type="password" name="password" class="form-control" id="exampleFormControlInput4" placeholder=" Password*" required>
                   <button type="submit" class="btn sign_button">Sign up </button>
                   <div class="remember">
-                    <input class="form-check-input" type="checkbox" class="checked_input" value="" id="flexCheckDefault">
+                    <input required class="form-check-input" type="checkbox" class="checked_input" value="" id="flexCheckDefault">
                     <label class="form-check-label confirmed" for="flexCheckDefault">
                         I confirmed that I have read and accepted the <a href="#" class="privacy">privacy policy </a>
                       </label>

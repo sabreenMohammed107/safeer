@@ -29,6 +29,8 @@ class ContentController extends Controller
             ]);
     }
 
+
+
     public function blogs()
     {
         $BreadCrumb = [["url" => "/", "name" => "Home"]];
@@ -113,6 +115,9 @@ class ContentController extends Controller
 
 
     public function loginSite(){
+        $redirectURL = session()->get("_previous")["url"];
+        session()->put("redirect_url",$redirectURL);
+
         $Company = Company::first();
         return view("website.login",
         [

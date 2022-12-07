@@ -256,7 +256,7 @@
                              {!! $AllBlogs[$i]->en_title !!}
                            </h5>
                            <p>
-                            {!! str_limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...') !!}
+                            {!! \Illuminate\Support\Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...') !!}
                             {{-- {{ strip_tags(Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }} --}}
 
                             </p>
@@ -291,7 +291,7 @@
 
                             </h5>
                             <p>
-                                {!! str_limit($blog->en_text ?? '', $limit = 300, $end = '...') !!}
+                                {!! \Illuminate\Support\Str::limit($blog->en_text ?? '', $limit = 300, $end = '...') !!}
 
                             </p>
                             <a href="{{url('/single-blog/'.$blog->id) }}" class="stretched-link">
@@ -320,7 +320,7 @@
                              {!! $category_blog->en_title !!}
                            </h5>
                            <p>
-                            {!! str_limit($category_blog->en_text ?? '', $limit = 300, $end = '...') !!}
+                            {!! \Illuminate\Support\Str::limit($category_blog->en_text ?? '', $limit = 300, $end = '...') !!}
 
 
                             </p>

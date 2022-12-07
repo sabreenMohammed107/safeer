@@ -76,7 +76,7 @@ class HotelsController extends Controller
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
         $RoomCosts = DB::table("room_type_costs")
-            ->select( 'from_date', 'end_date', 'en_room_type', 'food_bev_type', 'ar_room_type',
+            ->select( 'room_type_costs.id','from_date', 'end_date', 'en_room_type', 'food_bev_type', 'ar_room_type',
                 'cost','single_cost','double_cost','triple_cost','hotel_id')
 
             ->leftJoin("room_types", "room_types.id", "=", "room_type_costs.room_type_id")
@@ -87,6 +87,7 @@ class HotelsController extends Controller
             ->where([ ["hotel_id", "=", $id]])
 
             ->get();
+
             \Log::info($RoomCosts->count());
         return view("website.hotels.hotel_profile", [
             "Company" => $Company,

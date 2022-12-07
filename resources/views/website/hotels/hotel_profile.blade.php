@@ -17,7 +17,26 @@
 <x-website.header.general :title="$Hotel->hotel_enname .' - '" :breadcrumb="$BreadCrumb" :current="$Hotel->hotel_enname" />
 @endsection
 @section("content")
-
+@if (session('session-warning'))
+<div class="alert alert-warning">
+    {{ session('session-warning') }}
+</div>
+@endif
+@if (session('session-success'))
+<div class="alert alert-success">
+    {{ session('session-success') }}
+</div>
+@endif
+@if (session('session-danger'))
+<div class="alert alert-danger">
+    {{ session('session-danger') }}
+</div>
+@endif
+@if (session('session-info'))
+<div class="alert alert-info">
+    {{ session('session-info') }}
+</div>
+@endif
     <!-- tour details -->
     <section class="container details_section">
         <div class="row mx-0">
@@ -234,7 +253,7 @@
             </section>
         </div>
         <div class="rooms_avaliable container">
-            <h5> avaliable rooms </h5>
+            <h5> available rooms </h5>
             <div id="rooms_content">
 
                 @foreach ($RoomCosts as $Room)
@@ -272,7 +291,7 @@
                         </div>
 
                         <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                        <button class="btn rooms_button"> <a href="{{url('/site-login')}}">book</a> </button>
+                        <button class="btn rooms_button"> <a href="{{url("/safeer/room/$Room->id/book/1")}}">book</a> </button>
                         </div>
 
 
@@ -312,7 +331,7 @@
                         </div>
 
                         <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                        <button class="btn rooms_button"> <a href="{{url('/site-login')}}">book</a> </button>
+                            <button class="btn rooms_button"> <a href="{{url("/safeer/room/$Room->id/book/2")}}">book</a> </button>
                         </div>
 
 
@@ -350,7 +369,7 @@
                         </div>
 
                         <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                        <button class="btn rooms_button"> <a href="{{url('/site-login')}}">book</a> </button>
+                        <button class="btn rooms_button"> <a href="{{url("/safeer/room/$Room->id/book/3")}}">book</a> </button>
                         </div>
 
 
