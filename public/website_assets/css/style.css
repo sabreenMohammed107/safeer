@@ -19,7 +19,9 @@ a {
     top: 20vh;
     right: 0;
     padding: 20px;
-    background: #1C4482;
+    background: #FFF;
+    border: 3px solid #1C4482;
+    border-right: 0;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     opacity: .8;
@@ -37,8 +39,14 @@ a {
     height: 16px;
     border-radius: 50%;
     background-color: #1ed443;
-    color: #fff;
 }
+.cartbox a{
+  color: #1C4482 !important;
+}
+.cartbox a i{
+  color: #1C4482 !important;
+}
+
 
 :root {
   /* colors */

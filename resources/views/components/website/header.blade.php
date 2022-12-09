@@ -2,7 +2,7 @@
 
 @if(session()->get("SiteUser"))
 <div class="cartbox">
-    <a href="{{route("get_cart")}}"><i class="fa-solid fa-cart-shopping text-white"></i></a>
+    <a href="{{route("get_cart")}}"><i class="fa-solid fa-cart-shopping"></i></a>
     @if(session()->get("SiteUser") && session()->get("SiteUser")["hasCart"])
         <div class="cartCount"></div>
     @endif
