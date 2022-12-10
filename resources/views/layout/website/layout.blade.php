@@ -202,7 +202,9 @@
    <!-- image gallery  -->
    <script src="{{ asset('/website_assets/js/image_gllery.js')}}"></script>
    <!-- adding room -->
+
    <script src="{{ asset('/website_assets/js/add_room.js')}}"></script>
+   <script src="{{ asset('/website_assets/js/adding_years_Select.js')}}"></script>
 @yield("adds_js")
 </body>
 </html>

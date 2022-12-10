@@ -211,7 +211,16 @@ class HotelsController extends Controller
         $HotelsByAlpha = $RoomCosts->take(6)->orderBy("hotels.hotel_enname",'asc')->get();
 
         // return $HotelsByPrice;
-        \Log::info($Hotels->count());
+        //set serching data in session
+        $sessionArr=['from_date' => $request->from_date , 'country_id' => $request->country_id ,
+        'nights' => $request->nights, 'adultsNumber' => $request->adultsNumber ,'childNumber' => $request->childNumber ,
+        'roomsNumber' => $request->roomsNumber,
+        'ages' => $request->ages,
+    ];
+        session(['sessionArr' => $sessionArr]);
+
+        \Log::info(\Session::get('sessionArr'));
+
         return view("website.hotels.hotels", [
             "Company" => $Company,
             "Hotels" => $Hotels,

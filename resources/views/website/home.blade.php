@@ -29,6 +29,18 @@
                             <h5><a href="#" class="stretched-link">{{$City->city->en_city}}</a>
                             </h5>
                             <span>{{$City->subtitle_en}}</span>
+                            <div class="explore_links">
+                                <button class="btn ">
+                                 <a href="./hotel.html">
+                                  <i class="fa-solid fa-hotel"></i>
+                                 </a>
+                                </button>
+                                <button class="btn ">
+                                  <a href="./tours.html">
+                                    <i class="fa-solid fa-plane"></i>
+                                  </a>
+                                 </button>
+                              </div>
                             </div>
                         </div>
                     </div>
