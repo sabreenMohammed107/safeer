@@ -46,6 +46,24 @@ a {
 .cartbox a i{
   color: #1C4482 !important;
 }
+.del-hotel{
+  border: 1px solid rgb(255, 66, 66);
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: rgb(255, 66, 66);
+  transition: all .5s;
+}
+
+.del-hotel:hover{
+  border: 1px solid rgb(255, 66, 66);
+  display: inline-block;
+  padding: 10px 15px;
+  color: #fff;
+  background-color: rgb(255, 66, 66);
+  border-radius: 10px;
+}
+
 
 
 :root {
@@ -411,6 +429,14 @@ a {
   font-size: 17px;
   text-align: left;
 }
+.hotel_details h6 {
+  color: #1C4482;
+  font-weight: 800;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+  font-size: 17px;
+  text-align: left;
+}
 .hotel_details select ,
 .hotel_details input {
   text-transform: capitalize;
@@ -447,6 +473,10 @@ a {
   margin-top: 10px;
 }
 .hotel_details h5 span {
+  position: relative;
+  padding-left: 10px;
+}
+.hotel_details h6 span {
   position: relative;
   padding-left: 10px;
 }

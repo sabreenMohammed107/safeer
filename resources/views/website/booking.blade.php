@@ -52,6 +52,9 @@
                             <label  class="form-label">notes</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                           </div>
+                          <div class="col-12">
+                            <button type="submit" class="btn btn-outline-secondary w-100">Book</button>
+                          </div>
                     </div>
                 </form>
             </div>
@@ -61,13 +64,14 @@
         <div class="col-sm-12 col-md-4">
             <div class="passenger_info">
                 <div class="booking_info_card">
+                    <div class="text-end mb-3"><a class="del-hotel" href="#"><i class="fa-solid fa-trash"></i></a></div>
                     <div class="booking_info_card_info">
                         <div class="info_image">
                             <img src="{{ asset('/website_assets/images/homePage/hotels/hotel-1.webp') }}" alt="hotel image">
                         </div>
                         <div class="info_title">
                             <div class="card_info">
-                                <h6> Venice, Rome and </h6>
+                                <h6> Venice, Rome and</h6>
                                 <span>     <i class="fa-solid fa-location-dot"></i>  turkey  <span>|</span> istanbul</span>
                             </div>
                             <div class="rating">
@@ -80,7 +84,7 @@
                             </div>
                          </div>
                     </div>
-                    <div class="remain_info">
+                    <div class="remain_info mb-3">
                         <h5>
                             booking for 3 nights
                         </h5>
@@ -88,13 +92,62 @@
 
                         </div>
                         <h5>rooms</h5>
-                        <p>
-                            1 X Standers Double or Twin (bed &
+                        <p class="mb-0 pb-0">
+                            1 X Standers Double or Twin (bed) <span class="float-end">1 X $140</span>
                         </p>
+                        <p class="mb-0 pb-0">
+                            5 X Adults <span class="float-end">5 X $5</span>
+                        </p>
+                        <div class="grand_total">
+                            <h6> Sub-total</h6>
+                            <span class="h6"> 165 <span class="h6">$</span></span>
+                        </div>
                     </div>
-                    <div class="grand_total">
+                    <div class="text-end mb-3"><a class="del-hotel" href="#"><i class="fa-solid fa-trash"></i></a></div>
+                    <div class="booking_info_card_info">
+                        <div class="info_image">
+                            <img src="{{ asset('/website_assets/images/homePage/hotels/hotel-1.webp') }}" alt="hotel image">
+                        </div>
+                        <div class="info_title">
+                            <div class="card_info">
+                                <h6> Venice, Rome and</h6>
+                                <span>     <i class="fa-solid fa-location-dot"></i>  turkey  <span>|</span> istanbul</span>
+                            </div>
+                            <div class="rating">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                    <span> ( 1 review) </span>
+                            </div>
+                         </div>
+                    </div>
+                    <div class="remain_info mb-3">
+                        <h5>
+                            Included tour: Alexandria Tour
+                        </h5>
+                        <div class="date">
+
+                        </div>
+                        <h5>Details</h5>
+                        <p class="mb-0 pb-0">
+                            2 X Participant <span class="float-end">2 X $20</span>
+                        </p>
+                        <p class="mb-0 pb-0">
+                            1 free child <span class="float-end">$0</span>
+                        </p>
+                        <p class="mb-0 pb-0">
+                            3 child <span class="float-end">3 X $10</span>
+                        </p>
+                        <div class="grand_total">
+                            <h6> Sub-total</h6>
+                            <span class="h6"> 70 <span class="h6">$</span></span>
+                        </div>
+                    </div>
+                    <div class="grand_total final">
                         <h5> grand total</h5>
-                        <span> 30,78 <span>EUR</span></span>
+                        <span> 235 <span>$</span></span>
                     </div>
                 </div>
              </div>

@@ -95,6 +95,13 @@
     font-weight: 700;
     margin-bottom: 15px;
 }
+.grand_total h6 {
+    font-size: 15px;
+    color: #1C4482;
+    text-transform: capitalize;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
 .remain_info p {
     font-size: 12px;
     color:#7E7E7E ;
@@ -102,7 +109,7 @@
 
 }
 .remain_info {
-    border-bottom: 1px solid #C5C3C3;
+    /* border-bottom: 1px solid #C5C3C3; */
 }
 .grand_total {
     display: flex;
@@ -110,6 +117,9 @@
     align-items: center;
     justify-content: space-between;
     padding-top: 15px;
+}
+.grand_total.final{
+    border-top: 1px solid rgb(184, 184, 184);
 }
 .grand_total span {
     font-size: 20px;
@@ -119,7 +129,18 @@
 
 
 }
+.grand_total span.h6 {
+    font-size: 16px;
+    color: #1C4482;
+    text-transform: capitalize;
+    font-weight: 700;
+
+
+}
 .grand_total h5 {
+    margin-bottom: 0px;
+}
+.grand_total h6 {
     margin-bottom: 0px;
 }
 .terms .form-check label {
