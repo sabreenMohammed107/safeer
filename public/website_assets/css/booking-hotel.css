@@ -6,7 +6,7 @@
     padding-top: 30px;
     padding-bottom: 30px;
 }
-.passenger_section>h5 {
+.passenger_section h5 {
     font-size:20px ;
     color:#1C4482 ;
     font-weight: 700;
@@ -38,7 +38,7 @@
 
 }
 .passenger_info textarea  {
-    height: 140px;  
+    height: 140px;
 }
 .passenger_info input::placeholder {
     text-transform: capitalize;
@@ -137,7 +137,7 @@
 .form-check-input {
     height:33px ;
     width: 33px;
-    border-radius: 10px !important; 
+    border-radius: 10px !important;
     margin-top: 0px;
 }
 .terms .submit  {
@@ -146,13 +146,13 @@
 
 }
 .terms .submit button:first-of-type{
-    
+
     background-color: #1C4482;
     margin-right: 30px;
     width: 285px;
     height: 58px;
     border-radius: 16px;
-} 
+}
 .terms .submit button:first-of-type a {
     font-size: 18px;
     color:white ;
