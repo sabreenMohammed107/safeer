@@ -13,6 +13,58 @@ html {
 a {
   text-decoration: none;
 }
+.cartbox{
+    position: fixed;
+    z-index: 1000;
+    top: 20vh;
+    right: 0;
+    padding: 20px;
+    background: #FFF;
+    border: 3px solid #1C4482;
+    border-right: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    opacity: .8;
+    transition: all .5s;
+
+}
+.cartbox:hover{
+    opacity: 1;
+}
+.cartbox .cartCount{
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #1ed443;
+}
+.cartbox a{
+  color: #1C4482 !important;
+}
+.cartbox a i{
+  color: #1C4482 !important;
+}
+.del-hotel{
+  border: 1px solid rgb(255, 66, 66);
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: rgb(255, 66, 66);
+  transition: all .5s;
+}
+
+.del-hotel:hover{
+  border: 1px solid rgb(255, 66, 66);
+  display: inline-block;
+  padding: 10px 15px;
+  color: #fff;
+  background-color: rgb(255, 66, 66);
+  border-radius: 10px;
+}
+
+
 
 :root {
   /* colors */
@@ -377,6 +429,14 @@ a {
   font-size: 17px;
   text-align: left;
 }
+.hotel_details h6 {
+  color: #1C4482;
+  font-weight: 800;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+  font-size: 17px;
+  text-align: left;
+}
 .hotel_details select ,
 .hotel_details input {
   text-transform: capitalize;
@@ -413,6 +473,10 @@ a {
   margin-top: 10px;
 }
 .hotel_details h5 span {
+  position: relative;
+  padding-left: 10px;
+}
+.hotel_details h6 span {
   position: relative;
   padding-left: 10px;
 }

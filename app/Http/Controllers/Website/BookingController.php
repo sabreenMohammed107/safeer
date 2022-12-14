@@ -55,7 +55,8 @@ class BookingController extends Controller
         ->where([["user_id", "=", session()->get("SiteUser")["ID"]]])
         ->get();
 
-        return view("website.cart",
+        //return view("website.cart",
+        return view("website.booking",
             [
                 "Company" => $Company,
                 "Counters" => $Counters,
