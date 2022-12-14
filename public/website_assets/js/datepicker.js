@@ -29,7 +29,7 @@ $('.demo').daterangepicker({
             "May",
             "June",
             "July",
-            "August",   
+            "August",
             "Sep.t",
             "Oct.",
             "Nov.",

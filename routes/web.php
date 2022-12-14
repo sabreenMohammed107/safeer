@@ -73,17 +73,26 @@ Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('cont
 
 Route::middleware(['prevent-relogin'])->group(function () {
     //site-login
-    Route::get("/safeer/login", [ContentController::class, 'loginSite'])->name("siteLogin");
-    Route::post("/safeer/login", [AuthController::class, 'Login'])->name("ProceedLogin");
+    Route::get("/safer/login", [ContentController::class, 'loginSite'])->name("siteLogin");
+    Route::post("/safer/login", [AuthController::class, 'Login'])->name("ProceedLogin");
 
     //signupSite
-    Route::get("/safeer/register", [ContentController::class, 'signupSite'])->name("siteRegister");
-    Route::post("/safeer/register", [AuthController::class, 'Register'])->name("ProceedRegister");
+    Route::get("/safer/register", [ContentController::class, 'signupSite'])->name("siteRegister");
+    Route::post("/safer/register", [AuthController::class, 'Register'])->name("ProceedRegister");
+
 });
 
 // Logout
-Route::get("/safeer/logout", [AuthController::class, 'Logout'])->name("siteLogout");
-Route::get("/safeer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
+Route::get("/safer/logout", [AuthController::class, 'Logout'])->name("siteLogout");
+// user profile
+
+Route::get("/safer/profile/{id}", [AuthController::class, 'profile'])->name("siteProfile");
+//updateProfile
+Route::post("/safer/updateProfile", [AuthController::class, 'updateProfile'])->name("updateProfile");
+//hotelByCity
+Route::get("/hotelByCity/{id}", [HotelsController::class, 'getHotelByCity'])->name("hotelByCity");
+
+Route::get("/safer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
 
 Route::middleware(['is-site-auth'])->group(function () {
     //Route::get("/safeer/test", [AuthController::class, 'testSessions']);

@@ -1,0 +1,379 @@
+/* header edits */
+.register ul {
+    align-items: center;
+    padding: 0px;
+}
+.line {
+    display: flex;
+    align-items: center;
+
+}
+.line a {
+    padding: 0px;
+}
+.line a  img {
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.navbar::after {
+    right: 16%;
+}
+.profile_details {
+    padding-top: 40px;
+}
+.profile_tabs > div > button {
+    color: #1C4482 !important;
+    font-size: 18px !important;
+    text-transform: capitalize !important;
+    font-weight: 600 !important;
+    border: 1px solid #68C2E5 !important;
+    border-radius: 10px !important;
+    padding: 10px 15px !important;
+    margin-bottom: 10px !important; 
+    text-align: left !important;
+}
+.profile_tabs div button i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+.profile_tabs div button .account_icon ,
+.account_icon{
+    border-radius: 50%;
+    font-size: 14px !important;
+    padding: 4px 5px;
+    border: 1px solid #1C4482;
+    margin-right: 5px;
+}
+.profile_tabs >.nav-pills .nav-link.active, .nav-pills .show>.nav-link ,
+.profile_tabs div button:hover{
+    color: white !important;
+    background-color: #1C4482;
+
+}
+.nav-pills .nav-link::after {
+    display: none;
+}
+.account_info {
+  
+    border: 1px solid #68C2E5;
+    border-radius: 10px;
+    padding: 25px;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+.profile_heading {
+    font-size: 20px;
+    color: #1C4482;
+    text-transform: capitalize;
+    font-weight: 700;
+    margin: 0px;
+}
+.profile_heading i {
+    margin-right: 5px;
+}
+.profile_change {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+.profile_change img {
+    width: 88px;
+    margin-right: 15px;
+    border-radius: 50%;
+}
+.change {
+    display: flex;
+    flex-direction: column;
+
+}
+.change button {
+    color:#1C4482 ;
+    font-size:18px; ;
+    text-transform: capitalize;
+    width: fit-content;
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    margin-bottom: 5px;
+}
+.change button:hover{
+    text-decoration: underline;
+}
+.change span {
+    color: #7E7E7E;
+    font-size: 13px;
+    text-transform: capitalize;
+}
+.profile_info label {
+    text-transform: capitalize;
+    color: #1C4482;
+    font-size:15px ;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.profile_info input {
+    font-size: 15px;
+    margin-bottom: 15px;
+    color: #C5C3C3;
+    border-radius: 5px;
+    /* padding: 10px; */
+    height: 40px;
+}
+.profile_info input::placeholder {
+    color: #C5C3C3;
+    font-size: 15px;
+    padding-left: 10px;
+    text-transform: capitalize;
+}
+.submit_button{
+    color: white;
+    font-size: 18px;
+    text-transform: capitalize;
+    font-weight: 600;
+    background-color: #1C4482;
+    border-radius: 10px;
+    padding: 5px;
+    width: 175px; 
+    height: 41px;
+    margin-top: 10px;
+    /* margin-bottom: 25px; */
+}
+.submit_button:hover {
+    color: #1C4482;
+    border: 1px solid #1C4482;
+    background-color: white;
+}
+.password{
+    padding:25px;
+}
+.password_change {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.password_button {
+    color: #FF0000;
+    font-size: 17px;
+    text-transform: capitalize;
+}
+.password_button:hover {
+    text-decoration: underline;
+    color: #de0606;
+}
+
+/* favorite tab */
+.favorite {
+    padding-top: 10px;
+
+}
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.filters_items {
+    padding-top: 30px;
+}
+.setted_info > span{
+    font-weight: 700;
+}
+.setted_info .card_info span i {
+    color: #1C4482;
+    font-weight: 600;
+}
+.setted_tour_cards {
+    box-shadow: 0px 0px 3px 0px #00000029;
+}
+.card {
+    transition: none;
+}
+.load_button {
+    font-size:18px;
+    color: #7E7E7E;
+    font-weight: 700;
+    text-transform: capitalize;
+    border-radius: 10px;
+    border: 1px solid #7E7E7E;
+    padding: 5px 30px;
+    width: fit-content;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 35px;
+}
+.load_button:hover {
+    background-color: #7E7E7E;
+    color: white;
+
+}
+.nav-pills .nav-link {
+    padding-top: 0px;
+}
+.tab-content>.active {
+    width: 100%;
+}
+/* orders tab  */
+.orders h6 {
+    margin-bottom: 30px;
+}
+.rejected {
+    background-color:#FF0000 !important; 
+    color: white !important;
+}
+.passenger_table .info span{
+    margin-bottom: 15px;
+}
+
+/* payment method tab */
+.payment >span {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #7E7E7E;
+    padding-left: 25px;
+    margin-bottom: 20px;
+    display: block;
+}
+.payment_option .visa_info .visa {
+justify-content: space-between;
+box-shadow: 0px 0px 3px #00000029;
+}
+.payment_option .visa_info .visa .info {
+    display: flex;
+    align-items: center;
+    width: 80%;
+
+}
+.edits{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.delete {
+    color: #FF0000;
+}
+
+.edits i {
+    margin-right: 5px;
+}
+.edits div {
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 700;
+ 
+}
+.edits div:nth-of-type(1) {
+    color: #1C4482;
+    margin-right: 20px;
+}
+.delete i {
+    padding: 2px 5px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid #FF0000;
+}
+/*  log out tab */
+.modal-dialog{
+    min-width: fit-content;
+    /* max-width: fit-content; */
+}
+.log_title {
+    color: #FF0000;
+    font-size: 27px;
+    font-weight: 700;
+
+}
+.log_popup_info {
+    text-align: center;
+    font-size: 27px;
+    color: #1C4482;
+    font-weight: 600;
+    padding-top: 1rem;
+    /* padding-bottom: 0px; */
+    border-top: 1px solid #dee2e6;
+}
+.log_popup_button {
+    border-top: none;
+    justify-content: center;
+}
+.log_popup_button button {
+    width: 210px;
+    padding: 5px;
+    background-color: #FF0000;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 30px;
+}
+
+
+/* prfile button */
+.profile_name_button {
+    font-size: 17px !important;
+    background-color: transparent;
+    color: white;
+    padding:0px;
+text-transform: none;
+    /* padding-left: 10px; */
+    text-decoration: none;
+    padding-right: 25px;
+    /* margin-right: 10px; */
+}
+.main-wrapper .profile_name_button:hover {
+    color: #68C2E5;
+}
+.profile_name {
+    position: relative;
+}
+.logout_dropdown {
+    background-color: white;
+    color: #1C4482;
+    width: 88%;
+    padding: 5px;
+    padding-left: 20px;
+    position: absolute;
+    top: 30px;
+    left: 0px;
+    z-index: 9999999 !important;
+    display: none;
+}
+.show {
+    display: block;
+}
+@media (min-width:320px) and (max-width:767px) {
+    .payment_option .visa_info .visa {
+        flex-wrap: wrap;
+    }
+
+    .payment_option .visa_info .visa .info{
+        margin-bottom: 10px;
+    }
+    .payment_option .visa_info .visa .info{
+        width: fit-content;
+    } 
+}
+@media (min-width:992px) and (max-width:1200PX){
+    .navbar-nav > li > a{
+        font-size: 15px;
+    }
+    .navbar button {
+        padding: 0px;
+        font-size: 15px;
+    }
+    .navbar::after {
+    right: 18.8%;
+    }
+}
+@media (min-width:1201px) and (max-width:1400PX){
+    .navbar::after {
+        right: 18%;
+        }
+
+}
+@media screen and (min-width: 993px){
+    .navbar-collapse {
+        overflow-y: visible !important;
+    }
+}

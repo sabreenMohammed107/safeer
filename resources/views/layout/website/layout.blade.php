@@ -43,9 +43,12 @@
   <!-- video poppp styele -->
   <link rel="stylesheet" href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}">
   <!-- stylesheet  -->
+  {{-- <link rel="stylesheet" href="{{ asset('/website_assets/css/my-profile.css')}}"> --}}
   <link rel="stylesheet" href="{{ asset('/website_assets/css/style.css') }}">
+
   <!-- icon -->
   <link rel="icon" href="{{ asset('/website_assets/images/homePage/logo.webp') }}">
+
   @yield("adds_css")
   <title> {{$title}} </title>
 </head>
@@ -202,6 +205,7 @@
    <!-- image gallery  -->
    <script src="{{ asset('/website_assets/js/image_gllery.js')}}"></script>
    <!-- adding room -->
+   <script src="{{ asset('/website_assets/js/main.js')}}"></script>
 
    <script src="{{ asset('/website_assets/js/add_room.js')}}"></script>
    <script src="{{ asset('/website_assets/js/adding_years_Select.js')}}"></script>

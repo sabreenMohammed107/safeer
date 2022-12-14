@@ -11,7 +11,7 @@ $('.start-date').datepicker({
     disableTouchKeyboard: true,
     orientation: "bottom auto"
   });
-  
+
   $('.end-date').datepicker({
     templates: {
       leftArrow: '<i class="fa fa-chevron-left"></i>',
@@ -24,17 +24,17 @@ $('.start-date').datepicker({
     todayHighlight: true,
     disableTouchKeyboard: true,
     orientation: "bottom auto"
-  
+
   });
-  
-  
+
+
   $('.start-date').datepicker().on("changeDate", function () {
     var startDate = $('.start-date').datepicker('getDate');
     var oneDayFromStartDate = moment(startDate).add(1, 'days').toDate();
     $('.end-date').datepicker('setStartDate', oneDayFromStartDate);
     $('.end-date').datepicker('setDate', oneDayFromStartDate);
   });
-  
+
   $('.end-date').datepicker().on("show", function () {
     var startDate = $('.start-date').datepicker('getDate');
     $('.day.disabled').filter(function (index) {

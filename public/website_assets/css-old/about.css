@@ -1,0 +1,145 @@
+.slider_details .tabs span {
+    font-size: 20px;
+    font-weight: 600 ;
+    display: inline-block;
+    color: white;
+}
+.slider_details .tabs span a ,.slider_details .tabs span
+ {
+    text-decoration:none ;
+    color: white;
+    text-transform: uppercase;
+}
+.slider_section{
+    background-image: url(./../images/about/background.webp);
+    min-height: 420px;
+}
+.slider_section .slider_details{
+    height: 100%;
+    min-height: 420px;
+}
+
+.choosing_title {
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+.choosing_title h5{
+    text-transform: capitalize;
+    font-size: 30px;
+    font-weight: 600 ;
+    color:#210D3A ;
+    margin-bottom: 15px;
+}
+
+.choosing_title p{
+    font-size: 22px;
+    color: #7E7E7E;
+    
+}
+.benefits_info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 50px;
+}
+.benefits_info h6 {
+    text-transform: capitalize;
+    font-size: 22px;
+    font-weight: 600 ;
+    color:#210D3A ;
+    margin-bottom: 15px;
+    margin-top: 15px;
+
+}
+.benefits_info p{
+    font-size: 18px;
+    color: #7E7E7E;
+    
+}
+.investigtion{
+    padding-top: 90px;
+}
+.investigtion .adventure {
+padding-top: 95px;
+}
+.investigtion .adventure .adventure_info h2{
+    font-size: 30px;
+    color:#1F1E1C ;
+}
+.investigtion .adventure>img{
+    top: -7%;
+}
+/* .statistics {
+    background-image: linear-gradient(rgba(33, 13, 58, 0.78),rgba(33, 13, 58, 0.78)) , url("./../images/homePage/statics_back.webp");
+} */
+.obj_title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.obj_title h6 {
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #210D3A;
+    margin: 0px;
+    margin-top: 10px;
+}
+.objectives  {
+    padding-bottom: 30px;
+    position: relative;
+}
+.objectives p {
+    font-size: 18px;    
+    color: #ABABAB;
+    width: 90%;
+}
+.left {
+    margin-right: 30px;
+    position: relative;
+}
+.left::after {
+    content: "";
+    width: 1px;
+    height: 50%;
+    background-color: #7e7e7e68;
+    position: absolute;
+    top: 32%;
+    right: 0px;
+
+}
+.obj_title img {
+    width: 85px;
+    margin-right: 20px;
+}
+.vission_img{
+    width: 70px !important;
+}
+.objectives>img {
+    position: absolute;
+    top: -142px;
+    left: 18%;
+}
+/* .newsletter button {
+    background-color: #FFE600;
+    border-color: #FFE600;
+    color: #210D3A;
+}
+footer .contact_details .contact_info i{
+    color: #FFE600;
+} */
+
+
+@media (min-width: 320px) and (max-width:991px) {
+    .left::after{
+        display: none;
+    }
+    .objectives  {
+  
+        overflow: hidden;
+    }
+    
+}

@@ -13,6 +13,40 @@ html {
 a {
   text-decoration: none;
 }
+.cartbox{
+    position: fixed;
+    z-index: 1000;
+    top: 20vh;
+    right: 0;
+    padding: 20px;
+    background: #FFF;
+    border: 3px solid #1C4482;
+    border-right: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    opacity: .8;
+    transition: all .5s;
+
+}
+.cartbox:hover{
+    opacity: 1;
+}
+.cartbox .cartCount{
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #1ed443;
+}
+.cartbox a{
+  color: #1C4482 !important;
+}
+.cartbox a i{
+  color: #1C4482 !important;
+}
+
 
 :root {
   /* colors */
@@ -472,10 +506,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .hotel_details .main > button a {
   color: white;
 }
-
-.hotel_details .main > button  {
-    color: white;
-  }
 .hotel_details .main div button  {
   color: #1C4482;
   font-size: 15px;
@@ -493,8 +523,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .hotel_details .main > button:hover {
   background-color: whitesmoke;
   border: 2px solid #1C4482;
-  color: #1C4482;
-  font-weight: 500;
 }
 .hotel_details .main > button:hover a {
   color: #1C4482;
@@ -2994,7 +3022,6 @@ top: -4%;
 .show {
   display: block;
 
-
 }
 
 /* explore links */
@@ -3061,22 +3088,3 @@ margin-inline-end >> right */
   position: absolute;
   right: -3%;
 }
-
-
-
-.cartbox {
-    position: fixed;
-    z-index: 1000;
-    top: 20vh;
-    right: 0;
-    padding: 20px;
-    background: #FFF;
-    border: 3px solid #1C4482;
-    border-right: 0;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    opacity: .8;
-    transition: all .5s;
-}
-
-

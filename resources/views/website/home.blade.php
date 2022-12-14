@@ -31,7 +31,7 @@
                             <span>{{$City->subtitle_en}}</span>
                             <div class="explore_links">
                                 <button class="btn ">
-                                 <a href="./hotel.html">
+                                 <a href="{{ route('hotelByCity', $City->city->id) }}">
                                   <i class="fa-solid fa-hotel"></i>
                                  </a>
                                 </button>

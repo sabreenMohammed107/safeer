@@ -19,6 +19,11 @@ class SiteUser extends Model
     protected $table = "site_users";
 
     protected $fillable = [
+        'image',
+        'first_name',
+        'last_name',
+        'phone',
+        'address',
         'name',
         'email',
         'password'

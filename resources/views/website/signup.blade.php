@@ -18,6 +18,13 @@
                 <a href="{{route("siteLogin")}}">  have an Account ?<span> Sign in</span>   </a>
                 <form action="{{route("ProceedRegister")}}" method="POST">
                     @csrf
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <p class="text-danger">{{ $error }}</p>
+                                @endforeach
+                        </div>
+                    @endif
                   <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Full Name *" required>
                   <input type="text" name="phone" class="form-control" id="exampleFormControlInput2" placeholder="Phone Number*" required>
                   <input type="text" name="email" class="form-control" id="exampleFormControlInput3" placeholder="E-mail or User Name  *" required>

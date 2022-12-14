@@ -1,0 +1,98 @@
+
+/* add new credit or debt card */
+.add_card{
+    display: block !important;
+}
+.new_card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.new_card::after {
+    content:"";
+    width: 104.2%;
+    height: 1px;
+    background-color: #c5c3c370;
+    position: absolute;
+    bottom: 15px;
+    left: -18px;
+}
+.new_card div {
+    width: 100%;
+}
+.new_card label {
+    font-size:18px;
+    color: #1C4482;
+    font-weight: 600;
+    padding-left: 10px;
+    width: 90%;
+}
+
+.visa_types {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.visa_types img {
+    width: 60px;
+    padding-right: 15px;
+    cursor: pointer;
+
+}
+.card_inputs>* {
+    display: block;
+
+}
+.card_inputs label {
+    font-size: 14px;
+    color: #1C4482;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.card_inputs  input ,.card_inputs  select {
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #C5C3C3;
+}
+.card_inputs  input::placeholder ,
+.card_inputs  select {
+    text-transform: capitalize;
+}
+.billing_info h6 {
+    font-size: 17px;
+    color: #7E7E7E;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.add_card_button {
+    color: white;
+    background-color: #1C4482;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 10px 50px;
+    text-transform: capitalize;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+
+@media (min-width:320px) and (max-width:767px) {
+  
+    .new_card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .new_card div {
+        margin-bottom: 10px;
+    }
+    .visa_types {
+        flex-wrap: wrap;
+    }
+}

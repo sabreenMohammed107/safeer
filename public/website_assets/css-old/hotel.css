@@ -113,21 +113,6 @@ margin-top: 0px;
     margin-top: 30px;
 }
 
-.show_hotel {
-    display: block;
-  
-}
-
-#hotelyears {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-#hotelyears select  {
-  width: calc( 100% / 2 - 5px );
-  margin-right: 5px;
-}
 
 @media (min-width: 320px) and (max-width: 767px){
     .hotel_details .main{

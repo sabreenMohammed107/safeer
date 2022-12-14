@@ -143,6 +143,7 @@ class HotelsController extends Controller
         $Cities = City::all();
         $HotelsRecommended = $RoomCosts->take(6)->orderBy("hotel_stars" /*I took hotel stars as a recommendation factor*/)->get();
         $HotelsByPrice = $RoomCosts->take(6)->orderBy("hotels.id" /*Should have been made by price but there is no price column*/)->get();
+        $countries=Country::all();
         // return $HotelsByPrice;
         return view("website.hotels.hotels", [
             "Company" => $Company,
@@ -153,6 +154,7 @@ class HotelsController extends Controller
             "Countries" => $Countries,
             "Cities" => $Cities,
             "BreadCrumb" => $BreadCrumb,
+            "countries" => $countries,
         ]);
     }
 
@@ -212,15 +214,17 @@ class HotelsController extends Controller
 
         // return $HotelsByPrice;
         //set serching data in session
-        $sessionArr=['from_date' => $request->from_date , 'country_id' => $request->country_id ,
+
+        $sessionArr=['from_date' => $arr[0] , 'country_id' => $request->country_id ,
         'nights' => $request->nights, 'adultsNumber' => $request->adultsNumber ,'childNumber' => $request->childNumber ,
         'roomsNumber' => $request->roomsNumber,
+        'end_date'=> $arr[1],
         'ages' => $request->ages,
     ];
         session(['sessionArr' => $sessionArr]);
 
         \Log::info(\Session::get('sessionArr'));
-
+$countries=Country::all();
         return view("website.hotels.hotels", [
             "Company" => $Company,
             "Hotels" => $Hotels,
@@ -231,9 +235,64 @@ class HotelsController extends Controller
             "Countries" => $Countries,
             "Cities" => $Cities,
             "BreadCrumb" => $BreadCrumb,
+            "countries" => $countries,
         ]);
     }
+public function getHotelByCity($id){
 
+    $Hotels = Hotel::all();
+    $RoomCosts = DB::table("room_type_costs")
+        ->select('hotels.id as hotel_id', 'hotel_enname', 'hotel_arname',
+            'hotel_enoverview', 'hotel_aroverview', 'hotel_stars',
+            'hotel_banner', 'hotel_logo', 'hotel_enbrief', 'hotel_arbrief',
+            'city_id', 'details_enaddress', 'hotels.active', 'country_id', 'en_country', 'room_type_costs.from_date', 'room_type_costs.end_date',
+            'ar_country', 'en_city', 'ar_city', 'from_date', 'end_date', 'cost', DB::raw('count(review_text) as totalreviews'),
+            DB::raw('min(single_cost) as single_cost'))
+
+
+        ->leftJoin("hotels", "hotels.id", "=", "room_type_costs.hotel_id")
+        ->leftJoin("reviews", "hotels.id", "=", "reviews.hotel_id")
+        ->leftJoin("cities", "cities.id", "=", "hotels.city_id")
+        ->leftJoin("countries", "countries.id", "=", "cities.country_id")
+        ->where("hotels.active", "=", 1)
+        ->groupBy('hotels.id', 'hotel_enname', 'hotel_arname',
+            'hotel_enoverview', 'hotel_aroverview', 'hotel_stars',
+            'hotel_banner', 'hotel_logo', 'hotel_enbrief', 'hotel_arbrief',
+            'city_id', 'details_enaddress', 'hotels.active', 'country_id', 'en_country', 'room_type_costs.from_date', 'room_type_costs.end_date'
+            , 'ar_country', 'en_city', 'ar_city', 'from_date', 'end_date', 'cost');
+
+
+
+        $RoomCosts->where("city_id", "=", $id);
+
+
+
+    $Company = Company::first();
+    $BreadCrumb = [["url" => "/", "name" => "Home"]];
+    $Countries = Country::all();
+    $Cities = City::all();
+
+    $HotelsRecommended = $RoomCosts->take(6)->orderBy("hotel_stars",'desc')->get();
+
+    $HotelsByPrice = $RoomCosts->take(6)->orderBy("single_cost",'asc')->get();
+
+    $HotelsByAlpha = $RoomCosts->take(6)->orderBy("hotels.hotel_enname",'asc')->get();
+
+    \Log::info($RoomCosts->count());
+$countries=Country::all();
+    return view("website.hotels.hotels", [
+        "Company" => $Company,
+        "Hotels" => $Hotels,
+        "Count" => $HotelsRecommended->count(),
+        "HotelsRecommended" => $HotelsRecommended,
+        "HotelsByPrice" => $HotelsByPrice,
+        "HotelsByAlpha" => $HotelsByAlpha,
+        "Countries" => $Countries,
+        "Cities" => $Cities,
+        "BreadCrumb" => $BreadCrumb,
+        "countries" => $countries,
+    ]);
+}
     public function all_hotels(Request $request)
     {
         //return $offers;
@@ -267,6 +326,7 @@ class HotelsController extends Controller
 
         $HotelsByAlpha = $RoomCosts->take(6)->orderBy("hotels.hotel_enname",'asc')->get();
         // return $HotelsByPrice;
+        $countries=Country::all();
         return view("website.hotels.hotels", [
             "Company" => $Company,
             "Hotels" => $Hotels,
@@ -277,6 +337,7 @@ class HotelsController extends Controller
             "Countries" => $Countries,
             "Cities" => $Cities,
             "BreadCrumb" => $BreadCrumb,
+            "countries" => $countries,
         ]);
     }
 
