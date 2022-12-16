@@ -20,13 +20,13 @@
                 <button type="button" class="canvase_close_button" data-bs-dismiss="offcanvas" aria-label="Close">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-                <button class="offcan_buttons active">
+                <button class="{{ Request::segment(2)==null? 'offcan_buttons active' : 'offcan_buttons' }} ">
                     <a href="{{ url('/') }}">home</a>
                 </button>
-                <button class="offcan_buttons">
+                <button class="{{ Request::segment(2)=='about' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ url('/about') }}">about us</a>
                 </button>
-                <button class="offcan_buttons">
+                <button class="{{ Request::segment(2)=='hotels' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ url('/hotels') }}">hotels</a>
                 </button>
                 <button class="offcan_buttons">
@@ -38,7 +38,7 @@
                 <button class="offcan_buttons">
                     <a href="#">visa</a>
                 </button>
-                <button class="offcan_buttons">
+                <button class="{{ Request::segment(2)=='contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ url('/contact') }}">contact</a>
                 </button>
                 {{-- {{session()->get("SiteUser")["Name"]}} --}}
@@ -69,13 +69,13 @@
             <ul class="navbar-nav ms-auto">
                 <!-- first link tab  -->
                 <li>
-                    <a href="{{ url('/') }}" class="links hybrid active">home</a>
+                    <a href="{{ url('/') }}" class="{{ Request::segment(1)==null? 'links hybrid active' : 'links hybrid' }}"> home</a>
                 </li>
                 <li>
-                    <a href="{{ url('/about') }}" class="links hybrid">about us </a>
+                    <a href="{{ url('/about') }}" class="{{ Request::segment(1)=='about' ? 'links hybrid active' : 'links hybrid' }}">about us </a>
                 </li>
                 <li>
-                    <a href="{{ url('/hotels') }}" class="links hybrid">hotels </a>
+                    <a href="{{ url('/hotels') }}" class="{{ Request::segment(1)=='hotels' ? 'links hybrid active' : 'links hybrid' }}">hotels </a>
                 </li>
                 <li>
                     <a href="./tours.html" class="links hybrid">tours </a>
@@ -87,7 +87,7 @@
                     <a href="#" class="links hybrid">visa</a>
                 </li>
                 <li>
-                    <a href="{{ url('/contact') }}" class="links hybrid">contact us</a>
+                    <a href="{{ url('/contact') }}" class="{{ Request::segment(1)=='contact' ? 'links hybrid active' : 'links hybrid' }}">contact us</a>
                 </li>
                 <div class="register">
                     {{-- <ul>
@@ -132,7 +132,12 @@
 
                                 <a class="links hybrid p-2" href='' ><img title="Arabic" src="{{ asset('img/flags/ar.png') }}" class="flag-img"> </a>
                                 <a class="links hybrid p-2" href='' ><img title="English" src="{{ asset('img/flags/en.png') }}" class="flag-img"> </a>
-                              </div>
+
+                                {{-- <a class="links hybrid p-2" href='' >Ar</a>
+                                <a class="links hybrid p-2" href='' >En</a> --}}
+
+
+                            </div>
 
                         </li>
                     </ul>

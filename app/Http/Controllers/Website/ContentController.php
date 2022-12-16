@@ -9,6 +9,8 @@ use App\Models\Company;
 use App\Models\Company_branch;
 use App\Models\Contact;
 use App\Models\Counter;
+use App\Models\Newsletter;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Concat;
 
@@ -133,5 +135,23 @@ class ContentController extends Controller
             "Company" => $Company,
 
         ]);
+    }
+
+
+    public function sendNewsLetter(Request $request){
+        try{
+
+            $letter= Newsletter::create($request->all());
+            // $emails = ['senior.steps.info@gmail.com','info@btsconsultant.com','nasser@btsconsultant.com'];
+            // \Mail::to($emails)->send(new NewsLetterNotification($letter));
+
+
+             return redirect()->back()->with('message', 'Thanks; your request has been submitted successfully !');
+         }
+            catch(QueryException $q){
+
+             return redirect()->back()->with('message','ُEmpty Newsletter !!!');
+
+         }
     }
 }

@@ -70,6 +70,7 @@ Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
 Route::get('/single-blog/{id}',[ContentController::class, 'singleBlog'])->name('single-blog');
 Route::get('/contact', [ContentController::class, 'createForm']);
 Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
+Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
 
 Route::middleware(['prevent-relogin'])->group(function () {
     //site-login

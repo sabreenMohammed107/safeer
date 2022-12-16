@@ -74,17 +74,20 @@
               explore the beauty of the world
             </span>
           </div>
-          <div class="col-md-6 col-sm-12">
 
+          <div class="col-md-6 col-sm-12">
+            <form  action="{{url('/sendNewsLetter')}}" method="POST">
+                @csrf
             <div class="input-group input">
-              <input type="email" class="form-control" placeholder="Enter your email" aria-label="Recipient's username" aria-describedby="button-addon2">
-              <button class="btn btn-outline-secondary" type="button" id="button-addon2"><a href="#">
+              <input type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" placeholder="Enter your email" aria-label="Recipient's username" aria-describedby="button-addon2">
+              <button class="btn btn-outline-secondary" type="submit"  >
                 Join our newsletter
-              </a></button>
+              </button>
             </div>
 
-
+        </form>
           </div>
+
         </div>
       </div>
     </div>

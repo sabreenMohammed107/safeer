@@ -1,6 +1,7 @@
 var arr = [];
     var arr_countries = [];
     var arr_cities = [];
+    var arr_zones = [];
     var arr_ratings = [];
     var sort_by = 0; // recommended
     $(".hotel_id").change(function(){
@@ -27,6 +28,20 @@ var arr = [];
         }
         // console.log(arr);
         $("input[name=hotel_cities_ids]").val(arr_cities);
+        fetch_hotels()
+    });
+//zones
+    $(".hotel_zone_id").change(function(){
+        if($(this).is(':checked')){
+            arr_zones.push($(this).attr("data-id"));
+        }else{
+            var removeValue = $(this).attr("data-id");
+            arr_zones = $.grep(arr_zones, function(n) {
+                return n != removeValue;
+            });
+        }
+        // console.log(arr);
+        $("input[name=hotel_zone_ids]").val(arr_zones);
         fetch_hotels()
     });
     $(".hotel_countries_id").change(function(){
@@ -89,6 +104,7 @@ var arr = [];
                 hotel_rating: $("input[name=hotel_rating]").val(),
                 hotel_countries_ids: $("input[name=hotel_countries_ids]").val(),
                 hotel_cities_ids: $("input[name=hotel_cities_ids]").val(),
+                hotel_zone_ids: $("input[name=hotel_zone_ids]").val(),
                 price_from: $("input[name=price_from]").val(),
                 price_to: $("input[name=price_to]").val(),
                 sort_by: sort_by,

@@ -23,7 +23,7 @@
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
                             <select class="form-select" name="country_id" aria-label="Default select example">
-                                @foreach ($countries as $Country)
+                                @foreach ($Countries as $Country)
                                     <option value="{{ $Country->id }}"
                                         @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['country_id'] == $Country->id ? 'selected' : '' }} @endif>
                                         {{ $Country->en_country }}</option>
@@ -267,6 +267,33 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseZone" aria-expanded="false"
+                                        aria-controls="flush-collapseTwo">
+                                        zone
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseZone" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-collapseZone" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        @foreach ($zones as $zone)
+                                            <div class="form-check">
+                                                <input class="form-check-input hotel_zone_id"
+                                                    data-id="{{ $zone->id }}" type="checkbox" value=""
+                                                    id="defaultCheck4">
+                                                <label class="form-check-label" for="defaultCheck4">
+                                                    {{ $zone->en_zone }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                        <input type="hidden" name="hotel_zone_ids" />
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="flush-headingThree">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -466,7 +493,7 @@
                                                     </div>
                                                     <span class="hotels_price"><span
                                                             style="color:#5f5858;font-size: 16px;font-weight: 300">start
-                                                            with</span> $ {{ $HRec->minPrice }}</span>
+                                                            with</span> $ {{ $HRec->single_cost }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -520,7 +547,7 @@
                                                     </div>
                                                     <span class="hotels_price"><span
                                                             style="color:#5f5858;font-size: 16px;font-weight: 300">start
-                                                            with</span> $ {{ $HPrice->minPrice }}</span>
+                                                            with</span> $ {{ $HPrice->single_cost }}</span>
                                                     {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
                                                 </div>
                                             </div>
@@ -575,7 +602,7 @@
                                                     </div>
                                                     <span class="hotels_price"><span
                                                             style="color:#5f5858;font-size: 16px;font-weight: 300">start
-                                                            with</span> $ {{ $HAlpha->minPrice }}</span>
+                                                            with</span> $ {{ $HAlpha->single_cost }}</span>
                                                     {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
                                                 </div>
                                             </div>
@@ -590,17 +617,13 @@
                     <nav aria-label="Page navigation page_pagination example">
                         <ul class="pagination">
                             @for ($i = 0; $i < $Count / 6; $i++)
-                            @if($Count > 6)
                                 <li class="page-item page-num" data-val="{{ $i + 1 }}"><a class="page-link"
                                         href="#">{{ $i + 1 }}</a></li>
-                                        @endif
                             @endfor
                             <input type="hidden" name="page_num" />
-                            @if($Count > 6)
                             <li class="page-item page-inc">
                                 <a class="page-link" href="#">Next</a>
                             </li>
-                            @endif
                         </ul>
                     </nav>
                 </div>
