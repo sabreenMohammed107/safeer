@@ -1,7 +1,5 @@
 <!-- slider -->
 
-
-<!-- slider -->
 <div class="slider_section">
     <div class="slider_details">
         <h1> {{ $company->master_page_entitle }} {{-- title --}} <br> {{ $company->master_page_ensubtitle }}
@@ -37,6 +35,20 @@
 
                                     <div class="choices">
                                         <i class="fa-solid fa-location-dot"></i>
+                                        <select class="form-select" id="slct_srch" name="country_id"
+                                            aria-label="Default select example">
+                                            @foreach ($countries as $Country)
+                                                <option value="{{ $Country->id }}">{{ $Country->en_country }}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
+                                    <h5> destination</h5>
+
+                                    <div class="choices">
+                                        <i class="fa-solid fa-location-dot"></i>
                                         <select class="form-select" name="country_id"
                                             aria-label="Default select example">
                                             @foreach ($countries as $Country)
@@ -45,7 +57,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                                <div class="col-sm-12 col-md-6 col-xl-2 p-0 ">
                                     <h5> check in <span>check </span> </h5>
 
                                     <div class="datepicker calender">
@@ -64,7 +76,7 @@
                             @endfor
                                     </select>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-xl-4">
+                                <div class="col-sm-12 col-md-6 col-xl-3">
                                     <h5> Add room</h5>
                                     <div class="rooms">
                                         <button class="info form-select" type="button" onclick="open_addnew()">
@@ -444,3 +456,4 @@
     </div>
 
 </div>
+

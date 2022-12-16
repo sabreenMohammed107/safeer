@@ -90,9 +90,19 @@ a {
   text-decoration: none;
   padding-right: 25px;
   margin-right: 10px;
+  position: relative;
 }
-.main-wrapper a:hover {
-  color: #68C2E5;
+.main-wrapper a:hover{
+  color: white;
+}
+.main-wrapper a:not(.sign_up,.sign_in,.offcan_buttons a,.offcan_buttons_lang a , .logout_dropdown a):hover:after ,.main-wrapper a.active:after {
+  border-bottom: white 2px solid;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80%;
+  transform: translate(5%,-50%);
 }
 
 .main-wrapper ul li {
@@ -120,7 +130,7 @@ a {
   font-size: 1.8rem;
   cursor: pointer;
   padding: 0.2rem 0.5rem;
-  transition: all 0.4s ease;
+  /* transition: all 0.4s ease; */
   border: 2px solid #000;
   border-radius: 4px;
 }
@@ -186,16 +196,16 @@ a {
 .navbar {
   position: relative;
 }
-.navbar::after {
+/* span.line i::after {
   content:"";
-  height: 100%;
+  height: 50px;
   width: 2px;
   background-color: #0490CD;
   position: absolute;
   right: 15.7%;
   top: 0px;
   z-index: -1;
-}
+} */
 
 
 /* offcanvas styles  */
@@ -222,6 +232,9 @@ a {
 .offcan_buttons:hover a{
   color: white ;
 }
+.offcan_buttons:hover a::after{
+    border: none;
+  }
 .navbar button {
   color:var(--text-color);
   border: none;
@@ -314,11 +327,12 @@ a {
   padding: 0px;
 }
 
+/* ahmed sayed edit */
 
 .sign_up {
   position: relative;
 }
-.sign_up a::after {
+.sign_up a::before {
   content: "";
   width: 2px;
   height: 12px;
@@ -326,8 +340,8 @@ a {
   position: absolute;
   left: -21px;
   bottom: 7px;
-}
 
+}
 
 /* end of navigation links */
 
@@ -378,7 +392,7 @@ a {
   margin-top: 20px;
 }
 .travel_tabs li  {
-  background-color: transparent;
+  background-color: var(--main-color);
 }
 .travel_tabs li:hover {
   color: #210D3A;
@@ -3057,8 +3071,6 @@ top: -4%;
 }
 .show {
   display: block;
-
-
 }
 
 /* explore links */
@@ -3142,5 +3154,171 @@ margin-inline-end >> right */
     opacity: .8;
     transition: all .5s;
 }
+/* -------------------------------------------------- */
+/* -------------------------------------------------- */
+/* change language ahmed sayed */
+/* -------------------------------------------------- */
+/* -------------------------------------------------- */
+.profile_name_button {
+    font-size: 17px !important;
+    background-color: transparent;
+    color: white;
+    padding:0px;
+text-transform: none;
+    /* padding-left: 10px; */
+    text-decoration: none;
+    padding-right: 25px;
+    /* margin-right: 10px; */
+}
+.main-wrapper .profile_name_button:hover {
+    color: #68C2E5;
+}
+.profile_name {
+    position: relative;
+}
+.logout_dropdown {
+    background-color: white;
+    color: #1C4482;
+    /* width: max-content; */
 
+    position: absolute;
+    top: 45px;
+    right: 25px;
+    z-index: 9999999 !important;
+    display: none;
+}
+.show {
+    display: block;}
+    @media (min-width:320px) and (max-width:767px) {
+         }
+        .payment_option .visa_info .visa {
+        flex-wrap: wrap;
+    }
 
+    .payment_option .visa_info .visa .info{
+        margin-bottom: 10px;
+    }
+    .payment_option .visa_info .visa .info{
+        width: fit-content;
+    }
+
+@media (min-width:992px) and (max-width:1200PX){
+    .navbar-nav > li > a{
+        font-size: 15px;
+    }
+    .navbar button {
+        padding: 0px;
+        font-size: 15px;
+    }
+    .navbar::after {
+    right: 18.8%;
+    }
+    .logout_dropdown {
+        top: 45px;
+        right:-5px;
+    }
+}
+@media (min-width:1201px) and (max-width:1400PX){
+    .navbar::after {
+        right: 18%;
+        }
+
+}
+@media screen and (min-width: 993px){
+    .navbar-collapse {
+        overflow-y: visible !important;
+    }
+}
+
+.dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+
+    display: block;
+    border: none;
+    background: none;
+    width:100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+  }
+  .dropdown-container {
+    display: none;
+    padding-left: 8px;
+  }
+
+  /* Optional: Style the caret down icon */
+  .fa-caret-down {
+    float: right;
+    padding-right: 8px;
+  }
+
+  .offcan_buttons_lang.active {
+    background-color: var(--main-color);
+
+  }
+  .offcan_buttons_lang.active a{
+    color: white;
+
+  }
+
+  .offcan_buttons_lang {
+    background-color: transparent;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border-bottom: 1PX solid rgba(128, 128, 128, 0.458) !important;
+  }
+  .offcan_buttons_lang a {
+    padding-left: 0px;
+    color: var(--main-color);
+    text-transform: capitalize;
+    font-weight: 600;
+      font-size: 19px;
+      text-align: left;
+      display: block;
+      width: 100%;
+  }
+  .offcan_buttons_lang:hover {
+    background-color: var(--main-color);
+
+  }
+  .offcan_buttons_lang:hover a{
+    color: white ;
+  }
+  .offcan_buttons_lang:hover a::after{
+      border: none;
+    }
+    .logout_dropdown a img.flag-img{
+        width: 30px;
+        height: 30px;
+    }
+    .logout_dropdown a {
+        display: flex;
+        font-weight: 700;
+        justify-content: space-between;
+        color:var(--main-color);
+        margin-right: 0;
+        padding: 5px 10px;
+    }
+    .logout_dropdown a:hover {
+        background-color:var(--main-color);
+        color: white;
+    }
+
+    .offcan_buttons_lang .dropdown-container a {
+        display: flex;
+        justify-content: space-around;
+    }
+    .offcan_buttons_lang .dropdown-container a img{
+        width: 25px;
+        height: 25px;
+    }
+    .nav-tabs {
+        border-bottom: none;
+      }
+/* -------------------------------------------------- */
+/* -------------------------------------------------- */
+/* change language ahmed sayed */
+/* -------------------------------------------------- */
+/* -------------------------------------------------- */
