@@ -23,24 +23,28 @@
                     <div class=" card explore_main">
                         {{-- <div class="card-body explore_card" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{asset("/website_assets/images/homePage/places/$City->image")}});"> --}}
 
-                       <div class="card-body explore_card" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/explore') }}/{{ $City->image }});">
+                       <div class="card-body explore_card"
+                        style="background-image: url({{ asset('uploads/explore') }}/{{ $City->image }});">
 
                             <div class="header_info">
-                            <h5><a href="#" class="stretched-link">{{$City->city->en_city}}</a>
-                            </h5>
-                            <span>{{$City->subtitle_en}}</span>
-                            <div class="explore_links">
-                                <button class="btn ">
-                                 <a href="{{ route('hotelByCity', $City->city->id) }}">
-                                  <i class="fa-solid fa-hotel"></i>
-                                 </a>
-                                </button>
-                                <button class="btn ">
-                                  <a href="./tours.html">
-                                    <i class="fa-solid fa-plane"></i>
-                                  </a>
-                                 </button>
-                              </div>
+                                <h5>
+                                    <a href="#" class="stretched-link">
+                                        {{$City->city->en_city}}
+                                    </a>
+                                </h5>
+                                <span>{{$City->subtitle_en}}</span>
+                                <div class="explore_links">
+                                    <button class="btn ">
+                                    <a href="{{ route('hotelByCity', $City->city->id) }}">
+                                    <i class="fa-solid fa-hotel"></i>
+                                    </a>
+                                    </button>
+                                    <button class="btn ">
+                                    <a href="./tours.html">
+                                        <i class="fa-solid fa-plane"></i>
+                                    </a>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
