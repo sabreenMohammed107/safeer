@@ -61,9 +61,14 @@ switch ($offers->count()) {
           @foreach ($offers as $key => $Offer)
           @if ($Map[$key + 2])
           <div class="col-md-{{$Map[$key + 2]}} col-sm-12  p-0">
-            <div class="card-content">
+            <div class="card-content" >
+
               <div class=" card">
-                <div class="card-body offers_card offer_place_1" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/offers') }}/{{ $Offer->image }});">
+                <div class="card-body offers_card offer_place_1"
+                onmouseenter="darkBG(this)"
+                onmouseleave="rmvDarkBG(this)"
+
+                 style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/offers') }}/{{ $Offer->image }});">
                   <div class="header_info">
                     <h5><a href="#" class="stretched-link">{{$Offer->city->en_city ?? ""}}</a>
                     </h5>
@@ -73,9 +78,11 @@ switch ($offers->count()) {
                       220 $
                     </span>
                   </div>
+
               </div>
               </div>
             </div>
+
           </div>
           @endif
           @endforeach
@@ -88,3 +95,20 @@ switch ($offers->count()) {
 </div>
 </div>
 </section>
+
+
+
+<script>
+
+  function darkBG(elm){
+    let allourImg = elm.style.backgroundImage.split(',');
+    ourURL = allourImg[allourImg.length - 1];
+    var newStyleBG = `linear-gradient(hsla(0, 0%, 0%, 0.733),hsla(0, 0%, 0%, 0.733)) , ${ourURL} `
+    elm.style.backgroundImage = newStyleBG;
+  }
+  function rmvDarkBG(elm){
+    var newStyleBG = `linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , ${ourURL} `
+    elm.style.backgroundImage = newStyleBG;
+  }
+</script>
+
