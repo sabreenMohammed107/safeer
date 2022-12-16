@@ -1,7 +1,5 @@
 <!-- slider -->
 
-
-<!-- slider -->
 <div class="slider_section">
     <div class="slider_details">
         <h1> {{ $company->master_page_entitle }} {{-- title --}} <br> {{ $company->master_page_ensubtitle }}
@@ -461,3 +459,4 @@
     </div>
 
 </div>
+
