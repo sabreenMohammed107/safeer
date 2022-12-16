@@ -24,7 +24,7 @@
                         {{-- <div class="card-body explore_card" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{asset("/website_assets/images/homePage/places/$City->image")}});"> --}}
 
                        <div class="card-body explore_card"
-                        style="background-image: url({{ asset('uploads/explore') }}/{{ $City->image }});">
+                        style="background-image:linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/explore') }}/{{ $City->image }});">
 
                             <div class="header_info">
                                 <h5>
