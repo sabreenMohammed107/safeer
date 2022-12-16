@@ -1,7 +1,7 @@
 @extends("layout.website.layout", ["Company" => $Company,"title"=>"Safer | Home"])
 
 @section("bottom-header")
-<x-website.header.home :company="$Company" :countries="$Countries" />
+<x-website.header.home :company="$Company" :countries="$Countries" :cities="$cities" />
 @endsection
 @section("content")
 
@@ -354,4 +354,53 @@
         </div>
       </div>
     </section>
+@endsection
+
+@section('adds_js')
+<script>
+    $(document).ready(function() {
+
+$('.dynamic').change(function() {
+
+    if ($(this).val() != '') {
+        var select = $(this).attr("id");
+        var value = $(this).val();
+
+
+        $.ajax({
+            url: "{{route('dynamicSearchCity.fetch')}}",
+            method: "get",
+            data: {
+                select: select,
+                value: value,
+
+            },
+            success: function(result) {
+
+                $('#city_id').html(result);
+            }
+
+        })
+    }
+});
+    });
+
+
+    function getNumberOfDays(start, end) {
+    const date1 = new Date(start);
+    const date2 = new Date(end);
+
+    // One day in milliseconds
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    // Calculating the time difference between two dates
+    const diffInTime = date2.getTime() - date1.getTime();
+
+    // Calculating the no. of days between two dates
+    const diffInDays = Math.round(diffInTime / oneDay);
+$('#nights').val(diffInDays);
+    return diffInDays;
+}
+
+    </script>
 @endsection

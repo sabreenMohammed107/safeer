@@ -92,6 +92,9 @@ Route::post("/safer/updateProfile", [AuthController::class, 'updateProfile'])->n
 //hotelByCity
 Route::get("/hotelByCity/{id}", [HotelsController::class, 'getHotelByCity'])->name("hotelByCity");
 
+//dynamicSearchCity.fetch
+  Route::get('dynamicSearchCity/fetch', [MainController::class,'fetchCity'])->name('dynamicSearchCity.fetch');
+
 Route::get("/safer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
 
 Route::middleware(['is-site-auth'])->group(function () {

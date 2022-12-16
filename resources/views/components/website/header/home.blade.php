@@ -37,41 +37,58 @@
 
                                     <div class="choices">
                                         <i class="fa-solid fa-location-dot"></i>
-                                        <select class="form-select" name="country_id"
+                                        <select class="form-select dynamic" id="country" name="country_id"
                                             aria-label="Default select example">
                                             @foreach ($countries as $Country)
-                                                <option value="{{ $Country->id }}">{{ $Country->en_country }}</option>
+                                                <option value="{{ $Country->id }}" {{ $Country->id==1 ? 'selected' : '' }} >{{ $Country->en_country }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
+                                    <h5> city</h5>
+
+                                    <div class="choices">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <select class="form-select" id="city_id" name="city_id"
+                                            aria-label="Default select example">
+                                            <option value="">Select City</option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}" {{ $city->id==1 ? 'selected' : '' }} >{{ $city->en_city }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                                     <h5> check in <span>check </span> </h5>
 
                                     <div class="datepicker calender">
                                         <i class="fa-solid fa-calendar-days"></i>
-                                        <input type="text" id="demo" name="from_date" class="demo"
+                                        <input type="text"  id="demo" name="from_date" class="demo"
                                             value="" />
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-xl-2">
+                                <div class="col-sm-12 col-md-6 col-xl-1">
                                     <h5> nights</h5>
-                                    <select class="form-select" name="nights" aria-label="Default select example">
+                                    {{-- <select class="form-select" name="nights" aria-label="Default select example">
                                         @for ($i = 1; $i < 11; $i++)
                                 <option value="{{ $i }}"
                                     @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights'] == $i ? 'selected' : '' }} @endif>
                                     {{ $i }} </option>
                             @endfor
-                                    </select>
+                                    </select> --}}
+                                    <input type="text" readonly class="form-control" id="nights" name="nights" value="7" >
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-xl-4">
+                                <div class="col-sm-12 col-md-6 col-xl-3">
                                     <h5> Add room</h5>
                                     <div class="rooms">
                                         <button class="info form-select" type="button" onclick="open_addnew()">
                                             <i class="fa-regular fa-user"></i>
-                                            <span id="adults"> 3 adults </span>
-                                            <span id="children"> 3 children </span>
-                                            <span id="rooms"> 3 rooms </span>
+                                            <span id="adults"> 1 adults </span>
+                                            <span id="children"> 0 children </span>
+                                            <span id="rooms">1 rooms </span>
                                         </button>
                                         <div class="add_new" id="add_new">
                                             <div class="form-group counter">
@@ -79,12 +96,12 @@
                                                 <div class="input-group counter_content">
                                                     <div class="input-group-btn">
                                                         <button id="down" type="button" class=" btn btn-default"
-                                                            onclick=" adultdown('0')"><span
+                                                            onclick=" adultdown('1')"><span
                                                                 class="glyphicon glyphicon-minus"> <i
                                                                     class="fa-solid fa-minus"></i></span></button>
                                                     </div>
                                                     <input type="text" name="adultsNumber" id="adultsNumber"
-                                                        class="form-control input-number" value="0" />
+                                                        class="form-control input-number" value="1" />
                                                     <div class="input-group-btn">
                                                         <button id="up" type="button" class="btn btn-default"
                                                             onclick="adultup('10')"><span
@@ -122,12 +139,12 @@
                                                 <div class="input-group counter_content">
                                                     <div class="input-group-btn">
                                                         <button id="down" type="button" class="btn btn-default"
-                                                            onclick=" roomdown('0')"><span
+                                                            onclick=" roomdown('1')"><span
                                                                 class="glyphicon glyphicon-minus"> <i
                                                                     class="fa-solid fa-minus"></i></span></button>
                                                     </div>
                                                     <input type="text" name="roomsNumber" id="roomsNumber"
-                                                        class="form-control input-number" value="0" />
+                                                        class="form-control input-number" value="1" />
                                                     <div class="input-group-btn">
                                                         <button id="up" type="button" class="btn btn-default"
                                                             onclick="roomup('10')"><span

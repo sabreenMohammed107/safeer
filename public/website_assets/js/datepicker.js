@@ -1,3 +1,5 @@
+
+var date = new Date();
 $('.demo').daterangepicker({
     "showISOWeekNumbers": true,
     "timePicker": false,
@@ -40,6 +42,38 @@ $('.demo').daterangepicker({
     "linkedCalendars": true,
     "showCustomRangeLabel": false,
     "startDate": 1,
-    "endDate": "December 31, 2016 @ h:mm A",
+
+    "endDate": moment(date).add(7,'days'),
     "opens": "center"
-});
+},
+ function(start, end) {
+    const date1 = new Date(start);
+    const date2 = new Date(end);
+
+    // One day in milliseconds
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    // Calculating the time difference between two dates
+    const diffInTime = date2.getTime() - date1.getTime();
+
+    // Calculating the no. of days between two dates
+    const diffInDays = Math.round(diffInTime / oneDay);
+$('#nights').val(diffInDays-1);
+  });
+
+
+function getNumberOfDays(start, end) {
+    const date1 = new Date(start);
+    const date2 = new Date(end);
+
+    // One day in milliseconds
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    // Calculating the time difference between two dates
+    const diffInTime = date2.getTime() - date1.getTime();
+
+    // Calculating the no. of days between two dates
+    const diffInDays = Math.round(diffInTime / oneDay);
+$('#nights').val(diffInDays);
+    return diffInDays;
+}

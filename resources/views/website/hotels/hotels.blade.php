@@ -31,6 +31,22 @@
                             </select>
                         </div>
                     </div>
+
+
+                    <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
+                        <h5> city</h5>
+
+                        <div class="choices">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <select class="form-select" name="city_id" aria-label="Default select example">
+                                @foreach ($Cities as $city)
+                                    <option value="{{ $city->id }}"
+                                        @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['city_id'] == $city->id ? 'selected' : '' }} @endif>
+                                        {{ $city->en_city }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                         <h5> check in <span>check </span> </h5>
                         @if (session()->has('sessionArr'))
@@ -44,18 +60,19 @@
                                 value="01/01/2018 - 01/15/2018" />
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-xl-2">
+                    <div class="col-sm-12 col-md-6 col-xl-1">
                         <h5> nights </h5>
-                        <select class="form-select" name="nights" aria-label="Default select example">
+                        {{-- <select class="form-select" name="nights" aria-label="Default select example">
                             @for ($i = 1; $i < 11; $i++)
                                 <option value="{{ $i }}"
                                     @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights'] == $i ? 'selected' : '' }} @endif>
                                     {{ $i }} </option>
                             @endfor
 
-                        </select>
+                        </select> --}}
+                        <input type="text" id="nights" class="form-control" readonly name="nights" value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights']}} @endif" >
                     </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
+                    <div class="col-sm-12 col-md-6 col-xl-3">
                         <h5> Add room</h5>
                         <div class="rooms">
                             <button class="info form-select" type="button" onclick="open_addnew()">
@@ -120,6 +137,8 @@
                                 </div>
                                 <div id="years">
                                     @if (session()->has('sessionArr'))
+                                    @if(!empty(session()->has('sessionArr')['ages']))
+
                                         @foreach (Session::get('sessionArr')['ages'] as $key => $age)
                                             <select class="form-select" name="ages[]"
                                                 aria-label="Default select example">\n\
@@ -136,6 +155,7 @@
 
                                             </select>
                                         @endforeach
+                                    @endif
                                     @endif
                                 </div>
                                 <div class="form-group counter">
@@ -402,6 +422,7 @@
                                 aria-labelledby="pills-home-tab" tabindex="0">
 
                                 @foreach ($HotelsRecommended as $HRec)
+
                                     <div class="card-content">
                                         <div class=" card setted_tour_cards ">
                                             <div class="card_image">
@@ -418,6 +439,7 @@
                                                         $datetime2 = new DateTime($HRec->end_date);
                                                         $interval = $datetime1->diff($datetime2);
                                                         $days = $interval->format('%a');
+
                                                     @endphp
                                                     <h6> <a href="{{ url('/hotels/' . $HRec->hotel_id) }}"
                                                             class="stretched-link">{{ $HRec->hotel_enname }} –
@@ -444,7 +466,7 @@
                                                     </div>
                                                     <span class="hotels_price"><span
                                                             style="color:#5f5858;font-size: 16px;font-weight: 300">start
-                                                            with</span> $ {{ $HRec->single_cost }}</span>
+                                                            with</span> $ {{ $HRec->minPrice }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -498,7 +520,7 @@
                                                     </div>
                                                     <span class="hotels_price"><span
                                                             style="color:#5f5858;font-size: 16px;font-weight: 300">start
-                                                            with</span> $ {{ $HPrice->single_cost }}</span>
+                                                            with</span> $ {{ $HPrice->minPrice }}</span>
                                                     {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
                                                 </div>
                                             </div>
@@ -553,7 +575,7 @@
                                                     </div>
                                                     <span class="hotels_price"><span
                                                             style="color:#5f5858;font-size: 16px;font-weight: 300">start
-                                                            with</span> $ {{ $HAlpha->single_cost }}</span>
+                                                            with</span> $ {{ $HAlpha->minPrice }}</span>
                                                     {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
                                                 </div>
                                             </div>
@@ -568,13 +590,17 @@
                     <nav aria-label="Page navigation page_pagination example">
                         <ul class="pagination">
                             @for ($i = 0; $i < $Count / 6; $i++)
+                            @if($Count > 6)
                                 <li class="page-item page-num" data-val="{{ $i + 1 }}"><a class="page-link"
                                         href="#">{{ $i + 1 }}</a></li>
+                                        @endif
                             @endfor
                             <input type="hidden" name="page_num" />
+                            @if($Count > 6)
                             <li class="page-item page-inc">
                                 <a class="page-link" href="#">Next</a>
                             </li>
+                            @endif
                         </ul>
                     </nav>
                 </div>
@@ -636,5 +662,8 @@
 
         });
     });
+
+
+
     </script>
 @endsection

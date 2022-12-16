@@ -105,20 +105,20 @@
             <div class="row mx-0">
               <div class="col-6">
                 <ul>
-                  <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
-                <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
+                  <li><i class="fa-solid fa-angle-right"></i><a href = "{{ url('/') }}"> Home </a></li>
+                   <li><i class="fa-solid fa-angle-right"></i><a href = "{{ url('/about') }}">About </a></li>
+                <li><i class="fa-solid fa-angle-right"></i><a href = "{{ url('/hotels') }}">Hotels </a></li>
+                   <li><i class="fa-solid fa-angle-right"></i><a href = "{{ url('/contact') }}">Contact </a></li>
+
                 </ul>
               </div>
               <div class="col-6">
                 <ul>
-                  <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
-                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">product 1 </a></li>
+                  <li><i class="fa-solid fa-angle-right"></i><a href = "{{ url('/blogs') }}">Blogs </a></li>
+                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">Tours </a></li>
+                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">Transfer </a></li>
+                   <li><i class="fa-solid fa-angle-right"></i><a href = "#">Visa </a></li>
+
 
                 </ul>
               </div>
