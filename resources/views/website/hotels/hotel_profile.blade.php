@@ -86,11 +86,50 @@
                             </div>
                             <div class="sharing_icons">
                               <i class="fa-solid fa-share-nodes"></i>
-                              <div class="heart" onclick="setHeart(this)">
-                                {{-- <input type="checkbox" id="fav">
+                              <div class="heart" data-bs-toggle="modal"
+                              data-bs-target="#staticBack{{ $Hotel->hotel_id }}drop">
+                              {{-- <input type="checkbox" id="fav" type="submit modl_fav_add_remov"
+                                  onclick="setHeart(this)" data-info-fav="not_added">
 
-                                <label class="heart" for="fav"></label> --}}
-                            </div>
+                              <label class="heart" for="fav"></label> --}}
+                          </div>
+
+
+                          {{-- this is model modified by AHMEDsyd --}}
+                          {{-- this is model modified by AHMEDsyd --}}
+                          {{-- this is model modified by AHMEDsyd --}}
+                          <div class="modal fade addFavDialog"
+                              id="staticBack{{ $Hotel->hotel_id }}drop" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1"
+                              aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="staticBackdropLabel">Add
+                                              Favorite</h5>
+                                          <button type="button" class="btn-close"
+                                              data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <h3>Are You Sure You want to Add This To Favorite !!</h3>
+                                          <h6> <a class="stretched-link">{{
+                                                  $Hotel->hotel_enname }} –
+                                                  {{ $Hotel->hotel_stars }} Stars</a></h6>
+                                          <h4> You Will Lose Old Data </h4>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary"
+                                              data-bs-dismiss="modal">Cancel</button>
+                                          <button class="btn btn-primary modl_fav_add_remov"
+                                              onclick="setHeart(this)" data-info-fav="not_added"
+                                              data-bs-dismiss="modal">Add</button>
+                                      </div>
+                                  </div>
+                              </div>
+                      </div>
+                  {{-- this is model modified by AHMEDsyd --}}
+                  {{-- this is model modified by AHMEDsyd --}}
+                  {{-- this is model modified by AHMEDsyd --}}
                             </div>
                         </div>
 
