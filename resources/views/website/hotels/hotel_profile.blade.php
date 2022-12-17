@@ -86,7 +86,11 @@
                             </div>
                             <div class="sharing_icons">
                               <i class="fa-solid fa-share-nodes"></i>
-                              <i class="fa-regular fa-heart"></i>
+                              <div class="heart" onclick="setHeart(this)">
+                                {{-- <input type="checkbox" id="fav">
+
+                                <label class="heart" for="fav"></label> --}}
+                            </div>
                             </div>
                         </div>
 

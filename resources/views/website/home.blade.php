@@ -28,7 +28,7 @@
 
                             <div class="header_info">
                                 <h5>
-                                    <a href="#" class="stretched-link">
+                                    <a href="#" >
                                         {{$City->city->en_city}}
                                     </a>
                                 </h5>
@@ -247,12 +247,14 @@
                   </div>
                   <div class="blog_info">
                     <h5 class="left_heading">
-                      {!! $AllBlogs[0]->en_title !!}
+                        <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}">
+                            {!! $AllBlogs[0]->en_title !!}
+                        </a>
                     </h5>
                     <p>
                       {!! $AllBlogs[0]->en_text !!}
                     </p>
-                    <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}" >
+                    <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}"   >
                       Read more <i class="fa-solid fa-angle-right"></i>
                     </a>
                   </div>
@@ -269,14 +271,16 @@
                          </div>
                          <div class="blog_info">
                            <h5>
-                             {!! $AllBlogs[$i]->en_title !!}
+                            <a href="{{url('/single-blog/'.$AllBlogs[$i]->id) }}">
+                                {!! $AllBlogs[$i]->en_title !!}
+                            </a>
                            </h5>
                            <p>
                             {!! \Illuminate\Support\Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...') !!}
                             {{-- {{ strip_tags(Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }} --}}
 
                             </p>
-                           <a href="{{url('/single-blog/'.$AllBlogs[$i]->id) }}" class="stretched-link">
+                           <a href="{{url('/single-blog/'.$AllBlogs[$i]->id) }}" >
                              Read more <i class="fa-solid fa-angle-right"></i>
                            </a>
                          </div>
@@ -303,14 +307,15 @@
                         </div>
                         <div class="blog_info">
                             <h5 class="left_heading">
-                                {!! $blog->en_title !!}
-
+                                <a href="{{url('/single-blog/'.$blog->id) }}">
+                                    {!! $blog->en_title !!}
+                                </a>
                             </h5>
                             <p>
                                 {!! \Illuminate\Support\Str::limit($blog->en_text ?? '', $limit = 300, $end = '...') !!}
 
                             </p>
-                            <a href="{{url('/single-blog/'.$blog->id) }}" class="stretched-link">
+                            <a href="{{url('/single-blog/'.$blog->id) }}" >
                             Read more <i class="fa-solid fa-angle-right"></i>
                             </a>
                         </div>
@@ -332,15 +337,16 @@
                          </div>
                          <div class="blog_info">
                            <h5>
-
-                             {!! $category_blog->en_title !!}
+                            <a href="{{url('/single-blog/'.$category_blog->id) }}">
+                                {!! $category_blog->en_title !!}
+                            </a>
                            </h5>
                            <p>
                             {!! \Illuminate\Support\Str::limit($category_blog->en_text ?? '', $limit = 300, $end = '...') !!}
 
 
                             </p>
-                           <a href="{{url('/single-blog/'.$category_blog->id) }}" class="stretched-link">
+                           <a href="{{url('/single-blog/'.$category_blog->id) }}" >
                              Read more <i class="fa-solid fa-angle-right"></i>
                            </a>
                          </div>

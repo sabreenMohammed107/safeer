@@ -1525,8 +1525,6 @@ background-color: transparent;
 }
 .blod_side_left:hover .left_image{
   background-image: url("./../images/homePage/blog/blog-1.webp");
-  cursor: pointer;
-
 }
 /*  ending page */
 .ending{
@@ -3055,7 +3053,7 @@ top: -4%;
   position: absolute;
   top: 45px;
   width: 100%;
-  /* left: 0px; */
+  left: 0px;
   display: none;
   z-index: 999;
 }
@@ -3447,7 +3445,31 @@ text-transform: none;
         background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
     }
 
-
+    .heart {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        right: -40px;
+        top: 30px;
+        transform: translate(-50%, -50%);
+        background: url(https://cssanimation.rocks/images/posts/steps/heart.png) no-repeat;
+        background-position: 0 0;
+        cursor: pointer;
+        animation: fave-heart 1s steps(28);
+        z-index: 9989;
+      }
+       .noHeartIsRed {
+        background-position: -2800px 0;
+        transition: background 1s steps(28);
+      }
+      @keyframes fave-heart {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: -2800px 0;
+        }
+      }
 
 /* -------------------------------------------------- */
 /* -------------------------------------------------- */
