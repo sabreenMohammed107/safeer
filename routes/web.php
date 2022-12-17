@@ -96,6 +96,7 @@ Route::get("/hotelByCity/{id}", [HotelsController::class, 'getHotelByCity'])->na
   Route::get('dynamicSearchCity/fetch', [MainController::class,'fetchCity'])->name('dynamicSearchCity.fetch');
 
 Route::get("/safer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
+Route::get("/safer/room/{id}/book/{cap}/exchange", [BookingController::class, 'ExBookRoom'])->name("exBookRoom");
 
 Route::middleware(['is-site-auth'])->group(function () {
     //Route::get("/safeer/test", [AuthController::class, 'testSessions']);

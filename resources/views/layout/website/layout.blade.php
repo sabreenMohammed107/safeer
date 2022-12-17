@@ -95,7 +95,8 @@
             <div class="left_info">
               <h6>About us  </h6>
               <p>
-                {{$Company->overview_en}}             </p>
+                {{$Company->overview_en}}
+            </p>
             </div>
           </div>
           <!-- useful links -->

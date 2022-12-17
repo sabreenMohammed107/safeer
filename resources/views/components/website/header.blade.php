@@ -1,7 +1,7 @@
 @if (session()->get('SiteUser'))
 <div class="cartbox">
     <a href="{{ route('get_cart') }}"><i class="fa-solid fa-cart-shopping"></i></a>
-    @if (session()->get('SiteUser') && session()->get('SiteUser')['hasCart'])
+    @if (session()->get('SiteUser') && session()->get('hasCart'))
     <div class="cartCount"></div>
     @endif
 </div>
@@ -149,7 +149,7 @@
                             <img title="Arabic" src="{{ asset('img/flags/ar.png') }}" class="flag-img">
                             <img title="English" src="{{ asset('img/flags/en.png') }}" class="flag-img main-lang">
                         </li>
-                    
+
                         {{-- <li class=" profile_name">
                             <button class="links hybrid btn profile_name_button" onclick="opendropdown()">
                                 <i class="fa-solid fa-globe"></i></button>

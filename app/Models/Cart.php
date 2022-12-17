@@ -14,7 +14,14 @@ class Cart extends Model
     protected $fillable = [
         'user_id',
         'room_type_cost_id',
-        'room_cap'
+        'room_cap',
+        'adults_count',
+        'children_count',
+        'rooms_count',
+        'nights',
+        'from_date',
+        'to_date',
+        'ages'
         //room_cap => {1:Single, 2:Double, 3:Triple}
     ];
 }

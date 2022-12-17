@@ -18,6 +18,7 @@ class HotelsController extends Controller
 
     public function profile(int $id)
     {
+        //return session("SiteUser");
         // $RoomCost = Room_type_cost::find((int) $id);
         $Hotel = Hotel::find((int) $id);
         // return $RoomCost->hotelRooms->hotel;
@@ -37,12 +38,8 @@ class HotelsController extends Controller
         $RoomCosts = DB::table("room_type_costs")
             ->select('room_type_costs.id', 'from_date', 'end_date', 'en_room_type', 'food_bev_type', 'ar_room_type',
                 'cost', 'single_cost', 'double_cost', 'triple_cost', 'hotel_id')
-
             ->leftJoin("room_types", "room_types.id", "=", "room_type_costs.room_type_id")
             ->leftJoin("food_beverages", "food_beverages.id", "=", "room_type_costs.food_beverage_id")
-        // ->leftJoin("hotels", "hotels.id", "=", "room_type_costs.hotel_id")
-        // ->leftJoin("cities", "cities.id", "=", "hotels.city_id")
-        // ->leftJoin("countries", "countries.id", "=", "cities.country_id")
             ->where([["hotel_id", "=", $id]])
 
             ->get();
@@ -74,14 +71,7 @@ class HotelsController extends Controller
 
         $cityId = $request->city_id;
         $Hotels = Hotel::all();
-//         DB::raw('
-//         CASE
-//         WHEN DATE(from_date)  >= ' . $todate . ' THEN min(single_cost)
-//         WHEN DATE(end_date)  >= ' . $enddate . ' THEN min(single_cost)
-//    END
 
-// as single_cost'))
-//single_cost
         $RoomCosts = DB::table("room_type_costs")
             ->select('hotels.id as hotel_id', 'hotel_enname', 'hotel_arname',
                 'hotel_enoverview', 'hotel_aroverview', 'hotel_stars',
@@ -132,12 +122,11 @@ class HotelsController extends Controller
             $HotelsByAlpha = $RoomCosts->where("city_id", "=", \Session::get('sessionArr')['city_id'])->orderBy("hotels.hotel_enname", 'asc')->get();
 
         }
-// dd($HotelsRecommended);
-        // return $HotelsByPrice;
-        //set serching data in session
 
         $sessionArr = ['from_date' => $arr[0], 'country_id' => $request->country_id,
             'city_id' => $request->city_id,
+            'city_name' => City::find($request->city_id)->en_city,
+            'country_name' => Country::find($request->country_id)->en_country,
             'nights' => $request->nights, 'adultsNumber' => $request->adultsNumber, 'childNumber' => $request->childNumber,
             'roomsNumber' => $request->roomsNumber,
             'end_date' => $arr[1],

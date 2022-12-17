@@ -177,8 +177,8 @@
                     <div class="row mx-0 p-0">
                         <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
                             <h5> destination</h5>
-
-                            <div class="choices">
+                            @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['country_name']}} @endif
+                            {{-- <div class="choices">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <select class="form-select" name="country_id" aria-label="Default select example">
                                     @foreach ($Countries as $Country)
@@ -187,14 +187,15 @@
                                             {{ $Country->en_country }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
 
 
                         <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
                             <h5> city</h5>
+                            @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['city_name']}} @endif
 
-                            <div class="choices">
+                            {{-- <div class="choices">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <select class="form-select"  name="city_id" aria-label="Default select example">
                                     @foreach ($cities as $city)
@@ -203,20 +204,21 @@
                                             {{ $city->en_city }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                             <h5> check in <span>check </span> </h5>
                             @if (session()->has('sessionArr'))
-                            <input type="hidden" id="from_date" value="{{ Session::get('sessionArr')['from_date'] }}" >
-                            <input type="hidden" id="end_date" value="{{ Session::get('sessionArr')['end_date'] }}" >
+                            {{ Session::get('sessionArr')['from_date'] }} - {{ Session::get('sessionArr')['end_date'] }}
+                            {{-- <input type="hidden" id="from_date" disabled value="{{ Session::get('sessionArr')['from_date'] }}" >
+                            <input type="hidden" id="end_date" disabled value="{{ Session::get('sessionArr')['end_date'] }}" > --}}
                         @endif
 
-                            <div class="datepicker calender">
+                            {{-- <div class="datepicker calender">
                                 <i class="fa-solid fa-calendar-days"></i>
                                 <input type="text" readonly id="demo" name="from_date" class="demo" placeholder=""
                                     value="01/01/2018 - 01/15/2018" />
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-1">
                             <h5> nights </h5>
@@ -228,12 +230,13 @@
                                 @endfor
 
                             </select> --}}
-                            <input type="text" id="nights" class="form-control" readonly name="nights" value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights']}} @endif" >
+                            @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights']}} @endif
+                            {{-- <input type="text" id="nights" class="form-control" readonly name="nights" value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights']}} @endif" > --}}
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-3">
                             <h5> Add room</h5>
-                            <div class="rooms" style="padding:0">
-                                <button class="info form-select" type="button" onclick="open_addnew()">
+                            <div class="" style="padding:0">
+                                {{-- <button class="info form-select" type="button" onclick="open_addnew()"> --}}
                                     <i class="fa-regular fa-user"></i>
                                     <span id="adults">
                                         @if (session()->has('sessionArr'))
@@ -242,101 +245,16 @@
                                     </span>
                                     <span id="children">
                                         @if (session()->has('sessionArr'))
-                                            {{ Session::get('sessionArr')['childNumber'] }}
+                                            , {{ Session::get('sessionArr')['childNumber'] }}
                                         @endif children
                                     </span>
                                     <span id="rooms">
                                         @if (session()->has('sessionArr'))
-                                            {{ Session::get('sessionArr')['roomsNumber'] }}
+                                            , {{ Session::get('sessionArr')['roomsNumber'] }}
                                         @endif rooms
                                     </span>
-                                </button>
-                                <div class="add_new" id="add_new">
-                                    <div class="form-group counter">
-                                        <label>adults</label>
-                                        <div class="input-group counter_content">
-                                            {{-- <div class="input-group-btn">
-                                                <button id="down" type="button" class=" btn btn-default"
-                                                    onclick=" adultdown('0')"><span class="glyphicon glyphicon-minus"> <i
-                                                            class="fa-solid fa-minus"></i></span></button>
-                                            </div> --}}
-                                            <input type="text" name="adultsNumber" id="adultsNumber"
-                                                class="form-control input-number"
-                                                value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['adultsNumber'] }} @endif" />
-                                            {{-- <div class="input-group-btn">
-                                                <button id="up" type="button" class="btn btn-default"
-                                                    onclick="adultup('10')"><span class="glyphicon glyphicon-plus"><i
-                                                            class="fa-solid fa-plus"></i></span></button>
-                                            </div> --}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group counter">
-                                        <label>children</label>
-                                        <div class="input-group counter_content">
-                                            {{-- <div class="input-group-btn">
-                                                <button id="down" type="button" class="btn btn-default"
-                                                    onclick=" childdown('0') ; removeYearsSelect() "><span
-                                                        class="glyphicon glyphicon-minus"> <i
-                                                            class="fa-solid fa-minus"></i></span></button>
-                                            </div> --}}
-                                            <input type="text" name="childNumber" id="childNumber"
-                                                class="form-control input-number"
-                                                value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['childNumber'] }} @endif"
-                                                onchange="addYearsSelect()" />
-                                            {{-- <div class="input-group-btn">
-                                                <button id="up" type="button" class="btn btn-default"
-                                                    onclick="childup('10'); addYearsSelect()"><span
-                                                        class="glyphicon glyphicon-plus"><i
-                                                            class="fa-solid fa-plus"></i></span></button>
-                                            </div> --}}
+                                {{-- </button> --}}
 
-                                        </div>
-
-                                    </div>
-                                    <div id="years">
-                                        @if (session()->has('sessionArr'))
-                                        @if(!empty(session()->has('sessionArr')['ages']))
-
-                                            @foreach (Session::get('sessionArr')['ages'] as $key => $age)
-                                                <select class="form-select" name="ages[]"
-                                                    aria-label="Default select example">\n\
-
-                                                    @for ($i = 0; $i < 10; $i++)
-                                                        <option value="{{ $i + 1 }}"
-                                                            {{ Session::get('sessionArr')['ages'][$key] == $i + 1 ? 'selected' : '' }}>
-                                                            {{ $i + 1 }} years old
-                                                        </option>
-                                                    @endfor
-
-
-
-
-                                                </select>
-                                            @endforeach
-                                        @endif
-                                        @endif
-                                    </div>
-                                    <div class="form-group counter">
-                                        <label>rooms</label>
-                                        <div class="input-group counter_content">
-                                            {{-- <div class="input-group-btn">
-                                                <button id="down" type="button" class="btn btn-default"
-                                                    onclick=" roomdown('0')"><span class="glyphicon glyphicon-minus"> <i
-                                                            class="fa-solid fa-minus"></i></span></button>
-                                            </div> --}}
-                                            <input type="text" name="roomsNumber" id="roomsNumber"
-                                                class="form-control input-number"
-                                                value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['roomsNumber'] }} @endif" />
-                                            {{-- <div class="input-group-btn">
-                                                <button id="up" type="button" class="btn btn-default"
-                                                    onclick="roomup('10')"><span class="glyphicon glyphicon-plus"><i
-                                                            class="fa-solid fa-plus"></i></span></button>
-                                            </div> --}}
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn done_button" onclick="close_addnew()">
-                                        Done </button>
-                                </div>
                             </div>
 
                         </div>
@@ -356,7 +274,11 @@
             </section>
         </div>
         <div class="rooms_avaliable container">
-            <h5> available rooms </h5>
+            <h5> available rooms
+                @if(session("hasCart"))
+                <span class="text-danger fs-6">*You have an existing Room in Your Cart</span>
+                @endif
+            </h5>
             <div id="rooms_content">
 
                 @foreach ($RoomCosts as $Room)
@@ -387,14 +309,18 @@
                                 <span><a href="#">Cancellation Policy</a></span>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-sm-12 col-md-6">
+                        <div class="col-xl-2 col-sm-12 col-md-6">
                             <span class="price_info">
                              Cost/Day: {{$Room->single_cost}} $
                             </span>
                         </div>
 
-                        <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                        <button class="btn rooms_button"> <a href="{{url("/safeer/room/$Room->id/book/1")}}">book</a> </button>
+                        <div class="col-xl-2 col-sm-12 col-md-6 p-0">
+                            @if(!session("hasCart"))
+                            <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/1")}}">Book</a> </button>
+                            @else
+                            <button class="btn rooms_button"><a href="{{url("/safer/room/$Room->id/book/1/exchange")}}">Replace Cart</a> </button>
+                            @endif
                         </div>
 
 
@@ -427,14 +353,18 @@
                                 <span><a href="#">Cancellation Policy</a></span>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-sm-12 col-md-6">
+                        <div class="col-xl-2 col-sm-12 col-md-6">
                             <span class="price_info">
                              Cost/Day: {{$Room->double_cost}} $
                             </span>
                         </div>
 
-                        <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                            <button class="btn rooms_button"> <a href="{{url("/safeer/room/$Room->id/book/2")}}">book</a> </button>
+                        <div class="col-xl-2 col-sm-12 col-md-6 p-0">
+                            @if(!session("hasCart"))
+                            <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/2")}}">Book</a> </button>
+                            @else
+                            <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/2/exchange")}}">Replace Cart</a> </button>
+                            @endif
                         </div>
 
 
@@ -465,14 +395,18 @@
                                 <span><a href="#">Cancellation Policy</a></span>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-sm-12 col-md-6">
+                        <div class="col-xl-2 col-sm-12 col-md-6">
                             <span class="price_info">
                              Cost/Day: {{$Room->triple_cost}} $
                             </span>
                         </div>
 
-                        <div class="col-xl-1 col-sm-12 col-md-6 p-0">
-                        <button class="btn rooms_button"> <a href="{{url("/safeer/room/$Room->id/book/3")}}">book</a> </button>
+                        <div class="col-xl-2 col-sm-12 col-md-6 p-0">
+                        @if(!session("hasCart"))
+                        <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/3")}}">Book</a> </button>
+                        @else
+                        <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/3/exchange")}}">Replace Cart</a> </button>
+                        @endif
                         </div>
 
 
