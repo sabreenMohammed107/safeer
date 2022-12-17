@@ -239,50 +239,7 @@
     background-color: white;
     color: #1C4482;
 }
-/* modal styles */
-.modal-dialog {
-    min-width: auto;
-}
-.modal-content {
-    height: fit-content;
-    border-radius: 17px;
 
-}
-.modal-header {
-    padding-left: 35px;
-    padding-right: 35px;
-    border-bottom: 1px solid rgba(126, 126, 126, 0.211);
-}
-.modal-title {
-    font-size: 27px;
-    color:#1C4482 ;
-    font-weight: 700;
-    text-transform: capitalize;
-
-}
-
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0px;
-    padding-left: 35px;
-    padding-right: 35px;
-}
-.modal-body .rating {
-    font-size: 30px;
-    margin-top: 10px;
-
-}
-.modal-body .rating i:nth-of-type(4),
-.modal-body .rating i:nth-of-type(5){
-    color: #DCDCDC;
-}
-.modal-footer {
-    justify-content: center;
-    border: none;
-}
 
 .comment_input {
     width: 100%;
@@ -566,3 +523,7 @@ fieldset, label { margin: 0; padding: 0; }
     }
 }
 
+.rooms_button
+ {
+    color: #f2f2f2;
+ }
