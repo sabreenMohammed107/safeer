@@ -478,17 +478,15 @@
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h3>Are You Sure You want to Add This To Favorite !!</h3>
+                                                            <h3>Add To Favorite</h3>
                                                             <h6> <a class="stretched-link">{{
                                                                     $HRec->hotel_enname }} –
                                                                     {{ $HRec->hotel_stars }} Stars</a></h6>
-                                                            <h4> You Will Lose Old Data </h4>
+                                                                    
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Cancel</button>
-                                                            <button class="btn btn-primary modl_fav_add_remov"
-                                                                onclick="setHeart(this)" data-info-fav="not_added"
+                                                            <button class="btn btn-primary"
+                                                                onclick="setHeart(this)"
                                                                 data-bs-dismiss="modal">Add</button>
                                                         </div>
                                                     </div>
@@ -573,17 +571,15 @@
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h3>Are You Sure You want to Add This To Favorite !!</h3>
+                                                            <h3>Add To Favorite</h3>
                                                             <h6> <a class="stretched-link">{{
                                                                     $HPrice->hotel_enname }} –
                                                                     {{ $HPrice->hotel_stars }} Stars</a></h6>
-                                                            <h4> You Will Lose Old Data </h4>
+
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Cancel</button>
-                                                            <button class="btn btn-primary modl_fav_add_remov"
-                                                                onclick="setHeart(this)" data-info-fav="not_added"
+                                                            <button class="btn btn-primary"
+                                                                onclick="setHeart(this)"
                                                                 data-bs-dismiss="modal">Add</button>
                                                         </div>
                                                     </div>
@@ -669,17 +665,15 @@
                                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <h3>Are You Sure You want to Add This To Favorite !!</h3>
+                                                                    <h3>Add To Favorite</h3>
                                                                     <h6> <a class="stretched-link">{{
                                                                             $HAlpha->hotel_enname }} –
                                                                             {{ $HAlpha->hotel_stars }} Stars</a></h6>
-                                                                    <h4> You Will Lose Old Data </h4>
+
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Cancel</button>
-                                                                    <button class="btn btn-primary modl_fav_add_remov"
-                                                                        onclick="setHeart(this)" data-info-fav="not_added"
+                                                                    <button class="btn btn-primary"
+                                                                        onclick="setHeart(this)"
                                                                         data-bs-dismiss="modal">Add</button>
                                                                 </div>
                                                             </div>
