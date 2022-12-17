@@ -523,3 +523,7 @@ fieldset, label { margin: 0; padding: 0; }
     }
 }
 
+.rooms_button
+ {
+    color: #f2f2f2;
+ }

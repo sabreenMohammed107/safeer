@@ -3556,6 +3556,19 @@ text-transform: none;
     margin-top: 5px;
   }
 
+.modal-content .modal-footer button.btn-secondary {
+    margin-top: 0px;
+  }
+  .modal-content .modal-footer button.btn-secondary {
+    color: white;
+  }
+  .modal-content .modal-footer button.btn-secondary {
+    background-color: #a52121;
+    border-radius: 16px;
+    width: 100%;
+    margin-top: 5px;
+  }
+
 /* -------------------------------------------------- */
 /* -------------------------------------------------- */
 /* change language ahmed sayed */
