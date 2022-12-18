@@ -219,7 +219,7 @@ class HotelsController extends Controller
     public function fetch(Request $request)
     {
 
-
+\Log::info(["message",$request->all()]);
 
         if ($request->ajax()) {
             $todate=null;
@@ -271,8 +271,8 @@ class HotelsController extends Controller
                     "HotelsRecommended" => $HotelsRecommended,
                     "HotelsByPrice" => $HotelsByPrice,
                     "HotelsByAlpha" => $HotelsByAlpha,
-                    "Count" =>  $HotelsRecommended->count(),
-                    "page_num" => $request->page_num,
+                    // "Count" =>  $HotelsRecommended->count(),
+                    // "page_num" => $request->page_num,
                     "todate" =>$todate,
                     "enddate" =>$enddate,
 
