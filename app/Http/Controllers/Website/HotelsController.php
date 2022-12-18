@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\Gallery;
 use App\Models\Hotel;
 use App\Models\Review;
 use App\Models\Room_type_cost;
 use App\Models\Zone;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HotelsController extends Controller
 {
