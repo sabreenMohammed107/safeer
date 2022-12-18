@@ -98,7 +98,8 @@
             <div class="left_info">
               <h6>About us  </h6>
               <p>
-                {{$Company->overview_en}}             </p>
+                {{$Company->overview_en}}
+            </p>
             </div>
           </div>
           <!-- useful links -->
@@ -151,14 +152,25 @@
                 </div>
               </div>
               <div class="contact_info">
-                <div class="info socail_links">
+                {{-- <div class="info socail_links">
                  <a href="{{$Company->facebook}}" target="_blank"> <i class="fa-brands fa-facebook-f"></i></a>
                  <a href="{{$Company->youtube}}" target="_blank"> <i class="fa-brands fa-youtube"></i></a>
                  <a href="{{$Company->instagram}}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
 
+                </div> --}}
+
+                <div class="social-buttons">
+                    <a href="#" class="social-button social-button--facebook" aria-label="Facebook">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-button social-button--youtube" aria-label="Youtube">
+                      <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-button social-button--instagram" aria-label="Instagram">
+                      <i class="fab fa-instagram"></i>
+                    </a>
                 </div>
               </div>
-            </div>
             </div>
         </div>
       </div>

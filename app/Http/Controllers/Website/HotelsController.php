@@ -17,6 +17,48 @@ class HotelsController extends Controller
 {
     public function profile($id)
     {
+<<<<<<< HEAD
+=======
+        //return session("SiteUser");
+        // $RoomCost = Room_type_cost::find((int) $id);
+        $Hotel = Hotel::find((int) $id);
+        // return $RoomCost->hotelRooms->hotel;
+        $Company = Company::first();
+        $BreadCrumb = [["url" => "/", "name" => "Home"], ["url" => "/hotels", "name" => "Hotels"]];
+
+        $HotelTourGallery = Gallery::where([["hotel_id", '=', $id], ["active", '=', 1]])->take(4)->get();
+        // return $HotelTourGallery;
+        $FeaturesCategories = DB::table("hotels_features")
+            ->select("en_category", "features_categories.id")
+            ->leftJoin("features", "features.id", "=", "hotels_features.feature_id")
+            ->leftJoin("features_categories", "features.feature_category_id", "=", "features_categories.id")
+            ->where("hotel_id", '=', $id)
+            ->groupBy(["en_category", "features_categories.id"])->get();
+        // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
+
+        $RoomCosts = DB::table("room_type_costs")
+            ->select('room_type_costs.id', 'from_date', 'end_date', 'en_room_type', 'food_bev_type', 'ar_room_type',
+                'cost', 'single_cost', 'double_cost', 'triple_cost', 'hotel_id')
+            ->leftJoin("room_types", "room_types.id", "=", "room_type_costs.room_type_id")
+            ->leftJoin("food_beverages", "food_beverages.id", "=", "room_type_costs.food_beverage_id")
+            ->where([["hotel_id", "=", $id]])
+
+            ->get();
+            $Countries = Country::all();
+            $cities=City::where('country_id',1)->get();
+        \Log::info($RoomCosts->count());
+        return view("website.hotels.hotel_profile", [
+            "Company" => $Company,
+            // "RoomCost" => $RoomCost,
+            "Hotel" => $Hotel,
+            "BreadCrumb" => $BreadCrumb,
+            "FeaturesCategories" => $FeaturesCategories,
+            "HotelTourGallery" => $HotelTourGallery,
+            "RoomCosts" => $RoomCosts,
+            "Countries" => $Countries,
+            "cities" => $cities,
+        ]);
+>>>>>>> dfb68c6e99f6c7a734363b202597b2dddc4fae37
     }
 
     public function hotels(Request $request)
@@ -24,6 +66,47 @@ class HotelsController extends Controller
 
         $arr = explode(' |', $request->from_date);
 
+<<<<<<< HEAD
+=======
+        // DB::raw(" CASE WHEN users.plan_status = 0 THEN DATE(users.created_at) ELSE null END AS expired_date ")
+
+        $cityId = $request->city_id;
+        $Hotels = Hotel::all();
+
+        $RoomCosts = DB::table("room_type_costs")
+            ->select('hotels.id as hotel_id', 'hotel_enname', 'hotel_arname',
+                'hotel_enoverview', 'hotel_aroverview', 'hotel_stars',
+                'hotel_banner', 'hotel_logo', 'hotel_enbrief', 'hotel_arbrief',
+                'city_id', 'details_enaddress', 'hotels.active', 'country_id', 'en_country', 'room_type_costs.from_date', 'room_type_costs.end_date',
+                'ar_country', 'en_city', 'ar_city', 'from_date', 'end_date', 'cost', DB::raw('count(review_text) as totalreviews')
+
+            ,DB::raw('MIN(single_cost) as minPrice'))
+            ->leftJoin("hotels", "hotels.id", "=", "room_type_costs.hotel_id")
+            ->leftJoin("reviews", "hotels.id", "=", "reviews.hotel_id")
+            ->leftJoin("cities", "cities.id", "=", "hotels.city_id")
+            ->leftJoin("countries", "countries.id", "=", "cities.country_id")
+            ->where("hotels.active", "=", 1)
+
+            ->groupBy('hotels.id', 'hotel_enname', 'hotel_arname',
+                'hotel_enoverview', 'hotel_aroverview', 'hotel_stars',
+                'hotel_banner', 'hotel_logo', 'hotel_enbrief', 'hotel_arbrief',
+                'city_id', 'details_enaddress', 'hotels.active', 'country_id', 'en_country', 'room_type_costs.from_date', 'room_type_costs.end_date'
+                , 'ar_country', 'en_city', 'ar_city', 'from_date', 'end_date', 'cost');
+
+        //search with only city id
+        if ($request->city_id) {
+            $RoomCosts->where("city_id", "=", $request->city_id);
+
+        }
+
+
+        else {
+            $RoomCosts->where("city_id", "=", \Session::get('sessionArr')['city_id']);
+
+        }
+
+        // $RoomCosts = $RoomCosts->addSelect(DB::raw("'sabreen' as sabreenColumn"));
+>>>>>>> dfb68c6e99f6c7a734363b202597b2dddc4fae37
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => "Home"]];
         $Countries = Country::all();
@@ -41,6 +124,7 @@ class HotelsController extends Controller
             $enddate = Carbon::createFromFormat('d/m/Y', $xxend)->format('Y-m-d');
 
         }
+<<<<<<< HEAD
 
         $city_id = $request->city_id;
         $HotelsRecommended = Room_type_cost::where('from_date', '<=', $todate)
@@ -61,9 +145,13 @@ class HotelsController extends Controller
             $q->where('city_id', $city_id);
         })->groupBy('hotel_id')->paginate(6);
         //set serching data in session
+=======
+>>>>>>> dfb68c6e99f6c7a734363b202597b2dddc4fae37
 
         $sessionArr = ['from_date' => $arr[0], 'country_id' => $request->country_id,
             'city_id' => $request->city_id,
+            'city_name' => City::find($request->city_id)->en_city,
+            'country_name' => Country::find($request->country_id)->en_country,
             'nights' => $request->nights, 'adultsNumber' => $request->adultsNumber, 'childNumber' => $request->childNumber,
             'roomsNumber' => $request->roomsNumber,
             'end_date' => $arr[1],

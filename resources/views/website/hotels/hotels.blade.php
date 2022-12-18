@@ -11,20 +11,21 @@
             background-color: #210D3A !important;
         }
     </style>
+7
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="All Hotels" :breadcrumb="$BreadCrumb" current="All Hotels" />
+<x-website.header.general title="All Hotels" :breadcrumb="$BreadCrumb" current="All Hotels" />
 @endsection
 @section('content')
-    <!-- booking section -->
-    <section class="booking_hotels_section container">
-        <form action="{{ url('/hotels') }}" method="POST">
-            @csrf
-            <div class="hotel_details">
-                <div class="row mx-0 p-0">
-                    <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                        <h5> destination</h5>
+<!-- booking section -->
+<section class="booking_hotels_section container">
+    <form action="{{ url('/hotels') }}" method="POST">
+        @csrf
+        <div class="hotel_details">
+            <div class="row mx-0 p-0">
+                <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
+                    <h5> destination</h5>
 
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
@@ -37,21 +38,21 @@
                             </select>
                         </div>
                     </div>
+                </div>
 
 
-                    <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                        <h5> city</h5>
+                <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
+                    <h5> city</h5>
 
-                        <div class="choices">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <select class="form-select" name="city_id" aria-label="Default select example">
-                                @foreach ($Cities as $city)
-                                    <option value="{{ $city->id }}"
-                                        @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['city_id'] == $city->id ? 'selected' : '' }} @endif>
-                                        {{ $city->en_city }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="choices">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <select class="form-select" name="city_id" aria-label="Default select example">
+                            @foreach ($Cities as $city)
+                            <option value="{{ $city->id }}" @if (session()->has('sessionArr')) {{
+                                Session::get('sessionArr')['city_id'] == $city->id ? 'selected' : '' }} @endif>
+                                {{ $city->en_city }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                         <h5> check in <span>check </span> </h5>
@@ -60,11 +61,10 @@
                             <input type="hidden" id="end_date" value="{{ Session::get('sessionArr')['end_date'] }}">
                         @endif
 
-                        <div class="datepicker calender">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <input type="text" id="demo" name="from_date" class="demo" placeholder=""
-                                value="01/01/2018 - 01/15/2018" />
-                        </div>
+                    <div class="datepicker calender">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <input type="text" id="demo" name="from_date" class="demo" placeholder=""
+                            value="01/01/2018 - 01/15/2018" />
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-1">
                         <h5> nights </h5>
@@ -199,92 +199,231 @@
                                 <button type="button" class="btn done_button" onclick="close_addnew()">
                                     Done </button>
                             </div>
-                        </div>
+                            <div class="form-group counter">
+                                <label>children</label>
+                                <div class="input-group counter_content">
+                                    <div class="input-group-btn">
+                                        <button id="down" type="button" class="btn btn-default"
+                                            onclick=" childdown('0') ; removeYearsSelect() "><span
+                                                class="glyphicon glyphicon-minus"> <i
+                                                    class="fa-solid fa-minus"></i></span></button>
+                                    </div>
+                                    <input type="text" name="childNumber" id="childNumber"
+                                        class="form-control input-number"
+                                        value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['childNumber'] }} @endif"
+                                        onchange="addYearsSelect()" />
+                                    <div class="input-group-btn">
+                                        <button id="up" type="button" class="btn btn-default"
+                                            onclick="childup('10'); addYearsSelect()"><span
+                                                class="glyphicon glyphicon-plus"><i
+                                                    class="fa-solid fa-plus"></i></span></button>
+                                    </div>
 
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-1 p-0 ">
-                        <div class="main" id="room_main">
+                                </div>
 
-                            <button class="btn" type="submit">
-                                Search
-                            </button>
+                            </div>
+                            <div id="years">
+                                @if (session()->has('sessionArr'))
+                                @if(!empty(session()->has('sessionArr')['ages']))
+
+                                @foreach (Session::get('sessionArr')['ages'] as $key => $age)
+                                <select class="form-select" name="ages[]" aria-label="Default select example">\n\
+
+                                    @for ($i = 0; $i < 10; $i++) <option value="{{ $i + 1 }}" {{
+                                        Session::get('sessionArr')['ages'][$key]==$i + 1 ? 'selected' : '' }}>
+                                        {{ $i + 1 }} years old
+                                        </option>
+                                        @endfor
+
+
+
+
+                                </select>
+                                @endforeach
+                                @endif
+                                @endif
+                            </div>
+                            <div class="form-group counter">
+                                <label>rooms</label>
+                                <div class="input-group counter_content">
+                                    <div class="input-group-btn">
+                                        <button id="down" type="button" class="btn btn-default"
+                                            onclick=" roomdown('0')"><span class="glyphicon glyphicon-minus"> <i
+                                                    class="fa-solid fa-minus"></i></span></button>
+                                    </div>
+                                    <input type="text" name="roomsNumber" id="roomsNumber"
+                                        class="form-control input-number"
+                                        value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['roomsNumber'] }} @endif" />
+                                    <div class="input-group-btn">
+                                        <button id="up" type="button" class="btn btn-default"
+                                            onclick="roomup('10')"><span class="glyphicon glyphicon-plus"><i
+                                                    class="fa-solid fa-plus"></i></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn done_button" onclick="close_addnew()">
+                                Done </button>
                         </div>
                     </div>
 
                 </div>
+                <div class="col-sm-12 col-md-6 col-xl-1 p-0 ">
+                    <div class="main" id="room_main">
 
+                        <button class="btn" type="submit">
+                            Search
+                        </button>
+                    </div>
+                </div>
 
             </div>
-        </form>
-    </section>
-
-    <section class="tours container mt-4">
-        <div class="row mx-0">
-            <div class="  col-sm-0 col-xl-3">
-                <button class="btn filtered_button" onclick="openFilter()" id="filterButton">
-                    <i class="fa-solid fa-sliders"></i> search tours
-                </button>
-                <div class="search_tours" id="filtered-menu">
-                    <!-- <h6> search tours </h6> -->
-                    <div class="filter_labels" id="filtered-menu">
-                        <h6> hotels</h6>
-                        @foreach ($Hotels as $Hotel)
-                            <div class="form-check">
-                                <input class="form-check-input hotel_id" type="checkbox" data-id="{{ $Hotel->id }}"
-                                    value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    {{ $Hotel->hotel_enname }}
-                                </label>
-                            </div>
-                        @endforeach
-                        <input type="hidden" name="hotel_ids" />
 
 
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            {{-- <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                       country
-                      </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                      <div class="accordion-body">
-                        @foreach ($Countries as $Country)
-                        <div class="form-check">
-                            <input class="form-check-input hotel_countries_id" data-id="{{$Country->id}}" type="checkbox" value="" id="defaultCheck4" >
-                            <label class="form-check-label" for="defaultCheck4">
-                            {{$Country->en_country}}
-                            </label>
-                          </div>
-                        @endforeach
-                        <input type="hidden" name="hotel_countries_ids" />
-                      </div>
+        </div>
+    </form>
+</section>
+
+<section class="tours container mt-4">
+    <div class="row mx-0">
+        <div class="  col-sm-0 col-xl-3">
+            <button class="btn filtered_button" onclick="openFilter()" id="filterButton">
+                <i class="fa-solid fa-sliders"></i> search tours
+            </button>
+            <div class="search_tours" id="filtered-menu">
+                <!-- <h6> search tours </h6> -->
+                <div class="filter_labels" id="filtered-menu">
+                    <h6> hotels</h6>
+                    @foreach ($Hotels as $Hotel)
+                    <div class="form-check">
+                        <input class="form-check-input hotel_id" type="checkbox" data-id="{{ $Hotel->id }}" value=""
+                            id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            {{ $Hotel->hotel_enname }}
+                        </label>
                     </div>
-                  </div> --}}
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                        aria-controls="flush-collapseTwo">
-                                        city
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                    aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        @foreach ($Cities as $City)
-                                            <div class="form-check">
-                                                <input class="form-check-input hotel_cities_id"
-                                                    data-id="{{ $City->id }}" type="checkbox" value=""
-                                                    id="defaultCheck4">
-                                                <label class="form-check-label" for="defaultCheck4">
-                                                    {{ $City->en_city }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                        <input type="hidden" name="hotel_cities_ids" />
+                    @endforeach
+                    <input type="hidden" name="hotel_ids" />
 
+
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        {{-- <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                    country
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    @foreach ($Countries as $Country)
+                                    <div class="form-check">
+                                        <input class="form-check-input hotel_countries_id" data-id="{{$Country->id}}"
+                                            type="checkbox" value="" id="defaultCheck4">
+                                        <label class="form-check-label" for="defaultCheck4">
+                                            {{$Country->en_country}}
+                                        </label>
                                     </div>
+                                    @endforeach
+                                    <input type="hidden" name="hotel_countries_ids" />
+                                </div>
+                            </div>
+                        </div> --}}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                    aria-controls="flush-collapseTwo">
+                                    city
+                                </button>
+                            </h2>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    @foreach ($Cities as $City)
+                                    <div class="form-check">
+                                        <input class="form-check-input hotel_cities_id" data-id="{{ $City->id }}"
+                                            type="checkbox" value="" id="defaultCheck4">
+                                        <label class="form-check-label" for="defaultCheck4">
+                                            {{ $City->en_city }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                    <input type="hidden" name="hotel_cities_ids" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                    aria-controls="flush-collapseThree">
+                                    rating
+                                </button>
+                            </h2>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input rate_val" type="checkbox" value="" data-val="5"
+                                            id="defaultCheck12">
+                                        <label class="form-check-label price" for="defaultCheck12">
+                                            <div class="rating">
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rate_val" type="checkbox" value="" data-val="4"
+                                            id="defaultCheck13">
+                                        <label class="form-check-label" for="defaultCheck13">
+                                            <div class="rating">
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rate_val" type="checkbox" value="" data-val="3"
+                                            id="defaultCheck14">
+                                        <label class="form-check-label" for="defaultCheck14">
+                                            <div class="rating">
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rate_val" type="checkbox" value="" data-val="2"
+                                            id="defaultCheck15">
+                                        <label class="form-check-label" for="defaultCheck15">
+                                            <div class="rating">
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+
+
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rate_val" type="checkbox" value="" data-val="1"
+                                            id="defaultCheck16">
+                                        <label class="form-check-label" for="defaultCheck16">
+                                            <div class="rating">
+                                                <i class="fa-solid fa-star"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <input type="hidden" name="hotel_rating" />
                                 </div>
                             </div>
 
@@ -407,9 +546,33 @@
                      </div>
                   </div> --}}
                         </div>
+                        {{-- <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingForth">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-colapseForth" aria-expanded="false"
+                                    aria-controls="flush-colapseForth">
+                                    price range
+                                </button>
+                            </h2>
+                            <div id="flush-colapseForth" class="accordion-collapse collapse w-100"
+                                aria-labelledby="flush-headingForth" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <div class="multiple_range">
+                                        <div class="multirange">
+                                            <input type="range" min="0" max="10000" value="0" class="lower"
+                                                name="price_from">
+                                            <input type="range" min="0" max="10000" value="10000" class="upper"
+                                                name="price_to">
+                                            <span class="line_range"></span>
+                                        </div>
+                                        <p><span class="result-l">0</span> L.E -</p>
+                                        <p><span class="result-u">10000</span> L.E</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
-
             </div>
 
             <div class="col-sm-12 col-xl-9">
@@ -430,16 +593,44 @@
                                         price</button>
                                 </li>
 
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link sort_by" data-val="alpha" id="pills-alpha-tab"
-                                        data-bs-toggle="pill" data-bs-target="#pills-alpha" type="button"
-                                        role="tab" aria-controls="pills-alpha" aria-selected="false">
-                                        alphabitic</button>
-                                </li>
-                                <input type="hidden" name="sort_by" />
+        <div class="col-sm-12 col-xl-9" id="hotels_content">
+            <div class="filtered_hotels">
+                <div class="filters">
+                    <span> {{ $Count }} Available hotel rooms</span>
+                    <div class="left_filter">
+                        <ul class="nav nav-pills " id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link sort_by active" data-val="rec" id="pills-home-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
+                                    aria-controls="pills-home" aria-selected="true">Recommended </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link sort_by" data-val="price" id="pills-profile-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab"
+                                    aria-controls="pills-profile" aria-selected="false"> by
+                                    price</button>
+                            </li>
+
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link sort_by" data-val="alpha" id="pills-alpha-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-alpha" type="button" role="tab"
+                                    aria-controls="pills-alpha" aria-selected="false">
+                                    alphabitic</button>
+                            </li>
+                            <input type="hidden" name="sort_by" />
+                        </ul>
+                        {{-- <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                alphabitic
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">A</a></li>
+                                <li><a class="dropdown-item" href="#">B</a></li>
+                                <li><a class="dropdown-item" href="#">C</a></li>
                             </ul>
 
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
                 <div id="table_data">
@@ -452,7 +643,8 @@
 
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection
 @section('adds_js')
     <script src="{{ asset('/website_assets/js/hotel_filters.js') }}"></script>
@@ -637,4 +829,3 @@
         }
         //End function of pagination product
     </script>
-@endsection

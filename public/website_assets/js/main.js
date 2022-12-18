@@ -48,5 +48,8 @@ myMainLang.onclick = function () {
     })
 }
 
-
+// fav-heart
+function setHeart(myfav){
+    myfav.parentElement.parentElement.parentElement.parentElement.parentElement.children[1].classList.toggle('noHeartIsRed');
+}
 

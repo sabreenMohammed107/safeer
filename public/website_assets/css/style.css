@@ -985,7 +985,7 @@ z-index: 0;
 .offers_details .offers_card.offer_place_4{
   background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url("./../images/homePage/places_offer/offer-place-3.webp");
 }
-.card:hover .offers_card.offer_place_1 {
+/* .card:hover .offers_card.offer_place_1 {
   background-image: linear-gradient(hsla(0, 0%, 0%, 0),hsla(0, 0%, 0%, 0)), url("./../images/homePage/places_offer/offer-place-1.webp");
 
 }
@@ -1000,7 +1000,7 @@ z-index: 0;
 .card:hover .offers_card.offer_place_4 {
   background-image: linear-gradient(hsla(0, 0%, 0%, 0),hsla(0, 0%, 0%, 0)), url("./../images/homePage/places_offer/offer-place-3.webp");
 
-}
+} */
 .statistics {
   background-image: linear-gradient(rgba(28, 69, 130, 0.81),rgba(28, 69, 130, 0.81)) , url("./../images/homePage/statics_back.webp");
   background-size:cover;
@@ -1525,8 +1525,6 @@ background-color: transparent;
 }
 .blod_side_left:hover .left_image{
   background-image: url("./../images/homePage/blog/blog-1.webp");
-  cursor: pointer;
-
 }
 /*  ending page */
 .ending{
@@ -1577,7 +1575,8 @@ background-color: transparent;
 }
 .btn-outline-secondary:hover{
   background-color: #68C2E5;
-  border-color: #68C2E5;
+
+  border: 2px solid white;
 }
 .newsletter button:hover a{
   color: #02265F;
@@ -3054,7 +3053,7 @@ top: -4%;
   position: absolute;
   top: 45px;
   width: 100%;
-  /* left: 0px; */
+  left: 0px;
   display: none;
   z-index: 999;
 }
@@ -3370,6 +3369,206 @@ text-transform: none;
     .fa-solid.fa-arrow-down-short-wide {
         margin-left: 20px;
     }
+    .social-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+    .social-button {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+        width: 64px;
+        height: 64px;
+        text-decoration: none;
+        border-radius: 100%;
+
+        text-align: center;
+    }
+    footer .contact_details .contact_info .social-buttons .social-button i {
+        margin-right: 0 !important;
+    }
+    .social-button::after {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: 50%;
+        display: flex;
+        justify-content: center;
+        width: 0;
+        height: 0;
+        border-radius: 100%;
+        transition: 0.3s;
+    }
+    .social-button:focus, .social-button:hover {
+        color: #fff;
+    }
+    .social-button:focus::after, .social-button:hover::after {
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        margin-left: calc(-50% - 1px);
+    }
+    .social-button i, .social-button svg {
+        position: relative;
+        z-index: 1;
+        transition: 0.3s;
+    }
+    .social-button i {
+        font-size: 25.6px;
+    }
+    .social-button svg {
+        height: 40%;
+        width: 40%;
+    }
+
+    .social-button--facebook {
+        color: #3b5999;
+    }
+    .social-button--facebook::after {
+        background: #3b5999;
+    }
+
+    .social-button--youtube {
+        color: #FF1212;
+    }
+    .social-button--youtube::after {
+        background: #FF1212;
+    }
+
+    .social-button--instagram {
+        color: #e4405f;
+    }
+    .social-button--instagram::after {
+        background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    }
+
+    .heart {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        right: -40px;
+        top: 30px;
+        transform: translate(-50%, -50%);
+        background: url(https://cssanimation.rocks/images/posts/steps/heart.png) no-repeat;
+        background-position: 0 0;
+        cursor: pointer;
+        animation: fave-heart 1s steps(28);
+        z-index: 9989;
+      }
+       .noHeartIsRed {
+        background-position: -2800px 0;
+        transition: background 1s steps(28);
+      }
+      @keyframes fave-heart {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: -2800px 0;
+        }
+      }
+
+      .addFavDialog {
+        max-width: 620px;
+        height: 225px;
+      }
+
+      .modal {
+        position: fixed;
+        top: 50%;
+        left:50%;
+        transform: translate(-50% , -8%);
+        display: none;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        outline: 0;
+        z-index: 9991;
+        -webkit-transform: translate(-50% , 50%);
+        -moz-transform: translate(-50% , -8%);
+        -ms-transform: translate(-50% , -8%);
+        -o-transform: translate(-50% , -8%);
+
+}
+
+.modal-backdrop.fade.show {
+    z-index: 9990;
+}
+/* modal styles */
+.modal-dialog {
+    min-width: auto;
+}
+.modal-content {
+    height: fit-content;
+    border-radius: 17px;
+
+}
+.modal-header {
+    padding-left: 35px;
+    padding-right: 35px;
+    border-bottom: 1px solid rgba(126, 126, 126, 0.211);
+}
+.modal-title {
+    font-size: 27px;
+    color:#1C4482 ;
+    font-weight: 700;
+    text-transform: capitalize;
+
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+.modal-body .rating {
+    font-size: 30px;
+    margin-top: 10px;
+
+}
+.modal-body .rating i:nth-of-type(4),
+.modal-body .rating i:nth-of-type(5){
+    color: #DCDCDC;
+}
+.modal-footer {
+    justify-content: center;
+    border: none;
+}
+
+.modal-content .modal-footer button.btn-primary {
+    margin-top: 0px;
+  }
+  .modal-content .modal-footer button.btn-primary {
+    color: white;
+  }
+  .modal-content .modal-footer button.btn-primary {
+    background-color: #1C4482;
+    border-radius: 16px;
+    width: 100%;
+    margin-top: 5px;
+  }
+
+.modal-content .modal-footer button.btn-secondary {
+    margin-top: 0px;
+  }
+  .modal-content .modal-footer button.btn-secondary {
+    color: white;
+  }
+  .modal-content .modal-footer button.btn-secondary {
+    background-color: #a52121;
+    border-radius: 16px;
+    width: 100%;
+    margin-top: 5px;
+  }
+
 /* -------------------------------------------------- */
 /* -------------------------------------------------- */
 /* change language ahmed sayed */

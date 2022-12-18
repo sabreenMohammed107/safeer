@@ -46,7 +46,7 @@
      <script src="{{asset('dist/assets/js/custom/utilities/modals/create-project/main.js')}}"></script>
      <script src="{{asset('dist/assets/js/custom/utilities/modals/users-search.js')}}"></script>
      <script src="{{asset('dist/assets/js/custom/utilities/modals/new-target.js')}}"></script>
-@yield('scripts')
+    @yield('scripts')
      <!--end::Page Custom Javascript-->
      <!--end::Javascript-->
 

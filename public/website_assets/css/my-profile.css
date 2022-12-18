@@ -1,5 +1,5 @@
 /* header edits */
-.register ul {
+/* .register ul {
     align-items: center;
     padding: 0px;
 }
@@ -20,6 +20,7 @@
 .navbar::after {
     right: 16%;
 }
+*/
 .profile_details {
     padding-top: 40px;
 }
@@ -31,7 +32,7 @@
     border: 1px solid #68C2E5 !important;
     border-radius: 10px !important;
     padding: 10px 15px !important;
-    margin-bottom: 10px !important; 
+    margin-bottom: 10px !important;
     text-align: left !important;
 }
 .profile_tabs div button i {
@@ -56,7 +57,7 @@
     display: none;
 }
 .account_info {
-  
+
     border: 1px solid #68C2E5;
     border-radius: 10px;
     padding: 25px;
@@ -137,7 +138,7 @@
     background-color: #1C4482;
     border-radius: 10px;
     padding: 5px;
-    width: 175px; 
+    width: 175px;
     height: 41px;
     margin-top: 10px;
     /* margin-bottom: 25px; */
@@ -220,7 +221,7 @@
     margin-bottom: 30px;
 }
 .rejected {
-    background-color:#FF0000 !important; 
+    background-color:#FF0000 !important;
     color: white !important;
 }
 .passenger_table .info span{
@@ -262,7 +263,7 @@ box-shadow: 0px 0px 3px #00000029;
     font-size: 14px;
     text-transform: capitalize;
     font-weight: 700;
- 
+
 }
 .edits div:nth-of-type(1) {
     color: #1C4482;
@@ -352,7 +353,7 @@ text-transform: none;
     }
     .payment_option .visa_info .visa .info{
         width: fit-content;
-    } 
+    }
 }
 @media (min-width:992px) and (max-width:1200PX){
     .navbar-nav > li > a{

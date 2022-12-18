@@ -21,7 +21,7 @@
     /* border: 1px solid grey; */
     /* transform: scale(1.1);
   }  */
-   
+
 .tour_info .titles  {
     position: relative;
     border-bottom:  1px solid #DCDCDC;
@@ -63,7 +63,9 @@
     position: absolute;
     top: 0px;
     right: 0px;
-
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 .tour_info .titles  .sharing_icons i {
     padding:10px 10px;
@@ -72,7 +74,7 @@
     border-radius: 50%;
     border: 1px solid #1C4482;
     font-size: 16px;
-    margin-right: 10px;
+    margin-top: 11px;
     cursor: pointer;
 
 }
@@ -232,55 +234,12 @@
     color: white;
 }
 .add_comment_button:focus i,
-.add_comment_button:hover i 
+.add_comment_button:hover i
 {
     background-color: white;
     color: #1C4482;
 }
-/* modal styles */
-.modal-dialog {
-    min-width: auto;
-}
-.modal-content {
-    height: fit-content;
-    border-radius: 17px;
 
-}
-.modal-header {
-    padding-left: 35px;
-    padding-right: 35px;
-    border-bottom: 1px solid rgba(126, 126, 126, 0.211);
-}
-.modal-title {
-    font-size: 27px;
-    color:#1C4482 ;
-    font-weight: 700;
-    text-transform: capitalize;
-
-}
-
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0px;
-    padding-left: 35px;
-    padding-right: 35px;
-}
-.modal-body .rating {
-    font-size: 30px;
-    margin-top: 10px;
-   
-}
-.modal-body .rating i:nth-of-type(4),
-.modal-body .rating i:nth-of-type(5){
-    color: #DCDCDC;
-}
-.modal-footer {
-    justify-content: center;
-    border: none;
-}
 
 .comment_input {
     width: 100%;
@@ -372,7 +331,7 @@ fieldset, label { margin: 0; padding: 0; }
 
 /****** Style Star Rating Widget **** */
 
-.rating { 
+.rating {
   border: none;
   /* float: left; */
 }
@@ -383,27 +342,27 @@ fieldset, label { margin: 0; padding: 0; }
 .rating label:hover  {
     cursor: pointer;
 }
-.rating > input { display: none; } 
-.rating > label:before { 
+.rating > input { display: none; }
+.rating > label:before {
   margin: 5px;
   font-size: 1.25em;
   font-family: FontAwesome;
   display: inline-block;
   content: "\f005";
   cursor: default;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
-.rating > .half:before { 
+.rating > .half:before {
   content: "\f089";
   position: absolute;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
-.rating > label { 
-  color: #ddd; 
- float: right; 
- cursor: pointer; 
+.rating > label {
+  color: #ddd;
+ float: right;
+ cursor: pointer;
 }
 
 /*  slider */
@@ -415,7 +374,7 @@ fieldset, label { margin: 0; padding: 0; }
     position: relative;
     margin: auto;
   }
-  
+
   /* Next & previous buttons */
   .prev, .next {
     cursor: pointer;
@@ -433,18 +392,18 @@ fieldset, label { margin: 0; padding: 0; }
     padding: 0px 10px;
     background-color: rgba(255, 255, 255, 0.385);
   }
-  
+
   /* Position the "next button" to the right */
   .next {
     right: 0;
-  
+
   }
-  
+
   /* On hover, add a black background color with a little bit see-through */
   .prev:hover, .next:hover {
     background-color:white;
   }
-  
+
   /* Number text (1/3 etc) */
   .numbertext {
     color: #f2f2f2;
@@ -453,11 +412,11 @@ fieldset, label { margin: 0; padding: 0; }
     position: absolute;
     top: 0;
   }
-  
+
   /* The dots/bullets/indicators */
   .dot {
     cursor: pointer;
-  
+
     max-width: 192px;
     max-height: 140px;
     margin: 10px 2px;
@@ -466,10 +425,10 @@ fieldset, label { margin: 0; padding: 0; }
     display: inline-block;
     transition: background-color 0.6s ease;
   }
-  
-  .active, .dot:hover {
+
+  /* .active, .dot:hover {
     background-color: #717171;
-  }
+  } */
 
   .silder_images {
     display: flex;
@@ -490,7 +449,7 @@ fieldset, label { margin: 0; padding: 0; }
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #e37458c0;cursor: pointer;  } 
+.rating > input:checked ~ label:hover ~ label { color: #e37458c0;cursor: pointer;  }
 
 
 @media (min-width: 991px) and (max-width: 1400px) {
@@ -498,7 +457,7 @@ fieldset, label { margin: 0; padding: 0; }
         max-width: 162px;
     }
 }
-@media (min-width: 767px) and (max-width: 1199px) 
+@media (min-width: 767px) and (max-width: 1199px)
 {
     .second_details::after {
         display: none;
@@ -563,5 +522,8 @@ fieldset, label { margin: 0; padding: 0; }
         padding: 7px 8px;
     }
 }
-    
-  
+
+.rooms_button
+ {
+    color: #f2f2f2;
+ }
