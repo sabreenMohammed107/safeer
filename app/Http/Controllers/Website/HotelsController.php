@@ -45,7 +45,7 @@ class HotelsController extends Controller
 
             ->get();
             $Countries = Country::all();
-            $cities=City::where('country_id',1)->get();
+            $Cities=City::where('country_id',1)->get();
         \Log::info($RoomCosts->count());
         return view("website.hotels.hotel_profile", [
             "Company" => $Company,
@@ -56,7 +56,7 @@ class HotelsController extends Controller
             "HotelTourGallery" => $HotelTourGallery,
             "RoomCosts" => $RoomCosts,
             "Countries" => $Countries,
-            "cities" => $cities,
+            "Cities" => $Cities,
         ]);
     }
 
@@ -102,15 +102,13 @@ class HotelsController extends Controller
         })->groupBy('hotel_id')->paginate(6);
         //set serching data in session
 
-        $sessionArr = ['from_date' => $arr[0], 'country_id' => $request->country_id,
-            'city_id' => $request->city_id,
-            'city_name' => City::find($request->city_id)->en_city,
-            'country_name' => Country::find($request->country_id)->en_country,
-            'childNumber',
-            'roomsNumber' => $request->roomsNumber,
-            'end_date' => $arr[1],
-            'ages' => $request->ages,
-        ];
+        $sessionArr=['from_date' => $arr[0] , 'country_id' => $request->country_id ,
+        'city_id'=> $request->city_id ,
+        'nights' => $request->nights, 'adultsNumber' => $request->adultsNumber ,'childNumber' => $request->childNumber ,
+        'roomsNumber' => $request->roomsNumber,
+        'end_date'=> $arr[1],
+        'ages' => $request->ages,
+    ];
         session(['sessionArr' => $sessionArr]);
 
         \Log::info(\Session::get('sessionArr'));

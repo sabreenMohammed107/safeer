@@ -230,10 +230,9 @@
                             <i class="fa-solid fa-location-dot"></i>
                             <select class="form-select" name="country_id" aria-label="Default select example">
                                 @foreach ($Countries as $Country)
-                                <option value="{{ $Country->id }}" disabled @if (session()->has('sessionArr')) {{
-                                    Session::get('sessionArr')['country_id'] == $Country->id ? 'selected' : '' }}
-                                    @endif>
-                                    {{ $Country->en_country }}</option>
+                                    <option value="{{ $Country->id }}"
+                                        @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['country_id'] == $Country->id ? 'selected' : '' }} @endif>
+                                        {{ $Country->en_country }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -246,10 +245,10 @@
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
                             <select class="form-select" name="city_id" aria-label="Default select example">
-                                @foreach ($cities as $city)
-                                <option value="{{ $city->id }}" disabled @if (session()->has('sessionArr')) {{
-                                    Session::get('sessionArr')['city_id'] == $city->id ? 'selected' : '' }} @endif>
-                                    {{ $city->en_city }}</option>
+                                @foreach ($Cities as $city)
+                                    <option value="{{ $city->id }}"
+                                        @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['city_id'] == $city->id ? 'selected' : '' }} @endif>
+                                        {{ $city->en_city }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -257,46 +256,46 @@
                     <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                         <h5> check in <span>check </span> </h5>
                         @if (session()->has('sessionArr'))
-                        <input type="hidden" id="from_date" value="{{ Session::get('sessionArr')['from_date'] }}">
-                        <input type="hidden" id="end_date" value="{{ Session::get('sessionArr')['end_date'] }}">
+                            <input type="hidden" id="from_date" value="{{ Session::get('sessionArr')['from_date'] }}">
+                            <input type="hidden" id="end_date" value="{{ Session::get('sessionArr')['end_date'] }}">
                         @endif
 
                         <div class="datepicker calender">
                             <i class="fa-solid fa-calendar-days"></i>
-                            <input type="text" readonly id="demo" name="from_date" class="demo" placeholder=""
+                            <input type="text" id="demo" name="from_date" class="demo" placeholder=""
                                 value="01/01/2018 - 01/15/2018" />
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-1">
                         <h5> nights </h5>
-                        {{-- <select class="form-select" name="nights" aria-label="Default select example">
-                            @for ($i = 1; $i < 11; $i++) <option value="{{ $i }}" @if (session()->has('sessionArr')) {{
-                                Session::get('sessionArr')['nights'] == $i ? 'selected' : '' }} @endif>
-                                {{ $i }} </option>
-                                @endfor
 
-                        </select> --}}
                         <input type="text" id="nights" class="form-control" readonly name="nights"
-                            value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights']}} @endif">
+                            value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights'] }} @else 7 @endif">
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-3">
                         <h5> Add room</h5>
-                        <div class="rooms" style="padding:0">
+                        <div class="rooms" style="padding: 0;box-shadow: 0">
                             <button class="info form-select" type="button" onclick="open_addnew()">
                                 <i class="fa-regular fa-user"></i>
                                 <span id="adults">
                                     @if (session()->has('sessionArr'))
-                                    {{ Session::get('sessionArr')['adultsNumber'] }}
+                                        {{ Session::get('sessionArr')['adultsNumber'] }}
+                                    @else
+                                        1
                                     @endif adults
                                 </span>
                                 <span id="children">
                                     @if (session()->has('sessionArr'))
-                                    {{ Session::get('sessionArr')['childNumber'] }}
+                                        {{ Session::get('sessionArr')['childNumber'] }}
+                                    @else
+                                        0
                                     @endif children
                                 </span>
                                 <span id="rooms">
                                     @if (session()->has('sessionArr'))
-                                    {{ Session::get('sessionArr')['roomsNumber'] }}
+                                        {{ Session::get('sessionArr')['roomsNumber'] }}
+                                    @else
+                                        1
                                     @endif rooms
                                 </span>
                             </button>
@@ -311,7 +310,12 @@
                                         </div> --}}
                                         <input type="text" name="adultsNumber" id="adultsNumber"
                                             class="form-control input-number"
-                                            value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['adultsNumber'] }} @endif" />
+                                            @if (session()->has('sessionArr'))
+                                            value="{{ Session::get('sessionArr')['adultsNumber'] }}"
+                                                                                       @else
+                                            value="1"
+                                             @endif
+                                            />
                                         {{-- <div class="input-group-btn">
                                             <button id="up" type="button" class="btn btn-default"
                                                 onclick="adultup('10')"><span class="glyphicon glyphicon-plus"><i
@@ -330,7 +334,12 @@
                                         </div> --}}
                                         <input type="text" name="childNumber" id="childNumber"
                                             class="form-control input-number"
-                                            value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['childNumber'] }} @endif"
+                                            @if (session()->has('sessionArr'))
+                                            value="{{ Session::get('sessionArr')['childNumber'] }}"
+                                                                                       @else
+                                            value="0"
+                                             @endif
+
                                             onchange="addYearsSelect()" />
                                         {{-- <div class="input-group-btn">
                                             <button id="up" type="button" class="btn btn-default"
@@ -344,36 +353,42 @@
                                 </div>
                                 <div id="years">
                                     @if (session()->has('sessionArr'))
-                                    @if(!empty(session()->has('sessionArr')['ages']))
+                                        @if (!empty(session()->has('sessionArr')['ages']))
+                                            @foreach (Session::get('sessionArr')['ages'] as $key => $age)
+                                                <select class="form-select" name="ages[]"
+                                                    aria-label="Default select example">\n\
 
-                                    @foreach (Session::get('sessionArr')['ages'] as $key => $age)
-                                    <select class="form-select" name="ages[]" aria-label="Default select example">\n\
-
-                                        @for ($i = 0; $i < 10; $i++) <option value="{{ $i + 1 }}" {{
-                                            Session::get('sessionArr')['ages'][$key]==$i + 1 ? 'selected' : '' }}>
-                                            {{ $i + 1 }} years old
-                                            </option>
-                                            @endfor
+                                                    @for ($i = 0; $i < 10; $i++)
+                                                        <option value="{{ $i + 1 }}"
+                                                            {{ Session::get('sessionArr')['ages'][$key] == $i + 1 ? 'selected' : '' }}>
+                                                            {{ $i + 1 }} years old
+                                                        </option>
+                                                    @endfor
 
 
 
 
-                                    </select>
-                                    @endforeach
-                                    @endif
+                                                </select>
+                                            @endforeach
+                                        @endif
                                     @endif
                                 </div>
                                 <div class="form-group counter">
                                     <label>rooms</label>
-                                    <div class="input-group counter_content">
-                                        {{-- <div class="input-group-btn">
+                                     <div class="input-group counter_content">
+                                        {{--<div class="input-group-btn">
                                             <button id="down" type="button" class="btn btn-default"
                                                 onclick=" roomdown('0')"><span class="glyphicon glyphicon-minus"> <i
                                                         class="fa-solid fa-minus"></i></span></button>
                                         </div> --}}
                                         <input type="text" name="roomsNumber" id="roomsNumber"
                                             class="form-control input-number"
-                                            value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['roomsNumber'] }} @endif" />
+                                            @if (session()->has('sessionArr'))
+                                            value="{{ Session::get('sessionArr')['roomsNumber'] }}"
+                                                                                       @else
+                                            value="1"
+                                             @endif
+                                            />
                                         {{-- <div class="input-group-btn">
                                             <button id="up" type="button" class="btn btn-default"
                                                 onclick="roomup('10')"><span class="glyphicon glyphicon-plus"><i
