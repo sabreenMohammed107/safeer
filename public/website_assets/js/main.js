@@ -30,7 +30,23 @@ var logout_dropdown = document.getElementById('logout_dropdown');
 
 
 
+// ahmed sayed = user loging success so this how to show user profile and logout options
+let menuToggle = document.querySelectorAll('.already_loged');
+let navigation = document.querySelector('.menu.user_info_options');
 
+menuToggle.forEach((itm)=>{
+    itm.addEventListener('click' , function(){
+        navigation.classList.toggle('active_user');
+    })
+})
+// change lang
+let myMainLang = document.querySelector('.profile_name');
+myMainLang.onclick = function () {
+    document.querySelectorAll('.profile_name img').forEach((lang) => {
+
+        lang.classList.toggle('main-lang');
+    })
+}
 
 
 

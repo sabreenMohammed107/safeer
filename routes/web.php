@@ -63,6 +63,7 @@ Route::post("/hotels/search", [HotelsController::class, 'search']);
 Route::get("/hotels/{id}", [HotelsController::class, 'profile']);
 Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
 Route::post("/hotels/review/{id}", [HotelsController::class, 'add_review']);
+Route::get('/fetch-hotel-filter',  [HotelsController::class, 'fetch_data'])->name('fetch-hotel-filter');
 //new Routes 23-11
 Route::get("/about", [ContentController::class, 'about']);
 Route::get("/blogs", [ContentController::class, 'blogs']);

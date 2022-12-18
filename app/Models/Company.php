@@ -44,5 +44,7 @@ class Company extends Model
         'book_transport_vedio',
         'book_transport_en_title',
         'book_transport_ar_title',
+        'book_img',
+        'transport_img'
     ];
 }

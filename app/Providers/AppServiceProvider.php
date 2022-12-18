@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Company_branch;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Builder;
 
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Builder::defaultStringLength(191);
+        $master=Company_branch::where('master_flag',1)->firstorfail();
         //
     }
 }

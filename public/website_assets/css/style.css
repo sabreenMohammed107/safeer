@@ -626,7 +626,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .explore .explore_card .header_info{
-  height: inherit;
+    height: inherit;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 100%;
+    height: 100%;
 }
 
 .explore .explore_card .header_info h5 a  {
@@ -642,20 +647,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: white;
 }
 .card:hover .explore_card.place_1 {
-  background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url("./../images/homePage/places/place-1.webp");
+  background-image: url("./../images/homePage/places/place-1.webp");
 }
 
 .card:hover .explore_card.place_2 {
 
-  background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url("./../images/homePage/places/place-2.webp");
+  background-image: url("./../images/homePage/places/place-2.webp");
 
 }
 .card:hover .explore_card.place_3{
-  background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url("./../images/homePage/places/place-3.webp");
+  background-image: url("./../images/homePage/places/place-3.webp");
 
 }
 .card:hover .explore_card.place_4{
-  background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url("./../images/homePage/places/place-4.webp");
+  background-image: url("./../images/homePage/places/place-4.webp");
 
 }
 .card{
@@ -3289,9 +3294,13 @@ text-transform: none;
   .offcan_buttons_lang:hover a::after{
       border: none;
     }
-    .logout_dropdown a img.flag-img{
+     img.flag-img{
         width: 30px;
         height: 30px;
+        display: none;
+    }
+    img.main-lang{
+        display: block;
     }
     .logout_dropdown a {
         display: flex;
@@ -3317,6 +3326,50 @@ text-transform: none;
     .nav-tabs {
         border-bottom: none;
       }
+      a.already_loged {
+        cursor: pointer;
+      }
+
+
+      .menu li {
+        list-style: none;
+      }
+
+      .menu li a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+        font-size: 1rem;
+        text-decoration: none;
+        color: var(--main-color);
+      }
+
+      .menu li a i {
+        font-size: 1.5rem;
+      }
+
+      .menu li a:hover {
+        color: var(--sub-text-color);
+      }
+      .links.hybrid.sign_in.already_loged{
+        position: relative;
+    }
+    .menu.user_info_options{
+        position: absolute;
+        top: 44px;
+        left: -19px;
+        display: none;
+        width: 100%;
+        background-color: white;
+        padding: 5px 15px;
+    }
+    .active_user {
+        display: block !important;
+    }
+    .fa-solid.fa-arrow-down-short-wide {
+        margin-left: 20px;
+    }
 /* -------------------------------------------------- */
 /* -------------------------------------------------- */
 /* change language ahmed sayed */

@@ -14,6 +14,8 @@ class Room_type_cost extends Model
     'end_date',
     'cost',
     'hotel_room_id',
+    'created_at',
+    'updated_at',
     'currency_id',
     'food_beverage_id',
     'single_cost',
@@ -32,5 +34,12 @@ class Room_type_cost extends Model
     {
         return $this->belongsTo(Hotel_room::class,'hotel_room_id');
     }
+
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class,'hotel_id');
+    }
+
+
 
 }

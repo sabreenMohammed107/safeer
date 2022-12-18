@@ -5,12 +5,6 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel.css') }}">
-    <style>
-        .pageActive {
-            color: white !important;
-            background-color: #210D3A !important;
-        }
-    </style>
 @endsection
 
 @section('bottom-header')
@@ -56,9 +50,9 @@
                     <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                         <h5> check in <span>check </span> </h5>
                         @if (session()->has('sessionArr'))
-                            <input type="hidden" id="from_date" value="{{ Session::get('sessionArr')['from_date'] }}">
-                            <input type="hidden" id="end_date" value="{{ Session::get('sessionArr')['end_date'] }}">
-                        @endif
+                        <input type="hidden" id="from_date" value="{{ Session::get('sessionArr')['from_date'] }}" >
+                        <input type="hidden" id="end_date" value="{{ Session::get('sessionArr')['end_date'] }}" >
+                    @endif
 
                         <div class="datepicker calender">
                             <i class="fa-solid fa-calendar-days"></i>
@@ -68,9 +62,15 @@
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-1">
                         <h5> nights </h5>
+                        {{-- <select class="form-select" name="nights" aria-label="Default select example">
+                            @for ($i = 1; $i < 11; $i++)
+                                <option value="{{ $i }}"
+                                    @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights'] == $i ? 'selected' : '' }} @endif>
+                                    {{ $i }} </option>
+                            @endfor
 
-                        <input type="text" id="nights" class="form-control" readonly name="nights"
-                            value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights'] }} @else 7 @endif">
+                        </select> --}}
+                        <input type="text" id="nights" class="form-control" readonly name="nights" value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights']}} @endif" >
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-3">
                         <h5> Add room</h5>
@@ -80,22 +80,16 @@
                                 <span id="adults">
                                     @if (session()->has('sessionArr'))
                                         {{ Session::get('sessionArr')['adultsNumber'] }}
-                                    @else
-                                        1
                                     @endif adults
                                 </span>
                                 <span id="children">
                                     @if (session()->has('sessionArr'))
                                         {{ Session::get('sessionArr')['childNumber'] }}
-                                    @else
-                                        0
                                     @endif children
                                 </span>
                                 <span id="rooms">
                                     @if (session()->has('sessionArr'))
                                         {{ Session::get('sessionArr')['roomsNumber'] }}
-                                    @else
-                                        1
                                     @endif rooms
                                 </span>
                             </button>
@@ -110,12 +104,7 @@
                                         </div>
                                         <input type="text" name="adultsNumber" id="adultsNumber"
                                             class="form-control input-number"
-                                            @if (session()->has('sessionArr'))
-                                            value="{{ Session::get('sessionArr')['adultsNumber'] }}"
-                                                                                       @else
-                                            value="1"
-                                             @endif
-                                            />
+                                            value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['adultsNumber'] }} @endif" />
                                         <div class="input-group-btn">
                                             <button id="up" type="button" class="btn btn-default"
                                                 onclick="adultup('10')"><span class="glyphicon glyphicon-plus"><i
@@ -134,12 +123,7 @@
                                         </div>
                                         <input type="text" name="childNumber" id="childNumber"
                                             class="form-control input-number"
-                                            @if (session()->has('sessionArr'))
-                                            value="{{ Session::get('sessionArr')['childNumber'] }}"
-                                                                                       @else
-                                            value="0"
-                                             @endif
-
+                                            value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['childNumber'] }} @endif"
                                             onchange="addYearsSelect()" />
                                         <div class="input-group-btn">
                                             <button id="up" type="button" class="btn btn-default"
@@ -153,24 +137,25 @@
                                 </div>
                                 <div id="years">
                                     @if (session()->has('sessionArr'))
-                                        @if (!empty(session()->has('sessionArr')['ages']))
-                                            @foreach (Session::get('sessionArr')['ages'] as $key => $age)
-                                                <select class="form-select" name="ages[]"
-                                                    aria-label="Default select example">\n\
+                                    @if(!empty(session()->has('sessionArr')['ages']))
 
-                                                    @for ($i = 0; $i < 10; $i++)
-                                                        <option value="{{ $i + 1 }}"
-                                                            {{ Session::get('sessionArr')['ages'][$key] == $i + 1 ? 'selected' : '' }}>
-                                                            {{ $i + 1 }} years old
-                                                        </option>
-                                                    @endfor
+                                        @foreach (Session::get('sessionArr')['ages'] as $key => $age)
+                                            <select class="form-select" name="ages[]"
+                                                aria-label="Default select example">\n\
+
+                                                @for ($i = 0; $i < 10; $i++)
+                                                    <option value="{{ $i + 1 }}"
+                                                        {{ Session::get('sessionArr')['ages'][$key] == $i + 1 ? 'selected' : '' }}>
+                                                        {{ $i + 1 }} years old
+                                                    </option>
+                                                @endfor
 
 
 
 
-                                                </select>
-                                            @endforeach
-                                        @endif
+                                            </select>
+                                        @endforeach
+                                    @endif
                                     @endif
                                 </div>
                                 <div class="form-group counter">
@@ -183,12 +168,7 @@
                                         </div>
                                         <input type="text" name="roomsNumber" id="roomsNumber"
                                             class="form-control input-number"
-                                            @if (session()->has('sessionArr'))
-                                            value="{{ Session::get('sessionArr')['roomsNumber'] }}"
-                                                                                       @else
-                                            value="1"
-                                             @endif
-                                            />
+                                            value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['roomsNumber'] }} @endif" />
                                         <div class="input-group-btn">
                                             <button id="up" type="button" class="btn btn-default"
                                                 onclick="roomup('10')"><span class="glyphicon glyphicon-plus"><i
@@ -412,10 +392,10 @@
 
             </div>
 
-            <div class="col-sm-12 col-xl-9">
+            <div class="col-sm-12 col-xl-9" id="hotels_content">
                 <div class="filtered_hotels">
                     <div class="filters">
-                        <span> Available hotel rooms</span>
+                        <span> {{ $Count }} Available hotel rooms</span>
                         <div class="left_filter">
                             <ul class="nav nav-pills " id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
@@ -438,18 +418,215 @@
                                 </li>
                                 <input type="hidden" name="sort_by" />
                             </ul>
-
+                            {{-- <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+               alphabitic
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">A</a></li>
+                <li><a class="dropdown-item" href="#">B</a></li>
+                <li><a class="dropdown-item" href="#">C</a></li>
+              </ul>
+            </div> --}}
+                            {{-- <div class="dropdown">
+              <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              EUR
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">EUR</a></li>
+                <li><a class="dropdown-item" href="#">LE</a></li>
+                <li><a class="dropdown-item" href="#">USA</a></li>
+              </ul>
+            </div> --}}
                         </div>
                     </div>
                 </div>
-                <div id="table_data">
+                <div class="row mx-0">
+                    <div class="col-sm-12 p-0">
 
-                    @include('website.hotels.hotelsList')
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active w-100" id="pills-home" role="tabpanel"
+                                aria-labelledby="pills-home-tab" tabindex="0">
 
+                                @foreach ($HotelsRecommended as $HRec)
 
+                                    <div class="card-content">
+                                        <div class=" card setted_tour_cards ">
+                                            <div class="card_image">
+                                                <div class="image_overlay">
 
+                                                    <img src=" {{ asset('uploads/hotels') }}/{{ $HRec->hotel_banner }}"
+                                                        alt=" blogimage">
+                                                </div>
+                                            </div>
+                                            <div class="card-body  setted_info">
+                                                <div class="card_info">
+                                                    @php
+                                                        $datetime1 = new DateTime($HRec->from_date);
+                                                        $datetime2 = new DateTime($HRec->end_date);
+                                                        $interval = $datetime1->diff($datetime2);
+                                                        $days = $interval->format('%a');
+
+                                                    @endphp
+                                                    <h6> <a href="{{ url('/hotels/' . $HRec->hotel_id) }}"
+                                                            class="stretched-link">{{ $HRec->hotel_enname }} –
+                                                            {{ $HRec->hotel_stars }} Stars</a></h6>
+                                                    <span>
+                                                        <i class="fa-regular fa-heart"></i>
+                                                    </span>
+                                                </div>
+                                                <span> <i class="fa-solid fa-location-dot"></i>{{ $HRec->en_country }}
+                                                    <span>|</span> {{ $HRec->en_city }}</span>
+                                                <p>
+                                                    {{ $HRec->hotel_enoverview }}
+                                                </p>
+                                                <div class="price">
+                                                    <div class="rating">
+                                                        @for ($i = 0; $i < $HRec->hotel_stars; $i++)
+                                                            <i class="fa-solid fa-star"></i>
+                                                        @endfor
+                                                        @for ($i = 5; $i > $HRec->hotel_stars; $i--)
+                                                            <i class="fa-regular fa-star"></i>
+                                                        @endfor
+
+                                                        <span> ({{ $HRec->totalreviews }} review) </span>
+                                                    </div>
+                                                    <span class="hotels_price"><span
+                                                            style="color:#5f5858;font-size: 16px;font-weight: 300">start
+                                                            with</span> $ {{ $HRec->single_cost }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                            <div class="tab-pane fade w-100" id="pills-profile" role="tabpanel"
+                                aria-labelledby="pills-profile-tab" tabindex="0">
+
+                                @foreach ($HotelsByPrice as $HPrice)
+                                    <div class="card-content">
+                                        <div class=" card setted_tour_cards ">
+                                            <div class="card_image">
+                                                <div class="image_overlay">
+
+                                                    <img src="{{ asset('uploads/hotels') }}/{{ $HPrice->hotel_banner }}"
+                                                        alt=" blogimage">
+                                                </div>
+                                            </div>
+                                            <div class="card-body  setted_info">
+                                                <div class="card_info">
+                                                    @php
+                                                        $datetime1 = new DateTime($HRec->from_date);
+                                                        $datetime2 = new DateTime($HRec->end_date);
+                                                        $interval = $datetime1->diff($datetime2);
+                                                        $days = $interval->format('%a');
+                                                    @endphp
+                                                    <h6> <a href="./hotel_details.html"
+                                                            class="stretched-link">{{ $HPrice->hotel_enname }} –
+                                                            {{ $HPrice->hotel_stars }} Stars</a></h6>
+                                                    <span>
+                                                        <i class="fa-regular fa-heart"></i>
+                                                    </span>
+                                                </div>
+                                                <span> <i class="fa-solid fa-location-dot"></i> {{ $HPrice->en_country }}
+                                                    <span>|</span> {{ $HPrice->en_city }}</span>
+                                                <p>
+                                                    {{ $HPrice->hotel_enoverview }}
+                                                </p>
+                                                <div class="price">
+                                                    <div class="rating">
+                                                        @for ($i = 0; $i < $HPrice->hotel_stars; $i++)
+                                                            <i class="fa-solid fa-star"></i>
+                                                        @endfor
+                                                        @for ($i = 5; $i > $HPrice->hotel_stars; $i--)
+                                                            <i class="fa-regular fa-star"></i>
+                                                        @endfor
+
+                                                        <span> ({{ $HPrice->totalreviews }} review) </span>
+                                                    </div>
+                                                    <span class="hotels_price"><span
+                                                            style="color:#5f5858;font-size: 16px;font-weight: 300">start
+                                                            with</span> $ {{ $HPrice->single_cost }}</span>
+                                                    {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                            <div class="tab-pane fade w-100" id="pills-alpha" role="tabpanel"
+                                aria-labelledby="pills-alpha-tab" tabindex="0">
+
+                                @foreach ($HotelsByAlpha as $HAlpha)
+                                    <div class="card-content">
+                                        <div class=" card setted_tour_cards ">
+                                            <div class="card_image">
+                                                <div class="image_overlay">
+
+                                                    <img src="{{ asset('uploads/hotels') }}/{{ $HAlpha->hotel_banner }}"
+                                                        alt=" blogimage">
+                                                </div>
+                                            </div>
+                                            <div class="card-body  setted_info">
+                                                <div class="card_info">
+                                                    @php
+                                                        $datetime1 = new DateTime($HAlpha->from_date);
+                                                        $datetime2 = new DateTime($HAlpha->end_date);
+                                                        $interval = $datetime1->diff($datetime2);
+                                                        $days = $interval->format('%a');
+                                                    @endphp
+                                                    <h6> <a href="./hotel_details.html"
+                                                            class="stretched-link">{{ $HAlpha->hotel_enname }} –
+                                                            {{ $HAlpha->hotel_stars }} Stars</a></h6>
+                                                    <span>
+                                                        <i class="fa-regular fa-heart"></i>
+                                                    </span>
+                                                </div>
+                                                <span> <i class="fa-solid fa-location-dot"></i> {{ $HAlpha->en_country }}
+                                                    <span>|</span> {{ $HAlpha->en_city }}</span>
+                                                <p>
+                                                    {{ $HAlpha->hotel_enoverview }}
+                                                </p>
+                                                <div class="price">
+                                                    <div class="rating">
+                                                        @for ($i = 0; $i < $HAlpha->hotel_stars; $i++)
+                                                            <i class="fa-solid fa-star"></i>
+                                                        @endfor
+                                                        @for ($i = 5; $i > $HAlpha->hotel_stars; $i--)
+                                                            <i class="fa-regular fa-star"></i>
+                                                        @endfor
+
+                                                        <span> ({{ $HAlpha->totalreviews }} review) </span>
+                                                    </div>
+                                                    <span class="hotels_price"><span
+                                                            style="color:#5f5858;font-size: 16px;font-weight: 300">start
+                                                            with</span> $ {{ $HAlpha->single_cost }}</span>
+                                                    {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <nav aria-label="Page navigation page_pagination example">
+                        <ul class="pagination">
+                            @for ($i = 0; $i < $Count / 6; $i++)
+                                <li class="page-item page-num" data-val="{{ $i + 1 }}"><a class="page-link"
+                                        href="#">{{ $i + 1 }}</a></li>
+                            @endfor
+                            <input type="hidden" name="page_num" />
+                            <li class="page-item page-inc">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-
             </div>
         </div>
     </section>
@@ -458,183 +635,58 @@
     <script src="{{ asset('/website_assets/js/hotel_filters.js') }}"></script>
     <script>
         $(document).ready(function() {
-            var from_date = $('#from_date').val();
-            var end_date = $('#end_date').val();
+            var from_date=$('#from_date').val();
+            var end_date=$('#end_date').val();
 
             $('.demo').daterangepicker({
-                    "showISOWeekNumbers": true,
-                    "timePicker": false,
-                    "autoUpdateInput": true,
-                    "locale": {
-                        "cancelLabel": 'Clear',
-                        "format": "MMMM DD, YYYY ",
-                        "separator": " | ",
-                        "applyLabel": "Apply",
-                        "cancelLabel": "Cancel",
-                        "fromLabel": "From",
-                        "toLabel": "To",
-                        "customRangeLabel": "Custom",
-                        "weekLabel": "W",
-                        "daysOfWeek": [
-                            "Su",
-                            "Mo",
-                            "Tu",
-                            "We",
-                            "Th",
-                            "Fr",
-                            "Sa"
-                        ],
-                        "monthNames": [
-                            "Jan",
-                            "Feb",
-                            "March",
-                            "April",
-                            "May",
-                            "June",
-                            "July",
-                            "August",
-                            "Sep.t",
-                            "Oct.",
-                            "Nov.",
-                            "Dec."
-                        ],
-                        "firstDay": 1
-                    },
-                    "linkedCalendars": true,
-                    "showCustomRangeLabel": false,
-                    "startDate": from_date,
-                    "endDate": end_date,
-                    "opens": "center",
-                },
-                function(start, end) {
-                    const date1 = new Date(start);
-                    const date2 = new Date(end);
+    "showISOWeekNumbers": true,
+    "timePicker": false,
+    "autoUpdateInput": true,
+    "locale": {
+        "cancelLabel": 'Clear',
+        "format": "MMMM DD, YYYY ",
+        "separator": " | ",
+        "applyLabel": "Apply",
+        "cancelLabel": "Cancel",
+        "fromLabel": "From",
+        "toLabel": "To",
+        "customRangeLabel": "Custom",
+        "weekLabel": "W",
+        "daysOfWeek": [
+            "Su",
+            "Mo",
+            "Tu",
+            "We",
+            "Th",
+            "Fr",
+            "Sa"
+        ],
+        "monthNames": [
+            "Jan",
+            "Feb",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "Sep.t",
+            "Oct.",
+            "Nov.",
+            "Dec."
+        ],
+        "firstDay": 1
+    },
+    "linkedCalendars": true,
+    "showCustomRangeLabel": false,
+    "startDate": from_date,
+    "endDate": end_date,
+    "opens": "center",
 
-                    // One day in milliseconds
-                    const oneDay = 1000 * 60 * 60 * 24;
-
-                    // Calculating the time difference between two dates
-                    const diffInTime = date2.getTime() - date1.getTime();
-
-                    // Calculating the no. of days between two dates
-                    const diffInDays = Math.round(diffInTime / oneDay);
-                    $('#nights').val(diffInDays - 1);
-                });
-
-
-
-
-
-
-
-            $(document).on('click', '#productt .pagination a', function(event) {
-                event.preventDefault();
-                var page = $(this).attr('href').split('page=')[1];
-                var arr = [];
-                var arr_countries = [];
-                var arr_cities = [];
-                var arr_zones = [];
-                var arr_ratings = [];
-
-                $(".hotel_id").change(function() {
-                    if ($(this).is(':checked')) {
-                        arr.push($(this).attr("data-id"));
-                    } else {
-                        var removeValue = $(this).attr("data-id");
-                        arr = $.grep(arr, function(n) {
-                            return n != removeValue;
-                        });
-                    }
-
-                    $("input[name=hotel_ids]").val(arr);
-
-                });
-                $(".hotel_cities_id").change(function() {
-                    if ($(this).is(':checked')) {
-                        arr_cities.push($(this).attr("data-id"));
-                    } else {
-                        var removeValue = $(this).attr("data-id");
-                        arr_cities = $.grep(arr_cities, function(n) {
-                            return n != removeValue;
-                        });
-                    }
-                    // console.log(arr);
-                    $("input[name=hotel_cities_ids]").val(arr_cities);
-
-                });
-                //zones
-                $(".hotel_zone_id").change(function() {
-                    if ($(this).is(':checked')) {
-                        arr_zones.push($(this).attr("data-id"));
-                    } else {
-                        var removeValue = $(this).attr("data-id");
-                        arr_zones = $.grep(arr_zones, function(n) {
-                            return n != removeValue;
-                        });
-                    }
-                    // console.log(arr);
-                    $("input[name=hotel_zone_ids]").val(arr_zones);
-
-                });
-                $(".hotel_countries_id").change(function() {
-                    if ($(this).is(':checked')) {
-                        arr_countries.push($(this).attr("data-id"));
-                    } else {
-                        var removeValue = $(this).attr("data-id");
-                        arr_countries = $.grep(arr_countries, function(n) {
-                            return n != removeValue;
-                        });
-                    }
-                    // console.log(arr);
-                    $("input[name=hotel_countries_ids]").val(arr_countries);
-
-                });
-                $(".rate_val").change(function() {
-                    if ($(this).is(':checked')) {
-                        arr_ratings.push($(this).attr("data-val"));
-                    } else {
-                        var removeValue = $(this).attr("data-val");
-                        arr_ratings = $.grep(arr_ratings, function(n) {
-                            return n != removeValue;
-                        });
-                    }
-                    // console.log(arr);
-                    $("input[name=hotel_rating]").val(arr_ratings);
-
-                });
-
-
-                fetch_productdata(page, arr, arr_countries, arr_cities, arr_zones, arr_ratings);
-
-            });
         });
-        // End paginate product
-        //function of pagination product
+    });
 
-        function fetch_productdata(page, billColors, billSizes, billprices, category) {
-            // alert(category)
-            $.ajax({
-                url: "/fetch-hotel-filter?page=" + page,
-                data: {
 
-                    hotel_ids: $("input[name=hotel_ids]").val(),
-                    hotel_rating: $("input[name=hotel_rating]").val(),
-                    hotel_countries_ids: $("input[name=hotel_countries_ids]").val(),
-                    hotel_cities_ids: $("input[name=hotel_cities_ids]").val(),
-                    hotel_zone_ids: $("input[name=hotel_zone_ids]").val(),
-                    price_from: $("input[name=price_from]").val(),
-                    price_to: $("input[name=price_to]").val(),
-                },
 
-                success: function(response) {
-                    $('#table_data').html(response);
-                    // $('#selectSort option[value="'+selection+'"]').prop('selected', true);
-                },
-                error: function(response) {
-
-                }
-            });
-        }
-        //End function of pagination product
     </script>
 @endsection

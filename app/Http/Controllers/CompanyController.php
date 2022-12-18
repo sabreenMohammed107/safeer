@@ -90,7 +90,7 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
-        $input = $request->except(['_token','image','master_page_img_bg']);
+        $input = $request->except(['_token','image','master_page_img_bg','book_img','transport_img']);
 
         if ($request->hasFile('image')) {
             $attach_image = $request->file('image');
@@ -101,6 +101,16 @@ class CompanyController extends Controller
             $attach_image2 = $request->file('master_page_img_bg');
 
             $input['master_page_img_bg'] = $this->UplaodImage($attach_image2);
+        }
+        if ($request->hasFile('book_img')) {
+            $attach_image3 = $request->file('book_img');
+
+            $input['book_img'] = $this->UplaodImage($attach_image3);
+        }
+        if ($request->hasFile('transport_img')) {
+            $attach_image4 = $request->file('transport_img');
+
+            $input['transport_img'] = $this->UplaodImage($attach_image4);
         }
         $company->update($input);
         return redirect()->route($this->routeName. 'edit',$company->id)->with('flash_success', 'Successfully Saved!');    }

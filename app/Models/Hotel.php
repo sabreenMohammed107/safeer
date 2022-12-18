@@ -20,6 +20,7 @@ class Hotel extends Model
     'hotel_enbrief',
     'hotel_arbrief',
     'city_id',
+    'zone_id',
     'details_enaddress',
     'details_araddress',
     'google_map',

@@ -1,10 +1,10 @@
 @if (session()->get('SiteUser'))
-    <div class="cartbox">
-        <a href="{{ route('get_cart') }}"><i class="fa-solid fa-cart-shopping"></i></a>
-        @if (session()->get('SiteUser') && session()->get('SiteUser')['hasCart'])
-            <div class="cartCount"></div>
-        @endif
-    </div>
+<div class="cartbox">
+    <a href="{{ route('get_cart') }}"><i class="fa-solid fa-cart-shopping"></i></a>
+    @if (session()->get('SiteUser') && session()->get('SiteUser')['hasCart'])
+    <div class="cartCount"></div>
+    @endif
+</div>
 @endif
 <div class="main-wrapper">
     <nav class="navbar container">
@@ -43,17 +43,17 @@
                 </button>
                 {{-- {{session()->get("SiteUser")["Name"]}} --}}
                 @if (session()->get('SiteUser'))
-                    <a href="#">{{ session()->get('SiteUser')['Name'] }}</a>
+                <a href="#">{{ session()->get('SiteUser')['Name'] }}</a>
                 @else
-                    <button class="offcan_buttons">
-                        <a href="#">sign in</a>
-                    </button>
-                    <button class="offcan_buttons">
-                        <a href="#">Sign up</a>
-                    </button>
+                <button class="offcan_buttons">
+                    <a href="#">sign in</a>
+                </button>
+                <button class="offcan_buttons">
+                    <a href="#">Sign up</a>
+                </button>
                 @endif
                 <button class="offcan_buttons_lang">
-                    <a class="dropdown-btn" >Language <i class="fa fa-caret-down"></i></a>
+                    <a class="dropdown-btn">Language <i class="fa fa-caret-down"></i></a>
 
                     <div class="dropdown-container">
                         <a href="#"><img src="{{ asset('img/flags/ar.png') }}" class="flag-img">Arabic language</a>
@@ -91,55 +91,77 @@
                 </li>
                 <div class="register">
                     {{-- <ul>
-                <span class="line">  <a href="./my-profile.html">
-                    <img src="./images/my-profile/profile_picture.webp" alt="profile image">
-                </a> </span>
-                <li class=" profile_name">
-                  <button class="links hybrid btn profile_name_button" onclick="opendropdown()"> Ghada Mohamed <i class="fa-solid fa-angle-down"></i></button>
-                    <div class="logout_dropdown" id="logout_dropdown">
-                      <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
-                    </div>
-                </li>
+                        <span class="line"> <a href="./my-profile.html">
+                                <img src="./images/my-profile/profile_picture.webp" alt="profile image">
+                            </a> </span>
+                        <li class=" profile_name">
+                            <button class="links hybrid btn profile_name_button" onclick="opendropdown()"> Ghada Mohamed
+                                <i class="fa-solid fa-angle-down"></i></button>
+                            <div class="logout_dropdown" id="logout_dropdown">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
+                            </div>
+                        </li>
 
-              </ul> --}}
+                    </ul> --}}
 
                     <ul>
-                        <span class="line"> <i class="fa-solid fa-user"></i> </span>
+                        <span class="line sign_in already_loged"> <i class="fa-solid fa-user"></i> </span>
                         @if (session()->get('SiteUser'))
-                            <li class="sign_in">
-                                <?php
+                        <li class="sign_in">
+                            <?php
                                 $userId = session()->get('SiteUser')['ID'];
                                 ?>
 
-                                <a href="{{ route('siteProfile', $userId) }}"
-                                    class="links hybrid sign_in">{{ session()->get('SiteUser')['Name'] }}</a>
-                            </li>
-                            <li class="sign_up">
-                                <a href="{{ route('siteLogout') }}" class="links hybrid sign_up">Logout</a>
-                            </li>
-                        @else
-                            <li class="sign_in">
-                                <a href="{{ route('siteLogin') }}" class="links hybrid sign_in">sign in</a>
-                            </li>
-                            <li class="sign_up">
-                                <a href="{{ route('siteRegister') }}" class="links hybrid sign_up">sign up</a>
-                            </li>
-                        @endif
-                        <li class=" profile_name">
-                            <button class="links hybrid btn profile_name_button" onclick="opendropdown()">
-                                <i class="fa-solid fa-globe"></i></button>
-                              <div class="logout_dropdown" id="logout_dropdown">
-
-                                <a class="links hybrid p-2" href='' ><img title="Arabic" src="{{ asset('img/flags/ar.png') }}" class="flag-img"> </a>
-                                <a class="links hybrid p-2" href='' ><img title="English" src="{{ asset('img/flags/en.png') }}" class="flag-img"> </a>
-
-                                {{-- <a class="links hybrid p-2" href='' >Ar</a>
-                                <a class="links hybrid p-2" href='' >En</a> --}}
+                            {{-- <a href="{{ route('siteProfile', $userId) }}" class="links hybrid sign_in">{{
+                                session()->get('SiteUser')['Name'] }}</a> --}}
 
 
-                            </div>
+                            <a class="links hybrid sign_in already_loged">
+                                {{ session()->get('SiteUser')['Name'] }}
+                                <i class="fa-solid fa-arrow-down-short-wide"></i>
+                            </a>
+                            <ul class="menu user_info_options">
+                                <li><a href="{{ route('siteProfile', $userId) }}" class="links hybrid sign_in"><i
+                                            class="fa-solid fa-user"></i>Profile</a></li>
+                                <li><a href="#" class="links hybrid sign_in"><i class="fa-solid fa-cart-shopping"></i>My
+                                        Cart</a></li>
+                                <li><a href="#" class="links hybrid sign_in"><i
+                                            class="fa-solid fa-solid fa-bag-shopping"></i>My Orders</a></li>
+                                <li><a class="links hybrid sign_in" href="{{ route('siteLogout') }}"><i
+                                            class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+                            </ul>
+
+
 
                         </li>
+                        {{-- <li class="sign_up">
+                            <a href="{{ route('siteLogout') }}" class="links hybrid sign_up">Logout</a>
+                        </li> --}}
+                        @else
+                        <li class="sign_in">
+                            <a href="{{ route('siteLogin') }}" class="links hybrid sign_in">sign in</a>
+                        </li>
+                        <li class="sign_up">
+                            <a href="{{ route('siteRegister') }}" class="links hybrid sign_up">sign up</a>
+                        </li>
+                        @endif
+                        <li class=" profile_name" style="opacity: 0.8">
+                            <img title="Arabic" src="{{ asset('img/flags/ar.png') }}" class="flag-img">
+                            <img title="English" src="{{ asset('img/flags/en.png') }}" class="flag-img main-lang">
+                        </li>
+
+                        {{-- <li class=" profile_name">
+                            <button class="links hybrid btn profile_name_button" onclick="opendropdown()">
+                                <i class="fa-solid fa-globe"></i></button>
+                            <div class="logout_dropdown" id="logout_dropdown">
+
+                                <a class="links hybrid p-2" href=''><img title="Arabic"
+                                        src="{{ asset('img/flags/ar.png') }}" class="flag-img"> </a>
+                                <a class="links hybrid p-2" href=''><img title="English"
+                                        src="{{ asset('img/flags/en.png') }}" class="flag-img"> </a>
+                            </div>
+
+                        </li> --}}
                     </ul>
                 </div>
             </ul>

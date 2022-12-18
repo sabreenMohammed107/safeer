@@ -70,27 +70,27 @@ var arr = [];
         $("input[name=hotel_rating]").val(arr_ratings);
         fetch_hotels()
     });
-    $(".sort_by").click(function(){
-        if($(this).attr("data-val") == "rec"){
-            sort_by = 0;
-        }else{
-            sort_by = 1;
-        }
-        // console.log(arr);
-        $("input[name=hotel_rating]").val(arr_ratings);
-        fetch_hotels()
-    });
-    $(".page-num").click(function(){
-        $("input[name=page_num]").val($(this).attr("data-val"));
-        fetch_hotels()
-    });
-    $(".page-inc").click(function(){
-        $("input[name=page_num]").val($(this).attr("data-val"));
-    });
-    function paginationSetter(value) {
-        $("input[name=page_num]").val(value);
-        fetch_hotels()
-    }
+    // $(".sort_by").click(function(){
+    //     if($(this).attr("data-val") == "rec"){
+    //         sort_by = 0;
+    //     }else{
+    //         sort_by = 1;
+    //     }
+    //     // console.log(arr);
+    //     $("input[name=hotel_rating]").val(arr_ratings);
+    //     fetch_hotels()
+    // });
+    // $(".page-num").click(function(){
+    //     $("input[name=page_num]").val($(this).attr("data-val"));
+    //     fetch_hotels()
+    // });
+    // $(".page-inc").click(function(){
+    //     $("input[name=page_num]").val($(this).attr("data-val"));
+    // });
+    // function paginationSetter(value) {
+    //     $("input[name=page_num]").val(value);
+    //     fetch_hotels()
+    // }
     function fetch_hotels() {
         var url = "/hotels/retrieve";
         $.ajax({
@@ -112,8 +112,8 @@ var arr = [];
 
             },
             success: function(result){
-                // console.log(result);
-                $("#hotels_content").html(result);
+                 console.log(result);
+                $("#table_data").html(result);
             },
             error: function(jqXHR, textStatus, error){
                 console.log(textStatus + " - " + jqXHR.responseText);

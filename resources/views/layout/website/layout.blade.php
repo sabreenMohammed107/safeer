@@ -135,19 +135,19 @@
               <div class="contact_info">
                 <div class="info">
                   <i class="fa-solid fa-phone"></i>
-                  <span>01093174220</span>
+                  {{-- <span> {{ $master->phone }}</span> --}}
                 </div>
               </div>
               <div class="contact_info">
                 <div class="info">
                   <i class="fa-solid fa-envelope"></i>
-                  <span>e-mail@geenf.com</span>
+                  {{-- <span>{{ $master->email }}</span> --}}
                 </div>
               </div>
               <div class="contact_info">
                 <div class="info">
                   <i class="fa-solid fa-location-dot"></i>
-                  <span>Nasr city -Abbas el akkad</span>
+                  {{-- <span> {{ $master->detailed_address_en }}</span> --}}
                 </div>
               </div>
               <div class="contact_info">

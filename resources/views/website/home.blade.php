@@ -23,24 +23,28 @@
                     <div class=" card explore_main">
                         {{-- <div class="card-body explore_card" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{asset("/website_assets/images/homePage/places/$City->image")}});"> --}}
 
-                       <div class="card-body explore_card" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/explore') }}/{{ $City->image }});">
+                       <div class="card-body explore_card"
+                        style="background-image: url({{ asset('uploads/explore') }}/{{ $City->image }});">
 
                             <div class="header_info">
-                            <h5><a href="#" class="stretched-link">{{$City->city->en_city}}</a>
-                            </h5>
-                            <span>{{$City->subtitle_en}}</span>
-                            <div class="explore_links">
-                                <button class="btn ">
-                                 <a href="{{ route('hotelByCity', $City->city->id) }}">
-                                  <i class="fa-solid fa-hotel"></i>
-                                 </a>
-                                </button>
-                                <button class="btn ">
-                                  <a href="./tours.html">
-                                    <i class="fa-solid fa-plane"></i>
-                                  </a>
-                                 </button>
-                              </div>
+                                <h5>
+                                    <a href="#" class="stretched-link">
+                                        {{$City->city->en_city}}
+                                    </a>
+                                </h5>
+                                <span>{{$City->subtitle_en}}</span>
+                                <div class="explore_links">
+                                    <button class="btn ">
+                                    <a href="{{ route('hotelByCity', $City->city->id) }}">
+                                    <i class="fa-solid fa-hotel"></i>
+                                    </a>
+                                    </button>
+                                    <button class="btn ">
+                                    <a href="./tours.html">
+                                        <i class="fa-solid fa-plane"></i>
+                                    </a>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -136,11 +140,12 @@
   </section>
   <!-- booking section -->
   <section class="booking">
-    <img src="{{ asset("/website_assets/images/homePage/slider-mask.webp") }}" alt="slider mask">
+
+    <img class="w-100" src="{{ asset("/website_assets/images/homePage/slider-mask.webp") }}" alt="slider mask">
     <div class="booking_details">
       <div class="row mx-0">
         <div class=" col-xl-6 col- md-6 col-sm-12 p-0">
-          <div class="images">
+          <div class="images" style="background-image:url('@if($Company->book_img) {{asset("uploads/company/$Company->book_img")}} @else {{ asset("/website_assets/images/homePage/slider-mask.webp") }}  @endif') ">
             <button type="button" class="btn js-modal-btn " data-video-url="{{$Company->book_tour_vedio}}" data-bs-toggle="modal" data-bs-target="#video">
               <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}" alt=" video play button">
             </button>
@@ -189,9 +194,9 @@
         </div>
         </div>
         <div class=" col-xl-6 col- md-6 col-sm-12">
-          <div class="images image-2">
+          <div class="images image-2" style="background-image:url('@if($Company->transport_img) {{asset("uploads/company/$Company->transport_img")}} @else {{ asset("/website_assets/images/homePage/slider-mask.webp") }}  @endif') " >
             <img src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
-            <img src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
+             <img src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
 
             <img src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
 
