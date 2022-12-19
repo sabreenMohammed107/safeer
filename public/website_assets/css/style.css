@@ -1565,6 +1565,7 @@ background-color: transparent;
 .newsletter button {
   background-color: #02265F;
   border-color: #02265F;
+  color:#fff;
   border-radius:8px;
   position: absolute;
   right: 0px;
@@ -1576,7 +1577,11 @@ background-color: transparent;
 .btn-outline-secondary:hover{
   background-color: #68C2E5;
 
-  border: 2px solid white;
+  /* border: 2px solid #02265F; */
+  border-right:2px solid #02265F;
+  border-top: 2px solid #02265F;
+  border-bottom: 2px solid #02265F;
+  color:#02265F;
 }
 .newsletter button:hover a{
   color: #02265F;

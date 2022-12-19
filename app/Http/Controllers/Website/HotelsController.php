@@ -83,9 +83,7 @@ class HotelsController extends Controller
         }
 
         $city_id = $request->city_id;
-        $HotelsRecommended = Room_type_cost::where('from_date', '<=', $todate)
-        ->where('end_date', '>=', $todate)
-       ->with(['hotel' => function ($q) {
+        $HotelsRecommended = Room_type_cost::with(['hotel' => function ($q) {
             $q->orderBy('hotel_stars');
         }])->whereHas('hotel', function ($q) use ($city_id) {
             $q->where('city_id', $city_id);
@@ -93,9 +91,7 @@ class HotelsController extends Controller
 
         $HotelsByPrice = $HotelsRecommended->sortBy('single_cost');
 
-        $HotelsByAlpha =  Room_type_cost::where('from_date', '<=', $todate)
-        ->where('end_date', '>=', $todate)
-        ->with(['hotel' => function ($q) {
+        $HotelsByAlpha =  Room_type_cost::with(['hotel' => function ($q) {
             $q->orderBy('hotel_enname');
         }])->whereHas('hotel', function ($q) use ($city_id) {
             $q->where('city_id', $city_id);

@@ -353,7 +353,8 @@
                                 </div>
                                 <div id="years">
                                     @if (session()->has('sessionArr'))
-                                        @if (!empty(session()->has('sessionArr')['ages']))
+                                        {{-- @if (!empty(session()->has('sessionArr')['ages'])) --}}
+                                        @if (Session::get('sessionArr')['ages'])
                                             @foreach (Session::get('sessionArr')['ages'] as $key => $age)
                                                 <select class="form-select" name="ages[]"
                                                     aria-label="Default select example">\n\

@@ -156,14 +156,17 @@
                                 </div>
                                 <div id="years">
                                     @if (session()->has('sessionArr'))
-                                        @if (!empty(session()->has('sessionArr')['ages']))
+                                        @if (Session::get('sessionArr')['ages'])
+                                        {{-- @if (is_array(session()->has('sessionArr'))) --}}
                                             @foreach (Session::get('sessionArr')['ages'] as $key => $age)
                                                 <select class="form-select" name="ages[]"
                                                     aria-label="Default select example">\n\
 
                                                     @for ($i = 0; $i < 10; $i++)
                                                         <option value="{{ $i + 1 }}"
-                                                            {{ Session::get('sessionArr')['ages'][$key] == $i + 1 ? 'selected' : '' }}>
+                                                        @if (session()->has('sessionArr'))
+                                                            {{ Session::get('sessionArr')['ages'][$key] == $i + 1 ? 'selected' : '' }}
+                                                            @endif >
                                                             {{ $i + 1 }} years old
                                                         </option>
                                                     @endfor
