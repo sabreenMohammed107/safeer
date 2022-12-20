@@ -2,6 +2,7 @@
 
 @section('adds_css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel.css') }}">
