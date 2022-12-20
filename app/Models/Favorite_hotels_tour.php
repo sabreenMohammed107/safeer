@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Favorite_hotels_tour extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'hotel_id',
+        'user_id',
+        'tour_id',
+
+    ];
 }

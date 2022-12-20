@@ -39,9 +39,14 @@
                                     <h6> <a href="{{ url('/hotels/' . $HRec->hotel_id) }}"
                                             class="stretched-link">{{ $HRec->hotel->hotel_enname }} –
                                             {{ $HRec->hotel->hotel_stars }} Stars</a></h6>
-                                    <span>
-                                        <i class="fa-regular fa-heart"></i>
-                                    </span>
+                                            <span>
+                                                @if (session()->get('SiteUser'))
+                                                <a href="{{ url('/favourite/' . $HRec->hotel_id) }} class="btn add_comment_button" ><i class="fa-regular fa-heart"></i> </a>
+                                                @else
+
+                                                <a href="{{ route('siteLogin') }}" class="btn add_comment_button"> <i class="fa-regular fa-heart"></i> </a>
+                                                @endif
+                                            </span>
                                 </div>
                                 <span> <i
                                         class="fa-solid fa-location-dot"></i>{{ $HRec->hotel->country->en_country ?? '' }}
@@ -91,12 +96,17 @@
                                         $interval = $datetime1->diff($datetime2);
                                         $days = $interval->format('%a');
                                     @endphp
-                                    <h6> <a href="./hotel_details.html"
+                                    <h6> <a href="{{ url('/hotels/' . $HPrice->hotel_id) }}"
                                             class="stretched-link">{{ $HPrice->hotel->hotel_enname }} –
                                             {{ $HPrice->hotel->hotel_stars }} Stars</a></h6>
-                                    <span>
-                                        <i class="fa-regular fa-heart"></i>
-                                    </span>
+                                            <span>
+                                                @if (session()->get('SiteUser'))
+                                                <a href="{{ url('/favourite/' . $HPrice->hotel_id) }} class="btn add_comment_button" ><i class="fa-regular fa-heart"></i> </a>
+                                                @else
+
+                                                <a href="{{ route('siteLogin') }}" class="btn add_comment_button"> <i class="fa-regular fa-heart"></i> </a>
+                                                @endif
+                                            </span>
                                 </div>
                                 <span> <i class="fa-solid fa-location-dot"></i> {{ $HPrice->hotel->country->en_country ?? '' }}
                                     <span>|</span> {{ $HPrice->hotel->city->en_city }}</span>
@@ -146,11 +156,16 @@
                                         $interval = $datetime1->diff($datetime2);
                                         $days = $interval->format('%a');
                                     @endphp
-                                    <h6> <a href="./hotel_details.html"
+                                    <h6> <a href="{{ url('/hotels/' . $HAlpha->hotel_id) }}"
                                             class="stretched-link">{{ $HAlpha->hotel->hotel_enname }} –
                                             {{ $HAlpha->hotel->hotel_stars }} Stars</a></h6>
                                     <span>
-                                        <i class="fa-regular fa-heart"></i>
+                                        @if (session()->get('SiteUser'))
+                                        <a href="{{ url('/favourite/' . $HAlpha->hotel_id) }} ><i class="fa-regular fa-heart"></i> </a>
+                                        @else
+
+                                        <a href="{{ route('siteLogin') }}" class="btn add_comment_button"> <i class="fa-regular fa-heart"></i> </a>
+                                        @endif
                                     </span>
                                 </div>
                                 <span> <i class="fa-solid fa-location-dot"></i> {{ $HAlpha->hotel->country->en_country ?? '' }}

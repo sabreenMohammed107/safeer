@@ -18,7 +18,9 @@ use App\Http\Controllers\HotelPricesController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\SiteAuth\AuthController;
+use App\Http\Controllers\SiteUsersController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\UsersOrderController;
 use App\Http\Controllers\Website\BookingController;
 use App\Http\Controllers\Website\ContentController;
 use App\Http\Controllers\Website\HotelsController;
@@ -61,6 +63,9 @@ Route::post("/hotels", [HotelsController::class, 'hotels']);
 Route::post("/hotels/retrieve", [HotelsController::class, 'fetch']);
 Route::post("/hotels/search", [HotelsController::class, 'search']);
 Route::get("/hotels/{id}", [HotelsController::class, 'profile']);
+//favourite
+Route::get("/favourite/{id}", [HotelsController::class, 'favourite']);
+
 Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
 Route::post("/hotels/review/{id}", [HotelsController::class, 'add_review']);
 Route::get('/fetch-hotel-filter',  [HotelsController::class, 'fetch_data'])->name('fetch-hotel-filter');
@@ -156,6 +161,11 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
            //tours
          Route::resource('offers', OfferController::class);
 
+         //
+
+         Route::resource('site-users', SiteUsersController::class);
+
+         Route::resource('users-orders', UsersOrderController::class);
 });
 
 /*------------------------------------------

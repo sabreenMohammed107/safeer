@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\Favorite_hotels_tour;
 use App\Models\Gallery;
 use App\Models\Hotel;
 use App\Models\Review;
@@ -357,6 +358,19 @@ class HotelsController extends Controller
 
         $Rev->save();
 
+        return redirect()->back();
+    }
+
+
+    public function favourite($id){
+
+        if(session()->get("SiteUser")){
+            $input=[
+                'hotel_id'=>$id,
+                'user_id'=>session()->get("SiteUser")["ID"],
+            ];
+            Favorite_hotels_tour::create($input);
+        }
         return redirect()->back();
     }
 }

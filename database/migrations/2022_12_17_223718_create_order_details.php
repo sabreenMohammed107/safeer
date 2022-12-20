@@ -20,10 +20,8 @@ return new class extends Migration
             $table->string("room_type", 100);
             $table->string("room_view", 100);
             $table->string("food_bev_type", 100);
-
             $table->float("room_cost");
             $table->float("total_cost");
-
             $table->unsignedBigInteger('hotel_id')->nullable();
             $table->foreign('hotel_id')->references('id')->on('hotels');
 
