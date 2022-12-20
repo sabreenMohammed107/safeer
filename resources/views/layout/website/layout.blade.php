@@ -151,7 +151,7 @@
                 </div>
               </div>
               <div class="contact_info">
-                <div class="social-buttons">
+                {{-- <div class="social-buttons">
                     <a href="#" class="social-button social-button--facebook" aria-label="Facebook">
                       <i class="fab fa-facebook-f"></i>
                     </a>
@@ -161,6 +161,13 @@
                     <a href="#" class="social-button social-button--instagram" aria-label="Instagram">
                       <i class="fab fa-instagram"></i>
                     </a>
+                </div> --}}
+                <div class="icons-container">
+                    <div class="social-icons spinned">
+                        <a class="item facebook" href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a class="item youtube" href="#"><i class="fa-brands fa-youtube"></i></a>
+                        <a class="item instagram" href="#"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
                 </div>
               </div>
             </div>

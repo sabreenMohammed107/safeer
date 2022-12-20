@@ -1649,6 +1649,11 @@ footer .contact_details .contact_info i {
   font-size: 19px;
   color: var(--text-color);
 }
+footer .contact_details .contact_info i.fa-brands {
+  margin-right: 0;
+  font-size: 19px;
+  color: var(--main-color);
+}
 /* footer .contact_details .letter img{
 width: 35px;
 } */
@@ -3374,7 +3379,108 @@ text-transform: none;
     .fa-solid.fa-arrow-down-short-wide {
         margin-left: 20px;
     }
-    .social-buttons {
+
+    /* social buttons */
+    .icons-container{
+        height: 100px;
+        width: 400px;
+
+    }
+
+    .social-icons .item {
+        display: inline-block;
+        margin: 5px;
+        width: 50px;
+        height: 50px;
+        transition: .3s all;
+        position: relative;
+        -webkit-transition: .3s all;
+        text-align: center;
+        color: var(--main-color) !important;
+        background-color: #fff;
+        line-height: 48px;
+        border-radius: 50px;
+        -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
+        -moz-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
+        box-shadow: 0px 5px 11px 0px rgba(0,0,0,0.18), 0px 4px 15px 0px rgba(0,0,0,0.15);
+    }
+
+    .social-icons.spinned .item:hover {
+        -webkit-animation: Social-Icons-Flipping .3s;
+        animation: Social-Icons-Flipping .3s
+    }
+    footer .contact_details .contact_info .social-icons .item:hover i.fa-brands{
+        text-decoration: none;
+
+        color: #fff !important;
+    }
+    .social-icons .item .fa-brands {
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .social-icons .facebook {
+        color: #425F9C!important
+    }
+    .social-icons .twitter {
+        color: #00ACEE!important
+    }
+    .social-icons .google {
+        color: #c00!important
+    }
+    .social-icons .linkedin {
+        color: #0073B2!important
+    }
+    .social-icons .youtube {
+        color: #EB3E40!important
+    }
+    .social-icons .instagram {
+        color: #5E8AAC!important
+    }
+
+    .facebook:hover {
+        background-color: #425F9C!important
+    }
+    .twitter:hover {
+        background-color: #00ACEE!important
+    }
+    .google:hover {
+        background-color: #c00!important
+    }
+    .linkedin:hover {
+        background-color: #0073B2!important
+    }
+    .youtube:hover {
+        background-color: #EB3E40!important
+    }
+    .instagram:hover {
+        background:  linear-gradient(45deg, #f09433 15%,#e6683c 15%,#dc2743 35%,#cc2366 50%,#bc1888 70%);
+    }
+
+
+    @-webkit-keyframes Social-Icons-Flipping {
+        0% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0)
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+    @keyframes Social-Icons-Flipping {
+        0% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0)
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+
+    /* social buttons */
+    /* .social-buttons {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -3448,7 +3554,7 @@ text-transform: none;
     }
     .social-button--instagram::after {
         background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
-    }
+    } */
 
     .heart {
         width: 100px;
