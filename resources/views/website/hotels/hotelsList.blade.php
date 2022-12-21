@@ -46,7 +46,7 @@
 
                                             <label class="heart" for="fav"></label> --}}
                                         </div>
-                                        <div class="modal fade show addFavDialog"
+                                        <div class="modal fade  addFavDialog"
                                         id="staticBackdrop{{ $HRec->hotel_id }}" data-bs-backdrop="static"
                                         data-bs-keyboard="false" tabindex="-1"
                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -66,9 +66,7 @@
 
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-primary"
-                                                        onclick="setHeart(this)"
-                                                        data-bs-dismiss="modal">Add</button>
+
                                                         @if (session()->get('SiteUser'))
                                                 <a href="{{ url('/favourite/' . $HRec->hotel_id) }}" class="btn btn-primary"  onclick="setHeart(this)"
                                                     data-bs-dismiss="modal" >Add </a>
@@ -160,9 +158,7 @@
 
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-primary"
-                                                        onclick="setHeart(this)"
-                                                        data-bs-dismiss="modal">Add</button>
+
                                                         @if (session()->get('SiteUser'))
                                                 <a href="{{ url('/favourite/' . $HPrice->hotel_id) }}" class="btn btn-primary"  onclick="setHeart(this)"
                                                     data-bs-dismiss="modal" >Add </a>
@@ -254,9 +250,7 @@
 
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btn-primary"
-                                                        onclick="setHeart(this)"
-                                                        data-bs-dismiss="modal">Add</button>
+
                                                         @if (session()->get('SiteUser'))
                                                 <a href="{{ url('/favourite/' . $HAlpha->hotel_id) }}" class="btn btn-primary"  onclick="setHeart(this)"
                                                     data-bs-dismiss="modal" >Add </a>
