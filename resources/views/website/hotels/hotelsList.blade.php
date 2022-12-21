@@ -61,8 +61,8 @@
                                                 <div class="modal-body">
                                                     <h3>Add To Favorite</h3>
                                                     <h6> <a class="stretched-link">{{
-                                                            $HRec->hotel_enname }} –
-                                                            {{ $HRec->hotel_stars }} Stars</a></h6>
+                                                            $HRec->hotel->hotel_enname }} –
+                                                            {{ $HRec->hotel->hotel_stars }} Stars</a></h6>
 
                                                 </div>
                                                 <div class="modal-footer">
@@ -153,8 +153,8 @@
                                                 <div class="modal-body">
                                                     <h3>Add To Favorite</h3>
                                                     <h6> <a class="stretched-link">{{
-                                                            $HPrice->hotel_enname }} –
-                                                            {{ $HPrice->hotel_stars }} Stars</a></h6>
+                                                            $HPrice->hotel->hotel_enname }} –
+                                                            {{ $HPrice->hotel->hotel_stars }} Stars</a></h6>
 
                                                 </div>
                                                 <div class="modal-footer">
@@ -245,8 +245,8 @@
                                                 <div class="modal-body">
                                                     <h3>Add To Favorite</h3>
                                                     <h6> <a class="stretched-link">{{
-                                                            $HAlpha->hotel_enname }} –
-                                                            {{ $HAlpha->hotel_stars }} Stars</a></h6>
+                                                            $HAlpha->hotel->hotel_enname }} –
+                                                            {{ $HAlpha->hotel->hotel_stars }} Stars</a></h6>
 
                                                 </div>
                                                 <div class="modal-footer">
