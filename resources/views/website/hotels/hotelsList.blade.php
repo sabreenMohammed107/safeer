@@ -70,7 +70,7 @@
                                                         onclick="setHeart(this)"
                                                         data-bs-dismiss="modal">Add</button>
                                                         @if (session()->get('SiteUser'))
-                                                <a href="{{ url('/favourite/' . $HRec->hotel_id) }} class="btn btn-primary"  onclick="setHeart(this)"
+                                                <a href="{{ url('/favourite/' . $HRec->hotel_id) }}" class="btn btn-primary"  onclick="setHeart(this)"
                                                     data-bs-dismiss="modal" >Add </a>
                                                 @else
 
@@ -164,7 +164,7 @@
                                                         onclick="setHeart(this)"
                                                         data-bs-dismiss="modal">Add</button>
                                                         @if (session()->get('SiteUser'))
-                                                <a href="{{ url('/favourite/' . $HPrice->hotel_id) }} class="btn btn-primary"  onclick="setHeart(this)"
+                                                <a href="{{ url('/favourite/' . $HPrice->hotel_id) }}" class="btn btn-primary"  onclick="setHeart(this)"
                                                     data-bs-dismiss="modal" >Add </a>
                                                 @else
 
@@ -258,7 +258,7 @@
                                                         onclick="setHeart(this)"
                                                         data-bs-dismiss="modal">Add</button>
                                                         @if (session()->get('SiteUser'))
-                                                <a href="{{ url('/favourite/' . $HAlpha->hotel_id) }} class="btn btn-primary"  onclick="setHeart(this)"
+                                                <a href="{{ url('/favourite/' . $HAlpha->hotel_id) }}" class="btn btn-primary"  onclick="setHeart(this)"
                                                     data-bs-dismiss="modal" >Add </a>
                                                 @else
 

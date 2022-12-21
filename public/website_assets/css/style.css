@@ -3622,15 +3622,24 @@ text-transform: none;
     padding-left: 35px;
     padding-right: 35px;
     border-bottom: 1px solid rgba(126, 126, 126, 0.211);
+    background-color: #1C4482;
+}
+.modal-header .btn-close {
+    background-color: white;
 }
 .modal-title {
     font-size: 27px;
-    color:#1C4482 ;
     font-weight: 700;
     text-transform: capitalize;
-
+    color: white !important;
 }
 
+.modal-body h3{
+    font-size: 27px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: var(--main-color);
+}
 .modal-body {
     display: flex;
     flex-direction: column;
@@ -3663,7 +3672,7 @@ text-transform: none;
   .modal-content .modal-footer button.btn-primary {
     background-color: #1C4482;
     border-radius: 16px;
-    width: 100%;
+    padding: 5px 15px;
     margin-top: 5px;
   }
 
