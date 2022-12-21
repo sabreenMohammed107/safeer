@@ -3649,6 +3649,9 @@ text-transform: none;
     padding-left: 35px;
     padding-right: 35px;
 }
+.modal-body h6 a{
+    text-decoration: none;
+}
 .modal-body .rating {
     font-size: 30px;
     margin-top: 10px;
