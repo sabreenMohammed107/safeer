@@ -14,4 +14,11 @@ class Favorite_hotels_tour extends Model
         'tour_id',
 
     ];
+
+    public function hotel(){
+        return $this->belongsTo(Hotel::class,'hotel_id');
+    }
+    public function user(){
+        return $this->belongsTo(SiteUser::class,'user_id');
+    }
 }

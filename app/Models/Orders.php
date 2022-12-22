@@ -77,7 +77,17 @@ class Orders extends Model
      * @var array
      */
     protected $fillable = [
-        'order_no', 'user_id', 'address_id', 'payway', 'payment_id', 'order_date', 'copoun', 'subtotally', 'tax', 'delivery_cost', 'total', 'status', 'created_at', 'updated_at', 'order_date', 'order_status_id', 'doctor_id', 'event_id', 'payment_method_id', 'name', 'email', 'country_id', 'phone', 'ticket_id', 'booked_quantity', 'copoun_id', 'discount_id', 'ticket_net_fees', 'notes', 'created_at', 'updated_at', 'order_no', 'user_id', 'address', 'payway', 'payment_id', 'order_date', 'copoun', 'subtotally', 'tax', 'delivery_cost', 'total', 'status', 'created_at', 'updated_at', 'order_date', 'status_id', 'user_id', 'notes', 'created_at', 'updated_at', 'user_id', 'holder_salutation', 'holder_name', 'holder_mobile', 'notes', 'from_date', 'to_date', 'nights', 'adults_count', 'children_count', 'rooms_count', 'created_at', 'updated_at'
+        'user_id',
+    'holder_salutation',
+    'holder_name',
+    'holder_mobile',
+    'notes',
+    'from_date',
+    'to_date',
+    'nights',
+    'adults_count',
+    'children_count',
+    'rooms_count',
     ];
 
     /**
@@ -86,26 +96,10 @@ class Orders extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'order_no' => 'int', 'payway' => 'int', 'payment_id' => 'int', 'order_date' => 'datetime', 'subtotally' => 'double', 'tax' => 'double', 'delivery_cost' => 'double', 'total' => 'double', 'status' => 'int', 'created_at' => 'timestamp', 'updated_at' => 'timestamp', 'order_date' => 'date', 'name' => 'string', 'email' => 'string', 'phone' => 'string', 'booked_quantity' => 'double', 'ticket_net_fees' => 'double', 'notes' => 'string', 'created_at' => 'timestamp', 'updated_at' => 'timestamp', 'order_no' => 'int', 'address' => 'string', 'payway' => 'int', 'payment_id' => 'int', 'order_date' => 'datetime', 'copoun' => 'string', 'subtotally' => 'double', 'tax' => 'double', 'delivery_cost' => 'double', 'total' => 'double', 'status' => 'int', 'created_at' => 'timestamp', 'updated_at' => 'timestamp', 'order_date' => 'datetime', 'notes' => 'string', 'created_at' => 'timestamp', 'updated_at' => 'timestamp', 'holder_salutation' => 'string', 'holder_name' => 'string', 'holder_mobile' => 'string', 'notes' => 'string', 'from_date' => 'date', 'to_date' => 'date', 'nights' => 'int', 'adults_count' => 'int', 'children_count' => 'int', 'rooms_count' => 'int', 'created_at' => 'timestamp', 'updated_at' => 'timestamp'
-    ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'order_date', 'created_at', 'updated_at', 'order_date', 'created_at', 'updated_at', 'order_date', 'created_at', 'updated_at', 'order_date', 'created_at', 'updated_at', 'from_date', 'to_date', 'created_at', 'updated_at'
-    ];
 
     /**
      * Indicates if the model should be timestamped.
@@ -119,4 +113,8 @@ class Orders extends Model
     // Functions ...
 
     // Relations ...
+    public function user(){
+        return $this->belongsTo(SiteUser::class,'user_id');
+    }
+
 }

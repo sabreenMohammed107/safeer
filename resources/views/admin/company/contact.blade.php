@@ -6,14 +6,14 @@
             <!--begin::Info-->
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
                 <!--begin::Title-->
-                <h1 class="text-dark fw-bolder my-1 fs-2"> Orders</h1>
+                <h1 class="text-dark fw-bolder my-1 fs-2"> Contact Form</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb fw-bold fs-base my-1">
                     <li class="breadcrumb-item text-muted">
                         <a href="#" class="text-muted text-hover-primary">Home</a>
                     </li>
-                    <li class="breadcrumb-item text-muted">Order Data</li>
+                    <li class="breadcrumb-item text-muted">Contact Form</li>
 
                     <li class="breadcrumb-item text-dark">All</li>
                 </ul>
@@ -84,21 +84,21 @@
                                         value="1" />
                                 </div>
                             </th>
-                            <th class="min-w-200px">User Name</th>
+                            <th class="min-w-200px">Name</th>
                             {{-- <th class="text-end min-w-100px">Date</th> --}}
                             {{-- <th class="text-end min-w-100px">Time</th> --}}
-                            <th class="text-end min-w-70px">Holder Name</th>
-                            <th class="text-end min-w-100px">Hotel</th>
+                            <th class="text-end min-w-70px">phone</th>
+                            <th class="text-end min-w-100px">Email</th>
 
-                            <th class="text-end min-w-100px">Nights</th>
-                            <th class="text-end min-w-70px">Actions</th>
+                            <th class="text-end min-w-100px">Message</th>
+                            {{-- <th class="text-end min-w-70px">Actions</th> --}}
                         </tr>
                         <!--end::Table row-->
                     </thead>
                     <!--end::Table head-->
                     <!--begin::Table body-->
                     <tbody class="fw-bold text-gray-600">
-                        @foreach ($rows as $index => $row)
+                        @foreach ($contacts as $index => $row)
  <!--begin::Table row-->
  <tr>
     <!--begin::Checkbox-->
@@ -115,8 +115,8 @@
             <div class="ms-5">
                 <!--begin::Title-->
 
-                <a href="{{ route('site-users.show', $row->id) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
-                data-kt-ecommerce-category-filter="category_name" >{{ $row->order->user->name ?? ''}}</a>
+                <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
+                data-kt-ecommerce-category-filter="category_name" >{{ $row->name ?? ''}}</a>
                 <!--end::Title-->
             </div>
         </div>
@@ -135,51 +135,24 @@
     </td> --}}
     <!--end::SKU=-->
     <!--begin::Qty=-->
-    <td class="text-end pe-0" data-order="15">
-        <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
-        <span class="fw-bolder ms-3">{{ $row->order->holder_name ?? '' }}</span>
-    </td>
-    <!--end::Qty=-->
-    <!--begin::Price=-->
-    <td class="text-end pe-0">
-        <span class="fw-bolder text-dark">{{ $row->hotel->hotel_enname ?? '' }}</span>
+     <!--begin::Price=-->
+     <td class="text-end pe-0">
+        <span class="fw-bolder text-dark">{{ $row->phone ?? '' }}</span>
     </td>
     <!--end::Price=-->
+    <td class="text-end pe-0" data-order="15">
+        <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
+        <span class="fw-bolder ms-3">{{ $row->email ?? '' }}</span>
+    </td>
+    <!--end::Qty=-->
+
 
     <!--begin::Status=-->
     <td class="text-end pe-0">
-        <span class="fw-bolder text-dark">{{ $row->order->nights ?? '' }}</span>
+        <span class="fw-bolder text-dark">{{ $row->message  ?? '' }}</span>
     </td>
     <!--end::Status=-->
-    <!--begin::Action=-->
-    <td class="text-end">
-        <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
-            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-            <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-            <span class="svg-icon svg-icon-5 m-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    viewBox="0 0 24 24" fill="none">
-                    <path
-                        d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                        fill="black" />
-                </svg>
-            </span>
-            <!--end::Svg Icon-->
-        </a>
-        <!--begin::Menu-->
-        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
-            data-kt-menu="true">
-            <!--begin::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('users-orders.show', $row->id) }}"
-                    class="menu-link px-3">show</a>
-            </div>
-            <!--end::Menu item-->
 
-        </div>
-        <!--end::Menu-->
-    </td>
-    <!--end::Action=-->
 </tr>
 <!--end::Table row-->
 @endforeach

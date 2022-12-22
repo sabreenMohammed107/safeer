@@ -6,14 +6,14 @@
             <!--begin::Info-->
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
                 <!--begin::Title-->
-                <h1 class="text-dark fw-bolder my-1 fs-2"> Orders</h1>
+                <h1 class="text-dark fw-bolder my-1 fs-2"> Favorite Hotels</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb fw-bold fs-base my-1">
                     <li class="breadcrumb-item text-muted">
                         <a href="#" class="text-muted text-hover-primary">Home</a>
                     </li>
-                    <li class="breadcrumb-item text-muted">Order Data</li>
+                    <li class="breadcrumb-item text-muted">Favorite Hotels</li>
 
                     <li class="breadcrumb-item text-dark">All</li>
                 </ul>
@@ -87,10 +87,10 @@
                             <th class="min-w-200px">User Name</th>
                             {{-- <th class="text-end min-w-100px">Date</th> --}}
                             {{-- <th class="text-end min-w-100px">Time</th> --}}
-                            <th class="text-end min-w-70px">Holder Name</th>
-                            <th class="text-end min-w-100px">Hotel</th>
+                            <th class="text-end min-w-70px">User phone</th>
+                            <th class="text-end min-w-100px">Hotel Name</th>
 
-                            <th class="text-end min-w-100px">Nights</th>
+                            <th class="text-end min-w-100px">Hotel City</th>
                             <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -115,8 +115,8 @@
             <div class="ms-5">
                 <!--begin::Title-->
 
-                <a href="{{ route('site-users.show', $row->id) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
-                data-kt-ecommerce-category-filter="category_name" >{{ $row->order->user->name ?? ''}}</a>
+                <a href="{{ route('fav-hotels.show', $row->id) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
+                data-kt-ecommerce-category-filter="category_name" >{{ $row->user->name ?? ''}}</a>
                 <!--end::Title-->
             </div>
         </div>
@@ -135,20 +135,21 @@
     </td> --}}
     <!--end::SKU=-->
     <!--begin::Qty=-->
-    <td class="text-end pe-0" data-order="15">
-        <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
-        <span class="fw-bolder ms-3">{{ $row->order->holder_name ?? '' }}</span>
-    </td>
-    <!--end::Qty=-->
-    <!--begin::Price=-->
-    <td class="text-end pe-0">
-        <span class="fw-bolder text-dark">{{ $row->hotel->hotel_enname ?? '' }}</span>
+     <!--begin::Price=-->
+     <td class="text-end pe-0">
+        <span class="fw-bolder text-dark">{{ $row->user->phone ?? '' }}</span>
     </td>
     <!--end::Price=-->
+    <td class="text-end pe-0" data-order="15">
+        <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
+        <span class="fw-bolder ms-3">{{ $row->hotel->hotel_enname ?? '' }}</span>
+    </td>
+    <!--end::Qty=-->
+
 
     <!--begin::Status=-->
     <td class="text-end pe-0">
-        <span class="fw-bolder text-dark">{{ $row->order->nights ?? '' }}</span>
+        <span class="fw-bolder text-dark">{{ $row->hotel->city->en_city  ?? '' }}</span>
     </td>
     <!--end::Status=-->
     <!--begin::Action=-->
@@ -171,7 +172,7 @@
             data-kt-menu="true">
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('users-orders.show', $row->id) }}"
+                <a href="{{ route('fav-hotels.show', $row->id) }}"
                     class="menu-link px-3">show</a>
             </div>
             <!--end::Menu item-->
