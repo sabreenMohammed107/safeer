@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Company;
 use App\Models\SiteUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 

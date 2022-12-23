@@ -54,23 +54,24 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
     <div class="row mx-0">
         <div class="col-sm-12 col-md-6">
             <div class="passenger_info">
-                <form action="">
+                <form action="{{url('/Book')}}" method="POST">
+                    @csrf
                     <div class="row">
                         <h6>Reservation Holder Details:</h6>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Salutation
                             </label>
-                            <input type="text" name="adultsSal[]" class="form-control" placeholder="MR" aria-label="First name">
+                            <input type="text" name="adultsSal[]" required class="form-control" placeholder="MR" aria-label="First name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Name</label>
 
-                          <input type="text" name="adultsNames[]" class="form-control" placeholder="Name">
+                          <input type="text" name="adultsNames[]" required class="form-control" placeholder="Name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Mobile</label>
 
-                            <input type="text" name="adultsMobile[]" class="form-control" placeholder="Mobile">
+                            <input type="text" name="adultsMobile[]" required class="form-control" placeholder="Mobile">
                           </div>
                     </div>
                     <h6>Adults Details:</h6>
@@ -79,17 +80,17 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Salutation
                             </label>
-                            <input type="text" name="adultsSal[]" class="form-control" placeholder="MR" aria-label="First name">
+                            <input type="text" name="adultsSal[]" required class="form-control" placeholder="MR" aria-label="First name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Name</label>
 
-                          <input type="text" name="adultsNames[]" class="form-control" placeholder="Name">
+                          <input type="text" name="adultsNames[]" required class="form-control" placeholder="Name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Mobile</label>
 
-                            <input type="text" name="adultsMobile[]" class="form-control" placeholder="Mobile">
+                            <input type="text" name="adultsMobile[]" required class="form-control" placeholder="Mobile">
                           </div>
                     </div>
                     @endfor
@@ -104,8 +105,8 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Name
                             </label>
-                        <input type="text" class="form-control" name="childrenNames[]" placeholder="Name" aria-label="First name">
-                        <input type="hidden" name="childrenAges[]" value="{{$ages[$i]}}"/>
+                        <input type="text" class="form-control" required name="childrenNames[]" placeholder="Name" aria-label="First name">
+                        <input type="hidden" name="childrenAges[]" required value="{{$ages[$i]}}"/>
                         </div>
                     </div>
                     @endfor
@@ -113,11 +114,34 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                         <div class="col-12">
                             <label  class="form-label">notes</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                          </div>
-                          <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-outline-secondary">Place Order</button>
-                          </div>
+                            <textarea class="form-control" required name="notes" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input terms" required type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                I agree to all <a href="#">Terms and Conditions</a> of Safer
+                            </label>
+                        </div>
+                        <input type="hidden" name="hotel_id" value="{{$RoomCost->hotel_id}}" />
+                        <input type="hidden" name="from_date" value="{{$RoomCost->from_date}}" />
+                        <input type="hidden" name="to_date" value="{{$RoomCost->to_date}}" />
+                        <input type="hidden" name="nights" value="{{$RoomCost->nights}}" />
+                        <input type="hidden" name="adults_count" value="{{$RoomCost->adults_count}}" />
+                        <input type="hidden" name="children_count" value="{{$RoomCost->children_count}}" />
+                        <input type="hidden" name="rooms_count" value="{{$RoomCost->rooms_count}}" />
+                        <input type="hidden" name="room_type" value="{{$Type}}" />
+                        <input type="hidden" name="room_view" value="{{$RoomCost->en_room_type}}" />
+                        <input type="hidden" name="food_bev_type" value="{{$RoomCost->food_bev_type}}" />
+                        <input type="hidden" name="room_cost" value="{{$Cost}}" />
+                        <input type="hidden" name="total_cost" value="{{$TotalCost*1.14}}" />
+                        <input type="hidden" name="user_id" value="{{$RoomCost->user_id}}" />
+                        <input type="hidden" name="child_free_age_from" value="{{$RoomCost->child_free_age_from}}" />
+                        <input type="hidden" name="child_free_age_to" value="{{$RoomCost->child_free_age_to}}" />
+                        <input type="hidden" name="child_age_cost" value="{{$RoomCost->child_age_cost}}" />
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-info">Place Order</button>
+                        </div>
+
                     </div>
                 </form>
             </div>
@@ -162,7 +186,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                         <p class="mb-0 pb-0">
                             {{$RoomCost->rooms_count}} X {{$RoomCost->en_room_type}} {{$Type}} ({{$RoomCost->food_bev_type}})
-                            <span class="float-end text-end">{{$RoomCost->rooms_count}} X ${{$Cost}} <br> <span class="fw-bold"> ${{$RoomCost->rooms_count*$Cost}}</span></span>
+                            <span class="float-end text-end">{{$RoomCost->rooms_count}} X ${{number_formaT($Cost,2,'.','')}} <br> <span class="fw-bold"> ${{number_format((float)$RoomCost->rooms_count*$Cost,2,'.','')}}</span></span>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
@@ -175,30 +199,30 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
-                            {{$PaidChildren}} X Paid Childs (Age From {{$RoomCost->child_age_from}} To {{$RoomCost->child_age_to}}) <span class="float-end text-end">{{$PaidChildren}} X ${{$RoomCost->child_age_cost}} <br> <span class="fw-bold">${{$PaidChildren*$RoomCost->child_age_cost}}</span></span><br>
+                            {{$PaidChildren}} X Paid Childs (Age From {{$RoomCost->child_age_from}} To {{$RoomCost->child_age_to}}) <span class="float-end text-end">{{$PaidChildren}} X ${{number_format($RoomCost->child_age_cost,2,'.','')}} <br> <span class="fw-bold">${{number_format($PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span></span><br>
                         </p>
 
                         <br>
                         @endif
                         <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                            <span class="float-end text-end fw-bold">${{$RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost}}</span><br>
+                            <span class="float-end text-end fw-bold">${{number_format((float) $RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span><br>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
-                            Booking for {{$RoomCost->nights}} nights<span class="float-end text-end fw-bold">{{$RoomCost->nights}} X ${{($RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost)}}</span><br>
+                            Booking for {{$RoomCost->nights}} nights<span class="float-end text-end fw-bold">{{$RoomCost->nights}} X ${{number_format(((float)$RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost), 2, '.', '')}}</span><br>
                         </p>
                         <div class="grand_total">
                             <h6> Sub-total</h6>
-                            <span class="h6"> {{$TotalCost}} <span class="h6">$</span></span>
+                            <span class="h6"> {{number_format((float) $TotalCost, 2, '.', '')}} <span class="h6">$</span></span>
                         </div>
                         <p class="mb-0 pb-0">
-                            VAT (14%) <span class="float-end text-end">${{$TotalCost}} X 0.14 <br>  <span class="fw-bold">${{$TotalCost*0.14}}</span></span><br>
+                            VAT (14%) <span class="float-end text-end">${{number_format((float) $TotalCost, 2, '.', '')}} X 0.14 <br>  <span class="fw-bold">${{$TotalCost*0.14}}</span></span><br>
                         </p>
                         <br>
                     </div>
                     <div class="grand_total final">
                         <h5> grand total</h5>
-                        <span> {{$TotalCost*1.14}} <span>$</span></span>
+                        <span> {{number_format((float) $TotalCost*1.14, 2, '.', '')}} <span>$</span></span>
                     </div>
                 </div>
              </div>
