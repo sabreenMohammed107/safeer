@@ -380,7 +380,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
 
 <!--begin::Status=-->
 <td class="text-end pe-0">
-<span class="fw-bolder text-dark">{{ $person->person_cost ?? '' }}</span>
+<span class="fw-bolder text-dark">{{ $person->person_cost ?? '' }} $</span>
 </td>
 <!--end::Status=-->
 <!--begin::Action=-->
@@ -479,13 +479,13 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
         </td>
    <!--begin::Price=-->
    <td class="text-center pe-0">
-   <span class="fw-bolder text-dark">{{ $detail->room_cost ?? '' }}</span>
+   <span class="fw-bolder text-dark">{{ $detail->room_cost ?? '' }} $</span>
    </td>
    <!--end::Price=-->
 
    <!--begin::Status=-->
    <td class="text-end pe-0">
-   <span class="fw-bolder text-dark">{{ $detail->total_cost ?? '' }}</span>
+   <span class="fw-bolder text-dark">{{ $detail->total_cost ?? '' }} $</span>
    </td>
    <!--end::Status=-->
 
