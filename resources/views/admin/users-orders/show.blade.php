@@ -291,9 +291,10 @@
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>Order Persons </h2>
-                                            <span style="color: red;font-size: 14px"> Total Order Cost : {{$totalCost}}</span>
 
                                         </div>
+                                        <span style="color: red;font-size: 14px">  " Total Order Cost : {{$totalCost}} "</span>
+
                                     </div>
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
