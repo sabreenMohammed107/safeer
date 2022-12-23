@@ -74,6 +74,7 @@
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>Order</h2>
+                                            <span style="color: red">Total Order Cost : {{$totalCost}}</span>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -290,6 +291,8 @@
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>Order Persons</h2>
+                                            <span style="color: red">Total Order Cost : {{$totalCost}}</span>
+
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -402,6 +405,8 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>Order Details</h2>
+                                            <span style="color: red">Total Order Cost : {{$totalCost}}</span>
+
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -426,7 +431,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
                <th class="text-end min-w-100px">food_bev_type</th>
 
                <th class="text-end min-w-100px">room_cost</th>
-               <th class="text-end min-w-70px">total_cost</th>
+               <th class="text-end min-w-70px">line_cost</th>
            </tr>
            <!--end::Table row-->
        </thead>

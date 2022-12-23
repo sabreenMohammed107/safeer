@@ -71,7 +71,8 @@ class UsersOrderController extends Controller
             $order = Orders::where('id', $id)->first();
             $details = OrderDetails::where('order_id', $id)->get();
             $persons = OrderPersons::where('order_id', $id)->get();
-            return view($this->viewName . 'show', compact(['order', 'details', 'persons']));
+            $totalCost=OrderDetails::where('order_id', $id)->sum('price');
+            return view($this->viewName . 'show', compact(['order', 'details', 'persons','totalCost']));
         // }
 
     }
