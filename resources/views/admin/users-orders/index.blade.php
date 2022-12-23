@@ -115,7 +115,7 @@
             <div class="ms-5">
                 <!--begin::Title-->
 
-                <a href="{{ route('site-users.show', $row->order_id ) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
+                <a href="{{ route('users-orders.show', $row->order_id ) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
                  >{{ $row->order->user->name ?? ''}}</a>
                 <!--end::Title-->
             </div>
