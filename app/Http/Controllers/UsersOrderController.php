@@ -66,13 +66,13 @@ class UsersOrderController extends Controller
      */
     public function show($id)
     {
-        $row = OrderDetails::find(1);
-        if ($row) {
-            $order = Orders::where('id', $row->order_id)->first();
-            $details = OrderDetails::where('order_id', $row->order_id)->get();
-            $persons = OrderPersons::where('order_id', $row->order_id)->get();
+        // $row = OrderDetails::find(1);
+        // if ($row) {
+            $order = Orders::where('id', $id)->first();
+            $details = OrderDetails::where('order_id', $id)->get();
+            $persons = OrderPersons::where('order_id', $id)->get();
             return view($this->viewName . 'show', compact(['order', 'details', 'persons']));
-        }
+        // }
 
     }
 
