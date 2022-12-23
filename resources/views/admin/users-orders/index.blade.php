@@ -116,7 +116,7 @@
                 <!--begin::Title-->
 
                 <a href="{{ route('site-users.show', $row->order_id ) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
-                data-kt-ecommerce-category-filter="category_name" >{{ $row->order->user->name ?? ''}}</a>
+                 >{{ $row->order->user->name ?? ''}}</a>
                 <!--end::Title-->
             </div>
         </div>
