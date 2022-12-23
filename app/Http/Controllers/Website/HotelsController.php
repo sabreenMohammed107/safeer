@@ -91,12 +91,12 @@ class HotelsController extends Controller
         })->groupBy('hotel_id')->paginate(6);
 
         $HotelsByPrice = $HotelsRecommended->sortBy('single_cost');
-
-        $HotelsByAlpha =  Room_type_cost::with(['hotel' => function ($q) {
-            $q->orderBy('hotel_enname');
-        }])->whereHas('hotel', function ($q) use ($city_id) {
-            $q->where('city_id', $city_id);
-        })->groupBy('hotel_id')->paginate(6);
+        $HotelsByAlpha = $HotelsRecommended->sortBy('hotel.hotel_enname');
+        // $HotelsByAlpha =  Room_type_cost::with(['hotel' => function ($q) {
+        //     $q->orderBy('hotel_enname');
+        // }])->whereHas('hotel', function ($q) use ($city_id) {
+        //     $q->where('city_id', $city_id);
+        // })->groupBy('hotel_id')->paginate(6);
         //set serching data in session
 
         $sessionArr=['from_date' => $arr[0] , 'country_id' => $request->country_id ,
@@ -151,10 +151,11 @@ class HotelsController extends Controller
         })->groupBy('hotel_id')->paginate(6);
 
         $HotelsByPrice = $HotelsRecommended->sortBy('single_cost');
+        $HotelsByAlpha = $HotelsRecommended->sortBy('hotel.hotel_enname');
 
-        $HotelsByAlpha = Room_type_cost::whereHas('hotel', function ($q) use ($city_id) {
-            $q->where('city_id', $city_id);
-        })->groupBy('hotel_id')->paginate(6);
+        // $HotelsByAlpha = Room_type_cost::whereHas('hotel', function ($q) use ($city_id) {
+        //     $q->where('city_id', $city_id);
+        // })->groupBy('hotel_id')->paginate(6);
 
         $todate=null;
         $enddate=null;
@@ -190,10 +191,11 @@ class HotelsController extends Controller
         }])->groupBy('hotel_id')->paginate(6);
 
         $HotelsByPrice = $HotelsRecommended->sortBy('single_cost');
+        $HotelsByAlpha = $HotelsRecommended->sortBy('hotel.hotel_enname');
 
-        $HotelsByAlpha = Room_type_cost::with(['hotel' => function ($q) {
-            $q->orderBy('hotel_enname');
-        }])->groupBy('hotel_id')->paginate(6);
+        // $HotelsByAlpha = Room_type_cost::with(['hotel' => function ($q) {
+        //     $q->orderBy('hotel_enname');
+        // }])->groupBy('hotel_id')->paginate(6);
 
         $todate = null;
         $enddate = null;
@@ -258,10 +260,11 @@ class HotelsController extends Controller
             }])->groupBy('hotel_id')->paginate(6);
 
             $HotelsByPrice = $HotelsRecommended->sortBy('single_cost');
+            $HotelsByAlpha = $HotelsRecommended->sortBy('hotel.hotel_enname');
 
-            $HotelsByAlpha =  $RoomCosts->with(['hotel' => function ($q) {
-                $q->orderBy('hotel_enname');
-            }])->groupBy('hotel_id')->paginate(6);
+            // $HotelsByAlpha =  $RoomCosts->with(['hotel' => function ($q) {
+            //     $q->orderBy('hotel_enname');
+            // }])->groupBy('hotel_id')->paginate(6);
 
             return view("website.hotels.hotelsList",
                 [
@@ -322,10 +325,11 @@ class HotelsController extends Controller
             }])->groupBy('hotel_id')->paginate(6);
 
             $HotelsByPrice = $HotelsRecommended->sortBy('single_cost');
+            $HotelsByAlpha = $HotelsRecommended->sortBy('hotel.hotel_enname');
 
-            $HotelsByAlpha =  $RoomCosts->with(['hotel' => function ($q) {
-                $q->orderBy('hotel_enname');
-            }])->groupBy('hotel_id')->paginate(6);
+            // $HotelsByAlpha =  $RoomCosts->with(['hotel' => function ($q) {
+            //     $q->orderBy('hotel_enname');
+            // }])->groupBy('hotel_id')->paginate(6);
 
             return view("website.hotels.hotelsList",
                 [
@@ -370,6 +374,18 @@ class HotelsController extends Controller
                 'user_id'=>session()->get("SiteUser")["ID"],
             ];
             Favorite_hotels_tour::create($input);
+        }
+        return redirect()->back();
+    }
+
+    public function removeFavourite($id){
+
+        if(session()->get("SiteUser")){
+
+            $fav=Favorite_hotels_tour::where('hotel_id',$id)->where('user_id',session()->get("SiteUser")["ID"])->first();
+            if($fav){
+                $fav->delete();
+            }
         }
         return redirect()->back();
     }
