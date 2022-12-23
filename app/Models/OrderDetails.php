@@ -75,7 +75,14 @@ class OrderDetails extends Model
     // Scopes...
 
     // Functions ...
-
+    public function getTotalCostAttribute($total_cost)
+    {
+        return number_format($total_cost, 2);
+    }
+    public function getRoomCostAttribute($room_cost)
+    {
+        return number_format($room_cost, 2);
+    }
     // Relations ...
 
     public function order(){
