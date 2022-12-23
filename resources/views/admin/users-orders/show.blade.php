@@ -73,8 +73,8 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Order</h2>
-                                            <span style="color: red">Total Order Cost : {{$totalCost}}</span>
+                                            <h2>Order </h2>
+                                            <span style="color: red;font-size: 14px"> Total Order Cost : {{$totalCost}}</span>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -290,8 +290,8 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Order Persons</h2>
-                                            <span style="color: red">Total Order Cost : {{$totalCost}}</span>
+                                            <h2>Order Persons </h2>
+                                            <span style="color: red;font-size: 14px"> Total Order Cost : {{$totalCost}}</span>
 
                                         </div>
                                     </div>
@@ -404,8 +404,8 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Order Details</h2>
-                                            <span style="color: red">Total Order Cost : {{$totalCost}}</span>
+                                            <h2>Order Details </h2>
+                                            <span style="color: red;font-size: 14px"> Total Order Cost : {{$totalCost}}</span>
 
                                         </div>
                                     </div>

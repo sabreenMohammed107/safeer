@@ -153,7 +153,7 @@
         <span class="fw-bolder text-dark">{{ $row->hotel->city->en_city  ?? '' }}</span>
     </td>
     <td class="text-end pe-0">
-        <span class="fw-bolder text-dark">{{$row-created_at->->diffForHumans();}}</span>
+        <span class="fw-bolder text-dark">{{$row-created_at->diffForHumans();}}</span>
     </td>
     <!--end::Status=-->
     <!--begin::Action=-->
