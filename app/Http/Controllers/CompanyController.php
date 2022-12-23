@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Models\Contact;
 
 class CompanyController extends Controller
 {
@@ -148,5 +149,14 @@ class CompanyController extends Controller
           $file->move($uploadPath, $imageName);
 
           return $imageName;
+      }
+
+
+      public function contact()
+      {
+        $contacts = Contact::orderBy("created_at", "Desc")->get();
+
+
+        return view($this->viewName . 'contact', compact(['contacts']));
       }
 }

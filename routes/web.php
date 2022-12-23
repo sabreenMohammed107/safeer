@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllFavHotelsController;
 use App\Http\Controllers\BestHotelController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogsCategoryController;
@@ -156,6 +157,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
            //company
            Route::resource('company', CompanyController::class);
 
+           Route::get('/contact',[CompanyController::class,'contact'] )->name('contact');
 
             //branch
           Route::resource('branch', CompanyBranchController::class);
@@ -168,6 +170,8 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
          Route::resource('site-users', SiteUsersController::class);
 
          Route::resource('users-orders', UsersOrderController::class);
+         //fav-hotels
+         Route::resource('fav-hotels', AllFavHotelsController::class);
 });
 
 /*------------------------------------------

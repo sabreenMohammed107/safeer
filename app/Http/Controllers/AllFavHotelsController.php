@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderDetails;
-use App\Models\OrderPersons;
-use App\Models\Orders;
+use App\Models\Favorite_hotels_tour;
 use Illuminate\Http\Request;
 
-class UsersOrderController extends Controller
+class AllFavHotelsController extends Controller
 {
     protected $object;
     protected $viewName;
@@ -22,8 +20,8 @@ class UsersOrderController extends Controller
     {
         $this->middleware('auth');
 
-        $this->viewName = 'admin.users-orders.';
-        $this->routeName = 'users-orders.';
+        $this->viewName = 'admin.fav-hotels.';
+        $this->routeName = 'fav-hotels.';
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +30,7 @@ class UsersOrderController extends Controller
      */
     public function index()
     {
-        $rows = OrderDetails::orderBy("created_at", "Desc")->get();
+        $rows = Favorite_hotels_tour::orderBy("created_at", "Desc")->get()->unique('hotel_id');
 
         return view($this->viewName . 'index', compact(['rows']));
     }
@@ -66,14 +64,7 @@ class UsersOrderController extends Controller
      */
     public function show($id)
     {
-        $row = OrderDetails::find(1);
-        if ($row) {
-            $order = Orders::where('id', $row->order_id)->first();
-            $details = OrderDetails::where('order_id', $row->order_id)->get();
-            $persons = OrderPersons::where('order_id', $row->order_id)->get();
-            return view($this->viewName . 'show', compact(['order', 'details', 'persons']));
-        }
-
+        //
     }
 
     /**
@@ -107,6 +98,6 @@ class UsersOrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
