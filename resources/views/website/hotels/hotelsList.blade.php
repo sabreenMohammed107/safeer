@@ -10,7 +10,7 @@
                     <div class="card-content">
                         <div class=" card setted_tour_cards ">
                             <div class="card_image">
-                                <div class="image_overlay">
+                                <div class="image_overlay" >
 
                                     <img src=" {{ asset('uploads/hotels') }}/{{ $HRec->hotel->hotel_banner }}"
                                         alt=" blogimage">
@@ -84,7 +84,8 @@
                                         class="fa-solid fa-location-dot"></i>{{ $HRec->hotel->country->en_country ?? '' }}
                                     <span>|</span> {{ $HRec->hotel->city->en_city }}</span>
                                 <p>
-                                    {{ $HRec->hotel->hotel_enoverview }}
+                                    {!! \Illuminate\Support\Str::limit($HRec->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
+                                    {{-- {{ $HRec->hotel->hotel_enoverview }} --}}
                                 </p>
                                 <div class="price">
                                     <div class="rating">
