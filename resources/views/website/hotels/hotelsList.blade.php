@@ -37,15 +37,26 @@
 
                                     @endphp
                                     <h6> <a href="{{ url('/hotels/' . $HRec->hotel_id) }}"
-                                            class="stretched-link">{{ $HRec->hotel->hotel_enname }} –
+                                            class="">{{ $HRec->hotel->hotel_enname }} –
                                             {{ $HRec->hotel->hotel_stars }} Stars</a></h6>
-                                        <div class="heart" data-bs-toggle="modal"
+                                            <span>
+
+                                                @if (session()->get('SiteUser'))
+                                                <a href="{{ url('/favourite/' . $HRec->hotel_id) }}"
+                                                    ><i class="fa-regular fa-heart"></i> </a>
+                                                @else
+
+                                                <a href="{{ route('siteLogin') }}"
+                                                ><i class="fa-regular fa-heart"></i></a>
+                                                @endif
+                                              </span>
+                                        {{-- <div class="heart" data-bs-toggle="modal"
                                             data-bs-target="#staticBackdrop{{ $HRec->hotel_id }}">
                                             {{-- <input type="checkbox" id="fav" type="submit modl_fav_add_remov"
                                                 onclick="setHeart(this)" data-info-fav="not_added">
 
                                             <label class="heart" for="fav"></label> --}}
-                                        </div>
+                                       {{-- </div> --}}
                                         <div class="modal fade  addFavDialog"
                                         id="staticBackdrop{{ $HRec->hotel_id }}" data-bs-backdrop="static"
                                         data-bs-keyboard="false" tabindex="-1"
@@ -60,7 +71,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h3>Add To Favorite</h3>
-                                                    <h6> <a class="stretched-link">{{
+                                                    <h6> <a class="">{{
                                                             $HRec->hotel->hotel_enname }} –
                                                             {{ $HRec->hotel->hotel_stars }} Stars</a></h6>
 
@@ -130,15 +141,26 @@
                                         $days = $interval->format('%a');
                                     @endphp
                                     <h6> <a href="{{ url('/hotels/' . $HPrice->hotel_id) }}"
-                                            class="stretched-link">{{ $HPrice->hotel->hotel_enname }} –
+                                            class="">{{ $HPrice->hotel->hotel_enname }} –
                                             {{ $HPrice->hotel->hotel_stars }} Stars</a></h6>
-                                        <div class="heart" data-bs-toggle="modal"
+                                            <span>
+
+                                                @if (session()->get('SiteUser'))
+                                                <a href="{{ url('/favourite/' . $HPrice->hotel_id) }}"
+                                                    ><i class="fa-regular fa-heart"></i> </a>
+                                                @else
+
+                                                <a href="{{ route('siteLogin') }}"
+                                                ><i class="fa-regular fa-heart"></i></a>
+                                                @endif
+                                              </span>
+                                        {{-- <div class="heart" data-bs-toggle="modal"
                                             data-bs-target="#static{{ $HPrice->hotel_id }}Backdrop">
                                             {{-- <input type="checkbox" id="fav" type="submit modl_fav_add_remov"
                                                 onclick="setHeart(this)" data-info-fav="not_added">
 
                                             <label class="heart" for="fav"></label> --}}
-                                        </div>
+                                        {{--</div> --}}
                                         <div class="modal fade addFavDialog"
                                         id="static{{ $HPrice->hotel_id }}Backdrop" data-bs-backdrop="static"
                                         data-bs-keyboard="false" tabindex="-1"
@@ -153,7 +175,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h3>Add To Favorite</h3>
-                                                    <h6> <a class="stretched-link">{{
+                                                    <h6> <a class="">{{
                                                             $HPrice->hotel->hotel_enname }} –
                                                             {{ $HPrice->hotel->hotel_stars }} Stars</a></h6>
 
@@ -176,7 +198,9 @@
                                 <span> <i class="fa-solid fa-location-dot"></i> {{ $HPrice->hotel->country->en_country ?? '' }}
                                     <span>|</span> {{ $HPrice->hotel->city->en_city }}</span>
                                 <p>
-                                    {{ $HPrice->hotel->hotel_enoverview }}
+                                    {!! \Illuminate\Support\Str::limit($HPrice->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
+
+                                    {{-- {{ $HPrice->hotel->hotel_enoverview }} --}}
                                 </p>
                                 <div class="price">
                                     <div class="rating">
@@ -222,15 +246,26 @@
                                         $days = $interval->format('%a');
                                     @endphp
                                     <h6> <a href="{{ url('/hotels/' . $HAlpha->hotel_id) }}"
-                                            class="stretched-link">{{ $HAlpha->hotel->hotel_enname }} –
+                                            class="">{{ $HAlpha->hotel->hotel_enname }} –
                                             {{ $HAlpha->hotel->hotel_stars }} Stars</a></h6>
-                                        <div class="heart" data-bs-toggle="modal"
+                                            <span>
+
+                                                @if (session()->get('SiteUser'))
+                                                <a href="{{ url('/favourite/' . $HAlpha->hotel_id) }}"
+                                                    ><i class="fa-regular fa-heart"></i> </a>
+                                                @else
+
+                                                <a href="{{ route('siteLogin') }}"
+                                                ><i class="fa-regular fa-heart"></i></a>
+                                                @endif
+                                              </span>
+                                        {{-- <div class="heart" data-bs-toggle="modal"
                                             data-bs-target="#staticBack{{ $HAlpha->hotel_id }}drop">
                                             {{-- <input type="checkbox" id="fav" type="submit modl_fav_add_remov"
                                                 onclick="setHeart(this)" data-info-fav="not_added">
 
                                             <label class="heart" for="fav"></label> --}}
-                                        </div>
+                                        {{--</div> --}}
                                         <div class="modal fade addFavDialog"
                                         id="staticBack{{ $HAlpha->hotel_id }}drop" data-bs-backdrop="static"
                                         data-bs-keyboard="false" tabindex="-1"
@@ -268,7 +303,9 @@
                                 <span> <i class="fa-solid fa-location-dot"></i> {{ $HAlpha->hotel->country->en_country ?? '' }}
                                     <span>|</span> {{ $HAlpha->hotel->city->en_city }}</span>
                                 <p>
-                                    {{ $HAlpha->hotel->hotel_enoverview }}
+                                    {!! \Illuminate\Support\Str::limit($HAlpha->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
+
+                                    {{-- {{ $HAlpha->hotel->hotel_enoverview }} --}}
                                 </p>
                                 <div class="price">
                                     <div class="rating">
@@ -304,9 +341,11 @@
                         href="{{$HotelsRecommended->url($i)}}">{{$i}}</a></li>
             @endfor
             <input type="hidden" name="page_num" />
+            @if ($HotelsRecommended->currentPage() !== $HotelsRecommended->lastPage())
             <li class="page-item page-inc">
                 <a class="page-link" href="{{$HotelsRecommended->nextPageUrl()}}">Next</a>
             </li>
+            @endif
         </ul>
     </nav>
 </div>
