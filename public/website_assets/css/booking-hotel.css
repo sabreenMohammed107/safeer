@@ -26,7 +26,7 @@
     font-size: 15px;
     text-transform: capitalize;
 }
-.passenger_info input,
+.passenger_info input.form-control,
 .passenger_info textarea {
     margin-bottom: 10px;
     border: 1px solid #DDDDDD;
@@ -156,10 +156,18 @@
     align-items: center;
 }
 .form-check-input {
-    height:33px ;
+    height:33px;
     width: 33px;
     border-radius: 10px !important;
     margin-top: 0px;
+}
+.terms.form-check-input {
+    height: 23px;
+    width: 23px;
+    border-radius: 5px !important;
+    margin-top: 0px;
+    margin-right: 10px;
+    margin-left: 0px;
 }
 .terms .submit  {
     display: flex;
@@ -263,4 +271,16 @@
         min-height: 392px;
         height: 100%;
     }
+}
+
+
+.success-order{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid green;
+    padding: 1em;
+}
+.success-order i{
+    font-size: 4em;
 }
