@@ -595,7 +595,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 } */
 .explore_position {
   position:absolute;
-  top: -10%;
+  top: -85%;
   z-index: 100;
   left: 5%;
   width: 100%;
@@ -755,20 +755,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 {
   font-size: 26px;
 }
+.explore_details .explore_carsoul {
+    display: flex;
+}
+.explore_details .explore_carsoul .card-content {
+    width: 335px;
+}
 
 /* advertise section */
 
 .investigtion .adventure{
-  position: relative;
-  padding-top: 50px;
-  z-index: 222;
-  padding-top: 20%;
-overflow: hidden;
-z-index: 0;
+     position: relative;
+  /* padding-top: 50px; */
+     z-index: 222;
+   /* padding-top: 20%; */
+    overflow: hidden;
+    z-index: 0;
 }
 .investigtion .adventure>img {
   position: absolute;
-  top: 21%;
+  top: -7%;
   right: -17%;
 
 }
@@ -823,7 +829,7 @@ z-index: 0;
 
 /* limited offers */
 .offers {
-  padding-top: 70px;
+  padding-top: 800px;
   padding-bottom: 70px;
 }
  .offers .titles {
@@ -847,6 +853,9 @@ z-index: 0;
 }
 .offers_details .card {
   margin: 3px;
+}
+.explore.container.offers.hotels {
+    margin-top: -750px;
 }
 .offers_details .adventure_mind {
   background-image: linear-gradient(hsla(216, 65%, 31%, 0.781),hsla(216, 65%, 31%, 0.781)) , url("./../images/homePage/places_offer/offer-place.webp");

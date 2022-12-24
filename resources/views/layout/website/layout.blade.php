@@ -45,7 +45,10 @@
   <!-- stylesheet  -->
   {{-- <link rel="stylesheet" href="{{ asset('/website_assets/css/my-profile.css')}}"> --}}
   <link rel="stylesheet" href="{{ asset('/website_assets/css/style.css') }}">
-
+  {{-- owl Carousel links --}}
+  <link rel="stylesheet" href="{{ asset('/website_assets/css/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('/website_assets/css/owl.theme.default.css') }}">
+    {{-- owl Carousel links --}}
   <!-- icon -->
   <link rel="icon" href="{{ asset('/website_assets/images/homePage/logo.webp') }}">
 
@@ -221,7 +224,40 @@
    <script src="{{ asset('/website_assets/js/image_gllery.js')}}"></script>
    <!-- adding room -->
    <script src="{{ asset('/website_assets/js/main.js')}}"></script>
+    {{-- owl carousel --}}
+        <script>
+            $(document).ready(function(){
+                $(".owl-carousel").owlCarousel({
+                    items:4,
+                    loop:true,
+                    margin:10,
+                    autoplay:true,
+                    autoplayTimeout:3000,
+                    autoplayHoverPause:true,
+                    responsiveClass:true,
+                    responsive:{
+                        0:{
+                            items:1,
 
+                        },
+                        600:{
+                            items:2,
+
+                        },
+                        900:{
+                            items:3,
+
+                        },
+                        1150:{
+                            items:4,
+
+                        }
+                    }
+                });
+            });
+        </script>
+        <script src="{{ asset('/website_assets/js/owl.carousel.min.js')}}"></script>
+    {{-- owl carousel --}}
    <script src="{{ asset('/website_assets/js/add_room.js')}}"></script>
    <script src="{{ asset('/website_assets/js/adding_years_Select.js')}}"></script>
 @yield("adds_js")
