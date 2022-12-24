@@ -74,8 +74,11 @@
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>Order </h2>
-                                            <span style="color: red;font-size: 14px"> Total Order Cost : {{$totalCost}}</span>
                                         </div>
+                                    </div>
+                                    <div class="card-header" >
+                                        <span style="color: red;font-size: 14px;font-weight: 700">  " Total Order Cost : {{$totalCost}} $ "</span>
+
                                     </div>
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
@@ -293,9 +296,10 @@
                                             <h2>Order Persons </h2>
 
                                         </div>
-                                        <span style="color: red;font-size: 14px">  " Total Order Cost : {{$totalCost}} "</span>
+
 
                                     </div>
+
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
  <!--begin::Table-->
@@ -376,7 +380,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
 
 <!--begin::Status=-->
 <td class="text-end pe-0">
-<span class="fw-bolder text-dark">{{ $person->person_cost ?? '' }}</span>
+<span class="fw-bolder text-dark">{{ $person->person_cost ?? '' }} $</span>
 </td>
 <!--end::Status=-->
 <!--begin::Action=-->
@@ -406,7 +410,6 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>Order Details </h2>
-                                            <span style="color: red;font-size: 14px"> Total Order Cost : {{$totalCost}}</span>
 
                                         </div>
                                     </div>
@@ -476,13 +479,13 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
         </td>
    <!--begin::Price=-->
    <td class="text-center pe-0">
-   <span class="fw-bolder text-dark">{{ $detail->room_cost ?? '' }}</span>
+   <span class="fw-bolder text-dark">{{ $detail->room_cost ?? '' }} $</span>
    </td>
    <!--end::Price=-->
 
    <!--begin::Status=-->
    <td class="text-end pe-0">
-   <span class="fw-bolder text-dark">{{ $detail->total_cost ?? '' }}</span>
+   <span class="fw-bolder text-dark">{{ $detail->total_cost ?? '' }} $</span>
    </td>
    <!--end::Status=-->
 

@@ -25,6 +25,26 @@
                                 @endforeach
                         </div>
                     @endif
+                    @if (session('session-warning'))
+                    <div class="alert alert-warning">
+                        {{ session('session-warning') }}
+                    </div>
+                    @endif
+                    @if (session('session-success'))
+                    <div class="alert alert-success">
+                        {{ session('session-success') }}
+                    </div>
+                    @endif
+                    @if (session('session-danger'))
+                    <div class="alert alert-danger">
+                        {{ session('session-danger') }}
+                    </div>
+                    @endif
+                    @if (session('session-info'))
+                    <div class="alert alert-info">
+                        {{ session('session-info') }}
+                    </div>
+                    @endif
                   <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Full Name *" required>
                   <input type="text" name="phone" class="form-control" id="exampleFormControlInput2" placeholder="Phone Number*" required>
                   <input type="text" name="email" class="form-control" id="exampleFormControlInput3" placeholder="E-mail or User Name  *" required>
