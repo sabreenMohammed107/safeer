@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SiteAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Company;
+use App\Models\Favorite_hotels_tour;
 use App\Models\SiteUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -69,6 +70,26 @@ class AuthController extends Controller
             $request->session()->put("hasCart" , 1);
 
             return redirect()->to($redirect_url)->with("session-success", "Room is added in your cart successfully");
+        }
+
+        if(session()->get("AddFavHotel"))
+        {
+            $input = [
+                'hotel_id' => session()->get("AddFavHotel"),
+                'user_id' => session()->get("SiteUser")["ID"],
+            ];
+            Favorite_hotels_tour::create($input);
+            session()->forget("AddFavHotel");
+            $redirect_url = '/hotels';
+        }else if(session()->get("RemFavHotel"))
+        {
+            $fav = Favorite_hotels_tour::where('hotel_id', session()->get("RemFavHotel"))
+            ->where('user_id', session()->get("SiteUser")["ID"])->first();
+            if ($fav) {
+                $fav->delete();
+            }
+            session()->forget("RemFavHotel");
+            $redirect_url = '/hotels';
         }
 
         return redirect()->to($redirect_url);

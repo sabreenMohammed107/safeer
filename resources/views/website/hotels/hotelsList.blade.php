@@ -39,16 +39,25 @@
                                     <span>
 
                                         @if (session()->get('SiteUser'))
-                                            <?php
-                                            $favExist = 0;
+
+                                            {{-- $favExist = 0;
                                             $favUser = App\Models\Favorite_hotels_tour::where('hotel_id', $HRec->hotel_id)
                                                 ->where('user_id', session()->get('SiteUser')['ID'])
                                                 ->first();
                                             if ($favUser) {
                                                 $favExist = 1;
-                                            }
-                                            ?>
-                                            <span >
+                                            } --}}
+
+                                            @php
+                                                $favExist = 0;
+                                                $favUser = App\Models\Favorite_hotels_tour::where('hotel_id', $HRec->hotel_id)
+                                                    ->where('user_id', session()->get('SiteUser')['ID'])
+                                                    ->first();
+                                                if ($favUser) {
+                                                    $favExist = 1;
+                                                }
+                                            @endphp
+                                            {{-- <span >
                                                 @if($favExist==1)
                                             <a  href="{{ url('/removeFavourite/' . $HRec->hotel_id) }}"  ><i
                                                      class="fa-regular fa-heart card_info_hover"></i> </a>
@@ -61,8 +70,23 @@
                                                 @endif </span>
                                         @else
                                         <span> <a href="{{ route('siteLogin') }}"><i class="fa-regular fa-heart"></i></a>
-                                        </span>
+                                        </span>--}}
+                                            @else
+                                                @php
+                                                    $favExist=0;
+                                                @endphp
                                             @endif
+                                            <span >
+                                                @if($favExist==1)
+                                            <a  href="{{ url('/removeFavourite/' . $HRec->hotel_id) }}"  ><i
+                                                     class="fa-regular fa-heart card_info_hover"></i> </a>
+
+                                                     @else
+
+                                                    <a  href="{{ url('/favourite/' . $HRec->hotel_id) }}"  ><i
+                                                        class="fa-regular fa-heart"></i> </a>
+
+                                                @endif </span>
 
                                     {{-- <div class="heart" data-bs-toggle="modal"
                                             data-bs-target="#staticBackdrop{{ $HRec->hotel_id }}">
