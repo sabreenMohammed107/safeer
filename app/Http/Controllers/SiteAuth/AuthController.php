@@ -41,12 +41,7 @@ class AuthController extends Controller
             return redirect()->back()->with("session-danger", "No User with Specific Data");
         }
 
-        if (session()->get("redirect_url")) {
-            $redirect_url = '/cart';
-            session()->forget("redirect_url");
-        } else {
-            $redirect_url = "/";
-        }
+        $redirect_url = "/";
         if (session()->get("cartItem")) {
             $CartItem = Cart::where("user_id", '=', $User->id)->first();
             if ($CartItem) {
@@ -69,7 +64,7 @@ class AuthController extends Controller
                 $CartItem->ages                 = implode(",",session()->get("cartItem")["ages"]);
             }
             $CartItem->save();
-
+            $redirect_url = '/cart';
             session()->forget("cartItem");
             $request->session()->put("hasCart" , 1);
 
@@ -89,13 +84,23 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8'],
         ]);
 
-        $User = SiteUser::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
+        try {
+            $User = SiteUser::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+            ]);
+        } catch(\Illuminate\Database\QueryException $e) {
+            $Count = SiteUser::where("Email",'=',$request['email'])->count();
+            if($Count){
+                return redirect()->to("/safer/register")->with("session-danger","Email Address is Already in-use");
+            }else{
+                return redirect()->to("/safer/register")->with("session-danger", "Can't Register with this data please try again later");
+            }
+        }
 
-        return redirect()->to("/safeer/login");
+
+        return redirect()->to("/safer/login");
 
     }
 
