@@ -73,8 +73,12 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Order</h2>
+                                            <h2>Order </h2>
                                         </div>
+                                    </div>
+                                    <div class="card-header" >
+                                        <span style="color: red;font-size: 14px;font-weight: 700">  " Total Order Cost : {{$totalCost}} $ "</span>
+
                                     </div>
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
@@ -289,9 +293,13 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Order Persons</h2>
+                                            <h2>Order Persons </h2>
+
                                         </div>
+
+
                                     </div>
+
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
  <!--begin::Table-->
@@ -372,7 +380,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
 
 <!--begin::Status=-->
 <td class="text-end pe-0">
-<span class="fw-bolder text-dark">{{ $person->person_cost ?? '' }}</span>
+<span class="fw-bolder text-dark">{{ $person->person_cost ?? '' }} $</span>
 </td>
 <!--end::Status=-->
 <!--begin::Action=-->
@@ -401,7 +409,8 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Order Details</h2>
+                                            <h2>Order Details </h2>
+
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -426,7 +435,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
                <th class="text-end min-w-100px">food_bev_type</th>
 
                <th class="text-end min-w-100px">room_cost</th>
-               <th class="text-end min-w-70px">total_cost</th>
+               <th class="text-end min-w-70px">line_cost</th>
            </tr>
            <!--end::Table row-->
        </thead>
@@ -470,13 +479,13 @@ data-kt-ecommerce-category-filter="category_name" >{{ $person->person_type == 0 
         </td>
    <!--begin::Price=-->
    <td class="text-center pe-0">
-   <span class="fw-bolder text-dark">{{ $detail->room_cost ?? '' }}</span>
+   <span class="fw-bolder text-dark">{{ $detail->room_cost ?? '' }} $</span>
    </td>
    <!--end::Price=-->
 
    <!--begin::Status=-->
    <td class="text-end pe-0">
-   <span class="fw-bolder text-dark">{{ $detail->total_cost ?? '' }}</span>
+   <span class="fw-bolder text-dark">{{ $detail->total_cost ?? '' }} $</span>
    </td>
    <!--end::Status=-->
 

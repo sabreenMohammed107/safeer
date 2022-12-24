@@ -46,6 +46,12 @@
     font-weight: 600;
 
 }
+
+.card_info_hover  {
+    color: #1C4482;
+    font-weight: 600;
+
+}
 .setted_info > span span {
     margin-left: 8px;
     margin-right: 8px;
@@ -53,7 +59,7 @@
 }
 .setted_tour_cards:hover .card_info h6 {
     text-decoration: underline;
-} 
+}
 
 .setted_tour_cards:hover .image_overlay::after {
     display: none;
@@ -75,7 +81,7 @@
     padding-left: 8px;
 }
 .hotels_price {
-    font-size: 22px;
+    /* font-size: 22px; */
     color: #1C4482;
     margin-bottom: 10px;
     text-transform: capitalize;
@@ -115,7 +121,7 @@ margin-top: 0px;
 
 .show_hotel {
     display: block;
-  
+
 }
 
 #hotelyears {
@@ -153,7 +159,7 @@ margin-top: 0px;
     .card-content{
         margin-bottom: 25px;
     }
- 
+
 }
 @media (min-width: 768px) and (max-width: 991px) {
     .filter_labels {
@@ -163,7 +169,7 @@ margin-top: 0px;
     .card-content{
         margin-bottom: 25px;
     }
-  
+
 }
 
 

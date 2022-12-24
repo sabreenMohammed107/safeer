@@ -91,6 +91,7 @@
                             <th class="text-end min-w-100px">Hotel Name</th>
 
                             <th class="text-end min-w-100px">Hotel City</th>
+                            <th class="text-end min-w-100px">Created Date</th>
                             <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -150,6 +151,9 @@
     <!--begin::Status=-->
     <td class="text-end pe-0">
         <span class="fw-bolder text-dark">{{ $row->hotel->city->en_city  ?? '' }}</span>
+    </td>
+    <td class="text-end pe-0">
+        <span class="fw-bolder text-dark">{{$row->created_at->diffForHumans();}}</span>
     </td>
     <!--end::Status=-->
     <!--begin::Action=-->

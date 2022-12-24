@@ -115,8 +115,8 @@
             <div class="ms-5">
                 <!--begin::Title-->
 
-                <a href="{{ route('site-users.show', $row->id) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
-                data-kt-ecommerce-category-filter="category_name" >{{ $row->order->user->name ?? ''}}</a>
+                <a href="{{ route('users-orders.show', $row->order_id ) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
+                 >{{ $row->order->user->name ?? ''}}</a>
                 <!--end::Title-->
             </div>
         </div>
@@ -171,7 +171,7 @@
             data-kt-menu="true">
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('users-orders.show', $row->id) }}"
+                <a href="{{ route('users-orders.show', $row->order_id ) }}"
                     class="menu-link px-3">show</a>
             </div>
             <!--end::Menu item-->

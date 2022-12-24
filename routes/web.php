@@ -66,7 +66,8 @@ Route::post("/hotels/search", [HotelsController::class, 'search']);
 Route::get("/hotels/{id}", [HotelsController::class, 'profile']);
 //favourite
 Route::get("/favourite/{id}", [HotelsController::class, 'favourite']);
-
+//removeFavourite
+Route::get("/removeFavourite/{id}", [HotelsController::class, 'removeFavourite']);
 Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
 Route::post("/hotels/review/{id}", [HotelsController::class, 'add_review']);
 Route::get('/fetch-hotel-filter',  [HotelsController::class, 'fetch_data'])->name('fetch-hotel-filter');

@@ -88,14 +88,24 @@
                             <span> ( {{count($Hotel->reviews)}} review) </span>
                     </div>
                     <div class="sharing_icons">
-                        <i class="fa-solid fa-share-nodes"></i>
-                        <div class="heart" data-bs-toggle="modal"
+                        {{-- <i class="fa-solid fa-share-nodes"></i> --}}
+
+
+                            @if (session()->get('SiteUser'))
+                            <a href="{{ url('/favourite/' . $Hotel->id) }}"
+                                ><i class="fa-regular fa-heart"></i> </a>
+                            @else
+
+                            <a href="{{ route('siteLogin') }}"
+                            ><i class="fa-regular fa-heart"></i></a>
+                            @endif
+                        {{-- <div class="heart" data-bs-toggle="modal"
                             data-bs-target="#staticBack{{ $Hotel->hotel_id }}drop">
                             {{-- <input type="checkbox" id="fav" type="submit modl_fav_add_remov"
                                 onclick="setHeart(this)" data-info-fav="not_added">
 
                             <label class="heart" for="fav"></label> --}}
-                        </div>
+                        {{--</div> --}}
 
 
                         {{-- this is model modified by AHMEDsyd --}}

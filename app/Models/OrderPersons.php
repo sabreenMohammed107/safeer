@@ -44,7 +44,7 @@ class OrderPersons extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**
@@ -75,6 +75,9 @@ class OrderPersons extends Model
     // Scopes...
 
     // Functions ...
-
+    public function getPersonCostAttribute($person_cost)
+    {
+        return number_format($person_cost, 2);
+    }
     // Relations ...
 }

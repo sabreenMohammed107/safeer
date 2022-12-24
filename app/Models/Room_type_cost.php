@@ -40,6 +40,8 @@ class Room_type_cost extends Model
         return $this->belongsTo(Hotel::class,'hotel_id');
     }
 
-
+    public function hotel_sortedByDesc(){
+        return $this->belongsTo(Hotel::class)->sortByAsc('hotel_enname');
+     }
 
 }
