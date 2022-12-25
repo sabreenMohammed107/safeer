@@ -98,6 +98,9 @@ Route::get("/safer/logout", [AuthController::class, 'Logout'])->name("siteLogout
 Route::get("/safer/profile/{id}", [AuthController::class, 'profile'])->name("siteProfile");
 //updateProfile
 Route::post("/safer/updateProfile", [AuthController::class, 'updateProfile'])->name("updateProfile");
+
+ Route::get('load-rooms-data', [AuthController::class, 'loadMoreData'])->name('load-rooms-data');
+
 //hotelByCity
 Route::get("/hotelByCity/{id}", [HotelsController::class, 'getHotelByCity'])->name("hotelByCity");
 

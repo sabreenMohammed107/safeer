@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class=" col-xl-10 col-md-12 col-sm-12">
-            <section class="explore_carsoul">
+            <section class="explore_carsoul owl-carousel">
                 @foreach ($ExploreCities as $City)
                 <div class="card-content">
                     <div class=" card explore_main">
@@ -52,7 +52,7 @@
                 @endforeach
 
 
-          </div>
+            </section>
          </div>
     </div>
     <div class="adventure container">
