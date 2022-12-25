@@ -41,6 +41,8 @@
                             <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
                         </button>
 
+                        {{-- <a href="{{ route('siteLogout') }}" class="links hybrid sign_up">Logout</a> --}}
+
                         <!-- Modal -->
                         @if (session()->get('SiteUser'))
                             <form action="{{ route('siteLogout') }}">
@@ -94,7 +96,7 @@
                                 </span>
                             </div>
                         </div> --}}
-                            <div class="profile_info">
+                            <div class="profile_info mt-4">
 
                                 <div class="row mx-0">
                                     <div class="col-sm-12 col-md-6">
