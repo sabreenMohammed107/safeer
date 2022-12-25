@@ -242,15 +242,16 @@
                         },
                         600:{
                             items:2,
-
+                            margin:0
                         },
                         900:{
                             items:3,
+                            margin:0
 
                         },
-                        1150:{
+                        1345:{
                             items:4,
-
+                            margin:0
                         }
                     }
                 });
