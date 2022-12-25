@@ -184,7 +184,7 @@
 
   <!-- copy right section -->
   <div class="copyright">
-    <h6>All copyrights reserved to website 2021 </h6>
+    <h6>All copyrights reserved to safer 2022 </h6>
   </div>
 
   <!-- javascripts links -->

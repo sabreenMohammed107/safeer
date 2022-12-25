@@ -3374,7 +3374,7 @@ text-transform: none;
         align-items: center;
         gap: 10px;
         margin: 20px 0;
-        font-size: 1rem;
+        font-size: 0.9rem;
         text-decoration: none;
         color: var(--main-color);
       }

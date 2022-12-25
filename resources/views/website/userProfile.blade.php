@@ -28,18 +28,22 @@
                         <button class="nav-link" id="v-pills-favorite-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-favorite" type="button" role="tab"
                             aria-controls="v-pills-favorite" aria-selected="false"> <i
-                                class="fa-regular fa-heart"></i>favorite </button>
+                                class="fa-regular fa-heart"></i>favourites </button>
                         <button class="nav-link" id="v-pills-orders-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-orders" type="button" role="tab" aria-controls="v-pills-orders"
                             aria-selected="false"><i class="fa-regular fa-file-lines"></i> My orders </button>
-                        <button class="nav-link" id="v-pills-payment-tab" data-bs-toggle="pill"
+                        {{-- <button class="nav-link" id="v-pills-payment-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-payment" type="button" role="tab" aria-controls="v-pills-payment"
-                            aria-selected="false"><i class="fa-regular fa-file-lines"></i> My payment method </button>
+                            aria-selected="false"><i class="fa-regular fa-file-lines"></i> My payment method </button> --}}
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn logout_button" data-bs-toggle="modal"
+                        {{-- <button type="button" class="btn logout_button" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">
                             <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
-                        </button>
+                        </button> --}}
+
+                            {{-- <button type="submit" onclick="" class="btn logout_button" >
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
+                        </button> --}}
 
                         {{-- <a href="{{ route('siteLogout') }}" class="links hybrid sign_up">Logout</a> --}}
 
@@ -132,7 +136,7 @@
                         </form>
 
 
-                        <div class="account_info password">
+                        {{-- <div class="account_info password">
                             <div class="password_change">
                                 <h6 class="profile_heading"> My password </h6>
                                 <button class="btn password_button">
@@ -140,7 +144,7 @@
                                 </button>
                             </div>
 
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="tab-pane fade" id="v-pills-favorite" role="tabpanel"
                         aria-labelledby="v-pills-favorite-tab" tabindex="0">
@@ -672,7 +676,39 @@
                                 <div class="passenger_info">
                                     <div class="passenger_table">
                                         <div class="row mx-0">
-                                            <div class=" col p-0 info_edit">
+                                            <table class="table">
+                                                <thead class="table-light">
+                                            {{-- <table class="table table-light table-striped">
+                                                <thead> --}}
+                                                    <tr>
+
+                                                      <th scope="col">Hotel Name</th>
+                                                      <th scope="col">Start Date / End Date</th>
+                                                      <th scope="col">Room Type</th>
+                                                      <th scope="col">Adults</th>
+                                                      <th scope="col">Children</th>
+                                                      <th scope="col">Room Count</th>
+                                                      <th scope="col">Total Order Cost</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    @foreach ($orderData as $order)
+                                                    <tr>
+
+                                                        <td>{{$order->hotel->hotel_enname ?? ''}}</td>
+                                                        <td>{{ $order->order->from_date }} / {{ $order->order->to_date }}</td>
+                                                        <td>{{ $order->room_type }}</td>
+                                                        <td>{{ $order->order->adults_count }}</td>
+                                                        <td>{{ $order->order->children_count }}</td>
+                                                        <td>{{ $order->order->rooms_count }}</td>
+                                                        <td>{{ $order->total_cost }}</td>
+                                                      </tr>
+                                                    @endforeach
+
+
+                                                  </tbody>
+                                              </table>
+                                            {{-- <div class=" col p-0 info_edit">
                                                 <div class="info">
                                                     <span class="name main_row"> reservation no </span>
                                                     <span class="name">222187597 </span>
@@ -744,7 +780,7 @@
                                                     <span class="total"> 48,90 EUR</span>
                                                     <span class="total"> 48,90 EUR</span>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>

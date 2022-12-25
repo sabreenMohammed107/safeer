@@ -123,10 +123,10 @@
                             <ul class="menu user_info_options">
                                 <li><a href="{{ route('siteProfile', $userId) }}" class="links hybrid sign_in"><i
                                             class="fa-solid fa-user"></i>Profile</a></li>
-                                <li><a href="#" class="links hybrid sign_in"><i class="fa-solid fa-cart-shopping"></i>My
+                                <li><a href="{{ route('get_cart') }}" class="links hybrid sign_in"><i class="fa-solid fa-cart-shopping"></i>My
                                         Cart</a></li>
-                                <li><a href="#" class="links hybrid sign_in"><i
-                                            class="fa-solid fa-solid fa-bag-shopping"></i>My Orders</a></li>
+                                {{-- <li><a href="#" class="links hybrid sign_in"><i
+                                            class="fa-solid fa-solid fa-bag-shopping"></i>My Orders</a></li> --}}
                                 <li><a class="links hybrid sign_in" href="{{ route('siteLogout') }}"><i
                                             class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
                             </ul>
@@ -146,8 +146,8 @@
                         </li>
                         @endif
                         <li class=" profile_name" style="opacity: 0.8">
-                            <img title="Arabic" src="{{ asset('img/flags/ar.png') }}" class="flag-img">
-                            <img title="English" src="{{ asset('img/flags/en.png') }}" class="flag-img main-lang">
+                            <img title="Arabic" src="{{ asset('img/flags/ar.png') }}" class="flag-img main-lang">
+                            <img title="English" src="{{ asset('img/flags/en.png') }}" class="flag-img ">
                         </li>
 
                         {{-- <li class=" profile_name">
