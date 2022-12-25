@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SiteAuth;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Company;
+use App\Models\Favorite_hotels_tour;
 use App\Models\SiteUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -41,12 +42,7 @@ class AuthController extends Controller
             return redirect()->back()->with("session-danger", "No User with Specific Data");
         }
 
-        if (session()->get("redirect_url")) {
-            $redirect_url = '/cart';
-            session()->forget("redirect_url");
-        } else {
-            $redirect_url = "/";
-        }
+        $redirect_url = "/";
         if (session()->get("cartItem")) {
             $CartItem = Cart::where("user_id", '=', $User->id)->first();
             if ($CartItem) {
@@ -69,11 +65,31 @@ class AuthController extends Controller
                 $CartItem->ages                 = implode(",",session()->get("cartItem")["ages"]);
             }
             $CartItem->save();
-
+            $redirect_url = '/cart';
             session()->forget("cartItem");
             $request->session()->put("hasCart" , 1);
 
             return redirect()->to($redirect_url)->with("session-success", "Room is added in your cart successfully");
+        }
+
+        if(session()->get("AddFavHotel"))
+        {
+            $input = [
+                'hotel_id' => session()->get("AddFavHotel"),
+                'user_id' => session()->get("SiteUser")["ID"],
+            ];
+            Favorite_hotels_tour::create($input);
+            session()->forget("AddFavHotel");
+            $redirect_url = '/hotels';
+        }else if(session()->get("RemFavHotel"))
+        {
+            $fav = Favorite_hotels_tour::where('hotel_id', session()->get("RemFavHotel"))
+            ->where('user_id', session()->get("SiteUser")["ID"])->first();
+            if ($fav) {
+                $fav->delete();
+            }
+            session()->forget("RemFavHotel");
+            $redirect_url = '/hotels';
         }
 
         return redirect()->to($redirect_url);
@@ -89,13 +105,23 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8'],
         ]);
 
-        $User = SiteUser::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
+        try {
+            $User = SiteUser::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+            ]);
+        } catch(\Illuminate\Database\QueryException $e) {
+            $Count = SiteUser::where("Email",'=',$request['email'])->count();
+            if($Count){
+                return redirect()->to("/safer/register")->with("session-danger","Email Address is Already in-use");
+            }else{
+                return redirect()->to("/safer/register")->with("session-danger", "Can't Register with this data please try again later");
+            }
+        }
 
-        return redirect()->to("/safeer/login");
+
+        return redirect()->to("/safer/login");
 
     }
 

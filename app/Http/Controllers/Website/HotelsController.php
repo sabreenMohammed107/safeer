@@ -218,7 +218,7 @@ class HotelsController extends Controller
     public function fetch(Request $request)
     {
 
-\Log::info(["message",$request->all()]);
+    \Log::info(["message",$request->all()]);
 
         if ($request->ajax()) {
             $todate=null;
@@ -374,8 +374,11 @@ class HotelsController extends Controller
                 'user_id'=>session()->get("SiteUser")["ID"],
             ];
             Favorite_hotels_tour::create($input);
+            return redirect()->back();
+        }else{
+            session()->put("AddFavHotel", $id);
+            return redirect("/safer/login");
         }
-        return redirect()->back();
     }
 
     public function removeFavourite($id){
@@ -386,7 +389,11 @@ class HotelsController extends Controller
             if($fav){
                 $fav->delete();
             }
+            return redirect()->back();
+        }else{
+            session()->put("RemFavHotel", $id);
+            return session()->get("RemFavHotel");
+            return redirect("/safer/login");
         }
-        return redirect()->back();
     }
 }
