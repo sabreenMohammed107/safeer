@@ -12,6 +12,7 @@ use App\Models\Hotel_room;
 use App\Models\Hotel_type;
 use App\Models\Room_type;
 use App\Models\Room_type_cost;
+use App\Models\Zone;
 use File;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -61,9 +62,11 @@ class HotelController extends Controller
         $features = Feature::all();
         $countries = Country::all();
         $rooms = Room_type::all();
+        $zones = Zone::all();
+
         // $eventSpecialzation=[];
         $types = Room_type::all();
-        return view($this->viewName . 'add', compact(['types','rooms', 'cities', 'types', 'features', 'countries']));
+        return view($this->viewName . 'add', compact(['types','rooms', 'cities', 'types', 'features', 'countries','zones']));
     }
 
     /**
@@ -148,6 +151,8 @@ class HotelController extends Controller
         $types = Hotel_type::get();
         $features = Feature::all();
         $rooms = Room_type::all();
+        $zones = Zone::all();
+
         $hotelFeatures = $hotel->features->all();
          $hotelRooms=[];
 if($hotel->rooms){
@@ -159,7 +164,7 @@ if($hotel->rooms){
         $hotelRoomsCost = Room_type_cost::whereHas('hotelRooms', function ($q) use ($hotel) {
             $q->where('hotel_id', '=', $hotel->id);
         })->get();
-        return view($this->viewName . 'edit', compact(['roomsTypes','rooms','hotelRooms', 'hotelRoomsCost', 'hotel', 'cities', 'countries', 'types', 'features', 'hotelFeatures']));
+        return view($this->viewName . 'edit', compact(['roomsTypes','rooms','hotelRooms', 'zones','hotelRoomsCost', 'hotel', 'cities', 'countries', 'types', 'features', 'hotelFeatures']));
     }
 
     /**

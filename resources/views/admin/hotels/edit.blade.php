@@ -237,20 +237,20 @@
                                         <!--begin::Input group-->
                                         <div class="d-flex flex-wrap gap-5">
                                             <!--begin::Input group-->
-                                            {{-- <div class="fv-row w-100 flex-md-root">
+                                             <div class="fv-row w-100 flex-md-root">
                                                 <label class="fs-6 fw-bold form-label mt-3">
-                                                    <option value="">Select Hotel Type..</option>
+                                                    <option value="">Select Zone Type..</option>
                                                 </label>
-                                                <select class="form-select form-select-solid" name="hotel_type_id"
+                                                <select class="form-select form-select-solid" name="zone_id"
                                                     data-control="select2" data-placeholder="Select an option">
                                                     <option value=""></option>
-                                                    @foreach ($types as $type)
-                                                        <option value="{{ $type->id }}"
-                                                            {{ $hotel->hotel_type_id == $type->id ? 'selected' : '' }}>
-                                                            {{ $type->hotel_entype }}</option>
+                                                    @foreach ($zones as $zone)
+                                                        <option value="{{ $zone->id }}"
+                                                            {{ $zone->zone_id == $zone->id ? 'selected' : '' }}>
+                                                            {{ $zone->en_zone }}</option>
                                                     @endforeach
                                                 </select>
-                                            </div> --}}
+                                            </div>
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
                                                 <!--begin::Label-->
