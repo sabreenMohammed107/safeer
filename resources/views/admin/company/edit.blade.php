@@ -738,11 +738,11 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
                                                 <!--begin::Label-->
-                                                <label for="transport_img" class="btn btn-danger"> Transport image  </label>
+                                                <label for="book_img2" class="btn btn-danger"> Transport image  </label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 {{ $company->transport_img }}
-                                                <input type="file" id="book_img" style="visibility: hidden" name="transport_img"
+                                                <input type="file" id="book_img2" style="visibility: hidden" name="transport_img"
                                                     class="form-control mb-2" placeholder=""
                                                     value="{{ $company->transport_img }}" />
 
