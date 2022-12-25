@@ -84,9 +84,8 @@ class HotelsController extends Controller
         }
 
         $city_id = $request->city_id;
-        $HotelsRecommended = Room_type_cost::with(['hotel' => function ($q) {
-            $q->orderBy('hotel_stars');
-        }])->whereHas('hotel', function ($q) use ($city_id) {
+
+        $HotelsRecommended = Room_type_cost::join('hotels', 'room_type_costs.hotel_id', '=', 'hotels.id')->orderBy('hotels.hotel_stars', 'desc')->whereHas('hotel', function ($q) use ($city_id) {
             $q->where('city_id', $city_id);
         })->groupBy('hotel_id')->paginate(6);
 
@@ -144,9 +143,7 @@ class HotelsController extends Controller
 
         $city_id = $id;
 
-        $HotelsRecommended = Room_type_cost::with(['hotel' => function ($q) {
-            $q->orderBy('hotel_stars');
-        }])->whereHas('hotel', function ($q) use ($city_id) {
+        $HotelsRecommended = Room_type_cost::join('hotels', 'room_type_costs.hotel_id', '=', 'hotels.id')->orderBy('hotels.hotel_stars', 'desc')->whereHas('hotel', function ($q) use ($city_id) {
             $q->where('city_id', $city_id);
         })->groupBy('hotel_id')->paginate(6);
 
@@ -186,9 +183,7 @@ class HotelsController extends Controller
             //data of hotels
         $Hotels = Hotel::all();
         $RoomCosts = Room_type_cost::all()->unique('hotel_id');
-        $HotelsRecommended = Room_type_cost::with(['hotel' => function ($q) {
-            $q->orderBy('hotel_stars');
-        }])->groupBy('hotel_id')->paginate(6);
+        $HotelsRecommended = Room_type_cost::join('hotels', 'room_type_costs.hotel_id', '=', 'hotels.id')->orderBy('hotels.hotel_stars', 'desc')->groupBy('hotel_id')->paginate(6);
 
         $HotelsByPrice = $HotelsRecommended->sortBy('single_cost');
         $HotelsByAlpha = $HotelsRecommended->sortBy('hotel.hotel_enname');
@@ -254,10 +249,7 @@ class HotelsController extends Controller
             }
 
 
-            $HotelsRecommended = $RoomCosts->with(['hotel' => function ($q) {
-                $q->orderBy('hotel_stars');
-
-            }])->groupBy('hotel_id')->paginate(6);
+            $HotelsRecommended = $RoomCosts->join('hotels', 'room_type_costs.hotel_id', '=', 'hotels.id')->orderBy('hotels.hotel_stars', 'desc')->groupBy('hotel_id')->paginate(6);
 
             $HotelsByPrice = $HotelsRecommended->sortBy('single_cost');
             $HotelsByAlpha = $HotelsRecommended->sortBy('hotel.hotel_enname');
@@ -319,10 +311,7 @@ class HotelsController extends Controller
             }
 
 
-            $HotelsRecommended = $RoomCosts->with(['hotel' => function ($q) {
-                $q->orderBy('hotel_stars');
-
-            }])->groupBy('hotel_id')->paginate(6);
+            $HotelsRecommended = $RoomCosts->join('hotels', 'room_type_costs.hotel_id', '=', 'hotels.id')->orderBy('hotels.hotel_stars', 'desc')->groupBy('hotel_id')->paginate(6);
 
             $HotelsByPrice = $HotelsRecommended->sortBy('single_cost');
             $HotelsByAlpha = $HotelsRecommended->sortBy('hotel.hotel_enname');
