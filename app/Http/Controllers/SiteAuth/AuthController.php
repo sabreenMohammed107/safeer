@@ -151,6 +151,11 @@ class AuthController extends Controller
     public function profile($id)
     {
         $userSite=SiteUser::where('id',$id)->first();
+
+        // $data=$userSite->favorites();
+        $data=Favorite_hotels_tour::where('user_id',$id)->orderBy('id', 'DESC')->limit(3)->get();
+        $allRows=Favorite_hotels_tour::where('user_id',$id)->orderBy('id', 'DESC')->get();
+
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => "Home"]];
         return view("website.userProfile",
@@ -158,7 +163,91 @@ class AuthController extends Controller
             "Company" => $Company,
             "userSite" => $userSite,
             "BreadCrumb" => $BreadCrumb,
+            "data" => $data,
+            "allRows" => $allRows,
         ]);
+    }
+
+    public function loadMoreData(Request $request)
+    {
+            if ($request->id > 0) {
+                //info($request->id);
+                \Log::info('clicked');
+
+                        $data = Favorite_hotels_tour::where('user_id',session()->get("SiteUser")["ID"])->where('id','<',$request->id)->limit(3)->orderBy('id', 'DESC')->get();
+            }
+            $allRows=Favorite_hotels_tour::where('user_id',session()->get("SiteUser")["ID"])->orderBy('id', 'DESC')->get();
+            $output = '';
+            $last_id = '';
+
+            if (!$data->isEmpty()) {
+                $limit=0;$end=0;$i=0;
+                foreach ($data as $row) {
+                    $output .='<div class="card-content">
+                    <div class=" card setted_tour_cards ">
+                        <div class="card_image">
+                            <div class="image_overlay">
+
+                                    <img src="'.asset('uploads/hotels').'/'.$row->hotel->hotel_banner.'"
+                                    alt=" blogimage">
+                            </div>
+                        </div>
+                        <div class="card-body  setted_info">
+                            <div class="card_info">
+                                <h6>'.$row->hotel->hotel_enname.'  –
+                                    '.$row->hotel->hotel_stars .'Stars</h6>
+                                <span>
+                                    <i class="fa-regular fa-heart"></i>
+                                </span>
+                            </div>
+                            <span> <i class="fa-solid fa-location-dot"></i>';
+                            if($row->hotel->city && $row->hotel->city->country){
+                                $output .= $row->hotel->city->country->en_country.' <span>|</span>';
+                            }
+                            if($row->hotel->city){
+                                $output .=$row->hotel->city->en_city .'</span>';
+                            }
+
+                            $output .='<p>
+                                '.$row->hotel->hotel_enoverview.'
+
+                            </p>
+                            <div class="price">
+                                <div class="rating">
+                                ';
+
+                                    for($i = 0; $i < $row->hotel->hotel_stars; $i++){
+                                        $output .= '
+                                        <i class="fa-solid fa-star"></i>';
+                                    }
+
+
+                                for ($i = 5; $i > $row->hotel->hotel_stars; $i--){
+                                    $output .= '<i class="fa-regular fa-star"></i>';
+                                 }
+
+                                 $output .= '<span> ('.$row->hotel->totalreviews.' review) </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>';
+
+
+                    $last_id = $row->id ;
+
+                }
+
+
+            }
+
+             \Log::info($output);
+        $arr=[
+            'output'=>$output,
+            'last_id'=>$last_id,
+        ];
+            // return json_encode($arr);
+            return response()->json($arr);
     }
 
 

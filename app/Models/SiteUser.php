@@ -39,4 +39,11 @@ class SiteUser extends Model
         'password',
         'remember_token',
     ];
+
+
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Hotel::class, 'favorite_hotels_tours','user_id','hotel_id');
+    }
 }
