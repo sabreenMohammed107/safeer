@@ -10,6 +10,37 @@
     #previous {
         display: none;
     }
+
+    .avaliable span>a {
+
+    cursor: pointer;
+    }
+
+    .tooltip-body {
+
+display: flex;
+}
+
+.tooltip-inner {
+color: black !important;
+border: 3px solid #1C4482 !important;
+background-color: white !important;
+display: flex !important;
+padding: 5px 15px !important;
+max-width: 300px !important; //define whatever width you want
+}
+.tooltip-inner h5 {
+text-align: left;
+color: #1C4482 !important;
+}
+.tooltip-inner h6 {
+text-align: left;
+color: #1C4482 !important;
+}
+.tooltip-inner p {
+
+color: #7E7E7E !important;
+}
 </style>
 @endsection
 
@@ -458,7 +489,20 @@
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <div class="avaliable">
                                 <span> avaliable</span>
-                                <span><a href="#">Cancellation Policy</a></span>
+
+                                <span><a data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                     title='
+                                    <div class="tooltip-body">
+                                      <div class="row">
+                                        <h5 class="col-12">Booking for 7 nights</h5>
+                                        <h6 class="col-12">Rooms</h6>
+                                        <p  class="col-12"><span class="float-start">1 x Sea view Double(BB)</span> <span class="float-end">1 x $600 <br> <b>$600</b></sapn></p>
+                                            <p  class="col-12"><span class="float-start">1 x Adults</span></p>
+                                            <p  class="col-12"><span class="float-start">0 x Free childs (Age From 1 to 5) </span> <span class="float-end">Free</sapn></p>
+                                            <p  class="col-12"><span class="float-start">2 x Paid childs (Age From 6 to 11) </span> <span class="float-end">2 x $250 <br> <b>$500</b></sapn></p>
+                                      </div>
+                                    </div>
+                                      '>Cancellation Policy</a></span>
                             </div>
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
@@ -502,7 +546,18 @@
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <div class="avaliable">
                                 <span> avaliable</span>
-                                <span><a href="#">Cancellation Policy</a></span>
+                                <span><a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title='
+                                    <div class="tooltip-body">
+                                      <div class="row">
+                                        <h5 class="col-12">Booking for 7 nights</h5>
+                                        <h6 class="col-12">Rooms</h6>
+                                        <p  class="col-12"><span class="float-start">1 x Sea view Double(BB)</span> <span class="float-end">1 x $600 <br> <b>$600</b></sapn></p>
+                                            <p  class="col-12"><span class="float-start">1 x Adults</span></p>
+                                            <p  class="col-12"><span class="float-start">0 x Free childs (Age From 1 to 5) </span> <span class="float-end">Free</sapn></p>
+                                            <p  class="col-12"><span class="float-start">2 x Paid childs (Age From 6 to 11) </span> <span class="float-end">2 x $250 <br> <b>$500</b></sapn></p>
+                                      </div>
+                                    </div>
+                                      '>Cancellation Policy</a></span>
                             </div>
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
@@ -544,7 +599,19 @@
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <div class="avaliable">
                                 <span> avaliable</span>
-                                <span><a href="#">Cancellation Policy</a></span>
+                                <span><a data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" title='
+                                    <div class="tooltip-body">
+                                      <div class="row">
+                                        <h5 class="col-12">Booking for 7 nights</h5>
+                                        <h6 class="col-12">Rooms</h6>
+                                        <p  class="col-12"><span class="float-start">1 x Sea view Double(BB)</span> <span class="float-end">1 x $600 <br> <b>$600</b></sapn></p>
+                                            <p  class="col-12"><span class="float-start">1 x Adults</span></p>
+                                            <p  class="col-12"><span class="float-start">0 x Free childs (Age From 1 to 5) </span> <span class="float-end">Free</sapn></p>
+                                            <p  class="col-12"><span class="float-start">2 x Paid childs (Age From 6 to 11) </span> <span class="float-end">2 x $250 <br> <b>$500</b></sapn></p>
+                                      </div>
+                                    </div>
+                                      '>Cancellation Policy</a></span>
+
                             </div>
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
@@ -662,11 +729,18 @@
 </section>
 <!--  ending page  -->
 @endsection
-@section('adds_js')
 
+
+@section('adds_js')
 <script>
     $(document).ready(function() {
-var from_date = $('#from_date').val();
+
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+     var from_date = $('#from_date').val();
             var end_date = $('#end_date').val();
 
             $('.demo').daterangepicker({

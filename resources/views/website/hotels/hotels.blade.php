@@ -14,7 +14,6 @@
         .slider_section .slider_details{
             height: 420px !important;
         }
-
         .icons-container .social-icons .item i.fa-brands {
             padding-top: 15px ;
         }
