@@ -63,6 +63,7 @@ $data = curl_exec($ch);
 curl_close($ch);
 
 $arrayData = json_decode($data, true); // json object to array conversion
+var_dump($arrayData);
 if(isset($arrayData['result'])){
     $result = $arrayData['result'];
 
