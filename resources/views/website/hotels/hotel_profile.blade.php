@@ -53,7 +53,7 @@ color: #7E7E7E !important;
 <?php
 $cid =0x424a7b3906d2a73e; //CID of a place can be genrated from https://pleper.com/index.php?do=tools&sdo=cid_converter
 //execute curl
-$url = 'https://maps.googleapis.com/maps/api/place/details/json?cid='.$cid.'&key=AIzaSyD2qTHTWTV4oXX8MwfQ0lu5v4ZKXJMOF90';
+$url = 'https://maps.googleapis.com/maps/api/place/details/json?cid='.$cid.'&key=AIzaSyB-HYuu_uz4vfa57Mpov4wzx6pciIayVAE';
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_HEADER, 1);
