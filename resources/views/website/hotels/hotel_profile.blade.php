@@ -51,7 +51,7 @@ color: #7E7E7E !important;
 @section("content")
 {{-- google reviews --}}
 <?php
-$cid =0x424a7b3906d2a73e!5m2!4m1!1i2!8m2!3d41.0362673!4d28.9863785; //CID of a place can be genrated from https://pleper.com/index.php?do=tools&sdo=cid_converter
+$cid =0x424a7b3906d2a73e; //CID of a place can be genrated from https://pleper.com/index.php?do=tools&sdo=cid_converter
 //execute curl
 $url = 'https://maps.googleapis.com/maps/api/place/details/json?cid='.$cid.'&key=<AIzaSyD2qTHTWTV4oXX8MwfQ0lu5v4ZKXJMOF90>';
 $ch = curl_init();
