@@ -13,6 +13,7 @@ class Hotel extends Model
     'hotel_arname',
     'hotel_enoverview',
     'hotel_aroverview',
+    'keywords',
     'hotel_type_id',
     'hotel_stars',
     'hotel_logo',

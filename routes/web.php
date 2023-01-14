@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\HotelPricesController;
+use App\Http\Controllers\HotelsTagController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\SiteAuth\AuthController;
 use App\Http\Controllers\SiteUsersController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\ToursTagController;
 use App\Http\Controllers\UsersOrderController;
 use App\Http\Controllers\Website\BookingController;
 use App\Http\Controllers\Website\ContentController;
@@ -79,7 +81,9 @@ Route::get('/single-blog/{id}',[ContentController::class, 'singleBlog'])->name('
 Route::get('/contact', [ContentController::class, 'createForm']);
 Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
 Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
-
+// outocomplete search
+// Route::get('/autocomplete-search', [HotelsController::class, 'autocompleteSearch']);
+Route::get('autocomplete', [HotelsController::class, 'autocompleteSearch'])->name('autocomplete');
 Route::middleware(['prevent-relogin'])->group(function () {
     //site-login
     Route::get("/safer/login", [ContentController::class, 'loginSite'])->name("siteLogin");
@@ -137,12 +141,19 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
           //hotels
           Route::resource('hotels', HotelController::class);
           //
+
+          Route::get('autocompleteKeywords', [HotelController::class, 'autocompleteSearch'])->name('autocompleteKeywords');
+
           Route::post('dynamicdependentCat/fetch',[HotelController::class,'fetchCat'] )->name('dynamicdependentCat.fetch');
          //editingRooms
 
             Route::post('editingRooms',[HotelController::class,'editingRooms'] )->name('editingRooms');
            //features
             Route::resource('features', FeatureController::class);
+            //hotelTag
+            Route::resource('hotelTag', HotelsTagController::class);
+              //tourTag
+              Route::resource('tourTag', ToursTagController::class);
            //galleries
            Route::resource('galleries', GalleryController::class);
             //blog-categories

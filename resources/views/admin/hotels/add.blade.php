@@ -330,7 +330,6 @@
                                             <!--end::Editor-->
 
                                         </div>
-                                        <!--end::Input group-->
 
                                         <!--begin::Input group-->
                                         <div>
@@ -405,7 +404,18 @@
                                             </div>
 
                                         </div>
-
+ <!--end::Input group-->
+ <div class="d-flex flex-wrap gap-5">
+ <div class="fv-row w-100 flex-md-root">
+    <label class="form-label">Keywords</label>
+<br>
+    <input type="text" name="keywords" id="keywords" class="typeahead form-control nosubmit" value="{{ old('keywords') }}"
+       data-role="tagsinput" />
+    @if($errors->has('keywords'))
+    <strong class="text-danger">{{ $errors->first('keywords') }}</strong>
+    @endif
+ </div>
+ </div>
                                         <div class="d-flex flex-wrap gap-5">
                                             <div class="fv-row w-100 flex-md-root">
                                                 <label class=" form-label">Url Vedio</label>
@@ -651,4 +661,55 @@
 
         });
     </script>
+     <script src='https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js'></script>
+
+
+     <script>
+        $(function () {
+           $('input').on('change', function (event) {
+
+              var $element = $(event.target);
+              var $container = $element.closest('.example');
+
+              if (!$element.data('tagsinput'))
+                 return;
+
+              var val = $element.val();
+              if (val === null)
+                 val = "null";
+              var items = $element.tagsinput('items');
+
+              $('code', $('pre.val', $container)).html(($.isArray(val) ? JSON.stringify(val) : "\"" + val.replace('"', '\\"') + "\""));
+              $('code', $('pre.items', $container)).html(JSON.stringify($element.tagsinput('items')));
+
+
+           }).trigger('change');
+        });
+    //     $(document).ready(function() {
+    //         alert('ll')
+    //            var path = "{{ route('autocompleteKeywords') }}";
+
+    // $( "#keywords" ).autocomplete({
+    //     source: function( request, response ) {
+    //       $.ajax({
+    //         url: path,
+    //         type: 'GET',
+    //         dataType: "json",
+    //         data: {
+    //            search: request.term
+    //         },
+    //         success: function( data ) {
+    //            response( data );
+    //         }
+    //       });
+    //     },
+    //     select: function (event, ui) {
+    //        $('#keywords').val(ui.item.label);
+    //        console.log(ui.item);
+    //        return false;
+    //     }
+    //   });
+    // });
+     </script>
+
 @endsection

@@ -99,7 +99,7 @@ class HotelController extends Controller
             } else {
                 $input['active'] = '0';
             }
-
+            $input['keywords'] = str_replace('"', '', $request->keywords);
             $hotel = Hotel::create($input);
             if (!empty($request->get('features'))) {
 
@@ -404,4 +404,18 @@ if($hotelRoomsId){
         ];
         Hotel_room::create($input);
         return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
-}
+
+        public function autocompleteSearch(Request $request)
+
+
+        {
+            $data = Hotel::select("keywords as value", "id")
+                        ->where('keywords', 'LIKE', '%'. $request->get('search'). '%')
+                        ->get();
+        \Log::info('test');
+
+            return response()->json($data);
+        }
+
+
+    }

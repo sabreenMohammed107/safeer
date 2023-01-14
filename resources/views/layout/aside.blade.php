@@ -304,7 +304,14 @@
                             </a>
                         </div>
 
-
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('tourTag.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Tour Tags</span>
+                            </a>
+                        </div>
 
 
                     </div>
@@ -371,6 +378,15 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Hotel Pricing</span>
+                            </a>
+                        </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('hotelTag.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Hotel Tags</span>
                             </a>
                         </div>
                         {{-- end new --}}

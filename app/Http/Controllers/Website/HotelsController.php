@@ -218,15 +218,25 @@ class HotelsController extends Controller
         if ($request->ajax()) {
             $todate=null;
             $enddate=null;
+            $searchHotelId= $request->searchHotelId;
             $city_id= $request->hotel_cities_ids;
             $zone_id=$request->hotel_zone_ids;
             $rate_id=$request->hotel_rating;
+            $serch=$request->searchHotelId;
             $RoomCosts = Room_type_cost::whereHas('hotel', function ($q) {
                 $q->where('active',  1);
             });
-            if ($request->hotel_ids) {
-                $RoomCosts->whereIn("hotel_id", explode(',', $request->hotel_ids));
+
+            if ($request->searchHotelId ) {
+                $ser=Hotel::where('hotel_enname', $serch)->first();
+                $RoomCosts->where("hotel_id",$ser->id);
+            //    
             }
+            if ($request->hotel_ids && $request->searchHotelId) {
+                $RoomCosts->where("hotel_id",$ser->id)->orWhereIn("hotel_id", explode(',', $request->hotel_ids));
+                }elseif($request->hotel_ids && empty($request->searchHotelId)) {
+                    $RoomCosts->whereIn("hotel_id", explode(',', $request->hotel_ids));       
+                }
             if ($request->hotel_rating) {
 
                 $RoomCosts->whereHas('hotel', function ($q) use ($rate_id) {
@@ -257,7 +267,7 @@ class HotelsController extends Controller
             // $HotelsByAlpha =  $RoomCosts->with(['hotel' => function ($q) {
             //     $q->orderBy('hotel_enname');
             // }])->groupBy('hotel_id')->paginate(6);
-
+\Log::info( $HotelsRecommended);
             return view("website.hotels.hotelsList",
                 [
                     "HotelsRecommended" => $HotelsRecommended,
@@ -283,12 +293,27 @@ class HotelsController extends Controller
             $city_id= $request->hotel_cities_ids;
             $zone_id=$request->hotel_zone_ids;
             $rate_id=$request->hotel_rating;
+            $serch=$request->searchHotelId;
+
+            if ($request->searchHotelId) {
+               
+                $serIds=Hotel::where('hotel_enname', 'LIKE', '%'. $serch. '%')->pluck(id);
+                
+            }
             $RoomCosts = Room_type_cost::whereHas('hotel', function ($q) {
                 $q->where('active',  1);
             });
-            if ($request->hotel_ids) {
-                $RoomCosts->whereIn("hotel_id", explode(',', $request->hotel_ids));
+            if ($request->searchHotelId && !$request->hotel_ids) {
+                $ser=Hotel::where('hotel_enname', $serch)->first();
+                $RoomCosts->where("hotel_id",$ser->id);
+            //    
             }
+            if ($request->hotel_ids && $request->searchHotelId) {
+                $RoomCosts->where("hotel_id",$ser->id)->orWhereIn("hotel_id", explode(',', $request->hotel_ids));
+                }else{
+                    $RoomCosts->whereIn("hotel_id", explode(',', $request->hotel_ids));       
+                }
+            
             if ($request->hotel_rating) {
 
                 $RoomCosts->whereHas('hotel', function ($q) use ($rate_id) {
@@ -319,7 +344,7 @@ class HotelsController extends Controller
             // $HotelsByAlpha =  $RoomCosts->with(['hotel' => function ($q) {
             //     $q->orderBy('hotel_enname');
             // }])->groupBy('hotel_id')->paginate(6);
-
+            \Log::info( $HotelsRecommended);
             return view("website.hotels.hotelsList",
                 [
                     "HotelsRecommended" => $HotelsRecommended,
@@ -384,5 +409,17 @@ class HotelsController extends Controller
             return session()->get("RemFavHotel");
             return redirect("/safer/login");
         }
+    }
+
+
+    public function autocompleteSearch(Request $request)
+ 
+
+    {
+        $data = Hotel::select("hotel_enname as value", "id")
+                    ->where('hotel_enname', 'LIKE', '%'. $request->get('search'). '%')
+                    ->get();
+    
+        return response()->json($data);
     }
 }
