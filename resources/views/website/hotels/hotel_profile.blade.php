@@ -76,7 +76,7 @@ if(isset($arrayData['result'])){
 // var_dump($reviews);
 
 
-
+}
 ?>
 {{-- @foreach($reviews as $review)
 {{$review['author_name']}}
