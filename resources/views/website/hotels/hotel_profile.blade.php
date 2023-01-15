@@ -63,21 +63,24 @@ $data = curl_exec($ch);
 curl_close($ch);
 
 $arrayData = json_decode($data, true); // json object to array conversion
-var_dump($arrayData);
 if(isset($arrayData['result'])){
     $result = $arrayData['result'];
 
-$total_users    = $result['user_ratings_total']; // display total number of users who rated
-$overall_rating = $result['rating']; // display total average rating
-$reviews        = $result['reviews'];   //holds information like author_name, author_url, language, profile_photo_url, rating, relative_time_description, text, time
+// $total_users    = $result['user_ratings_total']; // display total number of users who rated
+// $overall_rating = $result['rating']; // display total average rating
+ $reviews        = $result['reviews'];   //holds information like author_name, author_url, language, profile_photo_url, rating, relative_time_description, text, time
 
 //display on view
-var_dump($total_users);
-var_dump($overall_ratings);
-var_dump($reviews);
-}
+// var_dump($total_users);
+// var_dump($overall_ratings);
+// var_dump($reviews);
+
+
 
 ?>
+{{-- @foreach($reviews as $review)
+{{$review['author_name']}}
+@endforeach --}}
 {{-- end googlereviews --}}
 @if (session('session-warning'))
 <div class="alert alert-warning">
@@ -728,9 +731,38 @@ var_dump($reviews);
             </div>
         </div>
     </div>
+
+@foreach($reviews as $key => $review)
+   <div class="review_details">
+        <img src="{{$review['profile_photo_url']}}" alt="profile picture ">
+        <div class="review_info">
+            <div class="heading">
+                <h6>{{$review['author_name']}} 
+                             <p>  {{$review['relative_time_description']}}
+</p>
+<img src={{asset("/website_assets/images/google-icon-isolated_68185-565.webp")}} width='30' >
+                </h6>
+  
+                <div class="rating">
+                    @for ($i = 0; $i < $review['rating']; $i++)
+                        <i class="fa-solid fa-star"></i>
+                        @endfor
+                        @for ($i = 5; $i > $review['rating']; $i--)
+                        <i class="fa-regular fa-star"></i>
+                        @endfor 
+                </div>
+            </div>
+            <p>
+                {{$review['text']}}
+            </p>
+        </div>
+
+    </div> 
+@endforeach
+ 
     @foreach ($Hotel->reviews as $rev)
     <div class="review_details">
-        <img src="{{asset(" /website_assets/images/tour-details/profile/profile-1.webp")}}" alt="profile picture ">
+        <img src="{{asset("/website_assets/images/tour-details/profile/profile-1.webp")}}" alt="profile picture ">
         <div class="review_info">
             <div class="heading">
                 <h6> user name </h6>
