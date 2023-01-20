@@ -119,7 +119,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <div class="form-check mb-3">
                             <input class="form-check-input terms" required type="checkbox" value="" id="flexCheckChecked">
                             <label class="form-check-label" for="flexCheckChecked">
-                                I agree to all <a href="url('/terms')">Terms and Conditions</a> of Safer
+                                I agree to all <a href="{{url('/terms')}}">Terms and Conditions</a> of Safer
                             </label>
                         </div>
                         <input type="hidden" name="hotel_id" value="{{$RoomCost->hotel_id}}" />
