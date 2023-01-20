@@ -406,7 +406,7 @@
 
                                         <div class="d-flex flex-wrap gap-5">
                                             <div class="fv-row w-100 flex-md-root">
-                                                <label class=" form-label">Google pace</label>
+                                                <label class=" form-label">Google place</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="text" name="google_place" class="form-control mb-2"
