@@ -3429,6 +3429,9 @@ text-transform: none;
         -moz-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
         box-shadow: 0px 5px 11px 0px rgba(0,0,0,0.18), 0px 4px 15px 0px rgba(0,0,0,0.15);
     }
+    .social-icons .item i{
+        padding-top: 15px;
+    }
 
     .social-icons.spinned .item:hover {
         -webkit-animation: Social-Icons-Flipping .3s;
@@ -3716,6 +3719,24 @@ text-transform: none;
     width: 100%;
     margin-top: 5px;
   }
+
+  .useful_links .pay-link img {
+    width: 70px;
+}
+
+.useful_links .pay-link {
+    padding-right: 27px;
+}
+
+.useful_links {
+    margin-bottom: 15px;
+}
+.contact_info.qr-code-custome img{
+    background-color: white;
+    width: 45px;
+    padding:3px;
+    margin: 0 0 0 15px;
+}
 
 /* -------------------------------------------------- */
 /* -------------------------------------------------- */
