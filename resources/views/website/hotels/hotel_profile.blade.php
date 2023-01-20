@@ -51,7 +51,9 @@ color: #7E7E7E !important;
 @section("content")
 {{-- google reviews --}}
 <?php
-$cid =0x424a7b3906d2a73e; //CID of a place can be genrated from https://pleper.com/index.php?do=tools&sdo=cid_converter
+// $cid =0x424a7b3906d2a73e;
+$cid=$Hotel->google_place;
+//CID of a place can be genrated from https://pleper.com/index.php?do=tools&sdo=cid_converter
 //execute curl
 $url = 'https://maps.googleapis.com/maps/api/place/details/json?cid='.$cid.'&key=AIzaSyB9BVYo2lK6DClKsR5crlGhu-31lYgfK9U';
 $ch = curl_init();
@@ -67,13 +69,22 @@ if(isset($arrayData['result'])){
     $result = $arrayData['result'];
 
 // $total_users    = $result['user_ratings_total']; // display total number of users who rated
-// $overall_rating = $result['rating']; // display total average rating
- $reviews        = $result['reviews'];   //holds information like author_name, author_url, language, profile_photo_url, rating, relative_time_description, text, time
+ $overall_rating = $result['rating']; // display total average rating
+ $reviews = $result['reviews'];   //holds information like author_name, author_url, language, profile_photo_url, rating, relative_time_description, text, time
 
 //display on view
 // var_dump($total_users);
-// var_dump($overall_ratings);
+
 // var_dump($reviews);
+// $data = "https://www.google.com/maps/place/%D9%81%D9%86%D8%AF%D9%82+%D9%85%D8%B1%D9%85%D8%B1%D8%A9+%D8%AA%D9%82%D8%B3%D9%8A%D9%85+%D9%85%D9%8A%D8%AF%D8%A7%D9%86%E2%80%AD/@41.0362673,28.9863785,15z/data=!4m8!3m7!1s0x0:0x424a7b3906d2a73e!5m2!4m1!1i2!8m2!3d41.0362673!4d28.9863785";
+// $last_index_of_i = strripos($data, ':');
+
+// $whatIWant = substr($data, $last_index_of_i+1);
+// $first_index_of_i = stripos($whatIWant,'!');
+
+
+// $whatIWant2 = substr($whatIWant,0, $first_index_of_i);
+// echo $whatIWant2;
 
 
 }
@@ -679,8 +690,19 @@ if(isset($arrayData['result'])){
     <div class="review_heading">
         <h5>
             room review
-        </h5>
+            @isset($arrayData['result'])
+        <div><span style="margin-right:5px" class="Aq14fc" aria-hidden="true">
 
+
+        </span>
+        <span class="z3HNkc" aria-label="Rated 4.4 out of 5," role="img">
+        <span style="width:62px"></span></span>
+        <a class="hqzQac" style="white-space:nowrap;font-size:14px;margin-left:5px" href="{{$Hotel->google_reviews}}" target="_blank"
+>
+         {{number_format((float)$result['rating'], 1, '.', '') }} Google reviews</a>
+        </div>
+        @endisset
+        </h5>
         <!-- modal -->
         <!-- Button trigger modal -->
         @if (session()->get('SiteUser'))
@@ -731,35 +753,37 @@ if(isset($arrayData['result'])){
             </div>
         </div>
     </div>
-
+@isset($arrayData['result'])
 @foreach($reviews as $key => $review)
-   <div class="review_details">
-        <img src="{{$review['profile_photo_url']}}" alt="profile picture ">
-        <div class="review_info">
-            <div class="heading">
-                <h6>{{$review['author_name']}} 
-                             <p>  {{$review['relative_time_description']}}
+<div class="review_details">
+     <img src="{{$review['profile_photo_url']}}" alt="profile picture ">
+     <div class="review_info">
+         <div class="heading">
+             <h6>{{$review['author_name']}}
+                          <p>  {{$review['relative_time_description']}}
 </p>
 <img src={{asset("/website_assets/images/google-icon-isolated_68185-565.webp")}} width='30' >
-                </h6>
-  
-                <div class="rating">
-                    @for ($i = 0; $i < $review['rating']; $i++)
-                        <i class="fa-solid fa-star"></i>
-                        @endfor
-                        @for ($i = 5; $i > $review['rating']; $i--)
-                        <i class="fa-regular fa-star"></i>
-                        @endfor 
-                </div>
-            </div>
-            <p>
-                {{$review['text']}}
-            </p>
-        </div>
+             </h6>
 
-    </div> 
+             <div class="rating">
+                 @for ($i = 0; $i < $review['rating']; $i++)
+                     <i class="fa-solid fa-star"></i>
+                     @endfor
+                     @for ($i = 5; $i > $review['rating']; $i--)
+                     <i class="fa-regular fa-star"></i>
+                     @endfor
+             </div>
+         </div>
+         <p>
+             {{$review['text']}}
+         </p>
+     </div>
+
+ </div>
 @endforeach
- 
+@endisset
+
+
     @foreach ($Hotel->reviews as $rev)
     <div class="review_details">
         <img src="{{asset("/website_assets/images/tour-details/profile/profile-1.webp")}}" alt="profile picture ">

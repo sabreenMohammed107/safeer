@@ -284,26 +284,26 @@
 
                                             <!--rooms -->
                                               <!--begin::Input group-->
-                                              {{-- <div class="fv-row w-100 flex-md-root">
+                                               <div class="fv-row w-100 flex-md-root">
 
                                                 <label class="fs-6 fw-bold form-label mt-3">
-                                                    <span class="required">Add Rooms Types</span>
+                                                    <span class="required">Add Tags</span>
                                                     <i class="fas fa-exclamation-circle ms-1 fs-7"
                                                         data-bs-toggle="tooltip"
                                                         title="Interviewer who conducts the meeting with the interviewee"></i>
                                                 </label>
 
-                                                <select required class="form-select form-select-solid" name="rooms[]"
+                                                <select required class="form-select form-select-solid" name="tags[]"
                                                     data-control="select2" data-placeholder="Select an option"
                                                     data-allow-clear="true" multiple="multiple">
                                                     <option></option>
-                                                    @foreach ($rooms as $room)
-                                                        <option value="{{ $room->id }}">{{ $room->en_room_type ?? '' }}
+                                                    @foreach ($tags as $tag)
+                                                        <option value="{{ $tag->id }}">{{ $tag->en_tag ?? '' }}
                                                         </option>
                                                     @endforeach
 
                                                 </select>
-                                            </div> --}}
+                                            </div>
                                             <!--end::Input group-->
                                         </div>
                                         <!--end::Input group-->
@@ -403,6 +403,26 @@
                                                 <!--end::Input-->
                                             </div>
 
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-5">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class=" form-label">Google pace</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" name="google_place" class="form-control mb-2"
+                                                    placeholder="google_place" value="" />
+                                                <!--end::Input-->
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-5">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class=" form-label">Google reviews link</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" name="google_reviews" class="form-control mb-2"
+                                                    placeholder="google_reviews" value="" />
+                                                <!--end::Input-->
+                                            </div>
                                         </div>
  <!--end::Input group-->
  <div class="d-flex flex-wrap gap-5">

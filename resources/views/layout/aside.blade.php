@@ -136,6 +136,14 @@
                                 <span class="menu-title">Cities</span>
                             </a>
                         </div>
+                           <div class="menu-item">
+                            <a class="menu-link" href="{{ route('hotelTag.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Tags</span>
+                            </a>
+                        </div>
                         {{-- <div class="menu-item">
                                     <a class="menu-link" href="{{route('room-types.index')}}">
                                         <span class="menu-bullet">
@@ -304,14 +312,14 @@
                             </a>
                         </div>
 
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="{{ route('tourTag.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Tour Tags</span>
                             </a>
-                        </div>
+                        </div> --}}
 
 
                     </div>
@@ -381,14 +389,14 @@
                             </a>
                         </div>
 
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="{{ route('hotelTag.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Hotel Tags</span>
                             </a>
-                        </div>
+                        </div> --}}
                         {{-- end new --}}
 
 

@@ -9,9 +9,11 @@ use App\Models\Country;
 use App\Models\Feature;
 use App\Models\Hotel;
 use App\Models\Hotel_room;
+use App\Models\Hotel_tag;
 use App\Models\Hotel_type;
 use App\Models\Room_type;
 use App\Models\Room_type_cost;
+use App\Models\Tag;
 use App\Models\Zone;
 use File;
 use Illuminate\Database\QueryException;
@@ -63,10 +65,10 @@ class HotelController extends Controller
         $countries = Country::all();
         $rooms = Room_type::all();
         $zones = Zone::all();
-
+        $tags = Tag::get();
         // $eventSpecialzation=[];
         $types = Room_type::all();
-        return view($this->viewName . 'add', compact(['types','rooms', 'cities', 'types', 'features', 'countries','zones']));
+        return view($this->viewName . 'add', compact(['types','tags','rooms', 'cities', 'types', 'features', 'countries','zones']));
     }
 
     /**
@@ -81,7 +83,7 @@ class HotelController extends Controller
         try {
             // Disable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner']);
+            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner','google_place']);
             if ($request->hasFile('hotel_logo')) {
                 $attach_image = $request->file('hotel_logo');
 
@@ -100,17 +102,31 @@ class HotelController extends Controller
                 $input['active'] = '0';
             }
             $input['keywords'] = str_replace('"', '', $request->keywords);
+
+            //place url
+
+            $data = $request->get('google_place');
+$last_index_of_i = strripos($data, ':');
+
+$whatIWant = substr($data, $last_index_of_i+1);
+$first_index_of_i = stripos($whatIWant,'!');
+
+
+$whatIWant2 = substr($whatIWant,0, $first_index_of_i);
+
+$input['google_place']=$whatIWant2;
+
             $hotel = Hotel::create($input);
             if (!empty($request->get('features'))) {
 
                 $hotel->features()->attach($request->features);
 
             }
-            // if (!empty($request->get('rooms'))) {
+            if (!empty($request->get('tags'))) {
 
-            //     $hotel->rooms()->attach($request->rooms);
+                $hotel->tags()->attach($request->tags);
 
-            // }
+            }
             DB::commit();
             // Enable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
@@ -161,10 +177,12 @@ if($hotel->rooms){
 
         $countries = Country::all();
         $roomsTypes = Hotel_room::where('hotel_id', $hotel->id)->get();
+        $tags = Tag::get();
+        $tagsHotel = Hotel_tag::where('hotel_id', $hotel->id)->get();
         $hotelRoomsCost = Room_type_cost::whereHas('hotelRooms', function ($q) use ($hotel) {
             $q->where('hotel_id', '=', $hotel->id);
         })->get();
-        return view($this->viewName . 'edit', compact(['roomsTypes','rooms','hotelRooms', 'zones','hotelRoomsCost', 'hotel', 'cities', 'countries', 'types', 'features', 'hotelFeatures']));
+        return view($this->viewName . 'edit', compact(['roomsTypes','tags','tagsHotel','rooms','hotelRooms', 'zones','hotelRoomsCost', 'hotel', 'cities', 'countries', 'types', 'features', 'hotelFeatures']));
     }
 
     /**
@@ -181,7 +199,7 @@ if($hotel->rooms){
         try {
             // Disable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner']);
+            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner','google_place']);
             if ($request->hasFile('hotel_logo')) {
                 $attach_image = $request->file('hotel_logo');
 
@@ -200,6 +218,16 @@ if($hotel->rooms){
             } else {
                 $input['active'] = '0';
             }
+            $data = $request->get('google_place');
+            $last_index_of_i = strripos($data, ':');
+
+            $whatIWant = substr($data, $last_index_of_i+1);
+            $first_index_of_i = stripos($whatIWant,'!');
+
+
+            $whatIWant2 = substr($whatIWant,0, $first_index_of_i);
+
+            $input['google_place']=$whatIWant2;
 
             $hotel->update($input);
             // $hotel=Hotel::create($input);
@@ -208,9 +236,9 @@ if($hotel->rooms){
                 $hotel->features()->sync($request->features);
 
             }
-            if (!empty($request->get('rooms'))) {
+            if (!empty($request->get('tags'))) {
 
-                $hotel->rooms()->sync($request->rooms);
+                $hotel->tags()->sync($request->tags);
 
             }
             //repeat data

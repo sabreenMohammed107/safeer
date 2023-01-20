@@ -83,7 +83,7 @@
                                     </div>
                                 </th>
                                 <th class="min-w-250px">id</th>
-                                <th class="min-w-250px">Hotel</th>
+                                {{-- <th class="min-w-250px">Hotel</th> --}}
                                 <th class="min-w-250px">En Tag</th>
 
                                 <th class="min-w-250px">Ar Tag</th>
@@ -112,7 +112,7 @@
                                         {{ $index + 1 }}
                                     </div>
                                     </td>
-                                    <td>
+                                    {{-- <td>
 
                                         <div class="d-flex">
 
@@ -121,7 +121,7 @@
 
 
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <td>
 
                                         <div class="d-flex">
@@ -279,7 +279,7 @@
                                                         </div>
                                                         <!--end::Input group-->
 
-
+{{--
    <div>
    <label class="fs-6 fw-bold form-label mt-3">
     <option value="">Select a Hotel...</option>
@@ -294,7 +294,7 @@
    </option>
     @endforeach
 </select>
-</div>
+</div> --}}
 <!--end::Input group-->
 
                                                         <!--begin::Actions-->
@@ -414,7 +414,7 @@
 
 
 		<!--begin::Input group-->
-         <div class="fv-row mb-7">
+         {{-- <div class="fv-row mb-7">
 
             <label class="fs-6 fw-bold form-label mt-3">
                 <option value="">Select Hotel..</option>
@@ -430,7 +430,7 @@
                 </option>
                 @endforeach
             </select>
-        </div>
+        </div> --}}
         <!--end::Input group-->
 
 

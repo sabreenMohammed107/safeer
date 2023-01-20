@@ -27,6 +27,8 @@ class Hotel extends Model
     'google_map',
     'hotel_vedio',
     'active',
+    'google_place',
+    'google_reviews'
 
     ];
 
@@ -45,6 +47,11 @@ class Hotel extends Model
     public function features()
     {
         return $this->belongsToMany(Feature::class, 'hotels_features');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'hotel_tags','hotel_id','tag_id');
     }
 
     public function hotel_features()
