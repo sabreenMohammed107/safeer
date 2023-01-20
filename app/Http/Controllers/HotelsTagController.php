@@ -33,7 +33,7 @@ class HotelsTagController extends Controller
      */
     public function index()
     {
-        $rows = Tag::whereNotNull('hotel_id')->orderBy("created_at", "Desc")->get();
+        $rows = Tag::orderBy("created_at", "Desc")->get();
         $hotels = Hotel::get();
 
         return view($this->viewName . 'index', compact(['rows', 'hotels']));

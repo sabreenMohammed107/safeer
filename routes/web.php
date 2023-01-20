@@ -113,12 +113,14 @@ Route::get("/hotelByCity/{id}", [HotelsController::class, 'getHotelByCity'])->na
 
 Route::get("/safer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
 Route::get("/safer/room/{id}/book/{cap}/exchange", [BookingController::class, 'ExBookRoom'])->name("exBookRoom");
+Route::get("/terms", [MainController::class, 'terms'])->name("terms");
 
 Route::middleware(['is-site-auth'])->group(function () {
     //Route::get("/safeer/test", [AuthController::class, 'testSessions']);
     Route::get("/cart", [BookingController::class, 'Cart'])->name("get_cart");
     Route::post("/Book", [BookingController::class, 'MakeOrder']);
     Route::get("/cart/{id}", [BookingController::class, 'DeleteCartItem'])->name("deleteCartItem");
+
 
 });
 

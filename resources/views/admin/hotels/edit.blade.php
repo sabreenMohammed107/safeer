@@ -279,31 +279,31 @@
 
                                             <!--Rooms -->
                                             <!--begin::Input group-->
-                                            {{-- <div class="fv-row w-100 flex-md-root">
+                                             <div class="fv-row w-100 flex-md-root">
 
                                                 <label class="fs-6 fw-bold form-label mt-3">
-                                                    <span class="required">Add Rooms types</span>
+                                                    <span class="required">Add Tags</span>
                                                     <i class="fas fa-exclamation-circle ms-1 fs-7"
                                                         data-bs-toggle="tooltip"
                                                         title="Interviewer who conducts the meeting with the interviewee"></i>
                                                 </label>
 
-                                                <select class="form-select form-select-solid" name="rooms[]"
+                                                <select class="form-select form-select-solid" name="tags[]"
                                                     data-control="select2" data-placeholder="Select an option"
                                                     data-allow-clear="true" multiple="multiple">
                                                     <option></option>
 
-                                                    @foreach ($rooms as $room)
+                                                    @foreach ($tags as $tag)
 
-                                                        <option value="{{ $room->id }}"
+                                                        <option value="{{ $tag->id }}"
 
-                                                            @foreach ($hotelRooms as $sublist) {{ $sublist->pivot->room_type_id == $room->id ? 'selected' : '' }} @endforeach>
-                                                            {{ $room->en_room_type }}
+                                                            @foreach ($tagsHotel as $sublist) {{ $sublist->hotel_id  == $hotel->id ? 'selected' : '' }} @endforeach>
+                                                            {{ $tag->en_tag }}
                                                         </option>
 
                                                             @endforeach
                                                 </select>
-                                            </div> --}}
+                                            </div>
                                             <!--end::Input group-->
                                         </div>
                                         <!--end::Input group-->
@@ -404,7 +404,26 @@
 
                                         </div>
 
-
+                                        <div class="d-flex flex-wrap gap-5">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class=" form-label">Google place</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" name="google_place" class="form-control mb-2"
+                                                    placeholder="google_place" value="{{$hotel->google_place}}"  />
+                                                <!--end::Input-->
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-5">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class=" form-label">Google reviews link</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" name="google_reviews" class="form-control mb-2"
+                                                    placeholder="google_reviews" value="{{ $hotel->google_reviews }}" />
+                                                <!--end::Input-->
+                                            </div>
+                                        </div>
                                         <div class="d-flex flex-wrap gap-5">
                                             <div class="fv-row w-100 flex-md-root">
                                                 <label class=" form-label">Url Vedio</label>

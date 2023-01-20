@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->id();
-            $table->longText('en_tag')->nullable();
-            $table->longText('ar_tag')->nullable();
-
-            $table->timestamps();
+        Schema::table('hotels', function (Blueprint $table) {
+            //
+            $table->longText('google_place')->nullable()->after('active');
+            $table->longText('google_reviews')->nullable()->after('google_place');
         });
     }
 
@@ -29,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::table('hotels', function (Blueprint $table) {
+            //
+        });
     }
 };

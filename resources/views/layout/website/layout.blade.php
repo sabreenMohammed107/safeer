@@ -115,7 +115,6 @@
                         </div>
                     </div>
                     <!-- useful links -->
-
                     <div class="col-xl-4 col-md-6 col-sm-12">
                         <div class="useful_links">
                             <h6>useful links </h6>
@@ -144,31 +143,6 @@
 
                                     </ul>
                                 </div>
-                                <div class="col-12">
-                                    <a href="http://" class="pay-link  "> <img src="{{ asset('img/payment/visa.png') }}"
-                                            alt="" srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img
-                                            src="{{ asset('img/payment/google-pay.png') }}" alt="" srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img
-                                            src="{{ asset('img/payment/apple-pay.png') }}" alt="" srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img
-                                            src="{{ asset('img/payment/mastercard.png') }}" alt="" srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img
-                                            src="{{ asset('img/payment/samsung-pay.png') }}" alt="" srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img
-                                            src="{{ asset('img/payment/stripe.png') }}" alt="" srcset=""></a>
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -176,7 +150,6 @@
                     <div class="col-xl-3 col-md-6">
                         <div class="contact_details">
                             <h6>Contact us</h6>
-
                             <div class="contact_info">
                                 <div class="info">
                                     <i class="fa-solid fa-phone"></i>
@@ -195,30 +168,189 @@
                                     <span>Nasr city -Abbas el akkad</span>
                                 </div>
                             </div>
-                            <div class="contact_info qr-code-custome">
-                                <div class="info">
-                                    <i class="fa-solid fa-qrcode"></i>
-                                    <span>Scan Me Now </span>
-                                </div>
-                                <img src="{{ asset('img/payment/QR-Code-PNG-Transparent.png') }}" alt="" srcset="">
-                            </div>
                             <div class="contact_info">
-
+                                {{-- <div class="social-buttons">
+                                    <a href="#" class="social-button social-button--facebook" aria-label="Facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" class="social-button social-button--youtube" aria-label="Youtube">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                    <a href="#" class="social-button social-button--instagram" aria-label="Instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </div> --}}
                                 <div class="icons-container">
                                     <div class="social-icons spinned">
                                         <a class="item facebook" href="#"><i class="fa-brands fa-facebook-f"></i></a>
                                         <a class="item youtube" href="#"><i class="fa-brands fa-youtube"></i></a>
                                         <a class="item instagram" href="#"><i class="fa-brands fa-instagram"></i></a>
+
+                                        {{-- <a
+                                            href="https://etbis.eticaret.gov.tr/sitedogrulama/481873F1B6764257A38C6F3CC6E8E5F9"
+                                            target="_blank"> {!!
+                                            QrCode::size(70)->generate('https://etbis.eticaret.gov.tr/sitedogrulama/481873F1B6764257A38C6F3CC6E8E5F9')
+                                            !!} --}}
+                                            {{-- </a> --}}
+
+                                        <img src="data:image/png;base64, {!! base64_encode(
+                            QrCode::format('png')->merge('/public/website_assets/images/q1.png')->encoding('UTF-8')->size(100)->generate('https://etbis.eticaret.gov.tr'),
+                        ) !!}" style="margin-bottom: 10px;">
+
+
+
                                     </div>
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <form action="{{url('/sendNewsLetter')}}" method="POST">
+                                            @csrf
+                                            <div class="input-group input">
+                                                <input type="email" name="email" class="form-control"
+                                                    placeholder="Enter your email" aria-label="Recipient's username"
+                                                    aria-describedby="button-addon2">
+                                                <button class="btn btn-outline-secondary" type="submit">
+                                                    Join our newsletter
+                                                </button>
+                                            </div>
+
+
+                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <footer>
+                            <div class="container">
+                                <div class="row mx-0">
+                                    <div class="col-xl-5 col-md-12 col-sm-12">
+                                        <div class="left_info">
+                                            <h6>About us </h6>
+                                            <p>
+                                                {{$Company->overview_en}} </p>
+                                        </div>
+                                    </div>
+                                    <!-- useful links -->
 
-                </div>
-            </div>
+                                    <div class="col-xl-4 col-md-6 col-sm-12">
+                                        <div class="useful_links">
+                                            <h6>useful links </h6>
+                                            <div class="row mx-0">
+                                                <div class="col-6">
+                                                    <ul>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                                href="{{ url('/') }}"> Home </a>
+                                                        </li>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                                href="{{ url('/about') }}">About
+                                                            </a></li>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                                href="{{ url('/hotels') }}">Hotels
+                                                            </a></li>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                                href="{{ url('/contact') }}">Contact </a></li>
 
-        </footer>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-6">
+                                                    <ul>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                                href="{{ url('/blogs') }}">Blogs
+                                                            </a></li>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="#">Tours
+                                                            </a></li>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="#">Transfer
+                                                            </a></li>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="#">Visa </a>
+                                                        </li>
+
+
+                                                    </ul>
+                                                </div>
+                                                <div class="col-12">
+                                                    <a href="http://" class="pay-link  "> <img
+                                                            src="{{ asset('img/payment/visa.png') }}" alt=""
+                                                            srcset=""></a>
+
+
+                                                    <a href="http://" class="pay-link "> <img
+                                                            src="{{ asset('img/payment/google-pay.png') }}" alt=""
+                                                            srcset=""></a>
+
+
+                                                    <a href="http://" class="pay-link "> <img
+                                                            src="{{ asset('img/payment/apple-pay.png') }}" alt=""
+                                                            srcset=""></a>
+
+
+                                                    <a href="http://" class="pay-link "> <img
+                                                            src="{{ asset('img/payment/mastercard.png') }}" alt=""
+                                                            srcset=""></a>
+
+
+                                                    <a href="http://" class="pay-link "> <img
+                                                            src="{{ asset('img/payment/samsung-pay.png') }}" alt=""
+                                                            srcset=""></a>
+
+
+                                                    <a href="http://" class="pay-link "> <img
+                                                            src="{{ asset('img/payment/stripe.png') }}" alt=""
+                                                            srcset=""></a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- contact details -->
+                                    <div class="col-xl-3 col-md-6">
+                                        <div class="contact_details">
+                                            <h6>Contact us</h6>
+
+                                            <div class="contact_info">
+                                                <div class="info">
+                                                    <i class="fa-solid fa-phone"></i>
+                                                    <span>01093174220</span>
+                                                </div>
+                                            </div>
+                                            <div class="contact_info">
+                                                <div class="info">
+                                                    <i class="fa-solid fa-envelope"></i>
+                                                    <span>e-mail@geenf.com</span>
+                                                </div>
+                                            </div>
+                                            <div class="contact_info">
+                                                <div class="info">
+                                                    <i class="fa-solid fa-location-dot"></i>
+                                                    <span>Nasr city -Abbas el akkad</span>
+                                                </div>
+                                            </div>
+                                            <div class="contact_info qr-code-custome">
+                                                <div class="info">
+                                                    <i class="fa-solid fa-qrcode"></i>
+                                                    <span>Scan Me Now </span>
+                                                </div>
+                                                <img src="{{ asset('img/payment/QR-Code-PNG-Transparent.png') }}" alt=""
+                                                    srcset="">
+                                            </div>
+                                            <div class="contact_info">
+
+                                                <div class="icons-container">
+                                                    <div class="social-icons spinned">
+                                                        <a class="item facebook" href="#"><i
+                                                                class="fa-brands fa-facebook-f"></i></a>
+                                                        <a class="item youtube" href="#"><i
+                                                                class="fa-brands fa-youtube"></i></a>
+                                                        <a class="item instagram" href="#"><i
+                                                                class="fa-brands fa-instagram"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </footer>
     </section>
     <!-- footer -->
 

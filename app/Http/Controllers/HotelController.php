@@ -9,9 +9,11 @@ use App\Models\Country;
 use App\Models\Feature;
 use App\Models\Hotel;
 use App\Models\Hotel_room;
+use App\Models\Hotel_tag;
 use App\Models\Hotel_type;
 use App\Models\Room_type;
 use App\Models\Room_type_cost;
+use App\Models\Tag;
 use App\Models\Zone;
 use File;
 use Illuminate\Database\QueryException;
@@ -63,10 +65,10 @@ class HotelController extends Controller
         $countries = Country::all();
         $rooms = Room_type::all();
         $zones = Zone::all();
-
+        $tags = Tag::get();
         // $eventSpecialzation=[];
         $types = Room_type::all();
-        return view($this->viewName . 'add', compact(['types','rooms', 'cities', 'types', 'features', 'countries','zones']));
+        return view($this->viewName . 'add', compact(['types', 'tags', 'rooms', 'cities', 'types', 'features', 'countries', 'zones']));
     }
 
     /**
@@ -81,7 +83,7 @@ class HotelController extends Controller
         try {
             // Disable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner']);
+            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner', 'google_place']);
             if ($request->hasFile('hotel_logo')) {
                 $attach_image = $request->file('hotel_logo');
 
@@ -100,17 +102,30 @@ class HotelController extends Controller
                 $input['active'] = '0';
             }
             $input['keywords'] = str_replace('"', '', $request->keywords);
+
+            //place url
+
+            $data = $request->get('google_place');
+            $last_index_of_i = strripos($data, ':');
+
+            $whatIWant = substr($data, $last_index_of_i + 1);
+            $first_index_of_i = stripos($whatIWant, '!');
+
+            $whatIWant2 = substr($whatIWant, 0, $first_index_of_i);
+
+            $input['google_place'] = $whatIWant2;
+
             $hotel = Hotel::create($input);
             if (!empty($request->get('features'))) {
 
                 $hotel->features()->attach($request->features);
 
             }
-            // if (!empty($request->get('rooms'))) {
+            if (!empty($request->get('tags'))) {
 
-            //     $hotel->rooms()->attach($request->rooms);
+                $hotel->tags()->attach($request->tags);
 
-            // }
+            }
             DB::commit();
             // Enable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
@@ -154,17 +169,19 @@ class HotelController extends Controller
         $zones = Zone::all();
 
         $hotelFeatures = $hotel->features->all();
-         $hotelRooms=[];
-if($hotel->rooms){
-    $hotelRooms = $hotel->rooms->all();
-}
+        $hotelRooms = [];
+        if ($hotel->rooms) {
+            $hotelRooms = $hotel->rooms->all();
+        }
 
         $countries = Country::all();
         $roomsTypes = Hotel_room::where('hotel_id', $hotel->id)->get();
+        $tags = Tag::get();
+        $tagsHotel = Hotel_tag::where('hotel_id', $hotel->id)->get();
         $hotelRoomsCost = Room_type_cost::whereHas('hotelRooms', function ($q) use ($hotel) {
             $q->where('hotel_id', '=', $hotel->id);
         })->get();
-        return view($this->viewName . 'edit', compact(['roomsTypes','rooms','hotelRooms', 'zones','hotelRoomsCost', 'hotel', 'cities', 'countries', 'types', 'features', 'hotelFeatures']));
+        return view($this->viewName . 'edit', compact(['roomsTypes', 'tags', 'tagsHotel', 'rooms', 'hotelRooms', 'zones', 'hotelRoomsCost', 'hotel', 'cities', 'countries', 'types', 'features', 'hotelFeatures']));
     }
 
     /**
@@ -181,7 +198,7 @@ if($hotel->rooms){
         try {
             // Disable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner']);
+            $input = $request->except(['_token', 'hotel_logo', 'hotel_banner', 'google_place']);
             if ($request->hasFile('hotel_logo')) {
                 $attach_image = $request->file('hotel_logo');
 
@@ -200,6 +217,15 @@ if($hotel->rooms){
             } else {
                 $input['active'] = '0';
             }
+            $data = $request->get('google_place');
+            $last_index_of_i = strripos($data, ':');
+
+            $whatIWant = substr($data, $last_index_of_i + 1);
+            $first_index_of_i = stripos($whatIWant, '!');
+
+            $whatIWant2 = substr($whatIWant, 0, $first_index_of_i);
+
+            $input['google_place'] = $whatIWant2;
 
             $hotel->update($input);
             // $hotel=Hotel::create($input);
@@ -208,9 +234,9 @@ if($hotel->rooms){
                 $hotel->features()->sync($request->features);
 
             }
-            if (!empty($request->get('rooms'))) {
+            if (!empty($request->get('tags'))) {
 
-                $hotel->rooms()->sync($request->rooms);
+                $hotel->tags()->sync($request->tags);
 
             }
             //repeat data
@@ -249,13 +275,13 @@ if($hotel->rooms){
 
                             $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
                                 where('room_type_id', $roomsIds)->first();
-if($hotelRoomsId){
-    if ($rCost->hotel_room_id != $hotelRoomsId->id) {
+                            if ($hotelRoomsId) {
+                                if ($rCost->hotel_room_id != $hotelRoomsId->id) {
 
-        $rCost->delete();
+                                    $rCost->delete();
 
-    }
-}
+                                }
+                            }
 
                         }
                     }
@@ -268,24 +294,24 @@ if($hotelRoomsId){
 
                     $hotelRoomsId = Hotel_room::where('hotel_id', (int) $pageList[0]['hotel_id'])->
                         where('room_type_id', (int) $pageList[$index]['room_type_id'])->first();
-if($hotelRoomsId){
-                    $evDay = Room_type_cost::firstOrNew([
-                        'from_date' => $pageList[$index]['from_date'],
-                        'end_date' => $pageList[$index]['end_date'],
-                        'cost' => $pageList[$index]['cost'],
-                        'hotel_room_id' => $hotelRoomsId->id,
+                    if ($hotelRoomsId) {
+                        $evDay = Room_type_cost::firstOrNew([
+                            'from_date' => $pageList[$index]['from_date'],
+                            'end_date' => $pageList[$index]['end_date'],
+                            'cost' => $pageList[$index]['cost'],
+                            'hotel_room_id' => $hotelRoomsId->id,
 
-                    ]);
+                        ]);
 
-                    $evDay->from_date = $pageList[$index]['from_date'];
-                    $evDay->end_date = $pageList[$index]['end_date'];
-                    $evDay->cost = $pageList[$index]['cost'];
-                    $evDay->hotel_room_id = $hotelRoomsId->id;
+                        $evDay->from_date = $pageList[$index]['from_date'];
+                        $evDay->end_date = $pageList[$index]['end_date'];
+                        $evDay->cost = $pageList[$index]['cost'];
+                        $evDay->hotel_room_id = $hotelRoomsId->id;
 
-                    $evDay->save();
+                        $evDay->save();
 
+                    }
                 }
-            }
             }
 
             DB::commit();
@@ -405,17 +431,14 @@ if($hotelRoomsId){
         Hotel_room::create($input);
         return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
 
-        public function autocompleteSearch(Request $request)
-
-
-        {
-            $data = Hotel::select("keywords as value", "id")
-                        ->where('keywords', 'LIKE', '%'. $request->get('search'). '%')
-                        ->get();
+    public function autocompleteSearch(Request $request)
+    {
+        $data = Hotel::select("keywords as value", "id")
+            ->where('keywords', 'LIKE', '%' . $request->get('search') . '%')
+            ->get();
         \Log::info('test');
 
-            return response()->json($data);
-        }
-
-
+        return response()->json($data);
     }
+
+}

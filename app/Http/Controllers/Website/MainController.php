@@ -58,4 +58,15 @@ class MainController extends Controller
 
         echo $output;
     }
+
+    public function terms(){
+        $BreadCrumb = [["url" => "/", "name" => "Terms & Condations"]];
+        $Company = Company::first();
+        return view("website.terms",
+        [
+            "Company" => $Company,
+            "BreadCrumb" => $BreadCrumb,
+
+        ]);
+    }
 }
