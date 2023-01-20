@@ -410,7 +410,7 @@
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="text" name="google_place" class="form-control mb-2"
-                                                    placeholder="google_place" value="{{ $hotel->google_place }}" />
+                                                    placeholder="google_place" value="{{$hotel->google_place}}"  />
                                                 <!--end::Input-->
                                             </div>
                                         </div>
