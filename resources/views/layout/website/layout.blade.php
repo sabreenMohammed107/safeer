@@ -104,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <footer>
+        {{-- <footer>
             <div class="container">
                 <div class="row mx-0">
                     <div class="col-xl-5 col-md-12 col-sm-12">
@@ -145,9 +145,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- contact details -->
-                    <div class="col-xl-3 col-md-6">
+                    {{-- <div class="col-xl-3 col-md-6">
                         <div class="contact_details">
                             <h6>Contact us</h6>
                             <div class="contact_info">
@@ -168,7 +168,7 @@
                                     <span>Nasr city -Abbas el akkad</span>
                                 </div>
                             </div>
-                            <div class="contact_info">
+                            <div class="contact_info"> --}}
                                 {{-- <div class="social-buttons">
                                     <a href="#" class="social-button social-button--facebook" aria-label="Facebook">
                                         <i class="fab fa-facebook-f"></i>
@@ -180,11 +180,12 @@
                                         <i class="fab fa-instagram"></i>
                                     </a>
                                 </div> --}}
-                                <div class="icons-container">
+                                {{-- <div class="icons-container">
                                     <div class="social-icons spinned">
                                         <a class="item facebook" href="#"><i class="fa-brands fa-facebook-f"></i></a>
                                         <a class="item youtube" href="#"><i class="fa-brands fa-youtube"></i></a>
                                         <a class="item instagram" href="#"><i class="fa-brands fa-instagram"></i></a>
+                                        --}}
 
                                         {{-- <a
                                             href="https://etbis.eticaret.gov.tr/sitedogrulama/481873F1B6764257A38C6F3CC6E8E5F9"
@@ -192,13 +193,14 @@
                                             QrCode::size(70)->generate('https://etbis.eticaret.gov.tr/sitedogrulama/481873F1B6764257A38C6F3CC6E8E5F9')
                                             !!} --}}
                                             {{-- </a> --}}
-
+                                        {{--
                                         <img src="data:image/png;base64, {!! base64_encode(
                             QrCode::format('png')->merge('/public/website_assets/images/q1.png')->encoding('UTF-8')->size(100)->generate('https://etbis.eticaret.gov.tr'),
                         ) !!}" style="margin-bottom: 10px;">
+                                        --}}
 
 
-
+                                        {{--
                                     </div>
 
                                     <div class="col-md-6 col-sm-12">
@@ -218,7 +220,7 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <footer>
                             <div class="container">
                                 <div class="row mx-0">
