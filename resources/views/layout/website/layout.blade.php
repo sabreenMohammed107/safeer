@@ -190,11 +190,11 @@
                                             href="https://etbis.eticaret.gov.tr/sitedogrulama/481873F1B6764257A38C6F3CC6E8E5F9"
                                             target="_blank"> {!!
                                             QrCode::size(70)->generate('https://etbis.eticaret.gov.tr/sitedogrulama/481873F1B6764257A38C6F3CC6E8E5F9')
-                                            !!} --}}
-                                            {{-- </a> --}}
+                                            !!}
+                                             </a> --}}
 
                                         <img src="data:image/png;base64, {!! base64_encode(
-                            QrCode::format('png')->merge('/public/website_assets/images/q1.png')->encoding('UTF-8')->size(100)->generate('https://etbis.eticaret.gov.tr'),
+                            QrCode::format('png')->merge('/public/website_assets/images/q1.png',0.5)->encoding('UTF-8')->size(100)->generate('https://etbis.eticaret.gov.tr'),
                         ) !!}" style="margin-bottom: 10px;">
 
 
