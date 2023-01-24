@@ -3733,7 +3733,7 @@ text-transform: none;
 }
 .contact_info.qr-code-custome img{
     background-color: white;
-    width: 45px;
+    /* width: 45px; */
     padding:3px;
     margin: 0 0 0 15px;
 }
