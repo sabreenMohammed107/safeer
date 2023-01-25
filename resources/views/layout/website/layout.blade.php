@@ -133,7 +133,7 @@
                                                                 href="{{ url('/hotels') }}">Hotels
                                                             </a></li>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/terms') }}">Terms & Condations </a></li>
+                                                                href="{{ url('/terms') }}">Terms & Conditions </a></li>
 
                                                     </ul>
                                                 </div>
