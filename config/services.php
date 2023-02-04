@@ -32,9 +32,9 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '966693360983283', //USE FROM FACEBOOK DEVELOPER ACCOUNT
-        'client_secret' => 'f52397c3277b43f72fd37b7602a58c43', //USE FROM FACEBOOK DEVELOPER ACCOUNT
-        'redirect' => 'https://examplelaravel8.test/facebook/callback/'
+        'client_id' => env('FACEBOOK_CLIENT_ID'), //USE FROM FACEBOOK DEVELOPER ACCOUNT
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'), //USE FROM FACEBOOK DEVELOPER ACCOUNT
+        'redirect' => 'https://safer.senior-consultingco.com/facebook/callback/'
     ],
     'google' => [
         'client_id' => '', //USE FROM Google DEVELOPER ACCOUNT
