@@ -25,7 +25,7 @@ class FaceBookController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
-
+            return $user->getEmail();
             $saveUser = SiteUser::where("email","=", $user->getEmail())->first();
             if($saveUser)
             {
