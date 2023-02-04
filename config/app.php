@@ -195,6 +195,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+
+
+
+        /* Socialite For Fast Login Using Social Media Accounts */
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -211,6 +216,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ])->toArray(),
 
 ];

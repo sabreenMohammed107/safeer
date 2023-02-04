@@ -26,7 +26,9 @@ class SiteUser extends Model
         'address',
         'name',
         'email',
-        'password'
+        'password',
+        'facebook_id',
+        'google_id'
     ];
 
     /**

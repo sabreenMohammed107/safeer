@@ -43,6 +43,14 @@ class AuthController extends Controller
             return redirect()->back()->with("session-danger", "No User with Specific Data");
         }
 
+        return AuthController::LoginProcess($User);
+
+    }
+
+    public static function LoginProcess(SiteUser $User)
+    {
+
+
         $redirect_url = "/";
         if (session()->get("cartItem")) {
             $CartItem = Cart::where("user_id", '=', $User->id)->first();
@@ -68,7 +76,7 @@ class AuthController extends Controller
             $CartItem->save();
             $redirect_url = '/cart';
             session()->forget("cartItem");
-            $request->session()->put("hasCart", 1);
+            session()->put("hasCart", 1);
 
             return redirect()->to($redirect_url)->with("session-success", "Room is added in your cart successfully");
         }
@@ -83,7 +91,7 @@ class AuthController extends Controller
             $redirect_url = '/hotels';
         } else if (session()->get("RemFavHotel")) {
             $fav = Favorite_hotels_tour::where('hotel_id', session()->get("RemFavHotel"))
-                ->where('user_id', session()->get("SiteUser")["ID"])->first();
+            ->where('user_id', session()->get("SiteUser")["ID"])->first();
             if ($fav) {
                 $fav->delete();
             }
@@ -92,7 +100,6 @@ class AuthController extends Controller
         }
 
         return redirect()->to($redirect_url);
-
     }
 
     public function Register(Request $request)
