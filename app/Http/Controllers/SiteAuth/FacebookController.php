@@ -51,7 +51,7 @@ class FaceBookController extends Controller
             AuthController::LoginProcess($saveUser);
             //Auth::loginUsingId($saveUser->id);
 
-            return redirect()->route('home');
+            return redirect()->to("/");
         } catch (\Throwable $th) {
             return redirect()->to("/")->with("session-danger", "Facebook Authentication Failed!");
             throw $th;
