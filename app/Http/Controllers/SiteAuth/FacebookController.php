@@ -46,7 +46,7 @@ class FaceBookController extends Controller
 
             return redirect()->route('home');
         } catch (\Throwable $th) {
-            redirect()->to("/");
+            return redirect()->to("/")->with("session-danger", "Facebook Authentication Failed!");
             throw $th;
         }
     }
