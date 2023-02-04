@@ -26,13 +26,21 @@ class FaceBookController extends Controller
         try {
             $user = Socialite::driver('facebook')->user();
 
-            $saveUser = SiteUser::updateOrCreate([
-                'facebook_id' => $user->getId(),
-                'email' => $user->getEmail(),
-            ], [
-                'name' => $user->getName(),
-                'password' => Hash::make($user->getName() . '@' . $user->getId())
-            ]);
+            $saveUser = SiteUser::where("email","=", $user->getEmail())->first();
+            if($saveUser)
+            {
+                $saveUser->facebook_id = $user->getId();
+                $saveUser->save();
+            }else{
+                $saveUser = SiteUser::updateOrCreate([
+                    'facebook_id' => $user->getId(),
+                ], [
+                    'name' => $user->getName(),
+                    'email' => $user->getEmail(),
+                    'password' => Hash::make($user->getName() . '@' . $user->getId())
+                ]);
+            }
+
 
             session()->put("SiteUser", [
                 "Email" => $saveUser->email,
