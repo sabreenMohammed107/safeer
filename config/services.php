@@ -32,8 +32,8 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '966693360983283', //USE FROM FACEBOOK DEVELOPER ACCOUNT
-        'client_secret' => 'f52397c3277b43f72fd37b7602a58c43', //USE FROM FACEBOOK DEVELOPER ACCOUNT
+        'client_id' => '', //USE FROM FACEBOOK DEVELOPER ACCOUNT
+        'client_secret' => '', //USE FROM FACEBOOK DEVELOPER ACCOUNT
         'redirect' => 'https://examplelaravel8.test/facebook/callback/'
     ],
     'google' => [
