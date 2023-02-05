@@ -25,7 +25,6 @@ class FaceBookController extends Controller
     {
         try {
             $user = Socialite::driver('facebook')->user();
-            return $user->user["first_name"];
             $saveUser = SiteUser::where("email","=", $user->getEmail())->first();
             $FBNoEmailUser = SiteUser::where("facebook_id", "=", $user->getId())->first();
             if($saveUser)
@@ -34,13 +33,16 @@ class FaceBookController extends Controller
                 $saveUser->save();
             }
             elseif(!$FBNoEmailUser){
+                $nameArr = explode(' ', $user->name);
+                $firstname = $nameArr[0];
+                $lastname = (count($nameArr) > 1)? $nameArr[count($nameArr) - 1] : '';
                 $saveUser = SiteUser::create([
                     'facebook_id' => $user->getId(),
                     'name' => $user->getName(),
                     'email' => ($user->getEmail())? $user->getEmail(): $user->getName().$user->getId()."@fb.com",
                     'password' => Hash::make($user->getName() . '@' . $user->getId()),
-                    'first_name' => $user->user['first_name'],
-                    'last_name' => $user->user['last_name']
+                    'first_name' => $firstname,
+                    'last_name' => $lastname
                 ]);
             }else{
                 $saveUser = $FBNoEmailUser;
