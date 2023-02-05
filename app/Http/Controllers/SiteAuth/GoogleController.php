@@ -22,7 +22,6 @@ class GoogleController extends Controller
     {
         try {
             $user = Socialite::driver('google')->user();
-            return $user->user;
 
             // Check Users Email If Already There (Email/Google Account)
             $saveUser = SiteUser::where('email', $user->getEmail())->first();
@@ -36,8 +35,8 @@ class GoogleController extends Controller
                     'name' => $user->getName(),
                     'email' => ($user->getEmail()) ? $user->getEmail() : $user->getName() . $user->getId() . "@g.com",
                     'password' => Hash::make($user->getName() . '@' . $user->getId()),
-                    'first_name' => $user->user['first_name'],
-                    'last_name' => $user->user['last_name']
+                    'first_name' => $user->user['given_name'],
+                    'last_name' => $user->user['family_name']
                 ]);
             } else {
                 $saveUser = $GoogleNoEmailUser;
