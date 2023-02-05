@@ -25,7 +25,7 @@ class GoogleController extends Controller
 
 
             // Check Users Email If Already There (Email/Google Account)
-            $saveUser = User::where('email', $user->getEmail())->first();
+            $saveUser = SiteUser::where('email', $user->getEmail())->first();
             $GoogleNoEmailUser = SiteUser::where("google_id", "=", $user->getId())->first();
             if ($saveUser) {
                 $saveUser->google_id = $user->getId();
