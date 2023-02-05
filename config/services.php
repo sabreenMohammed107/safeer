@@ -37,9 +37,9 @@ return [
         'redirect' => 'https://safer.senior-consultingco.com/facebook/callback/'
     ],
     'google' => [
-        'client_id' => '', //USE FROM Google DEVELOPER ACCOUNT
-        'client_secret' => '', //USE FROM Google DEVELOPER ACCOUNT
-        'redirect' => 'https://0a41-106-212-124-50.ngrok.io/google/callback/'
+        'client_id' => env('GOOGLE_CLIENT_ID'), //USE FROM Google DEVELOPER ACCOUNT
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'), //USE FROM Google DEVELOPER ACCOUNT
+        'redirect' => 'https://safer.senior-consultingco.com/google/callback'
     ],
 
 ];
