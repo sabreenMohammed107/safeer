@@ -36,6 +36,8 @@ class FaceBookController extends Controller
                 $nameArr = explode(' ', $user->name);
                 $firstname = $nameArr[0];
                 $lastname = (count($nameArr) > 1)? $nameArr[count($nameArr) - 1] : '';
+
+                return $firstname . ' ' . $lastname;
                 $saveUser = SiteUser::create([
                     'facebook_id' => $user->getId(),
                     'name' => $user->getName(),
