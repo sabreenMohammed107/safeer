@@ -67,7 +67,7 @@ class GoogleController extends Controller
             AuthController::LoginProcess($saveUser);
             //Auth::loginUsingId($saveUser->id);
 
-            return redirect()->route('home');
+            return redirect()->to("/");
         } catch (\Throwable $th) {
             redirect()->to("/");
             throw $th;
