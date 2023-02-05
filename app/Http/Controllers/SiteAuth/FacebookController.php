@@ -28,17 +28,15 @@ class FaceBookController extends Controller
             $saveUser = SiteUser::where("email","=", $user->getEmail())->first();
             if($saveUser)
             {
-                // $saveUser->facebook_id = $user->getId();
-                // $saveUser->save();
-                return "registered";
+                $saveUser->facebook_id = $user->getId();
+                $saveUser->save();
             }else{
-                // $saveUser = SiteUser::create([
-                //     'facebook_id' => $user->getId(),
-                //     'name' => $user->getName(),
-                //     'email' => $user->getEmail(),
-                //     'password' => Hash::make($user->getName() . '@' . $user->getId())
-                // ]);
-                return "Not registered";
+                $saveUser = SiteUser::create([
+                    'facebook_id' => $user->getId(),
+                    'name' => $user->getName(),
+                    'email' => $user->getEmail(),
+                    'password' => Hash::make($user->getName() . '@' . $user->getId())
+                ]);
             }
 
 
