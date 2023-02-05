@@ -43,7 +43,7 @@ class FaceBookController extends Controller
 
 
             session()->put("SiteUser", [
-                "Email" => ($saveUser->email)? $saveUser->email: $user->getName().$user->getId()."@fb.com",
+                "Email" => ($saveUser != null)? $saveUser->email: $user->getName().$user->getId()."@fb.com",
                 "Name" => $saveUser->name,
                 "ID" => $saveUser->id,
                 'facebook_id' => $saveUser->facebook_id,
