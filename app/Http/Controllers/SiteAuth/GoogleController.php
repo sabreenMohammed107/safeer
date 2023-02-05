@@ -35,37 +35,25 @@ class GoogleController extends Controller
                     'google_id' => $user->getId(),
                     'name' => $user->getName(),
                     'email' => ($user->getEmail()) ? $user->getEmail() : $user->getName() . $user->getId() . "@g.com",
-                    'password' => Hash::make($user->getName() . '@' . $user->getId())
+                    'password' => Hash::make($user->getName() . '@' . $user->getId()),
+                    'first_name' => $user->user['first_name'],
+                    'last_name' => $user->user['last_name']
                 ]);
             } else {
                 $saveUser = $GoogleNoEmailUser;
             }
-            // if (!$is_user) {
 
-            //     $saveUser = SiteUser::updateOrCreate([
-            //         'google_id' => $user->getId(),
-            //     ], [
-            //         'name' => $user->getName(),
-            //         'email' => $user->getEmail(),
-            //         'password' => Hash::make($user->getName() . '@' . $user->getId())
-            //     ]);
-            // } else {
-            //     $saveUser = User::where('email',  $user->getEmail())->update([
-            //         'google_id' => $user->getId(),
-            //     ]);
-            //     $saveUser = User::where('email', $user->getEmail())->first();
-            // }
 
             session()->put("SiteUser", [
                 "Email" => $saveUser->email,
                 "Name" => $saveUser->name,
                 "ID" => $saveUser->id,
-                'facebook_id' => $saveUser->facebook_id,
+                'google_id' => $saveUser->facebook_id,
+
             ]);
 
 
             AuthController::LoginProcess($saveUser);
-            //Auth::loginUsingId($saveUser->id);
 
             return redirect()->to("/");
         } catch (\Throwable $th) {

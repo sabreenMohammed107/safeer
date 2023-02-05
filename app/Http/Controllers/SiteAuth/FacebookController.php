@@ -37,7 +37,9 @@ class FaceBookController extends Controller
                     'facebook_id' => $user->getId(),
                     'name' => $user->getName(),
                     'email' => ($user->getEmail())? $user->getEmail(): $user->getName().$user->getId()."@fb.com",
-                    'password' => Hash::make($user->getName() . '@' . $user->getId())
+                    'password' => Hash::make($user->getName() . '@' . $user->getId()),
+                    'first_name' => $user->user['first_name'],
+                    'last_name' => $user->user['last_name']
                 ]);
             }else{
                 $saveUser = $FBNoEmailUser;
