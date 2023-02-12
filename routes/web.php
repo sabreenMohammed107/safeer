@@ -20,6 +20,8 @@ use App\Http\Controllers\HotelsTagController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\SiteAuth\AuthController;
+use App\Http\Controllers\SiteAuth\FaceBookController;
+use App\Http\Controllers\SiteAuth\GoogleController;
 use App\Http\Controllers\SiteUsersController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\ToursTagController;
@@ -114,6 +116,22 @@ Route::get("/hotelByCity/{id}", [HotelsController::class, 'getHotelByCity'])->na
 Route::get("/safer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
 Route::get("/safer/room/{id}/book/{cap}/exchange", [BookingController::class, 'ExBookRoom'])->name("exBookRoom");
 Route::get("/terms", [MainController::class, 'terms'])->name("terms");
+
+/**
+ * fast login using social media
+ */
+//
+// Facebook
+Route::prefix('facebook')->name('facebook.')->group( function(){
+    Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');
+    Route::get('callback', [FaceBookController::class, 'callbackFromFacebook'])->name('callback');
+});
+// Google
+Route::prefix('google')->name('google.')->group(function () {
+    Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
+    Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
+});
+// End Social Media Login
 
 Route::middleware(['is-site-auth'])->group(function () {
     //Route::get("/safeer/test", [AuthController::class, 'testSessions']);

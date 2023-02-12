@@ -63,12 +63,19 @@
                 <section class="sign_socail">
                     <button class="btn">
                     <img src="{{ asset('/website_assets/images/signin-up/socail-logins/facebook.webp')}}" alt="facebook logo">
-                        <a href="#">Sign in with Facebook</a>
+                        <a href="{{ route('facebook.login') }}" class="btn btn-facebook btn-user btn-block">
+                        {{-- <i class="fab fa-facebook-f fa-fw"></i> --}}
+                            Login with Facebook
+                        </a>
                     </button>
+
                     <button class="btn">
                       <img src="{{ asset('/website_assets/images/signin-up/socail-logins/google.webp')}}" alt="google logo">
 
-                        <a href="#">Sign in with Google</a>
+                        <a href="{{ route('google.login') }}" class="btn btn-google btn-user btn-block">
+                            {{-- <i class="fab fa-google fa-fw"></i>  --}}
+                            Login with Google
+                        </a>
                     </button>
                 </section>
       </div>
