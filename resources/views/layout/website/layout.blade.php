@@ -235,6 +235,7 @@
                             QrCode::format('png')->merge('/public/website_assets/images/q1.png')->size(100)->generate('https://etbis.eticaret.gov.tr'),
                         ) !!}" style="margin-bottom: 10px;">
 
+
                                             </div>
                                         </div>
                                     </div>
