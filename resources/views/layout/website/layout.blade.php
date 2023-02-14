@@ -104,7 +104,7 @@
                 </div>
             </div>
         </div>
-   
+
                         <footer>
                             <div class="container">
                                 <div class="row mx-0">
@@ -234,6 +234,7 @@
                                                       <img src="data:image/png;base64, {!! base64_encode(
                             QrCode::format('png')->merge('/public/website_assets/images/q1.png')->size(100)->generate('https://etbis.eticaret.gov.tr'),
                         ) !!}" style="margin-bottom: 10px;">
+
                                             </div>
                                         </div>
                                     </div>
