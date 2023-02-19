@@ -198,8 +198,8 @@
                             </h6>
                             <span> {{ $branches[1]->detailed_address_en }}</span>
                             {{-- <span> new york NY 10010</span> --}}
-                            <span> phone : {{ $branches[1]->phone }}</span>
-                            <span>fax:{{ $branches[1]->fax }}</span>
+                            <span> phone : {!! $branches[1]->phone !!}</span>
+                            {{-- <span>fax:{{ $branches[1]->fax }}</span> --}}
                             <span>email:{{ $branches[1]->email }}</span>
                         </div>
                     </div>
