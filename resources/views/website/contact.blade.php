@@ -170,7 +170,7 @@
                             <span> {{ $branches[0]->detailed_address_en }}</span>
                             {{-- <span> new york NY 10010</span> --}}
                             <span> phone :<br> {!! $branches[0]->phone !!}</span>
-                            <span>fax: {{ $branches[0]->fax }}</span>
+                            {{-- <span>fax: {{ $branches[0]->fax }}</span> --}}
                             <span>email: {{ $branches[0]->email }}</span>
                         </div>
                     </div>
