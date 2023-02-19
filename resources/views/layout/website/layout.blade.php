@@ -191,22 +191,36 @@
                                         <div class="contact_details">
                                             <h6>Contact us</h6>
 
-                                            <div class="contact_info">
+                                            <div class="contact_info" style="margin-bottom: 10px;">
                                                 <div class="info">
                                                     <i class="fa-solid fa-phone"></i>
-                                                    <span>01093174220</span>
+                                                    <span>For individuals: </span>
                                                 </div>
                                             </div>
-                                            <div class="contact_info">
+                                            <div class="contact_info" style="margin-bottom: 10px;">
+                                                <div class="info" style="margin-left: 25px;">
+                                                   
+                                                    <span >
+                                                        00905444668838 - 00905521501111 - 00905016451111 - 00905549302222 </span>
+                                                </div>
+                                            </div>
+                                             <div class="contact_info" style="margin-bottom: 10px;">
+                                                <div class="info">
+                                                    <i class="fa-solid fa-phone"></i>
+                                                    <span>
+                                                        For companies: 00905445019185</span>
+                                                </div>
+                                            </div>
+                                            <div class="contact_info" style="margin-bottom: 10px;">
                                                 <div class="info">
                                                     <i class="fa-solid fa-envelope"></i>
-                                                    <span>e-mail@geenf.com</span>
+                                                    <span>Info@Safer.Travel</span>
                                                 </div>
                                             </div>
-                                            <div class="contact_info">
+                                            <div class="contact_info" style="margin-bottom: 10px;">
                                                 <div class="info">
                                                     <i class="fa-solid fa-location-dot"></i>
-                                                    <span>Nasr city -Abbas el akkad</span>
+                                                    <span>Sixth floor above Kababji Mahmoud Restaurant - Watan Square - Al-Fateh - Istanbul - Turkey</span>
                                                 </div>
                                             </div>
 
@@ -232,7 +246,7 @@
                                                     srcset=""> --}}
 
                                                       <img src="data:image/png;base64, {!! base64_encode(
-                            QrCode::format('png')->merge('/public/website_assets/images/q1.png')->size(100)->generate('https://etbis.eticaret.gov.tr'),
+                            QrCode::format('png')->merge('/public/website_assets/images/q1.png')->size(70)->generate('https://etbis.eticaret.gov.tr'),
                         ) !!}" style="margin-bottom: 10px;">
 
 

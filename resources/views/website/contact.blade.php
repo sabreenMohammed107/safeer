@@ -48,7 +48,7 @@
                                     phone number
                                 </h6>
                                 <span class="info">
-                                    <a href="tel:{{ $master->phone }}"> {{ $master->phone }}</a>
+                                    <a href="tel:{{ $master->phone }}"> {!! $master->phone !!}</a>
                                 </span>
                                 {{-- <span class="info">
                               <a href="tel:011551112211">011551112211</a>
