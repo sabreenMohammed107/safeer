@@ -48,7 +48,7 @@
                                     phone number
                                 </h6>
                                 <span class="info">
-                                    <a href="tel:{{ $master->phone }}"> {{ $master->phone }}</a>
+                                    <a href="tel:{{ $master->phone }}"> {!! $master->phone !!}</a>
                                 </span>
                                 {{-- <span class="info">
                               <a href="tel:011551112211">011551112211</a>
@@ -169,8 +169,8 @@
                             </h6>
                             <span> {{ $branches[0]->detailed_address_en }}</span>
                             {{-- <span> new york NY 10010</span> --}}
-                            <span> phone : {{ $branches[0]->phone }}</span>
-                            <span>fax: {{ $branches[0]->fax }}</span>
+                            <span> phone :<br> {!! $branches[0]->phone !!}</span>
+                            {{-- <span>fax: {{ $branches[0]->fax }}</span> --}}
                             <span>email: {{ $branches[0]->email }}</span>
                         </div>
                     </div>
@@ -198,8 +198,8 @@
                             </h6>
                             <span> {{ $branches[1]->detailed_address_en }}</span>
                             {{-- <span> new york NY 10010</span> --}}
-                            <span> phone : {{ $branches[1]->phone }}</span>
-                            <span>fax:{{ $branches[1]->fax }}</span>
+                            <span> phone :<br> {!! $branches[1]->phone !!}</span>
+                            {{-- <span>fax:{{ $branches[1]->fax }}</span> --}}
                             <span>email:{{ $branches[1]->email }}</span>
                         </div>
                     </div>
