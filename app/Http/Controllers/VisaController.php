@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Car_class;
-use App\Models\Car_model;
+use App\Models\Country;
 use App\Models\Currency;
-use App\Models\Transfer;
-use App\Models\Transfer_location;
-use Illuminate\Database\QueryException;
+use App\Models\Visa;
 use Illuminate\Http\Request;
 
-class TransferController extends Controller
+class VisaController extends Controller
 {
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -21,13 +19,13 @@ class TransferController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(Transfer $object)
+    public function __construct(Visa $object)
     {
         $this->middleware('auth');
 
         $this->object = $object;
-        $this->viewName = 'admin.transfer.';
-        $this->routeName = 'transfer.';
+        $this->viewName = 'admin.visa.';
+        $this->routeName = 'visa.';
     }
     /**
      * Display a listing of the resource.
@@ -36,7 +34,7 @@ class TransferController extends Controller
      */
     public function index()
     {
-        $rows = Transfer::orderBy("created_at", "Desc")->get();
+        $rows = Visa::orderBy("created_at", "Desc")->get();
 
         return view($this->viewName . 'index', compact(['rows']));
     }
@@ -48,12 +46,9 @@ class TransferController extends Controller
      */
     public function create()
     {
-        $transferFrom = Transfer_location::all();
-        $transferTo = Transfer_location::all();
-        $carModel = Car_model::all();
-        $carClass = Car_class::all();
+        $countries = Country::all();
         $currancies = Currency::all();
-        return view($this->viewName . 'add', compact(['transferFrom', 'transferTo', 'carModel', 'carClass', 'currancies']));
+        return view($this->viewName . 'add', compact(['countries','currancies']));
     }
 
     /**
@@ -66,8 +61,9 @@ class TransferController extends Controller
     {
         $input = $request->except(['_token']);
 
-        Transfer::create($input);
+        Visa::create($input);
         return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
+
 
     /**
      * Display the specified resource.
@@ -88,14 +84,10 @@ class TransferController extends Controller
      */
     public function edit($id)
     {
-        $row = Transfer::where('id', $id)->first();
-        $transferFrom = Transfer_location::all();
-        $transferTo = Transfer_location::all();
-        $carModel = Car_model::all();
-        $carClass = Car_class::all();
+        $row=Visa::where('id',$id)->first();
+        $countries = Country::all();
         $currancies = Currency::all();
-        return view($this->viewName . 'edit', compact(['row', 'transferFrom', 'transferTo', 'carModel', 'carClass', 'currancies']));
-
+        return view($this->viewName . 'edit', compact(['row','countries','currancies']));
     }
 
     /**
@@ -109,8 +101,9 @@ class TransferController extends Controller
     {
         $input = $request->except(['_token']);
 
-        Transfer::findOrFail($id)->update($input);
+        Visa::findOrFail($id)->update($input);
         return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
+
 
     /**
      * Remove the specified resource from storage.
@@ -120,11 +113,11 @@ class TransferController extends Controller
      */
     public function destroy($id)
     {
-        $car = Transfer::where('id', $id)->first();
+        $row = Visa::where('id', $id)->first();
 
         try {
 
-            $car->delete();
+            $row->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
 
         } catch (QueryException $q) {

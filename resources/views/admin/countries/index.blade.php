@@ -6,14 +6,14 @@
             <!--begin::Info-->
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
                 <!--begin::Title-->
-                <h1 class="text-dark fw-bolder my-1 fs-2">Cities</h1>
+                <h1 class="text-dark fw-bolder my-1 fs-2">Countries</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb fw-bold fs-base my-1">
                     <li class="breadcrumb-item text-muted">
                         <a href="#" class="text-muted text-hover-primary">Home</a>
                     </li>
-                    <li class="breadcrumb-item text-muted">Cities</li>
+                    <li class="breadcrumb-item text-muted">Countries</li>
 
                     <li class="breadcrumb-item text-dark">All</li>
                 </ul>
@@ -60,7 +60,7 @@
                     <div class="card-toolbar">
                         <!--begin::Add customer-->
                         <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal"
-                            data-bs-target="#kt_modal_new_target">Add City</a>
+                            data-bs-target="#kt_modal_new_target">Add Country</a>
 
                         <!--end::Add customer-->
                     </div>
@@ -117,7 +117,7 @@
 
                                             <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
                                                 data-kt-ecommerce-category-filter="category_name">
-                                                {{ $row->en_city }}</a>
+                                                {{ $row->en_country }}</a>
 
 
                                         </div>
@@ -127,7 +127,7 @@
                                         <div class="d-flex">
 
 
-                                                {{ $row->ar_city }}</a>
+                                                {{ $row->ar_country }}</a>
 
 
                                         </div>
@@ -167,7 +167,7 @@
 
 
                                                 <form id="delete_{{ $row->id }}"
-                                                    action="{{ route('cities.destroy',$row->id) }}" method="POST"
+                                                    action="{{ route('countries.destroy',$row->id) }}" method="POST"
                                                     style="display: none;">
                                                     @csrf
                                                     {{-- <input type="hidden" name="_method" value="delete"> --}}
@@ -217,16 +217,16 @@
                                                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                                                     <!--begin:Form-->
                                                     <form id="kt_modal_update_target_updateForm" class="form"
-                                                        action="{{ route('cities.update', $row->id) }}"
+                                                        action="{{ route('countries.update', $row->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('PUT')
                                                         <!--begin::Heading-->
-                                                        <input type="hidden" name="city_id"
+                                                        <input type="hidden" name="country_id"
                                                             value="{{ $row->id }}" id="">
                                                         <div class="mb-13 text-center">
                                                             <!--begin::Title-->
-                                                            <h1 class="mb-3">Update cities</h1>
+                                                            <h1 class="mb-3">Update country</h1>
                                                             <!--end::Title-->
 
                                                         </div>
@@ -237,16 +237,16 @@
                                                         <div class="d-flex flex-column mb-8 fv-row">
                                                             <!--begin::Label-->
                                                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                <span class="required">City En Name</span>
+                                                                <span class="required"> En Name</span>
                                                                 <i class="fas fa-exclamation-circle ms-2 fs-7"
                                                                     data-bs-toggle="tooltip"
                                                                     title="Enter Country Name"></i>
                                                             </label>
                                                             <!--end::Label-->
                                                             <input type="text" class="form-control form-control-solid"
-                                                                placeholder="Enter City En Name"
-                                                                name="en_city"
-                                                                value="{{ $row->en_city }}" />
+                                                                placeholder="Enter  En Name"
+                                                                name="en_country"
+                                                                value="{{ $row->en_country }}" />
                                                         </div>
                                                         <!--end::Input group-->
 
@@ -255,38 +255,21 @@
                                                         <div class="d-flex flex-column mb-8 fv-row">
                                                             <!--begin::Label-->
                                                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                                                <span class="required">City Ar Name</span>
+                                                                <span class="required"> Ar Name</span>
                                                                 <i class="fas fa-exclamation-circle ms-2 fs-7"
                                                                     data-bs-toggle="tooltip"
                                                                     title="Enter Country Name"></i>
                                                             </label>
                                                             <!--end::Label-->
                                                             <input type="text" class="form-control form-control-solid"
-                                                                placeholder="Enter City ar Name"
-                                                                name="ar_city"
-                                                                value="{{ $row->ar_city }}" />
+                                                                placeholder="Enter  ar Name"
+                                                                name="ar_country"
+                                                                value="{{ $row->ar_country }}" />
                                                         </div>
                                                         <!--end::Input group-->
 
 
-  {{-- <div>
-   <label class="fs-6 fw-bold form-label mt-3">
-    <option value="">Select a Country...</option>
-    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i>
-</label>
 
-<select name="country_id"  required aria-label="Select a Country" data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_new_targetEdit{{$row->id}}" class="form-select form-select-solid fw-bolder">
-    <option value="" ></option>
-    @foreach($countries as $country)
-    <option value="{{$country->id}}" {{2 == $country->id ? 'selected': ''}}> @if (LaravelLocalization::getCurrentLocale() === 'en')
-        {{ $country->en_country }}
-    @else
-        {{ $country->dt_country }}
-    @endif</option>
-    @endforeach
-</select>
-</div> --}}
-<!--end::Input group-->
 
                                                         <!--begin::Actions-->
                                                         <div class="text-center">

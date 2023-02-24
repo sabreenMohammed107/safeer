@@ -32,6 +32,7 @@ use App\Http\Controllers\TourGalleryController;
 use App\Http\Controllers\ToursTagController;
 use App\Http\Controllers\TransferLocationController;
 use App\Http\Controllers\UsersOrderController;
+use App\Http\Controllers\VisaController;
 use App\Http\Controllers\Website\BookingController;
 use App\Http\Controllers\Website\ContentController;
 use App\Http\Controllers\Website\HotelsController;
@@ -224,6 +225,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
          //visa
            //countries
         Route::resource('countries', CountryController::class);
+        Route::resource('visa', VisaController::class);
 
 });
 

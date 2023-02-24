@@ -473,23 +473,23 @@
                             </a>
                         </div>
 
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Tranfser Pricing</span>
                             </a>
-                        </div>
+                        </div> --}}
 
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="#">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Tranfser Reserving</span>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <!-- end transportation -->
@@ -504,7 +504,7 @@
     </span>
     <div class="menu-sub menu-sub-accordion">
         <div class="menu-item">
-            <a class="menu-link" href="#">
+            <a class="menu-link" href="{{ route('countries.index') }}">
                 <span class="menu-bullet">
                     <span class="bullet bullet-dot"></span>
                 </span>
@@ -513,7 +513,7 @@
         </div>
 
         <div class="menu-item">
-            <a class="menu-link" href="#">
+            <a class="menu-link" href="{{ route('visa.index') }}">
                 <span class="menu-bullet">
                     <span class="bullet bullet-dot"></span>
                 </span>
@@ -522,7 +522,7 @@
         </div>
 
         <div class="menu-item">
-            <a class="menu-link" href="#">
+            <a class="menu-link" href="{{ route('visa.create') }}">
                 <span class="menu-bullet">
                     <span class="bullet bullet-dot"></span>
                 </span>
