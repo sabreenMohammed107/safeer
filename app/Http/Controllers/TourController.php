@@ -6,8 +6,15 @@ use App\Models\Tour;
 use App\Http\Requests\StoreTourRequest;
 use App\Http\Requests\UpdateTourRequest;
 use App\Models\City;
+use App\Models\Tour_type;
+use App\Models\Feature;
+use App\Models\Country;
+use App\Models\Tag;
+use App\Models\Tour_tag;
 use Illuminate\Database\QueryException;
 use File;
+use Illuminate\Support\Facades\DB;
+
 class TourController extends Controller
 {
     protected $object;
@@ -48,7 +55,15 @@ class TourController extends Controller
      */
     public function create()
     {
-        //
+        $cities = City::get();
+        $types = Tour_type::get();
+        $features = Feature::all();
+        $countries = Country::all();
+
+        $tags = Tag::get();
+        // $eventSpecialzation=[];
+
+        return view($this->viewName . 'add', compact(['types', 'tags', 'cities', 'types', 'features', 'countries']));
     }
 
     /**
@@ -59,20 +74,64 @@ class TourController extends Controller
      */
     public function store(StoreTourRequest $request)
     {
-        $input = $request->except(['_token','banner']);
-        if ($request->hasFile('banner')) {
-            $attach_image = $request->file('banner');
 
-            $input['banner'] = $this->UplaodImage($attach_image);
-        }
-        if ($request->has('active')) {
+    //new
+    DB::beginTransaction();
+        try {
+            // Disable foreign key checks!
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            $input = $request->except(['_token', 'thumbnail', 'banner']);
+            if ($request->hasFile('thumbnail')) {
+                $attach_image = $request->file('thumbnail');
 
-            $input['active'] = '1';
-        } else {
-            $input['active'] = '0';
+                $input['thumbnail'] = $this->UplaodImage($attach_image);
+            }
+
+            if ($request->hasFile('banner')) {
+                $attach_banner = $request->file('banner');
+
+                $input['banner'] = $this->UplaodBanner($attach_banner);
+            }
+            if ($request->has('active')) {
+
+                $input['active'] = '1';
+            } else {
+                $input['active'] = '0';
+            }
+
+
+            $tour = Tour::create($input);
+            if (!empty($request->get('features'))) {
+
+                $tour->features()->attach($request->features);
+
+            }
+            if (!empty($request->get('tags'))) {
+
+                $tour->tags()->attach($request->tags);
+
+            }
+            DB::commit();
+            // Enable foreign key checks!
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            return redirect()->route($this->routeName . 'index')->with('flash_success', 'تم الحفظ بنجاح');
+
+        } catch (\Throwable$e) {
+            // throw $th;
+            DB::rollback();
+            return redirect()->route($this->routeName . 'index')->with('flash_danger', $e->getMessage());
+            return redirect()->back()->withInput()->withErrors($e->getMessage());
+
         }
-        Tour::create($input);
-        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
+
+
+
+
+
+
+
+    }
 
     /**
      * Display the specified resource.
@@ -93,7 +152,19 @@ class TourController extends Controller
      */
     public function edit(Tour $tour)
     {
-        //
+        $cities = City::get();
+        $types = Tour_type::get();
+        $features = Feature::all();
+
+
+        $tourFeatures = $tour->features->all();
+
+
+        $countries = Country::all();
+        $tags = Tag::get();
+        $tagsTour = Tour_tag::where('tour_id', $tour->id)->get();
+
+        return view($this->viewName . 'edit', compact([ 'tags', 'tagsTour', 'tour', 'cities', 'countries', 'types', 'features', 'tourFeatures']));
     }
 
     /**
@@ -105,22 +176,58 @@ class TourController extends Controller
      */
     public function update(UpdateTourRequest $request, Tour $tour)
     {
-        $input = $request->except(['_token','tour_id','banner']);
-        if ($request->hasFile('banner')) {
-            $attach_image = $request->file('banner');
 
-            $input['banner'] = $this->UplaodImage($attach_image);
+    //new
+    DB::beginTransaction();
+        try {
+            // Disable foreign key checks!
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            $input = $request->except(['_token', 'thumbnail', 'banner']);
+            if ($request->hasFile('thumbnail')) {
+                $attach_image = $request->file('thumbnail');
+
+                $input['thumbnail'] = $this->UplaodImage($attach_image);
+            }
+
+            if ($request->hasFile('banner')) {
+                $attach_banner = $request->file('banner');
+
+                $input['banner'] = $this->UplaodBanner($attach_banner);
+            }
+            if ($request->has('active')) {
+
+                $input['active'] = '1';
+            } else {
+                $input['active'] = '0';
+            }
+
+
+            $tour->update($input);
+            if (!empty($request->get('features'))) {
+
+                $tour->features()->sync($request->features);
+
+            }
+            if (!empty($request->get('tags'))) {
+
+                $tour->tags()->sync($request->tags);
+
+            }
+            DB::commit();
+            // Enable foreign key checks!
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            return redirect()->route($this->routeName . 'index')->with('flash_success', 'تم الحفظ بنجاح');
+
+        } catch (\Throwable$e) {
+            // throw $th;
+            DB::rollback();
+            return redirect()->route($this->routeName . 'index')->with('flash_danger', $e->getMessage());
+            return redirect()->back()->withInput()->withErrors($e->getMessage());
+
         }
-        if ($request->has('active')) {
 
-            $input['active'] = '1';
-        } else {
-            $input['active'] = '0';
-        }
-
-        // Tour::findOrFail($request->get('tour_id'))->update($input);
-        $tour->update($input);
-        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -151,6 +258,26 @@ class TourController extends Controller
      /* uplaud image
        */
       public function UplaodImage($file_request)
+      {
+          //  This is Image Info..
+          $file = $file_request;
+          $name = $file->getClientOriginalName();
+          $ext = $file->getClientOriginalExtension();
+          $size = $file->getSize();
+          $path = $file->getRealPath();
+          $mime = $file->getMimeType();
+
+          // Rename The Image ..
+          $imageName = $name;
+          $uploadPath = public_path('uploads/tours');
+
+          // Move The image..
+          $file->move($uploadPath, $imageName);
+
+          return $imageName;
+      }
+
+      public function UplaodBanner($file_request)
       {
           //  This is Image Info..
           $file = $file_request;

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Country;
-use App\Http\Requests\StoreCountryRequest;
-use App\Http\Requests\UpdateCountryRequest;
+use App\Models\Transfer_location;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
-class CountryController extends Controller
+class TransferLocationController extends Controller
 {
 
     protected $object;
@@ -19,13 +18,13 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(Country $object)
+    public function __construct(Transfer_location $object)
     {
         $this->middleware('auth');
 
         $this->object = $object;
-        $this->viewName = 'admin.countries.';
-        $this->routeName = 'countries.';
+        $this->viewName = 'admin.transfer-location.';
+        $this->routeName = 'transfer-location.';
     }
     /**
      * Display a listing of the resource.
@@ -34,7 +33,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $rows = Country::orderBy("created_at", "Desc")->get();
+        $rows = Transfer_location::orderBy("created_at", "Desc")->get();
 
 
         return view($this->viewName . 'index', compact(['rows']));
@@ -53,22 +52,23 @@ class CountryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCountryRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCountryRequest $request)
+    public function store(Request $request)
     {
         $input = $request->except(['_token']);
-        Country::create($input);
+
+        Transfer_location::create($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Country  $country
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Country $country)
+    public function show($id)
     {
         //
     }
@@ -76,10 +76,10 @@ class CountryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Country  $country
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Country $country)
+    public function edit($id)
     {
         //
     }
@@ -87,32 +87,31 @@ class CountryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCountryRequest  $request
-     * @param  \App\Models\Country  $country
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCountryRequest $request, Country $country)
+    public function update(Request $request, $id)
     {
         $input = $request->except(['_token']);
 
-        $country->update($input);
-        // $specialzation->update($input);
-
+        Transfer_location::findOrFail($id)->update($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
-
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Country  $country
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy($id)
     {
+        $car = Transfer_location::where('id', $id)->first();
 
         try {
 
-            $country->delete();
+
+            $car->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
 
         } catch (QueryException $q) {

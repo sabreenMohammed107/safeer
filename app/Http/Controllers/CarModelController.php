@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gallery;
-use App\Http\Requests\StoreGalleryRequest;
-use App\Http\Requests\UpdateGalleryRequest;
-use App\Models\Hotel;
-use App\Models\Tour;
+use App\Models\Car_model;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use File;
-class GalleryController extends Controller
+class CarModelController extends Controller
 {
     protected $object;
     protected $viewName;
@@ -20,25 +17,25 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(Gallery $object)
+    public function __construct(Car_model $object)
     {
         $this->middleware('auth');
 
         $this->object = $object;
-        $this->viewName = 'admin.galleries.';
-        $this->routeName = 'galleries.';
-    }/**
+        $this->viewName = 'admin.car-models.';
+        $this->routeName = 'car-models.';
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $rows = Gallery::whereNotNull('hotel_id')->orderBy("created_at", "Desc")->get();
-        $hotels = Hotel::get();
-        $tours = Tour::get();
+        $rows = Car_model::orderBy("created_at", "Desc")->get();
 
-        return view($this->viewName . 'index', compact(['rows', 'hotels','tours']));
+
+        return view($this->viewName . 'index', compact(['rows']));
     }
 
     /**
@@ -48,22 +45,25 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+
+
+        return view($this->viewName . 'add');
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreGalleryRequest  $request
+
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreGalleryRequest $request)
+    public function store(Request $request)
     {
-        $input = $request->except(['_token','img']);
-        if ($request->hasFile('img')) {
-            $attach_image = $request->file('img');
+        $input = $request->except(['_token','image']);
+        if ($request->hasFile('image')) {
+            $attach_image = $request->file('image');
 
-            $input['img'] = $this->UplaodImage($attach_image);
+            $input['image'] = $this->UplaodImage($attach_image);
         }
         if ($request->has('active')) {
 
@@ -71,17 +71,16 @@ class GalleryController extends Controller
         } else {
             $input['active'] = '0';
         }
-        Gallery::create($input);
+        Car_model::create($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Gallery  $gallery
+
      * @return \Illuminate\Http\Response
      */
-    public function show(Gallery $gallery)
+    public function show($id)
     {
         //
     }
@@ -89,28 +88,29 @@ class GalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Gallery  $gallery
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gallery $gallery)
+    public function edit($id)
     {
-        //
+        $row = Car_model::where('id',$id)->first();
+
+        return view($this->viewName . 'edit', compact(['row']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateGalleryRequest  $request
-     * @param  \App\Models\Gallery  $gallery
+
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGalleryRequest $request, Gallery $gallery)
+    public function update(Request $request,  $id)
     {
-        $input = $request->except(['_token','gallery_id','img']);
-        if ($request->hasFile('img')) {
-            $attach_image = $request->file('img');
+        $input = $request->except(['_token','car_id','image']);
+        if ($request->hasFile('image')) {
+            $attach_image = $request->file('image');
 
-            $input['img'] = $this->UplaodImage($attach_image);
+            $input['image'] = $this->UplaodImage($attach_image);
         }
         if ($request->has('active')) {
 
@@ -120,26 +120,26 @@ class GalleryController extends Controller
         }
 
         // Tour::findOrFail($request->get('tour_id'))->update($input);
-        $gallery->update($input);
-        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
+        Car_model::findOrFail($request->get('car_id'))->update($input);
 
+        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Gallery  $gallery
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( $id)
     {
-        $gallery = Gallery::where('id', $id)->first();
-         // Delete File ..
-         $file = $gallery->img;
-         $file_name = public_path('uploads/galleries/' . $file);
-         try {
-             File::delete($file_name);
+        $car = Car_model::where('id', $id)->first();
+        // Delete File ..
+        $file = $car->image;
+        $file_name = public_path('uploads/carModels/' . $file);
+        try {
+            File::delete($file_name);
 
-            $gallery->delete();
+            $car->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
 
         } catch (QueryException $q) {
@@ -148,8 +148,7 @@ class GalleryController extends Controller
             Because it related with another table');
         }
     }
-
-    /* uplaud image
+  /* uplaud image
        */
       public function UplaodImage($file_request)
       {
@@ -163,7 +162,7 @@ class GalleryController extends Controller
 
           // Rename The Image ..
           $imageName = $name;
-          $uploadPath = public_path('uploads/galleries');
+          $uploadPath = public_path('uploads/carModels');
 
           // Move The image..
           $file->move($uploadPath, $imageName);
@@ -171,3 +170,4 @@ class GalleryController extends Controller
           return $imageName;
       }
 }
+
