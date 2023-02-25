@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SiteAuth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\SiteAuth\Services\RememberMeService;
 use App\Models\Cart;
 use App\Models\Company;
 use App\Models\Favorite_hotels_tour;

@@ -46,6 +46,18 @@ a {
 .cartbox a i{
   color: #1C4482 !important;
 }
+.bg-light-info{
+    background-color: #d2efff;
+    border: 1px solid #00ACEE;
+}
+.receipt-title{
+    border-bottom: 2px solid #00ACEE;
+    border-left: 2px solid #00ACEE;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    font-size: 1.2em;
+}
 .del-hotel{
   border: 1px solid rgb(255, 66, 66);
   display: inline-block;

@@ -16,9 +16,20 @@
 .passenger_info {
     border: 1px solid #DDDDDD;
     padding: 20px 25px;
-    min-height: 400px;
-    height: 100%;
+    /* min-height: 400px; */
+    /* height: 100%; */
     margin-bottom: 20px;
+}
+.passenger_info .img-holder{
+    border-radius: 10px;
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    aspect-ratio: 1;
+}
+.passenger_info .img-holder img{
+    aspect-ratio: 1;
 }
 
 .passenger_info label {
@@ -156,9 +167,9 @@
     align-items: center;
 }
 .form-check-input {
-    height:33px;
-    width: 33px;
-    border-radius: 10px !important;
+    height:23px;
+    width: 23px;
+    /* border-radius: 10px !important; */
     margin-top: 0px;
 }
 .terms.form-check-input {
