@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Country;
@@ -154,17 +155,39 @@ class ToursController extends Controller
 
     public function bookTours(Request $request)
     {
+        if(!session()->get("SiteUser")){
+            $sessionTourBook = [
+                // 'ID' => $request->id,
+                'tour_id' => $request->tour_id,
+                'tour_date' => $request->tour_date,
+                'adultsNumber' => $request->adultsNumber,
+                'childNumber' => $request->childNumber,
+                'ages' => $request->ages,
+                'itemType' => 1, // Tour
+            ];
+            session(['cartItem' => $sessionTourBook]);
 
-        $sessionTourBook = [
-            'tour_id' => $request->tour_id,
-            'tour_date' => $request->tour_date,
-            'adultsNumber' => $request->adultsNumber,
-            'childNumber' => $request->childNumber,
-            'ages' => $request->ages,
-        ];
-        session(['sessionTourBook' => $sessionTourBook]);
+            \Log::info(\Session::get('sessionTourBook'));
 
-        \Log::info(\Session::get('sessionTourBook'));
+            return redirect()->route("siteLogin");
+        }
+
+        $CartItem = new Cart();
+        $CartItem->user_id = session()->get("SiteUser")["ID"];
+        $CartItem->tour_id = $request->tour_id;
+        $CartItem->adults_count = $request->adultsNumber;
+        $CartItem->children_count = $request->childNumber;
+        $CartItem->tour_date = date_format(date_create($request->tour_date), "Y-m-d");
+        $CartItem->item_type = 1; // -> Tour
+        if (!$request->ages) {
+            $CartItem->ages = null;
+        } else {
+            $CartItem->ages = implode(",", $request->ages);
+        }
+        $CartItem->save();
+        session()->put("hasCart", 1);
+
+        return redirect()->to("/cart")->with("session-success", "Tour is added in your cart successfully");
 
     }
 }

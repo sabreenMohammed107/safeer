@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $created_at
  * @property int    $updated_at
  */
+
+
 class OrderDetails extends Model
 {
     /**
@@ -35,7 +37,20 @@ class OrderDetails extends Model
      * @var array
      */
     protected $fillable = [
-        'order_id', 'room_type', 'room_view', 'food_bev_type', 'room_cost', 'total_cost', 'hotel_id', 'created_at', 'updated_at'
+        'order_id',
+        'holder_salutation',
+        'holder_name',
+        'holder_mobile',
+        'notes',
+        'detail_type',
+        // 'room_type',
+        // 'room_view',
+        // 'food_bev_type',
+        // 'room_cost',
+        // 'total_cost',
+        // 'hotel_id',
+        'created_at',
+        'updated_at'
     ];
 
     /**

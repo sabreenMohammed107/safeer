@@ -230,12 +230,12 @@ class HotelsController extends Controller
             if ($request->searchHotelId ) {
                 $ser=Hotel::where('hotel_enname', $serch)->first();
                 $RoomCosts->where("hotel_id",$ser->id);
-            //    
+            //
             }
             if ($request->hotel_ids && $request->searchHotelId) {
                 $RoomCosts->where("hotel_id",$ser->id)->orWhereIn("hotel_id", explode(',', $request->hotel_ids));
                 }elseif($request->hotel_ids && empty($request->searchHotelId)) {
-                    $RoomCosts->whereIn("hotel_id", explode(',', $request->hotel_ids));       
+                    $RoomCosts->whereIn("hotel_id", explode(',', $request->hotel_ids));
                 }
             if ($request->hotel_rating) {
 
@@ -296,9 +296,9 @@ class HotelsController extends Controller
             $serch=$request->searchHotelId;
 
             if ($request->searchHotelId) {
-               
+
                 $serIds=Hotel::where('hotel_enname', 'LIKE', '%'. $serch. '%')->pluck(id);
-                
+
             }
             $RoomCosts = Room_type_cost::whereHas('hotel', function ($q) {
                 $q->where('active',  1);
@@ -306,14 +306,14 @@ class HotelsController extends Controller
             if ($request->searchHotelId && !$request->hotel_ids) {
                 $ser=Hotel::where('hotel_enname', $serch)->first();
                 $RoomCosts->where("hotel_id",$ser->id);
-            //    
+            //
             }
             if ($request->hotel_ids && $request->searchHotelId) {
                 $RoomCosts->where("hotel_id",$ser->id)->orWhereIn("hotel_id", explode(',', $request->hotel_ids));
                 }else{
-                    $RoomCosts->whereIn("hotel_id", explode(',', $request->hotel_ids));       
+                    $RoomCosts->whereIn("hotel_id", explode(',', $request->hotel_ids));
                 }
-            
+
             if ($request->hotel_rating) {
 
                 $RoomCosts->whereHas('hotel', function ($q) use ($rate_id) {
@@ -413,13 +413,11 @@ class HotelsController extends Controller
 
 
     public function autocompleteSearch(Request $request)
- 
-
     {
         $data = Hotel::select("hotel_enname as value", "id")
                     ->where('hotel_enname', 'LIKE', '%'. $request->get('search'). '%')
                     ->get();
-    
+
         return response()->json($data);
     }
 }

@@ -78,16 +78,14 @@ class Orders extends Model
      */
     protected $fillable = [
         'user_id',
-    'holder_salutation',
-    'holder_name',
-    'holder_mobile',
-    'notes',
-    'from_date',
-    'to_date',
-    'nights',
-    'adults_count',
-    'children_count',
-    'rooms_count',
+        // 'from_date',
+        // 'to_date',
+        // 'nights',
+        // 'adults_count',
+        // 'children_count',
+        // 'rooms_count',
+        'created_at',
+        'updated_at'
     ];
 
     /**

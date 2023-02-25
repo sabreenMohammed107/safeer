@@ -14,6 +14,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
+abstract class ItemType
+{
+    const ROOM = 0;
+    const TOUR = 1;
+}
+
 class AuthController extends Controller
 {
     public function Login(Request $request)
@@ -54,27 +60,45 @@ class AuthController extends Controller
 
         $redirect_url = "/";
         if (session()->get("cartItem")) {
-            $CartItem = Cart::where("user_id", '=', $User->id)->first();
-            if ($CartItem) {
-                return redirect()->to($redirect_url)->with("session-warning", "A reservation item is already in your cart");
+            if(session()->get("cartItem")["itemType"] == ItemType::ROOM) {
+                $CartItem = Cart::where([["user_id", '=', $User->id],['item_type','=',ItemType::ROOM]])->first();
+                if ($CartItem) {
+                    return redirect()->to($redirect_url)->with("session-warning", "A reservation item is already in your cart");
+                }
+
+                $CartItem = new Cart();
+                $CartItem->user_id = session()->get("SiteUser")["ID"];
+                $CartItem->room_type_cost_id = session()->get("cartItem")["ID"];
+                $CartItem->room_cap = session()->get("cartItem")["Cap"];
+                $CartItem->adults_count = session()->get("cartItem")["adultsNumber"];
+                $CartItem->children_count = session()->get("cartItem")["childNumber"];
+                $CartItem->rooms_count = session()->get("cartItem")["roomsNumber"];
+                $CartItem->nights = session()->get("cartItem")["Nights"];
+                $CartItem->from_date = session()->get("cartItem")["from_date"];
+                $CartItem->to_date = session()->get("cartItem")["to_date"];
+                if (!session()->get("sessionArr")["ages"]) {
+                    $CartItem->ages = null;
+                } else {
+                    $CartItem->ages = implode(",", session()->get("cartItem")["ages"]);
+                }
+                $CartItem->item_type = ItemType::ROOM;
+                $CartItem->save();
+            }else if(session()->get("cartItem")["itemType"] == ItemType::TOUR){
+                $CartItem = new Cart();
+                $CartItem->user_id = session()->get("SiteUser")["ID"];
+                $CartItem->tour_id = session()->get("cartItem")["tour_id"];
+                $CartItem->adults_count = session()->get("cartItem")["adultsNumber"];
+                $CartItem->children_count = session()->get("cartItem")["childNumber"];
+                $CartItem->tour_date = session()->get("cartItem")["tour_date"];
+                if (!session()->get("sessionArr")["ages"]) {
+                    $CartItem->ages = null;
+                } else {
+                    $CartItem->ages = implode(",", session()->get("cartItem")["ages"]);
+                }
+                $CartItem->item_type = ItemType::TOUR;
+                $CartItem->save();
             }
 
-            $CartItem = new Cart();
-            $CartItem->user_id = session()->get("SiteUser")["ID"];
-            $CartItem->room_type_cost_id = session()->get("cartItem")["ID"];
-            $CartItem->room_cap = session()->get("cartItem")["Cap"];
-            $CartItem->adults_count = session()->get("cartItem")["adultsNumber"];
-            $CartItem->children_count = session()->get("cartItem")["childNumber"];
-            $CartItem->rooms_count = session()->get("cartItem")["roomsNumber"];
-            $CartItem->nights = session()->get("cartItem")["Nights"];
-            $CartItem->from_date = session()->get("cartItem")["from_date"];
-            $CartItem->to_date = session()->get("cartItem")["to_date"];
-            if (!session()->get("sessionArr")["ages"]) {
-                $CartItem->ages = null;
-            } else {
-                $CartItem->ages = implode(",", session()->get("cartItem")["ages"]);
-            }
-            $CartItem->save();
             $redirect_url = '/cart';
             session()->forget("cartItem");
             session()->put("hasCart", 1);
