@@ -37,6 +37,7 @@ use App\Http\Controllers\Website\BookingController;
 use App\Http\Controllers\Website\ContentController;
 use App\Http\Controllers\Website\HotelsController;
 use App\Http\Controllers\Website\MainController;
+use App\Http\Controllers\Website\ToursController;
 use App\Models\Offer;
 
 /*
@@ -93,6 +94,15 @@ Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
 // outocomplete search
 // Route::get('/autocomplete-search', [HotelsController::class, 'autocompleteSearch']);
 Route::get('autocomplete', [HotelsController::class, 'autocompleteSearch'])->name('autocomplete');
+//tours
+Route::get("/tours", [ToursController::class, 'all_tours']);
+Route::post("/tours", [ToursController::class, 'all_tours']);
+Route::get('/fetch-tour-filter',  [ToursController::class, 'fetch_data'])->name('fetch-tour-filter');
+Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
+Route::get("/tours/{id}", [ToursController::class, 'profile']);
+Route::post("/bookTours", [ToursController::class, 'bookTours']);
+
+
 Route::middleware(['prevent-relogin'])->group(function () {
     //site-login
     Route::get("/safer/login", [ContentController::class, 'loginSite'])->name("siteLogin");

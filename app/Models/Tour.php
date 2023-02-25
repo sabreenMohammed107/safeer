@@ -38,6 +38,11 @@ class Tour extends Model
         return $this->belongsTo(City::class,'city_id');
     }
 
+    public function type()
+    {
+        return $this->belongsTo(Tour_type::class,'tour_type_id');
+    }
+
     public function features()
     {
         return $this->belongsToMany(Feature::class, 'tour_features');
@@ -46,5 +51,10 @@ class Tour extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'tour_tags','tour_id','tag_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }

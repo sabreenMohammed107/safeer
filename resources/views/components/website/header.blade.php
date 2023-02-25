@@ -78,7 +78,7 @@
                     <a href="{{ url('/hotels') }}" class="{{ Request::segment(1)=='hotels' ? 'links hybrid active' : 'links hybrid' }}">hotels </a>
                 </li>
                 <li>
-                    <a href="./tours.html" class="links hybrid">tours </a>
+                    <a href="{{ url('/tours') }}" class="{{ Request::segment(1)=='tours' ? 'links hybrid active' : 'links hybrid' }}" class="links hybrid">tours </a>
                 </li>
                 <li>
                     <a href="#" class="links hybrid">transfer </a>
