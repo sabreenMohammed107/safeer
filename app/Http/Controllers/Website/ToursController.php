@@ -56,7 +56,7 @@ class ToursController extends Controller
         $Cities = City::all();
         $TourTypes = Tour_type::all();
 
-        $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')->orderBy('reviews.tour_id', 'desc')->groupBy('tour_id')->select('tours.*')->paginate(6);
+        $ToursRecommended = Tour::rightJoin('reviews', 'reviews.tour_id', '=', 'tours.id')->orderBy('reviews.tour_id', 'desc')->groupBy('tour_id')->select('tours.*')->paginate(6);
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
