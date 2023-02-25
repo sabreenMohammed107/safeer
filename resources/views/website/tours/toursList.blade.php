@@ -18,7 +18,7 @@
                                 <div class="card_info">
                                     <h6>
                                         <a href="{{ url('/tours/' . $HRec->id) }}"
-                                            class=""> {{ $HRec->en_name }} </a> </h6>
+                                            class=""> {{ $HRec->id }} </a> </h6>
                                     <span>
                                       ${{ $HRec->tour_person_cost }}
                                     </span>
