@@ -6,14 +6,14 @@
             <!--begin::Info-->
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
                 <!--begin::Title-->
-                <h1 class="text-dark fw-bolder my-1 fs-2">Tours</h1>
+                <h1 class="text-dark fw-bolder my-1 fs-2">Car Models</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb fw-bold fs-base my-1">
                     <li class="breadcrumb-item text-muted">
                         <a href="../dist/index.html" class="text-muted text-hover-primary">Home</a>
                     </li>
-                    <li class="breadcrumb-item text-muted">Tours</li>
+                    <li class="breadcrumb-item text-muted">Car Models</li>
 
                     <li class="breadcrumb-item text-dark">All</li>
                 </ul>
@@ -60,8 +60,8 @@
                     <!--begin::Card toolbar-->
                     <div class="card-toolbar">
                         <!--begin::Add customer-->
-                     											<a href="{{ route('tours.create') }}" class="btn btn-primary">Add Tours</a>
-
+                        <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal"
+                            data-bs-target="#kt_modal_new_target">Add Car Models</a>
 
                         <!--end::Add customer-->
                     </div>
@@ -83,10 +83,10 @@
                                             value="1" />
                                     </div>
                                 </th>
-                                <th class="min-w-150px">image</th>
-                                <th class="min-w-250px">city</th>
-                                <th class="min-w-150px">Overview</th>
- <th class="min-w-150px text-end">Active</th>
+                                <th class="min-w-150px">Image</th>
+                                <th class="min-w-250px">Capacity</th>
+                                <th class="min-w-150px">Name</th>
+
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
                             <!--end::Table row-->
@@ -109,7 +109,7 @@
                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                             <a href="#">
                                                 <div class="symbol-label fs-3 bg-light-danger text-danger">
-                                                    <img src="{{ asset('uploads/tours') }}/{{ $row->banner }}"
+                                                    <img src="{{ asset('uploads/carModels') }}/{{ $row->image }}"
                                                         class="w-100" alt="">
                                                 </div>
                                             </a>
@@ -122,7 +122,7 @@
 
                                             <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
                                                 data-kt-ecommerce-category-filter="category_name">
-                                                {{ $row->city->en_city ?? '' }}</a>
+                                                {{ $row->capacity ?? '' }}</a>
 
 
                                         </div>
@@ -135,23 +135,11 @@
                                             <input type="hidden" name="" id=""
                                                 data-kt-ecommerce-category-filter="category_id" value="{{ $row->id }}">
 
-                                            <span class="symbol-label">{{ $row->en_overview }}</span>
+                                            <span class="symbol-label">{{ $row->model_enname }}</span>
 
                                         </div>
 
                                     </td>
-
-                                        <!--begin::Status=-->
-        <td class="text-end pe-0" data-order="Inactive">
-            <!--begin::Badges-->
-            @if($row->active == 1)
-            <div class="badge badge-light-success">active</div>
-            @else
-            <div class="badge badge-light-danger">Not active</div>
-            @endif
-
-            <!--end::Badges-->
-        </td>
                                     <!--end::Type=-->
                                     <!--begin::Action=-->
                                     <td class="text-end">
@@ -173,10 +161,10 @@
                                             data-kt-menu="true">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('tours.edit', $row->id) }}"
+                                                <a data-bs-toggle="modal"
+                                                    data-bs-target="#kt_modal_new_targetEdit{{ $row->id }}"
                                                     class="menu-link px-3">Edit</a>
                                             </div>
-
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
@@ -185,7 +173,7 @@
 
 
                                                 <form id="delete_{{ $row->id }}"
-                                                    action="{{ route('tours.destroy', $row) }}" method="POST"
+                                                    action="{{ route('car-models.destroy', $row) }}" method="POST"
                                                     style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
@@ -234,14 +222,15 @@
                                                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                                                     <!--begin:Form-->
                                                     <form id="kt_modal_update_target_updateForm" class="form"
-                                                        action="{{ route('tours.update', $row->id) }}" method="post"
+                                                        action="{{ route('car-models.update', $row->id) }}" method="post"
                                                         enctype="multipart/form-data">
                                                         @csrf
                                                         @method('PUT')
                                                         <!--begin::Heading-->
+                                                        <input type="hidden" name="car_id" value="{{ $row->id }}">
                                                         <div class="mb-13 text-center">
                                                             <!--begin::Title-->
-                                                            <h1 class="mb-3">Update Tours</h1>
+                                                            <h1 class="mb-3">Update Car Models</h1>
                                                             <!--end::Title-->
 
                                                         </div>
@@ -261,11 +250,11 @@
                                                                 <!--begin::Image input-->
                                                                 <div class="image-input image-input-outline"
                                                                     data-kt-image-input="true"
-                                                                    style="background-image: url(' {{ asset('uploads/tours') }}/{{ $row->banner }}')">
+                                                                    style="background-image: url(' {{ asset('uploads/carModels') }}/{{ $row->image }}')">
                                                                     <!--begin::Preview existing avatar-->
 
                                                                     <div class="image-input-wrapper w-100px h-100px"
-                                                                        style="background-image: url(' {{ asset('uploads/tours') }}/{{ $row->banner }}')">
+                                                                        style="background-image: url(' {{ asset('uploads/carModels') }}/{{ $row->image }}')">
 
                                                                     </div>
                                                                     <!--end::Preview existing avatar-->
@@ -276,7 +265,7 @@
                                                                         data-bs-toggle="tooltip" title="Change avatar">
                                                                         <i class="bi bi-pencil-fill fs-7"></i>
                                                                         <!--begin::Inputs-->
-                                                                        <input type="file" name="banner"
+                                                                        <input type="file" name="image"
                                                                             accept=".png, .jpg, .jpeg" />
                                                                         <input type="hidden" name="avatar_remove" />
                                                                         <!--end::Inputs-->
@@ -293,55 +282,36 @@
                                                         <div class="d-flex flex-column mb-8 fv-row">
                                                             <!--begin::Input group-->
                                                             <div class="d-flex flex-column mb-8">
-                                                                <label class="fs-6 fw-bold mb-2">En Overview</label>
-                                                                <textarea class="form-control form-control-solid" rows="3" name="en_overview" placeholder="Type En Overview">{{ $row->en_overview }}</textarea>
+                                                                <label class="fs-6 fw-bold mb-2">En Name</label>
+                                                                <textarea class="form-control form-control-solid" rows="3" name="model_enname" placeholder="Type En name">{{ $row->model_enname }}</textarea>
                                                             </div>
                                                             <!--end::Input group-->
 
                                                             <!--begin::Input group-->
                                                             <div class="d-flex flex-column mb-8">
-                                                                <label class="fs-6 fw-bold mb-2">Ar Overview</label>
-                                                                <textarea class="form-control form-control-solid" rows="3" name="ar_overview" placeholder="Type Ar Overview">{{ $row->ar_overview }}</textarea>
+                                                                <label class="fs-6 fw-bold mb-2">Ar Name</label>
+                                                                <textarea class="form-control form-control-solid" rows="3" name="model_arname" placeholder="Type Ar name">{{ $row->model_arname }}</textarea>
                                                             </div>
-                                                            {{-- select --}}
-                                                            <div>
-                                                                <label class="fs-6 fw-bold form-label mt-3">
-                                                                    <option value="">Select a City...</option>
 
-                                                                </label>
 
-                                                                <select name="city_id" required aria-label="Select a City"
-                                                                    data-control="select2"
-                                                                    data-placeholder="Select a Country..."
-                                                                    data-dropdown-parent="#kt_modal_new_targetEdit{{ $row->id }}"
-                                                                    class="form-select form-select-solid fw-bolder">
-                                                                    <option value=""></option>
-                                                                    @foreach ($cities as $city)
-                                                                        <option value="{{ $city->id }}"
-                                                                            {{ $row->city_id == $city->id ? 'selected' : '' }}>
-                                                                            {{ $city->en_city }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <!--end::Input group-->
-                                                            <!--begin::Input group-->
                                                             <div class="d-flex flex-column mb-8">
-                                                                <div
-                                                                    class="form-check form-switch form-check-custom form-check-solid">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        name="active[]" value="1"
-                                                                        id="flexSwitchDefault2"
-                                                                        {{ $row->active == 1 ? 'checked' : '' }} />
-                                                                    <label class="form-check-label"
-                                                                        for="flexSwitchDefault2">
-                                                                        Active
-                                                                    </label>
+                                                                <label class="fs-6 fw-bold mb-2">Capacity</label>
+                                                                <input class="form-control form-control-solid" type="number" name="capacity" value="{{ $row->capacity }}">
+                                                            </div>
+                                                            <div class="d-flex flex-wrap gap-5 mt-4">
+                                                                <!--begin::Input group-->
+                                                                <div class="fv-row w-100 flex-md-root">
+                                                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                                                        <input class="form-check-input" type="checkbox" name="active[]" value="1"
+                                                                            id="flexSwitchDefault" {{ $row->active == 1 ? ' checked' : '' }} />
+                                                                        <label class="form-check-label" for="flexSwitchDefault">
+                                                                            Active
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
+                                                                <!--end::Input group-->
+
                                                             </div>
-                                                            <!--end::Input group-->
-
-
                                                             <!--begin::Actions-->
                                                             <div class="text-center">
                                                                 <div class="btn btn-sm btn-icon btn-active-color-primary"
@@ -413,13 +383,13 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" action="{{ route('tours.store') }}"
+                    <form id="kt_modal_new_target_form" class="form" action="{{ route('car-models.store') }}"
                         method="post" enctype="multipart/form-data">
                         @csrf
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
-                            <h1 class="mb-3">Set Tours Field</h1>
+                            <h1 class="mb-3">Set Car Model</h1>
                             <!--end::Title-->
 
                         </div>
@@ -451,7 +421,7 @@
                                         title="Change avatar">
                                         <i class="bi bi-pencil-fill fs-7"></i>
                                         <!--begin::Inputs-->
-                                        <input type="file" name="banner" accept=".png, .jpg, .jpeg" />
+                                        <input type="file" name="image" accept=".png, .jpg, .jpeg" />
                                         <input type="hidden" name="avatar_remove" />
                                         <!--end::Inputs-->
                                     </label>
@@ -485,53 +455,38 @@
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Input group-->
                             <div class="d-flex flex-column mb-8">
-                                <label class="fs-6 fw-bold mb-2">En Overview</label>
-                                <textarea class="form-control form-control-solid" rows="3" name="en_overview" placeholder="Type En Overview"></textarea>
+                                <label class="fs-6 fw-bold mb-2">En Name</label>
+                                <textarea class="form-control form-control-solid" rows="3" name="model_enname" placeholder="Type En name"></textarea>
                             </div>
                             <!--end::Input group-->
 
                             <!--begin::Input group-->
                             <div class="d-flex flex-column mb-8">
-                                <label class="fs-6 fw-bold mb-2">Ar Overview</label>
-                                <textarea class="form-control form-control-solid" rows="3" name="ar_overview" placeholder="Type Ar Overview"></textarea>
+                                <label class="fs-6 fw-bold mb-2">Ar Name</label>
+                                <textarea class="form-control form-control-solid" rows="3" name="model_arname" placeholder="Type Ar name"></textarea>
                             </div>
-                            {{-- select --}}
-                            <div id="xx">
-                                <label class="fs-6 fw-bold form-label mt-3">
-                                    <option value="">Select a City...</option>
-
-                                </label>
-
-                                <select name="city_id" required aria-label="Select a City"
-                                    data-control="select2"
-                                    data-placeholder="Select a City..."
-                                    data-dropdown-parent="#xx"
-                                    class="form-select form-select-solid fw-bolder">
-                                    <option value=""></option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}"
-                                           >
-                                            {{ $city->en_city }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
                             <div class="d-flex flex-column mb-8">
-                                <div
-                                    class="form-check form-switch form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox"
-                                        name="active[]" value="1"
-                                        id="flexSwitchDefault2"
-                                        checked />
-                                    <label class="form-check-label"
-                                        for="flexSwitchDefault2">
-                                        Active
-                                    </label>
-                                </div>
+                                <label class="fs-6 fw-bold mb-2">Capacity</label>
+                                <input class="form-control form-control-solid" type="number" name="capacity" >
                             </div>
-                            <!--end::Input group-->
+<!--begin::checkbox-->
+
+<div class="d-flex flex-wrap gap-5 mt-4">
+<!--begin::Input group-->
+<div class="fv-row w-100 flex-md-root">
+<div class="form-check form-switch form-check-custom form-check-solid">
+<input class="form-check-input" type="checkbox" name="active[]" value="1"
+id="flexSwitchDefault" />
+<label class="form-check-label" for="flexSwitchDefault">
+Active
+</label>
+</div>
+</div>
+<!--end::Input group-->
+
+</div>
+<!--end:checkbox-->
+
 
                         <!--begin::Actions-->
                         <div class="text-center">

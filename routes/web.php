@@ -4,13 +4,17 @@ use App\Http\Controllers\AllFavHotelsController;
 use App\Http\Controllers\BestHotelController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogsCategoryController;
+use App\Http\Controllers\CarClassController;
+use App\Http\Controllers\CarModelController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CompanyBranchController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CounterController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\ExploreCityController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\TransferController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
@@ -24,12 +28,16 @@ use App\Http\Controllers\SiteAuth\FaceBookController;
 use App\Http\Controllers\SiteAuth\GoogleController;
 use App\Http\Controllers\SiteUsersController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\TourGalleryController;
 use App\Http\Controllers\ToursTagController;
+use App\Http\Controllers\TransferLocationController;
 use App\Http\Controllers\UsersOrderController;
+use App\Http\Controllers\VisaController;
 use App\Http\Controllers\Website\BookingController;
 use App\Http\Controllers\Website\ContentController;
 use App\Http\Controllers\Website\HotelsController;
 use App\Http\Controllers\Website\MainController;
+use App\Http\Controllers\Website\ToursController;
 use App\Models\Offer;
 
 /*
@@ -86,6 +94,15 @@ Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
 // outocomplete search
 // Route::get('/autocomplete-search', [HotelsController::class, 'autocompleteSearch']);
 Route::get('autocomplete', [HotelsController::class, 'autocompleteSearch'])->name('autocomplete');
+//tours
+Route::get("/tours", [ToursController::class, 'all_tours']);
+Route::post("/tours", [ToursController::class, 'all_tours']);
+Route::get('/fetch-tour-filter',  [ToursController::class, 'fetch_data'])->name('fetch-tour-filter');
+Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
+Route::get("/tours/{id}", [ToursController::class, 'profile']);
+Route::post("/bookTours", [ToursController::class, 'bookTours']);
+
+
 Route::middleware(['prevent-relogin'])->group(function () {
     //site-login
     Route::get("/safer/login", [ContentController::class, 'loginSite'])->name("siteLogin");
@@ -176,6 +193,8 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
               Route::resource('tourTag', ToursTagController::class);
            //galleries
            Route::resource('galleries', GalleryController::class);
+            //tour-galleries
+            Route::resource('tour-galleries', TourGalleryController::class);
             //blog-categories
         Route::resource('blog-categories', BlogsCategoryController::class);
           //blogs
@@ -207,6 +226,17 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
          Route::resource('users-orders', UsersOrderController::class);
          //fav-hotels
          Route::resource('fav-hotels', AllFavHotelsController::class);
+//transfer
+         Route::resource('car-models', CarModelController::class);
+         Route::resource('car-navigate', CarClassController::class);
+         Route::resource('transfer-location', TransferLocationController::class);
+         Route::resource('transfer', TransferController::class);
+
+         //visa
+           //countries
+        Route::resource('countries', CountryController::class);
+        Route::resource('visa', VisaController::class);
+
 });
 
 /*------------------------------------------

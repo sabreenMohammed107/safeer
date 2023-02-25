@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Country;
-use App\Http\Requests\StoreCountryRequest;
-use App\Http\Requests\UpdateCountryRequest;
+use App\Models\Car_class;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
-class CountryController extends Controller
+class CarClassController extends Controller
 {
-
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -19,13 +17,13 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(Country $object)
+    public function __construct(Car_class $object)
     {
         $this->middleware('auth');
 
         $this->object = $object;
-        $this->viewName = 'admin.countries.';
-        $this->routeName = 'countries.';
+        $this->viewName = 'admin.car-navigate.';
+        $this->routeName = 'car-navigate.';
     }
     /**
      * Display a listing of the resource.
@@ -34,7 +32,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $rows = Country::orderBy("created_at", "Desc")->get();
+        $rows = Car_class::orderBy("created_at", "Desc")->get();
 
 
         return view($this->viewName . 'index', compact(['rows']));
@@ -53,22 +51,23 @@ class CountryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCountryRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCountryRequest $request)
+    public function store(Request $request)
     {
         $input = $request->except(['_token']);
-        Country::create($input);
+
+        Car_class::create($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Country  $country
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Country $country)
+    public function show($id)
     {
         //
     }
@@ -76,10 +75,10 @@ class CountryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Country  $country
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Country $country)
+    public function edit($id)
     {
         //
     }
@@ -87,32 +86,31 @@ class CountryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCountryRequest  $request
-     * @param  \App\Models\Country  $country
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCountryRequest $request, Country $country)
+    public function update(Request $request, $id)
     {
         $input = $request->except(['_token']);
 
-        $country->update($input);
-        // $specialzation->update($input);
-
+        Car_class::findOrFail($id)->update($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
-
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Country  $country
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy($id)
     {
+        $car = Car_class::where('id', $id)->first();
 
         try {
 
-            $country->delete();
+
+            $car->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
 
         } catch (QueryException $q) {

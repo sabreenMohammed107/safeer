@@ -9,7 +9,8 @@ use App\Models\Hotel;
 use App\Models\Tour;
 use Illuminate\Database\QueryException;
 use File;
-class GalleryController extends Controller
+
+class TourGalleryController extends Controller
 {
     protected $object;
     protected $viewName;
@@ -25,8 +26,8 @@ class GalleryController extends Controller
         $this->middleware('auth');
 
         $this->object = $object;
-        $this->viewName = 'admin.galleries.';
-        $this->routeName = 'galleries.';
+        $this->viewName = 'admin.tour-galleries.';
+        $this->routeName = 'tour-galleries.';
     }/**
      * Display a listing of the resource.
      *
@@ -34,10 +35,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $rows = Gallery::whereNotNull('hotel_id')->orderBy("created_at", "Desc")->get();
+        $rows = Gallery::whereNotNull('tour_id')->orderBy("created_at", "Desc")->get();
         $hotels = Hotel::get();
         $tours = Tour::get();
-
         return view($this->viewName . 'index', compact(['rows', 'hotels','tours']));
     }
 

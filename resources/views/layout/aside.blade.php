@@ -144,6 +144,14 @@
                                 <span class="menu-title">Tags</span>
                             </a>
                         </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('features.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title"> Features</span>
+                            </a>
+                        </div>
                         {{-- <div class="menu-item">
                                     <a class="menu-link" href="{{route('room-types.index')}}">
                                         <span class="menu-bullet">
@@ -311,7 +319,25 @@
                                 <span class="menu-title">Tours List</span>
                             </a>
                         </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('tours.create') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Add Tour</span>
+                            </a>
+                        </div>
 
+                        {{-- new --}}
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('tour-galleries.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Tour Gallery</span>
+                            </a>
+                        </div>
+                        {{--  --}}
                         {{-- <div class="menu-item">
                             <a class="menu-link" href="{{ route('tourTag.index') }}">
                                 <span class="menu-bullet">
@@ -363,14 +389,14 @@
                                 <span class="menu-title">Hotel Gallery</span>
                             </a>
                         </div>
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="{{ route('features.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Hotel Features</span>
+                                <span class="menu-title"> Features</span>
                             </a>
-                        </div>
+                        </div> --}}
 
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('room-types.index') }}">
@@ -403,6 +429,111 @@
                     </div>
                 </div>
                 <!-- end Event -->
+                 <!-- start transportation -->
+                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">Transfer </span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('transfer.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Transfer  list</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('car-navigate.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Car Navigate</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('car-models.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Car Models</span>
+                            </a>
+                        </div>
+
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('transfer-location.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Tranfser Locations</span>
+                            </a>
+                        </div>
+
+                        {{-- <div class="menu-item">
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Tranfser Pricing</span>
+                            </a>
+                        </div> --}}
+
+                        {{-- <div class="menu-item">
+                            <a class="menu-link" href="#">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Tranfser Reserving</span>
+                            </a>
+                        </div> --}}
+                    </div>
+                </div>
+                <!-- end transportation -->
+                <!-- start Visa -->
+  <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+    <span class="menu-link">
+        <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+        </span>
+        <span class="menu-title">Visa</span>
+        <span class="menu-arrow"></span>
+    </span>
+    <div class="menu-sub menu-sub-accordion">
+        <div class="menu-item">
+            <a class="menu-link" href="{{ route('countries.index') }}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Country List</span>
+            </a>
+        </div>
+
+        <div class="menu-item">
+            <a class="menu-link" href="{{ route('visa.index') }}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Visa list</span>
+            </a>
+        </div>
+
+        <div class="menu-item">
+            <a class="menu-link" href="{{ route('visa.create') }}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Add Visa</span>
+            </a>
+        </div>
+
+
+    </div>
+</div>
+<!-- end Visa -->
                 <!-- start blog -->
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
