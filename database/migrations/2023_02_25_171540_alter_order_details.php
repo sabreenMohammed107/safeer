@@ -24,11 +24,12 @@ return new class extends Migration
              */
 
              // Removed Column --Old Structure--
-            $table->dropColumn("room_type", 100);
-            $table->dropColumn("room_view", 100);
-            $table->dropColumn("food_bev_type", 100);
+            $table->dropColumn("room_type");
+            $table->dropColumn("room_view");
+            $table->dropColumn("food_bev_type");
             $table->dropColumn("room_cost");
             $table->dropColumn("total_cost");
+            $table->dropForeign(['hotel_id']);
             $table->dropColumn('hotel_id');
             // Added Column --Previously was in Orders Table--
             $table->string('holder_salutation', 20)->default("MR");
