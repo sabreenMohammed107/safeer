@@ -263,7 +263,10 @@ input.nosubmit {
 
         $(document).ready(function() {
 
-
+            $('.datepicker').datepicker({
+                "setDate": new Date(),
+                "autoclose": true
+            });
 
             var arr = [];
 

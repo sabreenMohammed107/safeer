@@ -109,6 +109,8 @@ Route::get("/transfers", [SiteTransferController::class, 'all_transfer']);
 Route::post("/transfers", [SiteTransferController::class, 'all_transfer']);
 Route::get('/fetch-transfers-filter',  [SiteTransferController::class, 'fetch_data'])->name('fetch-transfers-filter');
 Route::post("/transfers/retrieve", [SiteTransferController::class, 'fetch']);
+Route::post("/bookTransfer", [SiteTransferController::class, 'bookTransfer']);
+
 
 Route::middleware(['prevent-relogin'])->group(function () {
     //site-login

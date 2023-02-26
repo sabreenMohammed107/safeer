@@ -38,28 +38,38 @@
                                         <p style="margin-bottom:0"> $ {{ $HRec->person_price }} Cost / Seat</p>
                                     </span>
                                 </div>
+ <form action="{{ url('/bookTransfer') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="transfer_id" value="{{ $HRec->id }}">
 
                               <div class="booking_info">
-                              <div class="details">
+
+                              <div class="details px-1">
                                 <label>
                                   pick a date
                                 </label>
 
-    <input type="date" class="form-control date_picker">
-                              </div>
+                                <div class="rooms date" style="padding: 0;box-shadow: 0" data-provide="datepicker">
+                                    <input type="text" name="transfer_date" class="form-control datepicker"
+                                        placeholder="dd/MM/YYY">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>                              </div>
                                 <div class="details">
 
 
                                     <label>
                                         Adults                                  </label>
-                                    <input type="text" class="form-control ">
+                                    <input type="number" name="transfer_adult" value="1" class="form-control ">
 
 
                                 </div>
-                                <button>
-                                   <a href="./tours-details.html" class="btn"> book</a>
-                                </button>
+                                <button class="btn mx-1" type="submit">
+                                        BOOK
+                                    </button>
                               </div>
+ </form>
                             </div>
                         </div>
                     </div>
@@ -104,27 +114,37 @@
                                 </span>
                             </div>
 
-                          <div class="booking_info">
-                          <div class="details">
-                            <label>
-                              pick a date
-                            </label>
+                            <form action="{{ url('/bookTransfer') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="transfer_id" value="{{ $HPrice->id }}">
+                                          <div class="booking_info">
 
-<input type="date" class="form-control date_picker">
-                          </div>
-                            <div class="details">
+                                          <div class="details px-1">
+                                            <label>
+                                              pick a date
+                                            </label>
+
+                                            <div class="rooms date" style="padding: 0;box-shadow: 0" data-provide="datepicker">
+                                                <input type="text" name="transfer_date" class="form-control datepicker"
+                                                    placeholder="dd/MM/YYY">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-th"></span>
+                                                </div>
+                                            </div>                              </div>
+                                            <div class="details">
 
 
-                                <label>
-                                    Adults                                  </label>
-                                <input type="text" class="form-control ">
+                                                <label>
+                                                    Adults                                  </label>
+                                                <input type="number" name="transfer_adult" value="1" class="form-control ">
 
 
-                            </div>
-                            <button>
-                               <a href="./tours-details.html" class="btn"> book</a>
-                            </button>
-                          </div>
+                                            </div>
+                                            <button class="btn mx-1" type="submit">
+                                                    BOOK
+                                                </button>
+                                          </div>
+             </form>
                         </div>
                     </div>
                 </div>
@@ -170,27 +190,38 @@
                                 </span>
                             </div>
 
-                          <div class="booking_info">
-                          <div class="details">
-                            <label>
-                              pick a date
-                            </label>
+                            <form action="{{ url('/bookTransfer') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="transfer_id" value="{{ $HAlpha->id }}">
 
-<input type="date" class="form-control date_picker">
-                          </div>
-                            <div class="details">
+                                          <div class="booking_info">
+
+                                          <div class="details px-1">
+                                            <label>
+                                              pick a date
+                                            </label>
+
+                                            <div class="rooms date" style="padding: 0;box-shadow: 0" data-provide="datepicker">
+                                                <input type="text" name="transfer_date" class="form-control datepicker"
+                                                    placeholder="dd/MM/YYY">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-th"></span>
+                                                </div>
+                                            </div>                              </div>
+                                            <div class="details">
 
 
-                                <label>
-                                    Adults                                  </label>
-                                <input type="text" class="form-control ">
+                                                <label>
+                                                    Adults                                  </label>
+                                                <input type="number" name="transfer_adult" value="1" class="form-control ">
 
 
-                            </div>
-                            <button>
-                               <a href="./tours-details.html" class="btn"> book</a>
-                            </button>
-                          </div>
+                                            </div>
+                                            <button class="btn mx-1" type="submit">
+                                                    BOOK
+                                                </button>
+                                          </div>
+             </form>
                         </div>
                     </div>
                 </div>

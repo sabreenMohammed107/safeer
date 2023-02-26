@@ -128,4 +128,22 @@ class SiteTransferController extends Controller
                 ])->render();
         }
     }
+
+    public function bookTransfer(Request $request)
+    {
+
+        $sessionTransferBook=[
+
+             'transfer_id' => $request->transfer_id ,
+        'transfer_date'=> $request->transfer_date ,
+        'transfer_adult' => $request->transfer_adult,
+
+    ];
+        session(['sessionTransferBook' => $sessionTransferBook]);
+
+        \Log::info(\Session::get('sessionTransferBook'));
+
+
+    }
 }
+
