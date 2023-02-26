@@ -228,7 +228,6 @@
 
                                                 <div class="icons-container">
                                                     <div class="social-icons spinned">
-        $comFooter=Company::where('id',1)->firstorfail();
                                                         <a class="item facebook" href="{{ $comFooter->facebook }}" target="_blank" ><i
                                                                 class="fa-brands fa-facebook-f"></i></a>
                                                         <a class="item youtube" href="{{ $comFooter->youtube }}" target="_blank" ><i
