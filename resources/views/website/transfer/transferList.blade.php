@@ -65,7 +65,7 @@
 
 
                                 </div>
-                                <button class="btn mx-1" type="submit">
+                                <button class="btn mx-1 btn-primary"" type="submit">
                                         BOOK
                                     </button>
                               </div>
@@ -140,7 +140,7 @@
 
 
                                             </div>
-                                            <button class="btn mx-1" type="submit">
+                                            <button class="btn mx-1 btn-primary" type="submit">
                                                     BOOK
                                                 </button>
                                           </div>
@@ -217,7 +217,7 @@
 
 
                                             </div>
-                                            <button class="btn mx-1" type="submit">
+                                            <button class="btn mx-1 btn-primary" type="submit">
                                                     BOOK
                                                 </button>
                                           </div>
@@ -241,11 +241,7 @@
                         href="{{ $TransfersRecommended->url($i) }}">{{ $i }}</a></li>
             @endfor
             <input type="hidden" name="page_num" />
-            {{-- @if ($ToursRecommended->currentPage() !== $ToursRecommended->lastPage())
-                <li class="page-item page-inc">
-                    <a class="page-link" href="{{ $ToursRecommended->nextPageUrl() }}">Next</a>
-                </li>
-            @endif --}}
+
         </ul>
     </nav>
     @endif

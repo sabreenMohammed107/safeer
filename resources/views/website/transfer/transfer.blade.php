@@ -289,7 +289,7 @@ input.nosubmit {
         }
         // console.log(arr);
         $("input[name=pickups_ids]").val(arr_pickups);
-        fetch_tours()
+        fetch_transfer()
     });
 //zones
     $(".dropoff_id").change(function(){
@@ -303,7 +303,7 @@ input.nosubmit {
         }
         // console.log(arr);
         $("input[name=dropoff_ids]").val(arr_dropoff);
-        fetch_tours()
+        fetch_transfer()
     });
 //zones
 $(".CarModels_id").change(function(){
@@ -316,8 +316,8 @@ $(".CarModels_id").change(function(){
             });
         }
         // console.log(arr);
-        $("input[name=CarModels_id]").val(arr_CarModels);
-        fetch_tours()
+        $("input[name=CarModels_ids]").val(arr_CarModels);
+        fetch_transfer()
     });
     //zones
     $(".CarClass_id").change(function(){
@@ -331,7 +331,7 @@ $(".CarModels_id").change(function(){
         }
         // console.log(arr);
         $("input[name=CarClass_ids]").val(arr_CarClass);
-        fetch_tours()
+        fetch_transfer()
     });
 
 
@@ -386,7 +386,7 @@ $(".CarModels_id").change(function(){
             });
         }
         // console.log(arr);
-        $("input[name=CarModels_id]").val(arr_CarModels);
+        $("input[name=CarModels_ids]").val(arr_CarModels);
     });
     //zones
     $(".CarClass_id").change(function(){
@@ -416,11 +416,11 @@ $(".CarModels_id").change(function(){
                 url: "/fetch-tour-filter?page=" + page,
                 data: {
 
-                    tour_Types_ids: $("input[name=tour_types_ids]").val(),
-                    tour_cities_ids: $("input[name=tour_cities_ids]").val(),
+                    pickups_ids: $("input[name=pickups_ids]").val(),
+                    dropoff_ids: $("input[name=dropoff_ids]").val(),
 
-                    price_from: $("input[name=price_from]").val(),
-                    price_to: $("input[name=price_to]").val(),
+                    CarModels_ids: $("input[name=CarModels_ids]").val(),
+                    CarClass_ids: $("input[name=CarClass_ids]").val(),
                 },
 
                 success: function(response) {
@@ -446,11 +446,11 @@ $(".CarModels_id").change(function(){
             data: {
 
 
-                tour_Types_ids: $("input[name=tour_types_ids]").val(),
-                    tour_cities_ids: $("input[name=tour_cities_ids]").val(),
+                pickups_ids: $("input[name=pickups_ids]").val(),
+                    dropoff_ids: $("input[name=dropoff_ids]").val(),
 
-                    price_from: $("input[name=price_from]").val(),
-                    price_to: $("input[name=price_to]").val(),
+                    CarModels_ids: $("input[name=CarModels_ids]").val(),
+                    CarClass_ids: $("input[name=CarClass_ids]").val(),
 
 
             },

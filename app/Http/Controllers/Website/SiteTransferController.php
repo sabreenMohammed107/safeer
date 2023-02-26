@@ -54,33 +54,36 @@ class SiteTransferController extends Controller
         \Log::info($request->all());
         if ($request->ajax()) {
 
-            $city_id = $request->tour_cities_ids;
-            $type_id = $request->tour_Types_ids;
 
             $filterTour = Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id');
 
-            if ($request->tour_cities_ids) {
-                $filterTour->whereIn("tours.city_id", explode(',', $request->tour_cities_ids));
+            if ($request->pickups_ids) {
+                $filterTour->whereIn("from_location_id", explode(',', $request->pickups_ids));
                 //
             }
-            if ($request->tour_Types_ids) {
-                $filterTour->whereIn("tours.tour_type_id", explode(',', $request->tour_Types_ids));
+            if ($request->dropoff_ids) {
+                $filterTour->whereIn("to_location_id", explode(',', $request->dropoff_ids));
                 //
             }
-            if ($request->price_from && $request->price_to) {
-                $filterTour->whereBetween('tour_person_cost', [$request->price_from, $request->price_to]);
+            if ($request->CarModels_ids) {
+                $filterTour->whereIn("car_model_id", explode(',', $request->CarModels_ids));
                 //
             }
+            if ($request->CarClass_ids) {
+                $filterTour->whereIn("class_id", explode(',', $request->CarClass_ids));
+                //
+            }
+
 
 
             $TransfersRecommended = $filterTour->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
             $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
             $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
 
-            return view("website.tours.toursList",
+            return view("website.transfer.transferList",
                 [
 
-                    "ToursRecommended" => $TransfersRecommended,
+                    "TransfersRecommended" => $TransfersRecommended,
                     "TransfersByPrice" => $TransfersByPrice,
                     "TransfersByAlpha" => $TransfersByAlpha,
                     "Count" => $TransfersRecommended->count(),
@@ -94,29 +97,31 @@ class SiteTransferController extends Controller
     {
         if ($request->ajax()) {
 
-            $city_id = $request->tour_cities_ids;
-            $type_id = $request->tour_Types_ids;
-
             $filterTour = Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id');
 
-            if ($request->tour_cities_ids) {
-                $filterTour->whereIn("tours.city_id", explode(',', $request->tour_cities_ids));
+            if ($request->pickups_ids) {
+                $filterTour->whereIn("from_location_id", explode(',', $request->pickups_ids));
                 //
             }
-            if ($request->tour_Types_ids) {
-                $filterTour->whereIn("tours.tour_type_id", explode(',', $request->tour_Types_ids));
+            if ($request->dropoff_ids) {
+                $filterTour->whereIn("to_location_id", explode(',', $request->dropoff_ids));
                 //
             }
-            if ($request->price_from && $request->price_to) {
-                $filterTour->whereBetween('tour_person_cost', [$request->price_from, $request->price_to]);
+            if ($request->CarModels_ids) {
+                $filterTour->whereIn("car_model_id", explode(',', $request->CarModels_ids));
                 //
             }
+            if ($request->CarClass_ids) {
+                $filterTour->whereIn("class_id", explode(',', $request->CarClass_ids));
+                //
+            }
+
 
             $TransfersRecommended = $filterTour->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
             $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
             $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
 
-            return view("website.tours.toursList",
+            return view("website.transfer.transferList",
                 [
 
                     "TransfersRecommended" => $TransfersRecommended,
