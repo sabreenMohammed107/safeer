@@ -143,7 +143,7 @@ class SiteTransferController extends Controller
 
         \Log::info(\Session::get('sessionTransferBook'));
 
-
+return \Session::get('sessionTransferBook');
     }
 }
 
