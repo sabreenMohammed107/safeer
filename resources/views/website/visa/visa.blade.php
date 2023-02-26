@@ -359,4 +359,5 @@ $("#addToCart").click(function() {
 //   };
 
         });
+    });
     </script>
