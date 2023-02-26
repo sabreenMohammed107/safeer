@@ -49,10 +49,9 @@ class VisaController extends Controller
     public function create()
     {
         $types = Visa_type::all();
-        $countries = Country::all();
         $currancies = Currency::all();
         $nationalities =Nationality::all();
-        return view($this->viewName . 'add', compact(['types','countries','currancies','nationalities']));
+        return view($this->viewName . 'add', compact(['types','currancies','nationalities']));
     }
 
     /**
@@ -90,10 +89,9 @@ class VisaController extends Controller
     {
         $row=Visa::where('id',$id)->first();
         $types = Visa_type::all();
-        $countries = Country::all();
         $currancies = Currency::all();
         $nationalities =Nationality::all();
-        return view($this->viewName . 'edit', compact(['row','types','countries','currancies','nationalities']));
+        return view($this->viewName . 'edit', compact(['row','types','currancies','nationalities']));
     }
 
     /**

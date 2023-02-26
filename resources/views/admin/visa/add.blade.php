@@ -63,28 +63,7 @@
                                     <div class="card-body pt-0">
                                         <!--begin::Input group-->
 
-                                        <!--end::Input-->
-                                        <div class="d-flex flex-wrap gap-5">
-                                            <!--begin::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row w-100 flex-md-root">
-                                                <label class="fs-6 fw-bold form-label mt-3">
-                                                    <option value="">Select country..</option>
-                                                    {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
-                                                </label>
-                                                <!--end::Label-->
-                                                <select required class="form-select form-select-solid "
-                                                    data-control="select2" data-placeholder="Select an option" required
-                                                    data-show-subtext="true" data-live-search="true" name="country_id" >
-                                                    <option value=""></option>
-                                                    @foreach ($countries as $country)
-                                                        <option value="{{ $country->id }}">{{ $country->en_country }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
 
-                                        </div>
                                         <div class="d-flex flex-wrap gap-5">
                                             <div class="fv-row w-100 flex-md-root">
                                                 <label class="fs-6 fw-bold form-label mt-3">
@@ -97,7 +76,7 @@
                                                     data-show-subtext="true" data-live-search="true" name="visa_type_id" >
                                                     <option value=""></option>
                                                     @foreach ($types as $type)
-                                                        <option value="{{ $type->id }}">{{ $type->en_type }}
+                                                        <option value="{{ $type->id }}">{{ $type->country->en_country ?? ''}} - {{ $type->en_type }}
                                                         </option>
                                                     @endforeach
                                                 </select>

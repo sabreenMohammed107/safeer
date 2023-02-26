@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\Visa_type;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -33,9 +34,10 @@ class VisaTypeController extends Controller
     public function index()
     {
         $rows = Visa_type::orderBy("created_at", "Desc")->get();
+        $countries = Country::all();
 
 
-        return view($this->viewName . 'index', compact(['rows']));
+        return view($this->viewName . 'index', compact(['rows','countries']));
     }
 
     /**

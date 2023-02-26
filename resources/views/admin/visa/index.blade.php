@@ -129,7 +129,7 @@
         <!--end::Qty=-->
         <!--begin::Price=-->
         <td class="text-end pe-0">
-            <span class="fw-bolder text-dark">{{ $row->country->en_country ?? '' }}</span>
+            <span class="fw-bolder text-dark">{{ $row->type->country->en_country ?? '' }}</span>
         </td>
         <!--end::Price=-->
 

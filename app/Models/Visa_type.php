@@ -11,7 +11,12 @@ class Visa_type extends Model
     protected $fillable = [
         'en_type',
         'ar_type',
+        'country_id',
 
 
     ];
+    public function country()
+    {
+        return $this->belongsTo(Country::class,'country_id');
+    }
 }

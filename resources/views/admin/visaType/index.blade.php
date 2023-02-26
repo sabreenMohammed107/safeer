@@ -86,7 +86,7 @@
 
                                 <th class="min-w-150px"> En Name</th>
                                 <th class="min-w-150px"> Ar Name</th>
-
+                                <th class="min-w-150px">Country</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
                             <!--end::Table row-->
@@ -125,6 +125,16 @@
                                                 data-kt-ecommerce-category-filter="category_id" value="{{ $row->id }}">
 
                                             <span class="symbol-label">{{ $row->en_type }}</span>
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+
+                                        <div class="d-flex">
+
+
+                                            <span class="symbol-label">{{ $row->country->en_country ?? '' }}</span>
 
                                         </div>
 
@@ -226,7 +236,26 @@
                                                         <!--end::Heading-->
                                                         <!--begin::Input group-->
 
-
+ <!--end::Input-->
+ <div class="d-flex flex-wrap gap-5">
+    <!--begin::Input group-->
+    <div class="fv-row w-100 flex-md-root">
+        <label class="fs-6 fw-bold form-label mt-3">
+            <option value="">Select country..</option>
+            {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
+        </label>
+        <!--end::Label-->
+        <select required class="form-select form-select-solid "
+            data-control="select2" data-placeholder="Select an option" required
+            data-show-subtext="true" data-live-search="true" name="country_id" >
+            <option value=""></option>
+            @foreach ($countries as $country)
+                <option value="{{ $country->id }}" {{ $row->country_id == $country->id ? 'selected' : '' }} >{{ $country->en_country }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
 
                                                         <div class="d-flex flex-column mb-8 fv-row">
                                                             <!--begin::Input group-->
@@ -327,7 +356,28 @@
                         </div>
                         <!--end::Heading-->
 
+  <!--end::Input-->
+  <div class="d-flex flex-wrap gap-5">
+    <!--begin::Input group-->
+    <!--begin::Input group-->
+    <div class="fv-row w-100 flex-md-root">
+        <label class="fs-6 fw-bold form-label mt-3">
+            <option value="">Select country..</option>
+            {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
+        </label>
+        <!--end::Label-->
+        <select required class="form-select form-select-solid "
+            data-control="select2" data-placeholder="Select an option" required
+            data-show-subtext="true" data-live-search="true" name="country_id" >
+            <option value=""></option>
+            @foreach ($countries as $country)
+                <option value="{{ $country->id }}">{{ $country->en_country }}
+                </option>
+            @endforeach
+        </select>
+    </div>
 
+</div>
 
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Input group-->
