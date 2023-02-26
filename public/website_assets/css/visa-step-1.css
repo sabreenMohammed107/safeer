@@ -100,16 +100,18 @@ input#file-upload-button {
 .total {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding-top: 30px;
+    justify-content: flex-end;
+    padding-top: 10px;
     padding-bottom: 40px;
 }
 .total button {
-
+    color: #fff;
     background-color: #1C4482;
-    border-radius: 16px;
+    border-radius: 10px;
     margin-top: 5px;
-    padding: 13px 45px;
+    padding: 8px 30px;
+    border:none;
+
 }
 .total button a {
     color: white;
@@ -117,8 +119,9 @@ input#file-upload-button {
     text-transform: capitalize;
 }
 .total button:hover {
-    background-color: white;
-    border: 1px solid #1C4482;
+    color:#1C4482;
+    background-color: #0dcaf0;
+    /* border: 1px solid #1C4482; */
 }
 .total button:hover a {
     color: #1C4482;

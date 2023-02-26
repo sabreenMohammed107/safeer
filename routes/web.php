@@ -41,6 +41,7 @@ use App\Http\Controllers\Website\HotelsController;
 use App\Http\Controllers\Website\MainController;
 use App\Http\Controllers\Website\SiteTransferController;
 use App\Http\Controllers\Website\ToursController;
+use App\Http\Controllers\Website\VisaDataController;
 use App\Models\Offer;
 
 /*
@@ -110,6 +111,10 @@ Route::post("/transfers", [SiteTransferController::class, 'all_transfer']);
 Route::get('/fetch-transfers-filter',  [SiteTransferController::class, 'fetch_data'])->name('fetch-transfers-filter');
 Route::post("/transfers/retrieve", [SiteTransferController::class, 'fetch']);
 Route::post("/bookTransfer", [SiteTransferController::class, 'bookTransfer']);
+//visa
+Route::get("/visa", [VisaDataController::class, 'all_visa']);
+//dynamicvisatype.fetch
+Route::post('dynamicvisatype/fetch',[VisaDataController::class,'fetchCat'] )->name('dynamicvisatype.fetch');
 
 
 Route::middleware(['prevent-relogin'])->group(function () {

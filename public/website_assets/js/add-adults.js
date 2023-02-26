@@ -89,5 +89,5 @@ function  addAdults() {
 var passengerInfo =document.getElementsByClassName('passenger_info');
 
 function removePassenger($event) {
-  $event.closest('.passenger_info').remove();
+  $event.closest('.passenger_info_details').remove();
 }

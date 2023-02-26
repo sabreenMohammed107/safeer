@@ -84,7 +84,7 @@
                     <a href="{{ url('/transfers') }}" class="{{ Request::segment(1)=='transfers' ? 'links hybrid active' : 'links hybrid' }}" >transfer </a>
                 </li>
                 <li>
-                    <a href="#" class="links hybrid">visa</a>
+                    <a href="{{ url('/visa') }}" class="{{ Request::segment(1)=='visa' ? 'links hybrid active' : 'links hybrid' }}" >visa</a>
                 </li>
                 <li>
                     <a href="{{ url('/contact') }}" class="{{ Request::segment(1)=='contact' ? 'links hybrid active' : 'links hybrid' }}">contact us</a>
