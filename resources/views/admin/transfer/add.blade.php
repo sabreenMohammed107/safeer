@@ -180,7 +180,7 @@
         <option value="">Select Currency Class..</option>
     </label>
     <select  class="form-select form-select-solid"
-        name="class_id" data-control="select2"
+        name="currency_id" data-control="select2"
         data-placeholder="Select an option">
         <option value=""></option>
         @foreach ($currancies as $currancy)
