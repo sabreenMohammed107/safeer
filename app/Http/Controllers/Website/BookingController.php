@@ -9,11 +9,22 @@ use App\Models\Counter;
 use App\Models\OrderDetails;
 use App\Models\Orders;
 use App\Models\OrderPersons;
+use App\Models\RoomDetails;
+use App\Models\Tour;
+use App\Models\TourDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
+abstract class ItemType
+{
+    const ROOM = 0;
+    const TOUR = 1;
+// etc.
+}
 class BookingController extends Controller
 {
+
     public function BookRoom(int $id, int $cap)
     {
         if(!session()->get("SiteUser")){
@@ -27,14 +38,15 @@ class BookingController extends Controller
                 "from_date"=> date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d"),
                 "to_date"=> date_format(date_create(session()->get("sessionArr")["end_date"]), "Y-m-d"),
                 'ages' => session()->get("sessionArr")["ages"],
+                'itemType' => 0 ,// Room
             ]);
 
             return redirect()->route("siteLogin");
         }
 
-        $CartItem = Cart::where("user_id",'=',session()->get("SiteUser")["ID"])->first();
+        $CartItem = Cart::where([["user_id",'=',session()->get("SiteUser")["ID"]],["item_type",'=',0]])->first();
 
-        if($CartItem){
+        if($CartItem){ // Has Room ?
             return redirect()->to("/safer/room/$id/book/$cap")->with("session-warning","Can't Purchase multiple booking in one time");
         }
 
@@ -48,6 +60,8 @@ class BookingController extends Controller
         $CartItem->nights               = session()->get("sessionArr")["nights"];
         $CartItem->from_date            = date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d");
         $CartItem->to_date              = date_format(date_create(session()->get("sessionArr")["end_date"]), "Y-m-d");
+        $CartItem->item_type            = 0;
+
         if(!session()->get("sessionArr")["ages"]){
             $CartItem->ages                 = null;
         }else{
@@ -61,11 +75,13 @@ class BookingController extends Controller
     }
     public function ExBookRoom(int $id, int $cap)
     {
-        Cart::where("user_id",'=',session()->get("SiteUser")["ID"])->delete();
+        Cart::where([["user_id",'=',session()->get("SiteUser")["ID"]],['item_type','=',0]])->delete();
         return $this->BookRoom($id, $cap);
     }
+
     public function Cart()
     {
+
         $BreadCrumb = [];
         $Company = Company::first();
 
@@ -74,23 +90,48 @@ class BookingController extends Controller
         $RoomCost = DB::table("cart")
         ->select( 'cart.user_id','cart.id','cart.room_cap','cart.adults_count', 'cart.children_count', 'cart.rooms_count', 'cart.nights', 'cart.ages','hotel_enoverview','hotels.hotel_stars','hotels.hotel_enname','cart.id','cart.from_date', 'cart.to_date', 'en_room_type', 'food_bev_type', 'ar_room_type',
             'cost','single_cost','double_cost','triple_cost','hotel_id','hotel_banner','countries.en_country','cities.en_city',
-            'child_free_age_from','child_free_age_to','child_age_from','child_age_to','child_age_cost')
+            'child_free_age_from','cart.item_type','child_free_age_to','child_age_from','child_age_to','child_age_cost')
         ->leftJoin("room_type_costs", "room_type_costs.id", "=", "cart.room_type_cost_id")
         ->leftJoin("hotels", "hotels.id", "=", "room_type_costs.hotel_id")
         ->leftJoin("cities", "hotels.city_id", "=", "cities.id")
         ->leftJoin("countries", "countries.id", "=", "cities.country_id")
         ->leftJoin("room_types", "room_types.id", "=", "room_type_costs.room_type_id")
         ->leftJoin("food_beverages", "food_beverages.id", "=", "room_type_costs.food_beverage_id")
-        ->where([["user_id", "=", session()->get("SiteUser")["ID"]]])
+        ->where([["user_id", "=", session()->get("SiteUser")["ID"]],["cart.item_type",'=',0]])
         ->first();
 
-        //return view("website.cart",
+        $ToursCost = DB::table("cart")
+            ->select(
+                'cart.user_id',
+                'cart.id',
+                'cart.tour_id',
+                'cart.adults_count',
+                'cart.children_count',
+                'cart.ages',
+                'en_overview',
+                'banner',
+                'tours.en_name',
+                'tours.id',
+                'cart.id',
+                'cart.tour_date',
+                'tour_person_cost',
+                'duration',
+                'countries.en_country',
+                'cities.en_city',
+                'cart.item_type',
+            )
+            ->leftJoin("tours", "cart.tour_id", "=", "tours.id")
+            ->leftJoin("cities", "tours.city_id", "=", "cities.id")
+            ->leftJoin("countries", "countries.id", "=", "cities.country_id")
+            ->where([["user_id", "=", session()->get("SiteUser")["ID"]], ["cart.item_type", '=', 1]])
+            ->get();
         return view("website.booking",
             [
                 "Company" => $Company,
                 "Counters" => $Counters,
                 "BreadCrumb" => $BreadCrumb,
-                "RoomCost" => $RoomCost
+                "RoomCost" => $RoomCost,
+                "ToursCost" => $ToursCost,
             ]);
     }
 
@@ -105,70 +146,138 @@ class BookingController extends Controller
 
     public function MakeOrder(Request $request)
     {
+        // $refTour = Tour::find($request->tour_id[0]);
+        // return $refTour;
         $BreadCrumb = [];
         $Company = Company::first();
 
         $Counters = Counter::get();
         DB::beginTransaction();
-
+        $RoomDetail = null;
         try {
             $order = new Orders();
             $order->user_id                 = $request->user_id;
-            $order->holder_salutation       = $request->adultsSal[0];
-            $order->holder_name             = $request->adultsNames[0];
-            $order->holder_mobile           = $request->adultsMobile[0];
-            $order->notes                   = $request->notes;
-            $order->from_date               = $request->from_date;
-            $order->to_date                 = $request->to_date;
-            $order->nights                  = $request->nights;
-            $order->adults_count            = $request->adults_count;
-            $order->children_count          = $request->children_count;
-            $order->rooms_count             = $request->rooms_count;
             $order->save();
 
-            //Adult Loop
-            if($request->adultsSal && count($request->adultsSal) > 1)
-            {
-                for ($i=1; $i < count($request->adultsSal); $i++) {
-                    $person = new OrderPersons();
-                    $person->order_id = $order->id;
-                    $person->person_type = 0; // Adult bit
-                    $person->person_salutation = $request->adultsSal[$i];
-                    $person->person_name = $request->adultsNames[$i];
-                    $person->person_mobile = $request->adultsMobile[$i];
-                    $person->person_cost = 0;
-                    $person->save();
-                }
-            }
+            if($request->adultsSal && $request->adultsSal[0]){
+                $orderDetails = new OrderDetails();
+                $orderDetails->order_id                = $order->id;
+                $orderDetails->holder_salutation       = $request->adultsSal[0];
+                $orderDetails->holder_name             = $request->adultsNames[0];
+                $orderDetails->holder_mobile           = $request->adultsMobile[0];
+                $orderDetails->notes                   = $request->notes;
+                $orderDetails->detail_type             = 0;
+                $orderDetails->save();
 
-            //Children Loop
-            if ($request->childrenNames && count($request->childrenNames) > 0) {
-                for ($i = 0; $i < count($request->childrenNames); $i++) {
-                    $person = new OrderPersons();
-                    $person->order_id = $order->id;
-                    $person->person_type = 1; // child bit
-                    $person->person_salutation = "";
-                    $person->person_mobile = "";
-                    $person->person_name = $request->childrenNames[$i];
-                    if($request->childrenAges[$i] <= $request->child_free_age_to && $request->childrenAges[$i] >= $request->child_free_age_from){
+                $RoomDetail = new RoomDetails();
+                $RoomDetail->order_details_id          = $orderDetails->id;
+                $RoomDetail->room_type                 = $request->room_type;
+                $RoomDetail->room_view                 = $request->room_view;
+                $RoomDetail->food_bev_type             = $request->food_bev_type;
+                $RoomDetail->room_cost                 = $request->room_cost;
+                $RoomDetail->total_cost                = $request->total_cost;
+                $RoomDetail->hotel_id                  = $request->hotel_id;
+                $RoomDetail->to_date                   = $request->to_date;
+                $RoomDetail->from_date                 = $request->from_date;
+                $RoomDetail->nights                    = $request->nights;
+                $RoomDetail->adults_count              = $request->adults_count;
+                $RoomDetail->children_count            = $request->children_count;
+                $RoomDetail->rooms_count               = $request->rooms_count;
+                $RoomDetail->save();
+
+
+
+                //Adult Loop
+                if($request->adultsSal && count($request->adultsSal) > 1)
+                {
+                    for ($i=1; $i < count($request->adultsSal); $i++) {
+                        $person = new OrderPersons();
+                        $person->order_details_id = $orderDetails->id;
+                        $person->person_type = 0; // Adult bit
+                        $person->person_salutation = $request->adultsSal[$i];
+                        $person->person_name = $request->adultsNames[$i];
+                        $person->person_mobile = $request->adultsMobile[$i];
                         $person->person_cost = 0;
-                    }else{
-                        $person->person_cost = $request->child_age_cost;
+                        $person->save();
                     }
-                    $person->save();
+                }
+
+                //Children Loop
+                if ($request->childrenNames && count($request->childrenNames) > 0) {
+                    for ($i = 0; $i < count($request->childrenNames); $i++) {
+                        $person = new OrderPersons();
+                        $person->order_details_id = $orderDetails->id;
+                        $person->person_type = 1; // child bit
+                        $person->person_salutation = "";
+                        $person->person_mobile = "";
+                        $person->person_name = $request->childrenNames[$i];
+                        if($request->childrenAges[$i] <= $request->child_free_age_to && $request->childrenAges[$i] >= $request->child_free_age_from){
+                            $person->person_cost = 0;
+                        }else{
+                            $person->person_cost = $request->child_age_cost;
+                        }
+                        $person->save();
+                    }
                 }
             }
 
-            $room = new OrderDetails();
-            $room->order_id = $order->id;
-            $room->room_type = $request->room_type;
-            $room->room_view = $request->room_view;
-            $room->food_bev_type = $request->food_bev_type;
-            $room->room_cost = $request->room_cost;
-            $room->total_cost = $request->total_cost;
-            $room->hotel_id = $request->hotel_id;
-            $room->save();
+            if(count($request->tour_adults_count) > 0)
+            {
+                for ($i=0; $i < count($request->tour_adults_count); $i++) {
+                    $orderDetails = new OrderDetails();
+                    $orderDetails->order_id = $order->id;
+                    $orderDetails->holder_salutation = $request->tour_adults_sal[$i][0];
+                    $orderDetails->holder_name = $request->tour_adults_name[$i][0];
+                    $orderDetails->holder_mobile = $request->tour_adults_mobile[$i][0];
+                    $orderDetails->notes = $request->tour_notes[$i];
+                    $orderDetails->detail_type = 1; // Tour Type Option [1]
+                    $orderDetails->save();
 
+                    $refTour = Tour::find((int)$request->tour_id[$i]);
+                    $TourElem = new TourDetails();
+                    $TourElem->order_details_id                 = $orderDetails->id;
+                    $TourElem->tour_id                          = (int)$request->tour_id[$i];
+                    $TourElem->tour_name                        = $refTour->en_name;
+                    $TourElem->tour_banner                      = $refTour->banner;
+                    $TourElem->tour_type                        = ($refTour->type->id == 1)? 0: 1;
+                    $TourElem->tour_cost                        = ((float)$request->tour_total_cost[$i])*1.14; // After Tax
+                    $TourElem->tour_date                        = $request->tour_date[$i];
+                    $TourElem->adults_count                     = (int)$request->tour_adults_count[$i];
+                    $TourElem->children_count                   = (int) $request->tour_children_count[$i];
+                    $TourElem->save();
+                    //Adult Loop
+                    if ($request->tour_adults_count[$i] && (int)$request->tour_adults_count[$i] > 1) {
+                        for ($j = 1; $j < (int)$request->tour_adults_count[$i]; $j++) {
+                            $person = new OrderPersons();
+                            $person->order_details_id = $orderDetails->id;
+                            $person->person_type = 0; // Adult byte
+                            $person->person_salutation = $request->tour_adults_sal[$i][$j];
+                            $person->person_name = $request->tour_adults_name[$i][$j];
+                            $person->person_mobile = $request->tour_adults_mobile[$i][$j];
+                            $person->person_cost = $refTour->tour_person_cost;
+                            $person->save();
+                        }
+                    }
+
+                    //Children Loop
+                    if ($request->tour_children_count[$i] && (int)$request->tour_children_count[$i] > 0) {
+                        for ($j = 0; $j < (int)$request->tour_children_count[$i]; $j++) {
+                            $person = new OrderPersons();
+                            $person->order_details_id = $orderDetails->id;
+                            $person->person_type = 1; // child bit
+                            $person->person_salutation = "";
+                            $person->person_mobile = "";
+                            $person->person_name = $request->tour_child_name[$i][$j];
+                            $person->person_cost = ((int)$request->tour_child_age[$i][$j] > 2)? $refTour->tour_person_cost : 0;
+                            $person->save();
+                        }
+                    }
+                }
+
+
+
+            }
+            // return "passed";
 
             $Cart = Cart::where("user_id","=",$request->user_id);
             $Cart->delete();
@@ -180,6 +289,7 @@ class BookingController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             // something went wrong
+            throw $e;
             return redirect()->back()->with("session-danger","Can't Purchase Right Now Please Try Again Later");
         }
 
@@ -189,7 +299,7 @@ class BookingController extends Controller
                 "Company" => $Company,
                 "Counters" => $Counters,
                 "BreadCrumb" => $BreadCrumb,
-                "Room"=>$room
+                "Room"=>$RoomDetail
             ]
         );
     }

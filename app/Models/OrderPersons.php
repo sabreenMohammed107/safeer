@@ -35,7 +35,14 @@ class OrderPersons extends Model
      * @var array
      */
     protected $fillable = [
-        'order_id', 'person_type', 'person_salutation', 'person_name', 'person_mobile', 'person_cost', 'created_at', 'updated_at'
+        'order_details_id',
+        'person_type', // [0=>adult, 1=>child]
+        'person_salutation',
+        'person_name',
+        'person_mobile',
+        'person_cost',
+        'created_at',
+        'updated_at'
     ];
 
     /**
