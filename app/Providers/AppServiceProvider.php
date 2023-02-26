@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Company_branch;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Builder;
+use Illuminate\Support\Facades\View;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -31,5 +32,6 @@ class AppServiceProvider extends ServiceProvider
         $master=Company_branch::where('master_flag',1)->firstorfail();
         $comFooter=Company::where('id',1)->firstorfail();
         //
+        View::share(['comFooter'=>$comFooter]);
     }
 }
