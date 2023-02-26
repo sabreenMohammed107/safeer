@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Country;
-use App\Models\Currency;
 use App\Models\Nationality;
-use App\Models\Visa;
-use App\Models\Visa_type;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-class VisaController extends Controller
+class NationalityController extends Controller
 {
-
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -21,13 +17,13 @@ class VisaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(Visa $object)
+    public function __construct(Nationality $object)
     {
         $this->middleware('auth');
 
         $this->object = $object;
-        $this->viewName = 'admin.visa.';
-        $this->routeName = 'visa.';
+        $this->viewName = 'admin.nationalities.';
+        $this->routeName = 'nationalities.';
     }
     /**
      * Display a listing of the resource.
@@ -36,7 +32,8 @@ class VisaController extends Controller
      */
     public function index()
     {
-        $rows = Visa::orderBy("created_at", "Desc")->get();
+        $rows = Nationality::orderBy("created_at", "Desc")->get();
+
 
         return view($this->viewName . 'index', compact(['rows']));
     }
@@ -48,11 +45,7 @@ class VisaController extends Controller
      */
     public function create()
     {
-        $types = Visa_type::all();
-        $countries = Country::all();
-        $currancies = Currency::all();
-        $nationalities =Nationality::all();
-        return view($this->viewName . 'add', compact(['types','countries','currancies','nationalities']));
+        //
     }
 
     /**
@@ -65,9 +58,8 @@ class VisaController extends Controller
     {
         $input = $request->except(['_token']);
 
-        Visa::create($input);
-        return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
-
+        Nationality::create($input);
+        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
     /**
      * Display the specified resource.
@@ -88,12 +80,7 @@ class VisaController extends Controller
      */
     public function edit($id)
     {
-        $row=Visa::where('id',$id)->first();
-        $types = Visa_type::all();
-        $countries = Country::all();
-        $currancies = Currency::all();
-        $nationalities =Nationality::all();
-        return view($this->viewName . 'edit', compact(['row','types','countries','currancies','nationalities']));
+        //
     }
 
     /**
@@ -107,9 +94,8 @@ class VisaController extends Controller
     {
         $input = $request->except(['_token']);
 
-        Visa::findOrFail($id)->update($input);
-        return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
-
+        Nationality::findOrFail($id)->update($input);
+        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
     /**
      * Remove the specified resource from storage.
@@ -119,11 +105,12 @@ class VisaController extends Controller
      */
     public function destroy($id)
     {
-        $row = Visa::where('id', $id)->first();
+        $car = Nationality::where('id', $id)->first();
 
         try {
 
-            $row->delete();
+
+            $car->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
 
         } catch (QueryException $q) {

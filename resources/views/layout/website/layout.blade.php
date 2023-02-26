@@ -199,9 +199,9 @@
                                             </div>
                                             <div class="contact_info" style="margin-bottom: 10px;">
                                                 <div class="info" style="margin-left: 25px;">
-                                                   
+
                                                     <span >
-                                                        00905444668838 - 00905521501111 - 00905016451111 - 00905549302222 </span>
+                                                        00905521501111 - 00905016451111 </span>
                                                 </div>
                                             </div>
                                              <div class="contact_info" style="margin-bottom: 10px;">
@@ -228,11 +228,12 @@
 
                                                 <div class="icons-container">
                                                     <div class="social-icons spinned">
-                                                        <a class="item facebook" href="#"><i
+        $comFooter=Company::where('id',1)->firstorfail();
+                                                        <a class="item facebook" href="{{ $comFooter->facebook }}" target="_blank" ><i
                                                                 class="fa-brands fa-facebook-f"></i></a>
-                                                        <a class="item youtube" href="#"><i
+                                                        <a class="item youtube" href="{{ $comFooter->youtube }}" target="_blank" ><i
                                                                 class="fa-brands fa-youtube"></i></a>
-                                                        <a class="item instagram" href="#"><i
+                                                        <a class="item instagram" href="{{ $comFooter->instagram }}" target="_blank" ><i
                                                                 class="fa-brands fa-instagram"></i></a>
                                                     </div>
                                                 </div>

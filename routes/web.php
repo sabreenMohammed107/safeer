@@ -21,6 +21,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\HotelPricesController;
 use App\Http\Controllers\HotelsTagController;
+use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\SiteAuth\AuthController;
@@ -33,10 +34,12 @@ use App\Http\Controllers\ToursTagController;
 use App\Http\Controllers\TransferLocationController;
 use App\Http\Controllers\UsersOrderController;
 use App\Http\Controllers\VisaController;
+use App\Http\Controllers\VisaTypeController;
 use App\Http\Controllers\Website\BookingController;
 use App\Http\Controllers\Website\ContentController;
 use App\Http\Controllers\Website\HotelsController;
 use App\Http\Controllers\Website\MainController;
+use App\Http\Controllers\Website\SiteTransferController;
 use App\Http\Controllers\Website\ToursController;
 use App\Models\Offer;
 
@@ -101,7 +104,11 @@ Route::get('/fetch-tour-filter',  [ToursController::class, 'fetch_data'])->name(
 Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
 Route::get("/tours/{id}", [ToursController::class, 'profile']);
 Route::post("/bookTours", [ToursController::class, 'bookTours']);
-
+//transfer
+Route::get("/transfers", [SiteTransferController::class, 'all_transfer']);
+Route::post("/transfers", [SiteTransferController::class, 'all_transfer']);
+Route::get('/fetch-transfers-filter',  [SiteTransferController::class, 'fetch_data'])->name('fetch-transfers-filter');
+Route::post("/transfers/retrieve", [SiteTransferController::class, 'fetch']);
 
 Route::middleware(['prevent-relogin'])->group(function () {
     //site-login
@@ -235,6 +242,8 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
          //visa
            //countries
         Route::resource('countries', CountryController::class);
+        Route::resource('nationalities', NationalityController::class);
+        Route::resource('visaType', VisaTypeController::class);
         Route::resource('visa', VisaController::class);
 
 });

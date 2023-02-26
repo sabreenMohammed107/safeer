@@ -9,9 +9,9 @@ class Visa extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'visa_trpe_enname',
-        'visa_trpe_arname',
+        'visa_type_id',
         'country_id',
+        'nationality_id',
         'cost',
         'currency_id',
         'en_notes',
@@ -22,6 +22,15 @@ class Visa extends Model
     public function country()
     {
         return $this->belongsTo(Country::class,'country_id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Visa_type::class,'visa_type_id');
+    }
+    public function nationality()
+    {
+        return $this->belongsTo(Nationality::class,'nationality_id');
     }
     public function currency()
     {

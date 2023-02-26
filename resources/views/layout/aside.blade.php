@@ -144,6 +144,7 @@
                                 <span class="menu-title">Tags</span>
                             </a>
                         </div>
+
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('features.index') }}">
                                 <span class="menu-bullet">
@@ -502,7 +503,24 @@
         <span class="menu-title">Visa</span>
         <span class="menu-arrow"></span>
     </span>
+
     <div class="menu-sub menu-sub-accordion">
+        <div class="menu-item">
+            <a class="menu-link" href="{{ route('nationalities.index') }}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Nationalities</span>
+            </a>
+        </div>
+        <div class="menu-item">
+            <a class="menu-link" href="{{ route('visaType.index') }}">
+                <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Visa Type</span>
+            </a>
+        </div>
         <div class="menu-item">
             <a class="menu-link" href="{{ route('countries.index') }}">
                 <span class="menu-bullet">

@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('visas', function (Blueprint $table) {
             $table->id();
-            $table->string('visa_trpe_enname', 250)->nullable();
-            $table->string('visa_trpe_arname', 250)->nullable();
+            $table->unsignedBigInteger('visa_type_id')->nullable();
+            $table->foreign('visa_type_id')->references('id')->on('visa_types');
             $table->unsignedBigInteger('country_id')->nullable();
             $table->foreign('country_id')->references('id')->on('countries');
+            $table->unsignedBigInteger('nationality_id')->nullable();
+            $table->foreign('nationality_id')->references('id')->on('nationalities');
             $table->double('cost',10,2)->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->foreign('currency_id')->references('id')->on('currencies');

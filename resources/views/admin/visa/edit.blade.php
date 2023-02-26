@@ -65,7 +65,6 @@
                                         <!--begin::Input group-->
 
                                         <!--end::Input-->
-
                                         <div class="d-flex flex-wrap gap-5">
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
@@ -84,40 +83,52 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
                                         </div>
-
-
-
-
-
-
-
                                         <div class="d-flex flex-wrap gap-5">
-                                            <!--begin::Input group-->
-                                            <div class="fv-row w-100 flex-md-root">
-                                                <label class="required form-label">Visa type en name</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input required type="text"
-                                                    name="visa_trpe_enname" class="form-control mb-2"
-                                                    placeholder="visa_trpe_enname" value="{{ $row->visa_trpe_enname }}"  />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
-
                                              <!--begin::Input group-->
                                              <div class="fv-row w-100 flex-md-root">
-                                                <label class="required form-label">Visa type ar name</label>
+                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                    <option value="">Select Visa Type</option>
+                                                    {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
+                                                </label>
                                                 <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input required type="text"
-                                                    name="visa_trpe_arname" class="form-control mb-2"
-                                                    placeholder="visa_trpe_arname" value="{{ $row->visa_trpe_arname }}"  />
-                                                <!--end::Input-->
+                                                <select required class="form-select form-select-solid "
+                                                    data-control="select2" data-placeholder="Select an option" required
+                                                    data-show-subtext="true" data-live-search="true" name="visa_type_id" >
+                                                    <option value=""></option>
+                                                    @foreach ($types as $type)
+                                                        <option value="{{ $type->id }}" {{ $row->visa_type_id == $type->id ? 'selected' : '' }} >{{ $type->en_type }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                            <!--end::Input group-->
+
+
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                    <option value="">Select nationality</option>
+                                                    {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
+                                                </label>
+                                                <!--end::Label-->
+                                                <select required class="form-select form-select-solid "
+                                                    data-control="select2" data-placeholder="Select an option" required
+                                                    data-show-subtext="true" data-live-search="true" name="nationality_id" >
+                                                    <option value=""></option>
+                                                    @foreach ($nationalities as $nationality)
+                                                        <option value="{{ $nationality->id }}" {{ $row->nationality_id == $nationality->id ? 'selected' : '' }} >{{ $nationality->en_nationality }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
+
+
+
+
+
+
+
+
 
                                         <div class="d-flex flex-wrap gap-5">
                                            <!--begin::Input group-->
@@ -135,7 +146,7 @@
                                         </div>
 
  <!--end::Input group-->
- <div class="d-flex flex-wrap gap-5">
+ {{-- <div class="d-flex flex-wrap gap-5">
  <div class="fv-row w-100 flex-md-root">
     <label class="fs-6 fw-bold form-label mt-3">
         <option value="">Select Currency Class..</option>
@@ -150,7 +161,7 @@
         @endforeach
     </select>
  </div>
- </div>
+ </div> --}}
 
  <div class="d-flex flex-wrap gap-5">
     <div class="fv-row w-100 flex-md-root">

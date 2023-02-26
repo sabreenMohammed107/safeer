@@ -116,7 +116,7 @@
                 <div class="ms-5">
                     <!--begin::Title-->
                     <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
-                    data-kt-ecommerce-category-filter="category_name" >{{ $row->visa_trpe_enname ?? '' }}</a>
+                    data-kt-ecommerce-category-filter="category_name" >{{ $row->type->en_type ?? '' }}</a>
                     <!--end::Title-->
                 </div>
             </div>
@@ -124,7 +124,7 @@
 
         <td class="text-end pe-0" data-order="15">
             <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
-            <span class="fw-bolder ms-3">{{ $row->visa_trpe_arname ?? '' }}</span>
+            <span class="fw-bolder ms-3">{{ $row->type->ar_type ?? '' }}</span>
         </td>
         <!--end::Qty=-->
         <!--begin::Price=-->
