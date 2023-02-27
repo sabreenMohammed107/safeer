@@ -299,7 +299,7 @@ class BookingController extends Controller
                     $TourElem->tour_name = $refTour->en_name;
                     $TourElem->tour_banner = $refTour->banner;
                     $TourElem->tour_type = ($refTour->type->id == 1) ? 0 : 1;
-                    $TourElem->tour_cost = ((float) $request->tour_total_cost[$i]); // Before Tax
+                    $TourElem->total_cost = ((float) $request->tour_total_cost[$i]); // Before Tax
                     $TourElem->tour_date = $request->tour_date[$i];
                     $TourElem->adults_count = (int) $request->tour_adults_count[$i];
                     $TourElem->children_count = (int) $request->tour_children_count[$i];
@@ -387,7 +387,7 @@ class BookingController extends Controller
     public function SuccessOrder(int $id)
     {
         $order = Orders::find($id);
-        return $order->order_details;
+        // return $order->order_details[1]->tours_details[0];
         $Cost = 0;
         foreach ($order->order_details as $index => $item) {
             if($item->detail_type == 0) // Room
