@@ -215,7 +215,7 @@ if(isset($arrayData['result'])){
                                 @foreach ($Hotel->features as $feature)
                                 @if ($feature->feature_category_id == $category->id)
                                 <div class="include-1">
-                                    <img src="{{asset(" /website_assets/images/tour-details/included/$feature->icon")}}"
+                                    <img src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
                                     alt="">
                                     <span>{{$feature->en_feature}}</span>
                                 </div>
