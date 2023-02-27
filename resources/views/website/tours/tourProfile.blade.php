@@ -276,7 +276,7 @@
                                             @foreach ($Tour->features as $feature)
                                                 @if ($feature->feature_category_id == $category->id)
                                                     <div class="include-1">
-                                                        <img width="30" src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
+                                                        <img width="20" src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
                                                             alt="">
 
                                                         <span>{{ $feature->en_feature }}</span>
