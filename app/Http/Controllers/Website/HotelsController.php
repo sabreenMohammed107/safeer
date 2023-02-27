@@ -372,7 +372,7 @@ class HotelsController extends Controller
         $Rev->hotel_id = $request->hotel_id;
         $Rev->review_date = now();
         $Rev->active = 1;
-        $Rev->tour_id = 1; //temp
+        // $Rev->tour_id = 1; //temp
 
         $Rev->save();
 

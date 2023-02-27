@@ -501,11 +501,11 @@
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="{{ url(' /hotels/review/add') }}" method="POST">
+                        <form action="{{ url('/tours/review/add') }}" method="POST">
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">add comment </h5>
-                                <input type="hidden" name="hotel_id" value="{{ $Tour->id }}" />
+                                <input type="hidden" name="tour_id" value="{{ $Tour->id }}" />
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>

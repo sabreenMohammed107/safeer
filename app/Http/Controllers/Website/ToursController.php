@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Country;
 use App\Models\Favorite_hotels_tour;
 use App\Models\Gallery;
+use App\Models\Review;
 use App\Models\Tour;
 use App\Models\Tour_type;
 use Illuminate\Http\Request;
@@ -223,4 +224,21 @@ class ToursController extends Controller
             return redirect("/safer/login");
         }
     }
+
+
+    public function add_review(Request $request)
+    {
+        $Rev = new Review();
+        $Rev->review_text = $request->review_text;
+        $Rev->review_stars = $request->rate_val;
+        $Rev->tour_id = $request->tour_id;
+        $Rev->review_date = now();
+        $Rev->active = 1;
+        // $Rev->tour_id = 1; //temp
+
+        $Rev->save();
+
+        return redirect()->back();
+    }
+
 }

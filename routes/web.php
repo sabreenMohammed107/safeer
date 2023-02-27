@@ -85,7 +85,7 @@ Route::get("/favourite/{id}", [HotelsController::class, 'favourite']);
 //removeFavourite
 Route::get("/removeFavourite/{id}", [HotelsController::class, 'removeFavourite']);
 Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
-Route::post("/hotels/review/{id}", [HotelsController::class, 'add_review']);
+Route::post("/hotels/review/add", [HotelsController::class, 'add_review']);
 Route::get('/fetch-hotel-filter',  [HotelsController::class, 'fetch_data'])->name('fetch-hotel-filter');
 //new Routes 23-11
 Route::get("/about", [ContentController::class, 'about']);
@@ -110,6 +110,8 @@ Route::post("/bookTours", [ToursController::class, 'bookTours']);
 Route::get("/removeFavouriteTours/{id}", [ToursController::class, 'removeFavourite']);
 //favouriteTours
 Route::get("/favouriteTours/{id}", [ToursController::class, 'favourite']);
+Route::post("/tours/review/add", [ToursController::class, 'add_review']);
+
 //transfer
 Route::get("/transfers", [SiteTransferController::class, 'all_transfer']);
 Route::post("/transfers", [SiteTransferController::class, 'all_transfer']);
