@@ -106,7 +106,7 @@
             <div class="row mx-0">
                 <div class="col-md-6 col-xl-4 col-sm-12 ">
                     <label for=""> visa request country </label>
-                    <select required class="form-select form-select-solid dynamic"
+                    <select  class="form-select form-select-solid dynamic"
                                                     data-control="select2" data-placeholder="Select an option" required
                                                     data-show-subtext="true" data-live-search="true" id="country"
                                                     data-dependent="sub" name="country[0]">
@@ -220,7 +220,7 @@
                 <div class="row mx-0">
                 <div class="col-md-6 col-xl-4 col-sm-12 ">
                     <label for=""> visa request country </label>
-                    <select required class="form-select form-select-solid dynamic"
+                    <select  class="form-select form-select-solid dynamic"
                                                                     data-control="select2" data-placeholder="Select an option" required
                                                                     data-show-subtext="true" data-live-search="true" id="country"
                                                                     data-dependent="sub" name="country[` + counter + `]" onchange="fetch(this)">

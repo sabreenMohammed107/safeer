@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use App\Models\Company;
 use App\Models\Country;
 use App\Models\Nationality;
+use App\Models\Visa;
 use App\Models\Visa_type;
 use Illuminate\Http\Request;
 
@@ -36,7 +36,10 @@ class VisaDataController extends Controller
         $select = $request->get('select');
         $value = $request->get('value');
 
-        $data = Visa_type::where('country_id', $value)->get();
+        // $data = Visa_type::where('country_id', $value)->get();
+
+        $visa_type_ids = Visa::pluck('visa_type_id');
+        $data = Visa_type::whereIn('id', $visa_type_ids)->where('country_id', $value)->get();
         $output = '<option value="">Select Visa Type</option>';
         foreach ($data as $row) {
             $output .= '<option value="' . $row->id . '">' . $row->en_type . '</option>';
@@ -47,16 +50,18 @@ class VisaDataController extends Controller
     public function bookVisas(Request $request)
     {
         $Visas = [];
-        for ($i=0; $i < count($request->country); $i++) {
+        for ($i = 0; $i < count($request->country); $i++) {
+            $visObj = Visa::where('visa_type_id', $request->visa_type_id[$i])->where('nationality_id', $request->nation[$i])->first();
             $elem = [
-                'country_id' => $request->country[$i],
-                'visa_type_id' => $request->visa_type_id[$i],
-                'nationality_id' => $request->nation[$i],
                 'name' => $request->name[$i],
                 'phone' => $request->phone[$i],
                 'email' => $request->email[$i],
             ];
-            array_push($Visas, $elem);
+            if ($visObj) {
+                $elem['visa_id'] = $visObj->id;
+                array_push($Visas, $elem);
+            }
+
         }
 
         if (!session()->get("SiteUser")) {
