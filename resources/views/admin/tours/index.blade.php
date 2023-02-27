@@ -85,7 +85,8 @@
                                 </th>
                                 <th class="min-w-150px">image</th>
                                 <th class="min-w-250px">city</th>
-                                <th class="min-w-150px">Overview</th>
+                                <th class="min-w-150px">En Name</th>
+                                <th class="min-w-150px">Ar Name</th>
  <th class="min-w-150px text-end">Active</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
@@ -135,7 +136,18 @@
                                             <input type="hidden" name="" id=""
                                                 data-kt-ecommerce-category-filter="category_id" value="{{ $row->id }}">
 
-                                            <span class="symbol-label">{{ $row->en_overview }}</span>
+                                            <span class="symbol-label">{{ $row->en_name }}</span>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+
+                                        <div class="d-flex">
+
+
+                                            <span class="symbol-label">{{ $row->ar_name }}</span>
 
                                         </div>
 
