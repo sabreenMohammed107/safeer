@@ -288,6 +288,31 @@
                                         </div>
 
                                         <!--begin::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="fv-row w-100 flex-md-root">
+                                            <!--begin::Label-->
+                                            <label class="form-label">En details</label>
+                                            <!--end::Label-->
+                                            <!--begin::Editor-->
+                                            <textarea class="tox-target" id="kt_docs_tinymce_basic3" name="en_tours_details"
+                                                placeholder="Type  En details"></textarea>
+                                            <!--end::Editor-->
+
+                                        </div>
+                                        <!--end::Input group-->
+                                        <!--begin::Input group-->
+                                        <div class="fv-row w-100 flex-md-root">
+                                            <!--begin::Label-->
+                                            <label class="form-label">Ar details</label>
+                                            <!--end::Label-->
+                                            <!--begin::Editor-->
+                                            <textarea class="tox-target" id="kt_docs_tinymce_basic4" name="ar_tours_details"
+                                                placeholder="Type  Ar details"></textarea>
+                                            <!--end::Editor-->
+
+                                        </div>
+
+                                        <!--begin::Input group-->
                                         <div>
                                             <!--begin::Label-->
                                             <label class="form-label">En brief</label>
