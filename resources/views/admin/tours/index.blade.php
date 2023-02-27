@@ -84,7 +84,7 @@
                                     </div>
                                 </th>
                                 <th class="min-w-150px">image</th>
-                                <th class="min-w-250px">city</th>
+                                <th class="min-w-150px">city</th>
                                 <th class="min-w-150px">En Name</th>
                                 <th class="min-w-150px">Ar Name</th>
  <th class="min-w-150px text-end">Active</th>
