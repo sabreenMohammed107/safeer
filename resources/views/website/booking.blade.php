@@ -13,10 +13,11 @@
     <x-website.header.general title="User Cart" :breadcrumb="$BreadCrumb" current="All your pre-booked rooms" />
 @endsection
 @section('content')
-@if ($RoomCost || count($ToursCost))
+@if ($RoomCost || count($ToursCost) || $TransferCost)
 @php
     $TotalCost = 0;
     $TotalToursFees = 0;
+    $TotalTransferCost = 0;
 @endphp
 @if ($RoomCost)
 @php
@@ -58,6 +59,11 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 @if (count($ToursCost) > 0)
     @php
         $TotalToursFees = 0;
+    @endphp
+@endif
+@if ($TransferCost)
+    @php
+        $TotalTransferCost = $TransferCost->capacity * $TransferCost->person_price;
     @endphp
 @endif
 <!-- passenger details -->
@@ -150,7 +156,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <input type="hidden" name="room_view" value="{{$RoomCost->en_room_type}}" />
                         <input type="hidden" name="food_bev_type" value="{{$RoomCost->food_bev_type}}" />
                         <input type="hidden" name="room_cost" value="{{$Cost}}" />
-                        <input type="hidden" name="total_cost" value="{{$TotalCost*1.14}}" />
+                        <input type="hidden" name="total_cost" value="{{$TotalCost}}" />
                         <input type="hidden" name="user_id" value="{{$RoomCost->user_id}}" />
                         <input type="hidden" name="child_free_age_from" value="{{$RoomCost->child_free_age_from}}" />
                         <input type="hidden" name="child_free_age_to" value="{{$RoomCost->child_free_age_to}}" />
@@ -250,7 +256,8 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
             </div>
             @endforeach
             @endif
-            {{-- <h4 class="bg-info px-3 py-1 text-white">Transportation Reservation Details</h4>
+            @if ($TransferCost)
+            <h4 class="bg-info px-3 py-1 text-white">Transportation Reservation Details</h4>
 
             <div class="passenger_info">
                 @csrf
@@ -258,21 +265,21 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <h6 class="fw-bold">Vehicle Details:</h6>
                     <div class="col-md-4 mb-3">
                         <div class="img-holder"
-                        style="background-image: url(https://www.rushlane.com/wp-content/uploads/2020/08/maruti-car-cancellation-fees-booking-2-1200x900.jpg)"
+                        style="background-image: url({{ asset('uploads/carModels') }}/{{ $TransferCost->image }})"
                         ></div>
                     </div>
                     <div class="col-md-8">
-                        <p class="mb-0">Car Model: <strong>c-class 180</strong></p>
-                        <p class="mb-0">Car Capacity: <strong>5</strong></p>
-                        <p class="mb-0">Class Type: <strong>Luxury</strong></p>
-                        <p class="mb-0">Starting point (from): <strong>Egyptian International Airport - Exit 1</strong></p>
-                        <p class="mb-0">Route Destination (to): <strong>El-Mokattam, Cairo</strong></p>
-                        <p class="mb-0">Fees/Person: <strong>20$</strong></p>
+                        <p class="mb-0">Car Model: <strong>{{$TransferCost->model_enname}}</strong></p>
+                        <p class="mb-0">Car Capacity: <strong>{{$TransferCost->capacity}}</strong></p>
+                        <p class="mb-0">Class Type: <strong>{{$TransferCost->class_enname}}</strong></p>
+                        <p class="mb-0">Starting point (from): <strong>{{$TransferCost->from_location_enname}}</strong></p>
+                        <p class="mb-0">Route Destination (to): <strong>{{$TransferCost->to_location_enname}}</strong></p>
+                        <p class="mb-0">Fees/Person: <strong>{{$TransferCost->person_price}}$</strong></p>
                     </div>
 
                     <h6 class="fw-bold">Reservation Holder Details:</h6>
                     <div class="form-check ps-5 my-2">
-                        <input class="form-check-input" type="checkbox" value="" id="transHolderFlag">
+                        <input class="form-check-input" type="checkbox" name="default_holder" id="transHolderFlag">
                         <label class="form-check-label ps-2" for="transHolderFlag">
                             I am not the holder
                         </label>
@@ -281,41 +288,52 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Salutation
                             </label>
-                            <input type="text" name="" required class="form-control" placeholder="MR" aria-label="First name">
+                            <input type="text" name="transferSal" class="form-control is_holder" placeholder="MR" aria-label="First name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Name</label>
 
-                            <input type="text" name="" required class="form-control" placeholder="Name">
+                            <input type="text" name="transferName" class="form-control is_holder" placeholder="Name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Mobile</label>
 
-                            <input type="text" name="" required class="form-control" placeholder="Mobile">
+                            <input type="text" name="transferMobile" class="form-control is_holder" placeholder="Mobile">
                         </div>
                         <div class="col-sm-12">
                             <label  class="form-label">Email</label>
 
-                            <input type="email"  class="form-control" placeholder="Email">
+                            <input type="email" name="transferEmail"  class="form-control is_holder" placeholder="Email">
                         </div>
                         <div class="col-sm-12">
                             <label  class="form-label">Job</label>
 
-                            <input type="text"  class="form-control" placeholder="Job">
+                            <input type="text" name="transferJob" class="form-control is_holder" placeholder="Job">
                         </div>
 
                     </div>
                     <div class="row">
                         <div class="col-12">
                         <label  class="form-label">notes</label>
-                        <textarea class="form-control"  name="" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control"  name="transferNotes" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
+                        <input type="hidden" name="transfer_id" value="{{$TransferCost->transfer_id}}" />
+                        <input type="hidden" name="transfer_date" value="{{$TransferCost->transfer_date}}" />
+                        <input type="hidden" name="car_model" value="{{$TransferCost->model_enname}}" />
+                        <input type="hidden" name="car_class" value="{{$TransferCost->class_enname}}" />
+                        <input type="hidden" name="from_loc" value="{{$TransferCost->from_location_enname}}" />
+                        <input type="hidden" name="to_loc" value="{{$TransferCost->to_location_enname}}" />
+                        <input type="hidden" name="capacity" value="{{$TransferCost->capacity}}" />
+                        <input type="hidden" name="fees" value="{{$TransferCost->person_price}}" />
+                        <input type="hidden" name="image" value="{{$TransferCost->image}}" />
                     </div>
                 </div>
 
 
             </div>
-            <h4 class="bg-info px-3 py-1 text-white">Visa Applications Details</h4>
+            @endif
+
+            {{-- <h4 class="bg-info px-3 py-1 text-white">Visa Applications Details</h4>
 
             <h6 class="bg-light-info px-3 py-1">Abdallah Ahmed Ali Abouelabbas</h6>
             <div class="passenger_info">
@@ -518,7 +536,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             </p>
                             <br>
                             <p class="mb-0 pb-0">
-                                {{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X Paid Childs  <span class="float-end text-end">2 X ${{$TourRec->tour_person_cost}} <br> <span class="fw-bold text-end">${{($TotalPaidPersons[$idx] - $TourRec->adults_count) * $TourRec->tour_person_cost}}</span></span><br>
+                                {{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X Paid Childs  <span class="float-end text-end">{{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X ${{$TourRec->tour_person_cost}} <br> <span class="fw-bold text-end">${{($TotalPaidPersons[$idx] - $TourRec->adults_count) * $TourRec->tour_person_cost}}</span></span><br>
                             </p>
 
                             <br>
@@ -539,47 +557,47 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                     <div style="border-top: 1px solid rgb(184, 184, 184)" class="mb-2"></div>
                 @endif
-                {{-- <p class="receipt-title">Transportation Receipt</p>
+                @if ($TransferCost)
+                <p class="receipt-title">Transportation Receipt</p>
                 <div class="booking_info_card">
-                    <div class="text-end mb-3"><a class="del-hotel" href="{{url("/car")}}"><i class="fa-solid fa-trash"></i></a></div>
+                    <div class="text-end mb-3"><a class="del-hotel" href="{{url("/cart/$TransferCost->id")}}"><i class="fa-solid fa-trash"></i></a></div>
                     <div class="remain_info mb-3">
                         <h5>Vehicle</h5>
 
                         <p class="mb-0 pb-0">
-                            From: <span class="float-end"> Egyptian International Airport</span>
+                            From: <span class="float-end"> {{$TransferCost->from_location_enname}}</span>
                         </p>
                         <br/>
                         <p class="mb-0 pb-0">
-                            To: <span class="float-end"> El-Mokattam, Cairo</span>
+                            To: <span class="float-end"> {{$TransferCost->to_location_enname}}</span>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
-                            Price/Seat <span class="float-end">$20</span><br>
+                            Price/Seat <span class="float-end">${{$TransferCost->person_price}}</span><br>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
-                            Capacity: <span class="float-end"> 6</span>
-                        </p>
-                        <br>
-                        <p class="mb-0 pb-0">
-                            Total Fees  <span class="float-end text-end">6 X $20 <br> <span class="fw-bold">$120</span></span><br>
+                            Capacity: <span class="float-end"> {{$TransferCost->capacity}}</span>
                         </p>
 
                         <br>
                         <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                            <span class="float-end text-end fw-bold">$120</span><br>
+                            Total Fees<span class="float-end text-end fw-bold">{{$TransferCost->capacity}} X ${{number_format((float) $TransferCost->person_price, 2, '.', '')}}
+                                <br> <span class="fw-bold">${{number_format($TransferCost->person_price, 2, '.', '') * $TransferCost->capacity}}</span></span><br>
                         </p>
                         <br>
                         <div class="grand_total">
                             <h6> Sub-total</h6>
-                            <span class="h6"> 120$</span></span>
+                            <span class="h6"> ${{number_format((float) ($TransferCost->person_price * $TransferCost->capacity), 2, '.', '')}}</span></span>
                         </div>
 
                         <br>
                     </div>
 
                 </div>
-                <p class="receipt-title">Visa Application Receipt</p>
+                @endif
+
+                {{-- <p class="receipt-title">Visa Application Receipt</p>
                 <div class="booking_info_card">
                     <div class="text-end mb-3"><a class="del-hotel" href="{{url("/ca")}}"><i class="fa-solid fa-trash"></i></a></div>
                     <div class="remain_info mb-3">
@@ -605,17 +623,17 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                 <p class="receipt-title">Total Fees</p>
                 <div class="remain_info">
                     <p class="mb-0 pb-0">
-                        Before Tax <span class="float-end text-end">${{$TotalCost + $TotalToursFees}} </span><br>
+                        Before Tax <span class="float-end text-end">${{$TotalCost + $TotalToursFees + $TotalTransferCost}} </span><br>
                     </p>
                     <br>
                     <p class="mb-0 pb-0">
-                        VAT (14%) <span class="float-end text-end">${{$TotalCost + $TotalToursFees}} X 0.14 <br>  <span class="fw-bold">${{($TotalCost + $TotalToursFees)*0.14}}</span></span><br>
+                        VAT (14%) <span class="float-end text-end">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost),2,'.','')}} X 0.14 <br>  <span class="fw-bold">${{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost)*1.14,2,'.','')}}</span></span><br>
                     </p>
                 <br/>
                 </div>
                 <div class="grand_total final">
                     <h5> grand total</h5>
-                    <span> {{number_format((float) ($TotalCost + $TotalToursFees)*1.14, 2, '.', '')}} <span>$</span></span>
+                    <span> <span>$</span>{{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost)*1.14,2,'.','')}} </span>
                 </div>
              </div>
         </div>
@@ -708,6 +726,11 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 <script>
     $("#transHolderFlag").change(function(){
         $(".trans-holder").fadeToggle();
+        if ($(".is_holder").attr('required')) {
+            $(".is_holder").removeAttr('required');
+        } else {
+            $(".is_holder").attr('required', 6);
+        }
     });
 </script>
 @endsection

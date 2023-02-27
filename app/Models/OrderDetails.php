@@ -41,6 +41,8 @@ class OrderDetails extends Model
         'holder_salutation',
         'holder_name',
         'holder_mobile',
+        'holder_email',
+        'holder_job',
         'notes',
         'detail_type',
         // 'room_type',
@@ -106,5 +108,19 @@ class OrderDetails extends Model
 
     public function hotel(){
         return $this->belongsTo(Hotel::class,'hotel_id');
+    }
+
+    public function room_details()
+    {
+        return $this->hasMany(RoomDetails::class, 'order_details_id');
+    }
+
+    public function tours_details()
+    {
+        return $this->hasMany(TourDetails::class, 'order_details_id');
+    }
+    public function transfer_details()
+    {
+        return $this->hasMany(TransferDetails::class, 'order_details_id');
     }
 }

@@ -459,7 +459,7 @@ if(isset($arrayData['result'])){
         </div>
         <div class="rooms_avaliable container">
             <h5> available rooms
-                @if(session("hasCart"))
+                @if(!$HasRoom)
                 <span class="text-danger fs-6">*You have an existing Room in Your Cart</span>
                 @endif
             </h5>
@@ -513,7 +513,7 @@ if(isset($arrayData['result'])){
                         </div>
 
                         <div class="col-xl-2 col-sm-12 col-md-6 p-0">
-                            @if(!session("hasCart"))
+                            @if(!$HasRoom)
                             <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/1")}}">Book</a> </button>
                             @else
                             <button class="btn rooms_button"><a href="{{url("/safer/room/$Room->id/book/1/exchange")}}">Replace Cart</a> </button>
@@ -568,7 +568,7 @@ if(isset($arrayData['result'])){
                         </div>
 
                         <div class="col-xl-2 col-sm-12 col-md-6 p-0">
-                            @if(!session("hasCart"))
+                            @if(!$HasRoom)
                             <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/2")}}">Book</a> </button>
                             @else
                             <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/2/exchange")}}">Replace Cart</a> </button>
@@ -622,7 +622,7 @@ if(isset($arrayData['result'])){
                         </div>
 
                         <div class="col-xl-2 col-sm-12 col-md-6 p-0">
-                        @if(!session("hasCart"))
+                        @if(!$HasRoom)
                         <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/3")}}">Book</a> </button>
                         @else
                         <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/3/exchange")}}">Replace Cart</a> </button>

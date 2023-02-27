@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Car_class;
 use App\Models\Car_model;
 use App\Models\City;
@@ -31,9 +32,9 @@ class SiteTransferController extends Controller
         $CarClass = Car_class::all();
 
         $TransfersRecommended = Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id')->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
+
         $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
         $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
-
         return view("website.transfer.transfer", [
             "Company" => $Company,
             "pickups" => $pickups,
@@ -136,19 +137,35 @@ class SiteTransferController extends Controller
 
     public function bookTransfer(Request $request)
     {
+        if(!session()->get("SiteUser")){
+            $sessionTransferBook=[
+                'transfer_id' => $request->transfer_id ,
+                'transfer_date'=> $request->transfer_date ,
+                'transfer_adult' => $request->transfer_adult,
+                'itemType' => 2, // Transfer Type Option
+            ];
+            session(['cartItem' => $sessionTransferBook]);
 
-        $sessionTransferBook=[
+            \Log::info(\Session::get('sessionTransferBook'));
 
-             'transfer_id' => $request->transfer_id ,
-        'transfer_date'=> $request->transfer_date ,
-        'transfer_adult' => $request->transfer_adult,
+            return redirect()->route("siteLogin");
+        }
 
-    ];
-        session(['sessionTransferBook' => $sessionTransferBook]);
+        $CartItem = Cart::where([["user_id", '=', session()->get("SiteUser")["ID"]], ["item_type", '=', 2]])->first();
 
-        \Log::info(\Session::get('sessionTransferBook'));
+        if ($CartItem) { // Has Transfer ?
+            return redirect()->to("/transfers")->with("session-warning", "Can't Purchase multiple transfer items in one time");
+        }
 
-return \Session::get('sessionTransferBook');
+        $CartItem = new Cart();
+        $CartItem->user_id = session()->get("SiteUser")["ID"];
+        $CartItem->transfer_id = $request->transfer_id;
+        $CartItem->transfer_date = date_format(date_create($request->transfer_date), "Y-m-d");
+        $CartItem->item_type = 2; // -> Transfer
+        $CartItem->save();
+        session()->put("hasCart", 1);
+
+        return redirect()->to("/cart")->with("session-success", "Transfer is added in your cart successfully");
     }
 }
 

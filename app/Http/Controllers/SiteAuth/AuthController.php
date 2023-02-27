@@ -18,6 +18,7 @@ abstract class ItemType
 {
     const ROOM = 0;
     const TOUR = 1;
+    const TRANSFER = 2;
 }
 
 class AuthController extends Controller
@@ -97,13 +98,20 @@ class AuthController extends Controller
                 }
                 $CartItem->item_type = ItemType::TOUR;
                 $CartItem->save();
+            }else if(session()->get("cartItem")["itemType"] == ItemType::TRANSFER){
+                $CartItem = new Cart();
+                $CartItem->user_id = session()->get("SiteUser")["ID"];
+                $CartItem->transfer_id = session()->get("cartItem")["transfer_id"];
+                $CartItem->transfer_date = date_format(date_create(session()->get("cartItem")["transfer_date"]), "Y-m-d");
+                $CartItem->item_type = 2; // -> Transfer
+                $CartItem->save();
             }
 
             $redirect_url = '/cart';
             session()->forget("cartItem");
             session()->put("hasCart", 1);
 
-            return redirect()->to($redirect_url)->with("session-success", "Room is added in your cart successfully");
+            return redirect()->to($redirect_url)->with("session-success", " Your cart is updated successfully");
         }
 
         if (session()->get("AddFavHotel")) {

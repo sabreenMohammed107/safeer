@@ -120,6 +120,7 @@ Route::post("/transfers/retrieve", [SiteTransferController::class, 'fetch']);
 Route::post("/bookTransfer", [SiteTransferController::class, 'bookTransfer']);
 //visa
 Route::get("/visa", [VisaDataController::class, 'all_visa']);
+Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas']);
 //dynamicvisatype.fetch
 Route::post('dynamicvisatype/fetch',[VisaDataController::class,'fetchCat'] )->name('dynamicvisatype.fetch');
 
@@ -176,6 +177,7 @@ Route::middleware(['is-site-auth'])->group(function () {
     Route::get("/cart", [BookingController::class, 'Cart'])->name("get_cart");
     Route::post("/Book", [BookingController::class, 'MakeOrder']);
     Route::get("/cart/{id}", [BookingController::class, 'DeleteCartItem'])->name("deleteCartItem");
+    Route::get("/Safer/OrderPlacement/{id}", [BookingController::class, 'SuccessOrder'])->name("successOrder");
 
 
 });

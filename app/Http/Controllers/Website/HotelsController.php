@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Country;
@@ -26,6 +27,8 @@ class HotelsController extends Controller
         // return $RoomCost->hotelRooms->hotel;
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => "Home"], ["url" => "/hotels", "name" => "Hotels"]];
+
+        $HasRoomCart = Cart::where([["user_id",'=',session()->get("SiteUser")["ID"]],["item_type",'=',0]])->count();
 
         $HotelTourGallery = Gallery::where([["hotel_id", '=', $id], ["active", '=', 1]])->take(4)->get();
         // return $HotelTourGallery;
@@ -57,6 +60,7 @@ class HotelsController extends Controller
             "HotelTourGallery" => $HotelTourGallery,
             "RoomCosts" => $RoomCosts,
             "Countries" => $Countries,
+            'HasRoom' => $HasRoomCart,
             "Cities" => $Cities,
         ]);
     }

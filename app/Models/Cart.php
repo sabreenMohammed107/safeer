@@ -25,6 +25,8 @@ class Cart extends Model
         'item_type',
         'tour_id',
         'tour_date',
+        'transfer_id',
+        'transfer_date',
 
     ];
 }

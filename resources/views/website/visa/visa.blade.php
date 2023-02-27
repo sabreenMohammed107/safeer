@@ -89,7 +89,8 @@
 @endsection
 @section('content')
 
-
+<form action="{{url("/Safer/BookVisa")}}" method="POST">
+    @csrf
     <section class="passenger_section container pt-5" id="passenger_section">
         <p class="receipt-title">Pickup Your Visa </p>
         <div class=" search_details_info passenger_info_details hotel_details mt-3 ">
@@ -97,7 +98,7 @@
             <!-- <button  onclick="removePassenger(this)">
               <i class="fa-solid fa-xmark"></i>
             </button> -->
-            <form data-category="1" >
+            {{-- <form data-category="1" > --}}
             <div class="passenger_info_title">
                 <h5> passenger </h5>
                 <!-- <span>1200 LE</span> -->
@@ -108,7 +109,7 @@
                     <select required class="form-select form-select-solid dynamic"
                                                     data-control="select2" data-placeholder="Select an option" required
                                                     data-show-subtext="true" data-live-search="true" id="country"
-                                                    data-dependent="sub">
+                                                    data-dependent="sub" name="country[0]">
                                                     <option value=""></option>
                                                     @foreach ($countries as $country)
                                                         <option value="{{ $country->id }}">{{ $country->en_country }}
@@ -118,15 +119,15 @@
                 </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for=""> Visa type </label>
-                    <select required class="form-select form-select-solid" name="visa_type_id"
+                    <select required class="form-select form-select-solid visa_type"
                     data-control="select2 sub2" data-placeholder="Select an option"
-                    data-show-subtext="true" data-live-search="true" id="sub">
+                    data-show-subtext="true" data-live-search="true" id="sub" name="visa_type_id[0]">
                     <option value="">select....</option>
                 </select>
                 </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for="">Nationality </label>
-                    <select class="form-select nationality" id="nationality" aria-label="Default select example">
+                    <select class="form-select nationality" id="nationality" aria-label="Default select example" name="nation[0]">
                         <option value="" disabled selected hidden>Choose...</option>
                         @foreach ($nationalities as $nationality)
                             <option value="{{ $nationality->id }}">{{ $nationality->en_nationality }}
@@ -137,17 +138,17 @@
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Name </label>
-                    <input type="text" name="name" placeholder="name" />
+                    <input type="text" name="name[0]" placeholder="name" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Mobile </label>
-                    <input type="tel" name="phone" placeholder="Mobile" />
+                    <input type="tel" name="phone[0]" placeholder="Mobile" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Email </label>
-                    <input type="email" name="email" placeholder="Email" />
+                    <input type="email" name="email[0]" placeholder="Email" />
                 </div>
 
                 <!-- <div class="col-sm-12 col-md-6 col-xl-4">
@@ -156,7 +157,7 @@
                -->
 
             </div>
-            </form>
+            {{-- </form> --}}
 
         </div>
     </section>
@@ -180,6 +181,7 @@
             </div>
         </div>
     </section>
+</form>
 @endsection
 @section('adds_js')
     {{-- <script src="{{ asset('/website_assets/js/hotel_filters.js') }}"></script> --}}
@@ -199,165 +201,203 @@
     <script>
 
         $(document).ready(function() {
+            var counter = 0;
 
-            var x = `
-        <div class=" search_details_info passenger_info_details hotel_details my-3">
-
- <button  onclick="removePassenger(this)">
-  <i class="fa-solid fa-xmark"></i>
-</button>
-<form data-category="">
-
-   <div class="passenger_info_title">
-      <h5> passenger </h5>
-      <!-- <span>1200 LE</span> -->
-  </div>
- <div class="row mx-0">
-  <div class="col-md-6 col-xl-4 col-sm-12 ">
-    <label for=""> visa request country </label>
-    <select required class="form-select form-select-solid dynamic"
-                                                    data-control="select2" data-placeholder="Select an option" required
-                                                    data-show-subtext="true" data-live-search="true" id="country"
-                                                    data-dependent="sub">
-                                                    <option value=""></option>
-                                                    @foreach ($countries as $country)
-                                                        <option value="{{ $country->id }}">{{ $country->en_country }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-  </div>
-  <div class="col-md-6 col-xl-4 col-sm-12">
-    <label for=""> Visa type  </label>
-    <select required class="form-select form-select-solid" name="visa_type_id"
-                                                    data-control="select2 sub2" data-placeholder="Select an option"
-                                                    data-show-subtext="true" data-live-search="true" id="sub">
-                                                    <option value="">select....</option>
-                                                </select>
-    </div>
-  <div class="col-md-6 col-xl-4 col-sm-12">
-    <label for="">Nationality </label>
-      <select class="form-select nationality"  id="nationality" aria-label="Default select example" >
-          <option value="" disabled selected hidden>Choose...</option>
-          @foreach ($nationalities as $nationality)
-                                                        <option value="{{ $nationality->id }}">{{ $nationality->en_nationality }}
-                                                        </option>
-                                                    @endforeach
-        </select>
-  </div>
-
-  <div class="col-sm-12 col-md-6 col-xl-4">
-     <label for="">Name  </label>
-     <input type="text" name="name" placeholder="name" />
-
-  </div>
-  <div class="col-sm-12 col-md-6 col-xl-4">
-      <label for="">Mobile  </label>
-      <input type="tel" name="phone" placeholder="Mobile" />
-
-   </div>
-   <div class="col-sm-12 col-md-6 col-xl-4">
-      <label for="">Email  </label>
-      <input type="email" name="email" placeholder="Email" />
-   </div>
-
-   <!-- <div class="col-sm-12 col-md-6 col-xl-4">
-     <a class="btn btn-primary" id="visaaa" >Add </a>
-   </div>
-   -->
-
- </div>
-</form>
-</div>
-
- `;
             $("#visaaa").click(function() {
+                counter++;
+                var x = `
+                        <div class=" search_details_info passenger_info_details hotel_details my-3">
 
+                <button  onclick="removePassenger(this)">
+                <i class="fa-solid fa-xmark"></i>
+                </button>
+
+
+                <div class="passenger_info_title">
+                    <h5> passenger </h5>
+                    <!-- <span>1200 LE</span> -->
+                </div>
+                <div class="row mx-0">
+                <div class="col-md-6 col-xl-4 col-sm-12 ">
+                    <label for=""> visa request country </label>
+                    <select required class="form-select form-select-solid dynamic"
+                                                                    data-control="select2" data-placeholder="Select an option" required
+                                                                    data-show-subtext="true" data-live-search="true" id="country"
+                                                                    data-dependent="sub" name="country[` + counter + `]" onchange="fetch(this)">
+                                                                    <option value=""></option>
+                                                                    @foreach ($countries as $country)
+                                                                        <option value="{{ $country->id }}">{{ $country->en_country }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                </div>
+                <div class="col-md-6 col-xl-4 col-sm-12">
+                    <label for=""> Visa type  </label>
+                    <select required class="form-select form-select-solid visa_type"
+                                                                    data-control="select2 sub2" data-placeholder="Select an option"
+                                                                    data-show-subtext="true" data-live-search="true" id="sub"
+                                                                    name="visa_type_id[` + counter + `]">
+                                                                    <option value="">select....</option>
+                                                                </select>
+                    </div>
+                <div class="col-md-6 col-xl-4 col-sm-12">
+                    <label for="">Nationality </label>
+                    <select class="form-select nationality"  id="nationality" aria-label="Default select example"
+                    name="nation[`+ counter +`]">
+                        <option value="" disabled selected hidden>Choose...</option>
+                        @foreach ($nationalities as $nationality)
+                                                                        <option value="{{ $nationality->id }}">{{ $nationality->en_nationality }}
+                                                                        </option>
+                                                                    @endforeach
+                        </select>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-xl-4">
+                    <label for="">Name  </label>
+                    <input type="text" name="name[` + counter + `]" placeholder="name" />
+
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-4">
+                    <label for="">Mobile  </label>
+                    <input type="tel" name="phone[` + counter + `]" placeholder="Mobile" />
+
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-4">
+                    <label for="">Email  </label>
+                    <input type="email" name="email[` + counter + `]" placeholder="Email" />
+                </div>
+
+                <!-- <div class="col-sm-12 col-md-6 col-xl-4">
+                    <a class="btn btn-primary" id="visaaa" >Add </a>
+                </div>
+                -->
+
+                </div>
+                </div>
+
+                `;
                 $('#passenger_section').append(x);
-
-                $('.dynamic').change(function() {
-
-if ($(this).val() != '') {
-    var select = $(this).attr("id");
-    var value = $(this).val();
-
-    var _token = $('input[name="_token"]').val();
-
-    $.ajax({
-        url: "{{ route('dynamicvisatype.fetch') }}",
-        method: "POST",
-        data: {
-            select: select,
-            value: value,
-            _token: _token
-        },
-        success: function(result) {
-
-            $("[name='visa_type_id']").html(result);
-        }
-
-    })
-}
-});
-
             });
+            // $('.dynamic').change(function() {
+            //     if ($(this).val() != '') {
+            //         var select = $(this).attr("id");
+            //         var value = $(this).val();
+
+            //         var _token = $('input[name="_token"]').val();
+            //         alert("First");
+            //         $.ajax({
+            //             url: "{{ route('dynamicvisatype.fetch') }}",
+            //             method: "POST",
+            //             data: {
+            //                 select: select,
+            //                 value: value,
+            //                 _token: _token
+            //             },
+            //             success: function(result) {
+
+            //                 $(this).parent().parent().find(".visa_type").html(result);
+            //             },
+            //             error: function(xhr, status, error) {
+            //                 var err = eval("(" + xhr.responseText + ")");
+            //                 alert(err.Message);
+            //             }
+
+            //         })
+            //     }
+            // });
+
+
 
 
             $('.dynamic').change(function() {
+                if ($(this).val() != '') {
+                    var select = $(this).attr("id");
+                    var value = $(this).val();
 
-if ($(this).val() != '') {
-    var select = $(this).attr("id");
-    var value = $(this).val();
+                    var trigger = $(this);
+                    var _token = $('input[name="_token"]').val();
+                    // alert("Second");
 
-    var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url: "{{ route('dynamicvisatype.fetch') }}",
+                        method: "POST",
+                        data: {
+                            select: select,
+                            value: value,
+                            _token: _token
+                        },
+                        success: function(result) {
+                            trigger.parent().parent().find(".visa_type").html(result);
+                        },
+                        error: function(xhr, status, error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            alert(err.Message);
+                        }
 
-    $.ajax({
-        url: "{{ route('dynamicvisatype.fetch') }}",
-        method: "POST",
-        data: {
-            select: select,
-            value: value,
-            _token: _token
-        },
-        success: function(result) {
-
-            $("[name='visa_type_id']").html(result);
-        }
-
-    })
-}
-});
-
-
-$("#addToCart").click(function() {
-//                 let forms = document.forms.length-1;
-//                 var index=forms;
-//       document.getElementById('numform').innerHTML = "Number of forms: " + forms;
-//       var passengers = [];
-//       var i;
-//       for (i = 0; i < index; i++) {
-//         var detail = {
-//                         total_item_price : parseFloat($(this).children('.total_item_price').text()),
-//                         total_after_discounts : parseFloat($(this).children('.total_after_discounts').text()),
-//                         vat_tax_value : parseFloat($(this).children('.vat_tax_value').text()),
-//                         comm_industr_tax : parseFloat($(this).children('.comm_industr_tax').text()),
-//                         net_value : parseFloat($(this).find('.net_value').text()),
-//                         item_discount : parseFloat($(this).find('.item_discount').val()),
-//                         is_stored : $('input[type=radio][name=optionsRadios'+row_num+']:checked').val(),
-//                         item_text : item_arabic_name,
-//                         item_id : item_id,
-//                         item_price : $(this).find('.item_price').val(),
-//                         item_quantity : $(this).find('.item_quantity').val(),
-//                         tax_exemption : tax_exemption,
-//                     }
-//                     passengers.push(passenger);
-// }
-// const data = [];
-//   for(let i=0; i<form.length; i++) {
-//     const elements = form[i].elements;
-//     data.push({form: form[i].getAttribute('data-category'), inputData: {}});
-
-//   };
+                    })
+                }
+            });
 
         });
-    });
+
+        function fetch(elem){
+                if ($(elem).val() != '') {
+                    var select = $(elem).attr("id");
+                    var value = $(elem).val();
+
+                    var trigger = $(elem);
+                    var _token = $('input[name="_token"]').val();
+                    // alert("Second");
+
+                    $.ajax({
+                        url: "{{ route('dynamicvisatype.fetch') }}",
+                        method: "POST",
+                        data: {
+                            select: select,
+                            value: value,
+                            _token: _token
+                        },
+                        success: function(result) {
+                            trigger.parent().parent().find(".visa_type").html(result);
+                        },
+                        error: function(xhr, status, error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            alert(err.Message);
+                        }
+
+                    })
+                }
+        }
+// $("#addToCart").click(function() {
+// //                 let forms = document.forms.length-1;
+// //                 var index=forms;
+// //       document.getElementById('numform').innerHTML = "Number of forms: " + forms;
+// //       var passengers = [];
+// //       var i;
+// //       for (i = 0; i < index; i++) {
+// //         var detail = {
+// //                         total_item_price : parseFloat($(this).children('.total_item_price').text()),
+// //                         total_after_discounts : parseFloat($(this).children('.total_after_discounts').text()),
+// //                         vat_tax_value : parseFloat($(this).children('.vat_tax_value').text()),
+// //                         comm_industr_tax : parseFloat($(this).children('.comm_industr_tax').text()),
+// //                         net_value : parseFloat($(this).find('.net_value').text()),
+// //                         item_discount : parseFloat($(this).find('.item_discount').val()),
+// //                         is_stored : $('input[type=radio][name=optionsRadios'+row_num+']:checked').val(),
+// //                         item_text : item_arabic_name,
+// //                         item_id : item_id,
+// //                         item_price : $(this).find('.item_price').val(),
+// //                         item_quantity : $(this).find('.item_quantity').val(),
+// //                         tax_exemption : tax_exemption,
+// //                     }
+// //                     passengers.push(passenger);
+// // }
+// // const data = [];
+// //   for(let i=0; i<form.length; i++) {
+// //     const elements = form[i].elements;
+// //     data.push({form: form[i].getAttribute('data-category'), inputData: {}});
+
+// //   };
+
+//         });
+//     });
     </script>

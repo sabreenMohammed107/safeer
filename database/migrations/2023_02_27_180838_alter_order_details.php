@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('visas', function (Blueprint $table) {
-            //
-            $table->dropForeign(['country_id']);
+        Schema::table('order_details', function (Blueprint $table) {
+            $table->string("holder_email", 150)->nullable()->change();
+            $table->string("holder_mobile", 150)->nullable()->change();
         });
     }
 
@@ -26,9 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('visas', function (Blueprint $table) {
-            //
-            $table->dropForeign(['country_id']);
-        });
+        //
     }
 };

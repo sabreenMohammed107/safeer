@@ -115,4 +115,8 @@ class Orders extends Model
         return $this->belongsTo(SiteUser::class,'user_id');
     }
 
+    public function order_details()
+    {
+        return $this->hasMany(OrderDetails::class, 'order_id');
+    }
 }
