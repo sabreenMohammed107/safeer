@@ -85,7 +85,7 @@
                                 </th>
                                 <th class="min-w-150px">image</th>
                                 <th class="min-w-250px">tour</th>
-                                {{-- <th class="min-w-150px">tour</th> --}}
+                                <th class="min-w-150px">city</th>
 
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
@@ -127,19 +127,17 @@
 
                                         </div>
                                     </td>
-
-
-                                    {{-- <td>
+ <td>
 
                                         <div class="d-flex">
                                             <input type="hidden" name="" id=""
                                                 data-kt-ecommerce-category-filter="category_id" value="{{ $row->id }}">
 
-                                            <span class="symbol-label"> {{ $row->tour->en_overview ?? '' }}</span>
+                                            <span class="symbol-label"> {{ $row->tour->city->en_city ?? '' }}</span>
 
                                         </div>
 
-                                    </td> --}}
+                                    </td>
                                     <!--end::Type=-->
                                     <!--begin::Action=-->
                                     <td class="text-end">
@@ -173,7 +171,7 @@
 
 
                                                 <form id="delete_{{ $row->id }}"
-                                                    action="{{ route('tour-galleries.destroy', $row) }}" method="POST"
+                                                    action="{{ route('tour-galleries.destroy', $row->id) }}" method="POST"
                                                     style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
