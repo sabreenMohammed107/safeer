@@ -152,7 +152,7 @@
                 @else
                     <div class="col-sm-12 col-xl-12">
             @endif
-            <div class="tour_info">
+            <div class="tour_info px-2">
                 <div class="titles">
                     <h6> {{ $Tour->en_name }}</h6>
                     <span> {{ $Tour->city->country->en_country }} <span>|</span> {{ $Tour->city->en_city }} </span>
