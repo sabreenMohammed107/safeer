@@ -28,7 +28,8 @@ class HotelsController extends Controller
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => "Home"], ["url" => "/hotels", "name" => "Hotels"]];
 
-        $HasRoomCart = Cart::where([["user_id",'=',session()->get("SiteUser")["ID"]],["item_type",'=',0]])->count();
+
+        $HasRoomCart =(session()->get("SiteUser"))? Cart::where([["user_id",'=',session()->get("SiteUser")["ID"]],["item_type",'=',0]])->count() : 0;
 
         $HotelTourGallery = Gallery::where([["hotel_id", '=', $id], ["active", '=', 1]])->take(4)->get();
         // return $HotelTourGallery;
