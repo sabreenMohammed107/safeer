@@ -220,31 +220,32 @@
             <div class="col-md-6 col-sm-12 col-xl-3">
                 <div class="tour_info_details">
                     <img src="{{ asset('/website_assets/images/tour-details/tour_info/timer.webp') }}" alt=" timer image">
-                    <h6> start time </h6>
-                    <span> 08:00 am </span>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12 col-xl-3">
-                <div class="tour_info_details second_details">
-                    <img src="{{ asset('/website_assets/images/tour-details/tour_info/clock.webp') }}" alt=" clock image">
-                    <h6> duration </h6>
-                    <span> 4 hours 20 min</span>
+                    <h6> Tour Type </h6>
+                    <span> {{ $Tour->type->en_name ?? '' }}</span>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xl-3">
                 <div class="tour_info_details ">
                     <img src="{{ asset('/website_assets/images/tour-details/tour_info/requires-interpreter.webp') }}"
                         alt=" requires-interpreter image">
-                    <h6> tour language </h6>
-                    <span> English -arabic </span>
+                    <h6> Tour Language </h6>
+                    <span> {{ $Tour->tour_en_language }} </span>
                 </div>
             </div>
+            <div class="col-md-6 col-sm-12 col-xl-3">
+                <div class="tour_info_details second_details">
+                    <img src="{{ asset('/website_assets/images/tour-details/tour_info/clock.webp') }}" alt=" clock image">
+                    <h6> Tour Days  </h6>
+                    <span> {{ $Tour->tour_en_days }}</span>
+                </div>
+            </div>
+
             <div class="col-md-6 col-sm-12 col-xl-3">
                 <div class="tour_info_details after_details">
                     <img src="{{ asset('/website_assets/images/tour-details/tour_info/passenger-with-baggage.webp') }}"
                         alt=" passenger-with-baggage image">
-                    <h6> tour days </h6>
-                    <span> from monday to sunday </span>
+                    <h6> Cost / Person </h6>
+                    <span>{{ $Tour->tour_person_cost }} </span>
                 </div>
             </div>
 
@@ -253,7 +254,7 @@
     <!-- included and not included section -->
 
     <section class="included container">
-        <h5> hotel facilities</h5>
+        <h5> Tour facilities</h5>
         <div class="row mx-0">
             <div class="col-sm-12 col-xl-6 pb-5">
                 @if (count($Tour->features))
