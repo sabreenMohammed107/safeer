@@ -301,7 +301,31 @@
                                             <!--end::Editor-->
 
                                         </div>
+ <!--begin::Input group-->
+ <div class="fv-row w-100 flex-md-root">
+    <!--begin::Label-->
+    <label class="form-label">En details</label>
+    <!--end::Label-->
+    <!--begin::Editor-->
+    <textarea class="tox-target" id="kt_docs_tinymce_basic3" name="en_tours_details"
+        placeholder="Type  En details">{{ $tour->en_tours_details }}</textarea>
+    <!--end::Editor-->
 
+</div>
+<!--end::Input group-->
+<!--begin::Input group-->
+<div class="fv-row w-100 flex-md-root">
+    <!--begin::Label-->
+    <label class="form-label">Ar details</label>
+    <!--end::Label-->
+    <!--begin::Editor-->
+    <textarea class="tox-target" id="kt_docs_tinymce_basic4" name="ar_tours_details"
+        placeholder="Type  Ar details">{{ $tour->ar_tours_details }}</textarea>
+    <!--end::Editor-->
+
+</div>
+
+<!--begin::Input group-->
                                         <!--begin::Input group-->
                                         <div>
                                             <!--begin::Label-->
@@ -586,6 +610,28 @@
         tinymce.init({
             selector: '#kt_docs_tinymce_basic2',
             menubar: false,
+            toolbar: ["styleselect fontselect fontsizeselect",
+                "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
+                "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code"
+            ],
+            plugins: "advlist autolink link image lists charmap print preview code"
+        });
+
+        tinymce.init({
+            selector: '#kt_docs_tinymce_basic3',
+            menubar: false,
+
+            toolbar: ["styleselect fontselect fontsizeselect",
+                "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
+                "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code"
+            ],
+            plugins: "advlist autolink link image lists charmap print preview code"
+        });
+
+        tinymce.init({
+            selector: '#kt_docs_tinymce_basic4',
+            menubar: false,
+
             toolbar: ["styleselect fontselect fontsizeselect",
                 "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
                 "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code"

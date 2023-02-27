@@ -28,7 +28,9 @@ class Tour extends Model
         'tour_person_cost',
         'currency_id',
         'en_notes',
-        'ar_notes'
+        'ar_notes',
+        'en_tours_details',
+        'ar_tours_details'
 
     ];
 

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tour-details.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel-details.css') }}">
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/blog.css') }}">
     <style>
         #next,
         #previous {
@@ -350,136 +351,120 @@
 
             </div>
     </section>
+    <!-- search hitels and rooms avaliable  section -->
+    <section class="rooms_search">
 
+        <img src="{{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}" alt="slider mask">
+        <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt="slider mask">
 
-{{-- details new section --}}
-<section class="container blog_section">
-    <div class="row mx-0 ">
-        <div class="col-sm-12 col-xl-12">
-            <div class="fitered_data hotels">
-                <div class="filtrered_cards hotel_details">
-                    <h5>
-                        tour details
-                    </h5>
-                    {!! $Tour->en_tours_details !!}
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        <div class="hotels container">
+            <h5> book tour </h5>
+            <section class="booking_hotels_section container">
+                <form action="{{ url('/bookTours') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="tour_id" value="{{ $Tour->id }}">
+                    <div class="hotel_details">
+                        <div class="row mx-0 p-0">
+                            <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
+                                <h5> {{ $Tour->en_name }}</h5>
 
- <!-- search hitels and rooms avaliable  section -->
- <section class="rooms_search">
-
-    <img src="{{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}" alt="slider mask">
-    <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt="slider mask">
-
-    <div class="hotels container">
-        <h5> book tour </h5>
-        <section class="booking_hotels_section container">
-            <form action="{{ url('/bookTours') }}" method="POST">
-                @csrf
-                <input type="hidden" name="tour_id" value="{{ $Tour->id }}">
-                <div class="hotel_details">
-                    <div class="row mx-0 p-0">
-                        <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                            <h5> {{ $Tour->en_name }}</h5>
-
-                            <div class="choices">
-                                {{-- <i class="fa-solid fa-location-dot"></i> --}}
-                                {{ $Tour->city->en_city ?? '' }}
+                                <div class="choices">
+                                    {{-- <i class="fa-solid fa-location-dot"></i> --}}
+                                    {{ $Tour->city->en_city ?? '' }}
+                                </div>
                             </div>
-                        </div>
 
 
-                        <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                            <h5> Tour Type</h5>
+                            <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
+                                <h5> Tour Type</h5>
 
-                            <div class="choices">
-                                {{ $Tour->type->en_name ?? '' }}
+                                <div class="choices">
+                                    {{ $Tour->type->en_name ?? '' }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
-                            <h5> Tour Date </h5>
+                            <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                                <h5> Tour Date </h5>
 
-                            <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control" name="tour_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+                                <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control" name="tour_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
 
-                        </div>
+                            </div>
 
-                        <div class="col-sm-12 col-md-6 col-xl-3">
-                            <h5>Adults | Child No.</h5>
-                            <div class="rooms" style="padding: 0;box-shadow: 0">
-                                <button class="info form-select" type="button" onclick="open_addnew()">
-                                    <i class="fa-regular fa-user"></i>
-                                    <span id="adults"> 1 adults </span>
-                                    <span id="children"> 0 children </span>
-                                </button>
-                                <div class="add_new" id="add_new">
-                                    <div class="form-group counter">
-                                        <label>adults</label>
-                                        <div class="input-group counter_content">
-                                            <div class="input-group-btn">
-                                                <button id="down" type="button" class=" btn btn-default"
-                                                    onclick=" adultdown('1')"><span class="glyphicon glyphicon-minus">
-                                                        <i class="fa-solid fa-minus"></i></span></button>
-                                            </div>
-                                            <input type="text" name="adultsNumber" id="adultsNumber"
-                                                class="form-control input-number" value="1" />
-                                            <div class="input-group-btn">
-                                                <button id="up" type="button" class="btn btn-default"
-                                                    onclick="adultup('10')"><span class="glyphicon glyphicon-plus"><i
-                                                            class="fa-solid fa-plus"></i></span></button>
+                            <div class="col-sm-12 col-md-6 col-xl-3">
+                                <h5>Adults | Child No.</h5>
+                                <div class="rooms" style="padding: 0;box-shadow: 0">
+                                    <button class="info form-select" type="button" onclick="open_addnew()">
+                                        <i class="fa-regular fa-user"></i>
+                                        <span id="adults"> 1 adults </span>
+                                        <span id="children"> 0 children </span>
+                                    </button>
+                                    <div class="add_new" id="add_new">
+                                        <div class="form-group counter">
+                                            <label>adults</label>
+                                            <div class="input-group counter_content">
+                                                <div class="input-group-btn">
+                                                    <button id="down" type="button" class=" btn btn-default"
+                                                        onclick=" adultdown('1')"><span class="glyphicon glyphicon-minus">
+                                                            <i class="fa-solid fa-minus"></i></span></button>
+                                                </div>
+                                                <input type="text" name="adultsNumber" id="adultsNumber"
+                                                    class="form-control input-number" value="1" />
+                                                <div class="input-group-btn">
+                                                    <button id="up" type="button" class="btn btn-default"
+                                                        onclick="adultup('10')"><span class="glyphicon glyphicon-plus"><i
+                                                                class="fa-solid fa-plus"></i></span></button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group counter">
-                                        <label>children</label>
-                                        <div class="input-group counter_content">
-                                            <div class="input-group-btn">
-                                                <button id="down" type="button" class="btn btn-default"
-                                                    onclick=" childdown('0') ; removeYearsSelect() "><span
-                                                        class="glyphicon glyphicon-minus"> <i
-                                                            class="fa-solid fa-minus"></i></span></button>
+                                        <div class="form-group counter">
+                                            <label>children</label>
+                                            <div class="input-group counter_content">
+                                                <div class="input-group-btn">
+                                                    <button id="down" type="button" class="btn btn-default"
+                                                        onclick=" childdown('0') ; removeYearsSelect() "><span
+                                                            class="glyphicon glyphicon-minus"> <i
+                                                                class="fa-solid fa-minus"></i></span></button>
+                                                </div>
+                                                <input type="text" name="childNumber" id="childNumber"
+                                                    class="form-control input-number" value="0"
+                                                    onchange="addYearsSelect()" />
+                                                <div class="input-group-btn">
+                                                    <button id="up" type="button" class="btn btn-default"
+                                                        onclick="childup('10'); addYearsSelect()"><span
+                                                            class="glyphicon glyphicon-plus"><i
+                                                                class="fa-solid fa-plus"></i></span></button>
+                                                </div>
                                             </div>
-                                            <input type="text" name="childNumber" id="childNumber"
-                                                class="form-control input-number" value="0"
-                                                onchange="addYearsSelect()" />
-                                            <div class="input-group-btn">
-                                                <button id="up" type="button" class="btn btn-default"
-                                                    onclick="childup('10'); addYearsSelect()"><span
-                                                        class="glyphicon glyphicon-plus"><i
-                                                            class="fa-solid fa-plus"></i></span></button>
-                                            </div>
+
+                                        </div>
+                                        <div id="years">
+
                                         </div>
 
+                                        <button type="button" class="btn done_button" onclick="close_addnew()">
+                                            Done </button>
                                     </div>
-                                    <div id="years">
+                                </div>
 
-                                    </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-xl-1 p-0 ">
+                                <div class="main" id="room_main">
 
-                                    <button type="button" class="btn done_button" onclick="close_addnew()">
-                                        Done </button>
+                                    <button class="btn" type="submit">
+                                        BOOK
+                                    </button>
                                 </div>
                             </div>
 
                         </div>
-                        <div class="col-sm-12 col-md-6 col-xl-1 p-0 ">
-                            <div class="main" id="room_main">
-
-                                <button class="btn" type="submit">
-                                    BOOK
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
-                </div>
-            </form>
-        </section>
-    </div>
+                </form>
+            </section>
+        </div>
 
 
-</section>
+    </section>
+
+
     <!-- rooms section -->
     <section class="reviews container">
         <div class="review_heading">

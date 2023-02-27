@@ -63,6 +63,11 @@ input.nosubmit {
     margin-right: 10px;
     padding: 0;
 }
+
+
+.popover-header button{
+            border:none !important;
+        }
     </style>
 
 
@@ -258,16 +263,28 @@ input.nosubmit {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer=""defer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer" defer="defer"></script>
+    <script src="{{ asset('/website_assets/js/datepicker-bs4.js?')}}" defer="defer"></script>
+
 <script>
+     $("#start_date, #end_date, #birth_date").datepicker({
+            minDate: 0,
+
+            dateFormat: 'mm/dd/yy', beforeShow: function () {
+                $(".ui-datepicker").css('font-size', 12)
+
+            },
+
+        });
 
 
         $(document).ready(function() {
+            $('#start_date, #end_date, #birth_date').datepicker({
 
-            $('.datepicker').datepicker({
-                "setDate": new Date(),
-                "autoclose": true
-            });
-
+});
+//
             var arr = [];
 
     var arr_pickups = [];
@@ -425,6 +442,9 @@ $(".CarModels_id").change(function(){
 
                 success: function(response) {
                     $('#table_data').html(response);
+                    $('#start_date, #end_date, #birth_date').datepicker({
+
+});
                     // $('#selectSort option[value="'+selection+'"]').prop('selected', true);
                 },
                 error: function(response) {
@@ -457,6 +477,9 @@ $(".CarModels_id").change(function(){
             success: function(result){
                  console.log(result);
                 $("#table_data").html(result);
+                $('#start_date, #end_date, #birth_date').datepicker({
+
+});
             },
             error: function(jqXHR, textStatus, error){
                 console.log(textStatus + " - " + jqXHR.responseText);
