@@ -95,7 +95,7 @@
                             </div>
                             <span class="duartion">  <i class="fa-solid fa-location-dot"></i>  duration {{ $HAlpha->duration }}</span>
                             <p>
-                            {!! $HAlpha->en_overview !!}
+                            {!! $HAlpha->en_notes !!}
 
                             </p>
 
