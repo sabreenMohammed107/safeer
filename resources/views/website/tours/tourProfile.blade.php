@@ -160,10 +160,36 @@
 
 
                         @if (session()->get('SiteUser'))
-                            <a href="{{ url('/favourite/' . $Tour->id) }}"><i class="fa-regular fa-heart"></i> </a>
+
+
+
+                        @php
+                            $favExist = 0;
+                            $favUser = App\Models\Favorite_hotels_tour::where('tour_id', $Tour->id)
+                                ->where('user_id', session()->get('SiteUser')['ID'])
+                                ->first();
+                            if ($favUser) {
+                                $favExist = 1;
+                            }
+                        @endphp
+
                         @else
-                            <a href="{{ route('siteLogin') }}"><i class="fa-regular fa-heart"></i></a>
+                            @php
+                                $favExist=0;
+                            @endphp
                         @endif
+                        <span >
+                            @if($favExist==1)
+                        <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i
+                                 class="fa-regular fa-heart "  style="background-color: #1C4482; color:#fff"></i> </a>
+
+                                 @else
+
+                                <a  href="{{ url('/favouriteTours/' . $Tour->id) }}"  ><i
+                                    class="fa-regular fa-heart"></i> </a>
+
+                            @endif </span>
+
                         {{-- <div class="heart" data-bs-toggle="modal"
                             data-bs-target="#staticBack{{ $Tour->hotel_id }}drop">
                             {{-- <input type="checkbox" id="fav" type="submit modl_fav_add_remov"

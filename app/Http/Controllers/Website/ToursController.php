@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\Favorite_hotels_tour;
 use App\Models\Gallery;
 use App\Models\Tour;
 use App\Models\Tour_type;
@@ -189,5 +190,37 @@ class ToursController extends Controller
 
         return redirect()->to("/cart")->with("session-success", "Tour is added in your cart successfully");
 
+    }
+
+
+    public function favourite($id){
+
+        if(session()->get("SiteUser")){
+            $input=[
+                'tour_id'=>$id,
+                'user_id'=>session()->get("SiteUser")["ID"],
+            ];
+            Favorite_hotels_tour::create($input);
+            return redirect()->back();
+        }else{
+            session()->put("AddFavTour", $id);
+            return redirect("/safer/login");
+        }
+    }
+
+    public function removeFavourite($id){
+
+        if(session()->get("SiteUser")){
+
+            $fav=Favorite_hotels_tour::where('tour_id',$id)->where('user_id',session()->get("SiteUser")["ID"])->first();
+            if($fav){
+                $fav->delete();
+            }
+            return redirect()->back();
+        }else{
+            session()->put("RemFavTour", $id);
+            return session()->get("RemFavTour");
+            return redirect("/safer/login");
+        }
     }
 }

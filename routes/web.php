@@ -105,6 +105,11 @@ Route::get('/fetch-tour-filter',  [ToursController::class, 'fetch_data'])->name(
 Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
 Route::get("/tours/{id}", [ToursController::class, 'profile']);
 Route::post("/bookTours", [ToursController::class, 'bookTours']);
+//removeFavouriteTours
+
+Route::get("/removeFavouriteTours/{id}", [ToursController::class, 'removeFavourite']);
+//favouriteTours
+Route::get("/favouriteTours/{id}", [ToursController::class, 'favourite']);
 //transfer
 Route::get("/transfers", [SiteTransferController::class, 'all_transfer']);
 Route::post("/transfers", [SiteTransferController::class, 'all_transfer']);
