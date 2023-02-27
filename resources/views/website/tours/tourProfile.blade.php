@@ -205,7 +205,7 @@
 
                 <h6> important note </h6>
                 <p>
-                    {{ $Tour->en_overview }}
+                    {!! $Tour->en_overview !!}
                 </p>
 
 

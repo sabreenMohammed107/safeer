@@ -326,7 +326,7 @@
                                             <label class="form-label">En Overview</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
-                                            <textarea class="form-control form-control-solid" rows="3" name="en_overview"
+                                            <textarea class="tox-target" id="kt_docs_tinymce_basic2" name="en_overview"
                                                 placeholder="Type  En Overview">{{ $tour->en_overview }}</textarea>
                                             <!--end::Editor-->
 
@@ -338,7 +338,7 @@
                                             <label class="form-label">Ar Overview</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
-                                            <textarea class="form-control form-control-solid" rows="3" name="ar_overview"
+                                            <textarea class="tox-target" id="kt_docs_tinymce_basic" name="ar_overview"
                                                 placeholder="Type  Ar Overview">{{ $tour->ar_overview }}</textarea>
                                             <!--end::Editor-->
 
@@ -512,6 +512,8 @@
     <!--end::Post-->
 @endsection
 @section('scripts')
+<script src="{{ asset('dist/assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
+
     <script>
           $(".dPick").flatpickr();
         $("#kt_datepicker_1").flatpickr();
@@ -610,6 +612,28 @@
     //     }
     //   });
     // });
+
+
+      // tinymce.init(options2);
+      tinymce.init({
+            selector: '#kt_docs_tinymce_basic',
+            menubar: false,
+
+            toolbar: ["styleselect fontselect fontsizeselect",
+                "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
+                "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code"
+            ],
+            plugins: "advlist autolink link image lists charmap print preview code"
+        });
+        tinymce.init({
+            selector: '#kt_docs_tinymce_basic2',
+            menubar: false,
+            toolbar: ["styleselect fontselect fontsizeselect",
+                "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
+                "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code"
+            ],
+            plugins: "advlist autolink link image lists charmap print preview code"
+        });
      </script>
 
 @endsection

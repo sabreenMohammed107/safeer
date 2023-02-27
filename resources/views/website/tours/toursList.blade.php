@@ -25,7 +25,7 @@
                                 </div>
                                 <span class="duartion">  <i class="fa-solid fa-location-dot"></i>  duration {{ $HRec->duration }}</span>
                                 <p>
-                                {{ $HRec->en_overview }}
+                                {!! $HRec->en_overview !!}
 
                                 </p>
 
@@ -60,7 +60,7 @@
                             </div>
                             <span class="duartion">  <i class="fa-solid fa-location-dot"></i>  duration {{ $HPrice->duration }}</span>
                             <p>
-                            {{ $HPrice->en_overview }}
+                            {!! $HPrice->en_overview !!}
 
                             </p>
 
@@ -95,7 +95,7 @@
                             </div>
                             <span class="duartion">  <i class="fa-solid fa-location-dot"></i>  duration {{ $HAlpha->duration }}</span>
                             <p>
-                            {{ $HAlpha->en_overview }}
+                            {!! $HAlpha->en_overview !!}
 
                             </p>
 
