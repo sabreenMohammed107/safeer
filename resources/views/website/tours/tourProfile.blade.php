@@ -298,14 +298,15 @@
                 @if ($Tour->tour_vedio)
                     <div class="images image-2">
                         <!-- <img src="./images/tour-details/video.webp" class="w-100" alt="image mask"> -->
-                        <button type="button" class="btn js-modal-btn " data-video-url="{{ $Tour->tour_vedio }}"
+                        <button type="button" class="btn js-modal-btn " data-video-url="{{$Tour->tour_vedio}}"
                             data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <img src="{{ asset(' /website_assets/images/homePage/play_button.webp') }}"
-                                alt=" video play button">
+                            <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}"
+                               style="border-radius: 50%" alt=" video play button">
                         </button>
 
                     </div>
                 @endif
+
                 @if ($Tour->google_map)
                     <div class="map">
                         <iframe src="{{ $Tour->google_map }}" style="border:0;" allowfullscreen="" loading="lazy"

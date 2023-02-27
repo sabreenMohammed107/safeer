@@ -170,7 +170,10 @@
 }
 
 .images {
-    background-image: url(./../images/tour-details/video.webp);
+    /* background-image: url(./../images/tour-details/video.webp); */
+
+    background-image: url(./../images/tour-details/safer_video_img.jpg);
+
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
