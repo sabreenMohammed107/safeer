@@ -27,11 +27,11 @@ class ToursController extends Controller
 
         $TourGallery = Gallery::where([["tour_id", '=', $id], ["active", '=', 1]])->take(4)->get();
         // return $HotelTourGallery;
-        $FeaturesCategories = DB::table("hotels_features")
+        $FeaturesCategories = DB::table("tour_features")
             ->select("en_category", "features_categories.id")
-            ->leftJoin("features", "features.id", "=", "hotels_features.feature_id")
+            ->leftJoin("features", "features.id", "=", "tour_features.feature_id")
             ->leftJoin("features_categories", "features.feature_category_id", "=", "features_categories.id")
-            ->where("hotel_id", '=', $id)
+            ->where("tour_id", '=', $id)
             ->groupBy(["en_category", "features_categories.id"])->get();
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
