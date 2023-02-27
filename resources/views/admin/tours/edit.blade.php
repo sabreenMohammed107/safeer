@@ -347,7 +347,7 @@
                                         <!--begin::Input group-->
                                         <div>
                                             <!--begin::Label-->
-                                            <label class="form-label">En Notes</label>
+                                            <label class="form-label">En brief</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
                                             <textarea class="form-control form-control-solid" rows="3" name="en_notes"
@@ -359,7 +359,7 @@
                                         <!--begin::Input group-->
                                         <div>
                                             <!--begin::Label-->
-                                            <label class="form-label">Ar Notes</label>
+                                            <label class="form-label">Ar brief</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
                                             <textarea class="form-control form-control-solid" rows="3" name="ar_notes"
