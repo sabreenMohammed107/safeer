@@ -33,11 +33,24 @@ class Tour extends Model
         'ar_tours_details'
 
     ];
+// this is a recommended way to declare event handlers
+public static function boot() {
+    parent::boot();
 
+    static::deleting(function($tour) { // before delete() method call this
+         $tour->galleries()->delete();
+         // do the rest of the cleanup...
+    });
+}
 
     public function city()
     {
         return $this->belongsTo(City::class,'city_id');
+    }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class,'tour_id','id');
     }
 
     public function type()

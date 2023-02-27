@@ -19,7 +19,8 @@ class VisaDataController extends Controller
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => "Home"], ["url" => "/visa", "name" => "visa"]];
         $countries = Country::all();
-        $nationalities = Nationality::all();
+        $nationality_ids = Visa::pluck('nationality_id');
+        $nationalities = Nationality::whereIn('id',$nationality_ids);
         return view("website.visa.visa", [
             "Company" => $Company,
             "countries" => $countries,
