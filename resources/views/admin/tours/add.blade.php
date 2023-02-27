@@ -339,7 +339,7 @@
                                             <!--end::Label-->
                                             <!--begin::Editor-->
                                             <textarea class="form-control form-control-solid" rows="3" name="en_notes"
-                                                placeholder=" En Notes"></textarea>
+                                                placeholder=" En brief"></textarea>
                                             <!--end::Editor-->
 
                                         </div>
@@ -351,7 +351,7 @@
                                             <!--end::Label-->
                                             <!--begin::Editor-->
                                             <textarea class="form-control form-control-solid" rows="3" name="ar_notes"
-                                                placeholder="Ar Notes"></textarea>
+                                                placeholder="Ar brief"></textarea>
                                             <!--end::Editor-->
 
                                         </div>

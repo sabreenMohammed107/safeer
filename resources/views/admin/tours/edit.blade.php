@@ -351,7 +351,7 @@
                                             <!--end::Label-->
                                             <!--begin::Editor-->
                                             <textarea class="form-control form-control-solid" rows="3" name="en_notes"
-                                                placeholder=" En Notes">{{ $tour->en_notes }}</textarea>
+                                                placeholder=" En brief">{{ $tour->en_notes }}</textarea>
                                             <!--end::Editor-->
 
                                         </div>
@@ -363,7 +363,7 @@
                                             <!--end::Label-->
                                             <!--begin::Editor-->
                                             <textarea class="form-control form-control-solid" rows="3" name="ar_notes"
-                                                placeholder="Ar Notes">{{ $tour->ar_notes }}</textarea>
+                                                placeholder="Ar brief">{{ $tour->ar_notes }}</textarea>
                                             <!--end::Editor-->
 
                                         </div>
