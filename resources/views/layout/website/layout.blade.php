@@ -310,6 +310,9 @@
     <script src="{{ asset('/website_assets/js/image_gllery.js')}}"></script>
     <!-- adding room -->
     <script src="{{ asset('/website_assets/js/main.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer=""defer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer" defer="defer"></script>
+    <script src="{{ asset('/website_assets/js/datepicker-bs4.js?')}}" defer="defer"></script>
     {{-- owl carousel --}}
     <script>
         $(document).ready(function(){

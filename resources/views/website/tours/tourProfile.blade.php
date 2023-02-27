@@ -2,6 +2,8 @@
 
 @section('adds_css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tour-details.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel-details.css') }}">
@@ -43,6 +45,10 @@
         .tooltip-inner p {
 
             color: #7E7E7E !important;
+        }
+
+        .popover-header button{
+            border:none !important;
         }
     </style>
 @endsection
@@ -378,13 +384,8 @@
                             <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
                                 <h5> Tour Date </h5>
 
-                                <div class="rooms date" style="padding: 0;box-shadow: 0" data-provide="datepicker">
-                                    <input type="text" name="tour_date" class="form-control datepicker"
-                                        placeholder="dd/MM/YYY">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
-                                </div>
+                                <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control" name="tour_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+
                             </div>
 
                             <div class="col-sm-12 col-md-6 col-xl-3">
@@ -600,11 +601,16 @@
 
 @section('adds_js')
     <script>
+document.addEventListener('DOMContentLoaded', function () {
+	jQuery('#start_date, #end_date, #birth_date').datepicker({
+
+	});
+});
         $(document).ready(function() {
-            $('.datepicker').datepicker({
-                "setDate": new Date(),
-                "autoclose": true
-            });
+            // $('.datepicker').datepicker({
+            //     "setDate": new Date(),
+            //     "autoclose": true
+            // });
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)

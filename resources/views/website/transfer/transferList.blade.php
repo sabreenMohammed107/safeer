@@ -48,14 +48,9 @@
                                 <label>
                                   pick a date
                                 </label>
+                                <input type="text" id="birth_date" placeholder="DD/MM/YYYY"  class="form-control " name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
 
-                                <div class="rooms date" style="padding: 0;box-shadow: 0" data-provide="datepicker">
-                                    <input type="text" name="transfer_date" class="form-control datepicker"
-                                        placeholder="dd/MM/YYY">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
-                                </div>                              </div>
+                                                            </div>
                                 <div class="details">
 
 
@@ -124,13 +119,8 @@
                                               pick a date
                                             </label>
 
-                                            <div class="rooms date" style="padding: 0;box-shadow: 0" data-provide="datepicker">
-                                                <input type="text" name="transfer_date" class="form-control datepicker"
-                                                    placeholder="dd/MM/YYY">
-                                                <div class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-th"></span>
-                                                </div>
-                                            </div>                              </div>
+                                            <input type="text" id="start_date" placeholder="DD/MM/YYYY"  class="form-control " name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+                                        </div>
                                             <div class="details">
 
 
@@ -201,13 +191,8 @@
                                               pick a date
                                             </label>
 
-                                            <div class="rooms date" style="padding: 0;box-shadow: 0" data-provide="datepicker">
-                                                <input type="text" name="transfer_date" class="form-control datepicker"
-                                                    placeholder="dd/MM/YYY">
-                                                <div class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-th"></span>
-                                                </div>
-                                            </div>                              </div>
+                                            <input type="text" id="end_date" placeholder="DD/MM/YYYY"  class="form-control " name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+                                        </div>
                                             <div class="details">
 
 
