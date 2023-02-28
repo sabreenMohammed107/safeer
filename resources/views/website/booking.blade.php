@@ -18,6 +18,7 @@
     $TotalCost = 0;
     $TotalToursFees = 0;
     $TotalTransferCost = 0;
+    $TotalVisasCost = 0;
 @endphp
 @if ($RoomCost)
 @php
