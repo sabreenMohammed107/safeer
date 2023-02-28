@@ -99,10 +99,9 @@ class ToursController extends Controller
                 //
             }
 
-            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tour_id')->paginate(3);
+            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(3);
             $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
             $ToursByAlpha = $ToursRecommended->sortBy('en_name');
-            return $ToursRecommended;
 
             return view("website.tours.toursList",
                 [
@@ -139,7 +138,7 @@ class ToursController extends Controller
                 //
             }
 
-            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tour_id')->paginate(3);
+            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(3);
             $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
             $ToursByAlpha = $ToursRecommended->sortBy('en_name');
             return view("website.tours.toursList",
