@@ -352,6 +352,7 @@ class BookingController extends Controller
                     $TourElem->tour_banner = $refTour->banner;
                     $TourElem->tour_type = ($refTour->type->id == 1) ? 0 : 1;
                     $TourElem->total_cost = ((float) $request->tour_total_cost[$i]); // Before Tax
+                    $TourElem->tour_cost = ((float) $request->tour_cost[$i]); // Before Tax
                     $TourElem->tour_date = $request->tour_date[$i];
                     $TourElem->adults_count = (int) $request->tour_adults_count[$i];
                     $TourElem->children_count = (int) $request->tour_children_count[$i];
