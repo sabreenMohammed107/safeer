@@ -49,7 +49,7 @@ class HotelsController extends Controller
             ->where([["hotel_id", "=", $id]])
 
             ->get();
-            $Countries = Country::all();
+            $Countries = Country::where('id',1)->get();
             $Cities=City::where('country_id',1)->get();
         \Log::info($RoomCosts->count());
         return view("website.hotels.hotel_profile", [
@@ -72,7 +72,7 @@ class HotelsController extends Controller
         $arr = explode(' |', $request->from_date);
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => "Home"]];
-        $Countries = Country::all();
+        $Countries = Country::where('id',1)->get();
         $Cities = City::all();
         $zones = Zone::all();
         //data of hotels
@@ -137,7 +137,7 @@ class HotelsController extends Controller
 
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => "Home"]];
-        $Countries = Country::all();
+        $Countries = Country::where('id',1)->get();
         $Cities = City::all();
         $zones = Zone::all();
          //data of hotels
@@ -182,7 +182,7 @@ class HotelsController extends Controller
 
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => "Home"]];
-        $Countries = Country::all();
+        $Countries = Country::where('id',1)->get();
         $Cities = City::all();
         $zones = Zone::all();
             //data of hotels
@@ -377,6 +377,9 @@ class HotelsController extends Controller
         $Rev->hotel_id = $request->hotel_id;
         $Rev->review_date = now();
         $Rev->active = 1;
+        if(session()->get("SiteUser")){
+            $Rev->user_id = session()->get("SiteUser")["ID"];
+        }
         // $Rev->tour_id = 1; //temp
 
         $Rev->save();

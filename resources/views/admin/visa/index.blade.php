@@ -90,7 +90,7 @@
                                 <th class="text-end min-w-100px">country</th>
 
                                 <th class="text-end min-w-100px">cost</th>
-                                <th class="text-end min-w-100px">currency</th>
+                                <th class="text-end min-w-100px">Nationality</th>
 
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
@@ -139,7 +139,7 @@
         </td>
         <!--end::Price=-->
         <td class="text-end pe-0">
-            <span class="fw-bolder text-dark">{{ $row->currency->currency ?? '' }}</span>
+            <span class="fw-bolder text-dark">{{ $row->nationality->en_nationality ?? '' }}</span>
         </td>
         <!--begin::Action=-->
         <td class="text-end">

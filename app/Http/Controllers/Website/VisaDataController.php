@@ -49,6 +49,22 @@ class VisaDataController extends Controller
         echo $output;
     }
 
+    public function fetchNationality(Request $request)
+    {
+
+        $select = $request->get('select');
+        $value = $request->get('value');
+
+        // $data = Visa_type::where('country_id', $value)->get();
+
+        $nationality_ids = Visa::where('visa_type_id',$value)->pluck('nationality_id');
+        $nationalities = Nationality::whereIn('id',$nationality_ids)->get();
+        $output = '<option value="">Select Nationality</option>';
+        foreach ($nationalities as $row) {
+            $output .= '<option value="' . $row->id . '">' . $row->en_nationality . '</option>';
+        }
+        echo $output;
+    }
     public function bookVisas(Request $request)
     {
         $Visas = [];

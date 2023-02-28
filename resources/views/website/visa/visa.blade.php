@@ -128,11 +128,8 @@
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for="">Nationality </label>
                     <select class="form-select nationality" id="nationality" aria-label="Default select example" name="nation[0]">
-                        <option value="" disabled selected hidden>Choose...</option>
-                        @foreach ($nationalities as $nationality)
-                            <option value="{{ $nationality->id }}">{{ $nationality->en_nationality }}
-                            </option>
-                        @endforeach
+                        <option value="">select....</option>
+
                     </select>
                 </div>
 
@@ -236,7 +233,7 @@
                     <select required class="form-select form-select-solid visa_type"
                                                                     data-control="select2 sub2" data-placeholder="Select an option"
                                                                     data-show-subtext="true" data-live-search="true" id="sub"
-                                                                    name="visa_type_id[` + counter + `]">
+                                                                    name="visa_type_id[` + counter + `]" onchange="fetchNationality(this)" >
                                                                     <option value="">select....</option>
                                                                 </select>
                     </div>
@@ -244,11 +241,8 @@
                     <label for="">Nationality </label>
                     <select class="form-select nationality"  id="nationality" aria-label="Default select example"
                     name="nation[`+ counter +`]">
-                        <option value="" disabled selected hidden>Choose...</option>
-                        @foreach ($nationalities as $nationality)
-                                                                        <option value="{{ $nationality->id }}">{{ $nationality->en_nationality }}
-                                                                        </option>
-                                                                    @endforeach
+                    <option value="">select....</option>
+
                         </select>
                 </div>
 
@@ -338,7 +332,66 @@
                 }
             });
 
+            $('.visa_type').change(function() {
+                if ($(this).val() != '') {
+                    var select = $(this).attr("id");
+                    var value = $(this).val();
+
+                    var trigger = $(this);
+                    var _token = $('input[name="_token"]').val();
+                    // alert("Second");
+
+                    $.ajax({
+                        url: "{{ route('dynamicnationality.fetch') }}",
+                        method: "POST",
+                        data: {
+                            select: select,
+                            value: value,
+                            _token: _token
+                        },
+                        success: function(result) {
+                            trigger.parent().parent().find(".nationality").html(result);
+                        },
+                        error: function(xhr, status, error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            alert(err.Message);
+                        }
+
+                    })
+                }
+            });
+
         });
+
+
+function fetchNationality(elem){
+    if ($(elem).val() != '') {
+                    var select = $(elem).attr("id");
+                    var value = $(elem).val();
+
+                    var trigger = $(elem);
+                    var _token = $('input[name="_token"]').val();
+                    // alert("Second");
+
+                    $.ajax({
+                        url: "{{ route('dynamicnationality.fetch') }}",
+                        method: "POST",
+                        data: {
+                            select: select,
+                            value: value,
+                            _token: _token
+                        },
+                        success: function(result) {
+                            trigger.parent().parent().find(".nationality").html(result);
+                        },
+                        error: function(xhr, status, error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            alert(err.Message);
+                        }
+
+                    })
+                }
+}
 
         function fetch(elem){
                 if ($(elem).val() != '') {

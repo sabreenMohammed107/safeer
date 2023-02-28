@@ -37,7 +37,7 @@ class ToursController extends Controller
             ->groupBy(["en_category", "features_categories.id"])->get();
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
-        $Countries = Country::all();
+        $Countries = Country::where('id',1)->get();
         $Cities = City::where('country_id', 1)->get();
         return view("website.tours.tourProfile", [
             "Company" => $Company,
@@ -233,6 +233,9 @@ class ToursController extends Controller
         $Rev->tour_id = $request->tour_id;
         $Rev->review_date = now();
         $Rev->active = 1;
+        if(session()->get("SiteUser")){
+            $Rev->user_id = session()->get("SiteUser")["ID"];
+        }
         // $Rev->tour_id = 1; //temp
 
         $Rev->save();

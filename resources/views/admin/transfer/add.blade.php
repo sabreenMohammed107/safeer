@@ -174,7 +174,7 @@
                                         </div>
 
  <!--end::Input group-->
- <div class="d-flex flex-wrap gap-5">
+ {{-- <div class="d-flex flex-wrap gap-5">
  <div class="fv-row w-100 flex-md-root">
     <label class="fs-6 fw-bold form-label mt-3">
         <option value="">Select Currency Class..</option>
@@ -189,7 +189,7 @@
         @endforeach
     </select>
  </div>
- </div>
+ </div> --}}
 
 
                                     </div>

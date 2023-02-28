@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <label for="email">e-mail </label>
-                                        <input type="email" name="email" value="{{ $userSite->email }}"
+                                        <input disabled type="email" name="email" value="{{ $userSite->email }}"
                                             class="form-control" id="email" placeholder="Mail ">
                                     </div>
                                     <div class="col-sm-12 col-md-6">
