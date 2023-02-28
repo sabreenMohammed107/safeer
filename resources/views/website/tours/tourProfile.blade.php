@@ -542,8 +542,7 @@
                                 </div>
                                 <div class="form-floating comment_input">
                                     <textarea class="form-control" name="review_text" placeholder="Leave a comment here" id="floatingTextarea2"
-                                        style="height: 200px"></textarea>
-                                    <label for="floatingTextarea2"> your Comments ...</label>
+                                        style="height: 100px"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -588,11 +587,15 @@
 
         @foreach ($Tour->reviews as $rev)
             <div class="review_details">
-                <img src="{{ asset('/website_assets/images/tour-details/profile/profile-1.webp') }}"
-                    alt="profile picture ">
+                <img src="{{asset("/website_assets/images/llogo.JPG")}}" alt="profile picture ">
+
                 <div class="review_info">
                     <div class="heading">
+                        @if (session()->get('SiteUser'))
+                        <h6> {{ session()->get('SiteUser')['Name'] }} </h6>
+                        @else
                         <h6> user name </h6>
+                        @endif
                         <div class="rating">
                             @for ($i = 0; $i < $rev->review_stars; $i++)
                                 <i class="fa-solid fa-star"></i>

@@ -12,17 +12,31 @@
                         type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                        type="button" role="tab" aria-controls="profile" aria-selected="false">tours</button>
-                </li>
+                    {{-- <a class="nav-link" href="">tours</a> --}}
+                    <a href="{{ url('/tours') }}">
+                    <button class="nav-link"
+                        type="button" >tours</button>
+                    </a>
+                    </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
-                        type="button" role="tab" aria-controls="contact" aria-selected="false">travel</button>
-                </li>
+                    {{-- <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                        type="button" role="tab" aria-controls="contact" aria-selected="false">travel</button> --}}
+
+                        <a href="{{ url('/transfers') }}">
+                            <button class="nav-link"
+                                type="button" >travel</button>
+                            </a>
+
+                    </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="visa-tab" data-bs-toggle="tab" data-bs-target="#visa" type="button"
-                        role="tab" aria-controls="visa" aria-selected="false">visa payment</button>
-                </li>
+                    {{-- <button class="nav-link" id="visa-tab" data-bs-toggle="tab" data-bs-target="#visa" type="button"
+                        role="tab" aria-controls="visa" aria-selected="false">visa payment</button> --}}
+                        <a href="{{ url('/visa') }}">
+                            <button class="nav-link"
+                                type="button" >visa payment</button>
+                            </a>
+
+                    </li>
             </ul>
             <div class="tab-content travel_box_content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
