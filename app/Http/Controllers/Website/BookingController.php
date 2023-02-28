@@ -228,10 +228,13 @@ class BookingController extends Controller
             )
             ->get();
                 // return $GPVisasCost;
+
+            $tax_percentage = 14; // 14% Currently
         return view(
             "website.booking",
             [
                 "Company" => $Company,
+                "tax_percentage" => $tax_percentage,
                 "Counters" => $Counters,
                 "BreadCrumb" => $BreadCrumb,
                 "RoomCost" => $RoomCost,
@@ -264,7 +267,8 @@ class BookingController extends Controller
         $order = null;
         try {
             $order = new Orders();
-            $order->user_id = $request->user_id;
+            $order->user_id = session()->get("SiteUser")["ID"];
+            $order->tax_percentage = $request->tax_percentage;
             $order->save();
 
             if ($request->adultsSal && $request->adultsSal[0]) {
@@ -317,6 +321,7 @@ class BookingController extends Controller
                         $person->person_type = 1; // child bit
                         $person->person_salutation = "";
                         $person->person_mobile = "";
+                        $person->age = $request->childrenAges[$i];
                         $person->person_name = $request->childrenNames[$i];
                         if ($request->childrenAges[$i] <= $request->child_free_age_to && $request->childrenAges[$i] >= $request->child_free_age_from) {
                             $person->person_cost = 0;
@@ -373,6 +378,7 @@ class BookingController extends Controller
                             $person->person_type = 1; // child bit
                             $person->person_salutation = "";
                             $person->person_mobile = "";
+                            $person->age = $request->tour_child_age[$i][$j];
                             $person->person_name = $request->tour_child_name[$i][$j];
                             $person->person_cost = ((int) $request->tour_child_age[$i][$j] > 2) ? $refTour->tour_person_cost : 0;
                             $person->save();

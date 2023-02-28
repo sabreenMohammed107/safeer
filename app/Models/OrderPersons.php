@@ -41,6 +41,7 @@ class OrderPersons extends Model
         'person_name',
         'person_mobile',
         'person_cost',
+        'age',
         'created_at',
         'updated_at'
     ];

@@ -78,6 +78,7 @@ class Orders extends Model
      */
     protected $fillable = [
         'user_id',
+        'tax_percentage',
         // 'from_date',
         // 'to_date',
         // 'nights',

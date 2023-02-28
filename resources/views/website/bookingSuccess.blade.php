@@ -41,7 +41,7 @@
     <div class="row mt-2">
         <h3 class="my-2"><strong>Congratulations!</strong> You've Purchased your Order Successfully</h3>
         <h5 class="my-2">Order Number : <span class="badge bg-success"> {{$Order->id}}</span></h5>
-        <h4 class="fw-bold my-2">Total Cost (After Tax): ${{$Cost * 1.14}}</h4>
+        <h4 class="fw-bold my-2">Total Cost (After Tax): ${{$Cost * (1 + (float)$Order->tax_percentage/100)}}</h4>
     </div>
 </div>
 
