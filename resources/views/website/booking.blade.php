@@ -271,7 +271,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <h6 class="fw-bold">Vehicle Details:</h6>
                     <div class="col-md-4 mb-3">
                         <div class="img-holder"
-                        style="background-image: url({{ asset('uploads/carModels') }}/{{ $TransferCost->image }})"
+                        style="background-image: url('{{ asset('uploads/carModels') }}/{{ $TransferCost->image }}')"
                         ></div>
                     </div>
                     <div class="col-md-8">
