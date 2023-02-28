@@ -420,17 +420,17 @@ $(".CarModels_id").change(function(){
     });
 
 
-                fetch_productdata(page, arr, arr_cities, arr_types);
+                fetch_productdata(page, arr, arr_pickups, arr_dropoff,arr_CarClass,arr_CarClass);
 
             });
         });
         // End paginate product
         //function of pagination product
 
-        function fetch_productdata(page,city, tourType, priceRange) {
+        function fetch_productdata(page, arr, arr_pickups, arr_dropoff,arr_CarClass,arr_CarClass) {
             // alert(category)
             $.ajax({
-                url: "/fetch-tour-filter?page=" + page,
+                url: "/fetch-transfers-filter?page=" + page,
                 data: {
 
                     pickups_ids: $("input[name=pickups_ids]").val(),
