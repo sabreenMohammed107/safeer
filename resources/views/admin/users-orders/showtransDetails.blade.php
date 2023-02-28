@@ -11,9 +11,10 @@
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb fw-bold fs-base my-1">
                     <li class="breadcrumb-item text-muted">
-                        <a href="../dist/index.html" class="text-muted text-hover-primary">Home</a>
+                        <a href="{{ url('/dashboard/admin/home') }}" class="text-muted text-hover-primary">Home</a>
                     </li>
-                    <li class="breadcrumb-item text-muted">Order</li>
+                    <li class="breadcrumb-item text-muted">
+                        <a href="{{ route('users-orders.index') }}" class="text-muted text-hover-primary">Order</a></li>
 
                     <li class="breadcrumb-item text-dark">All</li>
                 </ul>
@@ -35,57 +36,28 @@
             <!--begin::Main column-->
             <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                 <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-n2">
-                    <!--begin:::Tab item-->
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
-                            href="#kt_ecommerce_add_product_general">Rooms Details</a>
-                    </li>
-                    <!--end:::Tab item-->
-                    <!--begin:::Tab item-->
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                            href="#kt_ecommerce_add_product_advanced">Tours Details</a>
-                    </li>
-                    <!--end:::Tab item-->
 
                     <!--begin:::Tab item-->
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
                             href="#kt_ecommerce_add_fixed_advanced">Trans Details</a>
                     </li>
                     <!--end:::Tab item-->
-                    <!--begin:::Tab item-->
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                            href="#kt_ecommerce_add_visa_advanced">Visa Details</a>
-                    </li>
-                    <!--end:::Tab item-->
+
 
 
                 </ul>
 
                 <div class="tab-content">
                     <!--begin::Tab pane-->
-                    <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
-                        @include('admin.users-orders.roomDetails')
-                    </div>
-                    {{-- tab 2  --}}
-                    <!--begin::Tab pane-->
-                    <div class="tab-pane fade" id="kt_ecommerce_add_product_advanced" role="tab-panel">
-                        @include('admin.users-orders.toursDetails')
 
-                    </div>
 
-                    <div class="tab-pane fade" id="kt_ecommerce_add_fixed_advanced" role="tab-panel">
+                    <div class="tab-pane fade show active" id="kt_ecommerce_add_fixed_advanced" role="tab-panel">
                         @include('admin.users-orders.transDetails')
 
                     </div>
 
-                    {{-- visa content --}}
-                    <div class="tab-pane fade" id="kt_ecommerce_add_visa_advanced" role="tab-panel">
-                        @include('admin.users-orders.visaDetails')
 
-                    </div>
                     {{-- end visa content --}}
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->

@@ -88,9 +88,9 @@
                             {{-- <th class="text-end min-w-100px">Date</th> --}}
                             {{-- <th class="text-end min-w-100px">Time</th> --}}
                             <th class="text-end min-w-70px">Holder Name</th>
-                            <th class="text-end min-w-100px">Hotel</th>
+                            <th class="text-end min-w-100px">Type</th>
 
-                            <th class="text-end min-w-100px">Nights</th>
+                            <th class="text-end min-w-100px">Created Date</th>
                             <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -121,19 +121,7 @@
             </div>
         </div>
     </td>
-    <!--end::Category=-->
-     <!--begin::SKU=-->
-     {{-- <td class="text-end pe-0">
 
-        <span class="fw-bolder">{{ $row->event_date_form }}</span>
-    </td> --}}
-    <!--end::SKU=-->
-    <!--begin::SKU=-->
-    {{-- <td class="text-end pe-0">
-        <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
-        <span class="fw-bolder">{{ $row->event_time_form }}</span>
-    </td> --}}
-    <!--end::SKU=-->
     <!--begin::Qty=-->
     <td class="text-end pe-0" data-order="15">
         <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
@@ -141,14 +129,30 @@
     </td>
     <!--end::Qty=-->
     <!--begin::Price=-->
-    <td class="text-end pe-0">
-        <span class="fw-bolder text-dark">{{ $row->hotel->hotel_enname ?? '' }}</span>
+    <td class="text-center pe-0">
+        <span class="fw-bolder text-dark">
+            @if ($row->detail_type == 0)
+                Booking Room
+            @endif
+
+            @if ($row->detail_type == 1)
+                Booking Tours
+            @endif
+
+            @if ($row->detail_type == 2)
+                Booking Transfer
+            @endif
+
+            @if ($row->detail_type == 3)
+                Booking Visa
+            @endif
+           </span>
     </td>
     <!--end::Price=-->
 
     <!--begin::Status=-->
     <td class="text-end pe-0">
-        <span class="fw-bolder text-dark">{{ $row->order->nights ?? '' }}</span>
+        <span class="fw-bolder text-dark">{{ $row->order->created_at ?? '' }}</span>
     </td>
     <!--end::Status=-->
     <!--begin::Action=-->
@@ -171,7 +175,7 @@
             data-kt-menu="true">
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('users-orders.show', $row->order_id ) }}"
+                <a href="{{ route('users-orders.show', $row->id ) }}"
                     class="menu-link px-3">show</a>
             </div>
             <!--end::Menu item-->

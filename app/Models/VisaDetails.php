@@ -66,5 +66,9 @@ class VisaDetails extends Model
     {
         return $this->belongsTo(OrderDetails::class, 'order_details_id');
     }
+    public function visa()
+    {
+        return $this->belongsTo(Visa::class, 'visa_id');
+    }
 
 }

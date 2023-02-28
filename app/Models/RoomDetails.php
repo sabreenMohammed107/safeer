@@ -76,5 +76,9 @@ class RoomDetails extends Model
     {
         return $this->belongsTo(OrderDetails::class, 'order_details_id');
     }
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class, 'hotel_id');
+    }
 
 }

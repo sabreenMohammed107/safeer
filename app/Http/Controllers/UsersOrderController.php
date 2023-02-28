@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\OrderDetails;
 use App\Models\OrderPersons;
 use App\Models\Orders;
+use App\Models\RoomDetails;
+use App\Models\TourDetails;
+use App\Models\TransferDetails;
+use App\Models\VisaDetails;
 use Illuminate\Http\Request;
 
 class UsersOrderController extends Controller
@@ -66,14 +70,46 @@ class UsersOrderController extends Controller
      */
     public function show($id)
     {
-        // $row = OrderDetails::find(1);
-        // if ($row) {
-            $order = Orders::where('id', $id)->first();
-            $details = OrderDetails::where('order_id', $id)->get();
-            $persons = OrderPersons::where('order_id', $id)->get();
-            $totalCost=number_format(OrderDetails::where('order_id', $id)->sum('total_cost'),2);
-            return view($this->viewName . 'show', compact(['order', 'details', 'persons','totalCost']));
-        // }
+
+            $order = OrderDetails::where('id', $id)->first();
+            if($order->detail_type==0){
+                $roomDetails = RoomDetails::
+                join("order_details", "rooms_details.order_details_id", "=", "order_details.id")
+                ->where('order_details.detail_type',0)->where('order_details.id',$id)->select('rooms_details.*')->get();
+                $persons = OrderPersons::where('order_details_id', $id)->get();
+
+                            $totalCost=50;
+                return view($this->viewName . 'showroomDetails', compact(['order', 'roomDetails'
+               , 'persons','totalCost']));
+            }
+            if($order->detail_type==1){
+
+                $persons = OrderPersons::where('order_details_id', $id)->get();
+                $tourDetails = TourDetails::join("order_details", "tours_details.order_details_id", "=", "order_details.id")
+                ->where('order_details.detail_type',1)->where('order_details.id',$id)->select('tours_details.*')->get();
+
+                            $totalCost=50;
+                return view($this->viewName . 'showtoursDetails', compact(['order'
+               , 'tourDetails', 'persons','totalCost']));
+            }
+            if($order->detail_type==2){
+                $persons = OrderPersons::where('order_details_id', $id)->get();
+
+                $transDetails = TransferDetails:: join("order_details", "transfer_details.order_details_id", "=", "order_details.id")
+                ->where('order_details.detail_type',2)->where('order_details.id',$id)->select('transfer_details.*')->get();
+
+                            $totalCost=50;
+                return view($this->viewName . 'showtransDetails', compact(['order','transDetails', 'persons','totalCost']));
+            }
+            if($order->detail_type==3){
+                $persons = OrderPersons::where('order_details_id', $id)->get();
+
+                $visaDetails = VisaDetails:: join("order_details", "visa_details.order_details_id", "=", "order_details.id")
+                ->where('order_details.detail_type',3)->where('order_details.id',$id)->select('visa_details.*')->get();
+                            $totalCost=50;
+                return view($this->viewName . 'showvisaDetails', compact(['order','visaDetails', 'persons','totalCost']));
+            }
+
 
     }
 
