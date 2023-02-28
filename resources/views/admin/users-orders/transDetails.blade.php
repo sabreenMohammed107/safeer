@@ -143,7 +143,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->transfer_date ?? 
 <!--end::Table head-->
 <!--begin::Table body-->
 <tbody class="fw-bold text-gray-600">
-    @foreach ($persons as $index => $person)
+    {{-- @foreach ($persons as $index => $person) --}}
     <!--begin::Table row-->
     <tr>
     <!--begin::Checkbox-->
@@ -161,7 +161,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->transfer_date ?? 
     <!--begin::Title-->
 
     <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
-    data-kt-ecommerce-category-filter="category_name" >{{$person->person_salutation ?? '' }} - {{$person->person_name ?? '' }}</a>
+    data-kt-ecommerce-category-filter="category_name" >{{$order->holder_salutation ?? '' }} - {{$order->holder_name ?? '' }}</a>
     <!--end::Title-->
     </div>
     </div>
@@ -169,17 +169,17 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->transfer_date ?? 
 
     <!--begin::Qty=-->
     <td class="text-strt pe-0" data-order="15">
-        <span class="fw-bolder ms-3">{{$person->person_type==0 ?'Adult' : 'Child' }}</span>
+        <span class="fw-bolder ms-3">Adult</span>
     </td>
     <!--end::Qty=-->
     <td class="text-center pe-0" data-order="15">
-    <span class="fw-bolder ms-3">{{ $person->mobile ?? '' }}</span>
+    <span class="fw-bolder ms-3">{{ $order->holder_mobile ?? '' }}</span>
     </td>
 
 
     </tr>
     <!--end::Table row-->
-    @endforeach
+    {{-- @endforeach --}}
 
 
     </tbody>
