@@ -235,7 +235,6 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         </label>
                     </div>
                 </div>
-                @endif
 
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
@@ -245,6 +244,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <input type="hidden" name="tour_child_age[{{$index}}][]" required value="{{explode(",", $Tour->ages)[$i]}}"/>
                     </div>
                 </div>
+                @endif
                 @endfor
                 <div class="row">
 
