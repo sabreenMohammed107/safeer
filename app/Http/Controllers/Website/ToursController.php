@@ -169,7 +169,7 @@ class ToursController extends Controller
             ];
             session(['cartItem' => $sessionTourBook]);
 
-            \Log::info(\Session::get('sessionTourBook'));
+            \Log::info(\Session::get('cartItem'));
 
             return redirect()->route("siteLogin");
         }
