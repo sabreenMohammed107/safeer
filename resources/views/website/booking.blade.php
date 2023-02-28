@@ -228,12 +228,15 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         $TotalPaidPersons[$index]++;
                     }
                 @endphp
+                @if ($Tour->ages && explode(",", $Tour->ages)[$i] > 2)
                 <div class="row">
                     <div class="col-sm-12">
                         <label  class="form-label">Child Details (Age: {{explode(",", $Tour->ages)[$i]}}):
                         </label>
                     </div>
                 </div>
+                @endif
+
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <label  class="form-label">Name
