@@ -78,6 +78,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
     <form action="{{url('/Book')}}" method="POST">
     <div class="row mx-0">
         <div class="col-sm-12 col-md-6">
+            <input type="hidden" name="tax_percentage" value="{{$tax_percentage}}">
             @if($RoomCost)
             <h4 class="bg-info px-3 py-1 text-white">Hotel Room Reservation Details</h4>
             <div class="passenger_info">
@@ -143,7 +144,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                         <div class="col-12">
                             <label  class="form-label">notes</label>
-                            <textarea class="form-control" required name="notes" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea class="form-control" name="notes" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                         {{-- <div class="form-check mb-3">
                             <input class="form-check-input terms" required type="checkbox" value="" id="flexCheckChecked">
@@ -228,7 +229,6 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         $TotalPaidPersons[$index]++;
                     }
                 @endphp
-                @if ($Tour->ages && explode(",", $Tour->ages)[$i] > 2)
                 <div class="row">
                     <div class="col-sm-12">
                         <label  class="form-label">Child Details (Age: {{explode(",", $Tour->ages)[$i]}}):
@@ -244,13 +244,12 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <input type="hidden" name="tour_child_age[{{$index}}][]" required value="{{explode(",", $Tour->ages)[$i]}}"/>
                     </div>
                 </div>
-                @endif
                 @endfor
                 <div class="row">
 
                     <div class="col-12">
                         <label  class="form-label">notes</label>
-                        <textarea class="form-control" required name="tour_notes[{{$index}}]" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" name="tour_notes[{{$index}}]" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                     <input type="hidden" name="tour_id[{{$index}}]" value="{{$Tour->tour_id}}" />
                     <input type="hidden" name="tour_date[{{$index}}]" value="{{$Tour->tour_date}}" />
@@ -613,13 +612,13 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     </p>
                     <br>
                     <p class="mb-0 pb-0">
-                        VAT (14%) <span class="float-end text-end">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}} X 0.14 <br>  <span class="fw-bold">${{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost + $TotalVisasCost)*1.14,2,'.','')}}</span></span><br>
+                        VAT ({{$tax_percentage}}%) <span class="float-end text-end">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}} X {{(float)$tax_percentage/100}} <br>  <span class="fw-bold">${{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost + $TotalVisasCost)*(1 + (float)$tax_percentage/100),2,'.','')}}</span></span><br>
                     </p>
                 <br/>
                 </div>
                 <div class="grand_total final">
                     <h5> grand total</h5>
-                    <span> <span>$</span>{{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost)*1.14,2,'.','')}} </span>
+                    <span> <span>$</span>{{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost)*(1 + (float)$tax_percentage/100),2,'.','')}} </span>
                 </div>
              </div>
         </div>

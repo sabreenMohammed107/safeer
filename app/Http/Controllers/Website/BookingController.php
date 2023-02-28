@@ -34,13 +34,13 @@ class BookingController extends Controller
             session()->put("cartItem", [
                 "ID" => $id,
                 "Cap" => $cap,
-                "Nights" => session()->get("sessionArr")["nights"],
-                "adultsNumber" => session()->get("sessionArr")["adultsNumber"],
-                "childNumber" => session()->get("sessionArr")["childNumber"],
-                "roomsNumber" => session()->get("sessionArr")["roomsNumber"],
-                "from_date" => date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d"),
-                "to_date" => date_format(date_create(session()->get("sessionArr")["end_date"]), "Y-m-d"),
-                'ages' => session()->get("sessionArr")["ages"],
+                "Nights" => (session()->get("sessionArr"))?session()->get("sessionArr")["nights"] : 7,
+                "adultsNumber" => (session()->get("sessionArr"))?session()->get("sessionArr")["adultsNumber"]: 1,
+                "childNumber" => (session()->get("sessionArr"))?session()->get("sessionArr")["childNumber"]: 0,
+                "roomsNumber" => (session()->get("sessionArr"))?session()->get("sessionArr")["roomsNumber"]: 1,
+                "from_date" => (session()->get("sessionArr"))?date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d"): date("Y-m-d"),
+                "to_date" => (session()->get("sessionArr"))?date_format(date_create(session()->get("sessionArr")["end_date"]), "Y-m-d"): Date("Y-m-d", strtotime('+7 days')),
+                'ages' => (session()->get("sessionArr"))?session()->get("sessionArr")["ages"]:[],
                 'itemType' => 0, // Room
             ]);
 
@@ -57,15 +57,15 @@ class BookingController extends Controller
         $CartItem->user_id = session()->get("SiteUser")["ID"];
         $CartItem->room_type_cost_id = $id;
         $CartItem->room_cap = $cap;
-        $CartItem->adults_count = session()->get("sessionArr")["adultsNumber"];
-        $CartItem->children_count = session()->get("sessionArr")["childNumber"];
-        $CartItem->rooms_count = session()->get("sessionArr")["roomsNumber"];
-        $CartItem->nights = session()->get("sessionArr")["nights"];
-        $CartItem->from_date = date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d");
-        $CartItem->to_date = date_format(date_create(session()->get("sessionArr")["end_date"]), "Y-m-d");
+        $CartItem->adults_count = (session()->get("sessionArr"))?session()->get("sessionArr")["adultsNumber"]: 1;
+        $CartItem->children_count = (session()->get("sessionArr"))?session()->get("sessionArr")["childNumber"]: 0;
+        $CartItem->rooms_count = (session()->get("sessionArr")) ? session()->get("sessionArr")["roomsNumber"] : 1;
+        $CartItem->nights = (session()->get("sessionArr")) ?session()->get("sessionArr")["nights"]:7;
+        $CartItem->from_date = (session()->get("sessionArr")) ? date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d") : date("Y-m-d");
+        $CartItem->to_date = (session()->get("sessionArr")) ? date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d") : date("Y-m-d", strtotime('+7 days'));
         $CartItem->item_type = 0;
 
-        if (!session()->get("sessionArr")["ages"]) {
+        if (!session()->get("sessionArr") || !session()->get("sessionArr")["ages"]) {
             $CartItem->ages = null;
         } else {
             $CartItem->ages = implode(",", session()->get("sessionArr")["ages"]);
@@ -228,10 +228,13 @@ class BookingController extends Controller
             )
             ->get();
                 // return $GPVisasCost;
+
+            $tax_percentage = 14; // 14% Currently
         return view(
             "website.booking",
             [
                 "Company" => $Company,
+                "tax_percentage" => $tax_percentage,
                 "Counters" => $Counters,
                 "BreadCrumb" => $BreadCrumb,
                 "RoomCost" => $RoomCost,
@@ -264,7 +267,8 @@ class BookingController extends Controller
         $order = null;
         try {
             $order = new Orders();
-            $order->user_id = $request->user_id;
+            $order->user_id = session()->get("SiteUser")["ID"];
+            $order->tax_percentage = $request->tax_percentage;
             $order->save();
 
             if ($request->adultsSal && $request->adultsSal[0]) {
@@ -317,6 +321,7 @@ class BookingController extends Controller
                         $person->person_type = 1; // child bit
                         $person->person_salutation = "";
                         $person->person_mobile = "";
+                        $person->age = $request->childrenAges[$i];
                         $person->person_name = $request->childrenNames[$i];
                         if ($request->childrenAges[$i] <= $request->child_free_age_to && $request->childrenAges[$i] >= $request->child_free_age_from) {
                             $person->person_cost = 0;
@@ -373,6 +378,7 @@ class BookingController extends Controller
                             $person->person_type = 1; // child bit
                             $person->person_salutation = "";
                             $person->person_mobile = "";
+                            $person->age = $request->tour_child_age[$i][$j];
                             $person->person_name = $request->tour_child_name[$i][$j];
                             $person->person_cost = ((int) $request->tour_child_age[$i][$j] > 2) ? $refTour->tour_person_cost : 0;
                             $person->save();
@@ -393,6 +399,7 @@ class BookingController extends Controller
                 $orderDetails->holder_name = ($request->default_holder)? $request->transferName : $User->name;
                 $orderDetails->holder_mobile = ($request->default_holder) ? $request->transferMobile : $User->phone;
                 $orderDetails->holder_email = ($request->default_holder) ? $request->transferEmail : $User->email;
+                $orderDetails->holder_job = ($request->default_holder)? $request->transferJob : "";
                 $orderDetails->notes = $request->transferNotes;
                 $orderDetails->detail_type = 2; // Transfer
                 $orderDetails->save();
