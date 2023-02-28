@@ -65,7 +65,7 @@ class BookingController extends Controller
         $CartItem->to_date = (session()->get("sessionArr")) ? date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d") : date("Y-m-d", strtotime('+7 days'));
         $CartItem->item_type = 0;
 
-        if (!session()->get("sessionArr")["ages"]) {
+        if (!session()->get("sessionArr") || !session()->get("sessionArr")["ages"]) {
             $CartItem->ages = null;
         } else {
             $CartItem->ages = implode(",", session()->get("sessionArr")["ages"]);
