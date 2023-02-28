@@ -224,7 +224,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                 @endfor
                 @for ($i = 0; $i < $Tour->children_count; $i++)
                 @php
-                    if(explode(",", $Tour->ages)[$i] > 2){
+                    if($Tour->ages && explode(",", $Tour->ages)[$i] > 2){
                         $TotalPaidPersons[$index]++;
                     }
                 @endphp
