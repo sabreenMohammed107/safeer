@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Company;
 use App\Models\Country;
 use App\Models\Nationality;
@@ -63,11 +64,10 @@ class VisaDataController extends Controller
             }
 
         }
-
+        // return $Visas;
         if (!session()->get("SiteUser")) {
             $sessionVisasBook = [
                 'visas' => $Visas,
-                '_date' => date_format(now(), "Y-m-d"),
                 'itemType' => 3, // Visa Type Option
             ];
             session(['cartItem' => $sessionVisasBook]);
@@ -77,18 +77,20 @@ class VisaDataController extends Controller
             return redirect()->route("siteLogin");
         }
 
-        return $Visas;
-        // foreach ($Visas as $index => $visa) {
-        //     # code...
-        // }
-        // $CartItem = new Cart();
-        // $CartItem->user_id = session()->get("SiteUser")["ID"];
-        // $CartItem-> = $request->transfer_id;
-        // $CartItem->transfer_date = date_format(date_create($request->transfer_date), "Y-m-d");
-        // $CartItem->item_type = 2; // -> Transfer
-        // $CartItem->save();
-        // session()->put("hasCart", 1);
+        foreach ($Visas as $index => $visa) {
 
-        return redirect()->to("/cart")->with("session-success", "Transfer is added in your cart successfully");
+            $CartItem = new Cart();
+            $CartItem->user_id = session()->get("SiteUser")["ID"];
+            $CartItem->visa_id = $visa["visa_id"];
+            $CartItem->visa_name = $visa["name"];
+            $CartItem->visa_phone = $visa["phone"];
+            $CartItem->visa_email = $visa["email"];
+            $CartItem->item_type = 3; // -> Visa Type Option
+            $CartItem->save();
+        }
+
+        session()->put("hasCart", 1);
+
+        return redirect()->to("/cart")->with("session-success", "Visa(s) is added in your cart successfully");
     }
 }

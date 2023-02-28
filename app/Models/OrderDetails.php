@@ -123,4 +123,9 @@ class OrderDetails extends Model
     {
         return $this->hasMany(TransferDetails::class, 'order_details_id');
     }
+
+    public function visa_details()
+    {
+        return $this->hasMany(VisaDetails::class, 'order_details_id');
+    }
 }

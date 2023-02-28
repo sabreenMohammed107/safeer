@@ -19,6 +19,7 @@ abstract class ItemType
     const ROOM = 0;
     const TOUR = 1;
     const TRANSFER = 2;
+    const VISA = 3;
 }
 
 class AuthController extends Controller
@@ -105,6 +106,17 @@ class AuthController extends Controller
                 $CartItem->transfer_date = date_format(date_create(session()->get("cartItem")["transfer_date"]), "Y-m-d");
                 $CartItem->item_type = 2; // -> Transfer
                 $CartItem->save();
+            } else if (session()->get("cartItem")["itemType"] == ItemType::VISA) {
+                foreach (session()->get("cartItem")["visas"] as $i => $visa) {
+                    $CartItem = new Cart();
+                    $CartItem->user_id = session()->get("SiteUser")["ID"];
+                    $CartItem->visa_id = $visa["visa_id"];
+                    $CartItem->visa_name = $visa["name"];
+                    $CartItem->visa_phone = $visa["phone"];
+                    $CartItem->visa_email = $visa["email"];
+                    $CartItem->item_type = 3; // -> Visa
+                    $CartItem->save();
+                }
             }
 
             $redirect_url = '/cart';

@@ -13,7 +13,7 @@
     <x-website.header.general title="User Cart" :breadcrumb="$BreadCrumb" current="All your pre-booked rooms" />
 @endsection
 @section('content')
-@if ($RoomCost || count($ToursCost) || $TransferCost)
+@if ($RoomCost || count($ToursCost) || $TransferCost || count($VisasCost))
 @php
     $TotalCost = 0;
     $TotalToursFees = 0;
@@ -64,6 +64,11 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 @if ($TransferCost)
     @php
         $TotalTransferCost = $TransferCost->capacity * $TransferCost->person_price;
+    @endphp
+@endif
+@if (count($VisasCost) > 0)
+    @php
+        $TotalVisasCost =0;
     @endphp
 @endif
 <!-- passenger details -->
@@ -332,87 +337,60 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
             </div>
             @endif
-
-            {{-- <h4 class="bg-info px-3 py-1 text-white">Visa Applications Details</h4>
-
-            <h6 class="bg-light-info px-3 py-1">Abdallah Ahmed Ali Abouelabbas</h6>
+            @if(count($VisasCost) > 0)
+            <h4 class="bg-info px-3 py-1 text-white">Visa Applications Details</h4>
+            @foreach ($VisasCost as $idx => $visa)
+            @php
+                $TotalVisasCost += $visa->cost;
+            @endphp
+            <h6 class="bg-light-info px-3 py-1">{{$visa->visa_name}}</h6>
             <div class="passenger_info">
                 @csrf
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label  class="form-label">Country
                         </label>
-                        <p class="fw-bold">United States of America (USA)</p>
+                        <p class="fw-bold">{{$visa->en_country}}</p>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label  class="form-label">Visa Type
                         </label>
-                        <p class="fw-bold">J-Type</p>
+                        <p class="fw-bold">{{$visa->en_type}}</p>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label  class="form-label">Nationality</label>
 
-                        <p class="fw-bold">Egyptian</p>
+                        <p class="fw-bold">{{$visa->en_nationality}}</p>
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                         <label  class="form-label">Fees</label>
 
-                        <p class="fw-bold">3500 EGP</p>
+                        <p class="fw-bold">{{$visa->cost}}$</p>
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                         <label  class="form-label">Mobile</label>
 
-                        <p class="fw-bold">01110075475</p>
+                        <p class="fw-bold">{{$visa->visa_phone}}</p>
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                         <label  class="form-label">Email</label>
 
-                        <p class="fw-bold">abouelabbas@hotmail.com</p>
+                        <p class="fw-bold">{{$visa->visa_email}}</p>
                 </div>
 
-
+                <input type="hidden" name="visa_id[{{$idx}}]" value="{{$visa->visa_id}}">
+                <input type="hidden" name="visa_name[{{$idx}}]" value="{{$visa->visa_name}}">
+                <input type="hidden" name="visa_email[{{$idx}}]" value="{{$visa->visa_email}}">
+                <input type="hidden" name="visa_phone[{{$idx}}]" value="{{$visa->visa_phone}}">
+                <input type="hidden" name="visa_cost[{{$idx}}]" value="{{$visa->cost}}">
 
                 </div>
             </div>
-            <h6 class="bg-light-info px-3 py-1">Mahmoud Farid</h6>
-            <div class="passenger_info">
-                @csrf
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Country
-                        </label>
-                        <p class="fw-bold">United States of America (USA)</p>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Visa Type
-                        </label>
-                        <p class="fw-bold">J-Type</p>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Nationality</label>
+            @endforeach
 
-                        <p class="fw-bold">Egyptian</p>
-                </div>
-                <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Fees</label>
+            <input type="hidden" name="cost" value="{{$TotalVisasCost}}">
 
-                        <p class="fw-bold">3500 EGP</p>
-                </div>
-                <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Mobile</label>
-
-                        <p class="fw-bold">01110075475</p>
-                </div>
-                <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Email</label>
-
-                        <p class="fw-bold">abouelabbas@hotmail.com</p>
-                </div>
-
-
-
-                </div>
-            </div> --}}
+            @endif
             <div class="">
                 <div class="row">
 
@@ -596,44 +574,48 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                 </div>
                 @endif
-
-                {{-- <p class="receipt-title">Visa Application Receipt</p>
+                @if (count($VisasCost) > 0)
+                <p class="receipt-title">Visa Application Receipt</p>
                 <div class="booking_info_card">
                     <div class="text-end mb-3"><a class="del-hotel" href="{{url("/ca")}}"><i class="fa-solid fa-trash"></i></a></div>
                     <div class="remain_info mb-3">
                         <h5>Visa</h5>
-
+                        @foreach ($GPVisasCost as $_visa)
                         <p class="mb-0 pb-0">
-                            2 X J-Type Visa:<span class="float-end">2 X $350<span><br><span class="fw-bold">$700</span></span>
+                            {{$_visa->en_type}}:<span class="float-end">{{$_visa->groupped_count}} X ${{$_visa->sum_costs}}<span></span>
                         </p>
+                        @endforeach
+
                         <br>
                         <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                            <span class="float-end text-end fw-bold">$700</span><br>
+                            <span class="float-end text-end fw-bold">${{$TotalVisasCost}}</span><br>
                         </p>
                         <br>
                         <div class="grand_total">
                             <h6> Sub-total</h6>
-                            <span class="h6"> 700$</span></span>
+                            <span class="h6"> {{$TotalVisasCost}}$</span></span>
                         </div>
 
                         <br>
                     </div>
 
-                </div> --}}
+                </div>
+                @endif
+
                 <p class="receipt-title">Total Fees</p>
                 <div class="remain_info">
                     <p class="mb-0 pb-0">
-                        Before Tax <span class="float-end text-end">${{$TotalCost + $TotalToursFees + $TotalTransferCost}} </span><br>
+                        Before Tax <span class="float-end text-end">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}} </span><br>
                     </p>
                     <br>
                     <p class="mb-0 pb-0">
-                        VAT (14%) <span class="float-end text-end">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost),2,'.','')}} X 0.14 <br>  <span class="fw-bold">${{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost)*1.14,2,'.','')}}</span></span><br>
+                        VAT (14%) <span class="float-end text-end">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}} X 0.14 <br>  <span class="fw-bold">${{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost + $TotalVisasCost)*1.14,2,'.','')}}</span></span><br>
                     </p>
                 <br/>
                 </div>
                 <div class="grand_total final">
                     <h5> grand total</h5>
-                    <span> <span>$</span>{{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost)*1.14,2,'.','')}} </span>
+                    <span> <span>$</span>{{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost)*1.14,2,'.','')}} </span>
                 </div>
              </div>
         </div>

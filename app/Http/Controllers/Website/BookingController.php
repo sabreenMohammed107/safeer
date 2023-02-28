@@ -14,6 +14,7 @@ use App\Models\SiteUser;
 use App\Models\Tour;
 use App\Models\TourDetails;
 use App\Models\TransferDetails;
+use App\Models\VisaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -182,7 +183,51 @@ class BookingController extends Controller
             ->where([["user_id", "=", session()->get("SiteUser")["ID"]], ["cart.item_type", '=', 2]])
             ->first();
 
-            // return $TransferCost;
+        $VisasCost = DB::table("cart")
+            ->select(
+                'cart.user_id',
+                'cart.id',
+                'cart.visa_name',
+                'cart.visa_phone',
+                'cart.visa_email',
+                'cart.visa_id',
+                'cart.item_type',
+                'visa_types.en_type',
+                'countries.en_country',
+                'nationalities.en_nationality',
+                'visas.cost',
+            )
+            ->leftJoin("visas", "visas.id", "=", "cart.visa_id")
+            ->leftJoin("visa_types", "visa_types.id", "=", "visas.visa_type_id")
+            ->leftJoin("countries", "countries.id", "=", "visa_types.country_id")
+            ->leftJoin("nationalities", "nationalities.id", "=", "visas.nationality_id")
+            ->where([["user_id", "=", session()->get("SiteUser")["ID"]], ["cart.item_type", '=', 3]])
+            ->get();
+        $GPVisasCost = DB::table("cart")
+            ->select(
+                'cart.user_id',
+                'cart.visa_id',
+                'cart.item_type',
+                'visa_types.en_type',
+                'countries.en_country',
+                'nationalities.en_nationality',
+                DB::raw('COUNT(cost) as groupped_count, SUM(cost) as sum_costs')
+            )
+            ->leftJoin("visas", "visas.id", "=", "cart.visa_id")
+            ->leftJoin("visa_types", "visa_types.id", "=", "visas.visa_type_id")
+            ->leftJoin("countries", "countries.id", "=", "visa_types.country_id")
+            ->leftJoin("nationalities", "nationalities.id", "=", "visas.nationality_id")
+            ->where([["user_id", "=", session()->get("SiteUser")["ID"]], ["cart.item_type", '=', 3]])
+            ->groupBy(
+                'cart.user_id',
+                'cart.visa_id',
+                'cart.item_type',
+                'visa_types.en_type',
+                'countries.en_country',
+                'nationalities.en_nationality',
+            )
+            ->get();
+                // return $GPVisasCost;
         return view(
             "website.booking",
             [
@@ -191,6 +236,8 @@ class BookingController extends Controller
                 "BreadCrumb" => $BreadCrumb,
                 "RoomCost" => $RoomCost,
                 "ToursCost" => $ToursCost,
+                "VisasCost" => $VisasCost,
+                "GPVisasCost" => $GPVisasCost,
                 "TransferCost" => $TransferCost,
             ]
         );
@@ -364,6 +411,32 @@ class BookingController extends Controller
                 $TransferDetail->transfer_total_cost = ($request->capacity * (float)$request->fees);
                 $TransferDetail->save();
             }
+
+            if($request->visa_id && count($request->visa_id) > 0){
+                for ($i=0; $i < count($request->visa_id); $i++) {
+                    $orderDetails = new OrderDetails();
+                    $orderDetails->order_id = $order->id;
+                    /**
+                     * Holder Here is the Visa holder (Phone, Name, Email) ---- Visa_Details contains -> (name, phone, email)
+                     */
+                    $orderDetails->holder_salutation = "";
+                    $orderDetails->holder_name = $request->visa_name[$i];
+                    $orderDetails->holder_mobile = $request->visa_phone[$i];
+                    $orderDetails->holder_email = $request->visa_email[$i];
+                    $orderDetails->notes = " ";
+                    $orderDetails->detail_type = 3; // Visa option
+                    $orderDetails->save();
+
+
+                    $VisaDetail = new VisaDetails();
+                    $VisaDetail->visa_id = $request->visa_id[$i];
+                    $VisaDetail->order_details_id = $orderDetails->id;
+                    $VisaDetail->visa_cost = $request->visa_cost[$i];
+                    $VisaDetail->visa_date = date_format(now(), "Y-m-d");
+                    $VisaDetail->save();
+
+                }
+            }
             // return "passed";
 
             $Cart = Cart::where("user_id", "=", session()->get("SiteUser")["ID"]);
@@ -398,10 +471,9 @@ class BookingController extends Controller
             }else if($item->detail_type == 2){ // Transfer
                 $Cost += $item->transfer_details[0]->transfer_total_cost;
             }else if ($item->detail_type == 3) { // Visa
-                $Cost += 0; // To be completed
+                $Cost += $item->visa_details[0]->visa_cost; // To be completed
             }
         }
-        // return $Cost;
         $BreadCrumb = [];
         $Company = Company::first();
 

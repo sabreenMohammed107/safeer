@@ -27,12 +27,10 @@ class VisaDetails extends Model
      * @var array
      */
     protected $fillable = [
-        'visa_type_id',
-        'country_id',
-        'nationality_id',
-        'name',
-        'phone',
-        'email',
+        'visa_id',
+        'visa_date',
+        'visa_cost',
+        'order_details_id',
 
     ];
 

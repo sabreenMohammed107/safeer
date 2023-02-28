@@ -27,6 +27,10 @@ class Cart extends Model
         'tour_date',
         'transfer_id',
         'transfer_date',
+        'visa_id',
+        'visa_name',
+        'visa_phone',
+        'visa_email',
 
     ];
 }
