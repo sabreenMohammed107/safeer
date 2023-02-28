@@ -243,12 +243,13 @@ class TourController extends Controller
         $file_name = public_path('uploads/tours/' . $file);
         try {
             File::delete($file_name);
-
+            $tour->features()->detach();
+            $tour->tags()->detach();
             $tour->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
 
         } catch (QueryException $q) {
-            // return redirect()->back()->withInput()->with('flash_danger', $q->getMessage());
+            //  return redirect()->back()->withInput()->with('flash_danger', $q->getMessage());
             return redirect()->back()->withInput()->with('flash_danger', 'Can’t delete This Row
             Because it related with another table');
         }
