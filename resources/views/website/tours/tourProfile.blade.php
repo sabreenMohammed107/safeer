@@ -591,11 +591,8 @@
 
                 <div class="review_info">
                     <div class="heading">
-                        @if (session()->get('SiteUser'))
-                        <h6> {{ session()->get('SiteUser')['Name'] }} </h6>
-                        @else
-                        <h6> user name </h6>
-                        @endif
+                        <h6> {{ $rev->user->name ?? ''}} </h6>
+
                         <div class="rating">
                             @for ($i = 0; $i < $rev->review_stars; $i++)
                                 <i class="fa-solid fa-star"></i>
