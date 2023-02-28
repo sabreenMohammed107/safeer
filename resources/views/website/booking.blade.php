@@ -260,6 +260,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         $TotalToursFees += $TourTotalCost[$index];
                     @endphp
                     <input type="hidden" name="tour_total_cost[{{$index}}]" value="{{$TourTotalCost[$index]}}" />
+                    <input type="hidden" name="tour_cost[{{$index}}]" value="{{$Tour->tour_person_cost}}" />
                 </div>
             </div>
             @endforeach
