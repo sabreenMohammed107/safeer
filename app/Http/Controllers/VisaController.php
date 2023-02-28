@@ -7,7 +7,7 @@ use App\Models\Currency;
 use App\Models\Nationality;
 use App\Models\Visa;
 use App\Models\Visa_type;
-use Doctrine\DBAL\Query\QueryException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class VisaController extends Controller
