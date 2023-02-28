@@ -143,7 +143,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                         <div class="col-12">
                             <label  class="form-label">notes</label>
-                            <textarea class="form-control" required name="notes" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea class="form-control" name="notes" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                         {{-- <div class="form-check mb-3">
                             <input class="form-check-input terms" required type="checkbox" value="" id="flexCheckChecked">
@@ -228,7 +228,6 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         $TotalPaidPersons[$index]++;
                     }
                 @endphp
-                @if ($Tour->ages && explode(",", $Tour->ages)[$i] > 2)
                 <div class="row">
                     <div class="col-sm-12">
                         <label  class="form-label">Child Details (Age: {{explode(",", $Tour->ages)[$i]}}):
@@ -244,13 +243,12 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <input type="hidden" name="tour_child_age[{{$index}}][]" required value="{{explode(",", $Tour->ages)[$i]}}"/>
                     </div>
                 </div>
-                @endif
                 @endfor
                 <div class="row">
 
                     <div class="col-12">
                         <label  class="form-label">notes</label>
-                        <textarea class="form-control" required name="tour_notes[{{$index}}]" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" name="tour_notes[{{$index}}]" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                     <input type="hidden" name="tour_id[{{$index}}]" value="{{$Tour->tour_id}}" />
                     <input type="hidden" name="tour_date[{{$index}}]" value="{{$Tour->tour_date}}" />

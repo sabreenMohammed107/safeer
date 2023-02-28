@@ -459,7 +459,7 @@ if(isset($arrayData['result'])){
         </div>
         <div class="rooms_avaliable container">
             <h5> available rooms
-                @if(!$HasRoom)
+                @if($HasRoom != 0)
                 <span class="text-danger fs-6">*You have an existing Room in Your Cart</span>
                 @endif
             </h5>
