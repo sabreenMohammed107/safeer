@@ -241,16 +241,18 @@
                                              <div class="contact_info qr-code-custome" >
                                                 <div class="info">
                                                     <i class="fa-solid fa-qrcode"></i>
-                                                    <span>Scan Me Now </span>
+                                                    <span>Scan Me Now  </span>
                                                 </div>
                                                 {{-- <img src="{{ asset('img/payment/QR-Code-PNG-Transparent.png') }}" alt=""
                                                     srcset=""> --}}
 
                                                       <img src="data:image/png;base64, {!! base64_encode(
-                            QrCode::format('png')->merge('/public/website_assets/images/q1.png')->size(70)->generate('https://etbis.eticaret.gov.tr'),
+                            QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->merge('/public/website_assets/images/q1.png')->size(80)->generate('https://etbis.eticaret.gov.tr'),
                         ) !!}" style="margin-bottom: 10px;">
 
-
+<img src="data:image/png;base64, {!! base64_encode(
+    QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->size(80)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
+) !!}" style="margin-bottom: 10px;">
                                             </div>
                                         </div>
                                     </div>
