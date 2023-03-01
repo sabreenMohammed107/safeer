@@ -88,7 +88,7 @@
                             <th class="min-w-100px">User Name</th>
                             {{-- <th class="text-end min-w-100px">Date</th> --}}
                             {{-- <th class="text-end min-w-100px">Time</th> --}}
-                            <th class="text-end min-w-70px">Holder Name</th>
+                            <th class="text-end min-w-70px">User ID</th>
                             <th class="text-end min-w-100px">Type</th>
 
                             <th class="text-end min-w-100px">Created Date</th>
@@ -138,7 +138,7 @@
     <!--begin::Qty=-->
     <td class="text-end pe-0" data-order="15">
         <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
-        <span class="fw-bolder ms-3">{{ $row->order->holder_name ?? '' }}</span>
+        <span class="fw-bolder ms-3">{{ $row->order->user->id ?? '' }}</span>
     </td>
     <!--end::Qty=-->
     <!--begin::Price=-->

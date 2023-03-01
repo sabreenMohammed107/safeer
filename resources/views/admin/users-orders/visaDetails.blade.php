@@ -113,7 +113,7 @@ value="1" />
 </div>
 </th>
 
-<th class="min-w-200px">salutation</th>
+{{-- <th class="min-w-200px">salutation</th> --}}
 <th class="min-w-100px">holder name</th>
 <th class="text-end min-w-70px">mobile</th>
 <th class="text-end min-w-100px">notes</th>
@@ -136,7 +136,7 @@ value="1" />
 </td>
 <!--end::Checkbox-->
 <!--begin::Category=-->
-<td>
+{{-- <td>
 <div class="d-flex align-items-center">
 
 <div class="ms-5">
@@ -147,7 +147,7 @@ data-kt-ecommerce-category-filter="category_name" >{{$order->holder_salutation ?
 <!--end::Title-->
 </div>
 </div>
-</td>
+</td> --}}
 
 <!--begin::Qty=-->
 <td class="text-strt pe-0" data-order="15">
