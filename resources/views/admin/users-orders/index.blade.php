@@ -200,8 +200,8 @@
 
         @if ($row->detail_type == 3)
         <?php
-        $taxVal=($row->visa_details->sum('total_cost')* ($row->order->tax_percentage))/100;
-        $grandTotal=$row->visa_details->sum('total_cost') + $taxVal;
+        $taxVal=($row->visa_details->sum('visa_cost')* ($row->order->tax_percentage))/100;
+        $grandTotal=$row->visa_details->sum('visa_cost') + $taxVal;
                 ?>
                 {{number_format((float)$grandTotal, 2, '.', '')}}$
         @endif
