@@ -31,7 +31,7 @@ value="1" />
 
 <th class="text-end min-w-100px">room_cost</th>
 
-<th class="text-end min-w-70px">Date F/T</th>
+<th class="text-end min-w-70px">Date From</th>
 <th class="text-end min-w-70px">nights</th>
 <th class="text-end min-w-70px">Adults</th>
 <th class="text-end min-w-70px">Child</th>
@@ -89,7 +89,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $roomDetail->hotel->hotel_
 <!--end::Status=-->
 <!--begin::Status=-->
 <td class="text-end pe-0">
-    <span class="fw-bolder text-dark">{{ $roomDetail->from_date ?? '' }} / {{ $roomDetail->to_date ?? '' }}</span>
+    <span class="fw-bolder text-dark">{{ $roomDetail->from_date ?? '' }} </span>
     </td>
     <!--end::Status=-->
     <td class="text-end pe-0">
