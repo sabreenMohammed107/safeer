@@ -65,6 +65,23 @@ class VisaDataController extends Controller
         }
         echo $output;
     }
+
+    public function dynamicCost(Request $request)
+    {
+
+        $nationality = $request->get('nationality');
+        $visa_type = $request->get('visa_type');
+
+         $data = Visa::where('visa_type_id', $visa_type)->where('nationality_id',$nationality)->first();
+
+\Log::info([$nationality,$visa_type]);
+        $output ='';
+        if($data){
+            $output =$data->cost;
+        }
+
+        echo $output;
+    }
     public function bookVisas(Request $request)
     {
         $Visas = [];

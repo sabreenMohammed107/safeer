@@ -125,6 +125,8 @@ Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas']);
 Route::post('dynamicvisatype/fetch',[VisaDataController::class,'fetchCat'] )->name('dynamicvisatype.fetch');
 //dynamicnationality.fetch
 Route::post('dynamicnationality/fetch',[VisaDataController::class,'fetchNationality'] )->name('dynamicnationality.fetch');
+//dynamicCost
+Route::post('dynamicCost/fetch',[VisaDataController::class,'dynamicCost'] )->name('dynamicCost.fetch');
 
 Route::middleware(['prevent-relogin'])->group(function () {
     //site-login

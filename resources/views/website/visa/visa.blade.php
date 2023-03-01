@@ -148,11 +148,10 @@
                     <input type="email" name="email[0]" placeholder="Email" />
                 </div>
 
-                <!-- <div class="col-sm-12 col-md-6 col-xl-4">
-                 <a class="btn btn-primary" id="visaaa" >Add </a>
-               </div>
-               -->
+                <div id="costBerVisa" style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3">
 
+                    <h5><label for="">Cost / Visa :  </label><label class="visaCost">  50 </label> $</h5>
+                </div>
             </div>
             {{-- </form> --}}
 
@@ -240,7 +239,7 @@
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for="">Nationality </label>
                     <select class="form-select nationality"  id="nationality" aria-label="Default select example"
-                    name="nation[`+ counter +`]">
+                    name="nation[`+ counter +`]" onchange="fetchCost(this)" >
                     <option value="">select....</option>
 
                         </select>
@@ -261,6 +260,10 @@
                     <input type="email" name="email[` + counter + `]" placeholder="Email" />
                 </div>
 
+                <div  style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3 costBerVisa">
+
+<h5><label for="">Cost / Visa :  </label><label class="visaCost">  50 </label> $</h5>
+</div>
                 <!-- <div class="col-sm-12 col-md-6 col-xl-4">
                     <a class="btn btn-primary" id="visaaa" >Add </a>
                 </div>
@@ -322,6 +325,8 @@
                         },
                         success: function(result) {
                             trigger.parent().parent().find(".visa_type").html(result);
+                            $("#costBerVisa").css("display", "none");
+                            $('.visaCost').html('');
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
@@ -351,6 +356,42 @@
                         },
                         success: function(result) {
                             trigger.parent().parent().find(".nationality").html(result);
+                            $("#costBerVisa").css("display", "none");
+                            $('.visaCost').html('');
+                        },
+                        error: function(xhr, status, error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            alert(err.Message);
+                        }
+
+                    })
+                }
+            });
+
+            $('.nationality').change(function() {
+                if ($(this).val() != '') {
+                    var select = $(this).attr("id");
+                    var value = $(this).val();
+
+                    var trigger = $(this);
+                    var _token = $('input[name="_token"]').val();
+                    // alert("Second");
+
+                    $.ajax({
+                        url: "{{ route('dynamicCost.fetch') }}",
+                        method: "POST",
+                        data: {
+                            select: select,
+                            nationality: value,
+
+                            visa_type:  $('select[name="visa_type_id[0]"] option:selected').val(),
+                            _token: _token
+                        },
+                        success: function(result) {
+                            // alert(result)
+                            $("#costBerVisa").css("display", "block");
+
+                            $('.visaCost').text(result);
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
@@ -363,7 +404,40 @@
 
         });
 
+        function fetchCost(elem){
 
+            if ($(elem).val() != '') {
+                    var select = $(elem).attr("id");
+                    var selectName = $(elem).attr("name");
+                    var value = $(elem).val();
+                    let numbers = selectName.match(/\d/g);
+                    var trigger = $(elem);
+
+                    var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url: "{{ route('dynamicCost.fetch') }}",
+                        method: "POST",
+                        data: {
+                            select: select,
+                            nationality: value,
+                            visa_type:$('select[name="visa_type_id['+numbers+']"] option:selected').val(),
+                            _token: _token
+                        },
+                        success: function(result) {
+                            // alert(result)
+                            trigger.parent().parent().find(".costBerVisa").css("display", "block");
+                            trigger.parent().parent().find(".visaCost").text(result);
+
+                        },
+                        error: function(xhr, status, error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            alert(err.Message);
+                        }
+
+
+                    })
+                }
+        }
 function fetchNationality(elem){
     if ($(elem).val() != '') {
                     var select = $(elem).attr("id");
@@ -383,6 +457,8 @@ function fetchNationality(elem){
                         },
                         success: function(result) {
                             trigger.parent().parent().find(".nationality").html(result);
+                            trigger.parent().parent().find(".costBerVisa").css("display", "none");
+
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
@@ -412,6 +488,8 @@ function fetchNationality(elem){
                         },
                         success: function(result) {
                             trigger.parent().parent().find(".visa_type").html(result);
+                            trigger.parent().parent().find(".costBerVisa").css("display", "none");
+
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
