@@ -27,7 +27,6 @@ abstract class ItemType
 }
 class BookingController extends Controller
 {
-
     public function BookRoom(int $id, int $cap)
     {
         if (!session()->get("SiteUser")) {
@@ -85,6 +84,7 @@ class BookingController extends Controller
     public function Cart()
     {
 
+        // return date("Y-m-d", strtotime('+7 days'));
         $BreadCrumb = [];
         $Company = Company::first();
 
