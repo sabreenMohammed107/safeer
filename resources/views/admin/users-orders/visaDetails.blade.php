@@ -87,18 +87,18 @@ data-kt-ecommerce-category-filter="category_name" >{{ $visaDetail->visa->type->e
 </div>
     </div>
     <!--end::General options-->
-     <!--end::General options-->
-                <!--begin::General options-->
-                <div class="card card-flush py-4">
-                    <!--begin::Card header-->
-                    <div class="card-header">
-                        <div class="card-title">
-                            <h2>Persons Details </h2>
+       <!--end::General options-->
+      <!--begin::General options-->
+      <div class="card card-flush py-4">
+        <!--begin::Card header-->
+        <div class="card-header">
+            <div class="card-title">
+                <h2>Holder Details </h2>
 
-                        </div>
-                    </div>
-                    <!--end::Card header-->
-                     <!--begin::Table-->
+            </div>
+        </div>
+        <!--end::Card header-->
+         <!--begin::Table-->
 <div class="card-body pt-0">
 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_category_table">
 <!--begin::Table head-->
@@ -106,16 +106,18 @@ data-kt-ecommerce-category-filter="category_name" >{{ $visaDetail->visa->type->e
 <!--begin::Table row-->
 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
 <th class="w-10px pe-2">
-   <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-       <input class="form-check-input" type="checkbox" data-kt-check="true"
-           data-kt-check-target="#kt_ecommerce_category_table .form-check-input"
-           value="1" />
-   </div>
+<div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+<input class="form-check-input" type="checkbox" data-kt-check="true"
+data-kt-check-target="#kt_ecommerce_category_table .form-check-input"
+value="1" />
+</div>
 </th>
 
-<th class="min-w-200px">Person Name</th>
-<th class="min-w-100px">P/Type</th>
-<th class="text-end min-w-70px">Person Mobile</th>
+<th class="min-w-200px">salutation</th>
+<th class="min-w-100px">holder name</th>
+<th class="text-end min-w-70px">mobile</th>
+<th class="text-end min-w-100px">notes</th>
+<th class="text-end min-w-70px">email </th>
 
 </tr>
 <!--end::Table row-->
@@ -123,52 +125,59 @@ data-kt-ecommerce-category-filter="category_name" >{{ $visaDetail->visa->type->e
 <!--end::Table head-->
 <!--begin::Table body-->
 <tbody class="fw-bold text-gray-600">
-    @foreach ($persons as $index => $person)
-    <!--begin::Table row-->
-    <tr>
-    <!--begin::Checkbox-->
-    <td>
-    <div class="form-check form-check-sm form-check-custom form-check-solid">
-    <input class="form-check-input" type="checkbox" value="1" />
-    </div>
-    </td>
-    <!--end::Checkbox-->
-    <!--begin::Category=-->
-    <td>
-    <div class="d-flex align-items-center">
+{{-- @foreach ($persons as $index => $person) --}}
+<!--begin::Table row-->
+<tr>
+<!--begin::Checkbox-->
+<td>
+<div class="form-check form-check-sm form-check-custom form-check-solid">
+<input class="form-check-input" type="checkbox" value="1" />
+</div>
+</td>
+<!--end::Checkbox-->
+<!--begin::Category=-->
+<td>
+<div class="d-flex align-items-center">
 
-    <div class="ms-5">
-    <!--begin::Title-->
+<div class="ms-5">
+<!--begin::Title-->
 
-    <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
-    data-kt-ecommerce-category-filter="category_name" >{{$person->person_salutation ?? '' }} - {{$person->person_name ?? '' }}</a>
-    <!--end::Title-->
-    </div>
-    </div>
-    </td>
+<a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
+data-kt-ecommerce-category-filter="category_name" >{{$order->holder_salutation ?? '' }}</a>
+<!--end::Title-->
+</div>
+</div>
+</td>
 
-    <!--begin::Qty=-->
-    <td class="text-strt pe-0" data-order="15">
-        <span class="fw-bolder ms-3">{{$person->person_type==0 ?'Adult' : 'Child' }}</span>
-    </td>
-    <!--end::Qty=-->
-    <td class="text-center pe-0" data-order="15">
-    <span class="fw-bolder ms-3">{{ $person->mobile ?? '' }}</span>
-    </td>
+<!--begin::Qty=-->
+<td class="text-strt pe-0" data-order="15">
+<span class="fw-bolder ms-3">{{$order->holder_name ?? '' }}</span>
+</td>
+<!--end::Qty=-->
+<td class="text-end pe-0" data-order="15">
+<span class="fw-bolder ms-3">{{ $order->holder_mobile ?? '' }}</span>
+</td>
+
+<td class="text-end pe-0" data-order="15">
+<span class="fw-bolder ms-3">{{ $order->notes ?? '' }}</span>
+</td>
+
+<td class="text-end pe-0" data-order="15">
+<span class="fw-bolder ms-3">{{ $order->holder_email ?? '' }}</span>
+</td>
+
+</tr>
+<!--end::Table row-->
+{{-- @endforeach --}}
 
 
-    </tr>
-    <!--end::Table row-->
-    @endforeach
-
-
-    </tbody>
-    <!--end::Table body-->
+</tbody>
+<!--end::Table body-->
 </table>
 <!--end::Table-->
 </div>
-                </div>
-                <!--end::General options-->
+    </div>
+    <!--end::General options-->
 </div>
 
 </div>
