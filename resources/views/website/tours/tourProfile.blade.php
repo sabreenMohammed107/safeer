@@ -188,8 +188,8 @@
                             <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i class="fa-solid fa-share-nodes"></i>
                             </a> </span> --}}
                         <span >
-                            <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i class="fa-solid fa-share-nodes"></i>
-                            </a>
+                            {{-- <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i class="fa-solid fa-share-nodes"></i>
+                            </a> --}}
                             @if($favExist==1)
                         <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i
                                  class="fa-regular fa-heart "  style="background-color: #1C4482; color:#fff"></i> </a>
