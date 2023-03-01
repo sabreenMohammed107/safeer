@@ -183,18 +183,19 @@
 
                                                     ?>
                                                     @foreach ($data as $fav)
+                                                    @if($fav)
                                                         <div class="card-content">
                                                             <div class=" card setted_tour_cards ">
                                                                 <div class="card_image">
                                                                     <div class="image_overlay">
-                                                                        <img src="{{ asset('uploads/hotels') }}/{{ $fav->hotel->hotel_banner }}"
+                                                                        <img src="{{ asset('uploads/hotels') }}/{{ $fav->hotel->hotel_banner ?? '' }}"
                                                                             alt=" blogimage">
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body  setted_info">
                                                                     <div class="card_info">
-                                                                        <h6>{{ $fav->hotel->hotel_enname }} –
-                                                                            {{ $fav->hotel->hotel_stars }} Stars</h6>
+                                                                        <h6>{{ $fav->hotel->hotel_enname ?? '' }} –
+                                                                            {{ $fav->hotel->hotel_stars ?? ''}} Stars</h6>
                                                                         <span>
                                                                             <i class="fa-regular fa-heart"></i>
                                                                         </span>
@@ -230,6 +231,7 @@
                                                             $last_id = $fav->id;
 
                                                         @endphp
+                                                        @endif
                                                     @endforeach
 
                                                 </div>
