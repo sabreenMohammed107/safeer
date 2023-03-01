@@ -84,13 +84,15 @@
                                         value="1" />
                                 </div>
                             </th>
-                            <th class="min-w-200px">User Name</th>
+                            <th class="min-w-100px">Order ID</th>
+                            <th class="min-w-100px">User Name</th>
                             {{-- <th class="text-end min-w-100px">Date</th> --}}
                             {{-- <th class="text-end min-w-100px">Time</th> --}}
-                            <th class="text-end min-w-70px">Holder Name</th>
+                            <th class="text-end min-w-70px">User ID</th>
                             <th class="text-end min-w-100px">Type</th>
 
                             <th class="text-end min-w-100px">Created Date</th>
+                            <th class="text-end min-w-100px">Grand Total</th>
                             <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -115,6 +117,17 @@
             <div class="ms-5">
                 <!--begin::Title-->
 
+                 {{ $row->order->id ?? ''}}
+                <!--end::Title-->
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class="d-flex align-items-center">
+
+            <div class="ms-5">
+                <!--begin::Title-->
+
                 <a href="{{ route('users-orders.show', $row->order_id ) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
                  >{{ $row->order->user->name ?? ''}}</a>
                 <!--end::Title-->
@@ -125,17 +138,19 @@
     <!--begin::Qty=-->
     <td class="text-end pe-0" data-order="15">
         <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
-        <span class="fw-bolder ms-3">{{ $row->order->holder_name ?? '' }}</span>
+        <span class="fw-bolder ms-3">{{ $row->order->user->id ?? '' }}</span>
     </td>
     <!--end::Qty=-->
     <!--begin::Price=-->
     <td class="text-center pe-0">
         <span class="fw-bolder text-dark">
+
             @if ($row->detail_type == 0)
                 Booking Room
             @endif
 
             @if ($row->detail_type == 1)
+
                 Booking Tours
             @endif
 
@@ -148,11 +163,49 @@
             @endif
            </span>
     </td>
-    <!--end::Price=-->
 
-    <!--begin::Status=-->
     <td class="text-end pe-0">
+
         <span class="fw-bolder text-dark">{{ $row->order->created_at ?? '' }}</span>
+    </td>
+
+    <td class="text-end pe-0">
+
+        <span class="fw-bolder text-dark">
+            @if ($row->detail_type == 0)
+            <?php
+            $taxVal=($row->room_details->sum('total_cost') * ($row->order->tax_percentage))/100;
+            $grandTotal=$row->room_details->sum('total_cost') + $taxVal;
+                    ?>
+                    {{number_format((float)$grandTotal, 2, '.', '')}}$
+
+        @endif
+
+        @if ($row->detail_type == 1)
+        <?php
+
+        $taxVal=($row->tours_details->sum('total_cost')* ($row->order->tax_percentage))/100;
+        $grandTotal=$row->tours_details->sum('total_cost')+$taxVal;
+                ?>
+            {{number_format((float)$grandTotal, 2, '.', '')}}$
+        @endif
+
+        @if ($row->detail_type == 2)
+        <?php
+        $taxVal=($row->transfer_details->sum('total_cost')* ($row->order->tax_percentage))/100;
+        $grandTotal=$row->transfer_details->sum('total_cost') + $taxVal;
+                ?>
+                {{number_format((float)$grandTotal, 2, '.', '')}}$
+        @endif
+
+        @if ($row->detail_type == 3)
+        <?php
+        $taxVal=($row->visa_details->sum('total_cost')* ($row->order->tax_percentage))/100;
+        $grandTotal=$row->visa_details->sum('total_cost') + $taxVal;
+                ?>
+                {{number_format((float)$grandTotal, 2, '.', '')}}$
+        @endif
+        </span>
     </td>
     <!--end::Status=-->
     <!--begin::Action=-->

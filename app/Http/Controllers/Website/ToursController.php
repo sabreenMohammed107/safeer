@@ -37,7 +37,7 @@ class ToursController extends Controller
             ->groupBy(["en_category", "features_categories.id"])->get();
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
-        $Countries = Country::all();
+        $Countries = Country::where('id',1)->get();
         $Cities = City::where('country_id', 1)->get();
         return view("website.tours.tourProfile", [
             "Company" => $Company,
@@ -59,7 +59,7 @@ class ToursController extends Controller
         $Cities = City::all();
         $TourTypes = Tour_type::all();
 
-        $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(3);
+        $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
@@ -99,7 +99,7 @@ class ToursController extends Controller
                 //
             }
 
-            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(3);
+            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
             $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
             $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
@@ -138,7 +138,7 @@ class ToursController extends Controller
                 //
             }
 
-            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(3);
+            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
             $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
             $ToursByAlpha = $ToursRecommended->sortBy('en_name');
             return view("website.tours.toursList",
@@ -233,6 +233,9 @@ class ToursController extends Controller
         $Rev->tour_id = $request->tour_id;
         $Rev->review_date = now();
         $Rev->active = 1;
+        if(session()->get("SiteUser")){
+            $Rev->user_id = session()->get("SiteUser")["ID"];
+        }
         // $Rev->tour_id = 1; //temp
 
         $Rev->save();

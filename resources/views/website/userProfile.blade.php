@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-6">
                                         <label for="email">e-mail </label>
-                                        <input type="email" name="email" value="{{ $userSite->email }}"
+                                        <input disabled type="email" name="email" value="{{ $userSite->email }}"
                                             class="form-control" id="email" placeholder="Mail ">
                                     </div>
                                     <div class="col-sm-12 col-md-6">
@@ -183,18 +183,19 @@
 
                                                     ?>
                                                     @foreach ($data as $fav)
+                                                    @if($fav->hotel)
                                                         <div class="card-content">
                                                             <div class=" card setted_tour_cards ">
                                                                 <div class="card_image">
                                                                     <div class="image_overlay">
-                                                                        <img src="{{ asset('uploads/hotels') }}/{{ $fav->hotel->hotel_banner }}"
+                                                                        <img src="{{ asset('uploads/hotels') }}/{{ $fav->hotel->hotel_banner ?? '' }}"
                                                                             alt=" blogimage">
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body  setted_info">
                                                                     <div class="card_info">
-                                                                        <h6>{{ $fav->hotel->hotel_enname }} –
-                                                                            {{ $fav->hotel->hotel_stars }} Stars</h6>
+                                                                        <h6>{{ $fav->hotel->hotel_enname ?? '' }} –
+                                                                            {{ $fav->hotel->hotel_stars ?? ''}} Stars</h6>
                                                                         <span>
                                                                             <i class="fa-regular fa-heart"></i>
                                                                         </span>
@@ -202,7 +203,7 @@
                                                                     <span> <i class="fa-solid fa-location-dot"></i>
                                                                         {{ $fav->hotel->city->country->en_country ?? '' }}
                                                                         <span>|</span>
-                                                                        {{ $fav->hotel->city->en_city }}</span>
+                                                                        {{ $fav->hotel->city->en_city ?? '' }}</span>
                                                                     <p>
                                                                         {!! \Illuminate\Support\Str::limit($fav->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
 
@@ -230,6 +231,7 @@
                                                             $last_id = $fav->id;
 
                                                         @endphp
+                                                        @endif
                                                     @endforeach
 
                                                 </div>

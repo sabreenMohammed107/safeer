@@ -133,7 +133,7 @@ input.nosubmit {
 
 
 
-                            <div class="accordion-item">
+                            {{-- <div class="accordion-item">
                                 <h2 class="accordion-header" id="flush-headingForth">
                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-colapseForth" aria-expanded="false" aria-controls="flush-colapseForth">
                                  price range
@@ -152,7 +152,7 @@ input.nosubmit {
                                      </div>
                                  </div>
                                 </div>
-                             </div>
+                             </div> --}}
                         </div>
                     </div>
                 </div>

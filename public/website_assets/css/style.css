@@ -3107,7 +3107,7 @@ top: -4%;
 }
 .done_button:hover {
   background-color: #1C4482;
-  color: white;
+  color: white !important;
 }
 .btn-check:focus+.btn, .btn:focus {
   box-shadow: none;

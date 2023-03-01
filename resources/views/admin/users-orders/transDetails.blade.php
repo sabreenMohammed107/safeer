@@ -113,7 +113,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->transfer_date ?? 
                     <!--begin::Card header-->
                     <div class="card-header">
                         <div class="card-title">
-                            <h2>Persons Details </h2>
+                            <h2>Holder Details </h2>
 
                         </div>
                     </div>
@@ -134,9 +134,11 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->transfer_date ?? 
 </th>
 
 <th class="min-w-200px">Person Name</th>
-<th class="min-w-100px">P/Type</th>
-<th class="text-end min-w-70px">Person Mobile</th>
-
+<th class="min-w-100px">Type</th>
+<th class="min-w-100px">Email</th>
+<th class="text-end min-w-70px"> Mobile</th>
+<th class="text-end min-w-70px"> job</th>
+<th class="text-end min-w-70px"> Notes</th>
 </tr>
 <!--end::Table row-->
 </thead>
@@ -171,12 +173,20 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->transfer_date ?? 
     <td class="text-strt pe-0" data-order="15">
         <span class="fw-bolder ms-3">Adult</span>
     </td>
+    <td class="text-start pe-0" data-order="15">
+        <span class="fw-bolder ms-3">{{ $order->holder_email ?? '' }}</span>
+        </td>
     <!--end::Qty=-->
     <td class="text-center pe-0" data-order="15">
     <span class="fw-bolder ms-3">{{ $order->holder_mobile ?? '' }}</span>
     </td>
 
-
+    <td class="text-center pe-0" data-order="15">
+        <span class="fw-bolder ms-3">{{ $order->holder_job ?? '' }}</span>
+        </td>
+        <td class="text-center pe-0" data-order="15">
+            <span class="fw-bolder ms-3">{{ $order->notes ?? '' }}</span>
+            </td>
     </tr>
     <!--end::Table row-->
     {{-- @endforeach --}}

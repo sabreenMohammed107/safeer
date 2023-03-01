@@ -22,7 +22,7 @@ class MainController extends Controller
         $ExploreCities = Explore_city::where("active","=", 1)->take(5)->get();
         $Offers = Offer::where("active","=", 1)->get();
         $Counters = Counter::get();
-        $Countries = Country::all();
+        $Countries = Country::where('id',1)->get();
         $cities=City::where('country_id',1)->get();
         $BestHotels = Best_hotel::where('active','=',1)->orderBy("order")->get();
         $BlogsCategories = Blogs_category::all();
