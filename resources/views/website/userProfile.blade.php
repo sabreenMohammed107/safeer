@@ -183,7 +183,7 @@
 
                                                     ?>
                                                     @foreach ($data as $fav)
-                                                    @if($fav)
+                                                    @if($fav->hotel)
                                                         <div class="card-content">
                                                             <div class=" card setted_tour_cards ">
                                                                 <div class="card_image">
@@ -203,7 +203,7 @@
                                                                     <span> <i class="fa-solid fa-location-dot"></i>
                                                                         {{ $fav->hotel->city->country->en_country ?? '' }}
                                                                         <span>|</span>
-                                                                        {{ $fav->hotel->city->en_city }}</span>
+                                                                        {{ $fav->hotel->city->en_city ?? '' }}</span>
                                                                     <p>
                                                                         {!! \Illuminate\Support\Str::limit($fav->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
 
