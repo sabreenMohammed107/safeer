@@ -192,8 +192,8 @@
 
         @if ($row->detail_type == 2)
         <?php
-        $taxVal=($row->transfer_details->sum('total_cost')* ($row->order->tax_percentage))/100;
-        $grandTotal=$row->transfer_details->sum('total_cost') + $taxVal;
+        $taxVal=($row->transfer_details->sum('transfer_total_cost')* ($row->order->tax_percentage))/100;
+        $grandTotal=$row->transfer_details->sum('transfer_total_cost') + $taxVal;
                 ?>
                 {{number_format((float)$grandTotal, 2, '.', '')}}$
         @endif
