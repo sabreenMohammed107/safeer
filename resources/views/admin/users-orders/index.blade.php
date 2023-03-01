@@ -174,8 +174,8 @@
         <span class="fw-bolder text-dark">
             @if ($row->detail_type == 0)
             <?php
-            $taxVal=($row->room_details->sum('total_cost')* ($row->order->tax_percentage))/100;
-            $grandTotal=$row->tours_details->sum('total_cost') + $taxVal;
+            $taxVal=($row->room_details->sum('total_cost') * ($row->order->tax_percentage))/100;
+            $grandTotal=$row->room_details->sum('total_cost') + $taxVal;
                     ?>
                     {{number_format((float)$grandTotal, 2, '.', '')}}$
 
