@@ -216,7 +216,7 @@ input.nosubmit {
             <div class="col-sm-12 col-xl-9">
                 <div class="filtered_hotels">
                     <div class="filters">
-                        <span> pick up your car</span>
+                        <span> Pick up your car</span>
                         <div class="left_filter">
                             <ul class="nav nav-pills " id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">

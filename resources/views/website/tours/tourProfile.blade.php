@@ -240,7 +240,7 @@
                     </div>
                 </div>
 
-                <h6> important note </h6>
+                <h6> Overview </h6>
                 <p>
                     {!! $Tour->en_overview !!}
                 </p>
@@ -282,7 +282,7 @@
                     <img src="{{ asset('/website_assets/images/tour-details/tour_info/passenger-with-baggage.webp') }}"
                         alt=" passenger-with-baggage image">
                     <h6> Cost / Person </h6>
-                    <span>{{ $Tour->tour_person_cost }} </span>
+                    <span>{{ number_format($Tour->tour_person_cost, 2) }} $</span>
                 </div>
             </div>
 
