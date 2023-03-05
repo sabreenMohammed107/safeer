@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel.css') }}">
-   
+
     <style>
         .pageActive {
             color: white !important;
@@ -22,7 +22,7 @@
         }
 input.nosubmit {
       border: none;
-  
+
   margin: 0;
   padding: 7px 8px;
   font-size: 14px;
@@ -50,7 +50,7 @@ input.nosubmit {
 }
     </style>
 
-     
+
 @endsection
 
 @section('bottom-header')
@@ -275,7 +275,7 @@ input.nosubmit {
                         {{-- autocomplete --}}
                         <div classs="form-group">
          <input class="typeahead form-control nosubmit" onchange="fetch_hotels()" id="searchId" placeholder="search by hotel name" type="text">
-      
+
         </div>
                         {{-- @foreach ($Hotels as $Hotel)
                             <div class="form-check">
@@ -561,7 +561,7 @@ input.nosubmit {
 
         $(document).ready(function() {
                var path = "{{ route('autocomplete') }}";
-  
+
     $( "#searchId" ).autocomplete({
         source: function( request, response ) {
           $.ajax({
@@ -578,7 +578,7 @@ input.nosubmit {
         },
         select: function (event, ui) {
            $('#searchId').val(ui.item.label);
-           console.log(ui.item); 
+           console.log(ui.item);
            return false;
         }
       });
@@ -588,7 +588,7 @@ input.nosubmit {
     var arr_zones = [];
     var arr_ratings = [];
     var sort_by = 0; // recommended
-   
+
 
     $(".hotel_idxx").change(function(){
         if($(this).is(':checked')){
@@ -847,7 +847,7 @@ input.nosubmit {
             method: "POST",
             data: {
                 searchHotelId:$('#searchId').val(),
-                
+
                 hotel_ids: $("input[name=hotel_ids]").val(),
                 hotel_rating: $("input[name=hotel_rating]").val(),
                 hotel_countries_ids: $("input[name=hotel_countries_ids]").val(),

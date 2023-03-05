@@ -29,14 +29,14 @@
                 <button class="{{ Request::segment(2)=='hotels' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ url('/hotels') }}">hotels</a>
                 </button>
-                <button class="offcan_buttons">
-                    <a href="./tours.html">tours</a>
+                <button class="{{ Request::segment(2)=='tours' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                    <a href=".{{ url('/tours') }}">tours</a>
                 </button>
-                <button class="offcan_buttons">
-                    <a href="#">transfer</a>
+                <button class="{{ Request::segment(2)=='transfers' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                    <a href="{{  url('/transfers')  }}">transfer</a>
                 </button>
-                <button class="offcan_buttons">
-                    <a href="#">visa</a>
+                <button class="{{ Request::segment(2)=='visa' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                    <a href="{{ url('/visa')  }}">visa</a>
                 </button>
                 <button class="{{ Request::segment(2)=='contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ url('/contact') }}">contact</a>
@@ -145,7 +145,7 @@
                             <a href="{{ route('siteRegister') }}" class="links hybrid sign_up">sign up</a>
                         </li>
                         @endif
-                        {{-- <li class=" profile_name" style="opacity: 0.8">
+                         {{-- <li class=" profile_name" style="opacity: 0.8">
                             <img title="Arabic" src="{{ asset('img/flags/ar.png') }}" class="flag-img main-lang">
                             <img title="English" src="{{ asset('img/flags/en.png') }}" class="flag-img ">
                         </li> --}}

@@ -75,6 +75,37 @@ class ToursController extends Controller
 
         ]);
     }
+    public function getTourByCity($id)
+    {
+
+
+        $Company = Company::first();
+        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $Cities = City::all();
+        $TourTypes = Tour_type::all();
+
+            $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id');
+
+
+                $filterTour->where("tours.city_id",  $id);
+
+
+            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
+            $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
+            $ToursByAlpha = $ToursRecommended->sortBy('en_name');
+
+            return view("website.tours.tours", [
+                "Company" => $Company,
+                "Cities" => $Cities,
+                "BreadCrumb" => $BreadCrumb,
+                "TourTypes" => $TourTypes,
+                "ToursRecommended" => $ToursRecommended,
+                "ToursByPrice" => $ToursByPrice,
+                "ToursByAlpha" => $ToursByAlpha,
+                "Count" => $ToursRecommended->count(),
+
+            ]);
+        }
 
     public function fetch_data(Request $request)
     {

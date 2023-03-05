@@ -81,6 +81,26 @@ input.nosubmit {
 
     <section class="tours container mt-4">
         <div class="row mx-0">
+            @if (session()->has('message'))
+<div class="alert alert-success alert-dismissible fade show" >
+                <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ session()->get('message') }}
+</div>
+@endif
+
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul class="p-0 m-0" style="list-style: none;">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
             <div class="  col-sm-0 col-xl-3">
                 <button class="btn filtered_button" onclick="openFilter()" id="filterButton">
                     <i class="fa-solid fa-sliders"></i> search Transfer
@@ -92,7 +112,16 @@ input.nosubmit {
                         {{-- <h6> Search Hotels By Name</h6> --}}
                         {{-- autocomplete --}}
 
+                            <div class="row" style="padding-right: 1rem!important;">
 
+                                <div class="col-md-10">
+                                    <label for=""> search by car capacity</label>
+                                <input class="form-control " min="1" value="1"  id="searchId" placeholder="search by car capacity" type="number">
+                                </div>
+
+                                <div class="col-md-2 mt-4" ><button onclick="fetch_transfer()" class="btn btn-primary" ><i class="fa-solid fa-magnifying-glass"></i></button></div>
+
+                           </div>
                         <div class="accordion accordion-flush" id="accordionFlushExample">
 
 
@@ -264,24 +293,16 @@ input.nosubmit {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer=""defer"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer=""defer"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer" defer="defer"></script>
-    <script src="{{ asset('/website_assets/js/datepicker-bs4.js?')}}" defer="defer"></script>
+    {{-- <script src="{{ asset('/website_assets/js/datepicker-bs4.js?')}}" defer="defer"></script> --}}
 
 <script>
-     $("#start_date, #end_date, #birth_date").datepicker({
-            minDate: 0,
 
-            dateFormat: 'mm/dd/yy', beforeShow: function () {
-                $(".ui-datepicker").css('font-size', 12)
-
-            },
-
-        });
 
 
         $(document).ready(function() {
-            $('#start_date, #end_date, #birth_date').datepicker({
+            $('.transfer_date').datepicker({
 
 });
 //
@@ -442,7 +463,7 @@ $(".CarModels_id").change(function(){
 
                 success: function(response) {
                     $('#table_data').html(response);
-                    $('#start_date, #end_date, #birth_date').datepicker({
+                    $('.transfer_date').datepicker({
 
 });
                     // $('#selectSort option[value="'+selection+'"]').prop('selected', true);
@@ -465,7 +486,7 @@ $(".CarModels_id").change(function(){
             method: "POST",
             data: {
 
-
+                searchCarCapacity:$('#searchId').val(),
                 pickups_ids: $("input[name=pickups_ids]").val(),
                     dropoff_ids: $("input[name=dropoff_ids]").val(),
 
@@ -477,7 +498,7 @@ $(".CarModels_id").change(function(){
             success: function(result){
                  console.log(result);
                 $("#table_data").html(result);
-                $('#start_date, #end_date, #birth_date').datepicker({
+                $('.transfer_date').datepicker({
 
 });
             },

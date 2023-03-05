@@ -147,7 +147,15 @@
                     <label for="">Email </label>
                     <input type="email" name="email[0]" placeholder="Email" />
                 </div>
+                <div class="col-sm-12 col-md-6 col-xl-4">
+                    <label for="">Passport image </label>
+                    <input type="file" name="passport[0]" placeholder="Passport image" />
 
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-4">
+                    <label for="">Personal image </label>
+                    <input type="file" name="personal[0]" placeholder="Personal image" />
+                </div>
                 <div id="costBerVisa" style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3">
 
                     <h5><label for="">Cost / Visa :  </label><label class="visaCost">  50 </label> $</h5>
@@ -259,7 +267,15 @@
                     <label for="">Email  </label>
                     <input type="email" name="email[` + counter + `]" placeholder="Email" />
                 </div>
+                <div class="col-sm-12 col-md-6 col-xl-4">
+                    <label for="">Passport image </label>
+                    <input type="file" name="passport[` + counter + `]" placeholder="Passport image" />
 
+                </div>
+                <div class="col-sm-12 col-md-6 col-xl-4">
+                    <label for="">Personal image </label>
+                    <input type="file" name="personal[` + counter + `]" placeholder="Personal image" />
+                </div>
                 <div  style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3 costBerVisa">
 
 <h5><label for="">Cost / Visa :  </label><label class="visaCost">  50 </label> $</h5>

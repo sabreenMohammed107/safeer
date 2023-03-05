@@ -60,7 +60,7 @@
     <!-- icon -->
     <link rel="icon" href="{{ asset('/website_assets/images/homePage/logo.webp') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
     @yield("adds_css")
     <title> {{$title}} </title>
 </head>
@@ -143,11 +143,11 @@
                                                         <li><i class="fa-solid fa-angle-right"></i><a
                                                                 href="{{ url('/blogs') }}">Blogs
                                                             </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="#">Tours
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/tours') }}">Tours
                                                             </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="#">Transfer
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/transfers') }}">Transfer
                                                             </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="#">Visa </a>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/visa') }}">Visa </a>
                                                         </li>
 
 
@@ -245,14 +245,14 @@
                                                 </div>
                                                 {{-- <img src="{{ asset('img/payment/QR-Code-PNG-Transparent.png') }}" alt=""
                                                     srcset=""> --}}
+<a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >  <img src="data:image/png;base64, {!! base64_encode(
+    QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->merge('/public/website_assets/images/q1.png')->size(80)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
+) !!}" style="margin-bottom: 10px;"></a>
 
-                                                      <img src="data:image/png;base64, {!! base64_encode(
-                            QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->merge('/public/website_assets/images/q1.png')->size(80)->generate('https://etbis.eticaret.gov.tr'),
-                        ) !!}" style="margin-bottom: 10px;">
-
+<a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >
 <img src="data:image/png;base64, {!! base64_encode(
     QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->size(80)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
-) !!}" style="margin-bottom: 10px;">
+) !!}" style="margin-bottom: 10px;"></a>
                                             </div>
                                         </div>
                                     </div>
@@ -313,10 +313,11 @@
     <script src="{{ asset('/website_assets/js/image_gllery.js')}}"></script>
     <!-- adding room -->
     <script src="{{ asset('/website_assets/js/main.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer=""defer"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer=""defer"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer" defer="defer"></script>
-    <script src="{{ asset('/website_assets/js/datepicker-bs4.js?')}}" defer="defer"></script>
-    {{-- owl carousel --}}
+    {{-- <script src="{{ asset('/website_assets/js/datepicker-bs4.js?')}}" defer="defer"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    {{-- owl carousel --}}
     <script>
         $(document).ready(function(){
             // whts pp
@@ -327,7 +328,7 @@ $(document).on("click", "#send-it", function() {
       c = document.getElementById("chat-input").value,
       d = "https://web.whatsapp.com/send",
       e = b,
-      f = "&text=" + c;
+      f = "&text=" +  c;
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
@@ -335,7 +336,7 @@ $(document).on("click", "#send-it", function() {
     )
       var d = "whatsapp://send";
     //   +31 6 29320129
-    var g = d + "?phone=+905445019185" + e + f;
+    var g = d + "?phone=+905444668838" + e + f;
     window.open(g, "_blank");
   }
 }),

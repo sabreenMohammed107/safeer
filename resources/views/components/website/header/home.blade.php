@@ -24,7 +24,7 @@
 
                         <a href="{{ url('/transfers') }}">
                             <button class="nav-link"
-                                type="button" >travel</button>
+                                type="button" >Transfer</button>
                             </a>
 
                     </li>
@@ -33,7 +33,7 @@
                         role="tab" aria-controls="visa" aria-selected="false">visa payment</button> --}}
                         <a href="{{ url('/visa') }}">
                             <button class="nav-link"
-                                type="button" >visa payment</button>
+                                type="button" >visa </button>
                             </a>
 
                     </li>

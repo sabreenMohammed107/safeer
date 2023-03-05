@@ -16,7 +16,7 @@ use App\Models\Transfer;
 use App\Models\Transfer_location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Validator;
 class SiteTransferController extends Controller
 {
     //
@@ -75,7 +75,10 @@ class SiteTransferController extends Controller
                 //
             }
 
+            if ($request->searchCarCapacity ) {
+                $filterTour->where("car_models.capacity", $request->searchCarCapacity);
 
+            }
 
             $TransfersRecommended = $filterTour->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
             $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
@@ -116,7 +119,10 @@ class SiteTransferController extends Controller
                 $filterTour->whereIn("class_id", explode(',', $request->CarClass_ids));
                 //
             }
+            if ($request->searchCarCapacity ) {
+                $filterTour->where("car_models.capacity", $request->searchCarCapacity);
 
+            }
 
             $TransfersRecommended = $filterTour->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
             $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
@@ -137,7 +143,32 @@ class SiteTransferController extends Controller
 
     public function bookTransfer(Request $request)
     {
-        if(!session()->get("SiteUser")){
+        $capacity=Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id')->where('transfers.id',$request->transfer_id)
+        ->select('car_models.capacity')->first();
+        // dd($capacity->capacity);
+        $validator = Validator::make($request->all(), [
+            'transfer_adult' => 'required|integer|min:1|between: 1,'.$capacity->capacity.'',
+
+            'transfer_date' => 'required|date|after:today',
+
+        ], [
+            'transfer_adult.required' =>'Adult number is required',
+
+            'transfer_date.required' =>'Transfer date  is required',
+
+            'transfer_date.after' =>'Transfer date must be after today ',
+
+            'transfer_adult.between' =>'Adult number must be in 1 to '.$capacity->capacity.' ',
+
+
+        ]);
+        if ($validator->fails()) {
+
+            return redirect()->back()->withInput()
+                ->withErrors($validator->messages());
+
+        }
+      if(!session()->get("SiteUser")){
             $sessionTransferBook=[
                 'transfer_id' => $request->transfer_id ,
                 'transfer_date'=> $request->transfer_date ,

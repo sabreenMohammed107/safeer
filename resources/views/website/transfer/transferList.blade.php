@@ -17,14 +17,14 @@
                             <div class="card-body  setted_info">
                                 <a href="" class="btn btn-primary obj" >
                                     <span>
-                                       {{ $HRec->carClass->class_enname ?? '' }}                               </span>
+                                       {{ $HRec->carClass->class_enname ?? '' }}                        </span>
                                   </a>
                               <div class="card_info">
-                                  <h6> {{ $HRec->carModel->model_enname ?? '' }} </h6>
+                                  <h6> {{ $HRec->carModel->model_enname ?? '' }} to {{ $HRec->locationTo->location_enname ?? '' }} </h6>
 
                               </div>
                               <h5>
-                              <span  class="duartion py-1" >     Number of seats {{ $HRec->duration }}  </span>
+                              <span  class="duartion py-1" >     Number of seats {{ $HRec->carModel->capacity ??'' }}  </span>
                               </h5>
                                 <div class="card_info" >
                                     <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>From :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HRec->locationFrom->location_enname ?? '' }} </a></p>
@@ -36,7 +36,7 @@
                                     <div class="card_info" >
                                     <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-regular fa-clock"></i> duration: <a href="" style="color:#1C4482;font-weight: 700"> {{ $HRec->duration }} hours </a></p>
                                     <span>
-                                        <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HRec->person_price, 2) }} </a>  Cost / Seat </p>
+                                        <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HRec->person_price, 2) }} </a>  Cost / Journey </p>
                                     </span>
                                 </div>
  <form action="{{ url('/bookTransfer') }}" method="POST">
@@ -49,7 +49,9 @@
                                 <label>
                                   pick a date
                                 </label>
-                                <input type="text" id="birth_date" placeholder="DD/MM/YYYY"  class="form-control " name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+                                <input type="text" id="transfer_date" placeholder="DD/MM/YYYY"  class="form-control transfer_date " name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+
+
 
                                                             </div>
                                 <div class="details">
@@ -88,14 +90,14 @@
                         <div class="card-body  setted_info">
                             <a href="" class="btn btn-primary obj" >
                                 <span>
-                                    {{ $HPrice->carClass->class_enname ?? '' }}                              </span>
+                                    {{ $HPrice->carClass->class_enname ?? '' }}           </span>
                               </a>
                           <div class="card_info">
-                              <h6> {{ $HPrice->carModel->model_enname ?? '' }}</h6>
+                              <h6> {{ $HPrice->carModel->model_enname ?? '' }} to {{ $HPrice->locationTo->location_enname ?? '' }}</h6>
 
                           </div>
                           <h5>
-                            <span  class="duartion py-1" >     Number of seats {{ $HPrice->duration }}  </span>
+                            <span  class="duartion py-1" >     Number of seats {{ $HPrice->carModel->capacity ??''}}  </span>
                             </h5>
                               <div class="card_info" >
                                   <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>From :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HPrice->locationFrom->location_enname ?? '' }} </a></p>
@@ -107,7 +109,7 @@
                                   <div class="card_info" >
                                   <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-regular fa-clock"></i> duration: <a href="" style="color:#1C4482;font-weight: 700"> {{ $HPrice->duration }} hours </a></p>
                                   <span>
-                                      <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HPrice->person_price, 2) }} </a>  Cost / Seat </p>
+                                      <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HPrice->person_price, 2) }} </a>  Cost / Journey </p>
                                   </span>
                               </div>
                             <form action="{{ url('/bookTransfer') }}" method="POST">
@@ -120,7 +122,7 @@
                                               pick a date
                                             </label>
 
-                                            <input type="text" id="start_date" placeholder="DD/MM/YYYY"  class="form-control " name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+                                            <input type="text" id="start_date" placeholder="DD/MM/YYYY"  class="form-control transfer_date" name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
                                         </div>
                                             <div class="details">
 
@@ -159,14 +161,14 @@
                         <div class="card-body  setted_info">
                             <a href="" class="btn btn-primary obj" >
                                 <span>
-                                    {{ $HAlpha->carClass->class_enname ?? '' }}                            </span>
+                                    {{ $HAlpha->carClass->class_enname ?? '' }}  </span>
                               </a>
                           <div class="card_info">
-                              <h6> {{ $HAlpha->carModel->model_enname ?? '' }}</h6>
+                              <h6> {{ $HAlpha->carModel->model_enname ?? '' }} to {{ $HAlpha->locationTo->location_enname ?? '' }}                           </h6>
 
                           </div>
                           <h5>
-                            <span  class="duartion py-1" >     Number of seats {{ $HAlpha->duration }}  </span>
+                            <span  class="duartion py-1" >     Number of seats {{ $HAlpha->carModel->capacity ??'' }}  </span>
                             </h5>
                               <div class="card_info" >
                                   <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>From :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HAlpha->locationFrom->location_enname ?? '' }} </a></p>
@@ -178,7 +180,7 @@
                                   <div class="card_info" >
                                   <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-regular fa-clock"></i> duration: <a href="" style="color:#1C4482;font-weight: 700"> {{ $HAlpha->duration }} hours </a></p>
                                   <span>
-                                      <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HAlpha->person_price, 2) }} </a>  Cost / Seat </p>
+                                      <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HAlpha->person_price, 2) }} </a>  Cost / Journey </p>
                                   </span>
                               </div>
                             <form action="{{ url('/bookTransfer') }}" method="POST">
@@ -192,7 +194,7 @@
                                               pick a date
                                             </label>
 
-                                            <input type="text" id="end_date" placeholder="DD/MM/YYYY"  class="form-control " name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+                                            <input type="text" id="end_date" placeholder="DD/MM/YYYY"  class="form-control transfer_date" name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
                                         </div>
                                             <div class="details">
 
