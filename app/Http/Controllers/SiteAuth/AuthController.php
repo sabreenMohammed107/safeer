@@ -78,7 +78,7 @@ class AuthController extends Controller
                 $CartItem->nights = session()->get("cartItem")["Nights"];
                 $CartItem->from_date = session()->get("cartItem")["from_date"];
                 $CartItem->to_date = session()->get("cartItem")["to_date"];
-                if (!session()->get("sessionArr")["ages"]) {
+                if (!session()->get("cartItem")["ages"]) {
                     $CartItem->ages = null;
                 } else {
                     $CartItem->ages = implode(",", session()->get("cartItem")["ages"]);
@@ -92,7 +92,7 @@ class AuthController extends Controller
                 $CartItem->adults_count = session()->get("cartItem")["adultsNumber"];
                 $CartItem->children_count = session()->get("cartItem")["childNumber"];
                 $CartItem->tour_date = session()->get("cartItem")["tour_date"];
-                if (!session()->get("sessionArr")["ages"]) {
+                if (!session()->get("cartItem")["ages"]) {
                     $CartItem->ages = null;
                 } else {
                     $CartItem->ages = implode(",", session()->get("cartItem")["ages"]);
