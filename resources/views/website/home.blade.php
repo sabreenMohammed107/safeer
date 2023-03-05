@@ -4,6 +4,11 @@
 <x-website.header.home :company="$Company" :countries="$Countries" :cities="$cities" />
 @endsection
 @section("content")
+<style>
+
+    </style>
+
+
 
   <!-- explore turkey -->
   <section class="investigtion">
@@ -40,7 +45,7 @@
                                     </a>
                                     </button>
                                     <button class="btn ">
-                                    <a href="./tours.html">
+                                    <a href="{{ route('tourByCity', $City->city->id) }}">
                                         <i class="fa-solid fa-plane"></i>
                                     </a>
                                     </button>
@@ -104,20 +109,51 @@
                 <div class="card-content">
                   <div class=" card hotels_card">
                     <div class="card_image">
+                        <a href="{{ url('/hotels/' . $Hotel->hotel->id) }}">
                         <div class="image_overlay">
                     <img src="{{ asset('uploads/hotels') }}/{{$Hotel->hotel->hotel_banner}}" class="w-100" height="250" alt=" hotel image">
                         </div>
+                        </a>
                     </div>
                     <div class="card-body hotel_card_info">
                       <div class="card_info">
                         <h5>{{$Hotel->hotel->hotel_enname}} </h5>
-                       <a href="#">
-                        <i class="fa-regular fa-heart"></i>
-                       </a>
+                        @if (session()->get('SiteUser'))
+
+
+
+                                            @php
+                                                $favExist = 0;
+                                                $favUser = App\Models\Favorite_hotels_tour::where('hotel_id', $Hotel->hotel->id)
+                                                    ->where('user_id', session()->get('SiteUser')['ID'])
+                                                    ->first();
+                                                if ($favUser) {
+                                                    $favExist = 1;
+                                                }
+                                            @endphp
+
+                                            @else
+                                                @php
+                                                    $favExist=0;
+                                                @endphp
+                                            @endif
+                                            <span >
+                                                @if($favExist==1)
+                                            <a  href="{{ url('/removeFavourite/' . $Hotel->hotel->id) }}"  ><i
+                                                     class="fa-regular fa-heart card_info_hover" style="color: #1C4482;font-weight: 600;"></i> </a>
+
+                                                     @else
+
+                                                    <a  href="{{ url('/favourite/' . $Hotel->hotel->id) }}"  ><i
+                                                        class="fa-regular fa-heart"></i> </a>
+
+                                                @endif </span>
                       </div>
+                      <a href="{{ url('/hotels/' . $Hotel->hotel->id) }}">
                       <p>
                         {{$Hotel->hotel->hotel_enbrief}}
                       </p>
+                      </a>
                       <div class="location">
                         <i class="fa-sharp fa-solid fa-location-dot"></i>
                         <span> {{$Hotel->hotel->details_enaddress}} </span>
@@ -160,7 +196,7 @@
           <p>
             {{$Company->book_tour_en_desc}}
           </p>
-          <a href="#">Read more
+          <a href="{{ url('/tours') }}">Read more
             <i class="fa-solid fa-angle-right"></i>
             <i class="fa-solid fa-angle-right"></i>
           </a>
@@ -184,7 +220,7 @@
             {{$Company->book_transport_en_desc}}
         </p>
           <div class="read">
-            <a href="#">Read more
+            <a href="{{ url('/transfers') }}">Read more
               <i class="fa-solid fa-angle-right"></i>
               <i class="fa-solid fa-angle-right"></i>
             </a>
@@ -370,6 +406,7 @@
 @section('adds_js')
 <script>
     $(document).ready(function() {
+
 
 $('.dynamic').change(function() {
 

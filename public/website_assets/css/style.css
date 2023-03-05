@@ -3752,6 +3752,31 @@ text-transform: none;
     margin: 0 0 0 15px;
 }
 
+/*--------------------sasafixedicons-------------------------------------*/
+.fixed-icon {
+    position: fixed;
+    top: 150px !important;
+    left: 0px;
+    z-index: 999;
+}
+.f-icon {
+    background-color: whitesmoke;
+    margin-bottom: 2px;
+    padding: 5px 10px ;
+    border: 1px solid #0073B2;
+}
+
+.f-icon:hover {
+    background-color:  #0073B2;
+    margin-bottom: 2px;
+    padding: 5px 10px ;
+    border: 1px solid whitesmoke;
+
+}
+.f-icon:hover a{
+    color: #fff !important;
+}
+/*--------------------sasafixedicons-------------------------------------*/
 /* -------------------------------------------------- */
 /* -------------------------------------------------- */
 /* change language ahmed sayed */

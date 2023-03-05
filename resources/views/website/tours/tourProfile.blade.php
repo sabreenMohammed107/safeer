@@ -188,8 +188,8 @@
                             <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i class="fa-solid fa-share-nodes"></i>
                             </a> </span> --}}
                         <span >
-                            <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i class="fa-solid fa-share-nodes"></i>
-                            </a>
+                            {{-- <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i class="fa-solid fa-share-nodes"></i>
+                            </a> --}}
                             @if($favExist==1)
                         <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i
                                  class="fa-regular fa-heart "  style="background-color: #1C4482; color:#fff"></i> </a>
@@ -240,7 +240,7 @@
                     </div>
                 </div>
 
-                <h6> important note </h6>
+                <h6> Overview </h6>
                 <p>
                     {!! $Tour->en_overview !!}
                 </p>
@@ -282,7 +282,7 @@
                     <img src="{{ asset('/website_assets/images/tour-details/tour_info/passenger-with-baggage.webp') }}"
                         alt=" passenger-with-baggage image">
                     <h6> Cost / Person </h6>
-                    <span>{{ $Tour->tour_person_cost }} </span>
+                    <span>{{ number_format($Tour->tour_person_cost, 2) }} $</span>
                 </div>
             </div>
 

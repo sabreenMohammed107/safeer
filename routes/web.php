@@ -105,6 +105,8 @@ Route::get('/fetch-tour-filter',  [ToursController::class, 'fetch_data'])->name(
 Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
 Route::get("/tours/{id}", [ToursController::class, 'profile']);
 Route::post("/bookTours", [ToursController::class, 'bookTours']);
+//getTourByCity
+Route::get("/tourByCity/{id}", [ToursController::class, 'getTourByCity'])->name("tourByCity");
 //removeFavouriteTours
 
 Route::get("/removeFavouriteTours/{id}", [ToursController::class, 'removeFavourite']);
@@ -125,6 +127,8 @@ Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas']);
 Route::post('dynamicvisatype/fetch',[VisaDataController::class,'fetchCat'] )->name('dynamicvisatype.fetch');
 //dynamicnationality.fetch
 Route::post('dynamicnationality/fetch',[VisaDataController::class,'fetchNationality'] )->name('dynamicnationality.fetch');
+//dynamicCost
+Route::post('dynamicCost/fetch',[VisaDataController::class,'dynamicCost'] )->name('dynamicCost.fetch');
 
 Route::middleware(['prevent-relogin'])->group(function () {
     //site-login

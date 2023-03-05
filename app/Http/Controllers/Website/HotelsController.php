@@ -228,6 +228,7 @@ class HotelsController extends Controller
             $zone_id=$request->hotel_zone_ids;
             $rate_id=$request->hotel_rating;
             $serch=$request->searchHotelId;
+            \Log::info($request->all());
             $RoomCosts = Room_type_cost::whereHas('hotel', function ($q) {
                 $q->where('active',  1);
             });
@@ -243,10 +244,8 @@ class HotelsController extends Controller
                     $RoomCosts->whereIn("hotel_id", explode(',', $request->hotel_ids));
                 }
             if ($request->hotel_rating) {
-
-                $RoomCosts->whereHas('hotel', function ($q) use ($rate_id) {
-                    $q->whereIn('rate_id',  explode(',', $rate_id));
-                });
+                $rtes=Hotel::whereIn('hotel_stars',   explode(',', $rate_id))->pluck('id');
+                $RoomCosts->whereIn('hotel_id',$rtes) ;
             }
             if ($request->hotel_cities_ids) {
 
@@ -299,7 +298,7 @@ class HotelsController extends Controller
             $zone_id=$request->hotel_zone_ids;
             $rate_id=$request->hotel_rating;
             $serch=$request->searchHotelId;
-
+\Log::info($request->all());
             if ($request->searchHotelId) {
 
                 $serIds=Hotel::where('hotel_enname', 'LIKE', '%'. $serch. '%')->pluck(id);
@@ -321,9 +320,9 @@ class HotelsController extends Controller
 
             if ($request->hotel_rating) {
 
-                $RoomCosts->whereHas('hotel', function ($q) use ($rate_id) {
-                    $q->whereIn('rate_id',  explode(',', $rate_id));
-                });
+                $rtes=Hotel::whereIn('hotel_stars',   explode(',', $rate_id))->pluck('id');
+                $RoomCosts->whereIn('hotel_id',$rtes) ;
+
             }
             if ($request->hotel_cities_ids) {
 
