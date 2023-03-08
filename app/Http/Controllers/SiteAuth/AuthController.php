@@ -99,6 +99,11 @@ class AuthController extends Controller
                 $CartItem->item_type = ItemType::TOUR;
                 $CartItem->save();
             }else if(session()->get("cartItem")["itemType"] == ItemType::TRANSFER){
+                $CartItem = Cart::where([["user_id", '=', session()->get("SiteUser")["ID"]], ["item_type", '=', ItemType::TRANSFER]])->first();
+
+                if ($CartItem) { // Has Transfer ?
+                    return redirect()->to("/transfers")->with("session-warning", "Can't Purchase multiple transfer items in one time");
+                }
                 $CartItem = new Cart();
                 $CartItem->user_id = session()->get("SiteUser")["ID"];
                 $CartItem->transfer_id = session()->get("cartItem")["transfer_id"];

@@ -209,7 +209,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                         <input type="text" name="tour_adults_email[{{$index}}][]" required class="form-control" placeholder="Email">
                     </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
+                    <div class="col-sm-12 col-md-8">
                         <label  class="form-label">Pickup Point</label>
 
                         <input type="text" name="tour_pickup_point[{{$index}}]" required class="form-control" placeholder="Pickup Point">
@@ -305,19 +305,6 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     </div>
 
                     <h6 class="fw-bold">Reservation Holder Details:</h6>
-                    <div class="form-check ps-5 my-2">
-                        <input class="form-check-input" type="checkbox" name="default_holder" id="transHolderFlag">
-                        <label class="form-check-label ps-2" for="transHolderFlag">
-                            Go & Return
-                        </label>
-                    </div>
-                    <div class="row trans-holder" style="display: none;">
-                        <div class="col-sm-12 col-md-8">
-                            <div class="details px-1">
-                                <input type="text" id="transfer_date" placeholder="DD/MM/YYYY" class="form-control transfer_date is_holder" name="return" min="2000-01-01" max="2025-12-31" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">Salutation
@@ -365,6 +352,27 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <input type="hidden" name="capacity" value="{{$TransferCost->capacity}}" />
                         <input type="hidden" name="fees" id="t_price" value="{{$TransferCost->person_price}}" />
                         <input type="hidden" name="image" value="{{$TransferCost->image}}" />
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check my-2">
+                                <input class="form-check-input" type="checkbox" name="default_holder" id="transHolderFlag">
+                                <label class="form-check-label ps-2" for="transHolderFlag">
+                                    Go & Return
+                                </label>
+                            </div>
+                            <div class="row trans-holder" style="display: none;">
+                                <div class="col-sm-12 col-md-8">
+                                    <label class="mb-2">
+                                        Return Date
+                                    </label>
+                                    <br/>
+                                    <div class="details px-1">
+                                        <input type="text" id="transfer_date" min="{{$TransferCost->transfer_date}}" placeholder="DD/MM/YYYY" class="form-control transfer_date is_holder" name="return" max="2025-12-31" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -598,6 +606,10 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <br/>
                         <p class="mb-0 pb-0">
                             To: <span class="float-end"> {{$TransferCost->to_location_enname}}</span>
+                        </p>
+                        <br>
+                        <p class="mb-0 pb-0">
+                            Transportation Date : <span class="float-end"> {{$TransferCost->transfer_date}}</span>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
