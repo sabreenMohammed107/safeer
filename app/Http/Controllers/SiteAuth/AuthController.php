@@ -172,7 +172,8 @@ class AuthController extends Controller
                 return redirect()->to("/safer/register")->with("session-danger" , "Email Address is Already in-use")
                 ->with('Data', $data);
             } else {
-                return redirect()->to("/safer/register")->with("session-danger", "Can't Register with this data please try again later");
+                return redirect()->to("/safer/register")->with("session-danger", "Can't Register with this data please try again later")
+                ->with('Data', $data);;
             }
         }
 
