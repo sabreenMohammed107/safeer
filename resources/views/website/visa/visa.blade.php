@@ -89,7 +89,7 @@
 @endsection
 @section('content')
 
-<form action="{{url("/Safer/BookVisa")}}" method="POST">
+<form action="{{url("/Safer/BookVisa")}}" method="POST" enctype="multipart/form-data">
     @csrf
     <section class="passenger_section container pt-5" id="passenger_section">
         <p class="receipt-title">Pickup Your Visa </p>
@@ -107,15 +107,15 @@
                 <div class="col-md-6 col-xl-4 col-sm-12 ">
                     <label for=""> visa request country </label>
                     <select  class="form-select form-select-solid dynamic"
-                                                    data-control="select2" data-placeholder="Select an option" required
-                                                    data-show-subtext="true" data-live-search="true" id="country"
-                                                    data-dependent="sub" name="country[0]">
-                                                    <option value=""></option>
-                                                    @foreach ($countries as $country)
-                                                        <option value="{{ $country->id }}">{{ $country->en_country }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                        data-control="select2" data-placeholder="Select an option" required
+                        data-show-subtext="true" data-live-search="true" id="country"
+                        data-dependent="sub" name="country[0]">
+                        <option value=""></option>
+                        @foreach ($countries as $country)
+                            <option value="{{ $country->id }}">{{ $country->en_country }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for=""> Visa type </label>
@@ -158,7 +158,8 @@
                 </div>
                 <div id="costBerVisa" style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3">
 
-                    <h5><label for="">Cost / Visa :  </label><label class="visaCost">  50 </label> $</h5>
+                    <h5><label for="">Cost / Visa :  </label><label class="visaCost">  0 </label> $</h5>
+                    <input type="hidden" name="cost[0]" value="0" class="visaCostinp" />
                 </div>
             </div>
             {{-- </form> --}}
@@ -408,6 +409,7 @@
                             $("#costBerVisa").css("display", "block");
 
                             $('.visaCost').text(result);
+                            $('.visaCostinp').val(result);
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");

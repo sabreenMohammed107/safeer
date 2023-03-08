@@ -31,7 +31,8 @@ class VisaDetails extends Model
         'visa_date',
         'visa_cost',
         'order_details_id',
-
+        'visa_personal_photo',
+        'visa_passport_photo'
     ];
 
     /**

@@ -31,6 +31,9 @@ class Cart extends Model
         'visa_name',
         'visa_phone',
         'visa_email',
+        'visa_personal_photo',
+        'visa_passport_photo',
+        'visa_cost'
 
     ];
 }

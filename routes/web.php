@@ -181,6 +181,7 @@ Route::middleware(['is-site-auth'])->group(function () {
     //Route::get("/safeer/test", [AuthController::class, 'testSessions']);
     Route::get("/cart", [BookingController::class, 'Cart'])->name("get_cart");
     Route::post("/Book", [BookingController::class, 'MakeOrder']);
+    Route::get("/cart/visa", [BookingController::class, 'DeleteVisa'])->name("deleteVisa");
     Route::get("/cart/{id}", [BookingController::class, 'DeleteCartItem'])->name("deleteCartItem");
     Route::get("/Safer/OrderPlacement/{id}", [BookingController::class, 'SuccessOrder'])->name("successOrder");
 

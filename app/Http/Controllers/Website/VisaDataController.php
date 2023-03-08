@@ -10,6 +10,7 @@ use App\Models\Nationality;
 use App\Models\Visa;
 use App\Models\Visa_type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class VisaDataController extends Controller
 {
@@ -84,13 +85,21 @@ class VisaDataController extends Controller
     }
     public function bookVisas(Request $request)
     {
+        // return $request->passport[0]->getClientOriginalName();
+        // $passport = uniqid() . $request->passport[0]->getClientOriginalName();
+        // return $request;
         $Visas = [];
         for ($i = 0; $i < count($request->country); $i++) {
             $visObj = Visa::where('visa_type_id', $request->visa_type_id[$i])->where('nationality_id', $request->nation[$i])->first();
+            $passport = Storage::disk('public')->put('uploads/visas/', $request->passport[$i]);
+            $personal = Storage::disk('public')->put('uploads/visas/', $request->personal[$i]);
             $elem = [
                 'name' => $request->name[$i],
                 'phone' => $request->phone[$i],
                 'email' => $request->email[$i],
+                'passport' => basename($passport),
+                'personal' => basename($personal),
+
             ];
             if ($visObj) {
                 $elem['visa_id'] = $visObj->id;
@@ -119,6 +128,8 @@ class VisaDataController extends Controller
             $CartItem->visa_name = $visa["name"];
             $CartItem->visa_phone = $visa["phone"];
             $CartItem->visa_email = $visa["email"];
+            $CartItem->visa_personal_photo = $visa["personal"];
+            $CartItem->visa_passport_photo = $visa["passport"];
             $CartItem->item_type = 3; // -> Visa Type Option
             $CartItem->save();
         }

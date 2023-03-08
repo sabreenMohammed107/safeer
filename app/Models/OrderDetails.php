@@ -45,6 +45,7 @@ class OrderDetails extends Model
         'holder_job',
         'notes',
         'detail_type', //0 >> roomdetails - 1>>tourdetails - 2 >>transdetails - 3 >> visadetails
+        'pickup_point',
         // 'room_type',
         // 'room_view',
         // 'food_bev_type',

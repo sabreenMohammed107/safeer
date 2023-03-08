@@ -45,9 +45,9 @@
                         {{ session('session-info') }}
                     </div>
                     @endif
-                  <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Full Name *" required>
-                  <input type="text" name="phone" class="form-control" id="exampleFormControlInput2" placeholder="Phone Number*" required>
-                  <input type="text" name="email" class="form-control" id="exampleFormControlInput3" placeholder="E-mail or User Name  *" required>
+                  <input type="text" name="name" value="{{session('Data')? session('Data')['name'] : ""}}" class="form-control" id="exampleFormControlInput1" placeholder="Full Name *" required>
+                  <input type="text" name="phone" value="{{session('Data')? session('Data')['phone'] : ""}}" class="form-control" id="exampleFormControlInput2" placeholder="Phone Number*" required>
+                  <input type="text" name="email" value="{{session('Data')? session('Data')['email'] : ""}}" class="form-control" id="exampleFormControlInput3" placeholder="E-mail or User Name  *" required>
                   <input type="password" name="password" class="form-control" id="exampleFormControlInput4" placeholder=" Password*" required>
                   <button type="submit" class="btn sign_button">Sign up </button>
                   <div class="remember">

@@ -58,8 +58,6 @@ class AuthController extends Controller
 
     public static function LoginProcess(SiteUser $User)
     {
-
-
         $redirect_url = "/";
         if (session()->get("cartItem")) {
             if(session()->get("cartItem")["itemType"] == ItemType::ROOM) {
@@ -156,6 +154,12 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8'],
         ]);
 
+        $data = [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone']
+        ];
+
         try {
             $User = SiteUser::create([
                 'name' => $request['name'],
@@ -165,7 +169,8 @@ class AuthController extends Controller
         } catch (\Illuminate\Database\QueryException$e) {
             $Count = SiteUser::where("Email", '=', $request['email'])->count();
             if ($Count) {
-                return redirect()->to("/safer/register")->with("session-danger", "Email Address is Already in-use");
+                return redirect()->to("/safer/register")->with("session-danger" , "Email Address is Already in-use")
+                ->with('Data', $data);
             } else {
                 return redirect()->to("/safer/register")->with("session-danger", "Can't Register with this data please try again later");
             }
