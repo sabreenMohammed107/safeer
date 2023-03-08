@@ -13,6 +13,7 @@ use App\Models\SiteUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 abstract class ItemType
 {
@@ -147,18 +148,33 @@ class AuthController extends Controller
 
     public function Register(Request $request)
     {
-        $validated = $request->validate([
+        // $validated = $request->validate([
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255'],
+        //     'phone' => ['numeric'],
+        //     'password' => ['required', 'string', 'min:8'],
+        // ]);
+        $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['numeric'],
             'password' => ['required', 'string', 'min:8'],
         ]);
 
+
+
         $data = [
             'name' => $request['name'],
             'email' => $request['email'],
             'phone' => $request['phone']
         ];
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->with('Data', $data)
+                ->withInput();
+        }
 
         try {
             $User = SiteUser::create([
@@ -173,7 +189,7 @@ class AuthController extends Controller
                 ->with('Data', $data);
             } else {
                 return redirect()->to("/safer/register")->with("session-danger", "Can't Register with this data please try again later")
-                ->with('Data', $data);;
+                ->with('Data', $data);
             }
         }
 
