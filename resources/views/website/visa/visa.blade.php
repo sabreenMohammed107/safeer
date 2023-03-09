@@ -127,7 +127,7 @@
                 </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for="">Nationality </label>
-                    <select class="form-select nationality" id="nationality" aria-label="Default select example" name="nation[0]">
+                    <select class="form-select nationality" required id="nationality" aria-label="Default select example" name="nation[0]">
                         <option value="">select....</option>
 
                     </select>
@@ -135,26 +135,26 @@
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Name </label>
-                    <input type="text" name="name[0]" placeholder="name" />
+                    <input type="text" required name="name[0]" placeholder="name" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Mobile </label>
-                    <input type="tel" name="phone[0]" placeholder="Mobile" />
+                    <input type="tel" required name="phone[0]" placeholder="Mobile" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Email </label>
-                    <input type="email" name="email[0]" placeholder="Email" />
+                    <input type="email" required name="email[0]" placeholder="Email" />
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Passport image </label>
-                    <input type="file" name="passport[0]" placeholder="Passport image" />
+                    <input type="file" required name="passport[0]" placeholder="Passport image" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Personal image </label>
-                    <input type="file" name="personal[0]" placeholder="Personal image" />
+                    <input type="file" required name="personal[0]" placeholder="Personal image" />
                 </div>
                 <div id="costBerVisa" style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3">
 
@@ -247,7 +247,7 @@
                     </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for="">Nationality </label>
-                    <select class="form-select nationality"  id="nationality" aria-label="Default select example"
+                    <select class="form-select nationality" required  id="nationality" aria-label="Default select example"
                     name="nation[`+ counter +`]" onchange="fetchCost(this)" >
                     <option value="">select....</option>
 
@@ -256,26 +256,26 @@
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Name  </label>
-                    <input type="text" name="name[` + counter + `]" placeholder="name" />
+                    <input type="text" name="name[` + counter + `]" required placeholder="name" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Mobile  </label>
-                    <input type="tel" name="phone[` + counter + `]" placeholder="Mobile" />
+                    <input type="tel" name="phone[` + counter + `]" required placeholder="Mobile" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Email  </label>
-                    <input type="email" name="email[` + counter + `]" placeholder="Email" />
+                    <input type="email" name="email[` + counter + `]" required placeholder="Email" />
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Passport image </label>
-                    <input type="file" name="passport[` + counter + `]" placeholder="Passport image" />
+                    <input type="file" name="passport[` + counter + `]" required placeholder="Passport image" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Personal image </label>
-                    <input type="file" name="personal[` + counter + `]" placeholder="Personal image" />
+                    <input type="file" name="personal[` + counter + `]" required placeholder="Personal image" />
                 </div>
                 <div  style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3 costBerVisa">
 

@@ -23,10 +23,12 @@ data-kt-check-target="#kt_ecommerce_category_table .form-check-input"
 value="1" />
 </div>
 </th>
-<th class="min-w-200px">transfer_date</th>
+<th class="min-w-100px">transfer_date</th>
 <th class="min-w-100px">transfer_from</th>
 
 <th class="text-end min-w-70px">transfer_to</th>
+
+<th class="text-end min-w-100px">hotel_mame</th>
 <th class="text-end min-w-100px">car_model</th>
 
 <th class="text-end min-w-100px">car_class</th>
@@ -34,6 +36,9 @@ value="1" />
 
 <th class="text-end min-w-100px">transfer_person_price</th>
 <th class="text-end min-w-70px">transfer_line_cost</th>
+<th class="text-end min-w-100px">return</th>
+<th class="text-end min-w-100px">return_date</th>
+
 </tr>
 <!--end::Table row-->
 </thead>
@@ -73,6 +78,9 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->transfer_date ?? 
 <span class="fw-bolder ms-3">{{ $detail->transfer_to ?? '' }}</span>
 </td>
 <td class="text-center pe-0" data-order="15">
+    <span class="fw-bolder ms-3">{{ $detail->hotel_name ?? '' }}</span>
+    </td>
+<td class="text-center pe-0" data-order="15">
 <span class="fw-bolder ms-3">{{ $detail->car_model ?? '' }}</span>
 </td>
 <!--begin::Price=-->
@@ -95,6 +103,15 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->transfer_date ?? 
 <td class="text-end pe-0">
     <span class="fw-bolder text-dark">{{ $detail->transfer_total_cost ?? '' }} $</span>
     </td>
+
+    <td class="text-end pe-0">
+        <span class="fw-bolder text-dark">@if( $detail->is_return == 1) Return @else Not Return @endif</span>
+        </td>
+
+
+        <td class="text-end pe-0">
+            <span class="fw-bolder text-dark">{{ $detail->return_date}} </span>
+            </td>
     <!--end::Status=-->
 </tr>
 <!--end::Table row-->

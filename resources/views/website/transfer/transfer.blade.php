@@ -302,9 +302,7 @@ input.nosubmit {
 
 
         $(document).ready(function() {
-            $('.transfer_date').datepicker({
-
-});
+            $('.transfer_date').datepicker().datepicker('setDate', new Date());
 //
             var arr = [];
 

@@ -623,9 +623,7 @@
 @section('adds_js')
     <script>
 document.addEventListener('DOMContentLoaded', function () {
-	jQuery('#start_date, #end_date, #birth_date').datepicker({
-
-	});
+	jQuery('#start_date, #end_date, #birth_date').datepicker().datepicker('setDate', new Date());
 });
         $(document).ready(function() {
             // $('.datepicker').datepicker({

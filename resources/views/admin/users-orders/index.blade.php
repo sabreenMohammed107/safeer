@@ -90,7 +90,7 @@
                             {{-- <th class="text-end min-w-100px">Time</th> --}}
                             <th class="text-end min-w-70px">User ID</th>
                             <th class="text-end min-w-100px">Type</th>
-
+                            <th class="text-end min-w-100px">pickup_point</th>
                             <th class="text-end min-w-100px">Created Date</th>
                             <th class="text-end min-w-100px">Grand Total</th>
                             <th class="text-end min-w-70px">Actions</th>
@@ -163,7 +163,10 @@
             @endif
            </span>
     </td>
+    <td class="text-end pe-0">
 
+        <span class="fw-bolder text-dark">{{ $row->pickup_point ?? '' }}</span>
+    </td>
     <td class="text-end pe-0">
 
         <span class="fw-bolder text-dark">{{ $row->order->created_at ?? '' }}</span>

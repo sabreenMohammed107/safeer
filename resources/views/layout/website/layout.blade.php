@@ -41,9 +41,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap"
         rel="stylesheet">
     <!-- bootstrap -->
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/bootstrap/bootstrap-ar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/bootstrap/bootstrap.min.css') }}">
     <!-- normalize -->
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/normalize-ar.css') }}">
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/normalize.css') }}">
     <!-- slick cdn link -->
     <link rel="stylesheet" href="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.css') }}">
     <!-- video poppp styele -->
@@ -52,7 +52,7 @@
     <!-- stylesheet  -->
     {{--
     <link rel="stylesheet" href="{{ asset('/website_assets/css/my-profile.css')}}"> --}}
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/style-ar.css') }}">
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/style.css') }}">
     {{-- owl Carousel links --}}
     <link rel="stylesheet" href="{{ asset('/website_assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/owl.theme.default.css') }}">
