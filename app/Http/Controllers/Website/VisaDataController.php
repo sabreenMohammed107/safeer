@@ -75,13 +75,14 @@ class VisaDataController extends Controller
 
          $data = Visa::where('visa_type_id', $visa_type)->where('nationality_id',$nationality)->first();
 
-\Log::info([$nationality,$visa_type]);
+         \Log::info([$nationality,$visa_type]);
         $output ='';
         if($data){
             $output =$data->cost;
         }
+        echo json_encode(array( $output,$data->en_notes ?? ''));
 
-        echo $output;
+        // echo $output;
     }
     public function bookVisas(Request $request)
     {

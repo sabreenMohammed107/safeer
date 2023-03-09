@@ -160,6 +160,9 @@
 
                     <h5><label for="">Cost / Visa :  </label><label class="visaCost">  0 </label> $</h5>
                     <input type="hidden" name="cost[0]" value="0" class="visaCostinp" />
+                    <p class="visNotes">
+
+                    </p>
                 </div>
             </div>
             {{-- </form> --}}
@@ -280,6 +283,9 @@
                 <div  style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3 costBerVisa">
 
 <h5><label for="">Cost / Visa :  </label><label class="visaCost">  50 </label> $</h5>
+<p class="visNotes">
+
+</p>
 </div>
                 <!-- <div class="col-sm-12 col-md-6 col-xl-4">
                     <a class="btn btn-primary" id="visaaa" >Add </a>
@@ -344,6 +350,7 @@
                             trigger.parent().parent().find(".visa_type").html(result);
                             $("#costBerVisa").css("display", "none");
                             $('.visaCost').html('');
+                            $('.visNotes').html('');
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
@@ -375,6 +382,7 @@
                             trigger.parent().parent().find(".nationality").html(result);
                             $("#costBerVisa").css("display", "none");
                             $('.visaCost').html('');
+                            $('.visNotes').html('');
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
@@ -404,12 +412,15 @@
                             visa_type:  $('select[name="visa_type_id[0]"] option:selected').val(),
                             _token: _token
                         },
-                        success: function(result) {
+                        success: function(data) {
+                            var result = $.parseJSON(data);
+
                             // alert(result)
                             $("#costBerVisa").css("display", "block");
 
-                            $('.visaCost').text(result);
-                            $('.visaCostinp').val(result);
+                            $('.visaCost').text(result[0]);
+                            $('.visaCostinp').val(result[0]);
+                            $('.visNotes').text(result[1]);
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
@@ -441,10 +452,13 @@
                             visa_type:$('select[name="visa_type_id['+numbers+']"] option:selected').val(),
                             _token: _token
                         },
-                        success: function(result) {
+                        success: function(data) {
+                            var result = $.parseJSON(data);
                             // alert(result)
                             trigger.parent().parent().find(".costBerVisa").css("display", "block");
-                            trigger.parent().parent().find(".visaCost").text(result);
+                            trigger.parent().parent().find(".visaCost").text(result[0]);
+                            trigger.parent().parent().find(".visNotes").text(result[1]);
+
 
                         },
                         error: function(xhr, status, error) {
