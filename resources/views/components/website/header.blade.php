@@ -52,14 +52,14 @@
                     <a href="#">Sign up</a>
                 </button>
                 @endif
-                {{-- <button class="offcan_buttons_lang">
+                <button class="offcan_buttons_lang">
                     <a class="dropdown-btn">Language <i class="fa fa-caret-down"></i></a>
 
                     <div class="dropdown-container">
                         <a href="#"><img src="{{ asset('img/flags/ar.png') }}" class="flag-img">Arabic language</a>
                         <a href="#"><img src="{{ asset('img/flags/en.png') }}" class="flag-img">English language</a>
                     </div>
-                </button> --}}
+                </button>
 
             </div>
         </div>
@@ -145,10 +145,10 @@
                             <a href="{{ route('siteRegister') }}" class="links hybrid sign_up">sign up</a>
                         </li>
                         @endif
-                         {{-- <li class=" profile_name" style="opacity: 0.8">
+                         <li class=" profile_name" style="opacity: 0.8">
                             <img title="Arabic" src="{{ asset('img/flags/ar.png') }}" class="flag-img main-lang">
                             <img title="English" src="{{ asset('img/flags/en.png') }}" class="flag-img ">
-                        </li> --}}
+                        </li>
 
                         {{-- <li class=" profile_name">
                             <button class="links hybrid btn profile_name_button" onclick="opendropdown()">
