@@ -190,6 +190,8 @@ class BookingController extends Controller
                 'cart.visa_name',
                 'cart.visa_phone',
                 'cart.visa_email',
+                'cart.visa_personal_photo',
+                'cart.visa_passport_photo',
                 'cart.visa_id',
                 'cart.item_type',
                 'visa_types.en_type',
@@ -229,7 +231,7 @@ class BookingController extends Controller
             ->get();
                 // return $GPVisasCost;
 
-            $tax_percentage = 14; // 14% Currently
+            $tax_percentage = DB::table('tax')->orderBy('id', 'desc')->first()->tax_percentage; // 14% Currently
         return view(
             "website.booking",
             [
@@ -251,6 +253,13 @@ class BookingController extends Controller
         $Cart = Cart::find($id);
         $Cart->delete();
         session()->forget("hasCart");
+
+        return redirect()->back();
+    }
+    public function DeleteVisa()
+    {
+        $Cart = Cart::where([["user_id",'=', session()->get("SiteUser")["ID"]],["item_type",'=',3]]);
+        $Cart->delete();
 
         return redirect()->back();
     }
@@ -332,7 +341,11 @@ class BookingController extends Controller
                     }
                 }
             }
-
+            /**
+             *
+             *  Tours Section
+             *
+             */
             if ($request->tour_adults_count && count($request->tour_adults_count) > 0) {
                 for ($i = 0; $i < count($request->tour_adults_count); $i++) {
                     $orderDetails = new OrderDetails();
@@ -342,6 +355,8 @@ class BookingController extends Controller
                     $orderDetails->holder_mobile = $request->tour_adults_mobile[$i][0];
                     $orderDetails->notes = $request->tour_notes[$i];
                     $orderDetails->detail_type = 1; // Tour Type Option [1]
+                    $orderDetails->pickup_point = $request->tour_pickup_point[$i];
+                    $orderDetails->holder_email = $request->tour_adults_email[$i][0];
                     $orderDetails->save();
 
                     $refTour = Tour::find((int) $request->tour_id[$i]);
@@ -367,6 +382,7 @@ class BookingController extends Controller
                             $person->person_name = $request->tour_adults_name[$i][$j];
                             $person->person_mobile = $request->tour_adults_mobile[$i][$j];
                             $person->person_cost = $refTour->tour_person_cost;
+                            $person->person_email = $request->tour_adults_email[$i][$j];
                             $person->save();
                         }
                     }
@@ -396,11 +412,11 @@ class BookingController extends Controller
                 $User = SiteUser::find(session()->get("SiteUser")["ID"]);
                 $orderDetails = new OrderDetails();
                 $orderDetails->order_id = $order->id;
-                $orderDetails->holder_salutation = ($request->default_holder)? $request->transferSal : "Mr";
-                $orderDetails->holder_name = ($request->default_holder)? $request->transferName : $User->name;
-                $orderDetails->holder_mobile = ($request->default_holder) ? $request->transferMobile : $User->phone;
-                $orderDetails->holder_email = ($request->default_holder) ? $request->transferEmail : $User->email;
-                $orderDetails->holder_job = ($request->default_holder)? $request->transferJob : "";
+                $orderDetails->holder_salutation = $request->transferSal;
+                $orderDetails->holder_name = $request->transferName;
+                $orderDetails->holder_mobile = $request->transferMobile;
+                $orderDetails->holder_email = $request->transferEmail;
+                $orderDetails->holder_job = $request->transferJob;
                 $orderDetails->notes = $request->transferNotes;
                 $orderDetails->detail_type = 2; // Transfer
                 $orderDetails->save();
@@ -414,9 +430,12 @@ class BookingController extends Controller
                 $TransferDetail->car_model = $request->car_model;
                 $TransferDetail->car_class = $request->car_class;
                 $TransferDetail->car_image = $request->image;
+                $TransferDetail->hotel_name = $request->hotel_name;
                 $TransferDetail->car_capacity = $request->capacity;
+                $TransferDetail->is_return = ($request->default_holder) ? true : false;
+                $TransferDetail->return_date = ($request->default_holder) ? date_format(date_create($request->return), "Y-m-d") : null;
                 $TransferDetail->transfer_person_price = $request->fees;
-                $TransferDetail->transfer_total_cost = ($request->capacity * (float)$request->fees);
+                $TransferDetail->transfer_total_cost = (($request->default_holder)? 2 : 1)*((float)$request->fees);
                 $TransferDetail->save();
             }
 
@@ -440,6 +459,8 @@ class BookingController extends Controller
                     $VisaDetail->visa_id = $request->visa_id[$i];
                     $VisaDetail->order_details_id = $orderDetails->id;
                     $VisaDetail->visa_cost = $request->visa_cost[$i];
+                    $VisaDetail->visa_personal_photo = $request->visa_personal_photo[$i];
+                    $VisaDetail->visa_passport_photo = $request->visa_passport_photo[$i];
                     $VisaDetail->visa_date = date_format(now(), "Y-m-d");
                     $VisaDetail->save();
 

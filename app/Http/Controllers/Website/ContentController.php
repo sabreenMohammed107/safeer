@@ -117,8 +117,11 @@ class ContentController extends Controller
 
 
     public function loginSite(){
-        $redirectURL = session()->get("_previous")["url"];
-        session()->put("redirect_url",$redirectURL);
+        if(session()->get("_previous")){
+            $redirectURL = session()->get("_previous")["url"];
+            session()->put("redirect_url", $redirectURL);
+        }
+
 
         $Company = Company::first();
         return view("website.login",

@@ -13,6 +13,7 @@ use App\Models\SiteUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 abstract class ItemType
 {
@@ -58,8 +59,6 @@ class AuthController extends Controller
 
     public static function LoginProcess(SiteUser $User)
     {
-
-
         $redirect_url = "/";
         if (session()->get("cartItem")) {
             if(session()->get("cartItem")["itemType"] == ItemType::ROOM) {
@@ -78,7 +77,7 @@ class AuthController extends Controller
                 $CartItem->nights = session()->get("cartItem")["Nights"];
                 $CartItem->from_date = session()->get("cartItem")["from_date"];
                 $CartItem->to_date = session()->get("cartItem")["to_date"];
-                if (!session()->get("sessionArr")["ages"]) {
+                if (!session()->get("cartItem")["ages"]) {
                     $CartItem->ages = null;
                 } else {
                     $CartItem->ages = implode(",", session()->get("cartItem")["ages"]);
@@ -92,7 +91,7 @@ class AuthController extends Controller
                 $CartItem->adults_count = session()->get("cartItem")["adultsNumber"];
                 $CartItem->children_count = session()->get("cartItem")["childNumber"];
                 $CartItem->tour_date = session()->get("cartItem")["tour_date"];
-                if (!session()->get("sessionArr")["ages"]) {
+                if (!session()->get("cartItem")["ages"]) {
                     $CartItem->ages = null;
                 } else {
                     $CartItem->ages = implode(",", session()->get("cartItem")["ages"]);
@@ -100,6 +99,11 @@ class AuthController extends Controller
                 $CartItem->item_type = ItemType::TOUR;
                 $CartItem->save();
             }else if(session()->get("cartItem")["itemType"] == ItemType::TRANSFER){
+                $CartItem = Cart::where([["user_id", '=', session()->get("SiteUser")["ID"]], ["item_type", '=', ItemType::TRANSFER]])->first();
+
+                if ($CartItem) { // Has Transfer ?
+                    return redirect()->to("/transfers")->with("session-warning", "Can't Purchase multiple transfer items in one time");
+                }
                 $CartItem = new Cart();
                 $CartItem->user_id = session()->get("SiteUser")["ID"];
                 $CartItem->transfer_id = session()->get("cartItem")["transfer_id"];
@@ -149,12 +153,33 @@ class AuthController extends Controller
 
     public function Register(Request $request)
     {
-        $validated = $request->validate([
+        // $validated = $request->validate([
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255'],
+        //     'phone' => ['numeric'],
+        //     'password' => ['required', 'string', 'min:8'],
+        // ]);
+        $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['numeric'],
             'password' => ['required', 'string', 'min:8'],
         ]);
+
+
+
+        $data = [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone']
+        ];
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->with('Data', $data)
+                ->withInput();
+        }
 
         try {
             $User = SiteUser::create([
@@ -165,9 +190,11 @@ class AuthController extends Controller
         } catch (\Illuminate\Database\QueryException$e) {
             $Count = SiteUser::where("Email", '=', $request['email'])->count();
             if ($Count) {
-                return redirect()->to("/safer/register")->with("session-danger", "Email Address is Already in-use");
+                return redirect()->to("/safer/register")->with("session-danger" , "Email Address is Already in-use")
+                ->with('Data', $data);
             } else {
-                return redirect()->to("/safer/register")->with("session-danger", "Can't Register with this data please try again later");
+                return redirect()->to("/safer/register")->with("session-danger", "Can't Register with this data please try again later")
+                ->with('Data', $data);
             }
         }
 
