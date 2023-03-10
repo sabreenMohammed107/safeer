@@ -90,18 +90,13 @@
                         {{-- <img src="{{ asset('/website_assets/images/contact/message.webp') }}" alt="messages logo "> --}}
                         <div class="card-body ">
                             {{-- <div class="card_info"> --}}
-                                <h6>
-                                  Scan Our Code :
 
-                                </h6>
-                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >  <img src="data:image/png;base64, {!! base64_encode(
-                                        QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->merge('/public/website_assets/images/q1.png')->size(120)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
-                                        ) !!}" style="margin-bottom: 10px;"></a>
+                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" > <img src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}" width="200" alt="">
+                                    </a>
 &nbsp;&nbsp;
                                         <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >
-                                        <img src="data:image/png;base64, {!! base64_encode(
-                                        QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->size(120)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
-                                        ) !!}" style="margin-bottom: 10px;"></a>
+                                            <img src="{{ asset('/website_assets/images/qrNew.PNG') }}" width="90" alt="">
+                                        </a>
 
                              </div>
                         {{-- </div>  --}}

@@ -61,6 +61,9 @@
     <link rel="icon" href="{{ asset('/website_assets/images/homePage/logo.webp') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @yield("adds_css")
     <title> {{$title}} </title>
 </head>
@@ -239,20 +242,23 @@
                                                 </div>
                                             </div>
                                              <div class="contact_info qr-code-custome" >
-                                                <div class="info">
-                                                    <i class="fa-solid fa-qrcode"></i>
-                                                    <span>Scan Me Now  </span>
-                                                </div>
+
                                                 {{-- <img src="{{ asset('img/payment/QR-Code-PNG-Transparent.png') }}" alt=""
                                                     srcset=""> --}}
-<a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >  <img src="data:image/png;base64, {!! base64_encode(
+<a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >
+{{-- <img src="data:image/png;base64, {!! base64_encode(
     QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->merge('/public/website_assets/images/q1.png')->size(80)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
-) !!}" style="margin-bottom: 10px;"></a>
+) !!}" style="margin-bottom: 10px;"> --}}
+<img src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}" width="200" alt="">
+</a>
 
 <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >
-<img src="data:image/png;base64, {!! base64_encode(
+{{-- <img src="data:image/png;base64, {!! base64_encode(
     QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->size(80)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
-) !!}" style="margin-bottom: 10px;"></a>
+) !!}" style="margin-bottom: 10px;"> --}}
+<img src="{{ asset('/website_assets/images/qrNew.PNG') }}" width="90" alt="">
+
+</a>
                                             </div>
                                         </div>
                                     </div>
@@ -403,6 +409,7 @@ $(document).on("click", "#send-it", function() {
     {{-- owl carousel --}}
     <script src="{{ asset('/website_assets/js/add_room.js')}}"></script>
     <script src="{{ asset('/website_assets/js/adding_years_Select.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @yield("adds_js")
 </body>
 

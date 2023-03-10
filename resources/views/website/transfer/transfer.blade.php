@@ -302,7 +302,13 @@ input.nosubmit {
 
 
         $(document).ready(function() {
-            $('.transfer_date').datepicker().datepicker('setDate', new Date());
+            // $('.transfer_date').datepicker().datepicker('setDate', new Date());
+            flatpickr(".transfer_date", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+
+    defaultDate: new Date(date),
+});
 //
             var arr = [];
 
