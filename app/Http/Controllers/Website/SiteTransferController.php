@@ -76,7 +76,7 @@ class SiteTransferController extends Controller
             }
 
             if ($request->searchCarCapacity ) {
-                $filterTour->where("car_models.capacity", $request->searchCarCapacity);
+                $filterTour->where("car_models.capacity",'<=', $request->searchCarCapacity);
 
             }
 
@@ -120,14 +120,14 @@ class SiteTransferController extends Controller
                 //
             }
             if ($request->searchCarCapacity ) {
-                $filterTour->where("car_models.capacity", $request->searchCarCapacity);
+                $filterTour->where("car_models.capacity",'<=', $request->searchCarCapacity);
 
             }
 
             $TransfersRecommended = $filterTour->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
             $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
             $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
-
+\Log::info($request->all());
             return view("website.transfer.transferList",
                 [
 
