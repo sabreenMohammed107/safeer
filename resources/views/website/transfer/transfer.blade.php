@@ -457,7 +457,7 @@ $(".CarModels_id").change(function(){
             $.ajax({
                 url: "/fetch-transfers-filter?page=" + page,
                 data: {
-
+                    searchCarCapacity:$('#searchId').val(),
                     pickups_ids: $("input[name=pickups_ids]").val(),
                     dropoff_ids: $("input[name=dropoff_ids]").val(),
 
@@ -467,7 +467,12 @@ $(".CarModels_id").change(function(){
 
                 success: function(response) {
                     $('#table_data').html(response);
+                    flatpickr(".transfer_date", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
 
+    defaultDate: new Date(date),
+});
                     // $('#selectSort option[value="'+selection+'"]').prop('selected', true);
                 },
                 error: function(response) {
@@ -501,6 +506,12 @@ $(".CarModels_id").change(function(){
             success: function(result){
                  console.log(result);
                 $("#table_data").html(result);
+                flatpickr(".transfer_date", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+
+    defaultDate: new Date(date),
+});
 
             },
             error: function(jqXHR, textStatus, error){
