@@ -82,6 +82,27 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-12 col-md-6 col-xl-4 mt-2">
+                <div class="card-content " >
+                    <div class=" card" style="border: none">
+
+                        {{-- <img src="{{ asset('/website_assets/images/contact/message.webp') }}" alt="messages logo "> --}}
+                        <div class="card-body ">
+                            {{-- <div class="card_info"> --}}
+
+                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" > <img src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}" width="200" alt="">
+                                    </a>
+&nbsp;&nbsp;
+                                        <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >
+                                            <img src="{{ asset('/website_assets/images/qrNew.PNG') }}" width="90" alt="">
+                                        </a>
+
+                             </div>
+                        {{-- </div>  --}}
+                    </div>
+                </div>
+            </div>
     </section>
     <!-- need help section -->
     <section class="help_section socail_channels">
@@ -204,23 +225,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-12">
-                    <div class="contact_info qr-code-custome" >
-                        <div class="info">
-                            <i class="fa-solid fa-qrcode"></i>
-                            <span>Scan Me Now  </span>
-                        </div>
 
-<a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >  <img src="data:image/png;base64, {!! base64_encode(
-QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->merge('/public/website_assets/images/q1.png')->size(100)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
-) !!}" style="margin-bottom: 10px;"></a>
-
-<a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >
-<img src="data:image/png;base64, {!! base64_encode(
-QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->size(100)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
-) !!}" style="margin-bottom: 10px;"></a>
-                    </div>
-                </div>
             @endisset
 
 

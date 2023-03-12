@@ -49,7 +49,7 @@
                                 <label>
                                   pick a date
                                 </label>
-                                <input type="text" id="transfer_date" placeholder="DD/MM/YYYY"  class="form-control transfer_date " name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+                                <input type="text" id="transfer_date"    class="form-control transfer_date " name="transfer_date"  />
 
 
 

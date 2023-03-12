@@ -127,7 +127,7 @@
                 </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for="">Nationality </label>
-                    <select class="form-select nationality" id="nationality" aria-label="Default select example" name="nation[0]">
+                    <select class="form-select nationality" required id="nationality" aria-label="Default select example" name="nation[0]">
                         <option value="">select....</option>
 
                     </select>
@@ -135,31 +135,34 @@
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Name </label>
-                    <input type="text" name="name[0]" placeholder="name" />
+                    <input type="text" required name="name[0]" placeholder="name" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Mobile </label>
-                    <input type="tel" name="phone[0]" placeholder="Mobile" />
+                    <input type="tel" required name="phone[0]" placeholder="Mobile" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Email </label>
-                    <input type="email" name="email[0]" placeholder="Email" />
+                    <input type="email" required name="email[0]" placeholder="Email" />
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Passport image </label>
-                    <input type="file" name="passport[0]" placeholder="Passport image" />
+                    <input type="file" required name="passport[0]" placeholder="Passport image" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Personal image </label>
-                    <input type="file" name="personal[0]" placeholder="Personal image" />
+                    <input type="file" required name="personal[0]" placeholder="Personal image" />
                 </div>
                 <div id="costBerVisa" style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3">
 
                     <h5><label for="">Cost / Visa :  </label><label class="visaCost">  0 </label> $</h5>
                     <input type="hidden" name="cost[0]" value="0" class="visaCostinp" />
+                    <p class="visNotes">
+
+                    </p>
                 </div>
             </div>
             {{-- </form> --}}
@@ -247,7 +250,7 @@
                     </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for="">Nationality </label>
-                    <select class="form-select nationality"  id="nationality" aria-label="Default select example"
+                    <select class="form-select nationality" required  id="nationality" aria-label="Default select example"
                     name="nation[`+ counter +`]" onchange="fetchCost(this)" >
                     <option value="">select....</option>
 
@@ -256,30 +259,33 @@
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Name  </label>
-                    <input type="text" name="name[` + counter + `]" placeholder="name" />
+                    <input type="text" name="name[` + counter + `]" required placeholder="name" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Mobile  </label>
-                    <input type="tel" name="phone[` + counter + `]" placeholder="Mobile" />
+                    <input type="tel" name="phone[` + counter + `]" required placeholder="Mobile" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Email  </label>
-                    <input type="email" name="email[` + counter + `]" placeholder="Email" />
+                    <input type="email" name="email[` + counter + `]" required placeholder="Email" />
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Passport image </label>
-                    <input type="file" name="passport[` + counter + `]" placeholder="Passport image" />
+                    <input type="file" name="passport[` + counter + `]" required placeholder="Passport image" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">Personal image </label>
-                    <input type="file" name="personal[` + counter + `]" placeholder="Personal image" />
+                    <input type="file" name="personal[` + counter + `]" required placeholder="Personal image" />
                 </div>
                 <div  style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3 costBerVisa">
 
 <h5><label for="">Cost / Visa :  </label><label class="visaCost">  50 </label> $</h5>
+<p class="visNotes">
+
+</p>
 </div>
                 <!-- <div class="col-sm-12 col-md-6 col-xl-4">
                     <a class="btn btn-primary" id="visaaa" >Add </a>
@@ -344,6 +350,7 @@
                             trigger.parent().parent().find(".visa_type").html(result);
                             $("#costBerVisa").css("display", "none");
                             $('.visaCost').html('');
+                            $('.visNotes').html('');
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
@@ -375,6 +382,7 @@
                             trigger.parent().parent().find(".nationality").html(result);
                             $("#costBerVisa").css("display", "none");
                             $('.visaCost').html('');
+                            $('.visNotes').html('');
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
@@ -404,12 +412,15 @@
                             visa_type:  $('select[name="visa_type_id[0]"] option:selected').val(),
                             _token: _token
                         },
-                        success: function(result) {
+                        success: function(data) {
+                            var result = $.parseJSON(data);
+
                             // alert(result)
                             $("#costBerVisa").css("display", "block");
 
-                            $('.visaCost').text(result);
-                            $('.visaCostinp').val(result);
+                            $('.visaCost').text(result[0]);
+                            $('.visaCostinp').val(result[0]);
+                            $('.visNotes').text(result[1]);
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
@@ -441,10 +452,13 @@
                             visa_type:$('select[name="visa_type_id['+numbers+']"] option:selected').val(),
                             _token: _token
                         },
-                        success: function(result) {
+                        success: function(data) {
+                            var result = $.parseJSON(data);
                             // alert(result)
                             trigger.parent().parent().find(".costBerVisa").css("display", "block");
-                            trigger.parent().parent().find(".visaCost").text(result);
+                            trigger.parent().parent().find(".visaCost").text(result[0]);
+                            trigger.parent().parent().find(".visNotes").text(result[1]);
+
 
                         },
                         error: function(xhr, status, error) {

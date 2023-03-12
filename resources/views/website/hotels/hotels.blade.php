@@ -29,7 +29,7 @@ input.nosubmit {
   color: inherit;
   border: 1px solid #0000001f;
   border-radius: inherit;
-  width: 260px;
+  width: 100%;
   /* border: 1px solid #555; */
   display: block;
   padding: 9px 4px 9px 40px;

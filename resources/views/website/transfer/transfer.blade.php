@@ -116,7 +116,7 @@ input.nosubmit {
 
                                 <div class="col-md-10">
                                     <label for=""> search by car capacity</label>
-                                <input class="form-control " min="1" value="1"  id="searchId" placeholder="search by car capacity" type="number">
+                                <input class="form-control " min="1"   id="searchId" placeholder="search by car capacity" type="number">
                                 </div>
 
                                 <div class="col-md-2 mt-4" ><button onclick="fetch_transfer()" class="btn btn-primary" ><i class="fa-solid fa-magnifying-glass"></i></button></div>
@@ -302,8 +302,12 @@ input.nosubmit {
 
 
         $(document).ready(function() {
-            $('.transfer_date').datepicker({
+            // $('.transfer_date').datepicker().datepicker('setDate', new Date());
+            flatpickr(".transfer_date", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
 
+    defaultDate: new Date(date),
 });
 //
             var arr = [];
@@ -453,7 +457,7 @@ $(".CarModels_id").change(function(){
             $.ajax({
                 url: "/fetch-transfers-filter?page=" + page,
                 data: {
-
+                    searchCarCapacity:$('#searchId').val(),
                     pickups_ids: $("input[name=pickups_ids]").val(),
                     dropoff_ids: $("input[name=dropoff_ids]").val(),
 
@@ -463,8 +467,11 @@ $(".CarModels_id").change(function(){
 
                 success: function(response) {
                     $('#table_data').html(response);
-                    $('.transfer_date').datepicker({
+                    flatpickr(".transfer_date", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
 
+    defaultDate: new Date(date),
 });
                     // $('#selectSort option[value="'+selection+'"]').prop('selected', true);
                 },
@@ -477,6 +484,7 @@ $(".CarModels_id").change(function(){
 
 
         function fetch_transfer() {
+
         var url = "/transfers/retrieve";
         $.ajax({
             headers: {
@@ -498,9 +506,13 @@ $(".CarModels_id").change(function(){
             success: function(result){
                  console.log(result);
                 $("#table_data").html(result);
-                $('.transfer_date').datepicker({
+                flatpickr(".transfer_date", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
 
+    defaultDate: new Date(date),
 });
+
             },
             error: function(jqXHR, textStatus, error){
                 console.log(textStatus + " - " + jqXHR.responseText);

@@ -23,7 +23,9 @@ data-kt-check-target="#kt_ecommerce_category_table .form-check-input"
 value="1" />
 </div>
 </th>
-<th class="min-w-200px">visa Name</th>
+<th class="min-w-100px">passport Img</th>
+<th class="min-w-100px">visa Name</th>
+<th class="min-w-100px">person Img</th>
 <th class="min-w-100px">visa_nationality</th>
 
 
@@ -45,6 +47,19 @@ value="1" />
 </div>
 </td>
 <!--end::Checkbox-->
+ <!--end::Checkbox-->
+ <td>
+    <!--begin:: Avatar -->
+    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+        <a href="#">
+            <div class="symbol-label fs-3 bg-light-danger text-danger">
+                <img src="{{ asset('uploads/visas') }}/{{ $visaDetail->visa_passport_photo }}"
+                    class="w-100" alt="">
+            </div>
+        </a>
+    </div>
+    <!--end::Avatar-->
+</td>
 <!--begin::Category=-->
 <td>
 <div class="d-flex align-items-center">
@@ -58,7 +73,18 @@ data-kt-ecommerce-category-filter="category_name" >{{ $visaDetail->visa->type->e
 </div>
 </div>
 </td>
-
+<td>
+    <!--begin:: Avatar -->
+    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+        <a href="#">
+            <div class="symbol-label fs-3 bg-light-danger text-danger">
+                <img src="{{ asset('uploads/visas') }}/{{ $visaDetail->visa_personal_photo }}"
+                    class="w-100" alt="">
+            </div>
+        </a>
+    </div>
+    <!--end::Avatar-->
+</td>
 <!--begin::Qty=-->
 <td class="text-center pe-0" data-order="15">
 <span class="fw-bolder ms-3">{{$visaDetail->visa->nationality->en_nationality ?? '' }}</span>
