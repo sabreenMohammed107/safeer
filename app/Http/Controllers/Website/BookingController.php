@@ -433,7 +433,7 @@ class BookingController extends Controller
                 $TransferDetail->hotel_name = $request->hotel_name;
                 $TransferDetail->car_capacity = $request->capacity;
                 $TransferDetail->is_return = ($request->default_holder) ? true : false;
-                $TransferDetail->return_date = ($request->default_holder) ? date_format(date_create($request->return), "Y-m-d") : null;
+                $TransferDetail->return_date = ($request->default_holder) ? $request->return : null;
                 $TransferDetail->transfer_person_price = $request->fees;
                 $TransferDetail->transfer_total_cost = (($request->default_holder)? 2 : 1)*((float)$request->fees);
                 $TransferDetail->save();

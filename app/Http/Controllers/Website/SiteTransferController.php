@@ -143,6 +143,7 @@ class SiteTransferController extends Controller
 
     public function bookTransfer(Request $request)
     {
+        // return $request->transfer_date;
         $capacity=Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id')->where('transfers.id',$request->transfer_id)
         ->select('car_models.capacity')->first();
         // dd($capacity->capacity);
@@ -191,7 +192,7 @@ class SiteTransferController extends Controller
         $CartItem = new Cart();
         $CartItem->user_id = session()->get("SiteUser")["ID"];
         $CartItem->transfer_id = $request->transfer_id;
-        $CartItem->transfer_date = date_format(date_create($request->transfer_date), "Y-m-d");
+        $CartItem->transfer_date = $request->transfer_date;
         $CartItem->item_type = 2; // -> Transfer
         $CartItem->save();
         session()->put("hasCart", 1);
