@@ -118,6 +118,8 @@ class AuthController extends Controller
                     $CartItem->visa_name = $visa["name"];
                     $CartItem->visa_phone = $visa["phone"];
                     $CartItem->visa_email = $visa["email"];
+                    $CartItem->visa_personal_photo = $visa["personal"];
+                    $CartItem->visa_passport_photo = $visa["passport"];
                     $CartItem->item_type = 3; // -> Visa
                     $CartItem->save();
                 }
