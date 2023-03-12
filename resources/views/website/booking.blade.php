@@ -792,12 +792,12 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 <script>
     $(document).ready(function(){
         // $('.transfer_date').datepicker();
-        var _minDate = "{{($TransferCost)? $TransferCost->transfer_date : Date.now()}}"
+        var _minDate = "{{($TransferCost)? $TransferCost->transfer_date : ""}}"
         flatpickr(".transfer_date", {
             enableTime: true,
             dateFormat: "Y-m-d H:i:S",
             minDate:_minDate,
-            defaultDate: new Date(_minDate),
+            defaultDate: new Date(_minDate? _minDate : Date.now()),
         });
     });
     $(".delete_trash").click(function(e){
