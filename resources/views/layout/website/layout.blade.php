@@ -252,21 +252,25 @@
                                                        {{-- <img src="{{ asset('/website_assets/images/qrNew.PNG') }}" width="90" alt=""> --}}
                                                        {{-- <img src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}" width="210" alt="">
                                                        </a> --}}
-                                                       {{-- <div style="border: 1px solid blue;background-color: #fff ;color:blue;font-size: 14px">
-<h5>
-    BAŞKANIN MESAJI</h5>
-   <p>
-    Yönetim Kurulu Başkanı
-    DEVAMINI DEVAMINI OKU --}}
+                                                       <div style="position: relative">
+                                                       <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="200"  alt="">
 
-                                                   <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >
-                                                    {{  QrCode::size(105)->color(255, 255, 255)->backgroundColor(27, 34, 76)->generate('A basic example of QR code!')}}
+
+                                                   <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
+                                                      bottom: 5px;right: 7px;" target="_blank" >
+                                                    {{  QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34, 76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}}
                                                 </a>
-                                                       <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >
-<img src="data:image/png;base64, {!! base64_encode(
-    QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->merge('/public/website_assets/images/q1.png', .4)->size(95)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
-) !!}" style="margin-bottom: 10px;">
-{{-- <img src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}" width="210" alt=""> --}}
+                                            </div>
+                                                       <a href="https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463" target="_blank" >
+                                                        <?php
+                                                        $im=QrCode::format('png')
+                                                        ->merge('website_assets/images/q1.png', 0.4, true)
+                                                        ->size(90)->color(27, 34, 76)->errorCorrection('H')
+                                                        ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
+
+                                                        ?>
+
+<img src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;">
 </a>
 
 
