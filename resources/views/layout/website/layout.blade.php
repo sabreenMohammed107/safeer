@@ -11,7 +11,8 @@
     <meta property="og:description"
         content="Safer providing you online planning  your  next vacations and  booking trips around the world" />
         <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
-        <link rel="canonical" href="https://safer.travel/hotels" />
+        <link rel="canonical" href="{{ url()->current() }}" />
+
         <meta property="og:url" content="https://safercom/" />
     <meta property="og:image" content="./images/homePage/logo.webp" />
     <meta property="og:image:alt" content="Safer - Online hub for booking  trourism trips" />
