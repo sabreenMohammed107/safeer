@@ -420,6 +420,43 @@ $(document).on("click", "#send-it", function() {
     <script src="{{ asset('/website_assets/js/adding_years_Select.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @yield("adds_js")
+<script>
+    let slickSliders = document.querySelectorAll('.slick-slider');
+
+if ('IntersectionObserver' in window) {
+  // IntersectionObserver Supported
+  let config = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.0
+      };
+
+  let observer = new IntersectionObserver(onChange, config);
+  slickSliders.forEach(slider => observer.observe(slider));
+
+  function onChange(elements, observer) {
+    elements.forEach(element => {
+      if (element.isIntersecting) {
+        console.log("element intersecting", element.target);
+
+          var options = {};
+        // Stop watching and load the slickSlider
+        loadSlick(element.target, options);
+        observer.unobserve(element.target);
+      }
+    });
+  }
+
+} else {
+  // IntersectionObserver NOT Supported
+  slickSliders.forEach(slickSlider => loadSlick(slickSlider));
+}
+
+function loadSlick(slickSlider, options) {
+    $slickSlider = $(slickSlider);
+    $slickSlider.slick(options);
+}
+</scipt>
 </body>
 
 </html>
