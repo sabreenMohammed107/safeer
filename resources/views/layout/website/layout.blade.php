@@ -10,7 +10,9 @@
     <meta property="og:title" content="Safer - Online hub for booking  trourism trips" />
     <meta property="og:description"
         content="Safer providing you online planning  your  next vacations and  booking trips around the world" />
-    <meta property="og:url" content="https://safercom/" />
+        <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+        <link rel="canonical" href="https://safer.travel/hotels" />
+        <meta property="og:url" content="https://safercom/" />
     <meta property="og:image" content="./images/homePage/logo.webp" />
     <meta property="og:image:alt" content="Safer - Online hub for booking  trourism trips" />
     <meta property="og:site_name" content="safer.com" />
@@ -158,32 +160,32 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <a href="http://" class="pay-link  "> <img
-                                                            src="{{ asset('img/payment/visa.png') }}" alt=""
+                                                            src="{{ asset('img/payment/visa.png') }}" alt="visa"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/google-pay.png') }}" alt=""
+                                                            src="{{ asset('img/payment/google-pay.png') }}" alt="google-pay"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/apple-pay.png') }}" alt=""
+                                                            src="{{ asset('img/payment/apple-pay.png') }}" alt="apple-pay"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/mastercard.png') }}" alt=""
+                                                            src="{{ asset('img/payment/mastercard.png') }}" alt="mastercard"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/samsung-pay.png') }}" alt=""
+                                                            src="{{ asset('img/payment/samsung-pay.png') }}" alt="samsung-pay"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/stripe.png') }}" alt=""
+                                                            src="{{ asset('img/payment/stripe.png') }}" alt="stripe"
                                                             srcset=""></a>
 
                                                 </div>
@@ -253,7 +255,7 @@
                                                        {{-- <img src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}" width="210" alt="">
                                                        </a> --}}
                                                        <div style="position: relative">
-                                                       <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="200"  alt="">
+                                                       <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="200"  alt="Dijital">
 
 
                                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
