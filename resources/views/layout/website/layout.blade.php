@@ -245,15 +245,7 @@
                                             </div>
                                              <div class="contact_info qr-code-custome" >
 
-                                                {{-- <img src="{{ asset('img/payment/QR-Code-PNG-Transparent.png') }}" alt=""
-                                                    srcset=""> --}}
-                                                    {{-- <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" > --}}
-                                                        {{-- <img src="data:image/png;base64, {!! base64_encode(
-                                                           QrCode::format('png')->color(255, 255, 255)->backgroundColor(27, 34, 76)->size(100)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1'),
-                                                       ) !!}" style="margin-bottom: 10px;"> --}}
-                                                       {{-- <img src="{{ asset('/website_assets/images/qrNew.PNG') }}" width="90" alt=""> --}}
-                                                       {{-- <img src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}" width="210" alt="">
-                                                       </a> --}}
+
                                                        <div style="position: relative">
                                                        <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="200"  alt="Dijital">
 
