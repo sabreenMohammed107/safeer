@@ -24,12 +24,11 @@
     <meta name="twitter:title" content="Safer - Online hub for booking  trourism trips" />
     <meta name="twitter:description"
         content="Safer providing you online planning  your  next vacations and  booking trips around the world " />
-    <meta name="twitter:url" content="https://safer.com/" />
+    <meta name="twitter:url" content="https://safer.travel/" />
     <meta name="twitter:image" content="/images/homePage/logo.webp" />
     <meta property="twitter:image:alt" content="Safer - Online hub for booking  trourism trips" />
     <!-- general meta tags  -->
-    <meta name="canonical_tag" content="https://safer.com/" />
-    <meta name="canonical_tag" content="" />
+    <meta name="canonical_tag" content="https://safer.travel/" />
     <meta name="title" content="Safer - Online hub for booking  trourism trips" />
     <meta name="description"
         content="Safer providing you online planning  your  next vacations and  booking trips around the world" />
