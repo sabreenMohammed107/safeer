@@ -54,17 +54,20 @@ input.nosubmit {
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="All Hotels" :breadcrumb="$BreadCrumb" current="All Hotels" />
+    <x-website.header.general title="{{ __('links.hotels') }}" :breadcrumb="$BreadCrumb" current="{{ __('links.hotels') }}" />
 @endsection
 @section('content')
+<?php
+ $localVar=LaravelLocalization::getCurrentLocale();
+?>
     <!-- booking section -->
     <section class="booking_hotels_section container">
-        <form action="{{ url('/hotels') }}" method="POST">
+        <form action="{{ LaravelLocalization::localizeUrl('/hotels') }}" method="POST">
             @csrf
             <div class="hotel_details">
                 <div class="row mx-0 p-0">
                     <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                        <h5> destination</h5>
+                        <h5> {{ __('links.destination') }}</h5>
 
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
@@ -72,7 +75,12 @@ input.nosubmit {
                                 @foreach ($Countries as $Country)
                                     <option value="{{ $Country->id }}"
                                         @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['country_id'] == $Country->id ? 'selected' : '' }} @endif>
-                                        {{ $Country->en_country }}</option>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        {{ $Country->en_country }}
+                                        @else
+                                        {{ $Country->ar_country }}
+                                        @endif</option>
                                 @endforeach
                             </select>
                         </div>
@@ -80,7 +88,7 @@ input.nosubmit {
 
 
                     <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                        <h5> city</h5>
+                        <h5> {{ __('links.city') }}</h5>
 
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
@@ -88,13 +96,23 @@ input.nosubmit {
                                 @foreach ($Cities as $city)
                                     <option value="{{ $city->id }}"
                                         @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['city_id'] == $city->id ? 'selected' : '' }} @endif>
-                                        {{ $city->en_city }}</option>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                                    {{ $city->en_city }}
+                                                    @else
+                                                    {{ $city->ar_city }}
+                                                    @endif</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                         <h5> check in <span>check </span> </h5>
+                        @else
+                        <h5>تسجيل وصول | <span>تسجبل مغادرة </span> </h5>
+                        @endif
                         @if (session()->has('sessionArr'))
                             <input type="hidden" id="from_date" value="{{ Session::get('sessionArr')['from_date'] }}">
                             <input type="hidden" id="end_date" value="{{ Session::get('sessionArr')['end_date'] }}">
@@ -107,13 +125,13 @@ input.nosubmit {
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-1">
-                        <h5> nights </h5>
+                        <h5> {{ __('links.nights') }} </h5>
 
                         <input type="text" id="nights" class="form-control" readonly name="nights"
                             value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights'] }} @else 7 @endif">
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-3">
-                        <h5> Add room</h5>
+                        <h5> {{ __('links.addRoom') }}</h5>
                         <div class="rooms">
                             <button class="info form-select" type="button" onclick="open_addnew()">
                                 <i class="fa-regular fa-user"></i>
@@ -122,26 +140,26 @@ input.nosubmit {
                                         {{ Session::get('sessionArr')['adultsNumber'] }}
                                     @else
                                         1
-                                    @endif adults
+                                    @endif {{ __('links.adult') }}
                                 </span>
                                 <span id="children">
                                     @if (session()->has('sessionArr'))
                                         {{ Session::get('sessionArr')['childNumber'] }}
                                     @else
                                         0
-                                    @endif children
+                                    @endif {{ __('links.child') }}
                                 </span>
                                 <span id="rooms">
                                     @if (session()->has('sessionArr'))
                                         {{ Session::get('sessionArr')['roomsNumber'] }}
                                     @else
                                         1
-                                    @endif rooms
+                                    @endif {{ __('links.rooms') }}
                                 </span>
                             </button>
                             <div class="add_new" id="add_new">
                                 <div class="form-group counter">
-                                    <label>adults</label>
+                                    <label>{{ __('links.adult') }}</label>
                                     <div class="input-group counter_content">
                                         <div class="input-group-btn">
                                             <button id="down" type="button" class=" btn btn-default"
@@ -164,7 +182,7 @@ input.nosubmit {
                                     </div>
                                 </div>
                                 <div class="form-group counter">
-                                    <label>children</label>
+                                    <label>{{ __('links.child') }}</label>
                                     <div class="input-group counter_content">
                                         <div class="input-group-btn">
                                             <button id="down" type="button" class="btn btn-default"
@@ -204,7 +222,13 @@ input.nosubmit {
                                                         @if (session()->has('sessionArr'))
                                                             {{ Session::get('sessionArr')['ages'][$key] == $i + 1 ? 'selected' : '' }}
                                                             @endif >
-                                                            {{ $i + 1 }} years old
+                                                            {{ $i + 1 }}
+                                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                            years old
+
+                                                                          @else
+                                                                        سنة
+                                                                          @endif
                                                         </option>
                                                     @endfor
 
@@ -217,7 +241,7 @@ input.nosubmit {
                                     @endif
                                 </div>
                                 <div class="form-group counter">
-                                    <label>rooms</label>
+                                    <label>{{ __('links.rooms') }}</label>
                                     <div class="input-group counter_content">
                                         <div class="input-group-btn">
                                             <button id="down" type="button" class="btn btn-default"
@@ -240,7 +264,7 @@ input.nosubmit {
                                     </div>
                                 </div>
                                 <button type="button" class="btn done_button" onclick="close_addnew()">
-                                    Done </button>
+                                    {{ __('links.done') }} </button>
                             </div>
                         </div>
 
@@ -249,7 +273,7 @@ input.nosubmit {
                         <div class="main" id="room_main">
 
                             <button class="btn" type="submit">
-                                Search
+                                {{ __('links.search') }}
                             </button>
                         </div>
                     </div>
@@ -274,7 +298,12 @@ input.nosubmit {
                         {{-- <h6> Search Hotels By Name</h6> --}}
                         {{-- autocomplete --}}
                         <div classs="form-group">
-         <input class="typeahead form-control nosubmit" onchange="fetch_hotels()" id="searchId" placeholder="search by hotel name" type="text">
+         <input class="typeahead form-control nosubmit" onchange="fetch_hotels()" id="searchId" placeholder=" @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+         search by hotel name
+         @else
+       بحث باسم الفندق
+         @endif" type="text">
 
         </div>
                         {{-- @foreach ($Hotels as $Hotel)
@@ -315,7 +344,7 @@ input.nosubmit {
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseHotel" aria-expanded="false"
                                         aria-controls="flush-collapseTwo">
-                                        Hotels
+                                        {{ __('links.hotels') }}
                                     </button>
                                 </h2>
                                 <div id="flush-collapseHotel" class="accordion-collapse collapse"
@@ -326,7 +355,13 @@ input.nosubmit {
                                 <input class="form-check-input hotel_idxx" type="checkbox" data-id="{{ $Hotel->id }}"
                                     value="" id="defaultCheck1">
                                 <label class="form-check-label" for="defaultCheck1">
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
                                     {{ $Hotel->hotel_enname }}
+
+                @else
+                {{ $Hotel->hotel_arname }}
+                @endif
+
                                 </label>
                             </div>
                         @endforeach
@@ -340,7 +375,7 @@ input.nosubmit {
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                         aria-controls="flush-collapseTwo">
-                                        city
+                                        {{ __('links.city') }}
                                     </button>
                                 </h2>
                                 <div id="flush-collapseTwo" class="accordion-collapse collapse"
@@ -352,7 +387,14 @@ input.nosubmit {
                                                     data-id="{{ $City->id }}" type="checkbox" value=""
                                                     id="defaultCheck4">
                                                 <label class="form-check-label" for="defaultCheck4">
-                                                    {{ $City->en_city }}
+
+
+  @if (LaravelLocalization::getCurrentLocale() === 'en')
+  {{ $City->en_city }}
+
+  @else
+  {{ $City->ar_city }}
+  @endif
                                                 </label>
                                             </div>
                                         @endforeach
@@ -367,7 +409,7 @@ input.nosubmit {
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseZone" aria-expanded="false"
                                         aria-controls="flush-collapseTwo">
-                                        zone
+                                        {{ __('links.zone') }}
                                     </button>
                                 </h2>
                                 <div id="flush-collapseZone" class="accordion-collapse collapse"
@@ -379,7 +421,13 @@ input.nosubmit {
                                                     data-id="{{ $zone->id }}" type="checkbox" value=""
                                                     id="defaultCheck4">
                                                 <label class="form-check-label" for="defaultCheck4">
+
+                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                                     {{ $zone->en_zone }}
+                                                    @else
+                                                    {{ $zone->ar_zone }}
+                                                    @endif
                                                 </label>
                                             </div>
                                         @endforeach
@@ -393,7 +441,7 @@ input.nosubmit {
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseThree" aria-expanded="false"
                                         aria-controls="flush-collapseThree">
-                                        rating
+                                        {{ __('links.rating') }}
                                     </button>
                                 </h2>
                                 <div id="flush-collapseThree" class="accordion-collapse collapse"
@@ -489,26 +537,49 @@ input.nosubmit {
             <div class="col-sm-12 col-xl-9">
                 <div class="filtered_hotels">
                     <div class="filters">
-                        <span> Available hotel rooms</span>
+                        <span>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Available hotel rooms
+                           @else
+                            الغرف  المتاحة
+                           @endif
+                        </span>
                         <div class="left_filter">
                             <ul class="nav nav-pills " id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by active" data-val="rec" id="pills-home-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
-                                        aria-controls="pills-home" aria-selected="true">Recommended </button>
+                                        aria-controls="pills-home" aria-selected="true" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif >  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        Recommended
+                                        @else
+                                      مستحسن
+                                        @endif</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by" data-val="price" id="pills-profile-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
-                                        role="tab" aria-controls="pills-profile" aria-selected="false"> by
-                                        price</button>
+                                        role="tab" aria-controls="pills-profile" aria-selected="false" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        by Price
+                                        @else
+                                       بالسعر
+                                        @endif</button>
                                 </li>
 
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by" data-val="alpha" id="pills-alpha-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-alpha" type="button"
-                                        role="tab" aria-controls="pills-alpha" aria-selected="false">
-                                        alphabitic</button>
+                                        role="tab" aria-controls="pills-alpha" aria-selected="false" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif>
+
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        alphabitic
+                                        @else
+                                       ترتيب ابجدي
+                                        @endif</button>
                                 </li>
                                 <input type="hidden" name="sort_by" />
                             </ul>

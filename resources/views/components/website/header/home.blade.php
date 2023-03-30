@@ -2,79 +2,116 @@
 
 <div class="slider_section">
     <div class="slider_details">
-        <h1> {{ $company->master_page_entitle }} {{-- title --}} <br> {{ $company->master_page_ensubtitle }}
-            {{-- sub-title --}} </h1>
-        <p>{{ $company->master_page_entext }}</p>
+        <h1>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+            {{ $company->master_page_entitle }}  <br> {{ $company->master_page_ensubtitle }}
+
+
+            @else
+            {{ $company->master_page_artitle }}  <br> {{ $company->master_page_arsubtitle }}
+
+            @endif
+            </h1>
+        <p>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+            {{ $company->master_page_entext }}
+            @else
+            {{ $company->master_page_artext }}
+            @endif
+          </p>
         <div class="travel_box">
             <ul class="nav travel_tabs nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                        type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                        type="button" role="tab" aria-controls="home" aria-selected="true">{{ __('links.home') }}</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     {{-- <a class="nav-link" href="">tours</a> --}}
-                    <a href="{{ url('/tours') }}">
+                    <a href="{{ LaravelLocalization::localizeUrl('/tours') }}">
                     <button class="nav-link"
-                        type="button" >tours</button>
+                        type="button" >{{ __('links.tours') }}</button>
                     </a>
                     </li>
                 <li class="nav-item" role="presentation">
                     {{-- <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
                         type="button" role="tab" aria-controls="contact" aria-selected="false">travel</button> --}}
 
-                        <a href="{{ url('/transfers') }}">
+                        <a href="{{ LaravelLocalization::localizeUrl('/transfers') }}">
                             <button class="nav-link"
-                                type="button" >Transfer</button>
+                                type="button" >{{ __('links.transfer') }}</button>
                             </a>
 
                     </li>
                 <li class="nav-item" role="presentation">
                     {{-- <button class="nav-link" id="visa-tab" data-bs-toggle="tab" data-bs-target="#visa" type="button"
                         role="tab" aria-controls="visa" aria-selected="false">visa payment</button> --}}
-                        <a href="{{ url('/visa') }}">
+                        <a href="{{ LaravelLocalization::localizeUrl('/visa') }}">
                             <button class="nav-link"
-                                type="button" >visa </button>
+                                type="button" >{{ __('links.visa') }} </button>
                             </a>
 
                     </li>
             </ul>
             <div class="tab-content travel_box_content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <form action="{{ url('/hotels') }}" method="POST">
+                    <form action="{{ LaravelLocalization::localizeUrl('/hotels') }}" method="POST">
                         @csrf
                         <div class="hotel_details">
                             <div class="row mx-0 p-0">
                                 <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                                    <h5> destination</h5>
+                                    <h5> {{ __('links.destination') }}</h5>
 
                                     <div class="choices">
                                         <i class="fa-solid fa-location-dot"></i>
                                         <select class="form-select dynamic" id="country" name="country_id"
                                             aria-label="Default select example">
                                             @foreach ($countries as $Country)
-                                                <option value="{{ $Country->id }}" {{ $Country->id==1 ? 'selected' : '' }} >{{ $Country->en_country }}</option>
+                                                <option value="{{ $Country->id }}" {{ $Country->id==1 ? 'selected' : '' }} >
+
+                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                                    {{ $Country->en_country }}
+                                                    @else
+                                                    {{ $Country->ar_country }}
+                                                    @endif
+
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                                    <h5> city</h5>
+                                    <h5> {{ __('links.city') }}</h5>
 
                                     <div class="choices">
                                         <i class="fa-solid fa-location-dot"></i>
                                         <select class="form-select" id="city_id" name="city_id"
                                             aria-label="Default select example">
-                                            <option value="">Select City</option>
+                                            <option value="">{{ __('links.selectCity') }}</option>
                                             @foreach ($cities as $city)
-                                                <option value="{{ $city->id }}" {{ $city->id==1 ? 'selected' : '' }} >{{ $city->en_city }}</option>
+                                                <option value="{{ $city->id }}" {{ $city->id==1 ? 'selected' : '' }} >
+                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                                    {{ $city->en_city }}
+                                                    @else
+                                                    {{ $city->ar_city }}
+                                                    @endif
+                                                    </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                     <h5> check in <span>check </span> </h5>
+                                    @else
+                                    <h5>تسجيل وصول | <span>تسجبل مغادرة </span> </h5>
+                                    @endif
+
 
                                     <div class="datepicker calender">
                                         <i class="fa-solid fa-calendar-days"></i>
@@ -83,7 +120,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-xl-1">
-                                    <h5> nights</h5>
+                                    <h5> {{ __('links.nights') }}</h5>
                                     {{-- <select class="form-select" name="nights" aria-label="Default select example">
                                         @for ($i = 1; $i < 11; $i++)
                                 <option value="{{ $i }}"
@@ -94,17 +131,17 @@
                                     <input type="text" readonly class="form-control" id="nights" name="nights" value="7" >
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-xl-3">
-                                    <h5> Add room</h5>
+                                    <h5> {{ __('links.addRoom') }}</h5>
                                     <div class="rooms">
                                         <button class="info form-select" type="button" onclick="open_addnew()">
                                             <i class="fa-regular fa-user"></i>
-                                            <span id="adults"> 1 adults </span>
-                                            <span id="children"> 0 children </span>
-                                            <span id="rooms">1 rooms </span>
+                                            <span id="adults"> 1 {{ __('links.adult') }} </span>
+                                            <span id="children"> 0 {{ __('links.child') }} </span>
+                                            <span id="rooms">1 {{ __('links.rooms') }} </span>
                                         </button>
                                         <div class="add_new" id="add_new">
                                             <div class="form-group counter">
-                                                <label>adults</label>
+                                                <label>{{ __('links.adult') }}</label>
                                                 <div class="input-group counter_content">
                                                     <div class="input-group-btn">
                                                         <button id="down" type="button" class=" btn btn-default"
@@ -123,7 +160,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group counter">
-                                                <label>children</label>
+                                                <label>{{ __('links.child') }}</label>
                                                 <div class="input-group counter_content">
                                                     <div class="input-group-btn">
                                                         <button id="down" type="button" class="btn btn-default"
@@ -147,7 +184,7 @@
 
                                             </div>
                                             <div class="form-group counter">
-                                                <label>rooms</label>
+                                                <label>{{ __('links.rooms') }}</label>
                                                 <div class="input-group counter_content">
                                                     <div class="input-group-btn">
                                                         <button id="down" type="button" class="btn btn-default"
@@ -166,7 +203,7 @@
                                                 </div>
                                             </div>
                                             <button type="button" class="btn done_button" onclick="close_addnew()">
-                                                Done </button>
+                                                {{ __('links.done') }} </button>
                                         </div>
                                     </div>
 
@@ -175,7 +212,7 @@
                                     <div class="main" id="room_main">
 
                                         <button class="btn"  type="submit">
-                                           Search
+                                            {{ __('links.search') }}
                                         </button>
                                     </div>
                                 </div>

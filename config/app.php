@@ -217,6 +217,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Helper' => App\Helpers\Helper::class,
     ])->toArray(),
 
 ];

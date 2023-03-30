@@ -11,7 +11,7 @@ use App\Models\Visa;
 use App\Models\Visa_type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Lang as Lang;
 class VisaDataController extends Controller
 {
     //
@@ -19,7 +19,7 @@ class VisaDataController extends Controller
     {
 
         $Company = Company::first();
-        $BreadCrumb = [["url" => "/", "name" => "Home"], ["url" => "/visa", "name" => "visa"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')], ["url" => "/visa", "name" => Lang::get('links.visa')]];
         $countries = Country::all();
         $nationality_ids = Visa::pluck('nationality_id');
         $nationalities = Nationality::whereIn('id',$nationality_ids)->get();

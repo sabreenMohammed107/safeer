@@ -33,8 +33,14 @@
                                         }
 
                                     @endphp
-                                    <h6> <a href="{{ url('/hotels/' . $HRec->hotel_id) }}"
-                                            class="">{{ $HRec->hotel->hotel_enname }} –
+                                    <h6> <a href="{{ LaravelLocalization::localizeUrl('/hotels/' . $HRec->hotel_id) }}"
+                                            class="">@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                            {{ $HRec->hotel->hotel_enname }}
+                                            @else
+                                            {{ $HRec->hotel->hotel_arname }}
+                                            @endif
+                             –
                                             {{ $HRec->hotel->hotel_stars }} Stars</a></h6>
                                     <span>
 
@@ -59,13 +65,17 @@
                                             @endif
                                             <span >
                                                 @if($favExist==1)
-                                            <a  href="{{ url('/removeFavourite/' . $HRec->hotel_id) }}"  ><i
+                                            <a  href="{{ LaravelLocalization::localizeUrl('/removeFavourite/' . $HRec->hotel_id) }}"  ><i
                                                      class="fa-regular fa-heart card_info_hover"></i> </a>
 
                                                      @else
 
-                                                    <a  href="{{ url('/favourite/' . $HRec->hotel_id) }}"  ><i
-                                                        class="fa-regular fa-heart"></i> </a>
+                                                     @if (session()->get('SiteUser'))
+                                                     <a href="{{ LaravelLocalization::localizeUrl('/favourite/' . $HPrice->hotel_id) }}"><i
+                                                             class="fa-regular fa-heart"></i> </a>
+                                                 @else
+                                                     <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}"><i class="fa-regular fa-heart"></i></a>
+                                                 @endif
 
                                                 @endif </span>
 
@@ -77,7 +87,9 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="staticBackdropLabel">Add
-                                                        Favorite</h5>
+                                                        Favorite
+
+                                                    </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -94,7 +106,7 @@
                                                             class="btn btn-primary" onclick="setHeart(this)"
                                                             data-bs-dismiss="modal">Add </a>
                                                     @else
-                                                        <a href="{{ route('siteLogin') }}" class="btn btn-primary"
+                                                        <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}" class="btn btn-primary"
                                                             onclick="setHeart(this)" data-bs-dismiss="modal">Add </a>
                                                     @endif
                                                 </div>
@@ -103,12 +115,25 @@
                                     </div>
                                 </div>
                                 <span> <i
-                                        class="fa-solid fa-location-dot"></i>{{ $HRec->hotel->country->en_country ?? '' }}
-                                    <span>|</span> {{ $HRec->hotel->city->en_city }}</span>
-                                <p>
-                                    {!! \Illuminate\Support\Str::limit($HRec->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
-                                    {{-- {{ $HRec->hotel->hotel_enoverview }} --}}
-                                </p>
+                                        class="fa-solid fa-location-dot"></i>
+
+  @if (LaravelLocalization::getCurrentLocale() === 'en')
+  {{ $HRec->hotel->country->en_country ?? '' }}
+  <span>|</span> {{ $HRec->hotel->city->en_city }}</span>
+<p>
+  {!! \Illuminate\Support\Str::limit($HRec->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
+  {{-- {{ $HRec->hotel->hotel_enoverview }} --}}
+</p>
+
+  @else
+  {{ $HRec->hotel->country->ar_country ?? '' }}
+  <span>|</span> {{ $HRec->hotel->city->ar_city }}</span>
+<p>
+  {!! \Illuminate\Support\Str::limit($HRec->hotel->hotel_aroverview ?? '', $limit = 200, $end = '') !!}
+
+</p>
+  @endif
+
                                 <div class="price">
                                     <div class="rating">
                                         @for ($i = 0; $i < $HRec->hotel->hotel_stars; $i++)
@@ -118,11 +143,10 @@
                                             <i class="fa-regular fa-star"></i>
                                         @endfor
 
-                                        <span> ({{ $HRec->totalreviews }} review) </span>
+                                        <span> ({{ $HRec->totalreviews }} {{ __('links.review') }}) </span>
                                     </div>
                                     <span class="hotels_price"><span
-                                            style="color:#5f5858;font-size: 16px;font-weight: 300">start
-                                            with</span> $ {{ $minPrice ?? $HRec->single_cost }}</span>
+                                            style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> $ {{ $minPrice ?? $HRec->single_cost }}</span>
                                 </div>
                             </div>
                         </div>
@@ -150,33 +174,37 @@
                                         $interval = $datetime1->diff($datetime2);
                                         $days = $interval->format('%a');
                                     @endphp
-                                    <h6> <a href="{{ url('/hotels/' . $HPrice->hotel_id) }}"
-                                            class="">{{ $HPrice->hotel->hotel_enname }} –
-                                            {{ $HPrice->hotel->hotel_stars }} Stars</a></h6>
+                                    <h6> <a href="{{ LaravelLocalization::localizeUrl('/hotels/' . $HPrice->hotel_id) }}"
+                                            class=""> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                            {{ $HPrice->hotel->hotel_enname }}
+                                            @else
+                                            {{ $HPrice->hotel->hotel_arname }}
+                                            @endif –
+                                            {{ $HPrice->hotel->hotel_stars }} {{ __('links.stars') }}</a></h6>
                                     <span>
 
                                         @if (session()->get('SiteUser'))
-                                            <a href="{{ url('/favourite/' . $HPrice->hotel_id) }}"><i
+                                            <a href="{{ LaravelLocalization::localizeUrl('/favourite/' . $HPrice->hotel_id) }}"><i
                                                     class="fa-regular fa-heart"></i> </a>
                                         @else
-                                            <a href="{{ route('siteLogin') }}"><i class="fa-regular fa-heart"></i></a>
+                                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}"><i class="fa-regular fa-heart"></i></a>
                                         @endif
                                     </span>
-                                    {{-- <div class="heart" data-bs-toggle="modal"
-                                            data-bs-target="#static{{ $HPrice->hotel_id }}Backdrop">
-                                            {{-- <input type="checkbox" id="fav" type="submit modl_fav_add_remov"
-                                                onclick="setHeart(this)" data-info-fav="not_added">
 
-                                            <label class="heart" for="fav"></label> --}}
-                                    {{-- </div> --}}
                                     <div class="modal fade addFavDialog" id="static{{ $HPrice->hotel_id }}Backdrop"
                                         data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Add
-                                                        Favorite</h5>
+                                                    <h5 class="modal-title" id="staticBackdropLabel">@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                                        Add
+                                                        Favorite
+                                                        @else
+                                                      اضافة للمفضله
+                                                        @endif</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -193,7 +221,7 @@
                                                             class="btn btn-primary" onclick="setHeart(this)"
                                                             data-bs-dismiss="modal">Add </a>
                                                     @else
-                                                        <a href="{{ route('siteLogin') }}" class="btn btn-primary"
+                                                        <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}" class="btn btn-primary"
                                                             onclick="setHeart(this)" data-bs-dismiss="modal">Add </a>
                                                     @endif
                                                 </div>
@@ -202,13 +230,23 @@
                                     </div>
                                 </div>
                                 <span> <i class="fa-solid fa-location-dot"></i>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
                                     {{ $HPrice->hotel->country->en_country ?? '' }}
                                     <span>|</span> {{ $HPrice->hotel->city->en_city }}</span>
                                 <p>
                                     {!! \Illuminate\Support\Str::limit($HPrice->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
 
-                                    {{-- {{ $HPrice->hotel->hotel_enoverview }} --}}
                                 </p>
+
+                                    @else
+                                    {{ $HPrice->hotel->country->ar_country ?? '' }}
+                                    <span>|</span> {{ $HPrice->hotel->city->ar_city }}</span>
+                                <p>
+                                    {!! \Illuminate\Support\Str::limit($HPrice->hotel->hotel_aroverview ?? '', $limit = 200, $end = '') !!}
+
+                                </p>
+                                    @endif
+
                                 <div class="price">
                                     <div class="rating">
                                         @for ($i = 0; $i < $HPrice->hotel->hotel_stars; $i++)
@@ -218,11 +256,10 @@
                                             <i class="fa-regular fa-star"></i>
                                         @endfor
 
-                                        <span> ({{ $HPrice->totalreviews }} review) </span>
+                                        <span> ({{ $HPrice->totalreviews }} {{ __('links.review') }}) </span>
                                     </div>
                                     <span class="hotels_price"><span
-                                            style="color:#5f5858;font-size: 16px;font-weight: 300">start
-                                            with</span> $ {{ $HPrice->single_cost }}</span>
+                                            style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> $ {{ $HPrice->single_cost }}</span>
                                     {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
                                 </div>
                             </div>
@@ -251,16 +288,23 @@
                                         $interval = $datetime1->diff($datetime2);
                                         $days = $interval->format('%a');
                                     @endphp
-                                    <h6> <a href="{{ url('/hotels/' . $HAlpha->hotel_id) }}"
-                                            class="">{{ $HAlpha->hotel->hotel_enname }} –
+                                    <h6> <a href="
+                                        {{ LaravelLocalization::localizeUrl('/hotels/' . $HAlpha->hotel_id) }}"
+                                            class="">  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                            {{ $HAlpha->hotel->hotel_enname }}
+                                            @else
+                                            {{ $HAlpha->hotel->hotel_arname }}
+                                            @endif –
                                             {{ $HAlpha->hotel->hotel_stars }} Stars</a></h6>
                                     <span>
 
                                         @if (session()->get('SiteUser'))
-                                            <a href="{{ url('/favourite/' . $HAlpha->hotel_id) }}"><i
+                                            <a href="
+                                            {{ LaravelLocalization::localizeUrl('/favourite/' . $HAlpha->hotel_id) }}"><i
                                                     class="fa-regular fa-heart"></i> </a>
                                         @else
-                                            <a href="{{ route('siteLogin') }}"><i
+                                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}"><i
                                                     class="fa-regular fa-heart"></i></a>
                                         @endif
                                     </span>
@@ -296,7 +340,7 @@
                                                             class="btn btn-primary" onclick="setHeart(this)"
                                                             data-bs-dismiss="modal">Add </a>
                                                     @else
-                                                        <a href="{{ route('siteLogin') }}" class="btn btn-primary"
+                                                        <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}" class="btn btn-primary"
                                                             onclick="setHeart(this)" data-bs-dismiss="modal">Add </a>
                                                     @endif
                                                 </div>
@@ -305,13 +349,24 @@
                                     </div>
                                 </div>
                                 <span> <i class="fa-solid fa-location-dot"></i>
-                                    {{ $HAlpha->hotel->country->en_country ?? '' }}
-                                    <span>|</span> {{ $HAlpha->hotel->city->en_city }}</span>
-                                <p>
-                                    {!! \Illuminate\Support\Str::limit($HAlpha->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
 
-                                    {{-- {{ $HAlpha->hotel->hotel_enoverview }} --}}
-                                </p>
+  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+  {{ $HAlpha->hotel->country->en_country ?? '' }}
+  <span>|</span> {{ $HAlpha->hotel->city->en_city }}</span>
+<p>
+  {!! \Illuminate\Support\Str::limit($HAlpha->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
+
+</p>
+  @else
+  {{ $HAlpha->hotel->country->ar_country ?? '' }}
+  <span>|</span> {{ $HAlpha->hotel->city->ar_city }}</span>
+<p>
+  {!! \Illuminate\Support\Str::limit($HAlpha->hotel->hotel_aroverview ?? '', $limit = 200, $end = '') !!}
+
+</p>
+  @endif
+
                                 <div class="price">
                                     <div class="rating">
                                         @for ($i = 0; $i < $HAlpha->hotel->hotel_stars; $i++)
@@ -321,11 +376,10 @@
                                             <i class="fa-regular fa-star"></i>
                                         @endfor
 
-                                        <span> ({{ $HAlpha->totalreviews }} review) </span>
+                                        <span> ({{ $HAlpha->totalreviews }} {{ __('links.review') }}) </span>
                                     </div>
                                     <span class="hotels_price"><span
-                                            style="color:#5f5858;font-size: 16px;font-weight: 300">start
-                                            with</span> $ {{ $HAlpha->single_cost }}</span>
+                                            style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> $ {{ $HAlpha->single_cost }}</span>
                                     {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
                                 </div>
                             </div>
@@ -349,7 +403,7 @@
             <input type="hidden" name="page_num" />
             @if ($HotelsRecommended->currentPage() !== $HotelsRecommended->lastPage())
                 <li class="page-item page-inc">
-                    <a class="page-link" href="{{ $HotelsRecommended->nextPageUrl() }}">Next</a>
+                    <a class="page-link" href="{{ $HotelsRecommended->nextPageUrl() }}">{{ __('links.next') }}</a>
                 </li>
             @endif
         </ul>

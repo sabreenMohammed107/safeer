@@ -14,7 +14,7 @@ use App\Models\Tour;
 use App\Models\Tour_type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Lang as Lang;
 class ToursController extends Controller
 {
 /*
@@ -25,7 +25,7 @@ class ToursController extends Controller
 
         $Tour = Tour::find((int) $id);
         $Company = Company::first();
-        $BreadCrumb = [["url" => "/", "name" => "Home"], ["url" => "/tours", "name" => "Tours"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')], ["url" => "/tours", "name" => Lang::get('links.tours')]];
 
         $TourGallery = Gallery::where([["tour_id", '=', $id], ["active", '=', 1]])->take(4)->get();
         // return $HotelTourGallery;
@@ -55,7 +55,7 @@ class ToursController extends Controller
     {
 
         $Company = Company::first();
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Cities = City::all();
         $TourTypes = Tour_type::all();
 
@@ -80,7 +80,7 @@ class ToursController extends Controller
 
 
         $Company = Company::first();
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Cities = City::all();
         $TourTypes = Tour_type::all();
 

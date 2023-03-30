@@ -8,12 +8,17 @@
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="Contact Us" :breadcrumb="$BreadCrumb" current="" />
+    <x-website.header.general title="{{ __('links.contact_us') }}" :breadcrumb="$BreadCrumb" current="" />
 @endsection
 @section('content')
     <!-- socail channels -->
     <section class="socail_channels container">
-        <h5>contact us via our social channels.</h5>
+        <h5>@if (LaravelLocalization::getCurrentLocale() === 'en')
+            contact us via our social channels.
+
+            @else
+            اتصل بنا عبر قنواتنا الاجتماعية.
+            @endif</h5>
 
         <div class="row mx-0">
             <div class="col-sm-12 col-md-6 col-xl-4">
@@ -24,11 +29,22 @@
                         <div class="card-body socail_info">
                             <div class="card_info">
                                 <h6>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
                                     Our Location
+
+                @else
+              موقعنا
+                @endif
 
                                 </h6>
                                 <span>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                     {{ $master->detailed_address_en }}
+                @else
+                {{ $master->detailed_address_ar }}
+                @endif
+
 
                                 </span>
                             </div>
@@ -45,7 +61,13 @@
                         <div class="card-body socail_info">
                             <div class="card_info">
                                 <h6>
+
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
                                     phone number
+
+                @else
+              رقم التليفون
+                @endif
                                 </h6>
                                 <span class="info">
                                     <a href="tel:{{ $master->phone }}"> {!! $master->phone !!}</a>
@@ -66,8 +88,7 @@
                         <div class="card-body socail_info">
                             <div class="card_info">
                                 <h6>
-                                    e-mail
-
+                                    {{ __('links.email') }}
                                 </h6>
                                 <span class="info">
                                     <a href="mailto:{{ $master->email }}"> {{ $master->email }}</a>
@@ -112,8 +133,14 @@
         <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt=" slider mask bottom">
         <div class="container">
 
-            <h5> We Provide Best Services <br>
-                Need Help? </h5>
+            <h5>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                We Provide Best Services <br>
+                Need Help?
+                @else
+                نحن نقدم أفضل الخدمات <br>
+                تحتاج مساعدة؟
+                @endif </h5>
                 @if(Session::has('flash_success'))
 
                 <div class="alert alert-success alert-dismissible fade show" role="alert"
@@ -130,7 +157,8 @@
                         <div class="mb-3">
                             <input type="text" name="name"
                                 class="form-control {{ $errors->has('name') ? 'error' : '' }}" id="name"
-                                placeholder="Your Name *" required>
+                                placeholder="{{ __('links.name') }}
+                                *" required>
                             @if ($errors->has('name'))
                                 <div class="error">
                                     {{ $errors->first('name') }}
@@ -139,7 +167,8 @@
                         </div>
                         <div class="mb-3">
                             <input type="email" class="form-control {{ $errors->has('email') ? 'error' : '' }}"
-                                name="email" id="email" placeholder=" Your Email*" required>
+                                name="email" id="email" placeholder=" {{ __('links.email') }}
+                                *" required>
                             @if ($errors->has('email'))
                                 <div class="error">
                                     {{ $errors->first('email') }}
@@ -148,7 +177,8 @@
                         </div>
                         <div class="mb-3">
                             <input type="number" class="form-control {{ $errors->has('phone') ? 'error' : '' }}"
-                                name="phone" id="phone" placeholder="Your Phone *" required>
+                                name="phone" id="phone" placeholder="{{ __('links.mobile') }}
+                                *" required>
                             @if ($errors->has('phone'))
                                 <div class="error">
                                     {{ $errors->first('phone') }}
@@ -159,7 +189,8 @@
                     <div class="col-md-12 col-xl-6 col-sm-12">
                         <div class="mb-3">
                             <textarea class="form-control{{ $errors->has('message') ? 'error' : '' }}" name="message" id="message" rows="3"
-                                placeholder="Send message* " required></textarea>
+                                placeholder="{{ __('links.send_msg') }}
+                                * " required></textarea>
                             @if ($errors->has('message'))
                                 <div class="error">
                                     {{ $errors->first('message') }}
@@ -169,7 +200,7 @@
                     </div>
                     <div class="col-12">
                         <div class="mb-3 mt-3">
-                            <button type="submit" class="btn btn-primary">send message</button>
+                            <button type="submit" class="btn btn-primary">{{ __('links.send_msg') }}</button>
                         </div>
                     </div>
                 </div>
@@ -185,10 +216,21 @@
                     <div class="offices_info">
                         <div class="help_info">
                             <h6>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                 {{ $branches[0]->branch_enname }}
+                @else
+                {{ $branches[0]->branch_arname }}
+                @endif
+
 
                             </h6>
-                            <span> {{ $branches[0]->detailed_address_en }}</span>
+                            <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                {{ $branches[0]->detailed_address_en }}
+                                @else
+                                {{ $branches[0]->detailed_address_ar }}
+                                @endif</span>
                             {{-- <span> new york NY 10010</span> --}}
                             <span> phone :<br> {!! $branches[0]->phone !!}</span>
                             {{-- <span>fax: {{ $branches[0]->fax }}</span> --}}
@@ -215,9 +257,19 @@
                     <div class="offices_info">
                         <div class="help_info">
                             <h6>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 {{ $branches[1]->branch_enname }}
+
+                @else
+                {{ $branches[1]->branch_arname }}
+                @endif
                             </h6>
-                            <span> {{ $branches[1]->detailed_address_en }}</span>
+                            <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                {{ $branches[1]->detailed_address_en }}
+                                @else
+                                {{ $branches[1]->detailed_address_ar }}
+                                @endif</span>
                             {{-- <span> new york NY 10010</span> --}}
                             <span> phone :<br> {!! $branches[1]->phone !!}</span>
                             {{-- <span>fax:{{ $branches[1]->fax }}</span> --}}

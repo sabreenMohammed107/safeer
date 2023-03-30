@@ -17,14 +17,32 @@
                             <div class="card-body  setted_info">
                                 <a href="" class="btn btn-primary obj" >
                                     <span>
-                                       {{ $HRec->carClass->class_enname ?? '' }}                        </span>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                        {{ $HRec->carClass->class_enname ?? '' }}
+
+                                        @else
+                                        {{ $HRec->carClass->class_arname ?? '' }}
+                                        @endif
+                                                             </span>
                                   </a>
                               <div class="card_info">
-                                  <h6> {{ $HRec->carModel->model_enname ?? '' }} to {{ $HRec->locationTo->location_enname ?? '' }} </h6>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                <h6> {{ $HRec->carModel->model_enname ?? '' }} to {{ $HRec->locationTo->location_enname ?? '' }} </h6>
+
+                                @else
+                                <h6> {{ $HRec->carModel->model_arname ?? '' }} to {{ $HRec->locationTo->location_arname ?? '' }} </h6>
+
+                                @endif
 
                               </div>
                               <h5>
-                              <span  class="duartion py-1" >     Number of seats {{ $HRec->carModel->capacity ??'' }}  </span>
+                              <span  class="duartion py-1" >       @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Number of seats
+                                @else
+                              عدد المقاعد
+                                @endif {{ $HRec->carModel->capacity ??'' }}  </span>
                               </h5>
                                 <div class="card_info" >
                                     <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>From :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HRec->locationFrom->location_enname ?? '' }} </a></p>
@@ -39,7 +57,7 @@
                                         <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HRec->person_price, 2) }} </a>  Cost / Journey </p>
                                     </span>
                                 </div>
- <form action="{{ url('/bookTransfer') }}" method="POST">
+ <form action="{{ LaravelLocalization::localizeUrl('/bookTransfer') }}" method="POST">
                     @csrf
                     <input type="hidden" name="transfer_id" value="{{ $HRec->id }}">
 
@@ -47,7 +65,8 @@
 
                               <div class="details px-1">
                                 <label>
-                                  pick a date
+                                    {{ __('links.pickDate') }}
+
                                 </label>
                                 <input type="text" id="transfer_date"    class="form-control transfer_date " name="transfer_date"  />
 
@@ -58,13 +77,14 @@
 
 
                                     <label>
-                                        Adults                                  </label>
+                                        {{ __('links.adult') }}
+                                                                     </label>
                                     <input type="number" name="transfer_adult" value="1" class="form-control ">
 
 
                                 </div>
                                 <button class="btn mx-1 btn-primary"" type="submit">
-                                        BOOK
+                                    {{ __('links.book') }}
                                     </button>
                               </div>
  </form>
@@ -90,14 +110,32 @@
                         <div class="card-body  setted_info">
                             <a href="" class="btn btn-primary obj" >
                                 <span>
-                                    {{ $HPrice->carClass->class_enname ?? '' }}           </span>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    {{ $HPrice->carClass->class_enname ?? '' }}
+                                    @else
+                                    {{ $HPrice->carClass->class_arname ?? '' }}
+                                    @endif
+                                               </span>
                               </a>
                           <div class="card_info">
-                              <h6> {{ $HPrice->carModel->model_enname ?? '' }} to {{ $HPrice->locationTo->location_enname ?? '' }}</h6>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            <h6> {{ $HPrice->carModel->model_enname ?? '' }} to {{ $HPrice->locationTo->location_enname ?? '' }}</h6>
+
+                            @else
+                            <h6> {{ $HPrice->carModel->model_arname ?? '' }} to {{ $HPrice->locationTo->location_arname ?? '' }}</h6>
+
+                            @endif
 
                           </div>
                           <h5>
-                            <span  class="duartion py-1" >     Number of seats {{ $HPrice->carModel->capacity ??''}}  </span>
+                            <span  class="duartion py-1" >    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Number of seats
+                                @else
+                              عدد المقاعد
+                                @endif   {{ $HPrice->carModel->capacity ??''}}  </span>
                             </h5>
                               <div class="card_info" >
                                   <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>From :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HPrice->locationFrom->location_enname ?? '' }} </a></p>
@@ -112,14 +150,14 @@
                                       <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HPrice->person_price, 2) }} </a>  Cost / Journey </p>
                                   </span>
                               </div>
-                            <form action="{{ url('/bookTransfer') }}" method="POST">
+                            <form action="{{ LaravelLocalization::localizeUrl('/bookTransfer') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="transfer_id" value="{{ $HPrice->id }}">
                                           <div class="booking_info">
 
                                           <div class="details px-1">
                                             <label>
-                                              pick a date
+                                                {{ __('links.pickDate') }}
                                             </label>
 
                                             <input type="text" id="start_date" placeholder="DD/MM/YYYY"  class="form-control transfer_date" name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
@@ -128,13 +166,13 @@
 
 
                                                 <label>
-                                                    Adults                                  </label>
+                                                    {{ __('links.adult') }}                                </label>
                                                 <input type="number" name="transfer_adult" value="1" class="form-control ">
 
 
                                             </div>
                                             <button class="btn mx-1 btn-primary" type="submit">
-                                                    BOOK
+                                                {{ __('links.book') }}
                                                 </button>
                                           </div>
              </form>
@@ -161,14 +199,32 @@
                         <div class="card-body  setted_info">
                             <a href="" class="btn btn-primary obj" >
                                 <span>
-                                    {{ $HAlpha->carClass->class_enname ?? '' }}  </span>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    {{ $HAlpha->carClass->class_enname ?? '' }}
+                @else
+                {{ $HAlpha->carClass->class_arname ?? '' }}
+                @endif
+                                    </span>
                               </a>
                           <div class="card_info">
-                              <h6> {{ $HAlpha->carModel->model_enname ?? '' }} to {{ $HAlpha->locationTo->location_enname ?? '' }}                           </h6>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            <h6> {{ $HAlpha->carModel->model_enname ?? '' }} to {{ $HAlpha->locationTo->location_enname ?? '' }}                           </h6>
+
+
+                @else
+                <h6> {{ $HAlpha->carModel->model_arname ?? '' }} to {{ $HAlpha->locationTo->location_arname ?? '' }}                           </h6>
+
+                @endif
 
                           </div>
                           <h5>
-                            <span  class="duartion py-1" >     Number of seats {{ $HAlpha->carModel->capacity ??'' }}  </span>
+                            <span  class="duartion py-1" >     @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Number of seats
+                                @else
+                              عدد المقاعد
+                                @endif {{ $HAlpha->carModel->capacity ??'' }}  </span>
                             </h5>
                               <div class="card_info" >
                                   <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>From :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HAlpha->locationFrom->location_enname ?? '' }} </a></p>
@@ -183,7 +239,7 @@
                                       <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HAlpha->person_price, 2) }} </a>  Cost / Journey </p>
                                   </span>
                               </div>
-                            <form action="{{ url('/bookTransfer') }}" method="POST">
+                            <form action="{{ LaravelLocalization::localizeUrl('/bookTransfer') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="transfer_id" value="{{ $HAlpha->id }}">
 
@@ -191,7 +247,7 @@
 
                                           <div class="details px-1">
                                             <label>
-                                              pick a date
+                                                {{ __('links.pickDate') }}
                                             </label>
 
                                             <input type="text" id="end_date" placeholder="DD/MM/YYYY"  class="form-control transfer_date" name="transfer_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
@@ -200,13 +256,13 @@
 
 
                                                 <label>
-                                                    Adults                                  </label>
+                                                    {{ __('links.adult') }}                               </label>
                                                 <input type="number" name="transfer_adult" value="1" class="form-control ">
 
 
                                             </div>
                                             <button class="btn mx-1 btn-primary" type="submit">
-                                                    BOOK
+                                                {{ __('links.book') }}
                                                 </button>
                                           </div>
              </form>

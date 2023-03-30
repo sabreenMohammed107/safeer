@@ -16,7 +16,7 @@ use App\Models\Zone;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Lang as Lang;
 class HotelsController extends Controller
 {
     public function profile($id)
@@ -26,7 +26,7 @@ class HotelsController extends Controller
         $Hotel = Hotel::find((int) $id);
         // return $RoomCost->hotelRooms->hotel;
         $Company = Company::first();
-        $BreadCrumb = [["url" => "/", "name" => "Home"], ["url" => "/hotels", "name" => "Hotels"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')], ["url" => "/hotels", "name" => Lang::get('links.hotels')]];
 
 
         $HasRoomCart =(session()->get("SiteUser"))? Cart::where([["user_id",'=',session()->get("SiteUser")["ID"]],["item_type",'=',0]])->count() : 0;
@@ -71,7 +71,7 @@ class HotelsController extends Controller
 
         $arr = explode(' |', $request->from_date);
         $Company = Company::first();
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Countries = Country::where('id',1)->get();
         $Cities = City::all();
         $zones = Zone::all();
@@ -136,7 +136,7 @@ class HotelsController extends Controller
 
 
         $Company = Company::first();
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Countries = Country::where('id',1)->get();
         $Cities = City::all();
         $zones = Zone::all();
@@ -181,7 +181,7 @@ class HotelsController extends Controller
     {
 
         $Company = Company::first();
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Countries = Country::where('id',1)->get();
         $Cities = City::all();
         $zones = Zone::all();

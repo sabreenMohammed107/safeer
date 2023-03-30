@@ -17,15 +17,35 @@
                             <div class="card-body  setted_info">
                                 <div class="card_info">
                                     <h6>
-                                        <a href="{{ url('/tours/' . $HRec->id) }}"
-                                            class=""> {{ $HRec->en_name }} </a> </h6>
+                                        <a href="
+                                        {{ LaravelLocalization::localizeUrl('/tours/' . $HRec->id)  }}"
+                                            class="">
+                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                            {{ $HRec->en_name }}
+                                                          @else
+                                                          {{ $HRec->ar_name }}
+                                                          @endif </a> </h6>
                                     <span>
                                       ${{ $HRec->tour_person_cost }}
                                     </span>
                                 </div>
-                                <span class="duartion">  <i class="fa-solid fa-location-dot"></i>  duration {{ $HRec->duration }}</span>
+                                <span class="duartion">  <i class="fa-solid fa-location-dot"></i>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    duration
+                                                  @else
+                                                المدة
+                                                  @endif {{ $HRec->duration }}</span>
                                 <p>
-                                {!! $HRec->en_notes !!}
+
+  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+  {!! $HRec->en_notes !!}
+  @else
+  {!! $HRec->ar_notes !!}
+  @endif
+
 
                                 </p>
 
@@ -52,15 +72,31 @@
                         <div class="card-body  setted_info">
                             <div class="card_info">
                                 <h6>
-                                    <a href="{{ url('/tours/' . $HPrice->id) }}"
-                                        class=""> {{ $HPrice->en_name }} </a> </h6>
+                                    <a href="{{ LaravelLocalization::localizeUrl('/tours/' . $HPrice->id)}}"
+                                        class=""> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        {{ $HPrice->en_name }}
+                                        @else
+                                        {{ $HPrice->ar_name }}
+                                        @endif </a> </h6>
                                 <span>
                                   ${{ $HPrice->tour_person_cost }}
                                 </span>
                             </div>
-                            <span class="duartion">  <i class="fa-solid fa-location-dot"></i>  duration {{ $HPrice->duration }}</span>
+                            <span class="duartion">  <i class="fa-solid fa-location-dot"></i>           @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                duration
+                                              @else
+                                            المدة
+                                              @endif {{ $HPrice->duration }}</span>
                             <p>
-                            {!! $HPrice->en_notes !!}
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                {!! $HPrice->en_notes !!}
+                @else
+                {!! $HPrice->ar_notes !!}
+                @endif
+
 
                             </p>
 
@@ -87,16 +123,31 @@
                         </div>
                         <div class="card-body  setted_info">
                             <div class="card_info">
-                                <h6> <a href="{{ url('/tours/' . $HAlpha->id) }}"
-                                    class=""> {{ $HAlpha->en_name }} </a> </h6>
+                                <h6> <a href="{{ LaravelLocalization::localizeUrl('/tours/' . $HAlpha->id) }}"
+                                    class=""> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    {{ $HAlpha->en_name }}
+                                    @else
+                                    {{ $HAlpha->ar_name }}
+                                    @endif </a> </h6>
                                 <span>
                                   ${{ $HAlpha->tour_person_cost }}
                                 </span>
                             </div>
-                            <span class="duartion">  <i class="fa-solid fa-location-dot"></i>  duration {{ $HAlpha->duration }}</span>
-                            <p>
-                            {!! $HAlpha->en_notes !!}
+                            <span class="duartion">  <i class="fa-solid fa-location-dot"></i>           @if (LaravelLocalization::getCurrentLocale() === 'en')
 
+                                duration
+                                              @else
+                                            المدة
+                                              @endif {{ $HAlpha->duration }}</span>
+                            <p>
+
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            {!! $HAlpha->en_notes !!}
+            @else
+            {!! $HAlpha->ar_notes !!}
+            @endif
                             </p>
 
 

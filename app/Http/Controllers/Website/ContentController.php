@@ -13,12 +13,12 @@ use App\Models\Newsletter;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Concat;
-
+use Illuminate\Support\Facades\Lang as Lang;
 class ContentController extends Controller
 {
     public function about()
     {
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Company = Company::first();
 
         $Counters = Counter::get();
@@ -35,7 +35,7 @@ class ContentController extends Controller
 
     public function blogs()
     {
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Company = Company::first();
         $blogs = Blog::paginate(10);
         $categories = Blogs_category::get();
@@ -67,7 +67,7 @@ class ContentController extends Controller
 
     public function singleBlog($id)
     {
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Company = Company::first();
         $blog = Blog::where('id', $id)->first();
         $categories = Blogs_category::get();
@@ -85,7 +85,7 @@ class ContentController extends Controller
     // Create Contact Form
     public function createForm(Request $request)
     {
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Company = Company::first();
         $master=Company_branch::where('master_flag',1)->firstorfail();
         $branches = Company_branch::get();

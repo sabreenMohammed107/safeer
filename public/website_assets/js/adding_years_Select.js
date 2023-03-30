@@ -177,18 +177,23 @@ var yearsValue;
 
 function addYearsSelect() {
     yearsValue = yearInput.value;
+    var lang = $('html').attr('lang');
+console.log(lang);
+    // console.log(userLang);
     var years = `
       <select class="form-select" name="ages[]" aria-label="Default select example">\n\
-          <option value="1" selected> 1 years old </option>\n\
-          <option value="2"> 2 years old</option>\n\
-          <option value="3">3 years old</option>\n\
-          <option value="4">4 years old </option>\n\
-          <option value="5">5 years old</option>\n\
-          <option value="6">6 years old</option>\n\
-          <option value="7">7 years old</option>\n\
-          <option value="8">8 years old</option>\n\
-          <option value="9">9 years old</option>\n\
-          <option value="10">10 years old</option>\n\
+          <option value="1" selected> 1
+          ${lang === 'en' ? 'years old' : 'سنة'}
+           </option>\n\
+          <option value="2"> 2  ${lang === 'en' ? 'years old' : 'سنة'}</option>\n\
+          <option value="3">3  ${lang === 'en' ? 'years old' : 'سنة'}</option>\n\
+          <option value="4">4  ${lang === 'en' ? 'years old' : 'سنة'} </option>\n\
+          <option value="5">5  ${lang === 'en' ? 'years old' : 'سنة'}</option>\n\
+          <option value="6">6  ${lang === 'en' ? 'years old' : 'سنة'}</option>\n\
+          <option value="7">7  ${lang === 'en' ? 'years old' : 'سنة'}</option>\n\
+          <option value="8">8  ${lang === 'en' ? 'years old' : 'سنة'}</option>\n\
+          <option value="9">9  ${lang === 'en' ? 'years old' : 'سنة'}</option>\n\
+          <option value="10">10  ${lang === 'en' ? 'years old' : 'سنة'}</option>\n\
         </select>\n\
      `;
     yearSelect.insertAdjacentHTML("beforeend", years);

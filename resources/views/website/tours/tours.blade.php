@@ -54,16 +54,18 @@ input.nosubmit {
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="All Tours" :breadcrumb="$BreadCrumb" current="All Tours" />
+    <x-website.header.general title="{{ __('links.tours') }}" :breadcrumb="$BreadCrumb" current="{{ __('links.tours') }}" />
 @endsection
 @section('content')
-
+<?php
+ $localVar=LaravelLocalization::getCurrentLocale();
+?>
 
     <section class="tours container mt-4">
         <div class="row mx-0">
             <div class="  col-sm-0 col-xl-3">
                 <button class="btn filtered_button" onclick="openFilter()" id="filterButton">
-                    <i class="fa-solid fa-sliders"></i> search tours
+                    <i class="fa-solid fa-sliders"></i> {{ __('links.search') }}
                 </button>
                 <div class="search_tours" id="filtered-menu">
 
@@ -81,7 +83,7 @@ input.nosubmit {
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                         aria-controls="flush-collapseTwo">
-                                        city
+                                        {{ __('links.city') }}
                                     </button>
                                 </h2>
                                 <div id="flush-collapseTwo" class="accordion-collapse collapse"
@@ -93,7 +95,12 @@ input.nosubmit {
                                                     data-id="{{ $City->id }}" type="checkbox" value=""
                                                     id="defaultCheck4">
                                                 <label class="form-check-label" for="defaultCheck4">
+                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                                     {{ $City->en_city }}
+                                                    @else
+                                                    {{ $City->ar_city }}
+                                                    @endif
                                                 </label>
                                             </div>
                                         @endforeach
@@ -109,7 +116,7 @@ input.nosubmit {
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseFive" aria-expanded="false"
                                         aria-controls="flush-collapseFive">
-                                        Tour Type
+                                        {{ __('links.tourType') }}
                                     </button>
                                 </h2>
                                 <div id="flush-collapseFive" class="accordion-collapse collapse"
@@ -121,7 +128,15 @@ input.nosubmit {
                                                     data-id="{{ $Type->id }}" type="checkbox" value=""
                                                     id="defaultCheck4">
                                                 <label class="form-check-label" for="defaultCheck4">
-                                                    {{ $Type->en_name }}
+
+
+
+  @if (LaravelLocalization::getCurrentLocale() === 'en')
+  {{ $Type->en_name }}
+
+  @else
+  {{ $Type->ar_name }}
+  @endif
                                                 </label>
                                             </div>
                                         @endforeach
@@ -162,26 +177,43 @@ input.nosubmit {
             <div class="col-sm-12 col-xl-9">
                 <div class="filtered_hotels">
                     <div class="filters">
-                        <span> Available Tours</span>
+                        <span> {{ __('links.availableTours') }}</span>
                         <div class="left_filter">
                             <ul class="nav nav-pills " id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by active" data-val="rec" id="pills-home-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
-                                        aria-controls="pills-home" aria-selected="true">Recommended </button>
+                                        aria-controls="pills-home" aria-selected="truee" type="button" role="tab"
+                                        aria-controls="pills-home" aria-selected="true"  @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif >  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        Recommended
+                                        @else
+                                      مستحسن
+                                        @endif</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by" data-val="price" id="pills-profile-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
-                                        role="tab" aria-controls="pills-profile" aria-selected="false"> by
-                                        price</button>
+                                        role="tab" aria-controls="pills-profile" aria-selected="false" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        by Price
+                                        @else
+                                       بالسعر
+                                        @endif</button>
                                 </li>
 
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by" data-val="alpha" id="pills-alpha-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-alpha" type="button"
-                                        role="tab" aria-controls="pills-alpha" aria-selected="false">
-                                        alphabitic</button>
+                                        role="tab" aria-controls="pills-alpha" aria-selected="false" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif>
+
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        alphabitic
+                                        @else
+                                       ترتيب ابجدي
+                                        @endif</button>
                                 </li>
                                 <input type="hidden" name="sort_by" />
                             </ul>

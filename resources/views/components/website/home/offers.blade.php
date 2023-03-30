@@ -23,8 +23,24 @@ switch ($offers->count()) {
   <!-- offers section -->
 <section class="offers">
 <div class="titles">
-<h3>LIMITED TIME OFFERS </h3>
-<p>{!! $title!!}
+<h3>
+    @if (LaravelLocalization::getCurrentLocale() === 'en')
+    LIMITED TIME OFFERS
+
+    @else
+    عروض لفترة محدودة
+    @endif
+</h3>
+<p>
+    {{-- {!! $title!!} --}}
+    @if (LaravelLocalization::getCurrentLocale() === 'en')
+    Limit Offer When it comes to exploring exotic places, the choices are numerous. Whether you like peaceful destinations or vibrant landscapes, we have offers for you.
+
+
+
+    @else
+    عرض محدود عندما يتعلق الأمر باستكشاف أماكن غريبة ، فإن الخيارات عديدة. سواء كنت تحب الوجهات الهادئة أو المناظر الطبيعية النابضة بالحياة ، لدينا عروض لك.
+    @endif
 </p>
 </div>
 <div class="offers_details container">
@@ -34,21 +50,47 @@ switch ($offers->count()) {
       <div class=" card">
         <div class="card-body explore_card adventure_mind justify-content-evenly">
           <div class="header_info">
-            <h5>HAVE AN ADVENTURE
-              IN MIND?</h5>
+            <h5>
+                @if (LaravelLocalization::getCurrentLocale() === 'en')
+                HAVE AN ADVENTURE
+                IN MIND?
+
+                @else
+                استمتع بمغامرة
+                في خيالك؟
+                @endif
+               </h5>
            <p>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
             Dummy text ever since the 1500s,
-              when an unknown printer took.
-              A galley of type and scrambled it to make.
+            when an unknown printer took.
+            A galley of type and scrambled it to make.
+
+            @else
+            نص وهمي منذ القرن الخامس عشر الميلادي ،
+            عندما أخذت طابعة غير معروفة.
+            لوح من النوع واندفع لصنعه.
+            @endif
+
            </p>
           <div class="start">
             <span></span>
-            <h6>start from</h6>
+            <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                start from
+                @else
+                يبدأ من
+                @endif</h6>
             <span></span>
           </div>
             <span>699 $</span>
             <button class="btn">
-              <a href="#"> start trip</a>
+              <a href="#"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                start trip
+                @else
+                ابدأ الرحلة
+                @endif </a>
             </button>
           </div>
       </div>
@@ -70,9 +112,19 @@ switch ($offers->count()) {
 
                  style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/offers') }}/{{ $Offer->image }});">
                   <div class="header_info">
-                    <h5><a href="#" class="stretched-link">{{$Offer->city->en_city ?? ""}}</a>
+                    <h5><a href="#" class="stretched-link"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        {{$Offer->city->en_city ?? ""}}
+
+                        @else
+                        {{$Offer->city->ar_city ?? ""}}
+                        @endif</a>
                     </h5>
-                    <span>{{$Offer->subtitle_en}}
+                    <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                      .................  {{$Offer->subtitle_en}}
+
+                        @else
+                      {{$Offer->subtitle_ar}}
+                        @endif
                     </span>
                     <span>
                       220 $

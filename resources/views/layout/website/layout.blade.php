@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ config('app.locale') }}">
 
 <head>
     <meta charset="UTF-8">
@@ -43,9 +43,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap"
         rel="stylesheet">
     <!-- bootstrap -->
+    @if (LaravelLocalization::getCurrentLocale() === 'en')
     <link rel="stylesheet" href="{{ asset('/website_assets/css/bootstrap/bootstrap.min.css') }}">
+    @else
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/bootstrap/bootstrap-ar.min.css') }}">
+
+    @endif
     <!-- normalize -->
+    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
     <link rel="stylesheet" href="{{ asset('/website_assets/css/normalize.css') }}">
+    @else
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/normalize-ar.css') }}">
+
+    @endif
     <!-- slick cdn link -->
     <link rel="stylesheet" href="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.css') }}">
     <!-- video poppp styele -->
@@ -54,7 +65,12 @@
     <!-- stylesheet  -->
     {{--
     <link rel="stylesheet" href="{{ asset('/website_assets/css/my-profile.css')}}"> --}}
+    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
     <link rel="stylesheet" href="{{ asset('/website_assets/css/style.css') }}">
+    @else
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/style-ar.css') }}">
+    @endif
     {{-- owl Carousel links --}}
     <link rel="stylesheet" href="{{ asset('/website_assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/owl.theme.default.css') }}">
@@ -88,8 +104,17 @@
                 <div class="row mx-0 align-items-center">
                     <div class="col-md-6 col-sm-12">
                         <span>
+
+
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                             Prepare yourself and let's <br>
                             explore the beauty of the world
+                            @else
+                            جهز نفسك <br>
+                            استكشاف جمال العالم
+                            @endif
+
                         </span>
                     </div>
 
@@ -97,10 +122,16 @@
                         <form action="{{url('/sendNewsLetter')}}" method="POST">
                             @csrf
                             <div class="input-group input">
-                                <input type="email" name="email" class="form-control" placeholder="Enter your email"
+                                <input type="email" name="email" class="form-control" placeholder="{{ __('links.enter_email') }}"
                                     aria-label="Recipient's username" aria-describedby="button-addon2">
                                 <button class="btn btn-outline-secondary" type="submit">
+
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                     Join our newsletter
+                                    @else
+                                    اشترك في صحيفتنا الإخبارية
+                                    @endif
                                 </button>
                             </div>
 
@@ -116,43 +147,49 @@
                                 <div class="row mx-0">
                                     <div class="col-xl-5 col-md-12 col-sm-12">
                                         <div class="left_info">
-                                            <h6>About us </h6>
+                                            <h6>{{ __('links.about_us') }} </h6>
                                             <p>
-                                                {{$Company->overview_en}} </p>
+                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                                {{$Company->overview_en}}
+                                                @else
+                                                {{$Company->overview_ar}}
+                                                @endif
+                                               </p>
                                         </div>
                                     </div>
                                     <!-- useful links -->
 
                                     <div class="col-xl-4 col-md-6 col-sm-12">
                                         <div class="useful_links">
-                                            <h6>useful links </h6>
+                                            <h6>{{ __('links.useful') }} </h6>
                                             <div class="row mx-0">
                                                 <div class="col-6">
                                                     <ul>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/') }}"> Home </a>
+                                                                href="{{ url('/') }}"> {{ __('links.home') }} </a>
                                                         </li>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/about') }}">About
+                                                                href="{{ url('/about') }}">{{ __('links.about_us') }}
                                                             </a></li>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/hotels') }}">Hotels
+                                                                href="{{ url('/hotels') }}">{{ __('links.hotels') }}
                                                             </a></li>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/terms') }}">Terms & Conditions </a></li>
+                                                                href="{{ url('/terms') }}">{{ __('links.term_condation') }}</a></li>
 
                                                     </ul>
                                                 </div>
                                                 <div class="col-6">
                                                     <ul>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/blogs') }}">Blogs
+                                                                href="{{ url('/blogs') }}">{{ __('links.blogs') }}
                                                             </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/tours') }}">Tours
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/tours') }}">{{ __('links.tours') }}
                                                             </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/transfers') }}">Transfer
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/transfers') }}">{{ __('links.transfer') }}
                                                             </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/visa') }}">Visa </a>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/visa') }}">{{ __('links.visa') }} </a>
                                                         </li>
 
 
@@ -195,12 +232,18 @@
                                     <!-- contact details -->
                                     <div class="col-xl-3 col-md-6">
                                         <div class="contact_details">
-                                            <h6>Contact us</h6>
+                                            <h6>{{ __('links.contact_us') }}</h6>
 
                                             <div class="contact_info" style="margin-bottom: 10px;">
                                                 <div class="info">
                                                     <i class="fa-solid fa-phone"></i>
+                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                                     <span>For individuals: </span>
+                                                    @else
+                                                    <span> للافراد :</span>
+                                                    @endif
+
                                                 </div>
                                             </div>
                                             <div class="contact_info" style="margin-bottom: 10px;">
@@ -213,8 +256,15 @@
                                              <div class="contact_info" style="margin-bottom: 10px;">
                                                 <div class="info">
                                                     <i class="fa-solid fa-phone"></i>
+                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                                     <span>
                                                         For companies: 00905445019185</span>
+                                                    @else
+                                                    <span>
+                                                        للشركات: 00905445019185 </span>
+                                                    @endif
+
                                                 </div>
                                             </div>
                                             <div class="contact_info" style="margin-bottom: 10px;">
@@ -226,7 +276,14 @@
                                             <div class="contact_info" style="margin-bottom: 10px;">
                                                 <div class="info">
                                                     <i class="fa-solid fa-location-dot"></i>
+                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                                     <span>Sixth floor above Kababji Mahmoud Restaurant - Watan Square - Al-Fateh - Istanbul - Turkey</span>
+
+                                                    @else
+                                                    <span>
+                                                        الطابق السادس فوق مطعم كبابجي محمود - ساحة الوطن - الفاتح - اسطنبول - تركيا</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -281,7 +338,15 @@
 
     <!-- copy right section -->
     <div class="copyright">
+        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
         <h6>All copyrights reserved to safer 2022 </h6>
+
+        @else
+        <span>
+            جميع حقوق النشر محفوظة لشركة سافر 2022</span>
+        @endif
+
     </div>
 
     <!-- javascripts links -->

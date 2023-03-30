@@ -17,7 +17,7 @@
           <div class=" col-xl-2 col-md-12 col-sm-12">
             <div class="title">
               <div class="info">
-                <h4>explore <br> turkey</h4>
+                <h4>{{ __('links.explore') }} <br>{{ __('links.turkey') }} </h4>
               </div>
             </div>
           </div>
@@ -34,18 +34,31 @@
                             <div class="header_info">
                                 <h5>
                                     <a href="#" >
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                         {{$City->city->en_city}}
+                                        @else
+                                        {{$City->city->ar_city}}
+                                        @endif
+
                                     </a>
                                 </h5>
-                                <span>{{$City->subtitle_en}}</span>
+                                <span>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    {{$City->subtitle_en}}
+                                    @else
+                                    {{$City->subtitle_ar}}
+                                    @endif
+                                   </span>
                                 <div class="explore_links">
                                     <button class="btn ">
-                                    <a href="{{ route('hotelByCity', $City->city->id) }}">
+                                    <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('hotelByCity', $City->city->id))}}">
                                     <i class="fa-solid fa-hotel"></i>
                                     </a>
                                     </button>
                                     <button class="btn ">
-                                    <a href="{{ route('tourByCity', $City->city->id) }}">
+                                    <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('tourByCity', $City->city->id))}}">
                                         <i class="fa-solid fa-plane"></i>
                                     </a>
                                     </button>
@@ -69,15 +82,30 @@
         <div class=" col-xl-7 col- md-7 col-sm-12">
          <div class="adventure_info">
          <div class="heading">
-          <h2>
-            {{$Company->oveview_entitle}} <br>
-            {{$Company->overview_ensubtitle}}
-          </h2>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+            <h2>
+                {{$Company->oveview_entitle}} <br>
+                {{$Company->overview_ensubtitle}}
+              </h2>
+                @else
+                <h2>
+                    {{$Company->oveview_artitle}} <br>
+                    {{$Company->overview_arsubtitle}}
+                  </h2>
+                @endif
+
           <p>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
             {{$Company->overview_en}}
+                @else
+                {{$Company->overview_ar}}
+                @endif
+
           </p>
           <div class="read">
-            <a href="{{url('/about')}}">Read more
+            <a href="{{ LaravelLocalization::localizeUrl('/about_us') }}"> {{ __('links.readMore') }}
               <i class="fa-solid fa-angle-right"></i>
               <i class="fa-solid fa-angle-right"></i>
             </a>
@@ -97,9 +125,16 @@
   <section class=" hotel_section">
     <div class="explore container offers hotels">
       <div class="titles">
-        <h3>best hotels </h3>
+        <h3>{{ __('links.bestHotels') }} </h3>
         <p>
-          {{$Company->best_hotels_en_desc}}
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+            {{$Company->best_hotels_en_desc}}
+            @else
+            {{$Company->best_hotels_ar_desc}}
+            @endif
+
+
         </p>
       </div>
       <div class="hotel_details">
@@ -109,7 +144,7 @@
                 <div class="card-content">
                   <div class=" card hotels_card">
                     <div class="card_image">
-                        <a href="{{ url('/hotels/' . $Hotel->hotel->id) }}">
+                        <a href="{{ LaravelLocalization::localizeUrl('/hotels/' . $Hotel->hotel->id) }}">
                         <div class="image_overlay">
                     <img src="{{ asset('uploads/hotels') }}/{{$Hotel->hotel->hotel_banner}}" class="w-100" height="250" alt=" hotel image">
                         </div>
@@ -117,7 +152,15 @@
                     </div>
                     <div class="card-body hotel_card_info">
                       <div class="card_info">
-                        <h5>{{$Hotel->hotel->hotel_enname}} </h5>
+                        <h5>
+
+  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+   {{$Hotel->hotel->hotel_enname}}
+  @else
+  {{$Hotel->hotel->hotel_arname}}
+  @endif
+                             </h5>
                         @if (session()->get('SiteUser'))
 
 
@@ -139,19 +182,25 @@
                                             @endif
                                             <span >
                                                 @if($favExist==1)
-                                            <a  href="{{ url('/removeFavourite/' . $Hotel->hotel->id) }}"  ><i
+                                            <a  href="{{ LaravelLocalization::localizeUrl('/removeFavourite/' . $Hotel->hotel->id) }}"  ><i
                                                      class="fa-regular fa-heart card_info_hover" style="color: #1C4482;font-weight: 600;"></i> </a>
 
                                                      @else
 
-                                                    <a  href="{{ url('/favourite/' . $Hotel->hotel->id) }}"  ><i
+                                                    <a  href="{{ LaravelLocalization::localizeUrl('/favourite/' . $Hotel->hotel->id) }}"  ><i
                                                         class="fa-regular fa-heart"></i> </a>
 
                                                 @endif </span>
                       </div>
-                      <a href="{{ url('/hotels/' . $Hotel->hotel->id) }}">
+                      <a href="{{ LaravelLocalization::localizeUrl('/hotels/' . $Hotel->hotel->id) }}">
                       <p>
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                         {{$Hotel->hotel->hotel_enbrief}}
+  @else
+  {{$Hotel->hotel->hotel_arbrief}}
+  @endif
+
                       </p>
                       </a>
                       <div class="location">
@@ -160,7 +209,7 @@
                       </div>
                       <div class="price">
                         <span>$ 140 </span>
-                        <span>/nights</span>
+                        <span>/{{ __('links.nights') }}</span>
                       </div>
                   </div>
                 </div>
@@ -191,12 +240,24 @@
         <div class="right_side">
         <div class="heading">
           <h2>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
             {{$Company->book_tour_en_title}}
+@else
+{{$Company->book_tour_ar_title}}
+@endif
+
           </h2>
           <p>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
             {{$Company->book_tour_en_desc}}
+@else
+{{$Company->book_tour_ar_desc}}
+@endif
+
           </p>
-          <a href="{{ url('/tours') }}">Read more
+          <a href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.readMore') }}
             <i class="fa-solid fa-angle-right"></i>
             <i class="fa-solid fa-angle-right"></i>
           </a>
@@ -214,13 +275,25 @@
         <div class="adventure_info">
         <div class="heading">
           <h2>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
             {{$Company->book_transport_en_title}}
+@else
+{{$Company->book_transport_ar_title}}
+@endif
+
           </h2>
           <p>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
             {{$Company->book_transport_en_desc}}
+@else
+{{$Company->book_transport_ar_desc}}
+@endif
+
         </p>
           <div class="read">
-            <a href="{{ url('/transfers') }}">Read more
+            <a href="{{ url('/transfers') }}">{{ __('links.readMore') }}
               <i class="fa-solid fa-angle-right"></i>
               <i class="fa-solid fa-angle-right"></i>
             </a>
@@ -253,19 +326,35 @@
 
       <div class="blog_titles container">
         <div class="title_info">
-          <h4>blog</h4>
+          <h4>{{ __('links.blogs') }}</h4>
           <p>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
             Increase your knowledge with articles and interesting stories.
+@else
+زيادة معرفتك بالمقالات والقصص الشيقة.
+@endif
+
           </p>
         </div>
         <div class="blog_filters ms-auto">
           <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true"> <a>all</a></button>
+                <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true"> <a> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    all
+                    @else
+                  الكل
+                    @endif</a></button>
             </li>
             @foreach ($BlogsCategories as $key => $Category)
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link @if($key == $BlogsCategories->count() - 1) nav-link-4 @endif" id="pills-all-tab{{$Category->id}}" data-bs-toggle="pill" data-bs-target="#pills-all{{$Category->id}}" type="button" role="tab" aria-controls="pills-all{{$Category->id}}" aria-selected="true"> <a>{{$Category->en_category}}</a></button>
+                    <button class="nav-link @if($key == $BlogsCategories->count() - 1) nav-link-4 @endif" id="pills-all-tab{{$Category->id}}" data-bs-toggle="pill" data-bs-target="#pills-all{{$Category->id}}" type="button" role="tab" aria-controls="pills-all{{$Category->id}}" aria-selected="true"> <a> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        {{$Category->en_category}}
+                        @else
+                        {{$Category->ar_category}}
+                        @endif</a></button>
                 </li>
             @endforeach
         </ul>
@@ -285,14 +374,26 @@
                   <div class="blog_info">
                     <h5 class="left_heading">
                         <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                             {!! $AllBlogs[0]->en_title !!}
+                            @else
+                            {!! $AllBlogs[0]->ar_title !!}
+                            @endif
+
                         </a>
                     </h5>
                     <p>
-                      {!! $AllBlogs[0]->en_text !!}
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        {!! $AllBlogs[0]->en_text !!}
+                        @else
+                        {!! $AllBlogs[0]->ar_text !!}
+                        @endif
+
                     </p>
                     <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}"   >
-                      Read more <i class="fa-solid fa-angle-right"></i>
+                        {{ __('links.readMore') }} <i class="fa-solid fa-angle-right"></i>
                     </a>
                   </div>
                 </div>
@@ -309,16 +410,26 @@
                          <div class="blog_info">
                            <h5>
                             <a href="{{url('/single-blog/'.$AllBlogs[$i]->id) }}">
+
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                 {!! $AllBlogs[$i]->en_title !!}
+                            @else
+                            {!! $AllBlogs[$i]->ar_title !!}
+                            @endif
                             </a>
                            </h5>
                            <p>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                             {!! \Illuminate\Support\Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...') !!}
-                            {{-- {{ strip_tags(Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }} --}}
+                            @else
+                            {!! \Illuminate\Support\Str::limit($AllBlogs[$i]->ar_text ?? '', $limit = 300, $end = '...') !!}
+                            @endif
 
                             </p>
-                           <a href="{{url('/single-blog/'.$AllBlogs[$i]->id) }}" >
-                             Read more <i class="fa-solid fa-angle-right"></i>
+                           <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$AllBlogs[$i]->id) }}" >
+                            {{ __('links.readMore') }} <i class="fa-solid fa-angle-right"></i>
                            </a>
                          </div>
                         </div>
@@ -344,16 +455,29 @@
                         </div>
                         <div class="blog_info">
                             <h5 class="left_heading">
-                                <a href="{{url('/single-blog/'.$blog->id) }}">
+                                <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id) }}">
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                     {!! $blog->en_title !!}
+                @else
+                {!! $blog->ar_title !!}
+                @endif
+
                                 </a>
                             </h5>
                             <p>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                 {!! \Illuminate\Support\Str::limit($blog->en_text ?? '', $limit = 300, $end = '...') !!}
 
+                                @else
+                                {!! \Illuminate\Support\Str::limit($blog->ar_text ?? '', $limit = 300, $end = '...') !!}
+
+                                @endif
+
                             </p>
-                            <a href="{{url('/single-blog/'.$blog->id) }}" >
-                            Read more <i class="fa-solid fa-angle-right"></i>
+                            <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id) }}" >
+                                {{ __('links.readMore') }}<i class="fa-solid fa-angle-right"></i>
                             </a>
                         </div>
                         </div>
@@ -375,16 +499,34 @@
                          <div class="blog_info">
                            <h5>
                             <a href="{{url('/single-blog/'.$category_blog->id) }}">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 {!! $category_blog->en_title !!}
+
+
+                @else
+                {!! $category_blog->ar_title !!}
+
+                @endif
+
+
                             </a>
                            </h5>
                            <p>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
                             {!! \Illuminate\Support\Str::limit($category_blog->en_text ?? '', $limit = 300, $end = '...') !!}
 
 
+                @else
+                {!! \Illuminate\Support\Str::limit($category_blog->ar_text ?? '', $limit = 300, $end = '...') !!}
+
+                @endif
+
+
+
+
                             </p>
-                           <a href="{{url('/single-blog/'.$category_blog->id) }}" >
-                             Read more <i class="fa-solid fa-angle-right"></i>
+                           <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$category_blog->id) }}" >
+                            {{ __('links.readMore') }} <i class="fa-solid fa-angle-right"></i>
                            </a>
                          </div>
                         </div>

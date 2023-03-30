@@ -155,8 +155,8 @@
   }
   a.close-chat {
     position: absolute;
-    top: 5px;
-    right: 15px;
+    top: 0;
+    right: 0;
     color: #fff;
     font-size: 30px;
   }
@@ -224,7 +224,7 @@
     transform: scale(1);
     opacity: 1;
   }
-  .show {
+  .whatsapp-chat .show {
     display: block;
     animation-name: showhide;
     animation-duration: 0.5s;

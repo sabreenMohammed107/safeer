@@ -85,14 +85,19 @@
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="All Visa" :breadcrumb="$BreadCrumb" current="All Visa" />
+    <x-website.header.general title="{{ __('links.visa') }}" :breadcrumb="$BreadCrumb" current="{{ __('links.visa') }}" />
 @endsection
 @section('content')
 
-<form action="{{url("/Safer/BookVisa")}}" method="POST" enctype="multipart/form-data">
+<form action="{{ LaravelLocalization::localizeUrl("/Safer/BookVisa") }}" method="POST" enctype="multipart/form-data">
     @csrf
     <section class="passenger_section container pt-5" id="passenger_section">
-        <p class="receipt-title">Pickup Your Visa </p>
+        <p class="receipt-title">@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+            Pickup Your Visa
+            @else
+            احصل على التأشيرة الخاصة بك
+            @endif </p>
         <div class=" search_details_info passenger_info_details hotel_details mt-3 ">
 
             <!-- <button  onclick="removePassenger(this)">
@@ -100,65 +105,84 @@
             </button> -->
             {{-- <form data-category="1" > --}}
             <div class="passenger_info_title">
-                <h5> passenger </h5>
+                <h5> {{ __('links.passenger') }} </h5>
                 <!-- <span>1200 LE</span> -->
             </div>
             <div class="row mx-0">
                 <div class="col-md-6 col-xl-4 col-sm-12 ">
-                    <label for=""> visa request country </label>
+                    <label for="">
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        visa request country
+
+                                      @else
+                                      بلد طلب التأشيرة
+                                      @endif </label>
                     <select  class="form-select form-select-solid dynamic"
                         data-control="select2" data-placeholder="Select an option" required
                         data-show-subtext="true" data-live-search="true" id="country"
                         data-dependent="sub" name="country[0]">
                         <option value=""></option>
                         @foreach ($countries as $country)
-                            <option value="{{ $country->id }}">{{ $country->en_country }}
+                            <option value="{{ $country->id }}">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                {{ $country->en_country }}
+                        @else
+                        {{ $country->ar_country }}
+                        @endif
+
                             </option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
-                    <label for=""> Visa type </label>
+                    <label for="">   @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        Visa type
+                        @else
+                      نوع لفيزا
+                        @endif </label>
                     <select required class="form-select form-select-solid visa_type"
                     data-control="select2 sub2" data-placeholder="Select an option"
                     data-show-subtext="true" data-live-search="true" id="sub" name="visa_type_id[0]">
-                    <option value="">select....</option>
+                    <option value="">{{ __('links.select') }}</option>
                 </select>
                 </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
-                    <label for="">Nationality </label>
+                    <label for="">{{ __('links.nationality') }} </label>
                     <select class="form-select nationality" required id="nationality" aria-label="Default select example" name="nation[0]">
-                        <option value="">select....</option>
+                        <option value="">{{ __('links.select') }}</option>
 
                     </select>
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Name </label>
-                    <input type="text" required name="name[0]" placeholder="name" />
+                    <label for="">{{ __('links.name') }}  </label>
+                    <input type="text" required name="name[0]" placeholder="{{ __('links.name') }}" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Mobile </label>
-                    <input type="tel" required name="phone[0]" placeholder="Mobile" />
+                    <label for="">{{ __('links.mobile') }} </label>
+                    <input type="tel" required name="phone[0]" placeholder="{{ __('links.mobile') }}" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Email </label>
-                    <input type="email" required name="email[0]" placeholder="Email" />
+                    <label for="">{{ __('links.email') }} </label>
+                    <input type="email" required name="email[0]" placeholder="{{ __('links.email') }}" />
                 </div>
+
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Passport image </label>
-                    <input type="file" required name="passport[0]" placeholder="Passport image" />
+                    <label for="">{{ __('links.passImage') }} </label>
+                    <input type="file" required name="passport[0]" placeholder="{{ __('links.passImage') }}" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Personal image </label>
-                    <input type="file" required name="personal[0]" placeholder="Personal image" />
+                    <label for="">{{ __('links.persImage') }} </label>
+                    <input type="file" required name="personal[0]" placeholder="{{ __('links.persImage') }}" />
                 </div>
                 <div id="costBerVisa" style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3">
 
-                    <h5><label for="">Cost / Visa :  </label><label class="visaCost">  0 </label> $</h5>
+                    <h5><label for="">{{ __('links.costVis') }} </label><label class="visaCost">  0 </label> $</h5>
                     <input type="hidden" name="cost[0]" value="0" class="visaCostinp" />
                     <p class="visNotes">
 
@@ -176,7 +200,7 @@
             <p id="numform"></p>
             <button id="visaaa">
                 <i class="fa-solid fa-plus"></i>
-                Add
+                {{ __('links.add') }}
                 <!-- <a href="#" id="visaaa">Add</a> -->
             </button>
             <!-- <span>
@@ -185,7 +209,7 @@
         </div>
         <div class="total">
             <div class="col-12 text-center my-4">
-                <button id="addToCart" type="submit">Add To Cart</button>
+                <button id="addToCart" type="submit">{{ __('links.add_cart') }}</button>
             </div>
         </div>
     </section>
@@ -222,73 +246,88 @@
 
 
                 <div class="passenger_info_title">
-                    <h5> passenger </h5>
+                    <h5> {{ __('links.passenger') }} </h5>
                     <!-- <span>1200 LE</span> -->
                 </div>
                 <div class="row mx-0">
                 <div class="col-md-6 col-xl-4 col-sm-12 ">
-                    <label for=""> visa request country </label>
+                    <label for="">  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        visa request country
+
+                                      @else
+                                      بلد طلب التأشيرة
+                                      @endif </label>
                     <select  class="form-select form-select-solid dynamic"
                                                                     data-control="select2" data-placeholder="Select an option" required
                                                                     data-show-subtext="true" data-live-search="true" id="country"
                                                                     data-dependent="sub" name="country[` + counter + `]" onchange="fetch(this)">
                                                                     <option value=""></option>
                                                                     @foreach ($countries as $country)
-                                                                        <option value="{{ $country->id }}">{{ $country->en_country }}
+                                                                        <option value="{{ $country->id }}">            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+{{ $country->en_country }}
+@else
+{{ $country->ar_country }}
+@endif
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
                 </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
-                    <label for=""> Visa type  </label>
+                    <label for="">  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+Visa type
+@else
+نوع لفيزا
+@endif  </label>
                     <select required class="form-select form-select-solid visa_type"
                                                                     data-control="select2 sub2" data-placeholder="Select an option"
                                                                     data-show-subtext="true" data-live-search="true" id="sub"
                                                                     name="visa_type_id[` + counter + `]" onchange="fetchNationality(this)" >
-                                                                    <option value="">select....</option>
+                                                                    <option value="">{{ __('links.select') }}</option>
                                                                 </select>
                     </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
-                    <label for="">Nationality </label>
+                    <label for="">{{ __('links.nationality') }} </label>
                     <select class="form-select nationality" required  id="nationality" aria-label="Default select example"
                     name="nation[`+ counter +`]" onchange="fetchCost(this)" >
-                    <option value="">select....</option>
+                    <option value="">{{ __('links.select') }}</option>
 
                         </select>
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Name  </label>
-                    <input type="text" name="name[` + counter + `]" required placeholder="name" />
+                    <label for="">{{ __('links.name') }}   </label>
+                    <input type="text" name="name[` + counter + `]" required placeholder="{{ __('links.name') }} " />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Mobile  </label>
-                    <input type="tel" name="phone[` + counter + `]" required placeholder="Mobile" />
+                    <label for="">{{ __('links.mobile') }}  </label>
+                    <input type="tel" name="phone[` + counter + `]" required placeholder="{{ __('links.mobile') }}" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Email  </label>
-                    <input type="email" name="email[` + counter + `]" required placeholder="Email" />
+                    <label for="">{{ __('links.email') }}  </label>
+                    <input type="email" name="email[` + counter + `]" required placeholder="{{ __('links.email') }}" />
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Passport image </label>
-                    <input type="file" name="passport[` + counter + `]" required placeholder="Passport image" />
+                    <label for="">{{ __('links.passImage') }} </label>
+                    <input type="file" name="passport[` + counter + `]" required placeholder="{{ __('links.passImage') }}" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">Personal image </label>
-                    <input type="file" name="personal[` + counter + `]" required placeholder="Personal image" />
+                    <label for="">{{ __('links.persImage') }} </label>
+                    <input type="file" name="personal[` + counter + `]" required placeholder="{{ __('links.persImage') }}" />
                 </div>
                 <div  style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3 costBerVisa">
 
-<h5><label for="">Cost / Visa :  </label><label class="visaCost">  50 </label> $</h5>
+<h5><label for="">{{ __('links.costVis') }} </label><label class="visaCost">  50 </label> $</h5>
 <p class="visNotes">
 
 </p>
 </div>
                 <!-- <div class="col-sm-12 col-md-6 col-xl-4">
-                    <a class="btn btn-primary" id="visaaa" >Add </a>
+                    <a class="btn btn-primary" id="visaaa" >{{ __('links.add') }} </a>
                 </div>
                 -->
 

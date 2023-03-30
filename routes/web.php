@@ -74,6 +74,8 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 /*
 Routes Before Applying Authentication
 */
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
 Route::get("/", [MainController::class, 'index']);
 Route::get("/hotels", [HotelsController::class, 'all_hotels']);
 Route::post("/hotels", [HotelsController::class, 'hotels']);
@@ -187,7 +189,7 @@ Route::middleware(['is-site-auth'])->group(function () {
 
 
 });
-
+});
 /*------------------------------------------
 --------------------------------------------
 All Admin Routes List

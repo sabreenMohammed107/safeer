@@ -17,6 +17,7 @@ use App\Models\Transfer_location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use Illuminate\Support\Facades\Lang as Lang;
 class SiteTransferController extends Controller
 {
     //
@@ -24,7 +25,7 @@ class SiteTransferController extends Controller
     {
 
         $Company = Company::first();
-        $BreadCrumb = [["url" => "/", "name" => "Home"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $pickups = Transfer_location::all();
         $dropoff = Transfer_location::all();
 

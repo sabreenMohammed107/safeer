@@ -68,13 +68,36 @@ input.nosubmit {
 .popover-header button{
             border:none !important;
         }
+
+
+
+/* webkit solution */
+::-webkit-input-placeholder { text-align:right !important; }
+/* mozilla solution */
+input:-moz-placeholder { text-align:right !important; }
     </style>
+     @if (LaravelLocalization::getCurrentLocale() === 'ar')
+
+     <style>
+        input[type="number"]:-moz-placeholder {
+        text-align: right;
+    }
+    input[type="number"]:-ms-input-placeholder {
+        text-align: right;
+    }
+    input[type="number"]::-webkit-input-placeholder {
+        text-align: right;
+    }
+        </style>
+
+
+     @endif
 
 
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="All Transfer" :breadcrumb="$BreadCrumb" current="All Transfer" />
+    <x-website.header.general title="{{ __('links.transfer') }}" :breadcrumb="$BreadCrumb" current="{{ __('links.transfer') }}" />
 @endsection
 @section('content')
 
@@ -103,7 +126,7 @@ input.nosubmit {
 @endif
             <div class="  col-sm-0 col-xl-3">
                 <button class="btn filtered_button" onclick="openFilter()" id="filterButton">
-                    <i class="fa-solid fa-sliders"></i> search Transfer
+                    <i class="fa-solid fa-sliders"></i> {{ __('links.search') }}
                 </button>
                 <div class="search_tours" id="filtered-menu">
 
@@ -115,8 +138,15 @@ input.nosubmit {
                             <div class="row" style="padding-right: 1rem!important;">
 
                                 <div class="col-md-10">
-                                    <label for=""> search by car capacity</label>
-                                <input class="form-control " min="1"   id="searchId" placeholder="search by car capacity" type="number">
+                                    <label for="">  @if (LaravelLocalization::getCurrentLocale() === 'en')search by car capacity
+                                        @else البحث بسعة السيارة
+                                        @endif</label>
+                                <input class="form-control  @if (LaravelLocalization::getCurrentLocale() === 'ar')
+text-right
+
+
+
+                                @endif" min="1"   id="searchId"  type="number">
                                 </div>
 
                                 <div class="col-md-2 mt-4" ><button onclick="fetch_transfer()" class="btn btn-primary" ><i class="fa-solid fa-magnifying-glass"></i></button></div>
@@ -130,7 +160,13 @@ input.nosubmit {
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                         aria-controls="flush-collapseTwo">
+
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                         pick-up from
+                                        @else
+                                        استقبال من
+                                        @endif
                                     </button>
                                 </h2>
                                 <div id="flush-collapseTwo" class="accordion-collapse collapse"
@@ -142,7 +178,13 @@ input.nosubmit {
                                                     data-id="{{ $pickup->id }}" type="checkbox" value=""
                                                     id="defaultCheck4">
                                                 <label class="form-check-label" for="defaultCheck4">
+
+                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                                     {{ $pickup->location_enname }}
+                                                    @else
+                                                    {{ $pickup->location_arname }}
+                                                    @endif
                                                 </label>
                                             </div>
                                         @endforeach
@@ -158,7 +200,13 @@ input.nosubmit {
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseFive" aria-expanded="false"
                                         aria-controls="flush-collapseFive">
+
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                         drop-off
+                                        @else
+                                      وصول الى
+                                        @endif
                                     </button>
                                 </h2>
                                 <div id="flush-collapseFive" class="accordion-collapse collapse"
@@ -170,7 +218,13 @@ input.nosubmit {
                                                     data-id="{{ $drop->id }}" type="checkbox" value=""
                                                     id="defaultCheck4">
                                                 <label class="form-check-label" for="defaultCheck4">
+
+                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                                     {{ $drop->location_enname }}
+                                                    @else
+                                                    {{ $drop->location_arname }}
+                                                    @endif
                                                 </label>
                                             </div>
                                         @endforeach
@@ -186,7 +240,13 @@ input.nosubmit {
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#flush-collapseElev" aria-expanded="false"
             aria-controls="flush-collapseFive">
+
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
             car models
+            @else
+            موديلات السيارات
+            @endif
         </button>
     </h2>
     <div id="flush-collapseElev" class="accordion-collapse collapse"
@@ -198,7 +258,13 @@ input.nosubmit {
                         data-id="{{ $model->id }}" type="checkbox" value=""
                         id="defaultCheck4">
                     <label class="form-check-label" for="defaultCheck4">
+
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
                         {{ $model->model_enname }}
+
+                        @else
+                        {{ $model->model_arname }}
+                        @endif
                     </label>
                 </div>
             @endforeach
@@ -213,7 +279,14 @@ input.nosubmit {
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#flush-collapseTen" aria-expanded="false"
             aria-controls="flush-collapseTen">
+
+           @if (LaravelLocalization::getCurrentLocale() === 'en')
+
            car class
+           @else
+
+فئة السيارة
+           @endif
         </button>
     </h2>
     <div id="flush-collapseTen" class="accordion-collapse collapse"
@@ -225,7 +298,13 @@ input.nosubmit {
                         data-id="{{ $car->id }}" type="checkbox" value=""
                         id="defaultCheck4">
                     <label class="form-check-label" for="defaultCheck4">
+
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                         {{ $car->class_enname }}
+                        @else
+                        {{ $car->class_arname }}
+                        @endif
                     </label>
                 </div>
             @endforeach
@@ -245,26 +324,50 @@ input.nosubmit {
             <div class="col-sm-12 col-xl-9">
                 <div class="filtered_hotels">
                     <div class="filters">
-                        <span> Pick up your car</span>
+                        <span>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Pick up your car
+                            @else
+
+التقط سيارتك
+                            @endif
+                        </span>
                         <div class="left_filter">
                             <ul class="nav nav-pills " id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by active" data-val="rec" id="pills-home-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
-                                        aria-controls="pills-home" aria-selected="true">Recommended </button>
+                                        aria-controls="pills-home" aria-selected="true" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif >  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        Recommended
+                                        @else
+                                      مستحسن
+                                        @endif</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by" data-val="price" id="pills-profile-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
-                                        role="tab" aria-controls="pills-profile" aria-selected="false"> by
-                                        price</button>
+                                        role="tab" aria-controls="pills-profile" aria-selected="false" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        by Price
+                                        @else
+                                       بالسعر
+                                        @endif</button>
                                 </li>
 
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by" data-val="alpha" id="pills-alpha-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-alpha" type="button"
-                                        role="tab" aria-controls="pills-alpha" aria-selected="false">
-                                        alphabitic</button>
+                                        role="tab" aria-controls="pills-alpha" aria-selected="false" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif>
+
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        alphabitic
+                                        @else
+                                       ترتيب ابجدي
+                                        @endif</button>
                                 </li>
                                 <input type="hidden" name="sort_by" />
                             </ul>

@@ -13,7 +13,13 @@
 
                   </span>
                   <span>
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
                     {{$Counter->title_en}}
+
+                    @else
+                    {{$Counter->title_ar}}
+                    @endif
+
                   </span>
                   @if($key != 3)
                   @if($key % 2 == 0)
