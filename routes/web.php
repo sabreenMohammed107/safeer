@@ -43,6 +43,8 @@ use App\Http\Controllers\Website\SiteTransferController;
 use App\Http\Controllers\Website\ToursController;
 use App\Http\Controllers\Website\VisaDataController;
 use App\Models\Offer;
+use Illuminate\Support\Facades\Artisan;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +60,12 @@ use App\Models\Offer;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
 
+    return "Cache cleared successfully";
+ });
 Auth::routes();
 
 /*------------------------------------------
