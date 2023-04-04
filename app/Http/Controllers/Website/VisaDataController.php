@@ -12,6 +12,8 @@ use App\Models\Visa_type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Lang as Lang;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 class VisaDataController extends Controller
 {
     //
@@ -43,10 +45,21 @@ class VisaDataController extends Controller
 
         $visa_type_ids = Visa::pluck('visa_type_id');
         $data = Visa_type::whereIn('id', $visa_type_ids)->where('country_id', $value)->get();
-        $output = '<option value="">Select Visa Type</option>';
+        if (LaravelLocalization::getCurrentLocale() === 'en')
+        {
+            $output = '<option value="">Select Visa Type</option>';
+
         foreach ($data as $row) {
             $output .= '<option value="' . $row->id . '">' . $row->en_type . '</option>';
         }
+        }else{
+            $output = '<option value="">اختر نوع الفيزا</option>';
+
+        foreach ($data as $row) {
+            $output .= '<option value="' . $row->id . '">' . $row->ar_type . '</option>';
+        }
+        }
+
         echo $output;
     }
 
@@ -60,10 +73,20 @@ class VisaDataController extends Controller
 
         $nationality_ids = Visa::where('visa_type_id',$value)->pluck('nationality_id');
         $nationalities = Nationality::whereIn('id',$nationality_ids)->get();
-        $output = '<option value="">Select Nationality</option>';
-        foreach ($nationalities as $row) {
-            $output .= '<option value="' . $row->id . '">' . $row->en_nationality . '</option>';
-        }
+
+        if (LaravelLocalization::getCurrentLocale() === 'en')
+{
+    $output = '<option value="">Select Nationality</option>';
+    foreach ($nationalities as $row) {
+        $output .= '<option value="' . $row->id . '">' . $row->en_nationality . '</option>';
+    }
+}else{
+    $output = '<option value="">اختر الجنسية</option>';
+    foreach ($nationalities as $row) {
+        $output .= '<option value="' . $row->id . '">' . $row->ar_nationality . '</option>';
+    }
+}
+
         echo $output;
     }
 
@@ -80,7 +103,14 @@ class VisaDataController extends Controller
         if($data){
             $output =$data->cost;
         }
-        echo json_encode(array( $output,$data->en_notes ?? ''));
+        if (LaravelLocalization::getCurrentLocale() === 'en')
+{
+    echo json_encode(array( $output,$data->en_notes ?? ''));
+}else{
+    echo json_encode(array( $output,$data->ar_notes ?? ''));
+}
+
+
 
         // echo $output;
     }
