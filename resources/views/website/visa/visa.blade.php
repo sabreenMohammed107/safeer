@@ -115,7 +115,7 @@
                         visa request country
 
                                       @else
-                                      بلد طلب التأشيرة
+                                      الدولة المسافر إليها
                                       @endif </label>
                     <select  class="form-select form-select-solid dynamic"
                         data-control="select2" data-placeholder="Select an option" required
@@ -140,7 +140,7 @@
 
                         Visa type
                         @else
-                      نوع لفيزا
+                      نوع الفيزا
                         @endif </label>
                     <select required class="form-select form-select-solid visa_type"
                     data-control="select2 sub2" data-placeholder="Select an option"
@@ -158,7 +158,12 @@
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">{{ __('links.name') }}  </label>
-                    <input type="text" required name="name[0]" placeholder="{{ __('links.name') }}" />
+                    <input type="text" required name="name[0]" placeholder=" @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    Passenger Name
+                                  @else
+                                 اسم المسافر
+                                  @endif" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
@@ -260,8 +265,7 @@
                         visa request country
 
                                       @else
-                                      بلد طلب التأشيرة
-                                      @endif </label>
+                                      الدولة المسافر إليها                                      @endif </label>
                     <select  class="form-select form-select-solid dynamic"
                                                                     data-control="select2" data-placeholder="Select an option" required
                                                                     data-show-subtext="true" data-live-search="true" id="country"
@@ -283,7 +287,7 @@
 
 Visa type
 @else
-نوع لفيزا
+نوع الفيزا
 @endif  </label>
                     <select required class="form-select form-select-solid visa_type"
                                                                     data-control="select2 sub2" data-placeholder="Select an option"
@@ -303,7 +307,12 @@ Visa type
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">{{ __('links.name') }}   </label>
-                    <input type="text" name="name[` + counter + `]" required placeholder="{{ __('links.name') }} " />
+                    <input type="text" name="name[` + counter + `]" required placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+Passenger Name
+              @else
+             اسم المسافر
+              @endif " />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
