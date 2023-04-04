@@ -53,7 +53,14 @@
     </style>
 @endsection
 @section('bottom-header')
-    <x-website.header.general :title="$Tour->en_name . ' - '" :breadcrumb="$BreadCrumb" :current="$Tour->en_name" />
+@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+<x-website.header.general :title="$Tour->en_name . ' - '" :breadcrumb="$BreadCrumb" :current="$Tour->en_name" />
+
+                @else
+                <x-website.header.general :title="$Tour->ar_name . ' - '" :breadcrumb="$BreadCrumb" :current="$Tour->ar_name" />
+
+                @endif
 @endsection
 
 @section('content')
@@ -154,14 +161,33 @@
             @endif
             <div class="tour_info px-2">
                 <div class="titles">
-                    <h6> {{ $Tour->en_name }}</h6>
-                    <span> {{ $Tour->city->country->en_country }} <span>|</span> {{ $Tour->city->en_city }} </span>
+                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        {{ $Tour->en_name }}
+                        @else
+                        {{ $Tour->ar_name }}
+                        @endif </h6>
+                    <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        {{ $Tour->city->country->ar_country }}
+                        @else
+                        {{ $Tour->city->country->ar_country }}
+                        @endif <span>|</span>@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        {{ $Tour->city->en_city }}
+                        @else
+                        {{ $Tour->city->ar_city }}
+                        @endif  </span>
                     <div class="rating">
 
 
-                        <span> ( {{ count($Tour->reviews) }} review) </span>
+                        <span> ( {{ count($Tour->reviews) }} {{ __('links.review') }}) </span>
                     </div>
-                    <div class="sharing_icons">
+                    <div class="sharing_icons"  @if (LaravelLocalization::getCurrentLocale() == 'ar')
+
+                    style="left:100%"
+
+                         @endif >
                         {{-- <i class="fa-solid fa-share-nodes"></i> --}}
 
 
@@ -191,12 +217,12 @@
                             {{-- <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i class="fa-solid fa-share-nodes"></i>
                             </a> --}}
                             @if($favExist==1)
-                        <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i
+                        <a  href="{{ LaravelLocalization::localizeUrl('/removeFavouriteTours/' . $Tour->id) }}"  ><i
                                  class="fa-regular fa-heart "  style="background-color: #1C4482; color:#fff"></i> </a>
 
                                  @else
 
-                                <a  href="{{ url('/favouriteTours/' . $Tour->id) }}"  ><i
+                                <a  href="{{ LaravelLocalization::localizeUrl('/favouriteTours/' . $Tour->id) }}"  ><i
                                     class="fa-regular fa-heart"></i> </a>
 
                             @endif </span>
@@ -240,9 +266,19 @@
                     </div>
                 </div>
 
-                <h6> Overview </h6>
+                <h6>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    Overview
+                    @else
+                  نظرة عامة
+
+                    @endif </h6>
                 <p>
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
                     {!! $Tour->en_overview !!}
+                    @else
+
+                    {!! $Tour->ar_overview !!}
+                    @endif
                 </p>
 
 
@@ -257,23 +293,53 @@
             <div class="col-md-6 col-sm-12 col-xl-3">
                 <div class="tour_info_details">
                     <img src="{{ asset('/website_assets/images/tour-details/tour_info/timer.webp') }}" alt=" timer image">
-                    <h6> Tour Type </h6>
-                    <span> {{ $Tour->type->en_name ?? '' }}</span>
+                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        Tour Type
+                        @else
+
+                    نوع الرحلة
+                        @endif  </h6>
+                    <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        {{ $Tour->type->en_name ?? '' }}
+                        @else
+                        {{ $Tour->type->ar_name ?? '' }}
+
+                        @endif </span>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xl-3">
                 <div class="tour_info_details ">
                     <img src="{{ asset('/website_assets/images/tour-details/tour_info/requires-interpreter.webp') }}"
                         alt=" requires-interpreter image">
-                    <h6> Tour Language </h6>
-                    <span> {{ $Tour->tour_en_language }} </span>
+                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        Tour Language
+                        @else
+                      لغة الرحلة
+
+                        @endif  </h6>
+                    <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        {{ $Tour->tour_en_language }}
+                        @else
+
+                        {{ $Tour->tour_ar_language }}
+                        @endif  </span>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xl-3">
                 <div class="tour_info_details second_details">
                     <img src="{{ asset('/website_assets/images/tour-details/tour_info/clock.webp') }}" alt=" clock image">
-                    <h6> Tour Days  </h6>
-                    <span> {{ $Tour->tour_en_days }}</span>
+                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        Tour Days
+                        @else
+
+ايام الرحلة
+                        @endif   </h6>
+                    <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        {{ $Tour->tour_en_days }}
+                        @else
+
+                        {{ $Tour->tour_ar_days }}
+                        @endif </span>
                 </div>
             </div>
 
@@ -281,7 +347,12 @@
                 <div class="tour_info_details after_details">
                     <img src="{{ asset('/website_assets/images/tour-details/tour_info/passenger-with-baggage.webp') }}"
                         alt=" passenger-with-baggage image">
-                    <h6> Cost / Person </h6>
+                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        Cost / Person
+                        @else
+                      تكلفة/الشخص
+
+                        @endif  </h6>
                     <span>{{ number_format($Tour->tour_person_cost, 2) }} $</span>
                 </div>
             </div>
@@ -303,7 +374,12 @@
                                         data-bs-target="#panelsStayOpen-collapseTwo{{ $k }}"
                                         aria-expanded="false"
                                         aria-controls="panelsStayOpen-collapseTwo{{ $k }}">
-                                        {{ $category->en_category }}
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            {{$category->en_category}}
+                            @else
+                            {{-- {{$category->ar_category}} --}}
+                            @endif
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-collapseTwo{{ $k }}"
@@ -316,7 +392,12 @@
                                                         <img width="20" src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
                                                             alt="">
 
-                                                        <span>{{ $feature->en_feature }}</span>
+                                                        <span>@if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                            {{$feature->en_feature}}
+
+                                                            @else
+                                                            {{$feature->ar_feature}}
+                                                            @endif</span>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -364,9 +445,19 @@
             <div class="fitered_data hotels">
                 <div class="filtrered_cards hotel_details">
                     <h5>
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
                         tour details
+    @else
+تفاصيل الرحلة
+
+    @endif
                     </h5>
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
                     {!! $Tour->en_tours_details !!}
+                    @else
+
+                    {!! $Tour->ar_tours_details !!}
+                    @endif
                 </div>
             </div>
         </div>
@@ -380,48 +471,83 @@
     <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt="slider mask">
 
     <div class="hotels container">
-        <h5> book tour </h5>
+        <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+            book tour
+            @else
+          احجز رحلة
+
+            @endif  </h5>
         <section class="booking_hotels_section container">
-            <form action="{{ url('/bookTours') }}" method="POST">
+            <form action="{{ LaravelLocalization::localizeUrl('/bookTours') }}" method="POST">
                 @csrf
                 <input type="hidden" name="tour_id" value="{{ $Tour->id }}">
                 <div class="hotel_details">
                     <div class="row mx-0 p-0">
                         <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                            <h5> {{ $Tour->en_name }}</h5>
+                            <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                {{ $Tour->en_name }}
+                                @else
+                                {{ $Tour->ar_name }}
+
+                                @endif </h5>
 
                             <div class="choices">
                                 {{-- <i class="fa-solid fa-location-dot"></i> --}}
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 {{ $Tour->city->en_city ?? '' }}
+                                @else
+                                {{ $Tour->city->ar_city ?? '' }}
+
+                                @endif
                             </div>
                         </div>
 
 
                         <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                            <h5> Tour Type</h5>
+                            <h5>@if (LaravelLocalization::getCurrentLocale() === 'en')
+                                Tour Type
+                                @else
+                               نوع الرحلة
+
+                                @endif </h5>
 
                             <div class="choices">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 {{ $Tour->type->en_name ?? '' }}
+                                @else
+                                {{ $Tour->type->ar_name ?? '' }}
+
+                                @endif
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
-                            <h5> Tour Date </h5>
+                            <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                Tour Date
+                                @else
+                              تاريخ الرحلة
+
+                                @endif  </h5>
 
                             <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control" name="tour_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
 
                         </div>
 
                         <div class="col-sm-12 col-md-6 col-xl-3">
-                            <h5>Adults | Child No.</h5>
+                            <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                Adults | Child No.
+                                @else
+
+                                بالغين | عدد الاطفال.
+                                @endif</h5>
                             <div class="rooms" style="padding: 0;box-shadow: 0">
                                 <button class="info form-select" type="button" onclick="open_addnew()">
                                     <i class="fa-regular fa-user"></i>
-                                    <span id="adults"> 1 adults </span>
-                                    <span id="children"> 0 children </span>
+                                    <span id="adults"> 1 {{ __('links.adult') }} </span>
+                                    <span id="children"> 0 {{ __('links.child') }} </span>
                                 </button>
                                 <div class="add_new" id="add_new">
                                     <div class="form-group counter">
-                                        <label>adults</label>
+                                        <label>{{ __('links.adult') }}</label>
                                         <div class="input-group counter_content">
                                             <div class="input-group-btn">
                                                 <button id="down" type="button" class=" btn btn-default"
@@ -438,7 +564,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group counter">
-                                        <label>children</label>
+                                        <label>{{ __('links.child') }}</label>
                                         <div class="input-group counter_content">
                                             <div class="input-group-btn">
                                                 <button id="down" type="button" class="btn btn-default"
@@ -463,7 +589,7 @@
                                     </div>
 
                                     <button type="button" class="btn done_button" onclick="close_addnew()">
-                                        Done </button>
+                                        {{ __('links.done') }} </button>
                                 </div>
                             </div>
 
@@ -472,7 +598,7 @@
                             <div class="main" id="room_main">
 
                                 <button class="btn" type="submit">
-                                    BOOK
+                                    {{ __('links.book') }}
                                 </button>
                             </div>
                         </div>
@@ -489,7 +615,13 @@
     <section class="reviews container">
         <div class="review_heading">
             <h5>
+                @if (LaravelLocalization::getCurrentLocale() === 'en')
                 tour review
+                @else
+
+            تعليقات الرحلة
+                @endif
+
                 @isset($arrayData['result'])
                     <div><span style="margin-right:5px" class="Aq14fc" aria-hidden="true">
 
@@ -499,7 +631,7 @@
                             <span style="width:62px"></span></span>
                         <a class="hqzQac" style="white-space:nowrap;font-size:14px;margin-left:5px"
                             href="{{ $Tour->google_reviews }}" target="_blank">
-                            {{ number_format((float) $result['rating'], 1, '.', '') }} Google reviews</a>
+                            {{ number_format((float) $result['rating'], 1, '.', '') }} Google {{ __('links.reviews') }}</a>
                     </div>
                 @endisset
             </h5>
@@ -508,11 +640,10 @@
             @if (session()->get('SiteUser'))
                 <button type="button" class="btn add_comment_button" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">
-                    <i class="fa-solid fa-plus"></i> add comment
+                    <i class="fa-solid fa-plus"></i> {{ __('links.addComment') }}
                 </button>
             @else
-                <a href="{{ route('siteLogin') }}" class="btn add_comment_button"> <i class="fa-solid fa-plus"></i> add
-                    comment</a>
+                <a href="{{ route('siteLogin') }}" class="btn add_comment_button"> <i class="fa-solid fa-plus"></i> {{ __('links.addComment') }}</a>
             @endif
             {{-- <button type="button" class="btn add_comment_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="fa-solid fa-plus"></i> add comment
@@ -523,10 +654,10 @@
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="{{ url('/tours/review/add') }}" method="POST">
+                        <form action="{{ LaravelLocalization::localizeUrl('/tours/review/add') }}" method="POST">
                             @csrf
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">add comment </h5>
+                                <h5 class="modal-title" id="exampleModalLabel">{{ __('links.addComment') }} </h5>
                                 <input type="hidden" name="tour_id" value="{{ $Tour->id }}" />
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
@@ -541,12 +672,17 @@
                                     <input type="hidden" value="0" name="rate_val" />
                                 </div>
                                 <div class="form-floating comment_input">
-                                    <textarea class="form-control" name="review_text" placeholder="Leave a comment here" id="floatingTextarea2"
+                                    <textarea class="form-control" name="review_text" placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    Leave a comment here
+                                    @else
+                                  اترك تعليقك هنا
+                                    @endif " id="floatingTextarea2"
                                         style="height: 100px"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary comment_pop_btn">add comment </button>
+                                <button type="submit" class="btn btn-primary comment_pop_btn">{{ __('links.addComment') }} </button>
                             </div>
                         </form>
                     </div>
@@ -612,7 +748,13 @@
 
         @if (count($Tour->reviews) > 10)
             <button class="btn comments_button">
-                load all comments
+                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+        load all comments
+                @else
+
+تحميل كافة التعليقات
+                @endif
             </button>
         @endif
     </section>

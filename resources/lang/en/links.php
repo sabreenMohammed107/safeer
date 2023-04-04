@@ -255,7 +255,23 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'persImage'=>'Personal image',
 'costVis'=>'Cost / Visa : ',
 'add'=>'Add',
+'costDay'=>'Cost/Day:',
+'replaceCart'=>'Replace Cart',
+'addComment'=>'add comment',
+'comment'=>' comment',
+'haveAccount'=>'have an Account',
+'dontHaveAccount'=>'Don‘t have an Account ?',
 
+//errors msg
+'logerror'=>'Email-Address And Password Are Wrong.',
+'purchase'=>'Can‘t Purchase multiple booking in one time',
+'contpurchase'=>'Can‘t Purchase Right Now Please Try Again Later',
+'roomMsg'=>'Room is added in your cart successfully',
+'contactMsg'=>'We have received your message and would like to thank you for writing to us.',
+'empLetter'=>'Empty Newsletter !!!',
+'transpurchase'=>'Can‘t Purchase multiple transfer items in one time',
+'transCart'=>'Transfer is added in your cart successfully',
+'visaMsg'=>'Visa(s) is added in your cart successfully',
 ];
 
 

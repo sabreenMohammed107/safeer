@@ -137,6 +137,6 @@ class VisaDataController extends Controller
 
         session()->put("hasCart", 1);
 
-        return redirect()->to("/cart")->with("session-success", "Visa(s) is added in your cart successfully");
+        return redirect()->to("/cart")->with("session-success", Lang::get('links.visaMsg'));
     }
 }

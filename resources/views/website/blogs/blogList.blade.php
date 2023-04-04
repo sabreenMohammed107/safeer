@@ -7,10 +7,20 @@
                     <img src="{{ asset('uploads/blogs') }}/{{$blog->image}}" alt=" blogimage">
                     <div class="card-body hotel_card_info">
                         <div class="card_info">
-                            <h5><a href="{{url('/single-blog/'.$blog->id) }}" class="stretched-link">
-                                {{$blog->en_title ?? ''}}</a> </h5>
+                            <h5><a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id) }}" class="stretched-link">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                {{$blog->en_title ?? ''}}
+                                @else
+                                {{$blog->ar_title ?? ''}}
+                                @endif</a> </h5>
                             <p>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                 {{ strip_tags(Str::limit($blog->en_text ?? '', $limit = 300, $end = '...')) }}
+                                @else
+                                {{ strip_tags(Str::limit($blog->ar_text ?? '', $limit = 300, $end = '...')) }}
+                                @endif
                         </div>
                     </div>
                 </div>

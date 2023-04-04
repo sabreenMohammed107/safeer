@@ -17,7 +17,7 @@ use App\Models\TransferDetails;
 use App\Models\VisaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Lang as Lang;
 
 abstract class ItemType
 {
@@ -49,7 +49,7 @@ class BookingController extends Controller
         $CartItem = Cart::where([["user_id", '=', session()->get("SiteUser")["ID"]], ["item_type", '=', 0]])->first();
 
         if ($CartItem) { // Has Room ?
-            return redirect()->to("/safer/room/$id/book/$cap")->with("session-warning", "Can't Purchase multiple booking in one time");
+            return redirect()->to("/safer/room/$id/book/$cap")->with("session-warning",Lang::get('links.purchase') );
         }
 
         $CartItem = new Cart();
@@ -72,7 +72,7 @@ class BookingController extends Controller
         $CartItem->save();
         session()->put("hasCart", 1);
 
-        return redirect()->to("/cart")->with("session-success", "Room is added in your cart successfully");
+        return redirect()->to("/cart")->with("session-success", Lang::get('links.roomMsg'));
 
     }
     public function ExBookRoom(int $id, int $cap)
@@ -479,7 +479,7 @@ class BookingController extends Controller
             DB::rollback();
             // something went wrong
             throw $e;
-            return redirect()->back()->with("session-danger", "Can't Purchase Right Now Please Try Again Later");
+            return redirect()->back()->with("session-danger", Lang::get('links.contpurchase'));
         }
 
         return redirect()->to("/Safer/OrderPlacement/$order->id");

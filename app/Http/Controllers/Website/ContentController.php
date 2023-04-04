@@ -112,7 +112,7 @@ class ContentController extends Controller
         //  Store data in database
           Contact::create($request->all());
         //
-        return back()->with('flash_success', 'We have received your message and would like to thank you for writing to us.');
+        return back()->with('flash_success',Lang::get('links.contactMsg'));
     }
 
 
@@ -149,11 +149,11 @@ class ContentController extends Controller
             // \Mail::to($emails)->send(new NewsLetterNotification($letter));
 
 
-             return redirect()->back()->with('message', 'Thanks; your request has been submitted successfully !');
+             return redirect()->back()->with('message', Lang::get('links.contactMsg'));
          }
             catch(QueryException $q){
 
-             return redirect()->back()->with('message','ُEmpty Newsletter !!!');
+             return redirect()->back()->with('message',Lang::get('links.empLetter'));
 
          }
     }

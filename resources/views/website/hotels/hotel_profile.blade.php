@@ -45,8 +45,15 @@ color: #7E7E7E !important;
 @endsection
 
 @section("bottom-header")
-<x-website.header.general :title="$Hotel->hotel_enname .' - '" :breadcrumb="$BreadCrumb"
+@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+<x-website.header.general :title="$Hotel->hotel_enname " :breadcrumb="$BreadCrumb"
     :current="$Hotel->hotel_enname" />
+@else
+<x-website.header.general :title="$Hotel->hotel_arname " :breadcrumb="$BreadCrumb"
+    :current="$Hotel->hotel_arname" />
+@endif
+
 @endsection
 @section("content")
 {{-- google reviews --}}
@@ -150,8 +157,25 @@ if(isset($arrayData['result'])){
             @endif
             <div class="tour_info">
                 <div class="titles">
-                    <h6> {{$Hotel->hotel_enname}}</h6>
-                    <span> {{$Hotel->city->country->en_country}} <span>|</span> {{$Hotel->city->en_city}} </span>
+                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        {{$Hotel->hotel_enname}}
+
+                        @else
+                        {{$Hotel->hotel_arname}}
+                        @endif </h6>
+                    <span>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        {{$Hotel->city->country->en_country}}
+
+                        @else
+                        {{$Hotel->city->country->ar_country}}
+                        @endif
+                         <span>|</span>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                         {{$Hotel->city->en_city}}
+                        @else
+                        {{$Hotel->city->ar_city}}
+                        @endif
+                         </span>
                     <div class="rating">
                         @for ($i = 0; $i < $Hotel->hotel_stars; $i++)
                             <i class="fa-solid fa-star"></i>
@@ -160,27 +184,43 @@ if(isset($arrayData['result'])){
                             <i class="fa-regular fa-star"></i>
                             @endfor
 
-                            <span> ( {{count($Hotel->reviews)}} review) </span>
+                            <span> ( {{count($Hotel->reviews)}} {{ __('links.review') }}) </span>
                     </div>
-                    <div class="sharing_icons">
+                    <div class="sharing_icons"
+                    @if (LaravelLocalization::getCurrentLocale() === 'ar')
+
+               style="left:100%"
+
+                    @endif >
                         {{-- <i class="fa-solid fa-share-nodes"></i> --}}
 
 
                             @if (session()->get('SiteUser'))
-                            <a href="{{ url('/favourite/' . $Hotel->id) }}"
+                            <a href="{{ LaravelLocalization::localizeUrl('/favourite/' . $Hotel->id) }}"
                                 ><i class="fa-regular fa-heart"></i> </a>
                             @else
 
-                            <a href="{{ route('siteLogin') }}"
+                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}"
                             ><i class="fa-regular fa-heart"></i></a>
                             @endif
 
                     </div>
                 </div>
 
-                <h6> important note </h6>
+                <h6>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    important note
+
+                    @else
+                  ملاحظات مهمة
+                    @endif </h6>
                 <p>
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                     {{$Hotel->hotel_enoverview}}
+                    @else
+                    {{$Hotel->hotel_aroverview}}
+                    @endif
+
                 </p>
 
 
@@ -194,7 +234,12 @@ if(isset($arrayData['result'])){
 <!-- included and not included section -->
 
 <section class="included container">
-    <h5> hotel facilities</h5>
+    <h5>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+        hotel facilities
+
+        @else
+        مرافق الفندق
+        @endif</h5>
     <div class="row mx-0">
         <div class="col-sm-12 col-xl-6 pb-5">
             @if (count($Hotel->features))
@@ -205,7 +250,13 @@ if(isset($arrayData['result'])){
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#panelsStayOpen-collapseTwo{{$k}}" aria-expanded="false"
                             aria-controls="panelsStayOpen-collapseTwo{{$k}}">
+
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                             {{$category->en_category}}
+                            @else
+                            {{-- {{$category->ar_category}} --}}
+                            @endif
                         </button>
                     </h2>
                     <div id="panelsStayOpen-collapseTwo{{$k}}" class="accordion-collapse collapse show"
@@ -217,7 +268,13 @@ if(isset($arrayData['result'])){
                                 <div class="include-1">
                                     <img width="20" src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
                                     alt="">
-                                    <span>{{$feature->en_feature}}</span>
+                                    <span>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                        {{$feature->en_feature}}
+
+                                        @else
+                                        {{$feature->ar_feature}}
+                                        @endif</span>
                                 </div>
                                 @endif
                                 @endforeach
@@ -230,7 +287,14 @@ if(isset($arrayData['result'])){
             </div>
             @endforeach
             @else
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
             No hotel facilities provided
+            @else
+            لم يتم توفير مرافق الفندق
+
+            @endif
+
             @endif
         </div>
         <div class="col-sm-12 col-xl-6 ">
@@ -261,12 +325,22 @@ if(isset($arrayData['result'])){
     <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt="slider mask">
 
     <div class="hotels container">
-        <h5> search hotels </h5>
+        <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+               hotel search
+            @else
+          بحث فى الفندق
+            @endif </h5>
         <section class="booking_hotels_section container">
             <div class="hotel_details">
                 <div class="row mx-0 p-0">
                     <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                        <h5> destination</h5>
+                        <h5>   @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            destination
+                            @else
+                          الوجهة
+                            @endif </h5>
 
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
@@ -274,7 +348,12 @@ if(isset($arrayData['result'])){
                                 @foreach ($Countries as $Country)
                                     <option value="{{ $Country->id }}"
                                         @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['country_id'] == $Country->id ? 'selected' : '' }} @endif>
-                                        {{ $Country->en_country }}</option>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                        {{ $Country->en_country }}
+
+                                        @else
+                                        {{ $Country->ar_country }}
+                                        @endif </option>
                                 @endforeach
                             </select>
                         </div>
@@ -282,7 +361,7 @@ if(isset($arrayData['result'])){
 
 
                     <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                        <h5> city</h5>
+                        <h5> {{ __('links.city') }}</h5>
 
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
@@ -290,13 +369,23 @@ if(isset($arrayData['result'])){
                                 @foreach ($Cities as $city)
                                     <option value="{{ $city->id }}"
                                         @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['city_id'] == $city->id ? 'selected' : '' }} @endif>
-                                        {{ $city->en_city }}</option>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                        {{ $city->en_city }}
+
+                                        @else
+                                        {{ $city->ar_city }}
+                                        @endif</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                         <h5> check in <span>check </span> </h5>
+                        @else
+                        <h5>تسجيل وصول | <span>تسجبل مغادرة </span> </h5>
+                        @endif
                         @if (session()->has('sessionArr'))
                             <input type="hidden" id="from_date" value="{{ Session::get('sessionArr')['from_date'] }}">
                             <input type="hidden" id="end_date" value="{{ Session::get('sessionArr')['end_date'] }}">
@@ -309,13 +398,13 @@ if(isset($arrayData['result'])){
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-1">
-                        <h5> nights </h5>
+                        <h5> {{ __('links.nights') }} </h5>
 
                         <input type="text" id="nights" class="form-control" readonly name="nights"
                             value="@if (session()->has('sessionArr')) {{ Session::get('sessionArr')['nights'] }} @else 7 @endif">
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-3">
-                        <h5> Add room</h5>
+                        <h5> {{ __('links.addRoom') }}</h5>
                         <div class="rooms" style="padding: 0;box-shadow: 0">
                             <button class="info form-select" type="button" onclick="open_addnew()">
                                 <i class="fa-regular fa-user"></i>
@@ -324,26 +413,26 @@ if(isset($arrayData['result'])){
                                         {{ Session::get('sessionArr')['adultsNumber'] }}
                                     @else
                                         1
-                                    @endif adults
+                                    @endif {{ __('links.adult') }}
                                 </span>
                                 <span id="children">
                                     @if (session()->has('sessionArr'))
                                         {{ Session::get('sessionArr')['childNumber'] }}
                                     @else
                                         0
-                                    @endif children
+                                    @endif {{ __('links.child') }}
                                 </span>
                                 <span id="rooms">
                                     @if (session()->has('sessionArr'))
                                         {{ Session::get('sessionArr')['roomsNumber'] }}
                                     @else
                                         1
-                                    @endif rooms
+                                    @endif {{ __('links.rooms') }}
                                 </span>
                             </button>
                             <div class="add_new" id="add_new">
                                 <div class="form-group counter">
-                                    <label>adults</label>
+                                    <label>{{ __('links.adult') }}</label>
                                     <div class="input-group counter_content">
                                         {{-- <div class="input-group-btn">
                                             <button id="down" type="button" class=" btn btn-default"
@@ -366,7 +455,7 @@ if(isset($arrayData['result'])){
                                     </div>
                                 </div>
                                 <div class="form-group counter">
-                                    <label>children</label>
+                                    <label>{{ __('links.child') }}</label>
                                     <div class="input-group counter_content">
                                         {{-- <div class="input-group-btn">
                                             <button id="down" type="button" class="btn btn-default"
@@ -404,7 +493,13 @@ if(isset($arrayData['result'])){
                                                     @for ($i = 0; $i < 10; $i++)
                                                         <option value="{{ $i + 1 }}"
                                                             {{ Session::get('sessionArr')['ages'][$key] == $i + 1 ? 'selected' : '' }}>
-                                                            {{ $i + 1 }} years old
+                                                            {{ $i + 1 }}   @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                            years old
+
+                                                            @else
+                                                          سنة
+                                                            @endif
+
                                                         </option>
                                                     @endfor
 
@@ -417,7 +512,7 @@ if(isset($arrayData['result'])){
                                     @endif
                                 </div>
                                 <div class="form-group counter">
-                                    <label>rooms</label>
+                                    <label>{{ __('links.rooms') }}</label>
                                      <div class="input-group counter_content">
                                         {{--<div class="input-group-btn">
                                             <button id="down" type="button" class="btn btn-default"
@@ -440,7 +535,7 @@ if(isset($arrayData['result'])){
                                     </div>
                                 </div>
                                 <button type="button" class="btn done_button" onclick="close_addnew()">
-                                    Done </button>
+                                    {{ __('links.done') }} </button>
                             </div>
                         </div>
 
@@ -458,9 +553,22 @@ if(isset($arrayData['result'])){
             </section>
         </div>
         <div class="rooms_avaliable container">
-            <h5> available rooms
+            <h5>   @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                available rooms
+                @else
+              الغرف المتاحة
+                @endif
                 @if($HasRoom != 0)
-                <span class="text-danger fs-6">*You have an existing Room in Your Cart</span>
+                <span class="text-danger fs-6">
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    *You have an existing Room in Your Cart
+                    @else
+                    * لديك غرفة موجودة في عربة التسوق الخاصة بك
+
+                    @endif
+                    </span>
                 @endif
             </h5>
             <div id="rooms_content">
@@ -473,11 +581,21 @@ if(isset($arrayData['result'])){
 
                     <div class="row mx-0 align-items-center text-center">
                         <div class="col-xl-2 col-sm-12 col-md-6">
-                            <h6>{{$Room->en_room_type}} </h6>
+                            <h6>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                {{$Room->en_room_type}}
+                                @else
+                                {{$Room->ar_room_type}}
+                                @endif </h6>
                         </div>
 
                         <div class="col-xl-2 col-sm-12 col-md-6">
-                            <h6>Single </h6>
+                            <h6>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Single
+                                @else
+                              فردى
+                                @endif </h6>
                         </div>
 
 
@@ -489,7 +607,12 @@ if(isset($arrayData['result'])){
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <div class="avaliable">
-                                <span> avaliable</span>
+                                <span>   @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    avaliable
+                                    @else
+                                  متاح
+                                    @endif</span>
 
                                 <span><a data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
                                      title='
@@ -503,20 +626,25 @@ if(isset($arrayData['result'])){
                                             <p  class="col-12"><span class="float-start">2 x Paid childs (Age From 6 to 11) </span> <span class="float-end">2 x $250 <br> <b>$500</b></sapn></p>
                                       </div>
                                     </div>
-                                      '>Cancellation Policy</a></span>
+                                      '>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                      Cancellation Policy
+
+                                      @else
+                                    سياسة الإلغاء
+                                      @endif</a></span>
                             </div>
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <span class="price_info">
-                             Cost/Day: {{$Room->single_cost}} $
+                                {{ __('links.costDay') }} {{$Room->single_cost}} $
                             </span>
                         </div>
 
                         <div class="col-xl-2 col-sm-12 col-md-6 p-0">
                             @if(!$HasRoom)
-                            <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/1")}}">Book</a> </button>
+                            <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/1")}}">{{ __('links.book') }}</a> </button>
                             @else
-                            <button class="btn rooms_button"><a href="{{url("/safer/room/$Room->id/book/1/exchange")}}">Replace Cart</a> </button>
+                            <button class="btn rooms_button"><a href="{{url("/safer/room/$Room->id/book/1/exchange")}}">{{ __('links.replaceCart') }}</a> </button>
                             @endif
                         </div>
 
@@ -530,13 +658,25 @@ if(isset($arrayData['result'])){
 
                     <div class="row mx-0 align-items-center text-center">
                         <div class="col-xl-2 col-sm-12 col-md-6">
-                            <h6>{{$Room->en_room_type}}  </h6>
+                            <h6>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                {{$Room->en_room_type}}
+                                              @else
+                                              {{$Room->ar_room_type}}
+                                              @endif  </h6>
                         </div>
 
 
 
                         <div class="col-xl-2 col-sm-12 col-md-6">
-                            <h6>Double </h6>
+                            <h6>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Double
+                                              @else
+                                            زوجي
+                                              @endif </h6>
                         </div>
 
                         <div class="col-xl-2 col-sm-12 col-md-6">
@@ -546,7 +686,13 @@ if(isset($arrayData['result'])){
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <div class="avaliable">
-                                <span> avaliable</span>
+                                <span>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    avaliable
+                                                  @else
+                                                متاح
+                                                  @endif</span>
                                 <span><a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title='
                                     <div class="tooltip-body">
                                       <div class="row">
@@ -558,20 +704,26 @@ if(isset($arrayData['result'])){
                                             <p  class="col-12"><span class="float-start">2 x Paid childs (Age From 6 to 11) </span> <span class="float-end">2 x $250 <br> <b>$500</b></sapn></p>
                                       </div>
                                     </div>
-                                      '>Cancellation Policy</a></span>
+                                      '>
+                                      @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                      Cancellation Policy
+                                                    @else
+                                                  سياسة الإلغاء
+                                                    @endif</a></span>
                             </div>
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <span class="price_info">
-                             Cost/Day: {{$Room->double_cost}} $
+                                {{ __('links.costDay') }} {{$Room->double_cost}} $
                             </span>
                         </div>
 
                         <div class="col-xl-2 col-sm-12 col-md-6 p-0">
                             @if(!$HasRoom)
-                            <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/2")}}">Book</a> </button>
+                            <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/2")}}">{{ __('links.book') }}</a> </button>
                             @else
-                            <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/2/exchange")}}">Replace Cart</a> </button>
+                            <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/2/exchange")}}">{{ __('links.replaceCart') }}</a> </button>
                             @endif
                         </div>
 
@@ -584,12 +736,24 @@ if(isset($arrayData['result'])){
 
                     <div class="row mx-0 align-items-center text-center">
                         <div class="col-xl-2 col-sm-12 col-md-6">
-                            <h6>{{$Room->en_room_type}}  </h6>
+                            <h6>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                {{$Room->en_room_type}}
+                                              @else
+                                              {{$Room->ar_room_type}}
+                                              @endif  </h6>
                         </div>
 
 
                         <div class="col-xl-2 col-sm-12 col-md-6">
-                            <h6>Triple </h6>
+                            <h6>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Triple
+                                              @else
+                                            ثلاثية
+                                              @endif </h6>
                         </div>
 
                         <div class="col-xl-2 col-sm-12 col-md-6">
@@ -599,7 +763,13 @@ if(isset($arrayData['result'])){
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <div class="avaliable">
-                                <span> avaliable</span>
+                                <span>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    avaliable
+                                                  @else
+                                                متاحة
+                                                  @endif</span>
                                 <span><a data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top" title='
                                     <div class="tooltip-body">
                                       <div class="row">
@@ -611,21 +781,27 @@ if(isset($arrayData['result'])){
                                             <p  class="col-12"><span class="float-start">2 x Paid childs (Age From 6 to 11) </span> <span class="float-end">2 x $250 <br> <b>$500</b></sapn></p>
                                       </div>
                                     </div>
-                                      '>Cancellation Policy</a></span>
+                                      '>
+                                      @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                      Cancellation Policy
+                                                    @else
+                                                  سياسة الإلغاء
+                                                    @endif</a></span>
 
                             </div>
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <span class="price_info">
-                             Cost/Day: {{$Room->triple_cost}} $
+                                {{ __('links.costDay') }}{{$Room->triple_cost}} $
                             </span>
                         </div>
 
                         <div class="col-xl-2 col-sm-12 col-md-6 p-0">
                         @if(!$HasRoom)
-                        <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/3")}}">Book</a> </button>
+                        <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/3")}}">{{ __('links.book') }}</a> </button>
                         @else
-                        <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/3/exchange")}}">Replace Cart</a> </button>
+                        <button class="btn rooms_button"> <a href="{{url("/safer/room/$Room->id/book/3/exchange")}}">{{ __('links.replaceCart') }}</a> </button>
                         @endif
                         </div>
 
@@ -646,7 +822,13 @@ if(isset($arrayData['result'])){
 <section class="reviews container">
     <div class="review_heading">
         <h5>
-            room review
+
+  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+  room review
+  @else
+تعليقات الغرف
+  @endif
             @isset($arrayData['result'])
         <div><span style="margin-right:5px" class="Aq14fc" aria-hidden="true">
 
@@ -656,7 +838,13 @@ if(isset($arrayData['result'])){
         <span style="width:62px"></span></span>
         <a class="hqzQac" style="white-space:nowrap;font-size:14px;margin-left:5px" href="{{$Hotel->google_reviews}}" target="_blank"
 >
-         {{number_format((float)$result['rating'], 1, '.', '') }} Google reviews</a>
+         {{number_format((float)$result['rating'], 1, '.', '') }}
+         @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+         Google reviews
+                       @else
+                     تعليقات جوجل
+                       @endif </a>
         </div>
         @endisset
         </h5>
@@ -664,12 +852,11 @@ if(isset($arrayData['result'])){
         <!-- Button trigger modal -->
         @if (session()->get('SiteUser'))
         <button type="button" class="btn add_comment_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <i class="fa-solid fa-plus"></i> add comment
+            <i class="fa-solid fa-plus"></i> {{ __('links.addComment') }}
         </button>
         @else
 
-        <a href="{{ route('siteLogin') }}" class="btn add_comment_button"> <i class="fa-solid fa-plus"></i> add
-            comment</a>
+        <a href="{{ route('siteLogin') }}" class="btn add_comment_button"> <i class="fa-solid fa-plus"></i>  {{ __('links.addComment') }}</a>
 
         @endif
         {{-- <button type="button" class="btn add_comment_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -680,10 +867,10 @@ if(isset($arrayData['result'])){
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{url("/hotels/review/add")}}" method="POST">
+                    <form action="{{ LaravelLocalization::localizeUrl("/hotels/review/add") }}" method="POST">
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">add comment </h5>
+                            <h5 class="modal-title" id="exampleModalLabel"> {{ __('links.addComment') }}</h5>
                             <input type="hidden" name="hotel_id" value="{{$Hotel->id}}" />
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -697,12 +884,17 @@ if(isset($arrayData['result'])){
                                 <input type="hidden" value="0" name="rate_val" />
                             </div>
                             <div class="form-floating comment_input">
-                                <textarea class="form-control" name="review_text" placeholder="Leave a comment here"
+                                <textarea class="form-control" name="review_text" placeholder=" @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Leave a comment here
+                                @else
+                              اترك تعليقك هنا
+                                @endif"
                                    style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary comment_pop_btn">add comment </button>
+                            <button type="submit" class="btn btn-primary comment_pop_btn">{{ __('links.addComment') }} </button>
                         </div>
                     </form>
                 </div>
@@ -766,7 +958,13 @@ if(isset($arrayData['result'])){
 
     @if(count($Hotel->reviews) > 10)
     <button class="btn comments_button">
+        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
         load all comments
+                @else
+
+تحميل كافة التعليقات
+                @endif
     </button>
     @endif
 </section>

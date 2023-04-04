@@ -187,7 +187,7 @@ class SiteTransferController extends Controller
         $CartItem = Cart::where([["user_id", '=', session()->get("SiteUser")["ID"]], ["item_type", '=', 2]])->first();
 
         if ($CartItem) { // Has Transfer ?
-            return redirect()->to("/transfers")->with("session-warning", "Can't Purchase multiple transfer items in one time");
+            return redirect()->to("/transfers")->with("session-warning", Lang::get('links.transpurchase'));
         }
 
         $CartItem = new Cart();
@@ -198,7 +198,7 @@ class SiteTransferController extends Controller
         $CartItem->save();
         session()->put("hasCart", 1);
 
-        return redirect()->to("/cart")->with("session-success", "Transfer is added in your cart successfully");
+        return redirect()->to("/cart")->with("session-success",Lang::get('links.transCart'));
     }
 }
 

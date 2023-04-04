@@ -9,7 +9,7 @@
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="Blogs" :breadcrumb="$BreadCrumb" current="" />
+    <x-website.header.general title="{{ __('links.blogs') }}" :breadcrumb="$BreadCrumb" current="" />
 @endsection
 @section('content')
   <!-- searching for tors section -->
@@ -25,9 +25,19 @@
                                   <img src="{{ asset('uploads/blogs') }}/{{$blog->image}}" class="w-100" alt=" single blogimage">
                                   <div class="card-body hotel_card_info">
                                     <div class="card_info">
-                                      <h5>  {!! $blog->en_title ?? '' !!} </h5>
+                                      <h5>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                        {!! $blog->en_title ?? '' !!}
+                                        @else
+                                        {!! $blog->ar_title ?? '' !!}
+                                        @endif  </h5>
                                     <p>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                         {!! $blog->en_text ?? '' !!}
+                                        @else
+                                        {!! $blog->ar_text ?? '' !!}
+                                        @endif
                                      </p>
                                      </div>
                                   </div>
@@ -41,13 +51,18 @@
         </div>
         <div class="col-sm-12 col-xl-3">
             <button class="btn filtered_button" onclick="openFilter()" id="filterButton">
-              <i class="fa-solid fa-sliders"></i>   Categories
+              <i class="fa-solid fa-sliders"></i>   {{ __('links.categories') }}
             </button>
               <div class="categories_section" id="filtered-menu">
-                <h6> categories </h6>
+                <h6> {{ __('links.categories') }} </h6>
                 @foreach ($categories as $category)
                 <div class="categories">
-                    <span>{{$category->en_category}}</span>
+                    <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        {{$category->en_category}}
+                        @else
+                        {{$category->ar_category}}
+                        @endif</span>
                     <span>(1)</span>
                   </div>
                 @endforeach
@@ -59,22 +74,37 @@
               </div>
 
               <div class="latest_blog">
-                <h6> latest blog  </h6>
+                <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    latest blog
+                    @else
+                  اخرالمقالات
+                    @endif </h6>
                 @foreach ($latest as $obj)
                 <div class="blog_details">
                     <img src="{{ asset('uploads/blogs') }}/{{$obj->image}}" alt="latest blog image">
                     <div class="blog_info">
                       <h6> <a href="{{url('/single-blog/'.$obj->id) }}" class="stretched-link">
 
-                        {{ strip_tags(Str::limit($obj->en_title ?? '', $limit = 50, $end = '')) }}
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        {{ strip_tags(Str::limit($obj->ar_title ?? '', $limit = 50, $end = '')) }}
+                @else
+                {{ strip_tags(Str::limit($obj->en_title ?? '', $limit = 50, $end = '')) }}
+                @endif
 
                     </a></h6>
                       <p>
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
                         {{ strip_tags(Str::limit($obj->en_text ?? '', $limit = 200, $end = '...')) }}
+
+                        @else
+                        {{ strip_tags(Str::limit($obj->ar_text ?? '', $limit = 200, $end = '...')) }}
+                        @endif
 
 
                       </p>
-                      <span> 20 nov 2020</span>
+                      {{-- <span> 20 nov 2020</span> --}}
                     </div>
                   </div>
                 @endforeach
