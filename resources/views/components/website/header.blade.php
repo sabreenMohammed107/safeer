@@ -55,7 +55,29 @@ $localVar=LaravelLocalization::getCurrentLocale();
                     <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteRegister'))}}">{{ __('links.signin_up2') }}</a>
                 </button>
                 @endif
-                 <button class="offcan_buttons_lang">
+
+                <button class="offcan_buttons">
+                    @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
+                            <a  rel="alternate" hreflang="{{ $localeCode }}"
+                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+
+                                <!--{{ $properties['native'] }}-->
+
+                                {{ __('links.ar') }}
+
+                            </a>
+                        @endif
+                        @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
+                        <a  rel="alternate" hreflang="{{ $localeCode }}"
+                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+
+                            {{ __('links.en') }}
+                        </a>
+                    @endif
+                </button>
+
+
+                 {{-- <button class="offcan_buttons_lang">
                     <a class="dropdown-btn">{{ __('links.language') }} <i class="fa fa-caret-down"></i></a>
 
                     <div class="dropdown-container">
@@ -80,7 +102,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
                         @endif
                         <!--|-->
                     @endforeach  </div>
-                </button>
+                </button> --}}
 
             </div>
         </div>
