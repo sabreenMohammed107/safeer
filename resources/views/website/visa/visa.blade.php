@@ -200,7 +200,12 @@
             <p id="numform"></p>
             <button id="visaaa">
                 <i class="fa-solid fa-plus"></i>
-                {{ __('links.add') }}
+                @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                Add 1 more passanger
+@else
+اضافة راكب اخر
+@endif
                 <!-- <a href="#" id="visaaa">Add</a> -->
             </button>
             <!-- <span>
@@ -327,7 +332,12 @@ Visa type
 </p>
 </div>
                 <!-- <div class="col-sm-12 col-md-6 col-xl-4">
-                    <a class="btn btn-primary" id="visaaa" >{{ __('links.add') }} </a>
+                    <a class="btn btn-primary" id="visaaa" > @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        Add 1 more passanger
+@else
+اضافة راكب اخر
+@endif  </a>
                 </div>
                 -->
 
