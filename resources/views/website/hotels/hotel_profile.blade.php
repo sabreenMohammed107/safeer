@@ -189,7 +189,7 @@ if(isset($arrayData['result'])){
                     <div class="sharing_icons"
                     @if (LaravelLocalization::getCurrentLocale() === 'ar')
 
-               style="left:100%"
+                    style="right:100% !important"
 
                     @endif >
                         {{-- <i class="fa-solid fa-share-nodes"></i> --}}
