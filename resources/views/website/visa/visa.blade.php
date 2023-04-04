@@ -204,7 +204,7 @@
 
                 Add 1 more passanger
 @else
-اضافة راكب اخر
+اضافة مسافر اخر
 @endif
                 <!-- <a href="#" id="visaaa">Add</a> -->
             </button>
@@ -336,7 +336,7 @@ Visa type
 
                         Add 1 more passanger
 @else
-اضافة راكب اخر
+اضافة مسافر اخر
 @endif  </a>
                 </div>
                 -->

@@ -257,7 +257,7 @@ return [
 'availableTours'=>'الرحلات المتاحة',
 'book'=>'احجز',
 'pickDate'=>'اختر تاريخ',
-'passenger'=>'راكب',
+'passenger'=>'مسافر',
 'nationality'=>'الجنسيه',
 'passImage'=>'صورة الباسبور',
 'persImage'=>'صوره شخصية',
