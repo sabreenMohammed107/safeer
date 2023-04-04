@@ -160,7 +160,7 @@
                     <label for="">@if (LaravelLocalization::getCurrentLocale() === 'en')
                         Passenger Name
                                       @else اسم المسافر
-                                      @endif"  </label>
+                                      @endif </label>
                     <input type="text" required name="name[0]" placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en')
                     Passenger Name
                                   @else اسم المسافر
@@ -310,7 +310,7 @@ Visa type
                     <label for="">@if (LaravelLocalization::getCurrentLocale() === 'en')
                     Passenger Name
                                   @else اسم المسافر
-                                  @endif"   </label>
+                                  @endif  </label>
                     <input type="text" name="name[` + counter + `]" required placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en')
 
 Passenger Name
