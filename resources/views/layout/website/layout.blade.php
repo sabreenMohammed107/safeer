@@ -316,7 +316,7 @@
                                                         <?php
                                                         $im=QrCode::format('png')
                                                         ->merge('website_assets/images/q1.png', 0.4, true)
-                                                        ->size(80)->color(27, 34, 76)->errorCorrection('H')
+                                                        ->size(70)->color(27, 34, 76)->errorCorrection('H')
                                                         ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
 
                                                         ?>
