@@ -157,7 +157,10 @@
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">{{ __('links.name') }}  </label>
+                    <label for="">@if (LaravelLocalization::getCurrentLocale() === 'en')
+                        Passenger Name
+                                      @else اسم المسافر
+                                      @endif"  </label>
                     <input type="text" required name="name[0]" placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en')
                     Passenger Name
                                   @else اسم المسافر
@@ -304,7 +307,10 @@ Visa type
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">{{ __('links.name') }}   </label>
+                    <label for="">@if (LaravelLocalization::getCurrentLocale() === 'en')
+                    Passenger Name
+                                  @else اسم المسافر
+                                  @endif"   </label>
                     <input type="text" name="name[` + counter + `]" required placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en')
 
 Passenger Name
