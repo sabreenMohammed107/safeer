@@ -259,7 +259,7 @@ return [
 'pickDate'=>'اختر تاريخ',
 'passenger'=>'مسافر',
 'nationality'=>'الجنسية',
-'passImage'=>'صورة الباسبور',
+'passImage'=>'صورة جواز السفر',
 'persImage'=>'صورة شخصية',
 'costVis'=>'تكلفة / الفيزا : ',
 'add'=>'اضافة',
