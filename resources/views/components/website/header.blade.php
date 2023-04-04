@@ -57,6 +57,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
                 @endif
 
                 <button class="offcan_buttons">
+                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                     @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
                             <a  rel="alternate" hreflang="{{ $localeCode }}"
                                 href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
@@ -74,6 +75,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
                             {{ __('links.en') }}
                         </a>
                     @endif
+                    @endforeach
                 </button>
 
 
