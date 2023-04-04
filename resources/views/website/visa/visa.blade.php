@@ -158,11 +158,9 @@
 
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">{{ __('links.name') }}  </label>
-                    <input type="text" required name="name[0]" placeholder=" @if (LaravelLocalization::getCurrentLocale() === 'en')
-
+                    <input type="text" required name="name[0]" placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en')
                     Passenger Name
-                                  @else
-                                 اسم المسافر
+                                  @else اسم المسافر
                                   @endif" />
 
                 </div>
