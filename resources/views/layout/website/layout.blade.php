@@ -250,7 +250,7 @@
                                                 <div class="info" style="margin-left: 25px;">
 
                                                     <span >
-                                                        00905521501111 - 00905016451111 </span>
+                                                        00905521501111   00905016451111 </span>
                                                 </div>
                                             </div>
                                              <div class="contact_info" style="margin-bottom: 10px;">
@@ -316,7 +316,7 @@
                                                         <?php
                                                         $im=QrCode::format('png')
                                                         ->merge('website_assets/images/q1.png', 0.4, true)
-                                                        ->size(90)->color(27, 34, 76)->errorCorrection('H')
+                                                        ->size(80)->color(27, 34, 76)->errorCorrection('H')
                                                         ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
 
                                                         ?>

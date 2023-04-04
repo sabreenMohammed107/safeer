@@ -230,7 +230,7 @@ return [
 'message_required'=>'حقل الرسالة مطلوب',
 'email_required'=>'حقل البريد الالكتروني مطلوب',
 'name_regex'=>'اسم المستخدم يجب ألا يقل عن 4 حروف بدون رموز',
-'useful'=>'لينكات تهمك',
+'useful'=>'روابط تهمك',
 // home page
 'explore'=>'اكتشف',
 'turkey'=>'تركيا',
