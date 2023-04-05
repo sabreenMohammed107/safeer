@@ -12,7 +12,7 @@
 
             @endif
             </h1>
-        <p>
+        <p class="px-5">
             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
             {{ $company->master_page_entext }}
