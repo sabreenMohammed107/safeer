@@ -2,7 +2,7 @@
 
 <div class="slider_section">
     <div class="slider_details">
-        <h1>
+        <h3>
             @if (LaravelLocalization::getCurrentLocale() === 'en')
             {{ $company->master_page_entitle }}  <br> {{ $company->master_page_ensubtitle }}
 
@@ -11,7 +11,7 @@
             {{ $company->master_page_artitle }}  <br> {{ $company->master_page_arsubtitle }}
 
             @endif
-            </h1>
+            </h3>
         <p class="px-5">
             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
