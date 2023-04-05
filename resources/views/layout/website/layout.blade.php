@@ -160,7 +160,7 @@
                                     </div>
                                     <!-- useful links -->
 
-                                    <div class="col-xl-4 col-md-6 col-sm-12">
+                                    <div class="col-xl-3 col-md-6 col-sm-12">
                                         <div class="useful_links">
                                             <h6>{{ __('links.useful') }} </h6>
                                             <div class="row mx-0">
@@ -230,7 +230,7 @@
                                         </div>
                                     </div>
                                     <!-- contact details -->
-                                    <div class="col-xl-3 col-md-6">
+                                    <div class="col-xl-4 col-md-6">
                                         <div class="contact_details">
                                             <h6>{{ __('links.contact_us') }}</h6>
 
