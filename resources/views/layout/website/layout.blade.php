@@ -304,7 +304,7 @@
 
 
                                                        <div style="position: relative">
-                                                       <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="250"  alt="Dijital">
+                                                       <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="280"  alt="Dijital">
 
 
                                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
