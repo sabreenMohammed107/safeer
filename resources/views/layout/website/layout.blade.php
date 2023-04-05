@@ -145,7 +145,7 @@
                         <footer>
                             <div class="container">
                                 <div class="row mx-0">
-                                    <div class="col-xl-5 col-md-12 col-sm-12">
+                                    <div class="col-xl-4 col-md-12 col-sm-12">
                                         <div class="left_info">
                                             <h6>{{ __('links.about_us') }} </h6>
                                             <p>
@@ -160,7 +160,7 @@
                                     </div>
                                     <!-- useful links -->
 
-                                    <div class="col-xl-3 col-md-6 col-sm-12">
+                                    <div class="col-xl-4 col-md-6 col-sm-12">
                                         <div class="useful_links">
                                             <h6>{{ __('links.useful') }} </h6>
                                             <div class="row mx-0">
