@@ -283,4 +283,11 @@ return [
 'duration'=>'المدة',
 'drCost'=>'تكلفة / الرحلة',
 'hours'=>'ساعات',
+'transfer_adult.required' =>'عدد البالغين مطلوب',
+
+'transfer_date.required' =>'تاريخ الانتقال مطلوب',
+
+'transfer_date.after' =>'تاريخ الانتقال يجب ان يكون بعد تاريخ اليوم ',
+
+'transfer_adult.between' =>'عدد البالغين يجب ان يكون من 1 ال  ',
 ];

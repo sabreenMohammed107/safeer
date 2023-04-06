@@ -153,14 +153,16 @@ class SiteTransferController extends Controller
 
             'transfer_date' => 'required|date|after:today',
 
-        ], [
-            'transfer_adult.required' =>'Adult number is required',
+        ],
 
-            'transfer_date.required' =>'Transfer date  is required',
+        [
+            'transfer_adult.required' =>Lang::get('links.transfer_adult.required'),
 
-            'transfer_date.after' =>'Transfer date must be after today ',
+            'transfer_date.required' =>Lang::get('links.transfer_date.required'),
 
-            'transfer_adult.between' =>'Adult number must be in 1 to '.$capacity->capacity.' ',
+            'transfer_date.after' =>Lang::get('links.transfer_date.after'),
+
+            'transfer_adult.between' =>Lang::get('links.transfer_adult.between').$capacity->capacity.' ',
 
 
         ]);
