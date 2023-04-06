@@ -45,7 +45,7 @@
                                 @endif {{ $HRec->carModel->capacity ??'' }}  </span>
                               </h5>
                                 <div class="card_info" >
-                                    <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>{{ __('links.from') }} :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HRec->locationFrom->location_enname ?? '' }} </a></p>
+                                    <p style="margin-bottom:0"> <i style="padding: 0 5px 0 5px;" class="fa-solid fa-suitcase-rolling"></i>{{ __('links.from') }} :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HRec->locationFrom->location_enname ?? '' }} </a></p>
                                     <span>
                                         <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i> {{ __('links.to') }} : <a href="" style="color:#1C4482;font-weight: 700">{{ $HRec->locationTo->location_enname ?? '' }}</a></p>
                                     </span>
@@ -148,7 +148,7 @@
                                 @endif   {{ $HPrice->carModel->capacity ??''}}  </span>
                             </h5>
                               <div class="card_info" >
-                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>{{ __('links.from') }} :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HPrice->locationFrom->location_enname ?? '' }} </a></p>
+                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 5px;" class="fa-solid fa-suitcase-rolling"></i>{{ __('links.from') }} :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HPrice->locationFrom->location_enname ?? '' }} </a></p>
                                   <span>
                                       <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i> {{ __('links.to') }} : <a href="" style="color:#1C4482;font-weight: 700">{{ $HPrice->locationTo->location_enname ?? '' }}</a></p>
                                   </span>
@@ -245,7 +245,7 @@
                                 @endif {{ $HAlpha->carModel->capacity ??'' }}  </span>
                             </h5>
                               <div class="card_info" >
-                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>{{ __('links.from') }} :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HAlpha->locationFrom->location_enname ?? '' }} </a></p>
+                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 5px;" class="fa-solid fa-suitcase-rolling"></i>{{ __('links.from') }} :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HAlpha->locationFrom->location_enname ?? '' }} </a></p>
                                   <span>
                                       <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i> {{ __('links.to') }} : <a href="" style="color:#1C4482;font-weight: 700">{{ $HAlpha->locationTo->location_enname ?? '' }}</a></p>
                                   </span>
