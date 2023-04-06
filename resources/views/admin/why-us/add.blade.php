@@ -140,7 +140,7 @@
                                 <!--end::Label-->
                                 <!--begin::Editor-->
                                 <textarea class="form-control form-control-solid" rows="3" name="en_text"
-                                placeholder="Type  Ar Text"></textarea>                                <!--end::Editor-->
+                                placeholder="Type  En Text"></textarea>                                <!--end::Editor-->
 
                             </div>
                             <!--end::Input group-->

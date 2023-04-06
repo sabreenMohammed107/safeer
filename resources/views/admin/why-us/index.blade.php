@@ -60,7 +60,7 @@
                     <div class="card-toolbar">
                         <!--begin::Add customer-->
                       	<!--begin::Add product-->
-											<a href="{{ route('why-us.create') }}" class="btn btn-primary">Add </a>
+											{{-- <a href="{{ route('why-us.create') }}" class="btn btn-primary">Add </a> --}}
 											<!--end::Add product-->
 
                         <!--end::Add customer-->
@@ -160,7 +160,7 @@
                 </div>
                 <!--end::Menu item-->
                  <!--begin::Menu item-->
-                 <div class="menu-item px-3">
+                 {{-- <div class="menu-item px-3">
                     <a href="#" class="menu-link px-3"
                         data-kt-ecommerce-category-filter="delete_row">Delete</a>
 
@@ -171,7 +171,7 @@
 
         <button type="submit" value=""></button>
         </form>
-                </div>
+                </div> --}}
                 <!--end::Menu item-->
             </div>
             <!--end::Menu-->
