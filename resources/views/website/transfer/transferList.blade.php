@@ -65,6 +65,7 @@
                                     @endif
 
 
+
                                 </div>
  <form action="{{ LaravelLocalization::localizeUrl('/bookTransfer') }}" method="POST">
                     @csrf
