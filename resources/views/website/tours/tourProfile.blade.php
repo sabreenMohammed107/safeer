@@ -397,7 +397,7 @@
                                                         <img width="20" src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
                                                             alt="">
 
-                                                        <span>@if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                        <span style="text-indent: 10px">@if (LaravelLocalization::getCurrentLocale() === 'en')
                                                             {{$feature->en_feature}}
 
                                                             @else
