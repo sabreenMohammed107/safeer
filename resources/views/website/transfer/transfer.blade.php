@@ -60,7 +60,7 @@ input.nosubmit {
     text-transform: capitalize;
     color: #1C4482;
     /* width: 80px; */
-    margin-right: 10px;
+    margin: 10px;
     padding: 0;
 }
 
