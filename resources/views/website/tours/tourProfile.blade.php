@@ -362,7 +362,12 @@
     <!-- included and not included section -->
 
     <section class="included container">
+
+        @if (LaravelLocalization::getCurrentLocale() === 'en')
         <h5> Tour facilities</h5>
+@else
+<h5>مرافق الرحلة</h5>
+@endif
         <div class="row mx-0">
             <div class="col-sm-12 col-xl-6 pb-5">
                 @if (count($Tour->features))
@@ -444,14 +449,15 @@
         <div class="col-sm-12 col-xl-12">
             <div class="fitered_data hotels">
                 <div class="filtrered_cards hotel_details">
-                    <h5>
-                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        tour details
-    @else
-تفاصيل الرحلة
 
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        <h5> tour details </h5>
+    @else
+    <h5 style="text-align: right">
+تفاصيل الرحلة
+</h5>
     @endif
-                    </h5>
+
                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                     {!! $Tour->en_tours_details !!}
                     @else
