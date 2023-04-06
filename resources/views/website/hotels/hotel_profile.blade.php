@@ -607,7 +607,9 @@ if(isset($arrayData['result'])){
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <div class="avaliable">
-                                <span>   @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                <a
+                                                                href="{{ url('/terms') }}" target="_blank" >{{ __('links.term_condation') }}</a>
+                                {{-- <span>   @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                     avaliable
                                     @else
@@ -631,7 +633,7 @@ if(isset($arrayData['result'])){
 
                                       @else
                                     سياسة الإلغاء
-                                      @endif</a></span>
+                                      @endif</a></span> --}}
                             </div>
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
