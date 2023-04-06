@@ -28,10 +28,10 @@
                               <div class="card_info">
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                                <h6> {{ $HRec->carModel->model_enname ?? '' }} to {{ $HRec->locationTo->location_enname ?? '' }} </h6>
+                                <h6> {{ $HRec->carModel->model_enname ?? '' }} {{ __('links.to') }} {{ $HRec->locationTo->location_enname ?? '' }} </h6>
 
                                 @else
-                                <h6> {{ $HRec->carModel->model_arname ?? '' }} to {{ $HRec->locationTo->location_arname ?? '' }} </h6>
+                                <h6> {{ $HRec->carModel->model_arname ?? '' }} {{ __('links.to') }} {{ $HRec->locationTo->location_arname ?? '' }} </h6>
 
                                 @endif
 
@@ -86,10 +86,10 @@
                                 <div class="details">
 
 
-                                    <label style="text-indent: 5px">
+                                    <label >
                                         {{ __('links.adult') }}
                                                                      </label>
-                                    <input type="number" name="transfer_adult" value="1" class="form-control ">
+                                    <input type="number" name="transfer_adult" value="1" class="form-control px-1"">
 
 
                                 </div>
@@ -131,10 +131,10 @@
                           <div class="card_info">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                            <h6> {{ $HPrice->carModel->model_enname ?? '' }} to {{ $HPrice->locationTo->location_enname ?? '' }}</h6>
+                            <h6> {{ $HPrice->carModel->model_enname ?? '' }} {{ __('links.to') }} {{ $HPrice->locationTo->location_enname ?? '' }}</h6>
 
                             @else
-                            <h6> {{ $HPrice->carModel->model_arname ?? '' }} to {{ $HPrice->locationTo->location_arname ?? '' }}</h6>
+                            <h6> {{ $HPrice->carModel->model_arname ?? '' }} {{ __('links.to') }} {{ $HPrice->locationTo->location_arname ?? '' }}</h6>
 
                             @endif
 
@@ -183,9 +183,9 @@
                                             <div class="details">
 
 
-                                                <label style="text-indent: 5px">
+                                                <label >
                                                     {{ __('links.adult') }}                                </label>
-                                                <input type="number" name="transfer_adult" value="1" class="form-control ">
+                                                <input type="number" name="transfer_adult" value="1" class="form-control px-1"">
 
 
                                             </div>
@@ -227,11 +227,11 @@
                               </a>
                           <div class="card_info">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            <h6> {{ $HAlpha->carModel->model_enname ?? '' }} to {{ $HAlpha->locationTo->location_enname ?? '' }}                           </h6>
+                            <h6> {{ $HAlpha->carModel->model_enname ?? '' }} {{ __('links.to') }} {{ $HAlpha->locationTo->location_enname ?? '' }}                           </h6>
 
 
                 @else
-                <h6> {{ $HAlpha->carModel->model_arname ?? '' }} to {{ $HAlpha->locationTo->location_arname ?? '' }}                           </h6>
+                <h6> {{ $HAlpha->carModel->model_arname ?? '' }} {{ __('links.to') }} {{ $HAlpha->locationTo->location_arname ?? '' }}                           </h6>
 
                 @endif
 
@@ -279,9 +279,9 @@
                                             <div class="details">
 
 
-                                                <label style="text-indent: 5px">
+                                                <label >
                                                     {{ __('links.adult') }}                               </label>
-                                                <input type="number" name="transfer_adult" value="1" class="form-control ">
+                                                <input type="number" name="transfer_adult" value="1" class="form-control px-1">
 
 
                                             </div>
