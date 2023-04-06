@@ -277,6 +277,13 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'duration'=>'Duration',
 'drCost'=>'Cost / Journey',
 'hours'=>'hours',
+'transfer_adult.required' =>'Adult number is required',
+
+'transfer_date.required' =>'Transfer date  is required',
+
+'transfer_date.after' =>'Transfer date must be after today ',
+
+'transfer_adult.between' =>'Adult number must be in 1 to ',
 ];
 
 
