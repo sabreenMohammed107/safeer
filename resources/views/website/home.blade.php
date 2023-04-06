@@ -13,6 +13,7 @@
   <!-- explore turkey -->
   <section class="investigtion">
     <div class="explore explore_position container">
+        @if (LaravelLocalization::getCurrentLocale() === 'en')
          <div class="row mx-0 explore_details ">
           <div class=" col-xl-2 col-md-12 col-sm-12">
             <div class="title">
@@ -72,6 +73,69 @@
 
             </section>
          </div>
+         @else
+         <div class="row mx-0 explore_details ">
+
+            <div class=" col-xl-10 col-md-12 col-sm-12">
+              <section class="explore_carsoul owl-carousel">
+                  @foreach ($ExploreCities as $City)
+                  <div class="card-content">
+                      <div class=" card explore_main">
+                          {{-- <div class="card-body explore_card" style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{asset("/website_assets/images/homePage/places/$City->image")}});"> --}}
+
+                         <div class="card-body explore_card"
+                          style="background-image:linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/explore') }}/{{ $City->image }});">
+
+                              <div class="header_info">
+                                  <h5>
+                                      <a href="#" >
+                                          @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                          {{$City->city->en_city}}
+                                          @else
+                                          {{$City->city->ar_city}}
+                                          @endif
+
+                                      </a>
+                                  </h5>
+                                  <span>
+                                      @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                      {{$City->subtitle_en}}
+                                      @else
+                                      {{$City->subtitle_ar}}
+                                      @endif
+                                     </span>
+                                  <div class="explore_links">
+                                      <button class="btn ">
+                                      <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('hotelByCity', $City->city->id))}}">
+                                      <i class="fa-solid fa-hotel"></i>
+                                      </a>
+                                      </button>
+                                      <button class="btn ">
+                                      <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('tourByCity', $City->city->id))}}">
+                                          <i class="fa-solid fa-plane"></i>
+                                      </a>
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  @endforeach
+
+
+              </section>
+           </div>
+
+           <div class=" col-xl-2 col-md-12 col-sm-12">
+            <div class="title">
+              <div class="info">
+                <h4>{{ __('links.explore') }} <br>{{ __('links.turkey') }} </h4>
+              </div>
+            </div>
+          </div>
+         @endif
     </div>
     <div class="adventure container">
       <div class="row mx-0">
