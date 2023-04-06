@@ -86,7 +86,7 @@
                                 <div class="details">
 
 
-                                    <label>
+                                    <label style="text-indent: 5px">
                                         {{ __('links.adult') }}
                                                                      </label>
                                     <input type="number" name="transfer_adult" value="1" class="form-control ">
@@ -183,7 +183,7 @@
                                             <div class="details">
 
 
-                                                <label>
+                                                <label style="text-indent: 5px">
                                                     {{ __('links.adult') }}                                </label>
                                                 <input type="number" name="transfer_adult" value="1" class="form-control ">
 
@@ -279,7 +279,7 @@
                                             <div class="details">
 
 
-                                                <label>
+                                                <label style="text-indent: 5px">
                                                     {{ __('links.adult') }}                               </label>
                                                 <input type="number" name="transfer_adult" value="1" class="form-control ">
 
