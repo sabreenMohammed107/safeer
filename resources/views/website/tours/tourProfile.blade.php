@@ -288,7 +288,7 @@
         </div>
     </section>
 
-    <section class="tour_add_info container">
+    <section class="tour_add_info container py-5">
         <div class="row mx-0">
             <div class="col-md-6 col-sm-12 col-xl-3">
                 <div class="tour_info_details">
@@ -361,7 +361,7 @@
     </section>
     <!-- included and not included section -->
 
-    <section class="included container">
+    <section class="included container py-5">
 
         @if (LaravelLocalization::getCurrentLocale() === 'en')
         <h5> Tour facilities</h5>
