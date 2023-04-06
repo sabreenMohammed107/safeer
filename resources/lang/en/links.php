@@ -272,6 +272,11 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'transpurchase'=>'Can‘t Purchase multiple transfer items in one time',
 'transCart'=>'Transfer is added in your cart successfully',
 'visaMsg'=>'Visa(s) is added in your cart successfully',
+'from'=>'From',
+'to'=>'To',
+'duration'=>'Duration',
+'drCost'=>'Cost / Journey',
+'hours'=>'hours',
 ];
 
 

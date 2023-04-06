@@ -45,17 +45,26 @@
                                 @endif {{ $HRec->carModel->capacity ??'' }}  </span>
                               </h5>
                                 <div class="card_info" >
-                                    <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>From :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HRec->locationFrom->location_enname ?? '' }} </a></p>
+                                    <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>{{ __('links.from') }} :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HRec->locationFrom->location_enname ?? '' }} </a></p>
                                     <span>
-                                        <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i> To : <a href="" style="color:#1C4482;font-weight: 700">{{ $HRec->locationTo->location_enname ?? '' }}</a></p>
+                                        <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i> {{ __('links.to') }} : <a href="" style="color:#1C4482;font-weight: 700">{{ $HRec->locationTo->location_enname ?? '' }}</a></p>
                                     </span>
                                 </div>
 
                                     <div class="card_info" >
-                                    <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-regular fa-clock"></i> duration: <a href="" style="color:#1C4482;font-weight: 700"> {{ $HRec->duration }} hours </a></p>
+                                    <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-regular fa-clock"></i> {{ __('links.duration') }}: <a href="" style="color:#1C4482;font-weight: 700"> {{ $HRec->duration }} {{ __('links.hours') }} </a></p>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                     <span>
-                                        <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HRec->person_price, 2) }} </a>  Cost / Journey </p>
+                                        <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HRec->person_price, 2) }} </a>  {{ __('links.drCost') }} </p>
                                     </span>
+                                    @else
+                                    <span>
+                                        <p style="margin-bottom:0"> {{ __('links.drCost') }} <a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HRec->person_price, 2) }} </a>   </p>
+                                    </span>
+                                    @endif
+
+
                                 </div>
  <form action="{{ LaravelLocalization::localizeUrl('/bookTransfer') }}" method="POST">
                     @csrf
@@ -138,17 +147,25 @@
                                 @endif   {{ $HPrice->carModel->capacity ??''}}  </span>
                             </h5>
                               <div class="card_info" >
-                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>From :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HPrice->locationFrom->location_enname ?? '' }} </a></p>
+                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>{{ __('links.from') }} :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HPrice->locationFrom->location_enname ?? '' }} </a></p>
                                   <span>
-                                      <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i> To : <a href="" style="color:#1C4482;font-weight: 700">{{ $HPrice->locationTo->location_enname ?? '' }}</a></p>
+                                      <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i> {{ __('links.to') }} : <a href="" style="color:#1C4482;font-weight: 700">{{ $HPrice->locationTo->location_enname ?? '' }}</a></p>
                                   </span>
                               </div>
 
                                   <div class="card_info" >
-                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-regular fa-clock"></i> duration: <a href="" style="color:#1C4482;font-weight: 700"> {{ $HPrice->duration }} hours </a></p>
+                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-regular fa-clock"></i> {{ __('links.duration') }}: <a href="" style="color:#1C4482;font-weight: 700"> {{ $HPrice->duration }} {{ __('links.hours') }} </a></p>
+                                  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                   <span>
-                                      <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HPrice->person_price, 2) }} </a>  Cost / Journey </p>
-                                  </span>
+                                    <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HPrice->person_price, 2) }} </a>  {{ __('links.drCost') }} </p>
+                                </span>                                @else
+                                <span>
+                                    <p style="margin-bottom:0"> {{ __('links.drCost') }} <a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HPrice->person_price, 2) }} </a>   </p>
+                                </span>                                @endif
+
+
+
                               </div>
                             <form action="{{ LaravelLocalization::localizeUrl('/bookTransfer') }}" method="POST">
                                 @csrf
@@ -227,17 +244,23 @@
                                 @endif {{ $HAlpha->carModel->capacity ??'' }}  </span>
                             </h5>
                               <div class="card_info" >
-                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>From :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HAlpha->locationFrom->location_enname ?? '' }} </a></p>
+                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i>{{ __('links.from') }} :  <a href="" style="color:#1C4482;font-weight: 700">{{ $HAlpha->locationFrom->location_enname ?? '' }} </a></p>
                                   <span>
-                                      <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i> To : <a href="" style="color:#1C4482;font-weight: 700">{{ $HAlpha->locationTo->location_enname ?? '' }}</a></p>
+                                      <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-solid fa-suitcase-rolling"></i> {{ __('links.to') }} : <a href="" style="color:#1C4482;font-weight: 700">{{ $HAlpha->locationTo->location_enname ?? '' }}</a></p>
                                   </span>
                               </div>
 
                                   <div class="card_info" >
-                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-regular fa-clock"></i> duration: <a href="" style="color:#1C4482;font-weight: 700"> {{ $HAlpha->duration }} hours </a></p>
+                                  <p style="margin-bottom:0"> <i style="padding: 0 5px 0 0;" class="fa-regular fa-clock"></i> {{ __('links.duration') }}: <a href="" style="color:#1C4482;font-weight: 700"> {{ $HAlpha->duration }} {{ __('links.hours') }} </a></p>
+                                  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                   <span>
-                                      <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HAlpha->person_price, 2) }} </a>  Cost / Journey </p>
-                                  </span>
+                                    <p style="margin-bottom:0"><a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HAlpha->person_price, 2) }} </a>  {{ __('links.drCost') }} </p>
+                                </span>                                  @else
+                                <span>
+                                    <p style="margin-bottom:0"> {{ __('links.drCost') }} <a href="" style="color:#1C4482;font-weight: 700"> $ {{ number_format($HAlpha->person_price, 2) }} </a>  </p>
+                                </span>                                  @endif
+
                               </div>
                             <form action="{{ LaravelLocalization::localizeUrl('/bookTransfer') }}" method="POST">
                                 @csrf
