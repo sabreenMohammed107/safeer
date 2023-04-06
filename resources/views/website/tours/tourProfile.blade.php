@@ -415,7 +415,12 @@
                         </div>
                     @endforeach
                 @else
-                    No hotel facilities provided
+
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    No Tours facilities provided
+            @else
+           لا توجد مرافق للرحلة
+            @endif
                 @endif
             </div>
             <div class="col-sm-12 col-xl-6 ">
