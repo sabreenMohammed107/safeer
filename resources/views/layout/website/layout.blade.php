@@ -148,7 +148,7 @@
                                     <div class="col-xl-4 col-md-12 col-sm-12">
                                         <div class="left_info">
                                             <h6>{{ __('links.about_us') }} </h6>
-                                            <p>
+                                            <p style="text-align: justify;">
                                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                                 {{$Company->overview_en}}
