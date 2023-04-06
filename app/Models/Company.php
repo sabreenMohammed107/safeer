@@ -45,6 +45,10 @@ class Company extends Model
         'book_transport_en_title',
         'book_transport_ar_title',
         'book_img',
-        'transport_img'
+        'transport_img',
+        'why_us_entitle',
+    'why_us_artitle',
+    'why_us_entext',
+    'why_us_artext'
     ];
 }

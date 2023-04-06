@@ -626,6 +626,63 @@
                                             </div>
                                         </div>
 
+
+                                        {{-- ABOUT NEW --}}
+                                         <!--begin::Input group-->
+                                         <div class="d-flex flex-wrap gap-5">
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="form-label">Why Us En Desc</label>
+                                                <!--end::Label-->
+                                                <!--begin::Editor-->
+                                                <textarea class="form-select form-select-solid" id="kt_docs_tinymce_basic" name="why_us_entext">{{ $company->why_us_entext }}</textarea>
+                                                <!--end::Editor-->
+
+                                            </div>
+                                            <!--end::Input group-->
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="form-label">Why Us Ar Desc</label>
+                                                <!--end::Label-->
+                                                <!--begin::Editor-->
+                                                <textarea class="form-select form-select-solid" id="kt_docs_tinymce_basic2" name="why_us_artext">{{ $company->why_us_artext }}</textarea>
+                                                <!--end::Editor-->
+
+                                            </div>
+                                            <!--end::Input group-->
+
+                                        </div>
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-wrap gap-5 mt-4">
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="required form-label"> Why Us En Title</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" required name="why_us_entitle"
+                                                    class="form-control mb-2" placeholder=" En Title"
+                                                    value="{{ $company->why_us_entitle }}" />
+
+
+                                            </div>
+                                            <!--end::Input-->
+
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="required form-label">Why Us Ar Title</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" name="why_us_artitle" class="form-control mb-2"
+                                                    placeholder=" Ar title" value="{{ $company->why_us_artitle }}" />
+
+
+                                            </div>
+                                        </div>
+                                        {{-- END ABOUT --}}
                                         <div class="d-flex flex-wrap gap-5">
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">

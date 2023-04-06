@@ -129,6 +129,14 @@
                             @endif
                         </div>
                         <div class="menu-item">
+                            <a class="menu-link" href="{{ route('why-us.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Why Us</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
                             <a class="menu-link" href="{{ route('cities.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>

@@ -10,6 +10,7 @@ use App\Models\Company_branch;
 use App\Models\Contact;
 use App\Models\Counter;
 use App\Models\Newsletter;
+use App\Models\Why_us;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Concat;
@@ -22,12 +23,13 @@ class ContentController extends Controller
         $Company = Company::first();
 
         $Counters = Counter::get();
-
+$whyUss=Why_us::all();
         return view("website.about",
             [
                 "Company" => $Company,
                 "Counters" => $Counters,
                 "BreadCrumb" => $BreadCrumb,
+                "whyUss" => $whyUss,
             ]);
     }
 

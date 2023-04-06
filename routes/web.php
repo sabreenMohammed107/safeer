@@ -42,6 +42,7 @@ use App\Http\Controllers\Website\MainController;
 use App\Http\Controllers\Website\SiteTransferController;
 use App\Http\Controllers\Website\ToursController;
 use App\Http\Controllers\Website\VisaDataController;
+use App\Http\Controllers\WhyUsController;
 use App\Models\Offer;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -102,6 +103,7 @@ Route::get('/fetch-hotel-filter',  [HotelsController::class, 'fetch_data'])->nam
 //new Routes 23-11
 Route::get("/about", [ContentController::class, 'about']);
 Route::get("/blogs", [ContentController::class, 'blogs']);
+
 Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
 Route::get('/single-blog/{id}',[ContentController::class, 'singleBlog'])->name('single-blog');
 Route::get('/contact', [ContentController::class, 'createForm']);
@@ -240,6 +242,11 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
         Route::resource('blog-categories', BlogsCategoryController::class);
           //blogs
           Route::resource('blogs', BlogController::class);
+
+          //why-us
+          Route::resource('why-us', WhyUsController::class);
+
+
           //explore
           Route::resource('explore', ExploreCityController::class);
           //best-hotel

@@ -15,96 +15,48 @@
             <div class="choosing_title">
                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                <h5>why choose us</h5>
-                <p>
-                    When it comes to exploring exotic places, the choices are numerous. Whether you like peaceful <br>
-                    destinations or vibrant landscapes, we have offers for you.
+                <h5>{{ $Company->why_us_entitle }}</h5>
+                <p class="px-5">
+                    {{ $Company->why_us_entext }}
                 </p>
                 @else
-                <h5>لماذا أخترتنا</h5>
-                <p>
-                    عندما يتعلق الأمر باستكشاف الأماكن الغريبة ، فإن الخيارات عديدة. سواء كنت تحب السلام <br>
-                    وجهات أو مناظر طبيعية نابضة بالحياة ، لدينا عروض لك.
-                </p>
+                <h5> {{ $Company->why_us_artitle }}</h5>
+                <p class="px-5">
+                    {{ $Company->why_us_artext }}  </p>
                 @endif
 
             </div>
             <div class="benefits">
                 <div class="row mx-0">
+                    @foreach ($whyUss as $whyUs)
                     <div class="col-sm-12 col-md-4">
                         <div class="benefits_info">
 
-                            <img src="{{ asset('/website_assets/images/about/benefits/safe.webp') }}" alt="safty sheild">
+                            <img src="{{ asset('uploads/whyUs') }}/{{$whyUs->icon}}" alt="safty sheild">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
                             <h6>
-                                Best Price Guarantee
+                                {{$whyUs->en_title}}
                             </h6>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur <br>
-                                adipiscing elit.
+                                {{$whyUs->en_text}}
                             </p>
 
                 @else
                 <h6>
 
-ضمان أفضل الأسعار
+                    {{$whyUs->ar_title}}
                 </h6>
                 <p>
-                    لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه ... بروشور او فلاير على سبيل المثال ... او نماذج مواقع انترنت ...
+                    {{$whyUs->ar_artext}}
                 </p>
                 @endif
 
                         </div>
                     </div>
+                    @endforeach
 
-                    <div class="col-sm-12 col-md-4">
-                        <div class="benefits_info">
 
-                            <img src="{{ asset('/website_assets/images/about/benefits/timer.webp') }}" alt="time">
-                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            <h6>
-                                Easy & Quick Booking
-                            </h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur <br>
-                                adipiscing elit.
-                            </p>
 
-                @else
-                <h6>
-
-حجز سهل وسريع
-                </h6>
-                <p>
-                    لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه ... بروشور او فلاير على سبيل المثال ... او نماذج مواقع انترنت ...
-                </p>
-                @endif
-
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div class="benefits_info">
-
-                            <img src="{{ asset('/website_assets/images/about/benefits/service.webp') }}" alt="customer service">
-                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                            <h6>
-                                customer care 24/7
-                            </h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur <br>
-                                adipiscing elit.
-                            </p>
-                @else
-                <h6>
-                    خدمة العملاء 24/7
-                </h6>
-                <p>
-                    لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم لتعرض على العميل ليتصور طريقه وضع النصوص بالتصاميم سواء كانت تصاميم مطبوعه ... بروشور او فلاير على سبيل المثال ... او نماذج مواقع انترنت ...
-                </p>
-                @endif
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

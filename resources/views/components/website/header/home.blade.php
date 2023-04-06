@@ -12,6 +12,7 @@
 
             @endif
             </h1>
+
         <p class="px-5">
             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
