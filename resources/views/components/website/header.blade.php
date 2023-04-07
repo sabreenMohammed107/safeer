@@ -144,7 +144,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
 
                             <!--{{ $properties['native'] }}-->
 
-                            <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" class="flag-img ">
+                            <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" style="width: 40px;height:40px" class="flag-img ">
 
                         </a>
                     @endif
