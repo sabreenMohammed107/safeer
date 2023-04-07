@@ -180,6 +180,7 @@ a {
 
 
 .register span i {
+    margin: 0 12px;
   padding: 8px 10px;
   border-radius: 50%;
   background-color: #68C2E5;
@@ -3343,10 +3344,11 @@ text-transform: none;
      img.flag-img{
         width: 30px;
         height: 30px;
-        display: none;
+        /* display: none; */
+        display:inline;
     }
     img.main-lang{
-        display: block;
+        /* display: block; */
     }
     .logout_dropdown a {
         display: flex;

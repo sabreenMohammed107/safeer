@@ -3344,10 +3344,11 @@ body { direction: rtl ; }
        img.flag-img{
           width: 30px;
           height: 30px;
-          display: none;
+          /* display: none; */
+          display:inline;
       }
       img.main-lang{
-          display: block;
+          /* display: block; */
       }
       .logout_dropdown a {
           display: flex;

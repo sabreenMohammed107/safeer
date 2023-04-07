@@ -8,7 +8,7 @@ return [
   'phone' => 'Phone',
   'mobile' => 'Mobile Number',
   'email' => 'Email',
-  'en' => 'English',
+  'en' => 'En',
   'ar' => 'عربى',
   'how_register'=>'How it works',
   'joinNow'=>'Join Us Now',

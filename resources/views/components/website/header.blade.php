@@ -64,7 +64,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
 
                                 <!--{{ $properties['native'] }}-->
 
-                                {{ __('links.ar') }}
+                                <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" class="flag-img ">
 
                             </a>
                         @endif
@@ -72,7 +72,8 @@ $localVar=LaravelLocalization::getCurrentLocale();
                         <a  rel="alternate" hreflang="{{ $localeCode }}"
                             href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
-                            {{ __('links.en') }}
+                            <img title="English" src="{{ asset('website_assets/images/united-states.png') }}" class="flag-img ">
+
                         </a>
                     @endif
                     @endforeach
@@ -134,20 +135,33 @@ $localVar=LaravelLocalization::getCurrentLocale();
                 <li>
                     <a href="{{ LaravelLocalization::localizeUrl('/contact') }}" class="{{ Request::segment(1)=='contact' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.contact_us') }}</a>
                 </li>
-                <div class="register">
-                    {{-- <ul>
-                        <span class="line"> <a href="./my-profile.html">
-                                <img src="./images/my-profile/profile_picture.webp" alt="profile image">
-                            </a> </span>
-                        <li class=" profile_name">
-                            <button class="links hybrid btn profile_name_button" onclick="opendropdown()"> Ghada Mohamed
-                                <i class="fa-solid fa-angle-down"></i></button>
-                            <div class="logout_dropdown" id="logout_dropdown">
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
-                            </div>
-                        </li>
+                <li >
 
-                    </ul> --}}
+                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                    @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
+                        <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
+                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+
+                            <!--{{ $properties['native'] }}-->
+
+                            <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" class="flag-img ">
+
+                        </a>
+                    @endif
+                    @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
+                        <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
+                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+
+                           <img title="English" src="{{ asset('website_assets/images/united-states.png') }}" class="flag-img ">
+                        </a>
+                    @endif
+                    <!--|-->
+                @endforeach
+                        {{-- <a class="links hybrid p-2" href=''> AR </a>
+                    <a class="links hybrid p-2" href=''>EN </a> --}}
+                    </li>
+                <div class="register">
+
 
                     <ul>
                         <span class="line sign_in already_loged"> <i class="fa-solid fa-user"></i> </span>
@@ -168,7 +182,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
                             <ul class="menu user_info_options">
                                 <li><a href="{{ route('siteProfile', $userId) }}" class="links hybrid sign_in"><i
                                             class="fa-solid fa-user"></i>{{ __('links.my_profile') }}</a></li>
-                                <li><a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('get_cart'))}}" class="links hybrid sign_in"><i class="fa-solid fa-cart-shopping"></i>My
+                                <li><a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('get_cart'))}}" class="links hybrid sign_in"><i class="fa-solid fa-cart-shopping"></i>
                                     {{ __('links.cart') }}</a></li>
                                 {{-- <li><a href="#" class="links hybrid sign_in"><i
                                             class="fa-solid fa-solid fa-bag-shopping"></i>My Orders</a></li> --}}
@@ -211,31 +225,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
                             @endif
                             <!--|-->
                         @endforeach --}}
-                          <li class=" profile_name" style="opacity: 0.8">
 
-                        @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                        @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
-                            <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
-                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-
-                                <!--{{ $properties['native'] }}-->
-
-                                {{ __('links.ar') }}
-
-                            </a>
-                        @endif
-                        @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
-                            <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
-                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-
-                                {{ __('links.en') }}
-                            </a>
-                        @endif
-                        <!--|-->
-                    @endforeach
-                            {{-- <a class="links hybrid p-2" href=''> AR </a>
-                        <a class="links hybrid p-2" href=''>EN </a> --}}
-                        </li>
 
                         {{-- <li class=" profile_name">
                             <button class="links hybrid btn profile_name_button" onclick="opendropdown()">
