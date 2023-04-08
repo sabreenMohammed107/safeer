@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('ar_title', 250)->nullable();
             $table->text('en_text')->nullable();
             $table->text('ar_artext')->nullable();
+            $table->string('chat_whatsapp', 255)->nullable();
             $table->timestamps();
         });
     }

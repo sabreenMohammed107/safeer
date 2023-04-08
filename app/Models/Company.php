@@ -49,6 +49,7 @@ class Company extends Model
         'why_us_entitle',
     'why_us_artitle',
     'why_us_entext',
-    'why_us_artext'
+    'why_us_artext',
+    'chat_whatsapp'
     ];
 }

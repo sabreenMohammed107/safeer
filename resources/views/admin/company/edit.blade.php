@@ -343,7 +343,25 @@
 
 
                                         <!--begin::checkbox-->
+   <!--begin::Input group-->
+   <div class="d-flex flex-wrap gap-5">
+    <!--begin::Input group-->
+    <div class="fv-row w-100 flex-md-root">
+        <!--begin::Label-->
+        <label class="required form-label"> chat whatsapp</label>
+        <!--end::Label-->
+        <!--begin::Input-->
+        <input type="text" required name="chat_whatsapp"
+            class="form-control mb-2" placeholder=" chat whatsapp"
+            value="{{ $company->chat_whatsapp}}" />
 
+
+    </div>
+    <!--end::Input-->
+
+
+</div>
+<!--end::Input-->
 
 
                                     </div>

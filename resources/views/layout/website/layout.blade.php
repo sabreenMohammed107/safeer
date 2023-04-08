@@ -338,6 +338,7 @@
 
     <!-- copy right section -->
     <div class="copyright">
+        <input type="hidden" id="chat_whatsapp" value="{{ $Company->chat_whatsapp }}" >
         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
         <h6>All copyrights reserved to safer 2022 </h6>
@@ -403,6 +404,7 @@
             // whts pp
 $(document).on("click", "#send-it", function() {
   var a = document.getElementById("chat-input");
+  var chat_whatsapp=document.getElementById("chat_whatsapp").value;
   if ("" != a.value) {
     var b = $("#get-number").text(),
       c = document.getElementById("chat-input").value,
@@ -415,8 +417,8 @@ $(document).on("click", "#send-it", function() {
       )
     )
       var d = "whatsapp://send";
-    //   +31 6 29320129
-    var g = d + "?phone=+905444668838" + e + f;
+    //  +905444668838
+    var g = d + "?phone="+chat_whatsapp + e + f;
     window.open(g, "_blank");
   }
 }),
