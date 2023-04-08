@@ -1,6 +1,6 @@
 @if (session()->get('SiteUser'))
 <div class="cartbox">
-    <a href="{{ route('get_cart') }}"><i class="fa-solid fa-cart-shopping"></i></a>
+    <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('get_cart'))}}"><i class="fa-solid fa-cart-shopping"></i></a>
     @if (session()->get('SiteUser') && session()->get('hasCart'))
     <div class="cartCount"></div>
     @endif

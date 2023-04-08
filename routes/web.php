@@ -151,6 +151,7 @@ Route::middleware(['prevent-relogin'])->group(function () {
 
     //signupSite
     Route::get("/safer/register", [ContentController::class, 'signupSite'])->name("siteRegister");
+
     Route::post("/safer/register", [AuthController::class, 'Register'])->name("ProceedRegister");
 
 });
@@ -298,4 +299,14 @@ Route::middleware(['auth', 'user-access:manager'])->group(function () {
 
     Route::get('/manager/home', [HomeController::class, 'managerHome'])->name('manager.home');
 });
+
+/*-----------------------------------------------
+mcmr cash
+---------------------------------------------------
+ - remove cache files in bootstrap folder
+ 2- php artisan optimize
+ 3- php artisan route:trans:cache
+ 4- php artisan cache:clear
+ 5- php artisan route:clear
+ -----------*/
 

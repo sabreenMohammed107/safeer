@@ -167,29 +167,29 @@
                                                 <div class="col-6">
                                                     <ul>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/') }}"> {{ __('links.home') }} </a>
+                                                                href="{{ LaravelLocalization::localizeUrl('/') }}"> {{ __('links.home') }} </a>
                                                         </li>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/about') }}">{{ __('links.about_us') }}
+                                                                href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}
                                                             </a></li>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/hotels') }}">{{ __('links.hotels') }}
+                                                                href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{ __('links.hotels') }}
                                                             </a></li>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/terms') }}">{{ __('links.term_condation') }}</a></li>
+                                                                href="{{ LaravelLocalization::localizeUrl('/terms') }}">{{ __('links.term_condation') }}</a></li>
 
                                                     </ul>
                                                 </div>
                                                 <div class="col-6">
                                                     <ul>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ url('/blogs') }}">{{ __('links.blogs') }}
+                                                                href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}
                                                             </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/tours') }}">{{ __('links.tours') }}
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.tours') }}
                                                             </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/transfers') }}">{{ __('links.transfer') }}
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ LaravelLocalization::localizeUrl('/transfers') }}">{{ __('links.transfer') }}
                                                             </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ url('/visa') }}">{{ __('links.visa') }} </a>
+                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ LaravelLocalization::localizeUrl('/visa') }}">{{ __('links.visa') }} </a>
                                                         </li>
 
 

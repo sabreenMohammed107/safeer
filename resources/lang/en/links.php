@@ -284,6 +284,25 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'transfer_date.after' =>'Transfer date must be after today ',
 
 'transfer_adult.between' =>'Adult number must be in 1 to ',
+
+//booking
+'preBook'=>'ALL YOUR PRE-BOOKED ROOMS',
+'cartDetails'=>'Cart Details',
+'single'=>'Single',
+'double'=>'Double',
+'triple'=>'Triple',
+'Salutation'=>'Salutation',
+'cName'=>'Name',
+'mr'=>'MR',
+'notes'=>'Notes',
+'pickupP'=>'Pickup Point',
+'job'=>'Job',
+'hotel'=>' Hotel',
+'country'=>'Country',
+'vtype'=>'Visa Type',
+'fees'=>'Fees',
+'Reservation'=>'Reservation',
+'ReservationStatus'=>'Reservation Status',
 ];
 
 

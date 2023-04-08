@@ -13,7 +13,7 @@
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="User Cart" :breadcrumb="$BreadCrumb" current="All your pre-booked rooms" />
+    <x-website.header.general title="{{ __('links.cart') }} " :breadcrumb="$BreadCrumb" current="{{ __('links.preBook') }}" />
 @endsection
 @section('content')
 @if ($RoomCost || count($ToursCost) || $TransferCost || count($VisasCost))
@@ -26,15 +26,15 @@
 @if ($RoomCost)
 @php
 if($RoomCost->room_cap == 1){
-$Type = "Single";
+$Type =  __('links.single')  ;
 $Cost = $RoomCost->single_cost;
 }
 else if ($RoomCost->room_cap == 2){
-$Type = "Double";
+$Type =  __('links.double')  ;
 $Cost = $RoomCost->double_cost;
 }
 elseif($RoomCost->room_cap == 3){
-$Type = "Triple";
+$Type = __('links.triple')  ;
 $Cost = $RoomCost->triple_cost;
 }
 
@@ -77,52 +77,72 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 @endif
 <!-- passenger details -->
 <section class="passenger_section container">
-    <h5> Cart details </h5>
+    <h5> {{ __('links.cartDetails') }}  </h5>
     <form action="{{url('/Book')}}" method="POST">
     <div class="row mx-0">
         <div class="col-sm-12 col-md-6">
             <input type="hidden" name="tax_percentage" value="{{$tax_percentage}}">
             @if($RoomCost)
-            <h4 class="bg-info px-3 py-1 text-white">Hotel Room Reservation Details</h4>
+            <h4 class="bg-info px-3 py-1 text-white"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                Hotel Room Reservation Details
+                @else
+                تفاصيل حجز غرفة الفندق
+                @endif
+                </h4>
             <div class="passenger_info">
                     @csrf
                     <div class="row">
 
-                        <h6>Reservation Holder Details:</h6>
+                        <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Reservation Holder Details:
+                            @else
+
+تفاصيل صاحب الحجز:
+                            @endif </h6>
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">Salutation
+                            <label  class="form-label">
+                                {{ __('links.salutation') }}
                             </label>
-                            <input type="text" name="adultsSal[]" required class="form-control" placeholder="MR" aria-label="First name">
+                            <input type="text" name="adultsSal[]" required class="form-control" placeholder=" {{ __('links.mr') }}" aria-label="First name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">Name</label>
+                            <label  class="form-label"> {{ __('links.cName') }} </label>
 
-                          <input type="text" name="adultsNames[]" required class="form-control" placeholder="Name">
+                          <input type="text" name="adultsNames[]" required class="form-control" placeholder="{{ __('links.cName') }}">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">Mobile</label>
+                            <label  class="form-label">{{ __('links.mobile') }}</label>
 
-                            <input type="text" name="adultsMobile[]" required class="form-control" placeholder="Mobile">
+                            <input type="text" name="adultsMobile[]" required class="form-control" placeholder="{{ __('links.mobile') }}">
                           </div>
                     </div>
                     @if($RoomCost->adults_count-1 > 0)
-                    <h6>Adults Details:</h6>
+                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        Adults Details:
+                        @else
+                        تفاصيل البالغين:
+                        @endif
+</h6>
                     @for ($j = 0; $j < $RoomCost->adults_count-1; $j++)
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">Salutation
+                            <label  class="form-label">{{ __('links.salutation') }}
+                                Salutation
                             </label>
-                            <input type="text" name="adultsSal[]" required class="form-control" placeholder="MR" aria-label="First name">
+                            <input type="text" name="adultsSal[]" required class="form-control" placeholder="{{ __('links.mr') }} " aria-label="First name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">Name</label>
+                            <label  class="form-label">{{ __('links.cname') }} </label>
 
-                          <input type="text" name="adultsNames[]" required class="form-control" placeholder="Name">
+                          <input type="text" name="adultsNames[]" required class="form-control" placeholder="{{ __('links.cName') }} ">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">Mobile</label>
+                            <label  class="form-label">{{ __('links.mobile') }} </label>
 
-                            <input type="text" name="adultsMobile[]" required class="form-control" placeholder="Mobile">
+                            <input type="text" name="adultsMobile[]" required class="form-control" placeholder="{{ __('links.mobile') }} ">
                           </div>
                     </div>
                     @endfor
@@ -130,15 +150,22 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     @for ($i = 0; $i < $RoomCost->children_count; $i++)
                     <div class="row">
                         <div class="col-sm-12">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
                             <label  class="form-label">Child Details (Age: {{$ages[$i]}}):
                             </label>
+
+                                                    @else
+                                                    <label  class="form-label">تفاصيل الاطفال (عمر : {{$ages[$i]}}):
+                                                    </label>
+                                                    @endif
+
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
-                            <label  class="form-label">Name
+                            <label  class="form-label">{{ __('links.cName') }}
                             </label>
-                        <input type="text" class="form-control" required name="childrenNames[]" placeholder="Name" aria-label="First name">
+                        <input type="text" class="form-control" required name="childrenNames[]" placeholder="{{ __('links.cName') }} " aria-label="First name">
                         <input type="hidden" name="childrenAges[]" required value="{{$ages[$i]}}"/>
                         </div>
                     </div>
@@ -146,8 +173,8 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <div class="row">
 
                         <div class="col-12">
-                            <label  class="form-label">notes</label>
-                            <textarea class="form-control" name="notes" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <label  class="form-label">{{ __('links.notes') }} </label>
+                            <textarea class="form-control" name="{{ __('links.notes') }} " id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                         {{-- <div class="form-check mb-3">
                             <input class="form-check-input terms" required type="checkbox" value="" id="flexCheckChecked">
@@ -179,65 +206,87 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
             </div>
             @endif
             @if (count($ToursCost) > 0)
-            <h4 class="bg-info px-3 py-1 text-white">Tours Reservation Details</h4>
+            <h4 class="bg-info px-3 py-1 text-white"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                Tours Reservation Details
+                @else
+                تفاصيل حجز الرحلات
+                @endif
+              </h4>
             @foreach ($ToursCost as $index => $Tour)
                 @php
                     $TotalPaidPersons[$index] = $Tour->adults_count;
                 @endphp
-            <h6 class="bg-light-info px-3 py-1">{{$Tour->en_name}} <span class="float-end">{{$Tour->tour_date}}</span></h6>
+            <h6 class="bg-light-info px-3 py-1"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                {{$Tour->en_name}}
+
+                @else
+                {{$Tour->ar_name ?? ''}}
+                @endif  <span class="float-end">{{$Tour->tour_date}}</span></h6>
             <div class="passenger_info">
                 @csrf
                 <div class="row">
-                    <h6>Reservation Holder Details:</h6>
+                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        Reservation Holder Details:
+
+                        @else
+                        تفاصيل صاحب الحجز:
+                        @endif
+                       </h6>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Salutation
+                        <label  class="form-label">{{ __('links.salutation') }}
                         </label>
-                        <input type="text" name="tour_adults_sal[{{$index}}][]" required class="form-control" placeholder="MR" aria-label="First name">
+                        <input type="text" name="tour_adults_sal[{{$index}}][]" required class="form-control" placeholder="{{ __('links.mr') }} " aria-label="First name">
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Name</label>
+                        <label  class="form-label">{{ __('links.cName') }} </label>
 
-                        <input type="text" name="tour_adults_name[{{$index}}][]" required class="form-control" placeholder="Name">
+                        <input type="text" name="tour_adults_name[{{$index}}][]" required class="form-control" placeholder="{{ __('links.cName') }} ">
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Mobile</label>
+                        <label  class="form-label">{{ __('links.mobile') }} </label>
 
-                        <input type="text" name="tour_adults_mobile[{{$index}}][]" required class="form-control" placeholder="Mobile">
+                        <input type="text" name="tour_adults_mobile[{{$index}}][]" required class="form-control" placeholder="{{ __('links.mobile') }} ">
                     </div>
                     <div class="col-sm-12 col-md-8">
-                        <label  class="form-label">Email</label>
+                        <label  class="form-label">{{ __('links.email') }} </label>
 
-                        <input type="text" name="tour_adults_email[{{$index}}][]" required class="form-control" placeholder="Email">
+                        <input type="text" name="tour_adults_email[{{$index}}][]" required class="form-control" placeholder="{{ __('links.email') }} ">
                     </div>
                     <div class="col-sm-12 col-md-8">
-                        <label  class="form-label">Pickup Point</label>
+                        <label  class="form-label">{{ __('links.pickupP') }}</label>
 
-                        <input type="text" name="tour_pickup_point[{{$index}}]" required class="form-control" placeholder="Pickup Point">
+                        <input type="text" name="tour_pickup_point[{{$index}}]" required class="form-control" placeholder="{{ __('links.pickupP') }}">
                     </div>
                 </div>
-                <h6>Adults Details:</h6>
+                <h6>@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    Adults Details:
+                    @else
+                    تفاصيل البالغين:
+                    @endif</h6>
                 @for ($j = 0; $j < $Tour->adults_count-1; $j++)
 
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Salutation
+                        <label  class="form-label">{{ __('links.salutation') }}
                         </label>
-                        <input type="text" name="tour_adults_sal[{{$index}}][]" required class="form-control" placeholder="MR" aria-label="First name">
+                        <input type="text" name="tour_adults_sal[{{$index}}][]" required class="form-control" placeholder="{{ __('links.mr') }} MR" aria-label="First name">
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Name</label>
+                        <label  class="form-label">{{ __('links.cName') }} </label>
 
-                        <input type="text" name="tour_adults_name[{{$index}}][]" required class="form-control" placeholder="Name">
+                        <input type="text" name="tour_adults_name[{{$index}}][]" required class="form-control" placeholder="{{ __('links.cName') }} ">
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Mobile</label>
+                        <label  class="form-label">{{ __('links.mobile') }} =</label>
 
-                        <input type="text" name="tour_adults_mobile[{{$index}}][]" required class="form-control" placeholder="Mobile">
+                        <input type="text" name="tour_adults_mobile[{{$index}}][]" required class="form-control" placeholder="{{ __('links.mobile') }} ">
                     </div>
                     <div class="col-sm-12 col-md-8">
-                        <label  class="form-label">Email</label>
+                        <label  class="form-label">{{ __('links.email') }} </label>
 
-                        <input type="text" name="tour_adults_email[{{$index}}][]" required class="form-control" placeholder="Email">
+                        <input type="text" name="tour_adults_email[{{$index}}][]" required class="form-control" placeholder="{{ __('links.email') }} ">
                     </div>
                 </div>
                 @endfor
@@ -249,16 +298,23 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                 @endphp
                 <div class="row">
                     <div class="col-sm-12">
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
                         <label  class="form-label">Child Details (Age: {{explode(",", $Tour->ages)[$i]}}):
                         </label>
+
+                        @else
+                        <label  class="form-label">تفاصيل الاطفال  (العمر: {{explode(",", $Tour->ages)[$i]}}):
+                        </label>
+                        @endif
+
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <label  class="form-label">Name
+                        <label  class="form-label">{{ __('links.cName') }}
                         </label>
-                    <input type="text" class="form-control" required name="tour_child_name[{{$index}}][]" placeholder="Name" aria-label="First name">
+                    <input type="text" class="form-control" required name="tour_child_name[{{$index}}][]" placeholder="{{ __('links.cName') }} " aria-label="First name">
                     <input type="hidden" name="tour_child_age[{{$index}}][]" required value="{{explode(",", $Tour->ages)[$i]}}"/>
                     </div>
                 </div>
@@ -266,7 +322,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                 <div class="row">
 
                     <div class="col-12">
-                        <label  class="form-label">notes</label>
+                        <label  class="form-label">{{ __('links.notes') }} </label>
                         <textarea class="form-control" name="tour_notes[{{$index}}]" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                     <input type="hidden" name="tour_id[{{$index}}]" value="{{$Tour->tour_id}}" />
@@ -284,71 +340,120 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
             @endforeach
             @endif
             @if ($TransferCost)
-            <h4 class="bg-info px-3 py-1 text-white">Transportation Reservation Details</h4>
+            <h4 class="bg-info px-3 py-1 text-white">
+                @if (LaravelLocalization::getCurrentLocale() === 'en')
+                Transportation Reservation Details
+
+                @else
+
+تفاصيل حجز المواصلات
+                @endif </h4>
 
             <div class="passenger_info">
                 @csrf
                 <div class="row my-2">
-                    <h6 class="fw-bold">Vehicle Details:</h6>
+                    <h6 class="fw-bold"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        Vehicle Details:
+                        @else
+
+تفاصيل السيارة:
+                        @endif </h6>
                     <div class="col-md-4 mb-3">
                         <div class="img-holder"
                         style="background-image: url('{{ asset('uploads/carModels') }}/{{ $TransferCost->image }}')"
                         ></div>
                     </div>
                     <div class="col-md-8">
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
                         <p class="mb-0">Car Model: <strong>{{$TransferCost->model_enname}}</strong></p>
                         <p class="mb-0">Car Capacity: <strong>{{$TransferCost->capacity}}</strong></p>
                         <p class="mb-0">Class Type: <strong>{{$TransferCost->class_enname}}</strong></p>
                         <p class="mb-0">Starting point (from): <strong>{{$TransferCost->from_location_enname}}</strong></p>
                         <p class="mb-0">Route Destination (to): <strong>{{$TransferCost->to_location_enname}}</strong></p>
                         <p class="mb-0">Transportation Fees: <strong>{{$TransferCost->person_price}}$</strong></p>
+
+                        @else
+                        <p class="mb-0">موديل السيارة: <strong>{{$TransferCost->model_arname ?? ''}}</strong></p>
+                        <p class="mb-0">سعة السيارة: <strong>{{$TransferCost->capacity}}</strong></p>
+                        <p class="mb-0">فئه السيارة: <strong>{{$TransferCost->class_arname ?? ''}}</strong></p>
+                        <p class="mb-0">نقطه البداية (من): <strong>{{$TransferCost->from_location_arname ?? ''}}</strong></p>
+                        <p class="mb-0">نقطة الوصول (الي): <strong>{{$TransferCost->to_location_arname?? ''}}</strong></p>
+                        <p class="mb-0">تكلفة الرحلة: <strong>{{$TransferCost->person_price}}$</strong></p>
+                        @endif
+
                     </div>
 
-                    <h6 class="fw-bold">Reservation Holder Details:</h6>
+                    <h6 class="fw-bold"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        Reservation Holder Details:
+                        @else
+                        تفاصيل صاحب الحجز:
+                        @endif</h6>
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">Salutation
+                            <label  class="form-label">{{ __('links.salutation') }}
                             </label>
-                            <input type="text" name="transferSal" class="form-control" required="required" placeholder="MR" aria-label="First name">
+                            <input type="text" name="transferSal" class="form-control" required="required" placeholder="{{ __('links.mr') }}" aria-label="First name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">Name</label>
+                            <label  class="form-label">{{ __('links.cName') }} </label>
 
-                            <input type="text" name="transferName" class="form-control" required="required" placeholder="Name">
+                            <input type="text" name="transferName" class="form-control" required="required" placeholder="{{ __('links.cName') }}">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">Mobile</label>
+                            <label  class="form-label">{{ __('links.mobile') }} </label>
 
-                            <input type="text" name="transferMobile" class="form-control" required="required" placeholder="Mobile">
+                            <input type="text" name="transferMobile" class="form-control" required="required" placeholder="{{ __('links.mobile') }}">
                         </div>
                         <div class="col-sm-12">
-                            <label  class="form-label">Email</label>
+                            <label  class="form-label">{{ __('links.email') }} </label>
 
-                            <input type="email" name="transferEmail"  class="form-control" required="required" placeholder="Email">
+                            <input type="email" name="transferEmail"  class="form-control" required="required" placeholder="{{ __('links.email') }}">
                         </div>
                         <div class="col-sm-12">
-                            <label  class="form-label">Job</label>
+                            <label  class="form-label">{{ __('links.job') }}</label>
 
-                            <input type="text" name="transferJob" class="form-control" required="required" placeholder="Job">
+                            <input type="text" name="transferJob" class="form-control" required="required" placeholder="{{ __('links.job') }}">
                         </div>
                         <div class="col-sm-12">
-                            <label  class="form-label">Hotel</label>
+                            <label  class="form-label">{{ __('links.hotel') }}</label>
 
-                            <input type="text" name="hotel_name" class="form-control" required="required" placeholder="Hotel Name">
+                            <input type="text" name="hotel_name" class="form-control" required="required" placeholder="{{ __('links.hotel') }}">
                         </div>
 
                     </div>
                     <div class="row">
                         <div class="col-12">
-                        <label  class="form-label">notes</label>
+                        <label  class="form-label">{{ __('links.notes') }}</label>
                         <textarea class="form-control"  name="transferNotes" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                         <input type="hidden" name="transfer_id" value="{{$TransferCost->transfer_id}}" />
                         <input type="hidden" name="transfer_date" value="{{$TransferCost->transfer_date}}" />
-                        <input type="hidden" name="car_model" value="{{$TransferCost->model_enname}}" />
-                        <input type="hidden" name="car_class" value="{{$TransferCost->class_enname}}" />
-                        <input type="hidden" name="from_loc" value="{{$TransferCost->from_location_enname}}" />
-                        <input type="hidden" name="to_loc" value="{{$TransferCost->to_location_enname}}" />
+                        <input type="hidden" name="car_model" value="@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        {{$TransferCost->model_enname}}
+                        @else
+                        {{$TransferCost->model_arname ?? ''}}
+                        @endif" />
+                        <input type="hidden" name="car_class" value="@if (LaravelLocalization::getCurrentLocale() === 'en')
+                        {{$TransferCost->class_enname}}
+
+                        @else
+                        {{$TransferCost->class_arname ?? ''}}
+                        @endif" />
+                        <input type="hidden" name="from_loc" value="@if (LaravelLocalization::getCurrentLocale() === 'en')
+                        {{$TransferCost->from_location_enname}}
+
+                        @else
+                        {{$TransferCost->from_location_arname ?? ''}}
+                        @endif" />
+                        <input type="hidden" name="to_loc" value="@if (LaravelLocalization::getCurrentLocale() === 'en')
+                        {{$TransferCost->to_location_enname}}
+
+                        @else
+                        {{$TransferCost->to_location_arname ?? ''}}
+                        @endif" />
                         <input type="hidden" name="capacity" value="{{$TransferCost->capacity}}" />
                         <input type="hidden" name="fees" id="t_price" value="{{$TransferCost->person_price}}" />
                         <input type="hidden" name="image" value="{{$TransferCost->image}}" />
@@ -358,13 +463,25 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             <div class="form-check my-2">
                                 <input class="form-check-input" type="checkbox" name="default_holder" id="transHolderFlag">
                                 <label class="form-check-label ps-2" for="transHolderFlag">
-                                    Go & Return
+                                   @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                   Go & Return
+                                                    @else
+                                                    ذهاب & عودة
+                                                    @endif
+
                                 </label>
                             </div>
                             <div class="row trans-holder" style="display: none;">
                                 <div class="col-sm-12 col-md-8">
                                     <label class="mb-2">
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                                         Return Date
+                                                         @else
+                                                         تاريخ العودة
+                                                         @endif
+
                                     </label>
                                     <br/>
                                     <div class="details px-1">
@@ -380,7 +497,13 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
             </div>
             @endif
             @if(count($VisasCost) > 0)
-            <h4 class="bg-info px-3 py-1 text-white">Visa Applications Details</h4>
+            <h4 class="bg-info px-3 py-1 text-white"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                Visa Applications Details
+                @else
+
+تفاصيل طلبات التأشيرة
+                @endif </h4>
             @foreach ($VisasCost as $idx => $visa)
             @php
                 $TotalVisasCost += $visa->cost;
@@ -390,45 +513,60 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                 @csrf
                 <div class="row">
                     <div class="col-sm-12 col-md-6 pe-5 pb-4">
-                        <label  class="form-label">Passport
+                        <label  class="form-label">{{ __('links.passImage') }}
                         </label>
                             <br />
                         <img style="width:100%;border-radius:10px;" src="{{ asset("uploads/visas/".$visa->visa_passport_photo) }}" />
 
                     </div>
                     <div class="col-sm-12 col-md-6 pe-5 pb-4">
-                        <label  class="form-label">Personal Photo
+                        <label  class="form-label">{{ __('links.persImage') }}
                         </label>
                             <br />
                         <img style="width:100%;border-radius:10px;" src="{{ asset("uploads/visas/".$visa->visa_personal_photo) }}" />
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Country
+                        <label  class="form-label">{{ __('links.country') }}
                         </label>
-                        <p class="fw-bold">{{$visa->en_country}}</p>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Visa Type
-                        </label>
-                        <p class="fw-bold">{{$visa->en_type}}</p>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Nationality</label>
+                        <p class="fw-bold"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            {{$visa->en_country}}
 
-                        <p class="fw-bold">{{$visa->en_nationality}}</p>
+                            @else
+                            {{$visa->ar_country}}
+                            @endif</p>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-4">
+                        <label  class="form-label">{{ __('links.vtype') }}
+                        </label>
+                        <p class="fw-bold">@if (LaravelLocalization::getCurrentLocale() === 'en')
+                            {{$visa->en_type}}
+
+                            @else
+                            {{$visa->ar_type}}
+                            @endif</p>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-4">
+                        <label  class="form-label">{{ __('links.nationality') }} </label>
+
+                        <p class="fw-bold">@if (LaravelLocalization::getCurrentLocale() === 'en')
+                            {{$visa->en_nationality}}
+
+                            @else
+                            {{$visa->ar_nationality}}
+                            @endif</p>
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Fees</label>
+                        <label  class="form-label">{{ __('links.fees') }} </label>
 
                         <p class="fw-bold">{{$visa->cost}}$</p>
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">Mobile</label>
+                        <label  class="form-label">{{ __('links.mobile') }} </label>
 
                         <p class="fw-bold">{{$visa->visa_phone}}</p>
                 </div>
                 <div class="col-sm-12">
-                        <label  class="form-label">Email</label>
+                        <label  class="form-label">{{ __('links.email') }} </label>
 
                         <p class="fw-bold">{{$visa->visa_email}}</p>
                 </div>
@@ -454,11 +592,22 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <div class="form-check mb-3">
                         <input class="form-check-input terms" required type="checkbox" value="" id="flexCheckChecked">
                         <label class="form-check-label" for="flexCheckChecked">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                             I agree to all <a href="{{url('/terms')}}">Terms and Conditions</a> of Safer
+
+                            @else
+                            أوافق على جميع <a href="{{url('/terms')}}"> بنود وشروط </a> Safer
+                            @endif
                         </label>
                     </div>
                     <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-info">Place Order</button>
+                        <button type="submit" class="btn btn-info"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Place Order
+                            @else
+                            استكمال الطلب
+                            @endif</button>
                     </div>
 
                 </div>
@@ -468,7 +617,13 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
         <div class="col-sm-12 col-md-6">
             <div class="passenger_info">
                 @if ($RoomCost)
-                <p class="receipt-title">Hotel Reservation Receipt</p>
+                <p class="receipt-title"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    Hotel Reservation Receipt
+                    @else
+
+إيصال حجز الفندق
+                    @endif</p>
                 <div class="booking_info_card">
                     <div class="text-end mb-3"><a class="del-hotel delete_trash" href="{{url("/cart/$RoomCost->id")}}"><i class="fa-solid fa-trash"></i></a></div>
                     <div class="booking_info_card_info">
@@ -477,11 +632,21 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         </div>
                         <div class="info_title">
                             <div class="card_info">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 <h6> <a href="{{ url('/hotels/' . $RoomCost->hotel_id) }}"
                                     class="">{{ $RoomCost->hotel_enname }} –
                                     {{ $RoomCost->hotel_stars }} Stars</a></h6>
                                     <span> <i class="fa-solid fa-location-dot"></i>{{ $RoomCost->en_country }}
                                         <span>|</span> {{ $RoomCost->en_city }}</span>
+
+                                @else
+                                <h6> <a href="{{ url('/hotels/' . $RoomCost->hotel_id) }}"
+                                    class="">{{ $RoomCost->hotel_arname ?? '' }} –
+                                    {{ $RoomCost->hotel_stars }} Stars</a></h6>
+                                    <span> <i class="fa-solid fa-location-dot"></i>{{ $RoomCost->ar_country ??''}}
+                                        <span>|</span> {{ $RoomCost->ar_city ??'' }}</span>
+                                @endif
+
                             </div>
                             <div class="rating">
                                     @for ($i = 0; $i < $RoomCost->hotel_stars; $i++)
@@ -495,13 +660,20 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                          </div>
                     </div>
                     <div class="remain_info mb-3">
+
                         <h5>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                             booking for {{ $RoomCost->nights}} nights
+                            @else
+                            الحجز ل {{ $RoomCost->nights}} ليالي
+                            @endif
+
                         </h5>
                         <div class="date">
 
                         </div>
-                        <h5>rooms</h5>
+                        <h5>{{ __('links.rooms') }} </h5>
 
                         <p class="mb-0 pb-0">
                             {{$RoomCost->rooms_count}} X {{$RoomCost->en_room_type}} {{$Type}} ({{$RoomCost->food_bev_type}})
@@ -509,16 +681,30 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
-                            {{$RoomCost->adults_count}} X Adults
+                            {{$RoomCost->adults_count}} X {{ __('links.adult') }}
                         </p>
                         <br>
                         @if($ages)
                         <p class="mb-0 pb-0">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
                             {{$FreeChildren}} X Free Childs (Age From {{$RoomCost->child_free_age_from}} To {{$RoomCost->child_free_age_to}}) <span class="float-end">Free</span><br>
+
+
+                            @else
+                            {{$FreeChildren}} X اطفال مجاني (Age From {{$RoomCost->child_free_age_from}} الي {{$RoomCost->child_free_age_to}}) <span class="float-end">مجاني</span><br>
+
+                            @endif
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                             {{$PaidChildren}} X Paid Childs (Age From {{$RoomCost->child_age_from}} To {{$RoomCost->child_age_to}}) <span class="float-end text-end">{{$PaidChildren}} X ${{number_format($RoomCost->child_age_cost,2,'.','')}} <br> <span class="fw-bold">${{number_format($PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span></span><br>
+
+                            @else
+                            {{$PaidChildren}} X الاطفال المدفوعة (Age From {{$RoomCost->child_age_from}} الي {{$RoomCost->child_age_to}}) <span class="float-end text-end">{{$PaidChildren}} X ${{number_format($RoomCost->child_age_cost,2,'.','')}} <br> <span class="fw-bold">${{number_format($PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span></span><br>
+
+                            @endif
                         </p>
 
                         <br>
@@ -528,10 +714,22 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                             Booking for {{$RoomCost->nights}} nights<span class="float-end text-end fw-bold">{{$RoomCost->nights}} X ${{number_format(((float)$RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost), 2, '.', '')}}</span><br>
+
+                            @else
+                            الحجز من  {{$RoomCost->nights}} ليالي<span class="float-end text-end fw-bold">{{$RoomCost->nights}} X ${{number_format(((float)$RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost), 2, '.', '')}}</span><br>
+
+                            @endif
                         </p>
                         <div class="grand_total">
-                            <h6> Sub-total</h6>
+                            <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Sub-total
+                                @else
+                                المجموع الفرعي
+                                @endif </h6>
                             <span class="h6"> {{number_format((float) $TotalCost, 2, '.', '')}} <span class="h6">$</span></span>
                         </div>
                         <br>
@@ -539,7 +737,13 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                 </div>
                 @endif
                 @if(count($ToursCost) > 0)
-                    <p class="receipt-title">Tours Reservation Receipt</p>
+                    <p class="receipt-title"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        Tours Reservation Receipt
+                        @else
+
+إيصال حجز الجولات
+                        @endif </p>
                     @foreach ($ToursCost as $idx => $TourRec)
                     <div class="booking_info_card">
                         <div class="text-end mb-3"><a class="del-hotel delete_trash" href="{{url("/cart/$TourRec->id")}}"><i class="fa-solid fa-trash"></i></a></div>
@@ -549,10 +753,19 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             </div>
                             <div class="info_title">
                                 <div class="card_info">
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
                                     <h6> <a href="{{ url('/hotels/' ) }}"
                                         class="">{{$TourRec->en_name}}</a></h6>
                                         <span> <i class="fa-solid fa-location-dot"></i>{{ $TourRec->en_country }}
                                         <span>|</span> {{ $TourRec->en_city }}</span>
+
+                                    @else
+                                    <h6> <a href="{{ url('/hotels/' ) }}"
+                                        class="">{{$TourRec->ar_name ?? ''}}</a></h6>
+                                        <span> <i class="fa-solid fa-location-dot"></i>{{ $TourRec->ar_country ?? '' }}
+                                        <span>|</span> {{ $TourRec->ar_city ?? ''}}</span>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -560,18 +773,32 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             <div class="date">
 
                             </div>
-                            <h5>Tour</h5>
+                            <h5>{{ __('links.tours') }} </h5>
 
                             <p class="mb-0 pb-0">
-                                {{$TourRec->adults_count}} X Adults<span class="float-end text-end">{{$TourRec->adults_count}} X ${{$TourRec->tour_person_cost}}<br><span class="fw-bold">${{$TourRec->adults_count * $TourRec->tour_person_cost}}</span></span>
+                                {{$TourRec->adults_count}} X {{ __('links.adult') }} <span class="float-end text-end">{{$TourRec->adults_count}} X ${{$TourRec->tour_person_cost}}<br><span class="fw-bold">${{$TourRec->adults_count * $TourRec->tour_person_cost}}</span></span>
                             </p>
                             <br>
                             <p class="mb-0 pb-0">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 {{$TourRec->children_count - ($TotalPaidPersons[$idx] - $TourRec->adults_count)}} X Free Childs (< 2 years) <span class="float-end">Free</span><br>
+
+
+                                @else
+                                {{$TourRec->children_count - ($TotalPaidPersons[$idx] - $TourRec->adults_count)}} X اطفال مجاني (< سنتين) <span class="float-end">مجاني</span><br>
+
+                                @endif
                             </p>
                             <br>
                             <p class="mb-0 pb-0">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 {{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X Paid Childs  <span class="float-end text-end">{{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X ${{$TourRec->tour_person_cost}} <br> <span class="fw-bold text-end">${{($TotalPaidPersons[$idx] - $TourRec->adults_count) * $TourRec->tour_person_cost}}</span></span><br>
+
+
+                                @else
+                                {{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X اطفال مدفوعة  <span class="float-end text-end">{{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X ${{$TourRec->tour_person_cost}} <br> <span class="fw-bold text-end">${{($TotalPaidPersons[$idx] - $TourRec->adults_count) * $TourRec->tour_person_cost}}</span></span><br>
+
+                                @endif
                             </p>
 
                             <br>
@@ -580,7 +807,12 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             </p>
                             <br>
                             <div class="grand_total">
-                                <h6> Sub-total</h6>
+                                <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    Sub-total
+                                    @else
+                                    المجموع الفرعي
+                                    @endif </h6>
                                 <span class="h6"> ${{$TotalPaidPersons[$idx]*$TourRec->tour_person_cost}}</span></span>
                             </div>
 
@@ -593,40 +825,76 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <div style="border-top: 1px solid rgb(184, 184, 184)" class="mb-2"></div>
                 @endif
                 @if ($TransferCost)
-                <p class="receipt-title">Transportation Receipt</p>
+                <p class="receipt-title"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    Transportation Receipt
+                    @else
+                    إيصال النقل
+                    @endif </p>
                 <div class="booking_info_card">
                     {{-- onclick='confirmClick(event)' --}}
                     <div class="text-end mb-3"><a class="del-hotel delete_trash" href="{{url("/cart/$TransferCost->id")}}" ><i class="fa-solid fa-trash"></i></a></div>
                     <div class="remain_info mb-3">
-                        <h5>Vehicle</h5>
+                        <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Vehicle
+                            @else
+                            عربة
+                            @endif </h5>
 
                         <p class="mb-0 pb-0">
-                            From: <span class="float-end"> {{$TransferCost->from_location_enname}}</span>
+                            {{ __('links.from') }} : <span class="float-end"> {{$TransferCost->from_location_enname}}</span>
                         </p>
                         <br/>
                         <p class="mb-0 pb-0">
-                            To: <span class="float-end"> {{$TransferCost->to_location_enname}}</span>
+                            {{ __('links.to') }} : <span class="float-end"> {{$TransferCost->to_location_enname}}</span>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
-                            Transportation Date : <span class="float-end"> {{$TransferCost->transfer_date}}</span>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Transportation Date :
+                                                    @else
+                                                    تاريخ النقل:
+                                                    @endif  <span class="float-end"> {{$TransferCost->transfer_date}}</span>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
-                            Transportation Fees <span class="float-end t_rec">${{$TransferCost->person_price}}</span><br>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Transportation Fees
+                                                    @else
+                                                    رسوم النقل
+
+                                                    @endif  <span class="float-end t_rec">${{$TransferCost->person_price}}</span><br>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
-                            Capacity: <span class="float-end"> {{$TransferCost->capacity}}</span>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Capacity:
+                                                    @else
+                                                    السعة:
+                                                    @endif  <span class="float-end"> {{$TransferCost->capacity}}</span>
                         </p>
 
                         <br>
                         <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                            Total Fees<span class="float-end text-end fw-bold t_rec">${{number_format((float) $TransferCost->person_price, 2, '.', '')}}</span><br>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Total Fees
+                            @else
+                            الرسوم الكلية
+                            @endif  <span class="float-end text-end fw-bold t_rec">${{number_format((float) $TransferCost->person_price, 2, '.', '')}}</span><br>
                         </p>
                         <br>
                         <div class="grand_total">
-                            <h6> Sub-total</h6>
+                            <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Sub-total
+                                @else
+                                المجموع الفرعي
+                                @endif </h6>
                             <span class="h6 t_rec"> ${{number_format((float) ($TransferCost->person_price), 2, '.', '')}}</span></span>
                         </div>
 
@@ -636,14 +904,24 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                 </div>
                 @endif
                 @if (count($VisasCost) > 0)
-                <p class="receipt-title">Visa Application Receipt</p>
+                <p class="receipt-title"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    Visa Application Receipt
+                    @else
+                    ايصال التأشيرة
+                    @endif</p>
                 <div class="booking_info_card">
                     <div class="text-end mb-3"><a class="del-hotel delete_trash" href="{{url("/cart/visa")}}"><i class="fa-solid fa-trash"></i></a></div>
                     <div class="remain_info mb-3">
-                        <h5>Visa</h5>
+                        <h5>{{ __('links.visa') }} </h5>
                         @foreach ($GPVisasCost as $_visa)
                         <p class="mb-0 pb-0">
-                            {{$_visa->en_type}}:<span class="float-end">{{$_visa->groupped_count}} X ${{$_visa->sum_costs}}<span></span>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            {{$_visa->en_type}}:
+
+                            @else
+                            {{$_visa->ar_type}}:
+                            @endif <span class="float-end">{{$_visa->groupped_count}} X ${{$_visa->sum_costs}}<span></span>
                         </p>
                         @endforeach
 
@@ -653,7 +931,12 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         </p>
                         <br>
                         <div class="grand_total">
-                            <h6> Sub-total</h6>
+                            <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                Sub-total
+                                @else
+                                المجموع الفرعي
+                                @endif </h6>
                             <span class="h6"> {{$TotalVisasCost}}$</span></span>
                         </div>
 
@@ -663,20 +946,42 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                 </div>
                 @endif
 
-                <p class="receipt-title">Total Fees</p>
+                <p class="receipt-title"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    Total Fees
+                    @else
+                    الرسوم الكلية
+                    @endif </p>
                 <div class="remain_info">
                     <p class="mb-0 pb-0">
-                        Before Tax <span class="float-end text-end BeforeT_txt">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}} </span><br>
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        Before Tax
+
+                                                    @else
+                                                    قبل الضرائب
+                                                    @endif  <span class="float-end text-end BeforeT_txt">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}} </span><br>
                     </p>
                     <br>
                     <p class="mb-0 pb-0">
-                        After VAT ({{$tax_percentage}}%) <span class="float-end text-end"><span class="BeforeT_txt">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}}</span> X {{(float)$tax_percentage/100}} <br>  <span class="fw-bold AfterT_txt">${{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost + $TotalVisasCost)*(1 + (float)$tax_percentage/100),2,'.','')}}</span></span><br>
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        After VAT
+
+                        @else
+                        بعد ضريبة القيمة المضافة
+
+                        @endif  ({{$tax_percentage}}%) <span class="float-end text-end"><span class="BeforeT_txt">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}}</span> X {{(float)$tax_percentage/100}} <br>  <span class="fw-bold AfterT_txt">${{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost + $TotalVisasCost)*(1 + (float)$tax_percentage/100),2,'.','')}}</span></span><br>
                         <input type="hidden" name="BeforeT" value="{{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost + $TotalVisasCost),2,'.','')}}" />
                     </p>
                 <br/>
                 </div>
                 <div class="grand_total final">
-                    <h5> grand total</h5>
+                    <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                        grand total
+                        @else
+                        المجموع الإجمالي
+
+                        @endif </h5>
                     <span id="gt" class="AfterT_txt"> <span>$</span>{{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost)*(1 + (float)$tax_percentage/100),2,'.','')}} </span>
                 </div>
              </div>
@@ -762,7 +1067,12 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
     </div> --}}
 </section>
 @else
-<div class="container bg-light-info text-center p-5">Nothing is Added to cart</div>
+<div class="container bg-light-info text-center p-5"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+    Nothing is Added to cart
+    @else
+    لا شىء مضاف الى عربة التسوق
+    @endif</div>
 @endif
 @endsection
 

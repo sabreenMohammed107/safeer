@@ -290,4 +290,24 @@ return [
 'transfer_date.after' =>'تاريخ الانتقال يجب ان يكون بعد تاريخ اليوم ',
 
 'transfer_adult.between' =>'عدد البالغين يجب ان يكون من 1 ال  ',
+
+
+//booking
+'preBook'=>'جميع غرفك التي تم حجزها مسبقًا',
+'cartDetails'=>'تفاصيل السلة',
+'single'=>'فردي',
+'double'=>'زوجي',
+'triple'=>'ثلاثية',
+'salutation'=>'تحية',
+'cName'=>'الاسم',
+'mr'=>'السيد',
+'notes'=>'ملاحظات',
+'pickupP'=>'نقطه الالتقاط',
+'job'=>'الوظيفة',
+'hotel'=>' الفندق',
+'country'=>'الدولة',
+'vtype'=>'نوع الفيزا ',
+'fees'=>'التكلفة',
+'Reservation'=>'الحجز',
+'ReservationStatus'=>'حالة الحجز',
 ];

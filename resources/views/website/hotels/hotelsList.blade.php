@@ -71,7 +71,7 @@
                                                      @else
 
                                                      @if (session()->get('SiteUser'))
-                                                     <a href="{{ LaravelLocalization::localizeUrl('/favourite/' . $HPrice->hotel_id) }}"><i
+                                                     <a href="{{ LaravelLocalization::localizeUrl('/favourite/' . $HRec->hotel_id) }}"><i
                                                              class="fa-regular fa-heart"></i> </a>
                                                  @else
                                                      <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}"><i class="fa-regular fa-heart"></i></a>

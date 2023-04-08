@@ -55,15 +55,41 @@
                     <div class=" card setted_tour_cards ">
                       <img src="{{ asset('uploads/hotels') }}/{{$Room->hotel_banner}}" alt=" blogimage">
                       <div class="card-body setted_info">
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
                         <div class="card_info">
-                            <h6> <a href="{{url('/hotels/'.$Room->hotel_id)}}" class="stretched-link">{{$Room->hotel_enname}} – {{$Room->hotel_stars}} Stars - @if($Room->room_cap == 1) Single @elseif($Room->room_cap == 2) Double @else Triple @endif</a></h6>
+                            <h6> <a href="{{ LaravelLocalization::localizeUrl('/hotels/'.$Room->hotel_id) }}" class="stretched-link">{{$Room->hotel_enname}} – {{$Room->hotel_stars}} Stars - @if($Room->room_cap == 1) Single @elseif($Room->room_cap == 2) Double @else Triple @endif</a></h6>
                             <span>
-                                <a href="{{url("cart/$Room->id")}}" class="text-secondary"><i class="fa-solid fa-trash"></i></a>
+                                <a href="{{ LaravelLocalization::localizeUrl("cart/$Room->id") }}" class="text-secondary"><i class="fa-solid fa-trash"></i></a>
                             </span>
                         </div>
-                        <span>     <i class="fa-solid fa-location-dot"></i>  {{$Room->en_country}}  <span>|</span> {{$Room->en_city}}</span>
+
+                                                    @else
+                                                    <div class="card_info">
+                                                        <h6> <a href="{{ LaravelLocalization::localizeUrl('/hotels/'.$Room->hotel_id) }}" class="stretched-link">{{$Room->hotel_arname}} – {{$Room->hotel_stars}} نجوم - @if($Room->room_cap == 1) فردي @elseif($Room->room_cap == 2) زوجي @else ثلاثية @endif</a></h6>
+                                                        <span>
+                                                            <a href="{{ LaravelLocalization::localizeUrl("cart/$Room->id") }}" class="text-secondary"><i class="fa-solid fa-trash"></i></a>
+                                                        </span>
+                                                    </div>
+                                                    @endif
+
+                        <span>     <i class="fa-solid fa-location-dot"></i>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            {{$Room->en_country}}
+                            @else
+                            {{$Room->ar_country}}
+                            @endif <span>|</span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            {{$Room->en_city}}
+                            @else
+                            {{$Room->ar_city}}
+                            @endif</span>
                         <p>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
                             {{$Room->hotel_enoverview}}
+                                                    @else
+                                                    {{$Room->hotel_aroverview}}
+                                                    @endif
                         </p>
                         <div class="price">
                           <div class="rating">
@@ -90,20 +116,52 @@
                         @foreach ($RoomCosts as $RoomC)
                             <div class="remain_info pt-3">
                                 <h5>
-                                    {{$RoomC->hotel_enname}} – {{$RoomC->hotel_stars}} Stars
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    {{$RoomC->hotel_enname}}
+                                                    @else
+                                                    {{$RoomC->hotel_enname}}
+                                                    @endif – {{$RoomC->hotel_stars}} Stars
                                 </h5>
                                 <p>
-                                    1 X Standers @if($RoomC->room_cap == 1) Single @elseif($RoomC->room_cap == 2) Double @else Triple @endif
+                                    1 X Standers @if($RoomC->room_cap == 1) @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    Single
+                                    @else
+                                   فردي
+                                    @endif @elseif($RoomC->room_cap == 2) @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    Double
+                                    @else
+                                   زوجي
+                                    @endif @else @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    Triple
+                                    @else
+                                   ثلاتية
+                                    @endif @endif
 
                                     <span class="float-end">$@if($RoomC->room_cap == 1) {{$RoomC->single_cost}} @elseif($RoomC->room_cap == 2) {{$RoomC->double_cost}} @else {{$RoomC->triple_cost}} @endif</span>
                                 </p>
                             </div>
                         @endforeach
                         <div class="grand_total">
-                            <h5> grand total</h5>
+                            <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                grand total
+                                @else
+
+المجموع الإجمالي
+                                @endif </h5>
                             <span> {{$TotalCost}} <span>$</span></span>
                         </div>
-                        <button class="btn d-block w-100 mt-4 btn-primary">Proceed to Payment</button>
+                        <button class="btn d-block w-100 mt-4 btn-primary">@if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Proceed to Payment
+                            @else
+
+استكمال الدفع
+                            @endif </button>
                     </div>
                  </div>
             </div>

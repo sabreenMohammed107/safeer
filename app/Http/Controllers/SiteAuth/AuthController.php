@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 abstract class ItemType
 {
@@ -59,12 +60,13 @@ class AuthController extends Controller
 
     public static function LoginProcess(SiteUser $User)
     {
-        $redirect_url = "/";
+        $redirect_url =LaravelLocalization::localizeUrl('/');
+        // $redirect_url = "/";
         if (session()->get("cartItem")) {
             if(session()->get("cartItem")["itemType"] == ItemType::ROOM) {
                 $CartItem = Cart::where([["user_id", '=', $User->id],['item_type','=',ItemType::ROOM]])->first();
                 if ($CartItem) {
-                    return redirect()->to($redirect_url)->with("session-warning", "A reservation item is already in your cart");
+                    return redirect($redirect_url)->with("session-warning", "A reservation item is already in your cart");
                 }
 
                 $CartItem = new Cart();
@@ -102,7 +104,7 @@ class AuthController extends Controller
                 $CartItem = Cart::where([["user_id", '=', session()->get("SiteUser")["ID"]], ["item_type", '=', ItemType::TRANSFER]])->first();
 
                 if ($CartItem) { // Has Transfer ?
-                    return redirect()->to("/transfers")->with("session-warning", "Can't Purchase multiple transfer items in one time");
+                    return redirect(LaravelLocalization::localizeUrl('/transfers'))->with("session-warning", "Can't Purchase multiple transfer items in one time");
                 }
                 $CartItem = new Cart();
                 $CartItem->user_id = session()->get("SiteUser")["ID"];
@@ -124,12 +126,12 @@ class AuthController extends Controller
                     $CartItem->save();
                 }
             }
-
-            $redirect_url = '/cart';
+            $redirect_url =LaravelLocalization::localizeUrl('/cart');
+            // $redirect_url = '/cart';
             session()->forget("cartItem");
             session()->put("hasCart", 1);
 
-            return redirect()->to($redirect_url)->with("session-success", " Your cart is updated successfully");
+            return redirect($redirect_url)->with("session-success", " Your cart is updated successfully");
         }
 
         if (session()->get("AddFavHotel")) {
@@ -147,10 +149,10 @@ class AuthController extends Controller
                 $fav->delete();
             }
             session()->forget("RemFavHotel");
-            $redirect_url = '/hotels';
+            $redirect_url = LaravelLocalization::localizeUrl('/hotels');
         }
 
-        return redirect()->to($redirect_url);
+        return redirect($redirect_url);
     }
 
     public function Register(Request $request)
@@ -192,15 +194,15 @@ class AuthController extends Controller
         } catch (\Illuminate\Database\QueryException$e) {
             $Count = SiteUser::where("Email", '=', $request['email'])->count();
             if ($Count) {
-                return redirect()->to("/safer/register")->with("session-danger" , "Email Address is Already in-use")
+                return redirect()->to(LaravelLocalization::localizeUrl('/safer/register'))->with("session-danger" , "Email Address is Already in-use")
                 ->with('Data', $data);
             } else {
-                return redirect()->to("/safer/register")->with("session-danger", "Can't Register with this data please try again later")
+                return redirect()->to(LaravelLocalization::localizeUrl('/safer/register'))->with("session-danger", "Can't Register with this data please try again later")
                 ->with('Data', $data);
             }
         }
 
-        return redirect()->to("/safer/login");
+        return redirect()->to(LaravelLocalization::localizeUrl('/safer/login'));
 
     }
 
