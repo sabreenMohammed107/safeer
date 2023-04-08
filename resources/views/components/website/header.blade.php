@@ -11,7 +11,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
 ?>
 <div class="main-wrapper">
     <nav class="navbar container">
-        <img src="{{ asset('/website_assets/images/homePage/logo.webp') }}" alt="logo">
+        <img src="{{ asset('/website_assets/images/logo3.jpg') }}" style="margin: 0 11px" alt="logo">
         <!-- offcanvas nav bar    -->
         <button class="btn canvase_button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight">
