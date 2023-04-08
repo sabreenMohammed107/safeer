@@ -11,7 +11,16 @@ $localVar=LaravelLocalization::getCurrentLocale();
 ?>
 <div class="main-wrapper">
     <nav class="navbar container">
-        <img src="{{ asset('/website_assets/images/logo3.jpg') }}" style="margin: 0 11px" alt="logo">
+        <img src="{{ asset('/website_assets/images/logo3.jpg') }}"
+        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+        style=" margin: 0 0 0 15px;"
+        @else
+        style=" margin: 0 15px 0 0;"
+        @endif
+
+
+        alt="logo">
         <!-- offcanvas nav bar    -->
         <button class="btn canvase_button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight">
