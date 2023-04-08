@@ -41,7 +41,7 @@
         @endfor
         <!-- a Tag for next page -->
         <li class="page-item"><a class="page-link" href="{{ $blogs->nextPageUrl() }}">
-            Next
+
             </a></li>
     </ul>
     {{-- <ul class="pagination ">
