@@ -99,7 +99,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             Reservation Holder Details:
                             @else
 
-تفاصيل صاحب الحجز:
+تفاصيل مسئول الحجز:
                             @endif </h6>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">
@@ -230,7 +230,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         Reservation Holder Details:
 
                         @else
-                        تفاصيل صاحب الحجز:
+                        تفاصيل مسئول الحجز:
                         @endif
                        </h6>
                     <div class="col-sm-12 col-md-6 col-xl-4">
@@ -388,7 +388,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                         Reservation Holder Details:
                         @else
-                        تفاصيل صاحب الحجز:
+                        تفاصيل مسئول الحجز:
                         @endif</h6>
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-xl-4">
@@ -839,7 +839,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                             Vehicle
                             @else
-                            عربة
+                            تفاصيل الإنتقال
                             @endif </h5>
 
                         <p class="mb-0 pb-0">
@@ -884,7 +884,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                             Total Fees
                             @else
-                            الرسوم الكلية
+                           المجموع الفرعي
                             @endif  <span class=" text-end fw-bold t_rec">${{number_format((float) $TransferCost->person_price, 2, '.', '')}}</span><br>
                         </p>
                         <br>
@@ -958,7 +958,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         Before Tax
 
                                                     @else
-                                                    قبل الضرائب
+                                                    قبل ضريبة القيمة المضافة
                                                     @endif  <span class=" text-end BeforeT_txt">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}} </span><br>
                     </p>
                     <br>
