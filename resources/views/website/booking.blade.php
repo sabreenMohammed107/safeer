@@ -222,7 +222,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                 @else
                 {{$Tour->ar_name ?? ''}}
-                @endif  <span class="float-end">{{$Tour->tour_date}}</span></h6>
+                @endif  <span class="">{{$Tour->tour_date}}</span></h6>
             <div class="passenger_info">
                 @csrf
                 <div class="row">
@@ -677,7 +677,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                         <p class="mb-0 pb-0">
                             {{$RoomCost->rooms_count}} X {{$RoomCost->en_room_type}} {{$Type}} ({{$RoomCost->food_bev_type}})
-                            <span class="float-end text-end">{{$RoomCost->rooms_count}} X ${{number_formaT($Cost,2,'.','')}} <br> <span class="fw-bold"> ${{number_format((float)$RoomCost->rooms_count*$Cost,2,'.','')}}</span></span>
+                            <span class=" text-end">{{$RoomCost->rooms_count}} X ${{number_formaT($Cost,2,'.','')}} <br> <span class="fw-bold"> ${{number_format((float)$RoomCost->rooms_count*$Cost,2,'.','')}}</span></span>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
@@ -687,11 +687,11 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         @if($ages)
                         <p class="mb-0 pb-0">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            {{$FreeChildren}} X Free Childs (Age From {{$RoomCost->child_free_age_from}} To {{$RoomCost->child_free_age_to}}) <span class="float-end">Free</span><br>
+                            {{$FreeChildren}} X Free Childs (Age From {{$RoomCost->child_free_age_from}} To {{$RoomCost->child_free_age_to}}) <span class="">Free</span><br>
 
 
                             @else
-                            {{$FreeChildren}} X اطفال مجاني (Age From {{$RoomCost->child_free_age_from}} الي {{$RoomCost->child_free_age_to}}) <span class="float-end">مجاني</span><br>
+                            {{$FreeChildren}} X اطفال مجاني (Age From {{$RoomCost->child_free_age_from}} الي {{$RoomCost->child_free_age_to}}) <span class="">مجاني</span><br>
 
                             @endif
                         </p>
@@ -699,10 +699,10 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <p class="mb-0 pb-0">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                            {{$PaidChildren}} X Paid Childs (Age From {{$RoomCost->child_age_from}} To {{$RoomCost->child_age_to}}) <span class="float-end text-end">{{$PaidChildren}} X ${{number_format($RoomCost->child_age_cost,2,'.','')}} <br> <span class="fw-bold">${{number_format($PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span></span><br>
+                            {{$PaidChildren}} X Paid Childs (Age From {{$RoomCost->child_age_from}} To {{$RoomCost->child_age_to}}) <span class=" text-end">{{$PaidChildren}} X ${{number_format($RoomCost->child_age_cost,2,'.','')}} <br> <span class="fw-bold">${{number_format($PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span></span><br>
 
                             @else
-                            {{$PaidChildren}} X الاطفال المدفوعة (Age From {{$RoomCost->child_age_from}} الي {{$RoomCost->child_age_to}}) <span class="float-end text-end">{{$PaidChildren}} X ${{number_format($RoomCost->child_age_cost,2,'.','')}} <br> <span class="fw-bold">${{number_format($PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span></span><br>
+                            {{$PaidChildren}} X الاطفال المدفوعة (Age From {{$RoomCost->child_age_from}} الي {{$RoomCost->child_age_to}}) <span class=" text-end">{{$PaidChildren}} X ${{number_format($RoomCost->child_age_cost,2,'.','')}} <br> <span class="fw-bold">${{number_format($PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span></span><br>
 
                             @endif
                         </p>
@@ -710,16 +710,16 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <br>
                         @endif
                         <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                            <span class="float-end text-end fw-bold">${{number_format((float) $RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span><br>
+                            <span class=" text-end fw-bold">${{number_format((float) $RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost, 2, '.', '')}}</span><br>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                            Booking for {{$RoomCost->nights}} nights<span class="float-end text-end fw-bold">{{$RoomCost->nights}} X ${{number_format(((float)$RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost), 2, '.', '')}}</span><br>
+                            Booking for {{$RoomCost->nights}} nights<span class=" text-end fw-bold">{{$RoomCost->nights}} X ${{number_format(((float)$RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost), 2, '.', '')}}</span><br>
 
                             @else
-                            الحجز من  {{$RoomCost->nights}} ليالي<span class="float-end text-end fw-bold">{{$RoomCost->nights}} X ${{number_format(((float)$RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost), 2, '.', '')}}</span><br>
+                            الحجز من  {{$RoomCost->nights}} ليالي<span class=" text-end fw-bold">{{$RoomCost->nights}} X ${{number_format(((float)$RoomCost->rooms_count*$Cost + $PaidChildren*$RoomCost->child_age_cost), 2, '.', '')}}</span><br>
 
                             @endif
                         </p>
@@ -776,34 +776,34 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             <h5>{{ __('links.tours') }} </h5>
 
                             <p class="mb-0 pb-0">
-                                {{$TourRec->adults_count}} X {{ __('links.adult') }} <span class="float-end text-end">{{$TourRec->adults_count}} X ${{$TourRec->tour_person_cost}}<br><span class="fw-bold">${{$TourRec->adults_count * $TourRec->tour_person_cost}}</span></span>
+                                {{$TourRec->adults_count}} X {{ __('links.adult') }} <span class=" text-end">{{$TourRec->adults_count}} X ${{$TourRec->tour_person_cost}}<br><span class="fw-bold">${{$TourRec->adults_count * $TourRec->tour_person_cost}}</span></span>
                             </p>
                             <br>
                             <p class="mb-0 pb-0">
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                {{$TourRec->children_count - ($TotalPaidPersons[$idx] - $TourRec->adults_count)}} X Free Childs (< 2 years) <span class="float-end">Free</span><br>
+                                {{$TourRec->children_count - ($TotalPaidPersons[$idx] - $TourRec->adults_count)}} X Free Childs (< 2 years) <span class="">Free</span><br>
 
 
                                 @else
-                                {{$TourRec->children_count - ($TotalPaidPersons[$idx] - $TourRec->adults_count)}} X اطفال مجاني (< سنتين) <span class="float-end">مجاني</span><br>
+                                {{$TourRec->children_count - ($TotalPaidPersons[$idx] - $TourRec->adults_count)}} X اطفال مجاني (< سنتين) <span class="">مجاني</span><br>
 
                                 @endif
                             </p>
                             <br>
                             <p class="mb-0 pb-0">
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                {{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X Paid Childs  <span class="float-end text-end">{{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X ${{$TourRec->tour_person_cost}} <br> <span class="fw-bold text-end">${{($TotalPaidPersons[$idx] - $TourRec->adults_count) * $TourRec->tour_person_cost}}</span></span><br>
+                                {{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X Paid Childs  <span class=" text-end">{{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X ${{$TourRec->tour_person_cost}} <br> <span class="fw-bold text-end">${{($TotalPaidPersons[$idx] - $TourRec->adults_count) * $TourRec->tour_person_cost}}</span></span><br>
 
 
                                 @else
-                                {{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X اطفال مدفوعة  <span class="float-end text-end">{{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X ${{$TourRec->tour_person_cost}} <br> <span class="fw-bold text-end">${{($TotalPaidPersons[$idx] - $TourRec->adults_count) * $TourRec->tour_person_cost}}</span></span><br>
+                                {{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X اطفال مدفوعة  <span class=" text-end">{{$TotalPaidPersons[$idx] - $TourRec->adults_count}} X ${{$TourRec->tour_person_cost}} <br> <span class="fw-bold text-end">${{($TotalPaidPersons[$idx] - $TourRec->adults_count) * $TourRec->tour_person_cost}}</span></span><br>
 
                                 @endif
                             </p>
 
                             <br>
                             <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                                <span class="float-end text-end fw-bold">${{$TotalPaidPersons[$idx]*$TourRec->tour_person_cost}}</span><br>
+                                <span class=" text-end fw-bold">${{$TotalPaidPersons[$idx]*$TourRec->tour_person_cost}}</span><br>
                             </p>
                             <br>
                             <div class="grand_total">
@@ -843,11 +843,11 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             @endif </h5>
 
                         <p class="mb-0 pb-0">
-                            {{ __('links.from') }} : <span class="float-end"> {{$TransferCost->from_location_enname}}</span>
+                            {{ __('links.from') }} : <span class=""> {{$TransferCost->from_location_enname}}</span>
                         </p>
                         <br/>
                         <p class="mb-0 pb-0">
-                            {{ __('links.to') }} : <span class="float-end"> {{$TransferCost->to_location_enname}}</span>
+                            {{ __('links.to') }} : <span class=""> {{$TransferCost->to_location_enname}}</span>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
@@ -856,7 +856,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             Transportation Date :
                                                     @else
                                                     تاريخ النقل:
-                                                    @endif  <span class="float-end"> {{$TransferCost->transfer_date}}</span>
+                                                    @endif  <span class=""> {{$TransferCost->transfer_date}}</span>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
@@ -866,7 +866,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                                                     @else
                                                     رسوم النقل
 
-                                                    @endif  <span class="float-end t_rec">${{$TransferCost->person_price}}</span><br>
+                                                    @endif  <span class=" t_rec">${{$TransferCost->person_price}}</span><br>
                         </p>
                         <br>
                         <p class="mb-0 pb-0">
@@ -875,7 +875,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             Capacity:
                                                     @else
                                                     السعة:
-                                                    @endif  <span class="float-end"> {{$TransferCost->capacity}}</span>
+                                                    @endif  <span class=""> {{$TransferCost->capacity}}</span>
                         </p>
 
                         <br>
@@ -885,7 +885,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             Total Fees
                             @else
                             الرسوم الكلية
-                            @endif  <span class="float-end text-end fw-bold t_rec">${{number_format((float) $TransferCost->person_price, 2, '.', '')}}</span><br>
+                            @endif  <span class=" text-end fw-bold t_rec">${{number_format((float) $TransferCost->person_price, 2, '.', '')}}</span><br>
                         </p>
                         <br>
                         <div class="grand_total">
@@ -921,13 +921,13 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                             @else
                             {{$_visa->ar_type}}:
-                            @endif <span class="float-end">{{$_visa->groupped_count}} X ${{$_visa->sum_costs}}<span></span>
+                            @endif <span class="">{{$_visa->groupped_count}} X ${{$_visa->sum_costs}}<span></span>
                         </p>
                         @endforeach
 
                         <br>
                         <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                            <span class="float-end text-end fw-bold">${{$TotalVisasCost}}</span><br>
+                            <span class=" text-end fw-bold">${{$TotalVisasCost}}</span><br>
                         </p>
                         <br>
                         <div class="grand_total">
@@ -959,7 +959,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                                                     @else
                                                     قبل الضرائب
-                                                    @endif  <span class="float-end text-end BeforeT_txt">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}} </span><br>
+                                                    @endif  <span class=" text-end BeforeT_txt">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}} </span><br>
                     </p>
                     <br>
                     <p class="mb-0 pb-0">
@@ -969,7 +969,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         @else
                         بعد ضريبة القيمة المضافة
 
-                        @endif  ({{$tax_percentage}}%) <span class="float-end text-end"><span class="BeforeT_txt">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}}</span> X {{(float)$tax_percentage/100}} <br>  <span class="fw-bold AfterT_txt">${{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost + $TotalVisasCost)*(1 + (float)$tax_percentage/100),2,'.','')}}</span></span><br>
+                        @endif  ({{$tax_percentage}}%) <span class=" text-end"><span class="BeforeT_txt">${{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost),2,'.','')}}</span> X {{(float)$tax_percentage/100}} <br>  <span class="fw-bold AfterT_txt">${{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost + $TotalVisasCost)*(1 + (float)$tax_percentage/100),2,'.','')}}</span></span><br>
                         <input type="hidden" name="BeforeT" value="{{number_format((float)($TotalCost + $TotalToursFees+$TotalTransferCost + $TotalVisasCost),2,'.','')}}" />
                     </p>
                 <br/>
