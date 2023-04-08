@@ -346,7 +346,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                 @else
 
-تفاصيل حجز المواصلات
+تفاصيل حجز الإنتقالات
                 @endif </h4>
 
             <div class="passenger_info">
@@ -829,7 +829,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                     Transportation Receipt
                     @else
-                    إيصال النقل
+                    إيصال الإنتقال
                     @endif </p>
                 <div class="booking_info_card">
                     {{-- onclick='confirmClick(event)' --}}
@@ -855,7 +855,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                             Transportation Date :
                                                     @else
-                                                    تاريخ النقل:
+                                                    تاريخ الإنتقال:
                                                     @endif  <span class=""> {{$TransferCost->transfer_date}}</span>
                         </p>
                         <br>
@@ -864,7 +864,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 
                             Transportation Fees
                                                     @else
-                                                    رسوم النقل
+                                                    رسوم الإنتقال
 
                                                     @endif  <span class=" t_rec">${{$TransferCost->person_price}}</span><br>
                         </p>
