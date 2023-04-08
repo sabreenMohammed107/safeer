@@ -40,9 +40,7 @@
                     class="page-link {{ $blogs->currentPage() == $i ? ' active' : '' }}">{{ $i }}</a></li>
         @endfor
         <!-- a Tag for next page -->
-        <li class="page-item"><a class="page-link" href="{{ $blogs->nextPageUrl() }}">
 
-            </a></li>
     </ul>
     {{-- <ul class="pagination ">
         <li class="page-item"><a class="page-link" href="#">1</a></li>
