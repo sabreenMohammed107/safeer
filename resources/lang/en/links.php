@@ -303,6 +303,14 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'fees'=>'Fees',
 'Reservation'=>'Reservation',
 'ReservationStatus'=>'Reservation Status',
+'myAccount'=>'My Account',
+'myFavorite'=>'My Favorite',
+'myOrder'=>' My Order',
+'profile'=>'Profile',
+'accountinfo'=>'account info',
+'firstName' =>'First name',
+'lastName' =>'Last name',
+'submitProfile' =>'submit profile',
 ];
 
 

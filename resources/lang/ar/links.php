@@ -310,4 +310,12 @@ return [
 'fees'=>'التكلفة',
 'Reservation'=>'الحجز',
 'ReservationStatus'=>'حالة الحجز',
+'myAccount'=>'حسابي',
+'myFavorite'=>'المفضلة',
+'myOrder'=>' طلباتي',
+'profile'=>'الملف الشخصي',
+'accountinfo'=>'بيانات الملف الشخصي',
+'firstName' =>'الاسم الاول',
+'lastName' =>'الاسم الاخير ',
+'submitProfile' =>' حفظ التعديلات',
 ];
