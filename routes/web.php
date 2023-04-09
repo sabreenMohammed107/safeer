@@ -85,123 +85,128 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 /*
 Routes Before Applying Authentication
 */
-Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+], function()
 {
-Route::get("/", [MainController::class, 'index']);
-Route::get("/hotels", [HotelsController::class, 'all_hotels']);
-Route::post("/hotels", [HotelsController::class, 'hotels']);
-Route::post("/hotels/retrieve", [HotelsController::class, 'fetch']);
-Route::post("/hotels/search", [HotelsController::class, 'search']);
-Route::get("/hotels/{id}", [HotelsController::class, 'profile']);
-//favourite
-Route::get("/favourite/{id}", [HotelsController::class, 'favourite']);
-//removeFavourite
-Route::get("/removeFavourite/{id}", [HotelsController::class, 'removeFavourite']);
-Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
-Route::post("/hotels/review/add", [HotelsController::class, 'add_review']);
-Route::get('/fetch-hotel-filter',  [HotelsController::class, 'fetch_data'])->name('fetch-hotel-filter');
-//new Routes 23-11
-Route::get("/about", [ContentController::class, 'about']);
-Route::get("/blogs", [ContentController::class, 'blogs']);
+    Route::get("/", [MainController::class, 'index']);
+    Route::get("/hotels", [HotelsController::class, 'all_hotels']);
+    Route::post("/hotels", [HotelsController::class, 'hotels']);
+    Route::post("/hotels/retrieve", [HotelsController::class, 'fetch']);
+    Route::post("/hotels/search", [HotelsController::class, 'search']);
+    Route::get("/hotels/{id}", [HotelsController::class, 'profile']);
+    //favourite
+    Route::get("/favourite/{id}", [HotelsController::class, 'favourite']);
+    //removeFavourite
+    Route::get("/removeFavourite/{id}", [HotelsController::class, 'removeFavourite']);
+    Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
+    Route::post("/hotels/review/add", [HotelsController::class, 'add_review']);
+    Route::get('/fetch-hotel-filter',  [HotelsController::class, 'fetch_data'])->name('fetch-hotel-filter');
+    //new Routes 23-11
+    Route::get("/about", [ContentController::class, 'about']);
+    Route::get("/blogs", [ContentController::class, 'blogs']);
 
-Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
-Route::get('/single-blog/{id}',[ContentController::class, 'singleBlog'])->name('single-blog');
-Route::get('/contact', [ContentController::class, 'createForm']);
-Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
-Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
-// outocomplete search
-// Route::get('/autocomplete-search', [HotelsController::class, 'autocompleteSearch']);
-Route::get('autocomplete', [HotelsController::class, 'autocompleteSearch'])->name('autocomplete');
-//tours
-Route::get("/tours", [ToursController::class, 'all_tours']);
-Route::post("/tours", [ToursController::class, 'all_tours']);
-Route::get('/fetch-tour-filter',  [ToursController::class, 'fetch_data'])->name('fetch-tour-filter');
-Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
-Route::get("/tours/{id}", [ToursController::class, 'profile']);
-Route::post("/bookTours", [ToursController::class, 'bookTours']);
-//getTourByCity
-Route::get("/tourByCity/{id}", [ToursController::class, 'getTourByCity'])->name("tourByCity");
-//removeFavouriteTours
+    Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
+    Route::get('/single-blog/{id}',[ContentController::class, 'singleBlog'])->name('single-blog');
+    Route::get('/contact', [ContentController::class, 'createForm']);
+    Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
+    Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
+    // outocomplete search
+    // Route::get('/autocomplete-search', [HotelsController::class, 'autocompleteSearch']);
+    Route::get('autocomplete', [HotelsController::class, 'autocompleteSearch'])->name('autocomplete');
+    //tours
+    Route::get("/tours", [ToursController::class, 'all_tours']);
+    Route::post("/tours", [ToursController::class, 'all_tours']);
+    Route::get('/fetch-tour-filter',  [ToursController::class, 'fetch_data'])->name('fetch-tour-filter');
+    Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
+    Route::get("/tours/{id}", [ToursController::class, 'profile']);
+    Route::post("/bookTours", [ToursController::class, 'bookTours']);
+    //getTourByCity
+    Route::get("/tourByCity/{id}", [ToursController::class, 'getTourByCity'])->name("tourByCity");
+    //removeFavouriteTours
 
-Route::get("/removeFavouriteTours/{id}", [ToursController::class, 'removeFavourite']);
-//favouriteTours
-Route::get("/favouriteTours/{id}", [ToursController::class, 'favourite']);
-Route::post("/tours/review/add", [ToursController::class, 'add_review']);
+    Route::get("/removeFavouriteTours/{id}", [ToursController::class, 'removeFavourite']);
+    //favouriteTours
+    Route::get("/favouriteTours/{id}", [ToursController::class, 'favourite']);
+    Route::post("/tours/review/add", [ToursController::class, 'add_review']);
 
-//transfer
-Route::get("/transfers", [SiteTransferController::class, 'all_transfer']);
-Route::post("/transfers", [SiteTransferController::class, 'all_transfer']);
-Route::get('/fetch-transfers-filter',  [SiteTransferController::class, 'fetch_data'])->name('fetch-transfers-filter');
-Route::post("/transfers/retrieve", [SiteTransferController::class, 'fetch']);
-Route::post("/bookTransfer", [SiteTransferController::class, 'bookTransfer']);
-//visa
-Route::get("/visa", [VisaDataController::class, 'all_visa']);
-Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas']);
-//dynamicvisatype.fetch
-Route::post('dynamicvisatype/fetch',[VisaDataController::class,'fetchCat'] )->name('dynamicvisatype.fetch');
-//dynamicnationality.fetch
-Route::post('dynamicnationality/fetch',[VisaDataController::class,'fetchNationality'] )->name('dynamicnationality.fetch');
-//dynamicCost
-Route::post('dynamicCost/fetch',[VisaDataController::class,'dynamicCost'] )->name('dynamicCost.fetch');
+    //transfer
+    Route::get("/transfers", [SiteTransferController::class, 'all_transfer']);
+    Route::post("/transfers", [SiteTransferController::class, 'all_transfer']);
+    Route::get('/fetch-transfers-filter',  [SiteTransferController::class, 'fetch_data'])->name('fetch-transfers-filter');
+    Route::post("/transfers/retrieve", [SiteTransferController::class, 'fetch']);
+    Route::post("/bookTransfer", [SiteTransferController::class, 'bookTransfer']);
+    //visa
+    Route::get("/visa", [VisaDataController::class, 'all_visa']);
+    Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas']);
+    //dynamicvisatype.fetch
+    Route::post('dynamicvisatype/fetch',[VisaDataController::class,'fetchCat'] )->name('dynamicvisatype.fetch');
+    //dynamicnationality.fetch
+    Route::post('dynamicnationality/fetch',[VisaDataController::class,'fetchNationality'] )->name('dynamicnationality.fetch');
+    //dynamicCost
+    Route::post('dynamicCost/fetch',[VisaDataController::class,'dynamicCost'] )->name('dynamicCost.fetch');
+    Route::get("/getLocal", function () {
+        return LaravelLocalization::getCurrentLocale();
+    });
+    Route::middleware(['prevent-relogin'])->group(function () {
+        //site-login
+        Route::get("/safer/login", [ContentController::class, 'loginSite'])->name("siteLogin");
+        Route::post("/safer/login", [AuthController::class, 'Login'])->name("ProceedLogin");
 
-Route::middleware(['prevent-relogin'])->group(function () {
-    //site-login
-    Route::get("/safer/login", [ContentController::class, 'loginSite'])->name("siteLogin");
-    Route::post("/safer/login", [AuthController::class, 'Login'])->name("ProceedLogin");
+        //signupSite
+        Route::get("/safer/register", [ContentController::class, 'signupSite'])->name("siteRegister");
 
-    //signupSite
-    Route::get("/safer/register", [ContentController::class, 'signupSite'])->name("siteRegister");
+        Route::post("/safer/register", [AuthController::class, 'Register'])->name("ProceedRegister");
 
-    Route::post("/safer/register", [AuthController::class, 'Register'])->name("ProceedRegister");
+    });
 
-});
+    // Logout
+    Route::get("/safer/logout", [AuthController::class, 'Logout'])->name("siteLogout");
+    // user profile
 
-// Logout
-Route::get("/safer/logout", [AuthController::class, 'Logout'])->name("siteLogout");
-// user profile
+    Route::get("/safer/profile/{id}", [AuthController::class, 'profile'])->name("siteProfile");
+    //updateProfile
+    Route::post("/safer/updateProfile", [AuthController::class, 'updateProfile'])->name("updateProfile");
 
-Route::get("/safer/profile/{id}", [AuthController::class, 'profile'])->name("siteProfile");
-//updateProfile
-Route::post("/safer/updateProfile", [AuthController::class, 'updateProfile'])->name("updateProfile");
+    Route::get('load-rooms-data', [AuthController::class, 'loadMoreData'])->name('load-rooms-data');
 
- Route::get('load-rooms-data', [AuthController::class, 'loadMoreData'])->name('load-rooms-data');
+    //hotelByCity
+    Route::get("/hotelByCity/{id}", [HotelsController::class, 'getHotelByCity'])->name("hotelByCity");
 
-//hotelByCity
-Route::get("/hotelByCity/{id}", [HotelsController::class, 'getHotelByCity'])->name("hotelByCity");
+    //dynamicSearchCity.fetch
+    Route::get('dynamicSearchCity/fetch', [MainController::class,'fetchCity'])->name('dynamicSearchCity.fetch');
 
-//dynamicSearchCity.fetch
-  Route::get('dynamicSearchCity/fetch', [MainController::class,'fetchCity'])->name('dynamicSearchCity.fetch');
+    Route::get("/safer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
+    Route::get("/safer/room/{id}/book/{cap}/exchange", [BookingController::class, 'ExBookRoom'])->name("exBookRoom");
+    Route::get("/terms", [MainController::class, 'terms'])->name("terms");
 
-Route::get("/safer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
-Route::get("/safer/room/{id}/book/{cap}/exchange", [BookingController::class, 'ExBookRoom'])->name("exBookRoom");
-Route::get("/terms", [MainController::class, 'terms'])->name("terms");
+    /**
+     * fast login using social media
+     */
+    //
+    // Facebook
+    Route::prefix('facebook')->name('facebook.')->group( function(){
+        Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');
+        Route::get('callback', [FaceBookController::class, 'callbackFromFacebook'])->name('callback');
+    });
+    // Google
+    Route::prefix('google')->name('google.')->group(function () {
+        Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
+        Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
+    });
+    // End Social Media Login
 
-/**
- * fast login using social media
- */
-//
-// Facebook
-Route::prefix('facebook')->name('facebook.')->group( function(){
-    Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');
-    Route::get('callback', [FaceBookController::class, 'callbackFromFacebook'])->name('callback');
-});
-// Google
-Route::prefix('google')->name('google.')->group(function () {
-    Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
-    Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
-});
-// End Social Media Login
-
-Route::middleware(['is-site-auth'])->group(function () {
-    //Route::get("/safeer/test", [AuthController::class, 'testSessions']);
-    Route::get("/cart", [BookingController::class, 'Cart'])->name("get_cart");
-    Route::post("/Book", [BookingController::class, 'MakeOrder']);
-    Route::get("/cart/visa", [BookingController::class, 'DeleteVisa'])->name("deleteVisa");
-    Route::get("/cart/{id}", [BookingController::class, 'DeleteCartItem'])->name("deleteCartItem");
-    Route::get("/Safer/OrderPlacement/{id}", [BookingController::class, 'SuccessOrder'])->name("successOrder");
+    Route::middleware(['is-site-auth'])->group(function () {
+        //Route::get("/safeer/test", [AuthController::class, 'testSessions']);
+        Route::get("/cart", [BookingController::class, 'Cart'])->name("get_cart");
+        Route::post("/Book", [BookingController::class, 'MakeOrder']);
+        Route::get("/cart/visa", [BookingController::class, 'DeleteVisa'])->name("deleteVisa");
+        Route::get("/cart/{id}", [BookingController::class, 'DeleteCartItem'])->name("deleteCartItem");
+        Route::get("/Safer/OrderPlacement/{id}", [BookingController::class, 'SuccessOrder'])->name("successOrder");
 
 
-});
+    });
 });
 /*------------------------------------------
 --------------------------------------------

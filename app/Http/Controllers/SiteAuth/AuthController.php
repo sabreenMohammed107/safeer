@@ -141,7 +141,7 @@ class AuthController extends Controller
             ];
             Favorite_hotels_tour::create($input);
             session()->forget("AddFavHotel");
-            $redirect_url = '/hotels';
+            $redirect_url = LaravelLocalization::localizeUrl('/hotels');
         } else if (session()->get("RemFavHotel")) {
             $fav = Favorite_hotels_tour::where('hotel_id', session()->get("RemFavHotel"))
             ->where('user_id', session()->get("SiteUser")["ID"])->first();

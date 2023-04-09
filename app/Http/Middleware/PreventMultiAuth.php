@@ -4,8 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Mcamara\LaravelLocalization\Middleware\LaravelLocalizationMiddlewareBase;
 
-class PreventMultiAuth
+class PreventMultiAuth extends LaravelLocalizationMiddlewareBase
 {
     /**
      * Handle an incoming request.
@@ -18,8 +21,11 @@ class PreventMultiAuth
     {
         if(session()->get("SiteUser"))
         {
-            return redirect()->to("/");
+            return redirect()->to(LaravelLocalization::localizeUrl("/"));
         }
+
+        Carbon::setLocale(app('laravellocalization')->getCurrentLocale());
+
         return $next($request);
     }
 }
