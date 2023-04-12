@@ -32,6 +32,31 @@ class Hotel extends Model
 
     ];
 
+
+public static function boot() {
+    parent::boot();
+
+    static::deleting(function($hotel) { // before delete() method call this
+         $hotel->tags()->detach();
+         // do the rest of the cleanup...
+    });
+    static::deleting(function($hotel) { // before delete() method call this
+        $hotel->tags()->detach();
+        // do the rest of the cleanup...
+   });
+    static::deleting(function($hotel) { // before delete() method call this
+        $hotel->reviews()->delete();
+        // do the rest of the cleanup...
+   });
+
+   static::deleting(function($hotel) { // before delete() method call this
+    $hotel->hotel_features()->delete();
+    // do the rest of the cleanup...
+});
+
+
+
+}
     public function city()
     {
         return $this->belongsTo(City::class,'city_id');

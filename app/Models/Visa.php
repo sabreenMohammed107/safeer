@@ -18,7 +18,26 @@ class Visa extends Model
 
     ];
 
+    public static function boot() {
+        parent::boot();
 
+        static::deleting(function($visa) {
+
+             foreach ($visa->details as $detail) {
+                 $detail->delete();
+             }
+
+             foreach ($visa->carts as $cart) {
+                $cart->delete();
+            }
+        });
+    }
+    public function carts(){
+        return $this->hasMany(Cart::class,'visa_id','id');
+    }
+    public function details(){
+        return $this->hasMany(VisaDetails::class,'visa_id','id');
+    }
 
     public function type()
     {

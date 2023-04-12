@@ -18,7 +18,26 @@ class Transfer extends Model
         'currency_id',
 
     ];
+    public static function boot() {
+        parent::boot();
 
+        static::deleting(function($transfer) {
+
+             foreach ($transfer->details as $detail) {
+                 $detail->delete();
+             }
+
+             foreach ($transfer->carts as $cart) {
+                $cart->delete();
+            }
+        });
+    }
+    public function carts(){
+        return $this->hasMany(Cart::class,'transfer_id','id');
+    }
+    public function details(){
+        return $this->hasMany(TransferDetails::class,'transfer_id','id');
+    }
     public function locationFrom()
     {
         return $this->belongsTo(Transfer_location::class,'from_location_id');
