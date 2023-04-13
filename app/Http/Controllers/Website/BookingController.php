@@ -224,8 +224,11 @@ class BookingController extends Controller
                 'cart.visa_id',
                 'cart.item_type',
                 'visa_types.en_type',
+                'visa_types.ar_type',
                 'countries.en_country',
+                'countries.ar_country',
                 'nationalities.en_nationality',
+                'nationalities.ar_nationality',
                 DB::raw('COUNT(cost) as groupped_count, SUM(cost) as sum_costs')
             )
             ->leftJoin("visas", "visas.id", "=", "cart.visa_id")
@@ -238,8 +241,11 @@ class BookingController extends Controller
                 'cart.visa_id',
                 'cart.item_type',
                 'visa_types.en_type',
+                'visa_types.ar_type',
                 'countries.en_country',
+                'countries.ar_country',
                 'nationalities.en_nationality',
+                'nationalities.ar_nationality',
             )
             ->get();
                 // return $GPVisasCost;
