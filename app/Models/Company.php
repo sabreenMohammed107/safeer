@@ -50,6 +50,11 @@ class Company extends Model
     'why_us_artitle',
     'why_us_entext',
     'why_us_artext',
-    'chat_whatsapp'
+    'chat_whatsapp',
+    'login_en_title',
+    'login_ar_title',
+    'login_en_sub_title',
+    'login_ar_sub_title',
+
     ];
 }

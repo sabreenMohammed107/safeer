@@ -41,6 +41,22 @@ public static function boot() {
          $tour->galleries()->delete();
          // do the rest of the cleanup...
     });
+
+    static::deleting(function($tour) { // before delete() method call this
+        $tour->reviews()->delete();
+        // do the rest of the cleanup...
+   });
+
+   static::deleting(function($tour) { // before delete() method call this
+    $tour->details()->delete();
+    // do the rest of the cleanup...
+});
+
+
+static::deleting(function($tour) { // before delete() method call this
+    $tour->carts()->delete();
+    // do the rest of the cleanup...
+});
 }
 
     public function city()
@@ -71,5 +87,14 @@ public static function boot() {
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function details()
+    {
+        return $this->hasMany(TourDetails::class,'tour_id','id');
+    }
+
+    public function carts(){
+        return $this->hasMany(Cart::class,'tour_id','id');
     }
 }

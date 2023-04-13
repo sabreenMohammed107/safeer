@@ -8,15 +8,15 @@
 <!-- start of nav bar  and mega menu -->
 <div class="row mx-0">
     <div class="col-sm-12 col-md-6">
-        <div class="slider_section slider_details">
+        <div class="slider_section slider_details px-5">
             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-            <h1> the best way <br> to plan your  trip around the world   </h1>
-            <p>there are endless  posibilities  when planning your next <br> vacation  so we are waiting  for you to use travelling</p>
+            <h1 class="px-2"> {{ $Company->login_en_title }}  </h1>
+            <p>{{ $Company->login_en_sub_title }}</p>
             @else
 
-            <h1> أفضل طريقة <br> للتخطيط لرحلتك حول العالم </ h1>
-                <p> هناك إمكانيات لا حصر لها عند التخطيط لعطلتك <br> المقبلة ، لذلك نحن في انتظارك لاستخدام السفر </ p>
+            <h1 class="px-2"> {{ $Company->login_ar_title }}</ h1>
+                <p> {{ $Company->login_ar_sub_title }}</ p>
 
 
             @endif

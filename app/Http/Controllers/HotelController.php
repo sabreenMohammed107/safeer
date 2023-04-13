@@ -350,9 +350,9 @@ class HotelController extends Controller
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
 
         } catch (QueryException $q) {
-            // return redirect()->back()->withInput()->with('flash_danger', $q->getMessage());
-            return redirect()->back()->withInput()->with('flash_danger', 'Can’t delete This Row
-            Because it related with another table');
+             return redirect()->back()->withInput()->with('flash_danger', $q->getMessage());
+            // return redirect()->back()->withInput()->with('flash_danger', 'Can’t delete This Row
+            // Because it related with another table');
         }
     }
 

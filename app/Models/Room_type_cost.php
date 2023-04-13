@@ -30,6 +30,23 @@ class Room_type_cost extends Model
     'room_type_id',
     'hotel_id'
     ];
+
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($room) {
+
+
+
+             foreach ($room->carts as $cart) {
+                $cart->delete();
+            }
+        });
+    }
+    public function carts(){
+        return $this->hasMany(Cart::class,'room_type_cost_id','id');
+    }
     public function hotelRooms()
     {
         return $this->belongsTo(Hotel_room::class,'hotel_room_id');

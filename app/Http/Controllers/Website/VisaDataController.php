@@ -72,16 +72,18 @@ class VisaDataController extends Controller
         // $data = Visa_type::where('country_id', $value)->get();
 
         $nationality_ids = Visa::where('visa_type_id',$value)->pluck('nationality_id');
-        $nationalities = Nationality::whereIn('id',$nationality_ids)->get();
+
 
         if (LaravelLocalization::getCurrentLocale() === 'en')
 {
     $output = '<option value="">Select Nationality</option>';
+    $nationalities = Nationality::whereIn('id',$nationality_ids)->orderBy('en_nationality')->get();
     foreach ($nationalities as $row) {
         $output .= '<option value="' . $row->id . '">' . $row->en_nationality . '</option>';
     }
 }else{
     $output = '<option value="">اختر الجنسية</option>';
+    $nationalities = Nationality::whereIn('id',$nationality_ids)->orderBy('ar_nationality')->get();
     foreach ($nationalities as $row) {
         $output .= '<option value="' . $row->id . '">' . $row->ar_nationality . '</option>';
     }
