@@ -187,7 +187,69 @@
                                         <!--end::Input-->
 
 
+{{-- login --}}
+ <!--begin::Input group-->
+ <div class="d-flex flex-wrap gap-5">
+    <!--begin::Input group-->
+    <div class="fv-row w-100 flex-md-root">
+        <!--begin::Label-->
+        <label class="required form-label">Login En  Title</label>
+        <!--end::Label-->
+        <!--begin::Input-->
+        <input type="text" required name="login_en_title"
+            class="form-control mb-2" placeholder=" En  Title"
+            value="{{ $company->login_en_title }}" />
 
+
+    </div>
+    <!--end::Input-->
+
+    <!--begin::Input group-->
+    <div class="fv-row w-100 flex-md-root">
+        <!--begin::Label-->
+        <label class="required form-label">Login Ar  Title</label>
+        <!--end::Label-->
+        <!--begin::Input-->
+        <input type="text" name="login_ar_title" class="form-control mb-2"
+            placeholder=" Ar  title"
+            value="{{ $company->login_ar_title }}" />
+
+
+    </div>
+</div>
+<!--end::Input-->
+ <!--begin::Input group-->
+ <div class="d-flex flex-wrap gap-5">
+    <!--begin::Input group-->
+    <div class="fv-row w-100 flex-md-root">
+        <!--begin::Label-->
+        <label class="required form-label">Login En Sub Title</label>
+        <!--end::Label-->
+        <!--begin::Input-->
+        <input type="text" required name="login_en_sub_title"
+            class="form-control mb-2" placeholder=" En Sub Title"
+            value="{{ $company->login_en_sub_title }}" />
+
+
+    </div>
+    <!--end::Input-->
+
+    <!--begin::Input group-->
+    <div class="fv-row w-100 flex-md-root">
+        <!--begin::Label-->
+        <label class="required form-label"> Login Ar Sub Title</label>
+        <!--end::Label-->
+        <!--begin::Input-->
+        <input type="text" name="login_ar_sub_title" class="form-control mb-2"
+            placeholder=" Ar Sub title"
+            value="{{ $company->login_ar_sub_title }}" />
+
+
+    </div>
+</div>
+<!--end::Input-->
+
+{{-- endlogin --}}
 
 
                                         <!--begin::Input group-->
