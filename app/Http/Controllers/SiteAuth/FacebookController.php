@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class FaceBookController extends Controller
 {
@@ -59,9 +60,9 @@ class FaceBookController extends Controller
             AuthController::LoginProcess($saveUser);
             //Auth::loginUsingId($saveUser->id);
 
-            return redirect()->to("/");
+            return redirect()->to(LaravelLocalization::localizeUrl("/"));
         } catch (\Throwable $th) {
-            return redirect()->to("/")->with("session-danger", "Facebook Authentication Failed!");
+            return redirect()->to(LaravelLocalization::localizeUrl("/"))->with("session-danger", "Facebook Authentication Failed!");
             throw $th;
         }
     }

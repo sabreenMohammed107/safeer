@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class GoogleController extends Controller
 {
@@ -54,9 +55,9 @@ class GoogleController extends Controller
 
             AuthController::LoginProcess($saveUser);
 
-            return redirect()->to("/");
+            return redirect()->to(LaravelLocalization::localizeUrl("/"));
         } catch (\Throwable $th) {
-            redirect()->to("/");
+            redirect()->to(LaravelLocalization::localizeUrl("/"));
             throw $th;
         }
     }
