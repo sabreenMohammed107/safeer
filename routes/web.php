@@ -141,11 +141,11 @@ Route::group([
     Route::get("/visa", [VisaDataController::class, 'all_visa']);
     Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas']);
     //dynamicvisatype.fetch
-    Route::post('dynamicvisatype/fetch',[VisaDataController::class,'fetchCat'] )->name('dynamicvisatype.fetch');
+    Route::get('dynamicvisatype/fetch',[VisaDataController::class,'fetchCat'] )->name('dynamicvisatype.fetch');
     //dynamicnationality.fetch
-    Route::post('dynamicnationality/fetch',[VisaDataController::class,'fetchNationality'] )->name('dynamicnationality.fetch');
+    Route::get('dynamicnationality/fetch',[VisaDataController::class,'fetchNationality'] )->name('dynamicnationality.fetch');
     //dynamicCost
-    Route::post('dynamicCost/fetch',[VisaDataController::class,'dynamicCost'] )->name('dynamicCost.fetch');
+    Route::get('dynamicCost/fetch',[VisaDataController::class,'dynamicCost'] )->name('dynamicCost.fetch');
     Route::get("/getLocal", function () {
         return LaravelLocalization::getCurrentLocale();
     });

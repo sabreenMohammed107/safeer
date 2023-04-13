@@ -64,7 +64,12 @@ class VisaController extends Controller
     public function store(Request $request)
     {
         $input = $request->except(['_token']);
+        if ($request->has('active')) {
 
+            $input['active'] = '1';
+        } else {
+            $input['active'] = '0';
+        }
         Visa::create($input);
         return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
 
@@ -105,7 +110,12 @@ class VisaController extends Controller
     public function update(Request $request, $id)
     {
         $input = $request->except(['_token']);
+        if ($request->has('active')) {
 
+            $input['active'] = '1';
+        } else {
+            $input['active'] = '0';
+        }
         Visa::findOrFail($id)->update($input);
         return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
 

@@ -15,6 +15,7 @@ class Visa extends Model
         'currency_id',
         'en_notes',
         'ar_notes',
+        'active',
 
     ];
 

@@ -125,6 +125,22 @@
 
                                         </div>
 
+                                        <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-8">
+                                <div
+                                    class="form-check form-switch form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox"
+                                        name="active[]" value="1"
+                                        id="flexSwitchDefault2"
+                                        checked />
+                                    <label class="form-check-label"
+                                        for="flexSwitchDefault2">
+                                        Active
+                                    </label>
+                                </div>
+                            </div>
+                            <!--end::Input group-->
+
  <!--end::Input group-->
  {{-- <div class="d-flex flex-wrap gap-5">
  <div class="fv-row w-100 flex-md-root">

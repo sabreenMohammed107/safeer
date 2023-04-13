@@ -43,24 +43,46 @@ class VisaDataController extends Controller
 
         // $data = Visa_type::where('country_id', $value)->get();
 
-        $visa_type_ids = Visa::pluck('visa_type_id');
-        $data = Visa_type::whereIn('id', $visa_type_ids)->where('country_id', $value)->get();
-        if (LaravelLocalization::getCurrentLocale() === 'en')
-        {
-            $output = '<option value="">Select Visa Type</option>';
+        $visa_type_ids = Visa::where('active',1)->pluck('visa_type_id');
+        //check active && 1
+        $nationality_ids = Visa::where('active',1)->whereIn('visa_type_id',$visa_type_ids)
+        ->pluck('nationality_id');
 
-        foreach ($data as $row) {
-            $output .= '<option value="' . $row->id . '">' . $row->en_type . '</option>';
-        }
-        }else{
-            $output = '<option value="">اختر نوع الفيزا</option>';
+if( count($nationality_ids) >= 1){
+    $data = Visa_type::whereIn('id', $visa_type_ids)->where('country_id', $value)->get();
+    if (LaravelLocalization::getCurrentLocale() === 'en')
+    {
+        $output = '<option value="">Select Visa Type</option>';
 
-        foreach ($data as $row) {
-            $output .= '<option value="' . $row->id . '">' . $row->ar_type . '</option>';
-        }
-        }
+    foreach ($data as $row) {
+        $output .= '<option value="' . $row->id . '">' . $row->en_type . '</option>';
+    }
+    }else{
+        $output = '<option value="">اختر نوع الفيزا</option>';
 
-        echo $output;
+    foreach ($data as $row) {
+        $output .= '<option value="' . $row->id . '">' . $row->ar_type . '</option>';
+    }
+    }
+
+
+}
+else{
+    if (LaravelLocalization::getCurrentLocale() === 'en')
+    {
+        $output = '<option value="">No Visa Type Found</option>';
+
+
+
+    }else{
+        $output = '<option value="">لا يوجد  نوع الفيزا</option>';
+
+
+    }
+
+
+}
+echo $output;
     }
 
     public function fetchNationality(Request $request)
@@ -71,7 +93,7 @@ class VisaDataController extends Controller
 
         // $data = Visa_type::where('country_id', $value)->get();
 
-        $nationality_ids = Visa::where('visa_type_id',$value)->pluck('nationality_id');
+        $nationality_ids = Visa::where('active',1)->where('visa_type_id',$value)->pluck('nationality_id');
 
 
         if (LaravelLocalization::getCurrentLocale() === 'en')

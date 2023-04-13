@@ -91,7 +91,7 @@
 
                                 <th class="text-end min-w-100px">cost</th>
                                 <th class="text-end min-w-100px">Nationality</th>
-
+                                <th class="text-end min-w-100px">Active</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
                             <!--end::Table row-->
@@ -140,6 +140,14 @@
         <!--end::Price=-->
         <td class="text-end pe-0">
             <span class="fw-bolder text-dark">{{ $row->nationality->en_nationality ?? '' }}</span>
+        </td>
+
+        <td class="text-end pe-0">
+            @if($row->active == 1)
+            <span class="fw-bolder text-success">Yes</span>
+        @else
+        <span class="fw-bolder text-danger">No</span>
+        @endif
         </td>
         <!--begin::Action=-->
         <td class="text-end">

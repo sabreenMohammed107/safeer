@@ -402,7 +402,7 @@ Passenger Name
 
                     $.ajax({
                         url: "{{ route('dynamicvisatype.fetch') }}",
-                        method: "POST",
+                        method: "get",
                         data: {
                             select: select,
                             value: value,
@@ -434,7 +434,7 @@ Passenger Name
 
                     $.ajax({
                         url: "{{ route('dynamicnationality.fetch') }}",
-                        method: "POST",
+                        method: "get",
                         data: {
                             select: select,
                             value: value,
@@ -466,7 +466,7 @@ Passenger Name
 
                     $.ajax({
                         url: "{{ route('dynamicCost.fetch') }}",
-                        method: "POST",
+                        method: "get",
                         data: {
                             select: select,
                             nationality: value,
