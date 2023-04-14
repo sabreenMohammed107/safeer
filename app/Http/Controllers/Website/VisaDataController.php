@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Website;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Visa;
 use App\Models\Company;
 use App\Models\Country;
-use App\Models\Nationality;
-use App\Models\Visa;
 use App\Models\Visa_type;
+use App\Models\Nationality;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Lang as Lang;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;

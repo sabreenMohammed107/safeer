@@ -247,43 +247,7 @@
 
 
         </div>
-        <div class="row mx-0  mb-3">
-            @isset($branches[1])
-                <div class="col-md-6 col-sm-12">
-                    <iframe src="{{ $branches[1]->google_map }}" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <div class="offices_info">
-                        <div class="help_info">
-                            <h6>
-                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                {{ $branches[1]->branch_enname }}
 
-                @else
-                {{ $branches[1]->branch_arname }}
-                @endif
-                            </h6>
-                            <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                {{ $branches[1]->detailed_address_en }}
-                                @else
-                                {{ $branches[1]->detailed_address_ar }}
-                                @endif</span>
-                            {{-- <span> new york NY 10010</span> --}}
-                            <span> phone :<br> {!! $branches[1]->phone !!}</span>
-                            {{-- <span>fax:{{ $branches[1]->fax }}</span> --}}
-                            <span>email:{{ $branches[1]->email }}</span>
-                        </div>
-                    </div>
-                </div>
-
-            @endisset
-
-
-
-
-        </div>
 
     </section>
 

@@ -763,6 +763,77 @@
                                             </div>
                                         </div>
                                         {{-- END ABOUT --}}
+                                        {{-- visa data --}}
+                                         <!--begin::Input group-->
+                                         <div class="d-flex flex-wrap gap-5 mt-4">
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="required form-label"> Visa video En Title</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" required name="visa_en_title"
+                                                    class="form-control mb-2" placeholder=" En Title"
+                                                    value="{{ $company->visa_en_title }}" />
+
+
+                                            </div>
+                                            <!--end::Input-->
+
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="required form-label">Visa video Ar Title</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" name="visa_ar_title" class="form-control mb-2"
+                                                    placeholder=" Ar title" value="{{ $company->visa_ar_title }}" />
+
+
+                                            </div>
+                                        </div>
+                                         <!--begin::Input group-->
+                                         <div class="d-flex flex-wrap gap-5">
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="form-label">Visa video En Desc</label>
+                                                <!--end::Label-->
+                                                <!--begin::Editor-->
+                                                <textarea class="form-select form-select-solid" id="kt_docs_tinymce_basic" name="visa_en_text">{{ $company->visa_en_text }}</textarea>
+                                                <!--end::Editor-->
+
+                                            </div>
+                                            <!--end::Input group-->
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="form-label">Visa video Ar Desc</label>
+                                                <!--end::Label-->
+                                                <!--begin::Editor-->
+                                                <textarea class="form-select form-select-solid" id="kt_docs_tinymce_basic2" name="visa_ar_text">{{ $company->visa_ar_text }}</textarea>
+                                                <!--end::Editor-->
+
+                                            </div>
+                                            <!--end::Input group-->
+
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-5">
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="required form-label"> Visa video (embed youtube)</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="text" required name="visa_vedio"
+                                                    class="form-control mb-2" placeholder="  Visa video embed youtube"
+                                                    value="{{ $company->visa_vedio }}" />
+
+
+                                            </div>
+                                            <!--end::Input-->
+                                        </div>
+                                        {{-- end visa data --}}
                                         <div class="d-flex flex-wrap gap-5">
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
