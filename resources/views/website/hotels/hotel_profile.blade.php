@@ -1018,7 +1018,7 @@ if(isset($arrayData['result'])){
                     success: function(result){
                         if(result.errors)
                         {
-                            alert(result.errors)
+
 
                             $('.alert-danger').html('');
 
@@ -1029,7 +1029,7 @@ if(isset($arrayData['result'])){
                         }
                         else
                         {
-                            alert('no')
+
                             $('.alert-danger').hide();
                             $('#exampleModal').modal('hide');
                         }

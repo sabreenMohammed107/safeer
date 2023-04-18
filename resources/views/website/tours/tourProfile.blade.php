@@ -815,7 +815,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     success: function(result){
                         if(result.errors)
                         {
-                            alert(result.errors)
+
 
                             $('.alert-danger').html('');
 
@@ -826,7 +826,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                         else
                         {
-                            alert('no')
+
                             $('.alert-danger').hide();
                             $('#exampleModal').modal('hide');
                         }
