@@ -873,12 +873,13 @@ if(isset($arrayData['result'])){
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
+                    <div class="alert alert-danger" style="display:none"></div>
                     <form action="{{ LaravelLocalization::localizeUrl("/hotels/review/add") }}" method="POST">
                         @csrf
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel"> {{ __('links.addComment') }}</h5>
-                            <input type="hidden" name="hotel_id" value="{{$Hotel->id}}" />
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <input type="hidden" id="hotel_id" name="hotel_id" value="{{$Hotel->id}}" />
+                            <button type="button"  @if (LaravelLocalization::getCurrentLocale() === 'ar') style="margin: unset;" @endif class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="rating" id="rating_stars">
@@ -890,7 +891,7 @@ if(isset($arrayData['result'])){
                                 <input type="hidden" value="0" name="rate_val" />
                             </div>
                             <div class="form-floating comment_input">
-                                <textarea class="form-control" name="review_text" placeholder=" @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                <textarea class="form-control" id="review_text" name="review_text" placeholder=" @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                 Leave a comment here
                                 @else
@@ -898,9 +899,25 @@ if(isset($arrayData['result'])){
                                 @endif"
                                    style="height: 100px"></textarea>
                             </div>
+                            <div class="form-floating my-1">
+                                <div class="captcha">
+                                    <span>{!! captcha_img() !!}</span>
+                                    <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                        &#x21bb;
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-floating my-1">
+                                <input id="captcha" type="text" class="form-control" required placeholder="{{ __('links.enterCapcha') }}" name="captcha">
+                                @if ($errors->has('captcha'))
+                                <div class="error">
+                                    {{ $errors->first('captcha') }}
+                                </div>
+                            @endif
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary comment_pop_btn">{{ __('links.addComment') }} </button>
+                            <button type="button" class="btn btn-primary comment_pop_btn" id="formSubmit" >{{ __('links.addComment') }} </button>
                         </div>
                     </form>
                 </div>
@@ -981,6 +998,50 @@ if(isset($arrayData['result'])){
 @section('adds_js')
 <script>
     $(document).ready(function() {
+        $('#formSubmit').click(function(e){
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ url('/hotels/review/add') }}",
+                    method: 'get',
+                    data: {
+
+        review_text: $('#review_text').val(),
+        rate_val: $('#rate_val').val(),
+        hotel_id: $('#hotel_id').val(),
+        captcha: $('#captcha').val(),
+                    },
+                    success: function(result){
+                        if(result.errors)
+                        {
+                            alert(result.errors)
+
+                            $('.alert-danger').html('');
+
+                            $.each(result.errors, function(key, value){
+                                $('.alert-danger').show();
+                                $('.alert-danger').append('<li>'+value+'</li>');
+                            });
+                        }
+                        else
+                        {
+                            alert('no')
+                            $('.alert-danger').hide();
+                            $('#exampleModal').modal('hide');
+                        }
+                    }
+                });
+            });
+
+
+
+
+
+
 
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

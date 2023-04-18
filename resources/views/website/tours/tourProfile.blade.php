@@ -489,7 +489,7 @@
 
             @endif  </h5>
         <section class="booking_hotels_section container">
-            <form action="{{ LaravelLocalization::localizeUrl('/bookTours') }}" method="POST">
+            <form action="{{ LaravelLocalization::localizeUrl('/bookTours') }}" id="formSubmit"  method="POST">
                 @csrf
                 <input type="hidden" name="tour_id" value="{{ $Tour->id }}">
                 <div class="hotel_details">
@@ -670,7 +670,7 @@
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">{{ __('links.addComment') }} </h5>
                                 <input type="hidden" name="tour_id" value="{{ $Tour->id }}" />
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                <button type="button" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="margin: unset;" @endif class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -690,6 +690,22 @@
                                   اترك تعليقك هنا
                                     @endif " id="floatingTextarea2"
                                         style="height: 100px"></textarea>
+                                </div>
+                                <div class="form-floating my-1">
+                                    <div class="captcha">
+                                        <span>{!! captcha_img() !!}</span>
+                                        <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                            &#x21bb;
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-floating my-1">
+                                    <input id="captcha" type="text" class="form-control" required placeholder="{{ __('links.enterCapcha') }}" name="captcha">
+                                    @if ($errors->has('captcha'))
+                                    <div class="error">
+                                        {{ $errors->first('captcha') }}
+                                    </div>
+                                @endif
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -779,10 +795,47 @@ document.addEventListener('DOMContentLoaded', function () {
 	jQuery('#start_date, #end_date, #birth_date').datepicker().datepicker('setDate', new Date());
 });
         $(document).ready(function() {
-            // $('.datepicker').datepicker({
-            //     "setDate": new Date(),
-            //     "autoclose": true
-            // });
+            $('#formSubmit').click(function(e){
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ url('/tours/review/add') }}",
+                    method: 'get',
+                    data: {
+
+        review_text: $('#review_text').val(),
+        rate_val: $('#rate_val').val(),
+        tour_id: $('#tour_id').val(),
+        captcha: $('#captcha').val(),
+                    },
+                    success: function(result){
+                        if(result.errors)
+                        {
+                            alert(result.errors)
+
+                            $('.alert-danger').html('');
+
+                            $.each(result.errors, function(key, value){
+                                $('.alert-danger').show();
+                                $('.alert-danger').append('<li>'+value+'</li>');
+                            });
+                        }
+                        else
+                        {
+                            alert('no')
+                            $('.alert-danger').hide();
+                            $('#exampleModal').modal('hide');
+                        }
+                    }
+                });
+            });
+
+
+
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)

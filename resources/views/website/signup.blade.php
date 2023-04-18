@@ -65,6 +65,23 @@
                   <input type="text" name="phone" value="{{session('Data')? session('Data')['phone'] : ""}}" class="form-control" id="exampleFormControlInput2" placeholder="{{ __('links.phone') }}*" required>
                   <input type="text" name="email" value="{{session('Data')? session('Data')['email'] : ""}}" class="form-control" id="exampleFormControlInput3" placeholder="{{ __('links.email') }}  *" required>
                   <input type="password" name="password" class="form-control" id="exampleFormControlInput4" placeholder=" {{ __('links.password') }}*" required>
+                  <div class="form-group mb-4">
+                    <div class="captcha">
+                        <span>{!! captcha_img() !!}</span>
+                        <button type="button" class="btn btn-danger" class="reload" id="reload">
+                            &#x21bb;
+                        </button>
+                    </div>
+                </div>
+                {{-- <div class="form-group mb-4"> --}}
+                    <input id="captcha" type="text" class="form-control" required placeholder="{{ __('links.enterCapcha') }}" name="captcha">
+                    @if ($errors->has('captcha'))
+                    <div class="error">
+                        {{ $errors->first('captcha') }}
+                    </div>
+                @endif
+                {{-- </div> --}}
+
                   <button type="submit" class="btn sign_button">{{ __('links.signin_up2') }} </button>
                   <div class="remember">
                     <input required class="form-check-input" type="checkbox" class="checked_input" value="" id="flexCheckDefault">
@@ -129,4 +146,20 @@
       </div>
     </div>
  </div>
+@endsection
+
+@section('adds_js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $('#reload').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'reload-captcha-register',
+            success: function (data) {
+                $(".captcha span").html(data.captcha);
+            }
+        });
+    });
+</script>
 @endsection

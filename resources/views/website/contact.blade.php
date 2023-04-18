@@ -150,12 +150,21 @@
               </div>
 
             @endif
+            @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div><br />
+        @endif
             <form action="{{ route('contact.store') }}" method="post">
                 @csrf
                 <div class="row mx-0">
                     <div class="col-md-12 col-xl-6 col-sm-12">
                         <div class="mb-3">
-                            <input type="text" name="name"
+                            <input type="text" name="name" value="{{ old('name') }}"
                                 class="form-control {{ $errors->has('name') ? 'error' : '' }}" id="name"
                                 placeholder="{{ __('links.name') }}
                                 *" required>
@@ -167,7 +176,7 @@
                         </div>
                         <div class="mb-3">
                             <input type="email" class="form-control {{ $errors->has('email') ? 'error' : '' }}"
-                                name="email" id="email" placeholder=" {{ __('links.email') }}
+                                name="email"  value="{{ old('email') }}" id="email" placeholder=" {{ __('links.email') }}
                                 *" required>
                             @if ($errors->has('email'))
                                 <div class="error">
@@ -176,7 +185,7 @@
                             @endif
                         </div>
                         <div class="mb-3">
-                            <input type="number" class="form-control {{ $errors->has('phone') ? 'error' : '' }}"
+                            <input type="number" value="{{ old('phone') }}" class="form-control {{ $errors->has('phone') ? 'error' : '' }}"
                                 name="phone" id="phone" placeholder="{{ __('links.mobile') }}
                                 *" required>
                             @if ($errors->has('phone'))
@@ -190,13 +199,29 @@
                         <div class="mb-3">
                             <textarea class="form-control{{ $errors->has('message') ? 'error' : '' }}" name="message" id="message" rows="3"
                                 placeholder="{{ __('links.send_msg') }}
-                                * " required></textarea>
+                                * " required>value="{{ old('message') }}"</textarea>
                             @if ($errors->has('message'))
                                 <div class="error">
                                     {{ $errors->first('message') }}
                                 </div>
                             @endif
                         </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <div class="captcha">
+                            <span>{!! captcha_img() !!}</span>
+                            <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                &#x21bb;
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <input id="captcha" type="text" class="form-control" required placeholder="{{ __('links.enterCapcha') }}" name="captcha">
+                        @if ($errors->has('captcha'))
+                        <div class="error">
+                            {{ $errors->first('captcha') }}
+                        </div>
+                    @endif
                     </div>
                     <div class="col-12">
                         <div class="mb-3 mt-3">
@@ -252,4 +277,17 @@
     </section>
 
     <!--  ending page  -->
+@endsection
+@section('adds_js')
+<script type="text/javascript">
+    $('#reload').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'reload-captcha',
+            success: function (data) {
+                $(".captcha span").html(data.captcha);
+            }
+        });
+    });
+</script>
 @endsection

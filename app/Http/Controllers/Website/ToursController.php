@@ -15,6 +15,7 @@ use App\Models\Tour_type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang as Lang;
+use Validator;
 class ToursController extends Controller
 {
 /*
@@ -258,6 +259,21 @@ class ToursController extends Controller
 
     public function add_review(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+
+            'review_text' => 'required',
+            'captcha' => 'required|captcha',
+
+
+        ], [
+
+            'captcha.captcha' => Lang::get('links.captcha_captcha'),
+        ]);
+
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
         $Rev = new Review();
         $Rev->review_text = $request->review_text;
         $Rev->review_stars = $request->rate_val;
@@ -271,7 +287,9 @@ class ToursController extends Controller
 
         $Rev->save();
 
-        return redirect()->back();
+        // return redirect()->back();
+        return response()->json(['success'=>Lang::get('links.contactMsg')]);
+
     }
 
 }

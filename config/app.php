@@ -200,6 +200,7 @@ return [
 
         /* Socialite For Fast Login Using Social Media Accounts */
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
     ],
 
     /*
@@ -218,6 +219,7 @@ return [
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Helper' => App\Helpers\Helper::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ])->toArray(),
 
 ];

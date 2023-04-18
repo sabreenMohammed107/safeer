@@ -318,4 +318,6 @@ return [
 'firstName' =>'الاسم الاول',
 'lastName' =>'الاسم الاخير ',
 'submitProfile' =>' حفظ التعديلات',
+'enterCapcha' =>' ادخل رمز التحقق ',
+
 ];

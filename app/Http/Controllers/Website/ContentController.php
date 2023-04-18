@@ -15,6 +15,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Concat;
 use Illuminate\Support\Facades\Lang as Lang;
+use Validator;
 class ContentController extends Controller
 {
     public function about()
@@ -104,19 +105,33 @@ $whyUss=Why_us::all();
     public function ContactUsForm(Request $request)
     {
         // Form validation
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required',
             'phone' => 'required',
-
+            'captcha' => 'required|captcha',
             'message' => 'required',
+
+        ], [
+
+            'captcha.captcha' => Lang::get('links.captcha_captcha'),
         ]);
+        if ($validator->fails()) {
+
+            return redirect()->back()->withInput()
+                ->withErrors($validator->messages());
+
+        }
         //  Store data in database
           Contact::create($request->all());
         //
-        return back()->with('flash_success',Lang::get('links.contactMsg'));
+        return back() ->withInput($request->input())->with('flash_success',Lang::get('links.contactMsg'));
     }
-
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img()]);
+    }
 
     public function loginSite(){
         if(session()->get("_previous")){

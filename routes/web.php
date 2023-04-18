@@ -101,7 +101,7 @@ Route::group([
     //removeFavourite
     Route::get("/removeFavourite/{id}", [HotelsController::class, 'removeFavourite']);
     Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
-    Route::post("/hotels/review/add", [HotelsController::class, 'add_review']);
+    Route::get("/hotels/review/add", [HotelsController::class, 'add_review']);
     Route::get('/fetch-hotel-filter',  [HotelsController::class, 'fetch_data'])->name('fetch-hotel-filter');
     //new Routes 23-11
     Route::get("/about", [ContentController::class, 'about']);
@@ -112,6 +112,7 @@ Route::group([
     Route::get('/contact', [ContentController::class, 'createForm']);
     Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
     Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
+    Route::get('/reload-captcha', [ContentController::class, 'reloadCaptcha']);
     // outocomplete search
     // Route::get('/autocomplete-search', [HotelsController::class, 'autocompleteSearch']);
     Route::get('autocomplete', [HotelsController::class, 'autocompleteSearch'])->name('autocomplete');
@@ -129,7 +130,7 @@ Route::group([
     Route::get("/removeFavouriteTours/{id}", [ToursController::class, 'removeFavourite']);
     //favouriteTours
     Route::get("/favouriteTours/{id}", [ToursController::class, 'favourite']);
-    Route::post("/tours/review/add", [ToursController::class, 'add_review']);
+    Route::get("/tours/review/add", [ToursController::class, 'add_review']);
 
     //transfer
     Route::get("/transfers", [SiteTransferController::class, 'all_transfer']);
@@ -160,6 +161,7 @@ Route::group([
         Route::post("/safer/register", [AuthController::class, 'Register'])->name("ProceedRegister");
 
     });
+        Route::get('/safer/reload-captcha-register', [ContentController::class, 'reloadCaptcha']);
 
     // Logout
     Route::get("/safer/logout", [AuthController::class, 'Logout'])->name("siteLogout");
