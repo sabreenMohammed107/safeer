@@ -448,13 +448,13 @@
                         </a>
                     </h5>
                     <p>
+
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                        {!! $AllBlogs[0]->en_text !!}
+                        {!! \Illuminate\Support\Str::limit($AllBlogs[0]->en_text ?? '', $limit = 300, $end = '...') !!}
                         @else
-                        {!! $AllBlogs[0]->ar_text !!}
+                        {!! \Illuminate\Support\Str::limit($AllBlogs[0]->ar_text ?? '', $limit = 300, $end = '...') !!}
                         @endif
-
                     </p>
                     <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}"   >
                         {{ __('links.readMore') }} <i class="fa-solid fa-angle-right"></i>
