@@ -451,9 +451,9 @@
 
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                        {!! \Illuminate\Support\Str::limit($AllBlogs[0]->en_text ?? '', $limit = 300, $end = '...') !!}
+                        {!! \Illuminate\Support\Str::limit($AllBlogs[0]->en_text ?? '', $limit = 800, $end = '...') !!}
                         @else
-                        {!! \Illuminate\Support\Str::limit($AllBlogs[0]->ar_text ?? '', $limit = 300, $end = '...') !!}
+                        {!! \Illuminate\Support\Str::limit($AllBlogs[0]->ar_text ?? '', $limit = 800, $end = '...') !!}
                         @endif
                     </p>
                     <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}"   >
@@ -486,9 +486,9 @@
                            <p>
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                            {!! \Illuminate\Support\Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...') !!}
+                            {{ strip_tags(\Illuminate\Support\Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }}
                             @else
-                            {!! \Illuminate\Support\Str::limit($AllBlogs[$i]->ar_text ?? '', $limit = 300, $end = '...') !!}
+                            {{ strip_tags(\Illuminate\Support\Str::limit($AllBlogs[$i]->ar_text ?? '', $limit = 300, $end = '...')) }}
                             @endif
 
                             </p>
