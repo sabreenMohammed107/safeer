@@ -233,7 +233,7 @@ return [
 'useful'=>'روابط تهمك',
 // home page
 'explore'=>'اكتشف',
-'turkey'=>'تركيا',
+'turkey'=>'العالم',
 'readMore'=>'اقرأ المزيد',
 'bestHotels'=>'أفضل الفنادق',
 'nights'=>'ليالى',

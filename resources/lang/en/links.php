@@ -224,7 +224,7 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'useful'=>'useful links',
 // home page
 'explore'=>'Explore',
-'turkey'=>'Turkey',
+'turkey'=>'The World',
 'readMore'=>'Read more',
 'bestHotels'=>'best hotels',
 'nights'=>'nights',

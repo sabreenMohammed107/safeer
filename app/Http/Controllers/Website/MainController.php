@@ -19,7 +19,7 @@ class MainController extends Controller
     public function index()
     {
         $Company = Company::first();
-        $ExploreCities = Explore_city::where("active","=", 1)->take(5)->get();
+        $ExploreCities = Explore_city::where("active","=", 1)->get();
         $Offers = Offer::where("active","=", 1)->get();
         $Counters = Counter::get();
         $Countries = Country::where('id',1)->get();
