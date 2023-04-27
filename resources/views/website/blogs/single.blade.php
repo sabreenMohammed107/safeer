@@ -82,7 +82,13 @@
                     @endif </h6>
                 @foreach ($latest as $obj)
                 <div class="blog_details">
-                    <img src="{{ asset('uploads/blogs') }}/{{$obj->image}}" alt="latest blog image">
+                    <img src="{{ asset('uploads/blogs') }}/{{$obj->image}}" alt="latest blog image"
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                       style="margin-right: 20px;margin-left: 0;"
+                @else
+                style="margin-left: 20px;margin-right: 0;"
+                @endif  >
                     <div class="blog_info">
                       <h6> <a href="{{url('/single-blog/'.$obj->id) }}" class="stretched-link">
 
