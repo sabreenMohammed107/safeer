@@ -18,7 +18,7 @@ switch ($offers->count()) {
       $Map = [5,7,6,6,6,6];
       break;
   default:
-  $Map = [12,0,0,0,0,0];
+  $Map = [5,7,6,6,6,6];
       break;
 }
 @endphp
