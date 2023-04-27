@@ -437,7 +437,7 @@
                   </div>
                   <div class="blog_info">
                     <h5 class="left_heading">
-                        <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}">
+                        <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$AllBlogs[0]->id.'/'.$AllBlogs[0]->slug) }}">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                             {!! $AllBlogs[0]->en_title !!}
@@ -456,7 +456,7 @@
                         {!! \Illuminate\Support\Str::limit($AllBlogs[0]->ar_text ?? '', $limit = 800, $end = '...') !!}
                         @endif
                     </p>
-                    <a href="{{url('/single-blog/'.$AllBlogs[0]->id) }}"   >
+                    <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$AllBlogs[0]->id.'/'.$AllBlogs[0]->slug) }}"   >
                         {{ __('links.readMore') }} <i class="fa-solid fa-angle-right"></i>
                     </a>
                   </div>
@@ -473,7 +473,7 @@
                          </div>
                          <div class="blog_info">
                            <h5>
-                            <a href="{{url('/single-blog/'.$AllBlogs[$i]->id) }}">
+                            <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$AllBlogs[$i]->id.'/'.$AllBlogs[$i]->slug) }}">
 
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
@@ -492,7 +492,7 @@
                             @endif
 
                             </p>
-                           <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$AllBlogs[$i]->id) }}" >
+                           <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$AllBlogs[$i]->id.'/'.$AllBlogs[$i]->slug) }}" >
                             {{ __('links.readMore') }} <i class="fa-solid fa-angle-right"></i>
                            </a>
                          </div>
@@ -519,7 +519,7 @@
                         </div>
                         <div class="blog_info">
                             <h5 class="left_heading">
-                                <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id) }}">
+                                <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}">
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                     {!! $blog->en_title !!}
@@ -540,7 +540,7 @@
                                 @endif
 
                             </p>
-                            <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id) }}" >
+                            <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" >
                                 {{ __('links.readMore') }}<i class="fa-solid fa-angle-right"></i>
                             </a>
                         </div>
@@ -589,7 +589,7 @@
 
 
                             </p>
-                           <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$category_blog->id) }}" >
+                           <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$category_blog->id.'/'.$category_blog->slug) }}" >
                             {{ __('links.readMore') }} <i class="fa-solid fa-angle-right"></i>
                            </a>
                          </div>

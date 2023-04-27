@@ -63,7 +63,7 @@
                         <div class="blog_details">
                             <img src="{{ asset('uploads/blogs') }}/{{ $obj->image }}" alt="latest blog image">
                             <div class="blog_info">
-                                <h6> <a href="{{ LaravelLocalization::localizeUrl('/single-blog/' . $obj->id) }}" class="stretched-link">
+                                <h6> <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$obj->id.'/'.$obj->slug) }}" class="stretched-link">
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                     {{ strip_tags(Str::limit($obj->en_title ?? '', $limit = 50, $end = '')) }}

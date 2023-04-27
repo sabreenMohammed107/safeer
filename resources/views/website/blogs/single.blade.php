@@ -90,7 +90,7 @@
                 style="margin-left: 20px;margin-right: 0;"
                 @endif  >
                     <div class="blog_info">
-                      <h6> <a href="{{url('/single-blog/'.$obj->id) }}" class="stretched-link">
+                      <h6> <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" class="stretched-link">
 
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 

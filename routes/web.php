@@ -108,7 +108,7 @@ Route::group([
     Route::get("/blogs", [ContentController::class, 'blogs']);
 
     Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
-    Route::get('/single-blog/{id}',[ContentController::class, 'singleBlog'])->name('single-blog');
+    Route::get('/single-blog/{id}/{slug?}',[ContentController::class, 'singleBlog'])->name('single-blog');
     Route::get('/contact', [ContentController::class, 'createForm']);
     Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
     Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);

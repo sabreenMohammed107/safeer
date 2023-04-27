@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Blog extends Model
 {
@@ -23,5 +25,15 @@ class Blog extends Model
     {
         return $this->belongsTo(Blogs_category::class, 'blog_category_id');
     }
+    public function getSlugAttribute(): string
+    {
+        if( LaravelLocalization::getCurrentLocale() === "en"){
+            return str_slug($this->en_title);
 
+        }else{
+            return urlencode($this->ar_title);
+            // return Str::slug($this->ar_title)==""?strtolower(urlencode($this->ar_title)):Str::slug($this->ar_title);
+
+        }
+    }
 }

@@ -7,7 +7,7 @@
                     <img src="{{ asset('uploads/blogs') }}/{{$blog->image}}" alt=" blogimage">
                     <div class="card-body hotel_card_info">
                         <div class="card_info">
-                            <h5><a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id) }}" class="stretched-link">
+                            <h5><a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" class="stretched-link">
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                 {{$blog->en_title ?? ''}}

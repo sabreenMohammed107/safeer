@@ -700,7 +700,7 @@
                                     </div>
                                 </div>
                                 <div class="form-floating my-1">
-                                    <input id="captcha" type="text" class="form-control" required placeholder="{{ __('links.enterCapcha') }}" name="captcha">
+                                    <input id="captcha" type="text" class="form-control"  placeholder="{{ __('links.enterCapcha') }}" name="captcha">
                                     @if ($errors->has('captcha'))
                                     <div class="error">
                                         {{ $errors->first('captcha') }}
