@@ -88,9 +88,9 @@
 
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                        {{ strip_tags(Str::limit($obj->ar_title ?? '', $limit = 50, $end = '')) }}
+                        {{ strip_tags(Str::limit($obj->en_title ?? '', $limit = 50, $end = '')) }}
                 @else
-                {{ strip_tags(Str::limit($obj->en_title ?? '', $limit = 50, $end = '')) }}
+                {{ strip_tags(Str::limit($obj->ar_title ?? '', $limit = 50, $end = '')) }}
                 @endif
 
                     </a></h6>
