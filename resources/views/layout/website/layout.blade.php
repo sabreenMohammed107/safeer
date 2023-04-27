@@ -36,7 +36,9 @@
     <meta property="image:alt" content="Safer - Online hub for booking  trourism trips" />
     <meta name="keywords"
         content="hotels tours transfer visa contact trip destination adults child nights checkin room explore adventure experience offers travel packages agents acitivties hotel  transfer honemoon safari pharonic newsletter   " />
-    <!-- style sheets  -->
+
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- style sheets  -->
     <!-- fontawesome  -->
     <link rel="stylesheet" href="{{ asset('/website_assets/css/all.min.css') }}">
     <!-- fonts google -->
