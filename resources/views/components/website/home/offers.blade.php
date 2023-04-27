@@ -1,4 +1,5 @@
 @php
+dd($offers->count());
 switch ($offers->count()) {
   case 0:
       $Map = [12,0,0,0,0,0];
