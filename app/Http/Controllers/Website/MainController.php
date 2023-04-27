@@ -26,7 +26,7 @@ class MainController extends Controller
         $cities=City::where('country_id',1)->get();
         $BestHotels = Best_hotel::where('active','=',1)->orderBy("order")->get();
         $BlogsCategories = Blogs_category::all();
-        $AllBlogs = Blog::take(4)->get();
+        $AllBlogs = Blog::take(4)->orderBy("id","desc")->get();
         return view("website.home",
             [
                 "Company" => $Company,

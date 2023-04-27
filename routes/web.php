@@ -306,7 +306,12 @@ Route::middleware(['auth', 'user-access:manager'])->group(function () {
 
     Route::get('/manager/home', [HomeController::class, 'managerHome'])->name('manager.home');
 });
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
 
+    return "Cache cleared successfully";
+ });
 /*-----------------------------------------------
 mcmr cash
 ---------------------------------------------------
