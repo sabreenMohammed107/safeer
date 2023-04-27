@@ -1,5 +1,5 @@
 @php
-dd($offers->count());
+
 switch ($offers->count()) {
   case 0:
       $Map = [12,0,0,0,0,0];
@@ -18,6 +18,7 @@ switch ($offers->count()) {
       $Map = [5,7,6,6,6,6];
       break;
   default:
+  $Map = [12,0,0,0,0,0];
       break;
 }
 @endphp
