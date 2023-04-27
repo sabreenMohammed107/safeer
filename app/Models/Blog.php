@@ -32,7 +32,7 @@ class Blog extends Model
 
         }else{
             // return urlencode($this->ar_title);
-            // return Str::slug($this->ar_title)==""?strtolower(urlencode($this->ar_title)):Str::slug($this->ar_title);
+             return Str::slug($this->ar_title)==""?strtolower(urlencode($this->ar_title)):Str::slug($this->ar_title);
 
         }
     }
