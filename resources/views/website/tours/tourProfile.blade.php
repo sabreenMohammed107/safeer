@@ -159,7 +159,7 @@
                 @else
                     <div class="col-sm-12 col-xl-12">
             @endif
-            <div class="tour_info px-2">
+            <div class="tour_info px-3">
                 <div class="titles">
                     <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
 

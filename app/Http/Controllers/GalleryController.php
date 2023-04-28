@@ -59,19 +59,43 @@ class GalleryController extends Controller
      */
     public function store(StoreGalleryRequest $request)
     {
-        $input = $request->except(['_token','img']);
-        if ($request->hasFile('img')) {
-            $attach_image = $request->file('img');
+        // $input = $request->except(['_token','img']);
+        // if ($request->hasFile('img')) {
+        //     $attach_image = $request->file('img');
 
-            $input['img'] = $this->UplaodImage($attach_image);
-        }
-        if ($request->has('active')) {
+        //     $input['img'] = $this->UplaodImage($attach_image);
+        // }
+        // if ($request->has('active')) {
 
-            $input['active'] = '1';
-        } else {
-            $input['active'] = '0';
+        //     $input['active'] = '1';
+        // } else {
+        //     $input['active'] = '0';
+        // }
+        // Gallery::create($input);
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+              $input=[];
+                $name = $file->getClientOriginalName();
+
+
+                // Rename The Image ..
+                $imageName = $name;
+                $uploadPath = public_path('uploads/galleries');
+
+                // Move The image..
+                $file->move($uploadPath, $imageName);
+                //save in DB
+                if ($request->has('active')) {
+
+                    $input['active'] = '1';
+                } else {
+                    $input['active'] = '0';
+                }
+                $input['img'] = $imageName;
+                $input['hotel_id'] =$request->get('hotel_id');
+                Gallery::create($input);
+            }
         }
-        Gallery::create($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
 
