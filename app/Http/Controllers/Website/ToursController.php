@@ -188,6 +188,7 @@ class ToursController extends Controller
 
     public function bookTours(Request $request)
     {
+
         if(!session()->get("SiteUser")){
             $sessionTourBook = [
                 // 'ID' => $request->id,

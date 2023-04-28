@@ -257,7 +257,9 @@
                                                 @endif </span>
                       </div>
                       <a href="{{ LaravelLocalization::localizeUrl('/hotels/' . $Hotel->hotel->id) }}">
-                      <p>
+                      <p style="height: 130px;
+                      overflow: hidden;
+                      line-height: 2;">
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                         {{$Hotel->hotel->hotel_enbrief}}

@@ -489,7 +489,7 @@
 
             @endif  </h5>
         <section class="booking_hotels_section container">
-            <form action="{{ LaravelLocalization::localizeUrl('/bookTours') }}" id="formSubmit"  method="POST">
+            <form action="{{ LaravelLocalization::localizeUrl('/bookTours') }}"   method="POST">
                 @csrf
                 <input type="hidden" name="tour_id" value="{{ $Tour->id }}">
                 <div class="hotel_details">
