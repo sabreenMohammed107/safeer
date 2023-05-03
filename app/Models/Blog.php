@@ -27,14 +27,16 @@ class Blog extends Model
     }
     public function getSlugAttribute(): string
     {
-        if( LaravelLocalization::getCurrentLocale() === "en"){
-            return str_slug($this->en_title);
+        // if( LaravelLocalization::getCurrentLocale() === "en"){
+        //     return str_slug($this->en_title);
 
-        }else{
-            //  return urlencode($this->ar_title);
-             return rawurlencode($this->ar_title);
-            //  return Str::slug($this->ar_title)==""?strtolower(urlencode($this->ar_title)):Str::slug($this->ar_title);
+        // }else{
+        //     //  return urlencode($this->ar_title);
+        //      return rawurlencode($this->ar_title);
+        //     //  return Str::slug($this->ar_title)==""?strtolower(urlencode($this->ar_title)):Str::slug($this->ar_title);
 
-        }
+        // }
+
+        return str_slug($this->en_title);
     }
 }
