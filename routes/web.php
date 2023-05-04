@@ -232,7 +232,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
 
           Route::get('autocompleteKeywords', [HotelController::class, 'autocompleteSearch'])->name('autocompleteKeywords');
 
-          Route::post('dynamicdependentCat/fetch',[HotelController::class,'fetchCat'] )->name('dynamicdependentCat.fetch');
+          Route::post('dynamicdependentCat/fetch',[MainController::class,'fetchCat'] )->name('dynamicdependentCat.fetch');
          //editingRooms
 
             Route::post('editingRooms',[HotelController::class,'editingRooms'] )->name('editingRooms');

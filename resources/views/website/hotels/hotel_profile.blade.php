@@ -344,8 +344,8 @@ if(isset($arrayData['result'])){
 
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
-                            <select class="form-select" name="country_id" aria-label="Default select example">
-                                @foreach ($Countries as $Country)
+                            <select class="form-select dynamic" id="country" name="country_id"
+                            aria-label="Default select example">                                @foreach ($Countries as $Country)
                                     <option value="{{ $Country->id }}"
                                         @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['country_id'] == $Country->id ? 'selected' : '' }} @endif>
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -365,8 +365,8 @@ if(isset($arrayData['result'])){
 
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
-                            <select class="form-select" name="city_id" aria-label="Default select example">
-                                @foreach ($Cities as $city)
+                            <select class="form-select" id="city_id" name="city_id"
+                                            aria-label="Default select example">                                @foreach ($Cities as $city)
                                     <option value="{{ $city->id }}"
                                         @if (session()->has('sessionArr')) {{ Session::get('sessionArr')['city_id'] == $city->id ? 'selected' : '' }} @endif>
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -998,6 +998,29 @@ if(isset($arrayData['result'])){
 @section('adds_js')
 <script>
     $(document).ready(function() {
+        $('.dynamic').change(function() {
+
+if ($(this).val() != '') {
+    var select = $(this).attr("id");
+    var value = $(this).val();
+
+
+    $.ajax({
+        url: "{{route('dynamicSearchCity.fetch')}}",
+        method: "get",
+        data: {
+            select: select,
+            value: value,
+
+        },
+        success: function(result) {
+
+            $('#city_id').html(result);
+        }
+
+    })
+}
+});
         $('#formSubmit').click(function(e){
                 e.preventDefault();
                 $.ajaxSetup({

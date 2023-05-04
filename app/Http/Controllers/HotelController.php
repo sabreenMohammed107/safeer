@@ -19,6 +19,8 @@ use File;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class HotelController extends Controller
 {
@@ -410,10 +412,28 @@ class HotelController extends Controller
         $value = $request->get('value');
 
         $data = City::where('country_id', $value)->get();
-        $output = '<option value="">Select City</option>';
+        if (LaravelLocalization::getCurrentLocale() === 'en')
+        {
+
+            $output = '<option value=""> Select City</option>';
         foreach ($data as $row) {
-            $output .= '<option value="' . $row->id . '">' . $row->en_city . '</option>';
+            if(session()->has('sessionArr')){
+                $output = '<option value="'.Session::get('sessionArr')['city_id'].'" selected >' . $row->en_city . '</option>';
+            }
+            $output .= '<option value="' . $row->id . '" >' . $row->en_city . '</option>';
         }
+
+
+        }else{
+            $output = '<option value="">اختر المدينة</option>';
+        foreach ($data as $row) {
+            if(session()->has('sessionArr')){
+                $output = '<option value="'.Session::get('sessionArr')['city_id'].'" selected >' . $row->ar_city . '</option>';
+            }
+            $output .= '<option value="' . $row->id . '">' . $row->ar_city . '</option>';
+        }
+        }
+
         echo $output;
     }
 /**
