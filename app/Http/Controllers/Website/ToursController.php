@@ -193,7 +193,7 @@ class ToursController extends Controller
             $sessionTourBook = [
                 // 'ID' => $request->id,
                 'tour_id' => $request->tour_id,
-                'tour_date' => $request->tour_date,
+                'tour_date' => date_format(date_create($request->tour_date), "Y-m-d"),
                 'adultsNumber' => $request->adultsNumber,
                 'childNumber' => $request->childNumber,
                 'ages' => $request->ages,
