@@ -57,10 +57,10 @@ class FaceBookController extends Controller
                 'facebook_id' => $saveUser->facebook_id,
             ]);
 
-            AuthController::LoginProcess($saveUser);
+            return AuthController::LoginProcess($saveUser);
             //Auth::loginUsingId($saveUser->id);
 
-            return redirect()->to(LaravelLocalization::localizeUrl("/"));
+            //return redirect()->to(LaravelLocalization::localizeUrl("/"));
         } catch (\Throwable $th) {
             return redirect()->to(LaravelLocalization::localizeUrl("/"))->with("session-danger", "Facebook Authentication Failed!");
             throw $th;
