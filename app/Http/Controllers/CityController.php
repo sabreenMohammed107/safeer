@@ -35,7 +35,7 @@ class CityController extends Controller
     public function index()
     {
         $rows = City::orderBy("created_at", "Desc")->get();
-        $countries = Country::where('id',2)->get();
+        $countries = Country::whereIn('id',[1,5])->get();
 
         return view($this->viewName . 'index', compact(['rows', 'countries']));
     }
@@ -59,7 +59,7 @@ class CityController extends Controller
     public function store(Request $request)
     {
         $input = $request->except(['_token']);
-        $input['country_id']=1;
+        // $input['country_id']=1;
         City::create($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
@@ -95,7 +95,7 @@ class CityController extends Controller
     {
 
         $input = $request->except(['_token','city_id']);
-        $input['country_id']=1;
+        // $input['country_id']=1;
         City::findOrFail($request->get('city_id'))->update($input);
         // $specialzation->update($input);
 

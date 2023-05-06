@@ -50,8 +50,8 @@ class HotelsController extends Controller
             ->where([["hotel_id", "=", $id]])
 
             ->get();
-            $Countries = Country::where('id',1)->get();
-            $Cities=City::where('country_id',1)->get();
+            $Countries =Country::whereIn('id',[1,5])->get();
+            $Cities=City::get();
         \Log::info($RoomCosts->count());
         return view("website.hotels.hotel_profile", [
             "Company" => $Company,
@@ -73,8 +73,8 @@ class HotelsController extends Controller
         $arr = explode(' |', $request->from_date);
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-        $Countries = Country::where('id',1)->get();
-        $Cities = City::all();
+        $Countries = Country::whereIn('id',[1,5])->get();
+        $Cities = City::where('country_id',$request->country_id)->get();
         $zones = Zone::all();
         //data of hotels
         $Hotels = Hotel::all();
@@ -138,8 +138,8 @@ class HotelsController extends Controller
 
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-        $Countries = Country::where('id',1)->get();
-        $Cities = City::all();
+        $Countries = Country::whereIn('id',[1,5])->get();
+        $Cities = City::where('country_id',1)->get();
         $zones = Zone::all();
          //data of hotels
         $Hotels = Hotel::all();
@@ -183,8 +183,8 @@ class HotelsController extends Controller
 
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-        $Countries = Country::where('id',1)->get();
-        $Cities = City::all();
+        $Countries = Country::whereIn('id',[1,5])->get();
+        $Cities = City::where('country_id',1)->get();
         $zones = Zone::all();
             //data of hotels
         $Hotels = Hotel::all();

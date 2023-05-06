@@ -269,7 +269,7 @@
                                                         <!--end::Input group-->
 
 
-  {{-- <div>
+  <div>
    <label class="fs-6 fw-bold form-label mt-3">
     <option value="">Select a Country...</option>
     <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i>
@@ -278,14 +278,12 @@
 <select name="country_id"  required aria-label="Select a Country" data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_new_targetEdit{{$row->id}}" class="form-select form-select-solid fw-bolder">
     <option value="" ></option>
     @foreach($countries as $country)
-    <option value="{{$country->id}}" {{2 == $country->id ? 'selected': ''}}> @if (LaravelLocalization::getCurrentLocale() === 'en')
+    <option value="{{$country->id}}" {{$city->country_id == $country->id ? 'selected': ''}}>
         {{ $country->en_country }}
-    @else
-        {{ $country->dt_country }}
-    @endif</option>
+    </option>
     @endforeach
 </select>
-</div> --}}
+</div>
 <!--end::Input group-->
 
                                                         <!--begin::Actions-->
@@ -405,7 +403,7 @@
 
 
 		<!--begin::Input group-->
-        {{-- <div class="fv-row mb-7">
+         <div class="fv-row mb-7">
 
             <label class="fs-6 fw-bold form-label mt-3">
                 <option value="">Select Country..</option>
@@ -416,14 +414,11 @@
                 <option value="" ></option>
                 @foreach($countries as $country)
                 <option value="{{$country->id}}"  >
-                    @if (LaravelLocalization::getCurrentLocale() === 'en')
                     {{ $country->en_country }}
-                @else
-                    {{ $country->dt_country }}
-                @endif</option>
+               </option>
                 @endforeach
             </select>
-        </div> --}}
+        </div>
         <!--end::Input group-->
 
 

@@ -38,7 +38,7 @@ class ToursController extends Controller
             ->groupBy(["en_category", "features_categories.id"])->get();
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
-        $Countries = Country::where('id',1)->get();
+        $Countries = Country::whereIn('id',[1,5])->get();
         $Cities = City::where('country_id', 1)->get();
         return view("website.tours.tourProfile", [
             "Company" => $Company,
