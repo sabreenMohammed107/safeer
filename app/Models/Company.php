@@ -58,7 +58,8 @@ class Company extends Model
     'visa_en_title',
     'visa_ar_title',
     'visa_en_text',
-    'visa_ar_text'
+    'visa_ar_text',
+
 
     ];
 }
