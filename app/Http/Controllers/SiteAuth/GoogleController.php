@@ -53,9 +53,9 @@ class GoogleController extends Controller
             ]);
 
 
-            AuthController::LoginProcess($saveUser);
+            return AuthController::LoginProcess($saveUser);
 
-            return redirect()->to(LaravelLocalization::localizeUrl("/"));
+            // return redirect()->to(LaravelLocalization::localizeUrl("/"));
         } catch (\Throwable $th) {
             redirect()->to(LaravelLocalization::localizeUrl("/"));
             throw $th;

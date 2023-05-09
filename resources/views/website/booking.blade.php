@@ -594,10 +594,10 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <label class="form-check-label" for="flexCheckChecked">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                            I agree to all <a href="{{url('/terms')}}">Terms and Conditions</a> of Safer
+                            I agree to all <a href="{{url('/terms')}}" target="_blank">Terms and Conditions</a> of Safer
 
                             @else
-                            أوافق على جميع <a href="{{url('/terms')}}"> بنود وشروط </a> Safer
+                            أوافق على جميع <a href="{{url('/terms')}}" target="_blank"> بنود وشروط </a> Safer
                             @endif
                         </label>
                     </div>

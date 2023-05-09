@@ -61,7 +61,7 @@ class AuthController extends Controller
     public static function LoginProcess(SiteUser $User)
     {
         $redirect_url =LaravelLocalization::localizeUrl('/');
-        // $redirect_url = "/";
+        // $redirect_url = "/cart";
         if (session()->get("cartItem")) {
             if(session()->get("cartItem")["itemType"] == ItemType::ROOM) {
                 $CartItem = Cart::where([["user_id", '=', $User->id],['item_type','=',ItemType::ROOM]])->first();
