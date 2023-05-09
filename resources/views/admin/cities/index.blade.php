@@ -278,7 +278,7 @@
 <select name="country_id"  required aria-label="Select a Country" data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_new_targetEdit{{$row->id}}" class="form-select form-select-solid fw-bolder">
     <option value="" ></option>
     @foreach($countries as $country)
-    <option value="{{$country->id}}" {{$city->country_id == $country->id ? 'selected': ''}}>
+    <option value="{{$country->id}}" {{$row->country_id == $country->id ? 'selected': ''}}>
         {{ $country->en_country }}
     </option>
     @endforeach
