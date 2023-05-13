@@ -534,9 +534,9 @@
                             <p>
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                            {{ strip_tags(\Illuminate\Support\Str::limit($category_blog->en_text ?? '', $limit = 300, $end = '...')) }}
+                            {{ strip_tags(\Illuminate\Support\Str::limit($blog->en_text ?? '', $limit = 300, $end = '...')) }}
                             @else
-                            {{ strip_tags(\Illuminate\Support\Str::limit($category_blog->ar_text ?? '', $limit = 300, $end = '...')) }}
+                            {{ strip_tags(\Illuminate\Support\Str::limit($blog->ar_text ?? '', $limit = 300, $end = '...')) }}
                             @endif
 
                             </p>
@@ -577,14 +577,11 @@
                            </h5>
                            <p>
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            {!! \Illuminate\Support\Str::limit($category_blog->en_text ?? '', $limit = 300, $end = '...') !!}
 
-
-                @else
-                {!! \Illuminate\Support\Str::limit($category_blog->ar_text ?? '', $limit = 300, $end = '...') !!}
-
-                @endif
-
+                            {{ strip_tags(\Illuminate\Support\Str::limit($category_blog->en_text ?? '', $limit = 300, $end = '...')) }}
+                            @else
+                            {{ strip_tags(\Illuminate\Support\Str::limit($category_blog->ar_text ?? '', $limit = 300, $end = '...')) }}
+                            @endif
 
 
 
