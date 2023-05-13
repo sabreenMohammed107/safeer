@@ -453,9 +453,9 @@
 
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                        {!! \Illuminate\Support\Str::limit($AllBlogs[0]->en_text ?? '', $limit = 800, $end = '...') !!}
+                        {!! strip_tags(\Illuminate\Support\Str::limit($AllBlogs[0]->en_text ?? '', $limit = 800, $end = '...')) !!}
                         @else
-                        {!! \Illuminate\Support\Str::limit($AllBlogs[0]->ar_text ?? '', $limit = 800, $end = '...') !!}
+                        {!! strip_tags(\Illuminate\Support\Str::limit($AllBlogs[0]->ar_text ?? '', $limit = 800, $end = '...')) !!}
                         @endif
                     </p>
                     <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$AllBlogs[0]->id.'/'.$AllBlogs[0]->slug) }}"   >
