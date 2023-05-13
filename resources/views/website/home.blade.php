@@ -515,12 +515,12 @@
                 @foreach ($Category->blogs as $k => $blog)
                     @if ($k == 0)
                     <div class="col-sm-12 col-md-12 col-xl-6">
-                        <div class="blog_side">
-                        <div class="blog_image left_image" style="background-image: url({{asset("/website_assets/images/homePage/blog/{$blog->image}")}});">
-
-                        </div>
-                        <div class="blog_info">
-                            <h5 class="left_heading">
+                        <div class="blog_side_right">
+                            <div class="blog_image ">
+                              <img width="150" src="{{ asset('uploads/blogs') }}/{{$blog->image}}" alt="blog image">
+                            </div>
+                            <div class="blog_info">
+                            <h5 class="">
                                 <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}">
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
 
@@ -534,12 +534,10 @@
                             <p>
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                                {!! \Illuminate\Support\Str::limit($blog->en_text ?? '', $limit = 300, $end = '...') !!}
-
-                                @else
-                                {!! \Illuminate\Support\Str::limit($blog->ar_text ?? '', $limit = 300, $end = '...') !!}
-
-                                @endif
+                            {{ strip_tags(\Illuminate\Support\Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }}
+                            @else
+                            {{ strip_tags(\Illuminate\Support\Str::limit($AllBlogs[$i]->ar_text ?? '', $limit = 300, $end = '...')) }}
+                            @endif
 
                             </p>
                             <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" >
@@ -578,14 +576,13 @@
                             </a>
                            </h5>
                            <p>
+
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            {!! \Illuminate\Support\Str::limit($category_blog->en_text ?? '', $limit = 300, $end = '...') !!}
 
-
-                @else
-                {!! \Illuminate\Support\Str::limit($category_blog->ar_text ?? '', $limit = 300, $end = '...') !!}
-
-                @endif
+                            {{ strip_tags(\Illuminate\Support\Str::limit($category_blog->en_text ?? '', $limit = 300, $end = '...')) }}
+                            @else
+                            {{ strip_tags(\Illuminate\Support\Str::limit($category_blog->ar_text ?? '', $limit = 300, $end = '...')) }}
+                            @endif
 
 
 
