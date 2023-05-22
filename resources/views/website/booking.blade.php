@@ -110,7 +110,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label"> {{ __('links.cName') }} </label>
 
-                          <input type="text" name="adultsNames[]" required class="form-control" placeholder="{{ __('links.cName') }}">
+                          <input type="text" name="adultsNames[]" required value="{{session()->get("SiteUser")["Name"]}}" class="form-control" placeholder="{{ __('links.cName') }}">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">{{ __('links.mobile') }}</label>
@@ -135,7 +135,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             <input type="text" name="adultsSal[]" required class="form-control" placeholder="{{ __('links.mr') }} " aria-label="First name">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
-                            <label  class="form-label">{{ __('links.cname') }} </label>
+                            <label  class="form-label">{{ __('links.cName') }} </label>
 
                           <input type="text" name="adultsNames[]" required class="form-control" placeholder="{{ __('links.cName') }} ">
                         </div>
@@ -182,6 +182,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                                 I agree to all <a href="{{url('/terms')}}">Terms and Conditions</a> of Safer
                             </label>
                         </div> --}}
+                        <input type="hidden" name="cart_id" value="{{$RoomCost->id}}" />
                         <input type="hidden" name="hotel_id" value="{{$RoomCost->hotel_id}}" />
                         <input type="hidden" name="from_date" value="{{$RoomCost->from_date}}" />
                         <input type="hidden" name="to_date" value="{{$RoomCost->to_date}}" />
@@ -194,6 +195,9 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <input type="hidden" name="food_bev_type" value="{{$RoomCost->food_bev_type}}" />
                         <input type="hidden" name="room_cost" value="{{$Cost}}" />
                         <input type="hidden" name="total_cost" value="{{$TotalCost}}" />
+                        <input type="hidden" name="paid_num" value="{{$PaidChildren}}" />
+                        <input type="hidden" name="room_id" value="{{$RoomCost->room_type_cost_id}}" />
+                        <input type="hidden" name="room_cap" value="{{$RoomCost->room_cap}}" />
                         <input type="hidden" name="user_id" value="{{$RoomCost->user_id}}" />
                         <input type="hidden" name="child_free_age_from" value="{{$RoomCost->child_free_age_from}}" />
                         <input type="hidden" name="child_free_age_to" value="{{$RoomCost->child_free_age_to}}" />
@@ -241,7 +245,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label  class="form-label">{{ __('links.cName') }} </label>
 
-                        <input type="text" name="tour_adults_name[{{$index}}][]" required class="form-control" placeholder="{{ __('links.cName') }} ">
+                        <input type="text" name="tour_adults_name[{{$index}}][]"  value="{{session()->get("SiteUser")["Name"]}}" required class="form-control" placeholder="{{ __('links.cName') }} ">
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label  class="form-label">{{ __('links.mobile') }} </label>
@@ -251,7 +255,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <div class="col-sm-12 col-md-8">
                         <label  class="form-label">{{ __('links.email') }} </label>
 
-                        <input type="text" name="tour_adults_email[{{$index}}][]" required class="form-control" placeholder="{{ __('links.email') }} ">
+                        <input type="text" name="tour_adults_email[{{$index}}][]" required class="form-control"  value="{{session()->get("SiteUser")["Email"]}}" placeholder="{{ __('links.email') }} ">
                     </div>
                     <div class="col-sm-12 col-md-8">
                         <label  class="form-label">{{ __('links.pickupP') }}</label>
@@ -279,7 +283,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <input type="text" name="tour_adults_name[{{$index}}][]" required class="form-control" placeholder="{{ __('links.cName') }} ">
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label  class="form-label">{{ __('links.mobile') }} =</label>
+                        <label  class="form-label">{{ __('links.mobile') }}</label>
 
                         <input type="text" name="tour_adults_mobile[{{$index}}][]" required class="form-control" placeholder="{{ __('links.mobile') }} ">
                     </div>
@@ -335,6 +339,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     @endphp
                     <input type="hidden" name="tour_total_cost[{{$index}}]" value="{{$TourTotalCost[$index]}}" />
                     <input type="hidden" name="tour_cost[{{$index}}]" value="{{$Tour->tour_person_cost}}" />
+                    <input type="hidden" name="tour_ages[{{$index}}]" value="{{$Tour->ages}}" />
                 </div>
             </div>
             @endforeach
@@ -399,7 +404,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">{{ __('links.cName') }} </label>
 
-                            <input type="text" name="transferName" class="form-control" required="required" placeholder="{{ __('links.cName') }}">
+                            <input type="text" name="transferName"  value="{{session()->get("SiteUser")["Name"]}}" class="form-control" required="required" placeholder="{{ __('links.cName') }}">
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-4">
                             <label  class="form-label">{{ __('links.mobile') }} </label>
@@ -409,12 +414,12 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <div class="col-sm-12">
                             <label  class="form-label">{{ __('links.email') }} </label>
 
-                            <input type="email" name="transferEmail"  class="form-control" required="required" placeholder="{{ __('links.email') }}">
+                            <input type="email" name="transferEmail" value="{{session()->get("SiteUser")["Email"]}}"  class="form-control" required="required" placeholder="{{ __('links.email') }}">
                         </div>
                         <div class="col-sm-12">
                             <label  class="form-label">{{ __('links.job') }}</label>
 
-                            <input type="text" name="transferJob" class="form-control" required="required" placeholder="{{ __('links.job') }}">
+                            <input type="text" name="transferJob" class="form-control" placeholder="{{ __('links.job') }}">
                         </div>
                         <div class="col-sm-12">
                             <label  class="form-label">{{ __('links.hotel') }}</label>
@@ -625,7 +630,9 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
 إيصال حجز الفندق
                     @endif</p>
                 <div class="booking_info_card">
-                    <div class="text-end mb-3"><a class="del-hotel delete_trash" href="{{url("/cart/$RoomCost->id")}}"><i class="fa-solid fa-trash"></i></a></div>
+                    <div class="text-end mb-3">
+                        <a class="del-hotel delete_trash" href="{{url("/cart/$RoomCost->id")}}"><i class="fa-solid fa-trash"></i></a>
+                    </div>
                     <div class="booking_info_card_info">
                         <div class="info_image">
                             <img src="{{ asset('uploads/hotels') }}/{{ $RoomCost->hotel_banner }}" alt=" blogimage" />
@@ -1100,6 +1107,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
     });
 </script>
 <script>
+    let localization = "{{LaravelLocalization::getCurrentLocale()}}"
     $(document).ready(function(){
         // $('.transfer_date').datepicker();
         var _minDate = "{{($TransferCost)? $TransferCost->transfer_date : ""}}"
@@ -1115,18 +1123,22 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
         var elem = $(this);
         console.log($(this).attr("href"));
                 var obj = $.confirm({
-            title: 'Are you sure?',
-            content: "This is a confirmation regarding your action to delete a cart item.",
+            title: localization === "en" ? 'Are you sure?' : 'هل أنت متأكد؟',
+            content: localization === "en" ? 'This is a confirmation regarding your action to delete a cart item.' : 'هذا تأكيد بخصوص إجراءك لحذف عنصر من عربة التسوق.',
             buttons: {
                 confirm: {
+                    text: localization === "en" ? 'Confirm' : 'تأكيد',
                     action: function () {
                         window.location.href = elem.attr("href");
                     },
                     btnClass: 'btn-blue',
-                    },
-                cancel: function () {
-                    //
                 },
+                cancel:{
+                    text: localization === "en" ? 'Cancel' : 'إلغاء',
+                    action: function () {
+                        obj.close();
+                    },
+                }
             }
         });
 

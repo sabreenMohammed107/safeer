@@ -402,15 +402,18 @@ text-right
 
 <script>
 
-
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate() + 1);
 
         $(document).ready(function() {
+
             // $('.transfer_date').datepicker().datepicker('setDate', new Date());
             flatpickr(".transfer_date", {
     enableTime: true,
     dateFormat: "Y-m-d H:i",
 
-    defaultDate: new Date(date),
+    defaultDate: startDate,
+    minDate: startDate,
 });
 //
             var arr = [];
@@ -574,7 +577,8 @@ $(".CarModels_id").change(function(){
     enableTime: true,
     dateFormat: "Y-m-d H:i",
 
-    defaultDate: new Date(date),
+    defaultDate: startDate,
+    minDate: startDate,
 });
                     // $('#selectSort option[value="'+selection+'"]').prop('selected', true);
                 },
@@ -613,7 +617,8 @@ $(".CarModels_id").change(function(){
     enableTime: true,
     dateFormat: "Y-m-d H:i",
 
-    defaultDate: new Date(date),
+    defaultDate: startDate,
+    minDate: startDate,
 });
 
             },

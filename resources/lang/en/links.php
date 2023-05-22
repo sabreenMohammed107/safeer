@@ -12,8 +12,7 @@ return [
   'ar' => 'عربى',
   'how_register'=>'How it works',
   'joinNow'=>'Join Us Now',
-  'wait'=>'Moments and you will be taken back to the home page
- ...  ',
+  'wait'=>'Moments and you will be taken back to the home page...  ',
  'register_message'=>'Successfully Registered',
  'welcome'=>'Welcome',
  'password'=>'Password',
@@ -109,9 +108,7 @@ return [
 'why_us'=>'Why Abgad?',
 
 /*-----contact page -----------------*/
-'contact_text'=>'We aim to reach you at anytime and everywhere. Your satisfaction  is our mission and your comfortability is our vision.
-<br>
-Please contact us for any complaints and inquiries.',
+'contact_text'=>'We aim to reach you at anytime and everywhere. Your satisfaction  is our mission and your comfortability is our vision.<br>Please contact us for any complaints and inquiries.',
 'central_office'=>'Central Office',
 'open_hour'=>'Opening Hours',
 'open'=>'Open',
@@ -291,7 +288,7 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'single'=>'Single',
 'double'=>'Double',
 'triple'=>'Triple',
-'Salutation'=>'Salutation',
+'salutation'=>'Salutation',
 'cName'=>'Name',
 'mr'=>'MR',
 'notes'=>'Notes',

@@ -10,6 +10,7 @@ use App\Models\OrderDetails;
 use App\Models\Orders;
 use App\Models\OrderPersons;
 use App\Models\RoomDetails;
+use App\Models\Room_type_cost;
 use App\Models\SiteUser;
 use App\Models\Tour;
 use App\Models\TourDetails;
@@ -93,6 +94,7 @@ class BookingController extends Controller
         $RoomCost = DB::table("cart")
             ->select(
                 'cart.user_id',
+                'cart.room_type_cost_id',
                 'cart.id',
                 'cart.room_cap',
                 'cart.adults_count',
@@ -300,6 +302,30 @@ class BookingController extends Controller
             $order->save();
 
             if ($request->adultsSal && $request->adultsSal[0]) {
+                $Cost = 0;
+                $ChildrenCost = 0;
+                $FreeChildren = 0;
+                $PaidChildren = 0;
+                $room = Room_type_cost::find($request->room_id);
+                $cartitem = Cart::find($request->cart_id);
+                if($cartitem->children_count){
+                    $ages = explode(",", $cartitem->ages);
+
+                    for ($i=0; $i < $cartitem->children_count; $i++) {
+                        if($ages[$i] >= $room->child_free_age_from && $ages[$i] <= $room->child_free_age_to){
+                            $FreeChildren++;
+                        }else{
+                            $PaidChildren++;
+                        }
+                    }
+                }
+                if ($request->room_cap == 1) {
+                    $Cost = $room->single_cost;
+                } else if ($request->room_cap == 2) {
+                    $Cost = $room->double_cost;
+                } elseif ($request->room_cap == 3) {
+                    $Cost = $room->triple_cost;
+                }
                 $orderDetails = new OrderDetails();
                 $orderDetails->order_id = $order->id;
                 $orderDetails->holder_salutation = $request->adultsSal[0];
@@ -314,15 +340,17 @@ class BookingController extends Controller
                 $RoomDetail->room_type = $request->room_type;
                 $RoomDetail->room_view = $request->room_view;
                 $RoomDetail->food_bev_type = $request->food_bev_type;
-                $RoomDetail->room_cost = $request->room_cost;
-                $RoomDetail->total_cost = $request->total_cost;
+                $RoomDetail->room_cost = $Cost;
+
+                $RoomDetail->total_cost = $request->nights * ($cartitem->rooms_count * $Cost + $PaidChildren * $room->child_age_cost);
+
                 $RoomDetail->hotel_id = $request->hotel_id;
                 $RoomDetail->to_date = $request->to_date;
                 $RoomDetail->from_date = $request->from_date;
                 $RoomDetail->nights = $request->nights;
                 $RoomDetail->adults_count = $request->adults_count;
                 $RoomDetail->children_count = $request->children_count;
-                $RoomDetail->rooms_count = $request->rooms_count;
+                $RoomDetail->rooms_count = $cartitem->rooms_count;
                 $RoomDetail->save();
 
 
@@ -365,8 +393,8 @@ class BookingController extends Controller
              *  Tours Section
              *
              */
-            if ($request->tour_adults_count && count($request->tour_adults_count) > 0) {
-                for ($i = 0; $i < count($request->tour_adults_count); $i++) {
+            if ($request->tour_adults_count && count($request->tour_id) > 0) {
+                for ($i = 0; $i < count($request->tour_id); $i++) {
                     $orderDetails = new OrderDetails();
                     $orderDetails->order_id = $order->id;
                     $orderDetails->holder_salutation = $request->tour_adults_sal[$i][0];
@@ -379,13 +407,20 @@ class BookingController extends Controller
                     $orderDetails->save();
 
                     $refTour = Tour::find((int) $request->tour_id[$i]);
+                    $TotalPaidPersons = $request->tour_adults_count[$i];
+                    for ($j = 0; $j < $request->tour_children_count[$i]; $j++){
+                        if($request->tour_ages[$i] && explode(",", $request->tour_ages[$i])[$j] > 2){
+                            $TotalPaidPersons++;
+                        }
+                    }
+
                     $TourElem = new TourDetails();
                     $TourElem->order_details_id = $orderDetails->id;
                     $TourElem->tour_id = (int) $request->tour_id[$i];
                     $TourElem->tour_name = $refTour->en_name;
                     $TourElem->tour_banner = $refTour->banner;
                     $TourElem->tour_type = ($refTour->type->id == 1) ? 0 : 1;
-                    $TourElem->total_cost = ((float) $request->tour_total_cost[$i]); // Before Tax
+                    $TourElem->total_cost = ((float) $refTour->tour_person_cost*$TotalPaidPersons); // Before Tax
                     $TourElem->tour_cost = ((float) $request->tour_cost[$i]); // Before Tax
                     $TourElem->tour_date = $request->tour_date[$i];
                     $TourElem->adults_count = (int) $request->tour_adults_count[$i];
@@ -486,6 +521,9 @@ class BookingController extends Controller
                 }
             }
             // return "passed";
+
+
+
 
             $Cart = Cart::where("user_id", "=", session()->get("SiteUser")["ID"]);
             $Cart->delete();
