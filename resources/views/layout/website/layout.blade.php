@@ -348,13 +348,13 @@
         @else
         <span>
             جميع حقوق النشر محفوظة لشركة سافر 2022</span>
-        @endif
+            @endif
 
-    </div>
+        </div>
 
-    <!-- javascripts links -->
-    <!-- bootstrap 5.0v scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        <!-- javascripts links -->
+        <!-- bootstrap 5.0v scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
     </script>
     <script src="{{ asset('/website_assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
@@ -362,7 +362,8 @@
     {{-- <script src="  https://code.jquery.com/jquery-2.2.4.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> --}}
+
 
     <!-- date picker range links -->
 
@@ -375,10 +376,11 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js">
     </script>
     <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <script src="{{ asset('/website_assets/js/datepicker.js') }}"></script>
 
     <script src="{{ asset('/website_assets/js/momnet.js') }}"></script>
+    {{-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> --}}
     <script src="{{ asset('/website_assets/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('/website_assets/js/date_picker.js') }}"></script>
 

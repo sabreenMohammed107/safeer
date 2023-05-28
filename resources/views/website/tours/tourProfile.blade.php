@@ -568,7 +568,7 @@
 
                                 @endif  </h5>
 
-                            <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control" name="tour_date" min="2000-01-01" max="2025-12-31" autocomplete="off" />
+                            <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control" name="tour_date" min="{{date('Y-m-d', strtotime('+1 day'))}}" max="2023-12-31" autocomplete="off" />
 
                         </div>
 
@@ -820,10 +820,15 @@
 
 @section('adds_js')
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-	jQuery('#start_date, #end_date, #birth_date').datepicker().datepicker('setDate', new Date());
-});
+        // document.addEventListener('DOMContentLoaded', function () {
+
+        // });
+
+
         $(document).ready(function() {
+            let startDate = new Date();
+            startDate.setDate(startDate.getDate() + 1);
+            $('#end_date').datepicker({ startDate: startDate});
             $('#formSubmit').click(function(e){
                 e.preventDefault();
                 $.ajaxSetup({
