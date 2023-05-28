@@ -114,7 +114,7 @@
                             explore the beauty of the world
                             @else
                             جهز نفسك <br>
-                            استكشاف جمال العالم
+                            لإستكشاف جمال العالم
                             @endif
 
                         </span>

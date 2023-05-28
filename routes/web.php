@@ -121,7 +121,7 @@ Route::group([
     Route::post("/tours", [ToursController::class, 'all_tours']);
     Route::get('/fetch-tour-filter',  [ToursController::class, 'fetch_data'])->name('fetch-tour-filter');
     Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
-    Route::get("/tours/{id}", [ToursController::class, 'profile']);
+    Route::get("/tours/{id}/{slug?}", [ToursController::class, 'profile']);
     Route::post("/bookTours", [ToursController::class, 'bookTours']);
     //getTourByCity
     Route::get("/tourByCity/{id}", [ToursController::class, 'getTourByCity'])->name("tourByCity");
