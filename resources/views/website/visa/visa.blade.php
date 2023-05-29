@@ -171,7 +171,9 @@
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label for="">{{ __('links.mobile') }} </label>
+                        <label for="">{{ __('links.mobile') }} + @if (LaravelLocalization::getCurrentLocale() === 'en')  Country Code
+                            @else
+                           كود الدولة  @endif</label>
                         <input type="tel" required name="phone[0]" placeholder="{{ __('links.mobile') }}" />
 
                     </div>
@@ -286,6 +288,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- add adults  -->
     <script src="{{ asset('/website_assets/js/add-adults.js') }}"></script>
@@ -294,6 +298,8 @@
 
 
     <script>
+            let localization = "{{LaravelLocalization::getCurrentLocale()}}"
+
         $(document).ready(function() {
             var counter = 0;
 
@@ -368,7 +374,9 @@ Visa type
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">{{ __('links.mobile') }}  </label>
+                    <label for="">{{ __('links.mobile') }} + @if (LaravelLocalization::getCurrentLocale() === 'en')  Country Code
+              @else
+             كود الدولة  @endif </label>
                     <input type="tel" name="phone[` + counter + `]" required placeholder="{{ __('links.mobile') }}" />
 
                 </div>
