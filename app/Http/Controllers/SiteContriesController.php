@@ -1,13 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Country;
 use App\Http\Requests\StoreCountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
+use App\Models\Country;
 use Illuminate\Database\QueryException;
 
-class CountryController extends Controller
+class SiteContriesController extends Controller
 {
 
     protected $object;
@@ -24,8 +23,8 @@ class CountryController extends Controller
         $this->middleware('auth');
 
         $this->object = $object;
-        $this->viewName = 'admin.countries.';
-        $this->routeName = 'countries.';
+        $this->viewName = 'admin.site-countries.';
+        $this->routeName = 'site-countries.';
     }
     /**
      * Display a listing of the resource.
@@ -34,8 +33,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $rows = Country::where('flag',0)->orderBy("created_at", "Desc")->get();
-
+        $rows = Country::where('flag', 1)->orderBy("created_at", "Desc")->get();
 
         return view($this->viewName . 'index', compact(['rows']));
     }
@@ -59,9 +57,9 @@ class CountryController extends Controller
     public function store(StoreCountryRequest $request)
     {
         $input = $request->except(['_token']);
-
+        $input['flag'] = 1;
         Country::create($input);
-        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
+        return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
 
     /**
      * Display the specified resource.
@@ -99,8 +97,7 @@ class CountryController extends Controller
         $country->update($input);
         // $specialzation->update($input);
 
-        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
-
+        return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');}
 
     /**
      * Remove the specified resource from storage.

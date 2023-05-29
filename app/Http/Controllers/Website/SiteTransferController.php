@@ -31,7 +31,8 @@ class SiteTransferController extends Controller
 
         $CarModels = Car_model::all();
         $CarClass = Car_class::all();
-
+        $Countries = Country::where('flag',1)->get();
+        $Cities = City::where('country_id',1)->get();
         $TransfersRecommended = Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id')->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
 
         $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
@@ -47,10 +48,60 @@ class SiteTransferController extends Controller
             "TransfersByPrice" => $TransfersByPrice,
             "TransfersByAlpha" => $TransfersByAlpha,
             "Count" => $TransfersRecommended->count(),
-
+            "Cities" => $Cities,
+            "Countries" => $Countries,
         ]);
     }
 
+
+    public function transfer(Request $request)
+    {
+
+        $Company = Company::first();
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+        $pickups = Transfer_location::all();
+        $dropoff = Transfer_location::all();
+
+        $CarModels = Car_model::all();
+        $CarClass = Car_class::all();
+
+        $Countries = Country::where('flag',1)->get();
+        if($request->country_id){
+            $Cities = City::where('country_id',$request->country_id)->get();
+        }else{
+            $Cities = City::where('country_id',1)->get();
+        }
+        $city_id = $request->city_id;
+        $country_id = $request->country_id;
+
+        $TransfersRecommended = Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id')
+        ->whereHas('locationFrom', function ($q) use ($city_id) {
+            $q->where('city_id', $city_id);
+        })
+        ->orwhereHas('locationTo', function ($q) use ($city_id) {
+            $q->where('city_id', $city_id);
+        })->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
+
+        $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
+        $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
+        return view("website.transfer.transfer", [
+            "Company" => $Company,
+            "pickups" => $pickups,
+            "dropoff" => $dropoff,
+            "BreadCrumb" => $BreadCrumb,
+            "CarModels" => $CarModels,
+            "CarClass" => $CarClass,
+            "TransfersRecommended" => $TransfersRecommended,
+            "TransfersByPrice" => $TransfersByPrice,
+            "TransfersByAlpha" => $TransfersByAlpha,
+            "Count" => $TransfersRecommended->count(),
+            "Cities" => $Cities,
+            "Countries" => $Countries,
+            "city_id" => $city_id,
+            "country_id" => $country_id,
+
+        ]);
+    }
     public function fetch_data(Request $request)
     {
         \Log::info($request->all());
@@ -81,6 +132,17 @@ class SiteTransferController extends Controller
 
             }
 
+            if ($request->city_id ) {
+                $city_id=$request->city_id;
+                $filterTour->whereHas('locationFrom', function ($q) use ($city_id) {
+                    $q->where('city_id', $city_id);
+                })
+                ->orwhereHas('locationTo', function ($q) use ($city_id) {
+                    $q->where('city_id', $city_id);
+                });
+
+            }
+
             $TransfersRecommended = $filterTour->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
             $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
             $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
@@ -93,6 +155,7 @@ class SiteTransferController extends Controller
                     "TransfersByAlpha" => $TransfersByAlpha,
                     "Count" => $TransfersRecommended->count(),
                     "page_num" => $request->page_num,
+
 
                 ])->render();
         }

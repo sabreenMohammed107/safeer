@@ -52,8 +52,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-
-
     </style>
 
 
@@ -71,7 +69,74 @@
     <?php
     $localVar = LaravelLocalization::getCurrentLocale();
     ?>
+    <!-- newsearch section -->
+    <section class="booking_hotels_section container">
+        <form action="{{ LaravelLocalization::localizeUrl('/tours') }}" method="POST">
+            @csrf
+            <div class="hotel_details">
+                <div class="row mx-0 p-0">
+                    <div class="col-sm-12 col-md-6 col-xl-5 p-s-0 ">
+                        <h5> {{ __('links.destination') }}</h5>
 
+                        <div class="choices">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <select class="form-select dynamic" required id="country" name="country_id"
+                                aria-label="Default select example">
+                                <option value=""> ...</option>
+                                @foreach ($Countries as $Country)
+                                    <option value="{{ $Country->id }}"
+                                        @isset($country_id) {{ $country_id == $Country->id ? 'selected' : '' }} @endisset>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                            {{ $Country->en_country }}
+                                        @else
+                                            {{ $Country->ar_country }}
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-12 col-md-6 col-xl-5 p-s-0 ">
+                        <h5> {{ __('links.city') }}</h5>
+
+                        <div class="choices">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <select class="form-select" required id="city_id" name="city_id" aria-label="Default select example">
+                                <option value=""> ...</option>
+                                @foreach ($Cities as $city)
+                                    <option value="{{ $city->id }}"
+                                        @isset($city_id) {{ $city_id == $city->id ? 'selected' : '' }} @endisset>
+
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                            {{ $city->en_city }}
+                                        @else
+                                            {{ $city->ar_city }}
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-12 col-md-6 col-xl-1 p-0 ">
+                        <div class="main" id="room_main">
+
+                            <button class="btn" type="submit">
+                                {{ __('links.search') }}
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </form>
+    </section>
+    <!--end search -->
     <section class="tours container mt-4">
         <div class="row mx-0">
             <div class="  col-sm-0 col-xl-3">
@@ -102,8 +167,9 @@
                                     <div class="accordion-body">
                                         @foreach ($Cities as $City)
                                             <div class="form-check">
-                                                <input class="form-check-input tour_cities_id" data-id="{{ $City->id }}"
-                                                    type="checkbox" value="" id="defaultCheck4">
+                                                <input class="form-check-input tour_cities_id"
+                                                    data-id="{{ $City->id }}" type="checkbox" value=""
+                                                    id="defaultCheck4">
                                                 <label class="form-check-label" for="defaultCheck4">
                                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                                                         {{ $City->en_city }}
@@ -255,7 +321,29 @@
     <script>
         $(document).ready(function() {
 
+            $('.dynamic').change(function() {
 
+                if ($(this).val() != '') {
+                    var select = $(this).attr("id");
+                    var value = $(this).val();
+
+
+                    $.ajax({
+                        url: "{{ route('dynamicSearchCity.fetch') }}",
+                        method: "get",
+                        data: {
+                            select: select,
+                            value: value,
+
+                        },
+                        success: function(result) {
+
+                            $('#city_id').html(result);
+                        }
+
+                    })
+                }
+            });
 
             var arr = [];
 
@@ -346,6 +434,8 @@
 
         function fetch_productdata(page, arr, arr_cities, arr_types) {
             // alert(category)
+            var country_id = $('#country').find(":selected").val();
+            var city_id = $('#city_id').find(":selected").val();
             $.ajax({
                 url: "/fetch-tour-filter?page=" + page,
                 data: {
@@ -355,6 +445,8 @@
 
                     price_from: $("input[name=price_from]").val(),
                     price_to: $("input[name=price_to]").val(),
+                    country_id:country_id,
+                    city_id:city_id,
                 },
 
                 success: function(response) {

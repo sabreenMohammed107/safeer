@@ -35,7 +35,7 @@ class CityController extends Controller
     public function index()
     {
         $rows = City::orderBy("created_at", "Desc")->get();
-        $countries = Country::whereIn('id',[1,5])->get();
+        $countries = Country::where('flag',1)->get();
 
         return view($this->viewName . 'index', compact(['rows', 'countries']));
     }

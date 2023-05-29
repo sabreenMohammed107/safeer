@@ -27,6 +27,7 @@ use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\SiteAuth\AuthController;
 use App\Http\Controllers\SiteAuth\FaceBookController;
 use App\Http\Controllers\SiteAuth\GoogleController;
+use App\Http\Controllers\SiteContriesController;
 use App\Http\Controllers\SiteUsersController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\TourGalleryController;
@@ -118,7 +119,7 @@ Route::group([
     Route::get('autocomplete', [HotelsController::class, 'autocompleteSearch'])->name('autocomplete');
     //tours
     Route::get("/tours", [ToursController::class, 'all_tours']);
-    Route::post("/tours", [ToursController::class, 'all_tours']);
+    Route::post("/tours", [ToursController::class, 'tours']);
     Route::get('/fetch-tour-filter',  [ToursController::class, 'fetch_data'])->name('fetch-tour-filter');
     Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
     Route::get("/tours/{id}/{slug?}", [ToursController::class, 'profile']);
@@ -134,7 +135,7 @@ Route::group([
 
     //transfer
     Route::get("/transfers", [SiteTransferController::class, 'all_transfer']);
-    Route::post("/transfers", [SiteTransferController::class, 'all_transfer']);
+    Route::post("/transfers", [SiteTransferController::class, 'transfer']);
     Route::get('/fetch-transfers-filter',  [SiteTransferController::class, 'fetch_data'])->name('fetch-transfers-filter');
     Route::post("/transfers/retrieve", [SiteTransferController::class, 'fetch']);
     Route::post("/bookTransfer", [SiteTransferController::class, 'bookTransfer']);
@@ -291,6 +292,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
          //visa
            //countries
         Route::resource('countries', CountryController::class);
+        Route::resource('site-countries', SiteContriesController::class);
         Route::resource('nationalities', NationalityController::class);
         Route::resource('visaType', VisaTypeController::class);
         Route::resource('visa', VisaController::class);

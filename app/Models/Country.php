@@ -11,6 +11,7 @@ class Country extends Model
     protected $fillable = [
         'en_country',
         'ar_country',
+        'flag'
 
     ];
 }
