@@ -11,6 +11,7 @@ class Transfer_location extends Model
     protected $fillable = [
         'location_enname',
         'location_arname',
+        'city_id',
 
     ];
 }

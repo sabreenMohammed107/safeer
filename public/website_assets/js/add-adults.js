@@ -132,12 +132,5 @@ function removePassenger(event) {
       }
     );
 
-    //   var result = window.confirm('Are you sure?');
-    //   if (result == false) {
-    //     //   event.preventDefault();
-    //     return false;
-    //   }else{
-    //     event.closest('.passenger_info_details').remove();
 
-    //   }
 }

@@ -59,4 +59,29 @@ class User extends Authenticatable
             get: fn ($value) =>  ["user", "admin", "manager"][$value],
         );
     }
+
+
+     /**
+     * The roles that belong to the user.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'users_roles');
+    }
+
+     /**
+ * Check if this user belongs to a role
+ *
+ * @return bool
+ */
+ public function hasRole($role_name)
+ {
+     foreach ($this->roles as $role){
+
+         //I assumed the column which holds the role name is called role_name
+         if ($role->name == $role_name)
+             return true;
+      }
+     return false;
+ }
 }

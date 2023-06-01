@@ -102,8 +102,8 @@
             <div class=" search_details_info passenger_info_details hotel_details mt-3 ">
 
                 <!-- <button  onclick="removePassenger(this)">
-                  <i class="fa-solid fa-xmark"></i>
-                </button> -->
+                      <i class="fa-solid fa-xmark"></i>
+                    </button> -->
                 {{-- <form data-category="1" > --}}
                 <div class="passenger_info_title">
                     <h5> {{ __('links.passenger') }} </h5>
@@ -171,9 +171,12 @@
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label for="">{{ __('links.mobile') }} + @if (LaravelLocalization::getCurrentLocale() === 'en')  Country Code
+                        <label for="">{{ __('links.mobile') }} + @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                Country Code
                             @else
-                           كود الدولة  @endif</label>
+                                كود الدولة
+                            @endif
+                        </label>
                         <input type="tel" required name="phone[0]" placeholder="{{ __('links.mobile') }}" />
 
                     </div>
@@ -184,12 +187,14 @@
 
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">{{ __('links.passImage') }} </label>
-                        <input type="file" required name="passport[0]" placeholder="{{ __('links.passImage') }}" />
+                        <input type="file" class="file" onchange="validateSize(this)" required name="passport[0]"
+                            placeholder="{{ __('links.passImage') }}" />
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">{{ __('links.persImage') }} </label>
-                        <input type="file" required name="personal[0]" placeholder="{{ __('links.persImage') }}" />
+                        <input type="file" class="file" onchange="validateSize(this)" required name="personal[0]"
+                            placeholder="{{ __('links.persImage') }}" />
                     </div>
                     <div id="costBerVisa" style="display: none" class="col-sm-12 col-md-6 col-xl-4 mt-3">
 
@@ -220,8 +225,8 @@
                     <!-- <a href="#" id="visaaa">Add</a> -->
                 </button>
                 <!-- <span>
-                Total price:  <span> 2400 LE</span>
-              </span> -->
+                    Total price:  <span> 2400 LE</span>
+                  </span> -->
             </div>
             <div class="total">
                 <div class="col-12 text-center my-4">
@@ -248,7 +253,10 @@
                         </button>
 
                     </div> --}}
-                    <iframe  width="100%" height="100%" <iframe width="560" height="315" src=" {{ $Company->visa_vedio }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe width="100%" height="100%" <iframe width="560" height="315"
+                        src=" {{ $Company->visa_vedio }}" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
                 </div>
                 <div class=" col-xl-6 col- md-6 col-sm-12 p-0">
                     <div class="right_side">
@@ -298,7 +306,7 @@
 
 
     <script>
-            let localization = "{{LaravelLocalization::getCurrentLocale()}}"
+        let localization = "{{ LaravelLocalization::getCurrentLocale() }}"
 
         $(document).ready(function() {
             var counter = 0;
@@ -386,12 +394,12 @@ Visa type
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">{{ __('links.passImage') }} </label>
-                    <input type="file" name="passport[` + counter + `]" required placeholder="{{ __('links.passImage') }}" />
+                    <input type="file" class="file" onchange="validateSize(this)" name="passport[` + counter + `]" required placeholder="{{ __('links.passImage') }}" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">{{ __('links.persImage') }} </label>
-                    <input type="file" name="personal[` + counter + `]" required placeholder="{{ __('links.persImage') }}" />
+                    <input type="file" class="file" onchange="validateSize(this)" name="personal[` + counter + `]" required placeholder="{{ __('links.persImage') }}" />
                 </div>
                 <div  style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3 costBerVisa">
 
@@ -682,4 +690,25 @@ Visa type
 
         //         });
         //     });
+
+        function validateSize(input) {
+
+            const fileSize = input.files[0].size / 1024 / 1024; // in MiB
+            if (fileSize > 2) {
+                //   alert('File size exceeds 2 MiB');
+                swal({
+                    title: localization === "en" ? "warning" : "تحذير",
+                    text: localization === "en" ? "File size exceeds 2 MiB" : "حجم الملف يتجاوز 2 ميغا بايت",
+                    icon: "warning",
+                    button: localization === "en" ? "Confirm" : "تأكيد",
+                });
+                // const file =
+                //     document.querySelector('.file');
+                    input.value = '';
+                // return false;
+            } else {
+                // Proceed further
+                return true;
+            }
+        }
     </script>

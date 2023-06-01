@@ -242,7 +242,23 @@
                                                                 <textarea class="form-control form-control-solid" rows="3" name="location_arname" placeholder="Type Ar name">{{ $row->location_arname }}</textarea>
                                                             </div>
 
-
+                                                            <div class="fv-row w-100 flex-md-root">
+                                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                                    <option value="">Select City..</option>
+                                                                    {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
+                                                                </label>
+                                                                <!--end::Label-->
+                                                                <select required class="form-select form-select-solid" name="city_id"
+                                                                    data-control="select2" data-placeholder="Select an option"
+                                                                    data-show-subtext="true" data-live-search="true" id="sub">
+                                                                    <option value="">select....</option>
+                                                                    @foreach ($cities as $city)
+                                                                        <option value="{{ $city->id }}"
+                                                                            {{ $row->city_id == $city->id ? 'selected' : '' }}>
+                                                                            {{ $city->en_city }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
 
 
                                                             <div class="text-center">
@@ -343,7 +359,23 @@
                                 <textarea class="form-control form-control-solid" rows="3" name="location_arname" placeholder="Type Ar name"></textarea>
                             </div>
 
-
+                            <div class="fv-row w-100 flex-md-root">
+                                <label class="fs-6 fw-bold form-label mt-3">
+                                    <option value="">Select City..</option>
+                                    {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
+                                </label>
+                                <!--end::Label-->
+                                <select required class="form-select form-select-solid" name="city_id"
+                                    data-control="select2" data-placeholder="Select an option"
+                                    data-show-subtext="true" data-live-search="true" id="sub">
+                                    <option value="">select....</option>
+                                    @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}"
+                                        {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                        {{ $city->en_city }}</option>
+                                @endforeach
+                                </select>
+                            </div>
 
 </div>
 <!--end:checkbox-->

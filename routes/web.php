@@ -15,6 +15,7 @@ use App\Http\Controllers\ExploreCityController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\UsersRoleController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
@@ -296,6 +297,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
         Route::resource('nationalities', NationalityController::class);
         Route::resource('visaType', VisaTypeController::class);
         Route::resource('visa', VisaController::class);
+        Route::resource('user-role', UsersRoleController::class);
 
 });
 
