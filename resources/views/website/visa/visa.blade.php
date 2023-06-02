@@ -102,8 +102,8 @@
             <div class=" search_details_info passenger_info_details hotel_details mt-3 ">
 
                 <!-- <button  onclick="removePassenger(this)">
-                      <i class="fa-solid fa-xmark"></i>
-                    </button> -->
+                              <i class="fa-solid fa-xmark"></i>
+                            </button> -->
                 {{-- <form data-category="1" > --}}
                 <div class="passenger_info_title">
                     <h5> {{ __('links.passenger') }} </h5>
@@ -225,8 +225,8 @@
                     <!-- <a href="#" id="visaaa">Add</a> -->
                 </button>
                 <!-- <span>
-                    Total price:  <span> 2400 LE</span>
-                  </span> -->
+                            Total price:  <span> 2400 LE</span>
+                          </span> -->
             </div>
             <div class="total">
                 <div class="col-12 text-center my-4">
@@ -473,14 +473,16 @@ Visa type
                             _token: _token
                         },
                         success: function(result) {
+
                             trigger.parent().parent().find(".visa_type").html(result);
                             $("#costBerVisa").css("display", "none");
                             $('.visaCost').html('');
                             $('.visNotes').html('');
                         },
                         error: function(xhr, status, error) {
+                            alert("xhr.responseText");
                             var err = eval("(" + xhr.responseText + ")");
-                            alert(err.Message);
+
                         }
 
                     })
@@ -512,7 +514,7 @@ Visa type
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
-                            alert(err.Message);
+                            alert("err.Message");
                         }
 
                     })
@@ -550,7 +552,7 @@ Visa type
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
-                            alert(err.Message);
+                            alert(" 222");
                         }
 
                     })
@@ -571,7 +573,7 @@ Visa type
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
                     url: "{{ route('dynamicCost.fetch') }}",
-                    method: "POST",
+                    method: "GET",
                     data: {
                         select: select,
                         nationality: value,
@@ -589,7 +591,7 @@ Visa type
                     },
                     error: function(xhr, status, error) {
                         var err = eval("(" + xhr.responseText + ")");
-                        alert(err.Message);
+                        alert("333");
                     }
 
 
@@ -608,7 +610,7 @@ Visa type
 
                 $.ajax({
                     url: "{{ route('dynamicnationality.fetch') }}",
-                    method: "POST",
+                    method: "Get",
                     data: {
                         select: select,
                         value: value,
@@ -621,7 +623,7 @@ Visa type
                     },
                     error: function(xhr, status, error) {
                         var err = eval("(" + xhr.responseText + ")");
-                        alert(err.Message);
+                        alert("444");
                     }
 
                 })
@@ -639,7 +641,7 @@ Visa type
 
                 $.ajax({
                     url: "{{ route('dynamicvisatype.fetch') }}",
-                    method: "POST",
+                    method: "Get",
                     data: {
                         select: select,
                         value: value,
@@ -652,7 +654,7 @@ Visa type
                     },
                     error: function(xhr, status, error) {
                         var err = eval("(" + xhr.responseText + ")");
-                        alert(err.Message);
+                        alert("555");
                     }
 
                 })
@@ -704,7 +706,7 @@ Visa type
                 });
                 // const file =
                 //     document.querySelector('.file');
-                    input.value = '';
+                input.value = '';
                 // return false;
             } else {
                 // Proceed further

@@ -7,8 +7,8 @@ use App\Models\Cart;
 use App\Models\Company;
 use App\Models\Counter;
 use App\Models\OrderDetails;
-use App\Models\Orders;
 use App\Models\OrderPersons;
+use App\Models\Orders;
 use App\Models\RoomDetails;
 use App\Models\Room_type_cost;
 use App\Models\SiteUser;
@@ -34,13 +34,13 @@ class BookingController extends Controller
             session()->put("cartItem", [
                 "ID" => $id,
                 "Cap" => $cap,
-                "Nights" => (session()->get("sessionArr"))?session()->get("sessionArr")["nights"] : 7,
-                "adultsNumber" => (session()->get("sessionArr"))?session()->get("sessionArr")["adultsNumber"]: 1,
-                "childNumber" => (session()->get("sessionArr"))?session()->get("sessionArr")["childNumber"]: 0,
-                "roomsNumber" => (session()->get("sessionArr"))?session()->get("sessionArr")["roomsNumber"]: 1,
-                "from_date" => (session()->get("sessionArr"))?date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d"): date("Y-m-d"),
-                "to_date" => (session()->get("sessionArr"))?date_format(date_create(session()->get("sessionArr")["end_date"]), "Y-m-d"): Date("Y-m-d", strtotime('+7 days')),
-                'ages' => (session()->get("sessionArr"))?session()->get("sessionArr")["ages"]:[],
+                "Nights" => (session()->get("sessionArr")) ? session()->get("sessionArr")["nights"] : 7,
+                "adultsNumber" => (session()->get("sessionArr")) ? session()->get("sessionArr")["adultsNumber"] : 1,
+                "childNumber" => (session()->get("sessionArr")) ? session()->get("sessionArr")["childNumber"] : 0,
+                "roomsNumber" => (session()->get("sessionArr")) ? session()->get("sessionArr")["roomsNumber"] : 1,
+                "from_date" => (session()->get("sessionArr")) ? date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d") : date("Y-m-d"),
+                "to_date" => (session()->get("sessionArr")) ? date_format(date_create(session()->get("sessionArr")["end_date"]), "Y-m-d") : Date("Y-m-d", strtotime('+7 days')),
+                'ages' => (session()->get("sessionArr")) ? session()->get("sessionArr")["ages"] : [],
                 'itemType' => 0, // Room
             ]);
 
@@ -50,17 +50,17 @@ class BookingController extends Controller
         $CartItem = Cart::where([["user_id", '=', session()->get("SiteUser")["ID"]], ["item_type", '=', 0]])->first();
 
         if ($CartItem) { // Has Room ?
-            return redirect()->to("/safer/room/$id/book/$cap")->with("session-warning",Lang::get('links.purchase') );
+            return redirect()->to("/safer/room/$id/book/$cap")->with("session-warning", Lang::get('links.purchase'));
         }
 
         $CartItem = new Cart();
         $CartItem->user_id = session()->get("SiteUser")["ID"];
         $CartItem->room_type_cost_id = $id;
         $CartItem->room_cap = $cap;
-        $CartItem->adults_count = (session()->get("sessionArr"))?session()->get("sessionArr")["adultsNumber"]: 1;
-        $CartItem->children_count = (session()->get("sessionArr"))?session()->get("sessionArr")["childNumber"]: 0;
+        $CartItem->adults_count = (session()->get("sessionArr")) ? session()->get("sessionArr")["adultsNumber"] : 1;
+        $CartItem->children_count = (session()->get("sessionArr")) ? session()->get("sessionArr")["childNumber"] : 0;
         $CartItem->rooms_count = (session()->get("sessionArr")) ? session()->get("sessionArr")["roomsNumber"] : 1;
-        $CartItem->nights = (session()->get("sessionArr")) ?session()->get("sessionArr")["nights"]:7;
+        $CartItem->nights = (session()->get("sessionArr")) ? session()->get("sessionArr")["nights"] : 7;
         $CartItem->from_date = (session()->get("sessionArr")) ? date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d") : date("Y-m-d");
         $CartItem->to_date = (session()->get("sessionArr")) ? date_format(date_create(session()->get("sessionArr")["from_date"]), "Y-m-d") : date("Y-m-d", strtotime('+7 days'));
         $CartItem->item_type = 0;
@@ -167,7 +167,6 @@ class BookingController extends Controller
             ->where([["user_id", "=", session()->get("SiteUser")["ID"]], ["cart.item_type", '=', 1]])
             ->get();
 
-
         $TransferCost = DB::table("cart")
             ->select(
                 'cart.user_id',
@@ -250,9 +249,9 @@ class BookingController extends Controller
                 'nationalities.ar_nationality',
             )
             ->get();
-                // return $GPVisasCost;
+        // return $GPVisasCost;
 
-            $tax_percentage = DB::table('tax')->orderBy('id', 'desc')->first()->tax_percentage; // 14% Currently
+        $tax_percentage = DB::table('tax')->orderBy('id', 'desc')->first()->tax_percentage; // 14% Currently
         return view(
             "website.booking",
             [
@@ -279,7 +278,7 @@ class BookingController extends Controller
     }
     public function DeleteVisa()
     {
-        $Cart = Cart::where([["user_id",'=', session()->get("SiteUser")["ID"]],["item_type",'=',3]]);
+        $Cart = Cart::where([["user_id", '=', session()->get("SiteUser")["ID"]], ["item_type", '=', 3]]);
         $Cart->delete();
 
         return redirect()->back();
@@ -308,13 +307,13 @@ class BookingController extends Controller
                 $PaidChildren = 0;
                 $room = Room_type_cost::find($request->room_id);
                 $cartitem = Cart::find($request->cart_id);
-                if($cartitem->children_count){
+                if ($cartitem->children_count) {
                     $ages = explode(",", $cartitem->ages);
 
-                    for ($i=0; $i < $cartitem->children_count; $i++) {
-                        if($ages[$i] >= $room->child_free_age_from && $ages[$i] <= $room->child_free_age_to){
+                    for ($i = 0; $i < $cartitem->children_count; $i++) {
+                        if ($ages[$i] >= $room->child_free_age_from && $ages[$i] <= $room->child_free_age_to) {
                             $FreeChildren++;
-                        }else{
+                        } else {
                             $PaidChildren++;
                         }
                     }
@@ -333,6 +332,8 @@ class BookingController extends Controller
                 $orderDetails->holder_mobile = $request->adultsMobile[0];
                 $orderDetails->notes = $request->notes;
                 $orderDetails->detail_type = 0;
+                                    //add status column
+                                    $orderDetails->status_id = 1;
                 $orderDetails->save();
 
                 $RoomDetail = new RoomDetails();
@@ -352,8 +353,6 @@ class BookingController extends Controller
                 $RoomDetail->children_count = $request->children_count;
                 $RoomDetail->rooms_count = $cartitem->rooms_count;
                 $RoomDetail->save();
-
-
 
                 //Adult Loop
                 if ($request->adultsSal && count($request->adultsSal) > 1) {
@@ -404,12 +403,14 @@ class BookingController extends Controller
                     $orderDetails->detail_type = 1; // Tour Type Option [1]
                     $orderDetails->pickup_point = $request->tour_pickup_point[$i];
                     $orderDetails->holder_email = $request->tour_adults_email[$i][0];
+                                        //add status column
+                                        $orderDetails->status_id = 1;
                     $orderDetails->save();
 
                     $refTour = Tour::find((int) $request->tour_id[$i]);
                     $TotalPaidPersons = $request->tour_adults_count[$i];
-                    for ($j = 0; $j < $request->tour_children_count[$i]; $j++){
-                        if($request->tour_ages[$i] && explode(",", $request->tour_ages[$i])[$j] > 2){
+                    for ($j = 0; $j < $request->tour_children_count[$i]; $j++) {
+                        if ($request->tour_ages[$i] && explode(",", $request->tour_ages[$i])[$j] > 2) {
                             $TotalPaidPersons++;
                         }
                     }
@@ -420,7 +421,7 @@ class BookingController extends Controller
                     $TourElem->tour_name = $refTour->en_name;
                     $TourElem->tour_banner = $refTour->banner;
                     $TourElem->tour_type = ($refTour->type->id == 1) ? 0 : 1;
-                    $TourElem->total_cost = ((float) $refTour->tour_person_cost*$TotalPaidPersons); // Before Tax
+                    $TourElem->total_cost = ((float) $refTour->tour_person_cost * $TotalPaidPersons); // Before Tax
                     $TourElem->tour_cost = ((float) $request->tour_cost[$i]); // Before Tax
                     $TourElem->tour_date = $request->tour_date[$i];
                     $TourElem->adults_count = (int) $request->tour_adults_count[$i];
@@ -457,9 +458,6 @@ class BookingController extends Controller
                     }
                 }
 
-
-
-
             }
 
             if ($request->transfer_id) {
@@ -473,6 +471,8 @@ class BookingController extends Controller
                 $orderDetails->holder_job = $request->transferJob;
                 $orderDetails->notes = $request->transferNotes;
                 $orderDetails->detail_type = 2; // Transfer
+                //add status column
+                $orderDetails->status_id = 1;
                 $orderDetails->save();
 
                 $TransferDetail = new TransferDetails();
@@ -489,12 +489,12 @@ class BookingController extends Controller
                 $TransferDetail->is_return = ($request->default_holder) ? true : false;
                 $TransferDetail->return_date = ($request->default_holder) ? $request->return : null;
                 $TransferDetail->transfer_person_price = $request->fees;
-                $TransferDetail->transfer_total_cost = (($request->default_holder)? 2 : 1)*((float)$request->fees);
+                $TransferDetail->transfer_total_cost = (($request->default_holder) ? 2 : 1) * ((float) $request->fees);
                 $TransferDetail->save();
             }
 
-            if($request->visa_id && count($request->visa_id) > 0){
-                for ($i=0; $i < count($request->visa_id); $i++) {
+            if ($request->visa_id && count($request->visa_id) > 0) {
+                for ($i = 0; $i < count($request->visa_id); $i++) {
                     $orderDetails = new OrderDetails();
                     $orderDetails->order_id = $order->id;
                     /**
@@ -506,8 +506,9 @@ class BookingController extends Controller
                     $orderDetails->holder_email = $request->visa_email[$i];
                     $orderDetails->notes = " ";
                     $orderDetails->detail_type = 3; // Visa option
+                    //add status column
+                    $orderDetails->status_id = 1;
                     $orderDetails->save();
-
 
                     $VisaDetail = new VisaDetails();
                     $VisaDetail->visa_id = $request->visa_id[$i];
@@ -521,9 +522,6 @@ class BookingController extends Controller
                 }
             }
             // return "passed";
-
-
-
 
             $Cart = Cart::where("user_id", "=", session()->get("SiteUser")["ID"]);
             $Cart->delete();
@@ -542,37 +540,35 @@ class BookingController extends Controller
         return redirect()->to("/Safer/OrderPlacement/$order->id");
     }
 
-
     public function SuccessOrder(int $id)
     {
         $order = Orders::find($id);
         // return $order->order_details[1]->tours_details[0];
         $Cost = 0;
         foreach ($order->order_details as $index => $item) {
-            if($item->detail_type == 0) // Room
-            {
-                $Cost += $item->room_details[0]->total_cost;
-            }else if($item->detail_type == 1){ // Tour
-                $Cost += $item->tours_details[0]->total_cost;
-            }else if($item->detail_type == 2){ // Transfer
-                $Cost += $item->transfer_details[0]->transfer_total_cost;
-            }else if ($item->detail_type == 3) { // Visa
-                $Cost += $item->visa_details[0]->visa_cost; // To be completed
-            }
+            if ($item->detail_type == 0) // Room {
+            $Cost += $item->room_details[0]->total_cost;
+        } else if ($item->detail_type == 1) { // Tour
+            $Cost += $item->tours_details[0]->total_cost;
+        } else if ($item->detail_type == 2) { // Transfer
+            $Cost += $item->transfer_details[0]->transfer_total_cost;
+        } else if ($item->detail_type == 3) { // Visa
+            $Cost += $item->visa_details[0]->visa_cost; // To be completed
         }
-        $BreadCrumb = [];
-        $Company = Company::first();
-
-        $Counters = Counter::get();
-        return view(
-            "website.bookingSuccess",
-            [
-                "Company" => $Company,
-                "Counters" => $Counters,
-                "BreadCrumb" => $BreadCrumb,
-                "Order" => $order,
-                "Cost" => $Cost, // Before Tax
-            ]
-        );
     }
+    $BreadCrumb = [];
+    $Company = Company::first();
+
+    $Counters = Counter::get();
+    return view(
+        "website.bookingSuccess",
+        [
+            "Company" => $Company,
+            "Counters" => $Counters,
+            "BreadCrumb" => $BreadCrumb,
+            "Order" => $order,
+            "Cost" => $Cost, // Before Tax
+        ]
+    );
+}
 }

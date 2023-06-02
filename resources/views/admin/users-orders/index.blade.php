@@ -93,6 +93,7 @@
                             <th class="text-end min-w-100px">pickup_point</th>
                             <th class="text-end min-w-100px">Created Date</th>
                             <th class="text-end min-w-100px">Grand Total</th>
+                            <th class="text-end min-w-100px">Status</th>
                             <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -210,6 +211,10 @@
         @endif
         </span>
     </td>
+    <td class="text-end pe-0">
+
+        <span class="fw-bolder text-dark">{{ $row->status->status ?? '' }}</span>
+    </td>
     <!--end::Status=-->
     <!--begin::Action=-->
     <td class="text-end">
@@ -235,7 +240,10 @@
                     class="menu-link px-3">show</a>
             </div>
             <!--end::Menu item-->
-
+            <div class="menu-item px-3">
+                <a href="{{ route('users-orders.edit', $row->id ) }}"
+                    class="menu-link px-3">edit</a>
+            </div>
         </div>
         <!--end::Menu-->
     </td>
