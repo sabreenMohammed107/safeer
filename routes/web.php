@@ -282,6 +282,19 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
          Route::resource('site-users', SiteUsersController::class);
 
          Route::resource('users-orders', UsersOrderController::class);
+
+         //new updates on order
+         Route::post('EditTourDetails',[UsersOrderController::class,'EditTourDetails'])->name('EditTourDetails');
+
+         Route::post('EditholderDetails',[UsersOrderController::class,'EditholderDetails'])->name('EditholderDetails');
+
+         Route::post('EditTourPersons',[UsersOrderController::class,'EditTourPersons'])->name('EditTourPersons');
+
+         Route::post('deleteTourPersons',[UsersOrderController::class,'deleteTourPersons'])->name('deleteTourPersons');
+Route::post('AddAdultTourPersons',[UsersOrderController::class,'AddAdultTourPersons'])->name('AddAdultTourPersons');
+
+Route::post('AddChildTourPersons',[UsersOrderController::class,'AddChildTourPersons'])->name('AddChildTourPersons');
+
          //fav-hotels
          Route::resource('fav-hotels', AllFavHotelsController::class);
 //transfer

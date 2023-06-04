@@ -546,7 +546,8 @@ class BookingController extends Controller
         // return $order->order_details[1]->tours_details[0];
         $Cost = 0;
         foreach ($order->order_details as $index => $item) {
-            if ($item->detail_type == 0) // Room {
+            if ($item->detail_type == 0) // Room
+            {
             $Cost += $item->room_details[0]->total_cost;
         } else if ($item->detail_type == 1) { // Tour
             $Cost += $item->tours_details[0]->total_cost;
