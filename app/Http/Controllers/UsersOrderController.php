@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
+use App\Models\Nationality;
 use App\Models\OrderDetails;
 use App\Models\OrderPersons;
 use App\Models\RoomDetails;
 use App\Models\TourDetails;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
+use App\Models\Visa;
 use App\Models\VisaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Storage;
 class UsersOrderController extends Controller
 {
     protected $object;
@@ -148,11 +151,17 @@ class UsersOrderController extends Controller
 
         if ($order->detail_type == 3) {
             $persons = OrderPersons::where('order_details_id', $id)->get();
-
+            $countries = Country::all();
+        $nationality_ids = Visa::pluck('nationality_id');
+        $nationalities = Nationality::whereIn('id',$nationality_ids)->get();
+        $visas = Visa::all();
             $visaDetails = VisaDetails::join("order_details", "visa_details.order_details_id", "=", "order_details.id")
                 ->where('order_details.detail_type', 3)->where('order_details.id', $id)->select('visa_details.*')->get();
             $totalCost = 50;
-            return view($this->viewName . 'editvisaDetails', compact(['order', 'visaDetails', 'persons', 'totalCost']));
+            return view($this->viewName . 'editvisaDetails', compact(['order',
+            'visaDetails', 'persons', 'totalCost'
+
+        ,'countries','nationality_ids','nationalities','visas']));
         }
     }
 
@@ -354,4 +363,29 @@ class UsersOrderController extends Controller
         return redirect()->back()->with('flash_del', 'Update transfer Details!');
     }
 
+    public function EditVisaDetails(Request $request){
+        $obj= VisaDetails::findOrFail($request->detail_id);
+        if (optional($obj->visa_personal_photo)->isNotEmpty()) {
+            Storage::disk('public')->delete('uploads/visas/',$obj->visa_personal_photo);
+        }
+        if (optional($obj->visa_passport_photo)->isNotEmpty()) {
+            Storage::disk('public')->delete('uploads/visas/',$obj->visa_passport_photo);
+        }
+        $passport = Storage::disk('public')->put('uploads/visas/', $request->passport);
+        $personal = Storage::disk('public')->put('uploads/visas/', $request->personal);
+        VisaDetails::findOrFail($request->detail_id)->update([
+            'visa_id' => $request->visa_id,
+            'visa_personal_photo' => basename($personal),
+            'visa_passport_photo' =>basename($passport),
+
+        ]);
+        $orderDetails = OrderDetails::where('id',$request->order_id)->update([
+            'holder_name' => $request->name,
+            'holder_mobile' => $request->phone,
+            'holder_email' => $request->email,
+         ]);
+
+
+        return redirect()->back()->with('flash_del', 'Update Visa Details!');
+    }
 }

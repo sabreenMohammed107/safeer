@@ -102,8 +102,8 @@
             <div class=" search_details_info passenger_info_details hotel_details mt-3 ">
 
                 <!-- <button  onclick="removePassenger(this)">
-                              <i class="fa-solid fa-xmark"></i>
-                            </button> -->
+                                  <i class="fa-solid fa-xmark"></i>
+                                </button> -->
                 {{-- <form data-category="1" > --}}
                 <div class="passenger_info_title">
                     <h5> {{ __('links.passenger') }} </h5>
@@ -225,8 +225,8 @@
                     <!-- <a href="#" id="visaaa">Add</a> -->
                 </button>
                 <!-- <span>
-                            Total price:  <span> 2400 LE</span>
-                          </span> -->
+                                Total price:  <span> 2400 LE</span>
+                              </span> -->
             </div>
             <div class="total">
                 <div class="col-12 text-center my-4">

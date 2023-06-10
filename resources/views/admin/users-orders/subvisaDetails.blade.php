@@ -31,6 +31,7 @@ value="1" />
 
 <th class="text-end min-w-100px">visa_date</th>
 <th class="text-end min-w-70px">visa_cost</th>
+<th class="text-end min-w-70px">edit</th>
 </tr>
 <!--end::Table row-->
 </thead>
@@ -99,9 +100,156 @@ data-kt-ecommerce-category-filter="category_name" >{{ $visaDetail->visa->type->e
 <td class="text-end pe-0">
 <span class="fw-bolder text-dark">{{ $visaDetail->visa_cost ?? '' }} $</span>
 </td>
-<!--end::Status=-->
+  <!--end::Status=-->
+  <td class="text-end pe-0">
+    <a data-bs-toggle="modal" data-bs-target="#kt_modal_new_targetEdit{{ $visaDetail->id }}"
+        class="menu-link px-3">Edit</a>
+</td>
 
-</tr>
+<!--begin::Modal - New Target-->
+<div class="modal fade" id="kt_modal_new_targetEdit{{ $visaDetail->id }}" tabindex="-1"
+    aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <!--begin::Modal content-->
+        <div class="modal-content rounded">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-primary"
+                    data-bs-dismiss="modal">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137"
+                                width="16" height="2" rx="1"
+                                transform="rotate(-45 6 17.3137)" fill="black" />
+                            <rect x="7.41422" y="6" width="16"
+                                height="2" rx="1"
+                                transform="rotate(45 7.41422 6)" fill="black" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--begin::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                <!--begin:Form-->
+                <form id="kt_modal_update_target_updateForm" class="form"
+                    action="{{ route('EditVisaDetails') }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
+
+                    <!--begin::Heading-->
+                    <input type="hidden" name="detail_id" value="{{ $visaDetail->id }}">
+                    <input type="hidden" name="order_id" value="{{ $visaDetail->order_details_id }}">
+                    <div class="mb-13 text-center">
+                        <!--begin::Title-->
+                        <h1 class="mb-3">Update Visa Details</h1>
+                        <!--end::Title-->
+
+                    </div>
+                    <!--end::Heading-->
+                    <!--begin::Input group-->
+
+
+
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <div class="row mx-0">
+                            <div class="col-md-12 col-xl-12 col-sm-12 ">
+                                <label for="">
+
+                                        visa request
+
+                                </label>
+                                <select class="form-select form-select-solid dynamic" data-control="select2"
+                                    data-placeholder="Select an option" required data-show-subtext="true" data-live-search="true"
+                                    id="visa"  name="visa_id">
+                                    <option value=""></option>
+                                    @foreach ($visas as $visa)
+                                        <option value="{{ $visa->id }}">
+                                            {{$visa->country->en_country??''}}{{$visa->type->en_type??''}}{{ $visa->nationality->en_nationality??'' }}{{ $visa->cost }}
+                                            {{-- @isset($visa->country)
+                                            @php
+
+                                            echo "{$visa->country->en_country} {$visa->type->en_type} {$visa->nationality->en_nationality} {$visa->cost}";
+
+
+
+                                            @endphp
+  @endisset() --}}
+
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                <label for="">
+                                        Passenger Name
+
+                                </label>
+                                <input type="text" class="form-control" required name="name"
+                                    />
+
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                <label for="">
+                                    {{ __('links.mobile') }}
+                                        Country Code
+
+                                </label>
+                                <input type="tel" class="form-control" required name="phone"  />
+
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                <label for="">{{ __('links.email') }} </label>
+                                <input type="email" class="form-control" required name="email"  />
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                <label for="">{{ __('links.passImage') }} </label>
+                                <input type="file" class="file form-control" onchange="validateSize(this)" required name="passport"
+                                    placeholder="{{ __('links.passImage') }}" />
+
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-xl-6">
+                                <label for="">{{ __('links.persImage') }} </label>
+                                <input type="file" class="file form-control" onchange="validateSize(this)" required name="personal"
+                                    placeholder="{{ __('links.persImage') }}" />
+                            </div>
+
+                        </div>
+
+                        <div class="text-center mt-2">
+                            <div class="btn btn-sm btn-icon btn-active-color-primary"
+                                style="margin-right: 25px" data-bs-dismiss="modal">
+                                <button type="reset" id="kt_modal_update_target_cancel"
+                                    class="btn btn-light me-3"
+                                    data-dismiss="modal">Cancel</button>
+                            </div>
+                            <button type="submit" id="kt_modal_update_target_submit"
+                                class="btn btn-primary">
+                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-progress">Please wait...
+                                    <span
+                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                </form>
+                <!--end:Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - New Target-->
 <!--end::Table row-->
 @endforeach
 

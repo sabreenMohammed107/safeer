@@ -287,6 +287,9 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
 
     //
     Route::post('EditTransDetails', [UsersOrderController::class, 'EditTransDetails'])->name('EditTransDetails');
+
+    Route::post('EditVisaDetails', [UsersOrderController::class, 'EditVisaDetails'])->name('EditVisaDetails');
+
     //fav-hotels
     Route::resource('fav-hotels', AllFavHotelsController::class);
 //transfer
