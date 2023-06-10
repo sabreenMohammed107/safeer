@@ -6,10 +6,13 @@ use App\Models\OrderDetails;
 use App\Models\OrderPersons;
 use App\Models\RoomDetails;
 use App\Models\TourDetails;
+use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\VisaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class UsersOrderController extends Controller
 {
@@ -122,16 +125,35 @@ class UsersOrderController extends Controller
     {
         $order = OrderDetails::where('id', $id)->first();
 
-        // if($order->detail_type==1){
+        if ($order->detail_type == 1) {
 
-        $persons = OrderPersons::where('order_details_id', $id)->get();
-        $tourDetails = TourDetails::join("order_details", "tours_details.order_details_id", "=", "order_details.id")
-            ->where('order_details.detail_type', 1)->where('order_details.id', $id)->select('tours_details.*')->get();
+            $persons = OrderPersons::where('order_details_id', $id)->get();
+            $tourDetails = TourDetails::join("order_details", "tours_details.order_details_id", "=", "order_details.id")
+                ->where('order_details.detail_type', 1)->where('order_details.id', $id)->select('tours_details.*')->get();
 
-        $totalCost = 50;
-        return view($this->viewName . 'edittoursDetails', compact(['order'
-            , 'tourDetails', 'persons', 'totalCost']));
-        // }
+            $totalCost = 50;
+            return view($this->viewName . 'edittoursDetails', compact(['order'
+                , 'tourDetails', 'persons', 'totalCost']));
+        }
+
+        if ($order->detail_type == 2) {
+            $persons = OrderPersons::where('order_details_id', $id)->get();
+            $transfers = Transfer::all();
+            $transDetails = TransferDetails::join("order_details", "transfer_details.order_details_id", "=", "order_details.id")
+                ->where('order_details.detail_type', 2)->where('order_details.id', $id)->select('transfer_details.*')->get();
+
+            $totalCost = 50;
+            return view($this->viewName . 'edittransDetails', compact(['order', 'transfers', 'transDetails', 'persons', 'totalCost']));
+        }
+
+        if ($order->detail_type == 3) {
+            $persons = OrderPersons::where('order_details_id', $id)->get();
+
+            $visaDetails = VisaDetails::join("order_details", "visa_details.order_details_id", "=", "order_details.id")
+                ->where('order_details.detail_type', 3)->where('order_details.id', $id)->select('visa_details.*')->get();
+            $totalCost = 50;
+            return view($this->viewName . 'editvisaDetails', compact(['order', 'visaDetails', 'persons', 'totalCost']));
+        }
     }
 
     /**
@@ -184,7 +206,7 @@ class UsersOrderController extends Controller
 
     public function EditTourPersons(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
     }
 
     public function deleteTourPersons(Request $request)
@@ -244,12 +266,12 @@ class UsersOrderController extends Controller
             // Enable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        return redirect()->back()->with('flash_del', 'add adult !');
+            return redirect()->back()->with('flash_del', 'add adult !');
 
         } catch (\Throwable $e) {
             // throw $th;
             DB::rollback();
-        return redirect()->back()->with('flash_del', $e->getMessage());
+            return redirect()->back()->with('flash_del', $e->getMessage());
 
         }
 
@@ -270,32 +292,66 @@ class UsersOrderController extends Controller
             $person->person_mobile = "";
             $person->person_name = $request->person_name;
 
-            $person->person_cost =((int) $request->age > 2) ? $details->tour_cost : 0;
+            $person->person_cost = ((int) $request->age > 2) ? $details->tour_cost : 0;
             $person->age = $request->age;
             $person->save();
-if((int) $request->age > 2){
-            $details->update([
-                'total_cost' => $details->total_cost + $person->person_cost,
-                'children_count' => $details->adults_count + 1,
-            ]);
-        } else {
-            $details->update([
-                'children_count' => $details->children_count +1 ,
-            ]);
-        }
+            if ((int) $request->age > 2) {
+                $details->update([
+                    'total_cost' => $details->total_cost + $person->person_cost,
+                    'children_count' => $details->adults_count + 1,
+                ]);
+            } else {
+                $details->update([
+                    'children_count' => $details->children_count + 1,
+                ]);
+            }
 
             DB::commit();
             // Enable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        return redirect()->back()->with('flash_del', 'add child !');
+            return redirect()->back()->with('flash_del', 'add child !');
 
         } catch (\Throwable $e) {
             // throw $th;
             DB::rollback();
-        return redirect()->back()->with('flash_del', $e->getMessage());
+            return redirect()->back()->with('flash_del', $e->getMessage());
 
         }
-
     }
+/***
+ * trans editing
+ */
+    public function EditTransDetails(Request $request)
+    {
+        $transfer = Transfer::where('id', $request->transfer_id)->first();
+        $capacity = $transfer->carModel->capacity;
+        $validator = Validator::make($request->all(), [
+            'capacity' => 'required|integer|min:1|between: 1,' . $capacity . '',
+            'transfer_date' => ['required', 'after:today'],
+
+        ]);
+
+        if ($validator->fails()) {
+            $data['autoOpenModal'] = true;
+            return Redirect::back()->withErrors($validator)->withInput($data);
+        }
+
+        TransferDetails::findOrFail($request->detail_id)->update([
+            'transfer_date' => $request->transfer_date,
+            'transfer_from' => $transfer->locationFrom->location_enname ?? '',
+            'transfer_to' => $transfer->locationTo->location_enname ?? '',
+            'car_model' => $transfer->carModel->model_arname ?? '',
+            'car_class' => $transfer->carClass->class_enname??'',
+            'hotel_name' => $request->hotel_name,
+            'car_capacity' => $capacity,
+
+            'is_return' => ($request->default_holder) ? true : false,
+            'return_date' => ($request->default_holder) ? $request->return : null,
+            'transfer_person_price' => $transfer->person_price,
+            'transfer_total_cost' => $transfer->person_price* $request->capacity,
+        ]);
+        return redirect()->back()->with('flash_del', 'Update transfer Details!');
+    }
+
 }
