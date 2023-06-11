@@ -279,8 +279,9 @@
     .passenger_info {
         border: 1px solid #DDDDDD;
         padding: 20px 25px;
-        min-height: 392px;
-        height: 100%;
+        /* edit fore responsive */
+        /* min-height: 392px; */
+        /* height: 100%; */
     }
 }
 
