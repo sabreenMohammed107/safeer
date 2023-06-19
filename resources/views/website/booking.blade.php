@@ -1145,5 +1145,3 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
         obj.close();
     });
 </script>
-
-pt>
