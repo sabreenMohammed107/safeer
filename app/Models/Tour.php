@@ -97,4 +97,13 @@ static::deleting(function($tour) { // before delete() method call this
     public function carts(){
         return $this->hasMany(Cart::class,'tour_id','id');
     }
+
+
+
+    public function getSlugAttribute(): string
+    {
+
+
+        return str_slug($this->en_name);
+    }
 }

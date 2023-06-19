@@ -6,14 +6,14 @@
             <!--begin::Info-->
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
                 <!--begin::Title-->
-                <h1 class="text-dark fw-bolder my-1 fs-2"> Orders</h1>
+                <h1 class="text-dark fw-bolder my-1 fs-2"> Users Data</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb fw-bold fs-base my-1">
                     <li class="breadcrumb-item text-muted">
                         <a href="#" class="text-muted text-hover-primary">Home</a>
                     </li>
-                    <li class="breadcrumb-item text-muted">Order Data</li>
+                    <li class="breadcrumb-item text-muted"> Users Data</li>
 
                     <li class="breadcrumb-item text-dark">All</li>
                 </ul>
@@ -60,7 +60,7 @@
                 <div class="card-toolbar">
                     <!--begin::Add customer-->
                       <!--begin::Add product-->
-                                        {{-- <a href="{{ route('blogs.create') }}" class="btn btn-primary">Add Blog</a> --}}
+                                        <a href="{{ route('user-role.create') }}" class="btn btn-primary">Add User</a>
                                         <!--end::Add product-->
 
                     <!--end::Add customer-->
@@ -84,16 +84,13 @@
                                         value="1" />
                                 </div>
                             </th>
-                            <th class="min-w-100px">Order ID</th>
-                            <th class="min-w-100px">User Name</th>
+                            <th class="min-w-200px">Name</th>
                             {{-- <th class="text-end min-w-100px">Date</th> --}}
                             {{-- <th class="text-end min-w-100px">Time</th> --}}
-                            <th class="text-end min-w-70px">User ID</th>
-                            <th class="text-end min-w-100px">Type</th>
-                            <th class="text-end min-w-100px">pickup_point</th>
-                            <th class="text-end min-w-100px">Created Date</th>
-                            <th class="text-end min-w-100px">Grand Total</th>
-                            <th class="text-end min-w-100px">Status</th>
+                            <th class="text-end min-w-70px">email</th>
+                            <th class="text-end min-w-100px">phone</th>
+
+                            <th class="text-end min-w-100px">address</th>
                             <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -118,102 +115,40 @@
             <div class="ms-5">
                 <!--begin::Title-->
 
-                 {{ $row->order->id ?? ''}}
+                <a href="{{ route('site-users.show', $row->id) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
+                data-kt-ecommerce-category-filter="category_name" >{{ $row->name}}</a>
                 <!--end::Title-->
             </div>
         </div>
     </td>
-    <td>
-        <div class="d-flex align-items-center">
+    <!--end::Category=-->
+     <!--begin::SKU=-->
+     {{-- <td class="text-end pe-0">
 
-            <div class="ms-5">
-                <!--begin::Title-->
-
-                <a href="{{ route('users-orders.show', $row->order_id ) }}" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
-                 >{{ $row->order->user->name ?? ''}}</a>
-                <!--end::Title-->
-            </div>
-        </div>
-    </td>
-
+        <span class="fw-bolder">{{ $row->event_date_form }}</span>
+    </td> --}}
+    <!--end::SKU=-->
+    <!--begin::SKU=-->
+    {{-- <td class="text-end pe-0">
+        <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
+        <span class="fw-bolder">{{ $row->event_time_form }}</span>
+    </td> --}}
+    <!--end::SKU=-->
     <!--begin::Qty=-->
     <td class="text-end pe-0" data-order="15">
         <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
-        <span class="fw-bolder ms-3">{{ $row->order->user->id ?? '' }}</span>
+        <span class="fw-bolder ms-3">{{ $row->email ??'' }}</span>
     </td>
     <!--end::Qty=-->
     <!--begin::Price=-->
-    <td class="text-center pe-0">
-        <span class="fw-bolder text-dark">
-
-            @if ($row->detail_type == 0)
-                Booking Room
-            @endif
-
-            @if ($row->detail_type == 1)
-
-                Booking Tours
-            @endif
-
-            @if ($row->detail_type == 2)
-                Booking Transfer
-            @endif
-
-            @if ($row->detail_type == 3)
-                Booking Visa
-            @endif
-           </span>
-    </td>
     <td class="text-end pe-0">
-
-        <span class="fw-bolder text-dark">{{ $row->pickup_point ?? '' }}</span>
+        <span class="fw-bolder text-dark">{{ $row->phone ?? '' }}</span>
     </td>
+    <!--end::Price=-->
+
+    <!--begin::Status=-->
     <td class="text-end pe-0">
-
-        <span class="fw-bolder text-dark">{{ $row->order->created_at ?? '' }}</span>
-    </td>
-
-    <td class="text-end pe-0">
-
-        <span class="fw-bolder text-dark">
-            @if ($row->detail_type == 0)
-            <?php
-            $taxVal=($row->room_details->sum('total_cost') * ($row->order->tax_percentage))/100;
-            $grandTotal=$row->room_details->sum('total_cost') + $taxVal;
-                    ?>
-                    {{number_format((float)$grandTotal, 2, '.', '')}}$
-
-        @endif
-
-        @if ($row->detail_type == 1)
-        <?php
-
-        $taxVal=($row->tours_details->sum('total_cost')* ($row->order->tax_percentage))/100;
-        $grandTotal=$row->tours_details->sum('total_cost')+$taxVal;
-                ?>
-            {{number_format((float)$grandTotal, 2, '.', '')}}$
-        @endif
-
-        @if ($row->detail_type == 2)
-        <?php
-        $taxVal=($row->transfer_details->sum('transfer_total_cost')* ($row->order->tax_percentage))/100;
-        $grandTotal=$row->transfer_details->sum('transfer_total_cost') + $taxVal;
-                ?>
-                {{number_format((float)$grandTotal, 2, '.', '')}}$
-        @endif
-
-        @if ($row->detail_type == 3)
-        <?php
-        $taxVal=($row->visa_details->sum('visa_cost')* ($row->order->tax_percentage))/100;
-        $grandTotal=$row->visa_details->sum('visa_cost') + $taxVal;
-                ?>
-                {{number_format((float)$grandTotal, 2, '.', '')}}$
-        @endif
-        </span>
-    </td>
-    <td class="text-end pe-0">
-
-        <span class="fw-bolder text-dark">{{ $row->status->status ?? '' }}</span>
+        <span class="fw-bolder text-dark">{{ $row->address ?? '' }}</span>
     </td>
     <!--end::Status=-->
     <!--begin::Action=-->
@@ -236,16 +171,30 @@
             data-kt-menu="true">
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-                <a href="{{ route('users-orders.show', $row->id ) }}"
-                    class="menu-link px-3">show</a>
-            </div>
-            <!--end::Menu item-->
-            <div class="menu-item px-3">
-                <a href="{{ route('users-orders.edit', $row->id ) }}"
+                <a href="{{ route('user-role.edit', $row->id) }}"
                     class="menu-link px-3">edit</a>
             </div>
-        </div>
+            <!--end::Menu item-->
+
+
         <!--end::Menu-->
+        <!--begin::Menu item-->
+        <div class="menu-item px-3">
+            <a href="#" class="menu-link px-3"
+                data-kt-ecommerce-category-filter="delete_row">Delete</a>
+
+
+            <form id="delete_{{ $row->id }}"
+                action="{{ route('user-role.destroy', $row) }}" method="POST"
+                style="display: none;">
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" value=""></button>
+            </form>
+        </div>
+        <!--end::Menu item-->
+    </div>
     </td>
     <!--end::Action=-->
 </tr>

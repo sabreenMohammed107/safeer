@@ -46,6 +46,7 @@ class OrderDetails extends Model
         'notes',
         'detail_type', //0 >> roomdetails - 1>>tourdetails - 2 >>transdetails - 3 >> visadetails
         'pickup_point',
+        'oder_status',
         // 'room_type',
         // 'room_view',
         // 'food_bev_type',
@@ -105,6 +106,9 @@ class OrderDetails extends Model
 
     public function order(){
         return $this->belongsTo(Orders::class,'order_id');
+    }
+    public function status(){
+        return $this->belongsTo(Status::class,'status_id');
     }
 
     public function hotel(){

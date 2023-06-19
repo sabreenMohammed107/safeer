@@ -1,13 +1,13 @@
-var addAdultsBtn =document.getElementById ('adultButton');
+var addAdultsBtn = document.getElementById("adultButton");
 
-var adultInput = document.getElementById('adult_dtails');
-var inputs = document.getElementsByClassName('dating_inputs');
+var adultInput = document.getElementById("adult_dtails");
+var inputs = document.getElementsByClassName("dating_inputs");
 var removeBtn = document.getElementById('removeBtn"');
 // var roomBtn =document.getElementById('room_main');
-var passengerSectionMargin =document.getElementById('passenger_section');
+var passengerSectionMargin = document.getElementById("passenger_section");
 
-function  addAdults() {
-    var adultsCounter = document.getElementsByClassName('adults_fileds').length;
+function addAdults() {
+    var adultsCounter = document.getElementsByClassName("adults_fileds").length;
     var fields = `
     <div class="row">
 
@@ -69,25 +69,68 @@ function  addAdults() {
     </div>
 
     </div>
-    
 
-  </div> `
-  adultInput.insertAdjacentHTML ('beforeend',fields);
-//   inputs.style.alignItems="flex-end";
 
+  </div> `;
+    adultInput.insertAdjacentHTML("beforeend", fields);
+    //   inputs.style.alignItems="flex-end";
 }
 
- function remove($event) {
-    console.log ($event.closest('.adults_fileds'));
-    $event.closest('.adults_fileds').remove();
+function remove($event) {
+    console.log($event.closest(".adults_fileds"));
+    $event.closest(".adults_fileds").remove();
     // hotelMargin.style.marginTop="-70px";
 }
 
+//  passenger delete
+var passengerInfo = document.getElementsByClassName("passenger_info");
+
+function removePassenger(event) {
+    swal({
+        title: localization === "en" ? "Are you sure?" : "هل أنت متأكد؟",
+        text:
+            localization === "en"
+                ? "This is a confirmation regarding your action to delete this item."
+                : "هذا تأكيد بخصوص إجراءك لحذف هذا العنصر .",
+        // title: "Are you sure?",
+        // text: "Please click confirm to delete this item",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        buttons: {
+            conf: {
+                text:localization === "en" ? "Confirm" : "تأكيد",
+                value: "conf",
+              },
+            catch: {
+              text:  localization === "en" ? "No" : "إلغاء",
+              value: "catch",
+            },
+
+        },
+
+        confirmButtonClass: "btn btn-success",
+        cancelButtonClass: "btn btn-danger",
+        buttonsStyling: true,
+    }).
+    then((value) => {
+        switch (value) {
+
+          case "conf":
+            event.closest(".passenger_info_details").remove();
+            break;
+
+          case "catch":
+            localization === "en" ?  swal("ok!", "complete your data!", "success") :  swal("حسنا!", "استكمل بياناتك");
+            // swal("Gotcha!", "Pikachu was caught!", "success");
+            break;
+
+          default:
+            swal.close();
+            // localization === "en" ?  swal("ok!", "complete your data!", "success") :  swal("حسنا!", "استكمل بياناتك");
+        }
+      }
+    );
 
 
-//  passenger delete 
-var passengerInfo =document.getElementsByClassName('passenger_info');
-
-function removePassenger($event) {
-  $event.closest('.passenger_info_details').remove();
 }

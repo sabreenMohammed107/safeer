@@ -6,8 +6,8 @@
                 <div class=" card  tours_card hotels_card">
                     <img src="{{ asset('uploads/blogs') }}/{{$blog->image}}" alt=" blogimage">
                     <div class="card-body hotel_card_info">
-                        <div class="card_info">
-                            <h5><a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" class="stretched-link">
+                        <div class="card_info" style="height: 115px; max-height: 115px; overflow: hidden;">
+                            <h5><a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" >
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                 {{$blog->en_title ?? ''}}

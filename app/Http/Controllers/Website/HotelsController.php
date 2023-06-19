@@ -50,7 +50,7 @@ class HotelsController extends Controller
             ->where([["hotel_id", "=", $id]])
 
             ->get();
-            $Countries =Country::whereIn('id',[1,5])->get();
+            $Countries =Country::where('flag',1)->get();
             $Cities=City::get();
         \Log::info($RoomCosts->count());
         return view("website.hotels.hotel_profile", [
@@ -73,7 +73,7 @@ class HotelsController extends Controller
         $arr = explode(' |', $request->from_date);
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-        $Countries = Country::whereIn('id',[1,5])->get();
+        $Countries = Country::where('flag',1)->get();
         $Cities = City::where('country_id',$request->country_id)->get();
         $zones = Zone::all();
         //data of hotels
@@ -91,7 +91,8 @@ class HotelsController extends Controller
 
         $city_id = $request->city_id;
 
-        $HotelsRecommended = Room_type_cost::join('hotels', 'room_type_costs.hotel_id', '=', 'hotels.id')->orderBy('hotels.hotel_stars', 'desc')->whereHas('hotel', function ($q) use ($city_id) {
+        $HotelsRecommended = Room_type_cost::join('hotels', 'room_type_costs.hotel_id', '=', 'hotels.id')->orderBy('hotels.hotel_stars', 'desc')
+        ->whereHas('hotel', function ($q) use ($city_id) {
             $q->where('city_id', $city_id);
         })->groupBy('hotel_id')->paginate(6);
 
@@ -138,7 +139,7 @@ class HotelsController extends Controller
 
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-        $Countries = Country::whereIn('id',[1,5])->get();
+        $Countries = Country::where('flag',1)->get();
         $Cities = City::where('country_id',1)->get();
         $zones = Zone::all();
          //data of hotels
@@ -183,7 +184,7 @@ class HotelsController extends Controller
 
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-        $Countries = Country::whereIn('id',[1,5])->get();
+        $Countries = Country::where('flag',1)->get();
         $Cities = City::where('country_id',1)->get();
         $zones = Zone::all();
             //data of hotels

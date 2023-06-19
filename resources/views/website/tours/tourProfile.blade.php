@@ -50,6 +50,23 @@
         .popover-header button{
             border:none !important;
         }
+        .bookbox {
+            position: fixed;
+            z-index: 1000;
+            top: 30vh;
+            right: 0;
+            padding: 20px;
+            background: #fff;
+            border: 3px solid #1C4482;
+            border-right: 0;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            opacity: .8;
+            transition: all .5s;
+        }
+        .bookbox a{
+           color: #1C4482 !important
+        }
     </style>
 @endsection
 @section('bottom-header')
@@ -64,6 +81,18 @@
 @endsection
 
 @section('content')
+
+<div class="bookbox">
+    <a  a rel="noopener"  href="#bookSection" >
+
+    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                       Book Your Tour Now
+                        @else
+                        إحجز رحلتك الان
+                        @endif
+</a>
+</div>
     {{-- google reviews --}}
     <?php
     // $cid =0x424a7b3906d2a73e;
@@ -481,14 +510,14 @@
     <img src="{{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}" alt="slider mask">
     <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt="slider mask">
 
-    <div class="hotels container">
+    <div class="hotels container" id="bookSection">
         <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
             book tour
             @else
           احجز رحلة
 
             @endif  </h5>
-        <section class="booking_hotels_section container">
+        <section class="booking_hotels_section container" >
             <form action="{{ LaravelLocalization::localizeUrl('/bookTours') }}"   method="POST">
                 @csrf
                 <input type="hidden" name="tour_id" value="{{ $Tour->id }}">

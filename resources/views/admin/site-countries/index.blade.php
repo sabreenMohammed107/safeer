@@ -6,14 +6,14 @@
             <!--begin::Info-->
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
                 <!--begin::Title-->
-                <h1 class="text-dark fw-bolder my-1 fs-2">Transfer Locations</h1>
+                <h1 class="text-dark fw-bolder my-1 fs-2">Countries</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb fw-bold fs-base my-1">
                     <li class="breadcrumb-item text-muted">
-                        <a href="../dist/index.html" class="text-muted text-hover-primary">Home</a>
+                        <a href="#" class="text-muted text-hover-primary">Home</a>
                     </li>
-                    <li class="breadcrumb-item text-muted">Transfer Locations</li>
+                    <li class="breadcrumb-item text-muted">Countries</li>
 
                     <li class="breadcrumb-item text-dark">All</li>
                 </ul>
@@ -26,7 +26,6 @@
 @endsection
 
 @section('content')
-
     <!--begin::Post-->
     <div class="post fs-6 d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -61,7 +60,7 @@
                     <div class="card-toolbar">
                         <!--begin::Add customer-->
                         <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal"
-                            data-bs-target="#kt_modal_new_target">Add Transfer Location</a>
+                            data-bs-target="#kt_modal_new_target">Add Country</a>
 
                         <!--end::Add customer-->
                     </div>
@@ -83,10 +82,10 @@
                                             value="1" />
                                     </div>
                                 </th>
+                                <th class="min-w-250px">id</th>
+                                <th class="min-w-250px">En Name</th>
 
-                                <th class="min-w-150px"> En Name</th>
-                                <th class="min-w-150px"> Ar Name</th>
-
+                                <th class="min-w-250px">Ar Name</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
                             <!--end::Table row-->
@@ -99,36 +98,42 @@
                                 <tr>
                                     <!--begin::Checkbox-->
                                     <td>
+
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
                                             <input class="form-check-input" type="checkbox" value="1" />
                                         </div>
                                     </td>
                                     <!--end::Checkbox-->
-
+                                    <td>
+                                        <div class="d-flex">
+                                        <input type="hidden" data-kt-ecommerce-category-filter="category_id"
+                                            value="{{ $row->id }}">
+                                        {{ $index + 1 }}
+                                    </div>
+                                    </td>
                                     <td>
 
                                         <div class="d-flex">
 
                                             <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder mb-1"
                                                 data-kt-ecommerce-category-filter="category_name">
-                                                {{ $row->location_enname ?? '' }}</a>
+                                                {{ $row->en_country }}</a>
 
 
                                         </div>
                                     </td>
-
-
                                     <td>
 
                                         <div class="d-flex">
-                                            <input type="hidden" name="" id=""
-                                                data-kt-ecommerce-category-filter="category_id" value="{{ $row->id }}">
 
-                                            <span class="symbol-label">{{ $row->location_arname }}</span>
+
+                                                {{ $row->ar_country }}</a>
+
 
                                         </div>
-
                                     </td>
+
+
                                     <!--end::Type=-->
                                     <!--begin::Action=-->
                                     <td class="text-end">
@@ -151,7 +156,7 @@
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a data-bs-toggle="modal"
-                                                    data-bs-target="#kt_modal_new_targetEdit{{ $row->id }}"
+                                                    data-bs-target="#kt_modal_new_targetEdit{{$row->id}}"
                                                     class="menu-link px-3">Edit</a>
                                             </div>
                                             <!--end::Menu item-->
@@ -162,9 +167,10 @@
 
 
                                                 <form id="delete_{{ $row->id }}"
-                                                    action="{{ route('transfer-location.destroy', $row) }}" method="POST"
+                                                    action="{{ route('site-countries.destroy',$row->id) }}" method="POST"
                                                     style="display: none;">
                                                     @csrf
+                                                    {{-- <input type="hidden" name="_method" value="delete"> --}}
                                                     @method('DELETE')
 
                                                     <button type="submit" value=""></button>
@@ -179,7 +185,7 @@
 
 
                                     <!--begin::Modal - New Target-->
-                                    <div class="modal fade" id="kt_modal_new_targetEdit{{ $row->id }}"
+                                    <div class="modal fade" id="kt_modal_new_targetEdit{{$row->id}}"
                                         tabindex="-1" aria-hidden="true">
                                         <!--begin::Modal dialog-->
                                         <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -211,73 +217,77 @@
                                                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                                                     <!--begin:Form-->
                                                     <form id="kt_modal_update_target_updateForm" class="form"
-                                                        action="{{ route('transfer-location.update', $row->id) }}" method="post"
-                                                        enctype="multipart/form-data">
+                                                        action="{{ route('site-countries.update', $row->id) }}"
+                                                        method="post">
                                                         @csrf
                                                         @method('PUT')
                                                         <!--begin::Heading-->
-                                                        <input type="hidden" name="car_id" value="{{ $row->id }}">
+                                                        <input type="hidden" name="country_id"
+                                                            value="{{ $row->id }}" id="">
                                                         <div class="mb-13 text-center">
                                                             <!--begin::Title-->
-                                                            <h1 class="mb-3">Update Transfer Location</h1>
+                                                            <h1 class="mb-3">Update country</h1>
                                                             <!--end::Title-->
 
                                                         </div>
                                                         <!--end::Heading-->
-                                                        <!--begin::Input group-->
 
 
 
                                                         <div class="d-flex flex-column mb-8 fv-row">
-                                                            <!--begin::Input group-->
-                                                            <div class="d-flex flex-column mb-8">
-                                                                <label class="fs-6 fw-bold mb-2">En Name</label>
-                                                                <textarea class="form-control form-control-solid" rows="3" name="location_enname" placeholder="Type En name">{{ $row->location_enname }}</textarea>
-                                                            </div>
-                                                            <!--end::Input group-->
-
-                                                            <!--begin::Input group-->
-                                                            <div class="d-flex flex-column mb-8">
-                                                                <label class="fs-6 fw-bold mb-2">Ar Name</label>
-                                                                <textarea class="form-control form-control-solid" rows="3" name="location_arname" placeholder="Type Ar name">{{ $row->location_arname }}</textarea>
-                                                            </div>
-
-                                                            <div class="fv-row w-100 flex-md-root">
-                                                                <label class="fs-6 fw-bold form-label mt-3">
-                                                                    <option value="">Select City..</option>
-                                                                    {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
-                                                                </label>
-                                                                <!--end::Label-->
-                                                                <select required class="form-select form-select-solid" name="city_id"
-                                                                    data-control="select2" data-placeholder="Select an option"
-                                                                    data-show-subtext="true" data-live-search="true" id="sub">
-                                                                    <option value="">select....</option>
-                                                                    @foreach ($cities as $city)
-                                                                        <option value="{{ $city->id }}"
-                                                                            {{ $row->city_id == $city->id ? 'selected' : '' }}>
-                                                                            {{ $city->en_city }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
+                                                            <!--begin::Label-->
+                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                <span class="required"> En Name</span>
+                                                                <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                                    data-bs-toggle="tooltip"
+                                                                    title="Enter Country Name"></i>
+                                                            </label>
+                                                            <!--end::Label-->
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                placeholder="Enter  En Name"
+                                                                name="en_country"
+                                                                value="{{ $row->en_country }}" />
+                                                        </div>
+                                                        <!--end::Input group-->
 
 
-                                                            <div class="text-center">
-                                                                <div class="btn btn-sm btn-icon btn-active-color-primary"
-                                                                    style="margin-right: 25px" data-bs-dismiss="modal">
-                                                                    <button type="reset"
-                                                                        id="kt_modal_update_target_cancel"
-                                                                        class="btn btn-light me-3"
-                                                                        data-dismiss="modal">Cancel</button>
-                                                                </div>
-                                                                <button type="submit" id="kt_modal_update_target_submit"
-                                                                    class="btn btn-primary">
-                                                                    <span class="indicator-label">Submit</span>
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                </button>
+
+                                                        <div class="d-flex flex-column mb-8 fv-row">
+                                                            <!--begin::Label-->
+                                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                                <span class="required"> Ar Name</span>
+                                                                <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                                    data-bs-toggle="tooltip"
+                                                                    title="Enter Country Name"></i>
+                                                            </label>
+                                                            <!--end::Label-->
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                placeholder="Enter  ar Name"
+                                                                name="ar_country"
+                                                                value="{{ $row->ar_country }}" />
+                                                        </div>
+                                                        <!--end::Input group-->
+
+
+
+
+                                                        <!--begin::Actions-->
+                                                        <div class="text-center">
+                                                            <div class="btn btn-sm btn-icon btn-active-color-primary"
+                                                                style="margin-right: 25px" data-bs-dismiss="modal">
+                                                                <button type="reset" id="kt_modal_update_target_cancel"
+                                                                    class="btn btn-light me-3"
+                                                                    data-dismiss="modal">Cancel</button>
                                                             </div>
-                                                            <!--end::Actions-->
+                                                            <button type="submit" id="kt_modal_update_target_submit"
+                                                                class="btn btn-primary">
+                                                                <span class="indicator-label">Submit</span>
+                                                                <span class="indicator-progress">Please wait...
+                                                                    <span
+                                                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                            </button>
+                                                        </div>
+                                                        <!--end::Actions-->
                                                     </form>
                                                     <!--end:Form-->
                                                 </div>
@@ -331,54 +341,55 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" action="{{ route('transfer-location.store') }}"
-                        method="post" enctype="multipart/form-data">
+                    <form id="kt_modal_new_target_form" class="form" action="{{ route('site-countries.store') }}"
+                        method="post">
                         @csrf
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
-                            <h1 class="mb-3">Set Transfer Location</h1>
+                            <h1 class="mb-3">Set Country Name</h1>
                             <!--end::Title-->
 
                         </div>
                         <!--end::Heading-->
 
 
+                        <!--begin::Input group-->
+
 
                         <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Input group-->
-                            <div class="d-flex flex-column mb-8">
-                                <label class="fs-6 fw-bold mb-2">En Name</label>
-                                <textarea class="form-control form-control-solid" rows="3" name="location_enname" placeholder="Type En name"></textarea>
-                            </div>
-                            <!--end::Input group-->
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                <span class="required"> En Name</span>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                    title="Enter  En Name"></i>
+                            </label>
+                            <!--end::Label-->
+                            <input type="text" class="form-control form-control-solid"
+                                placeholder="Enter  En Name" name="en_country" />
+                        </div>
+                        <!--end::Input group-->
 
-                            <!--begin::Input group-->
-                            <div class="d-flex flex-column mb-8">
-                                <label class="fs-6 fw-bold mb-2">Ar Name</label>
-                                <textarea class="form-control form-control-solid" rows="3" name="location_arname" placeholder="Type Ar name"></textarea>
-                            </div>
+                                    <!--begin::Input group-->
 
-                            <div class="fv-row w-100 flex-md-root">
-                                <label class="fs-6 fw-bold form-label mt-3">
-                                    <option value="">Select City..</option>
-                                    {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
-                                </label>
-                                <!--end::Label-->
-                                <select required class="form-select form-select-solid" name="city_id"
-                                    data-control="select2" data-placeholder="Select an option"
-                                    data-show-subtext="true" data-live-search="true" id="sub">
-                                    <option value="">select....</option>
-                                    @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}"
-                                        {{ old('city_id') == $city->id ? 'selected' : '' }}>
-                                        {{ $city->en_city }}</option>
-                                @endforeach
-                                </select>
-                            </div>
 
-</div>
-<!--end:checkbox-->
+                                    <div class="d-flex flex-column mb-8 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                            <span class="required"> Ar Name</span>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                title="Enter  Ar Name"></i>
+                                        </label>
+                                        <!--end::Label-->
+                                        <input type="text" class="form-control form-control-solid"
+                                            placeholder="Enter  ar Name" name="ar_country" />
+                                    </div>
+                                    <!--end::Input group-->
+
+
+
+
+
 
 
                         <!--begin::Actions-->

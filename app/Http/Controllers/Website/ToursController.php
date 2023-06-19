@@ -38,7 +38,7 @@ class ToursController extends Controller
             ->groupBy(["en_category", "features_categories.id"])->get();
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
-        $Countries = Country::whereIn('id',[1,5])->get();
+        $Countries = Country::where('flag',1)->get();
         $Cities = City::where('country_id', 1)->get();
         return view("website.tours.tourProfile", [
             "Company" => $Company,
@@ -52,14 +52,52 @@ class ToursController extends Controller
         ]);
     }
     //
+    public function tours(Request $request)
+    {
+
+        $Company = Company::first();
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+        // $Cities = City::all();
+        $TourTypes = Tour_type::all();
+        $Countries = Country::where('flag',1)->get();
+        if($request->country_id){
+            $Cities = City::where('country_id',$request->country_id)->get();
+        }else{
+            $Cities = City::where('country_id',1)->get();
+        }
+
+        $city_id = $request->city_id;
+        $country_id = $request->country_id;
+        $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')
+        ->where('city_id',$city_id)->paginate(6);
+        $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
+        $ToursByAlpha = $ToursRecommended->sortBy('en_name');
+
+        return view("website.tours.tours", [
+            "Company" => $Company,
+            "Cities" => $Cities,
+            "Countries" => $Countries,
+            "BreadCrumb" => $BreadCrumb,
+            "TourTypes" => $TourTypes,
+            "ToursRecommended" => $ToursRecommended,
+            "ToursByPrice" => $ToursByPrice,
+            "ToursByAlpha" => $ToursByAlpha,
+            "Count" => $ToursRecommended->count(),
+            "city_id" => $city_id,
+            "country_id" => $country_id,
+
+
+        ]);
+    }
     public function all_tours(Request $request)
     {
 
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-        $Cities = City::all();
+        // $Cities = City::all();
         $TourTypes = Tour_type::all();
-
+        $Countries = Country::where('flag',1)->get();
+        $Cities = City::where('country_id',1)->get();
         $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
@@ -67,6 +105,7 @@ class ToursController extends Controller
         return view("website.tours.tours", [
             "Company" => $Company,
             "Cities" => $Cities,
+            "Countries" => $Countries,
             "BreadCrumb" => $BreadCrumb,
             "TourTypes" => $TourTypes,
             "ToursRecommended" => $ToursRecommended,
@@ -130,7 +169,10 @@ class ToursController extends Controller
                 $filterTour->whereBetween('tour_person_cost', [$request->price_from, $request->price_to]);
                 //
             }
-
+            if ($request->city_id) {
+                $filterTour->where('city_id',$city_id);
+                //
+            }
             $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
             $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
             $ToursByAlpha = $ToursRecommended->sortBy('en_name');
