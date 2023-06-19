@@ -591,7 +591,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
             <input type="hidden" name="cost" value="{{$TotalVisasCost}}">
 
             @endif
-            <div class="">
+            <div class="my-3 px-3">
                 <div class="row">
 
                     <div class="form-check mb-3">
