@@ -77,11 +77,11 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->tour_name?? ''}}<
 
 <!--begin::Qty=-->
 <td class="text-center pe-0" data-order="15">
-<span class="fw-bolder ms-3">{{$detail->tour_type ?? '' }}</span>
+<span class="fw-bolder ms-3">{{$detail->tour->type->en_name ?? '' }}</span>
 </td>
 <!--end::Qty=-->
 <td class="text-center pe-0" data-order="15">
-<span class="fw-bolder ms-3">{{ $detail->tour_cost ?? '' }} $</span>
+<span class="fw-bolder ms-3"><?php echo  number_format($detail->tour_cost, 2) .'$' ; ?></span>
 </td>
 <td class="text-center pe-0" data-order="15">
 <span class="fw-bolder ms-3">{{ $detail->tour_date ?? '' }}</span>
@@ -99,7 +99,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->tour_name?? ''}}<
 <!--end::Status=-->
 <!--begin::Status=-->
 <td class="text-end pe-0">
-    <span class="fw-bolder text-dark">{{ $detail->total_cost ?? '' }} </span>
+    <span class="fw-bolder text-dark"><?php echo  number_format($detail->total_cost, 2) .'$' ; ?> </span>
     </td>
     <!--end::Status=-->
 </tr>
@@ -279,7 +279,7 @@ data-kt-ecommerce-category-filter="category_name" >{{$order->holder_salutation ?
         </td>
 
         <td class="text-center pe-0" data-order="15">
-            <span class="fw-bolder ms-3">{{ $person->person_cost ?? '' }}</span>
+            <span class="fw-bolder ms-3">{{ $person->person_cost ?? '' }} $</span>
             </td>
 
     </tr>

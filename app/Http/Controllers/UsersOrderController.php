@@ -11,6 +11,7 @@ use App\Models\TourDetails;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\Visa;
+use App\Models\Status;
 use App\Models\VisaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -127,7 +128,7 @@ class UsersOrderController extends Controller
     public function edit($id)
     {
         $order = OrderDetails::where('id', $id)->first();
-
+$statuses=Status::all();
         if ($order->detail_type == 1) {
 
             $persons = OrderPersons::where('order_details_id', $id)->get();
@@ -136,7 +137,7 @@ class UsersOrderController extends Controller
 
             $totalCost = 50;
             return view($this->viewName . 'edittoursDetails', compact(['order'
-                , 'tourDetails', 'persons', 'totalCost']));
+                , 'tourDetails', 'persons', 'totalCost','statuses']));
         }
 
         if ($order->detail_type == 2) {
@@ -146,7 +147,7 @@ class UsersOrderController extends Controller
                 ->where('order_details.detail_type', 2)->where('order_details.id', $id)->select('transfer_details.*')->get();
 
             $totalCost = 50;
-            return view($this->viewName . 'edittransDetails', compact(['order', 'transfers', 'transDetails', 'persons', 'totalCost']));
+            return view($this->viewName . 'edittransDetails', compact(['order', 'transfers', 'transDetails', 'persons', 'totalCost','statuses']));
         }
 
         if ($order->detail_type == 3) {
@@ -161,7 +162,7 @@ class UsersOrderController extends Controller
             return view($this->viewName . 'editvisaDetails', compact(['order',
             'visaDetails', 'persons', 'totalCost'
 
-        ,'countries','nationality_ids','nationalities','visas']));
+        ,'countries','nationality_ids','nationalities','visas','statuses']));
         }
     }
 
@@ -388,4 +389,56 @@ class UsersOrderController extends Controller
 
         return redirect()->back()->with('flash_del', 'Update Visa Details!');
     }
+
+    public function updateStatus(Request $request)
+    {
+
+    $order = OrderDetails::where('id', $request->get('order'))->first();
+    $input = ['status_id'=>$request->get('value')];
+
+    OrderDetails::where('id', $request->get('order'))->update($input);
+\Log::info($request->all());
+       return true;
+}
+
+
+public function receiptSave(Request $request){
+
+    $input = $request->except(['_token','order_id','receipt_image']);
+    $order=OrderDetails::where('id',$request->get('order_id'))->first();
+        if ($request->hasFile('receipt_image')) {
+            $attach_image = $request->file('receipt_image');
+
+            $input['receipt_image'] = $this->UplaodImage($attach_image);
+        }
+
+
+        // Tour::findOrFail($request->get('tour_id'))->update($input);
+        if($order){
+            $order->update($input);
+
+        }
+        return redirect()->back()->with('flash_success', 'Successfully Saved!');
+}
+
+
+public function UplaodImage($file_request)
+      {
+          //  This is Image Info..
+          $file = $file_request;
+          $name = $file->getClientOriginalName();
+          $ext = $file->getClientOriginalExtension();
+          $size = $file->getSize();
+          $path = $file->getRealPath();
+          $mime = $file->getMimeType();
+
+          // Rename The Image ..
+          $imageName = $name;
+          $uploadPath = public_path('uploads/orders');
+
+          // Move The image..
+          $file->move($uploadPath, $imageName);
+
+          return $imageName;
+      }
 }

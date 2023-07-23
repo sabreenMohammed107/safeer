@@ -26,7 +26,6 @@
 @endsection
 
 @section('content')
-
     <!--begin::Post-->
     <div class="post fs-6 d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -298,15 +297,15 @@
 
                                                                 </label>
 
-                                                                <select name="feature_category_id" required aria-label="Select a Category"
-                                                                    data-control="select2"
+                                                                <select name="feature_category_id" required
+                                                                    aria-label="Select a Category" data-control="select2"
                                                                     data-placeholder="Select a Country..."
                                                                     data-dropdown-parent="#kt_modal_new_targetEdit{{ $row->id }}"
                                                                     class="form-select form-select-solid fw-bolder">
                                                                     <option value=""></option>
                                                                     @foreach ($categories as $category)
                                                                         <option value="{{ $category->id }}"
-                                                                            {{ $row->feature_category_id  == $category->id ? 'selected' : '' }}>
+                                                                            {{ $row->feature_category_id == $category->id ? 'selected' : '' }}>
                                                                             {{ $category->en_category }}
                                                                         </option>
                                                                     @endforeach
@@ -477,14 +476,11 @@
                                 </label>
 
                                 <select name="feature_category_id" required aria-label="Select a City"
-                                    data-control="select2"
-                                    data-placeholder="Select a Category..."
-                                    data-dropdown-parent="#xx"
-                                    class="form-select form-select-solid fw-bolder">
+                                    data-control="select2" data-placeholder="Select a Category..."
+                                    data-dropdown-parent="#xx" class="form-select form-select-solid fw-bolder">
                                     <option value=""></option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                           >
+                                        <option value="{{ $category->id }}">
                                             {{ $category->en_category }}
                                         </option>
                                     @endforeach
@@ -493,17 +489,17 @@
                             <!--end::Input group-->
 
 
-                        <!--begin::Actions-->
-                        <div class="text-center">
-                            <button type="reset" id="kt_modal_new_target_cancel"
-                                class="btn btn-light me-3">Cancel</button>
-                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
-                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                        </div>
-                        <!--end::Actions-->
+                            <!--begin::Actions-->
+                            <div class="text-center">
+                                <button type="reset" id="kt_modal_new_target_cancel"
+                                    class="btn btn-light me-3">Cancel</button>
+                                <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                                    <span class="indicator-label">Submit</span>
+                                    <span class="indicator-progress">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+                            <!--end::Actions-->
                     </form>
                     <!--end:Form-->
                 </div>

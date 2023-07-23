@@ -115,6 +115,7 @@ var KTAppEcommerceCategories = function() {
     };
 }();
 
+
 // On document ready
 KTUtil.onDOMContentLoaded(function() {
     KTAppEcommerceCategories.init();

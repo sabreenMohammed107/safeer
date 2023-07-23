@@ -40,6 +40,11 @@ class TourDetails extends Model
         'updated_at'
     ];
 
+
+    public function tour()
+    {
+        return $this->belongsTo(Tour::class,'tour_id');
+    }
     /**
      * The attributes excluded from the model's JSON form.
      *

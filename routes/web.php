@@ -285,10 +285,14 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::post('AddAdultTourPersons', [UsersOrderController::class, 'AddAdultTourPersons'])->name('AddAdultTourPersons');
     Route::post('AddChildTourPersons', [UsersOrderController::class, 'AddChildTourPersons'])->name('AddChildTourPersons');
 
+    Route::post('updateStatus', [UsersOrderController::class, 'updateStatus'])->name('updateStatus');
+
     //
     Route::post('EditTransDetails', [UsersOrderController::class, 'EditTransDetails'])->name('EditTransDetails');
 
     Route::post('EditVisaDetails', [UsersOrderController::class, 'EditVisaDetails'])->name('EditVisaDetails');
+//receiptSave
+Route::post('receiptSave', [UsersOrderController::class, 'receiptSave'])->name('receiptSave');
 
     //fav-hotels
     Route::resource('fav-hotels', AllFavHotelsController::class);
@@ -306,6 +310,8 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::resource('visaType', VisaTypeController::class);
     Route::resource('visa', VisaController::class);
     Route::resource('user-role', UsersRoleController::class);
+    Route::post('storeAssign', [UsersRoleController::class, 'storeAssign'])->name('storeAssign');
+
 
 });
 

@@ -86,7 +86,7 @@
                             </th>
                             <th class="min-w-200px">Name</th>
                             {{-- <th class="text-end min-w-100px">Date</th> --}}
-                            {{-- <th class="text-end min-w-100px">Time</th> --}}
+                            <th class="text-end min-w-100px">Role</th>
                             <th class="text-end min-w-70px">email</th>
                             <th class="text-end min-w-100px">phone</th>
 
@@ -134,6 +134,9 @@
         <span class="fw-bolder">{{ $row->event_time_form }}</span>
     </td> --}}
     <!--end::SKU=-->
+    <td class="text-end pe-0">
+        <span class="fw-bolder text-dark">{{ $row->roles[0]->name ?? '' }}</span>
+    </td>
     <!--begin::Qty=-->
     <td class="text-end pe-0" data-order="15">
         <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
@@ -176,7 +179,13 @@
             </div>
             <!--end::Menu item-->
 
-
+   <!--begin::Menu item-->
+   <div class="menu-item px-3"
+   @if ($row->hasRole('admin')) style="display:none" @endif >
+    <a href="{{ route('user-role.show', $row->id) }}"
+        class="menu-link px-3">Orders</a>
+</div>
+<!--end::Menu item-->
         <!--end::Menu-->
         <!--begin::Menu item-->
         <div class="menu-item px-3">

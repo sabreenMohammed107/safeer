@@ -84,4 +84,12 @@ class User extends Authenticatable
       }
      return false;
  }
+
+ /**
+     * The roles that belong to the user.
+     */
+    public function orders()
+    {
+        return $this->belongsToMany(OrderDetails::class, 'assign_orders');
+    }
 }

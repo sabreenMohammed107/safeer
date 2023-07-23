@@ -91,7 +91,7 @@
                             <th class="text-end min-w-100px">phone</th>
 
                             <th class="text-end min-w-100px">address</th>
-                            <th class="text-end min-w-70px">Actions</th>
+                            {{-- <th class="text-end min-w-70px">Actions</th> --}}
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -152,7 +152,7 @@
     </td>
     <!--end::Status=-->
     <!--begin::Action=-->
-    <td class="text-end">
+    {{-- <td class="text-end">
         <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
@@ -164,21 +164,16 @@
                         fill="black" />
                 </svg>
             </span>
-            <!--end::Svg Icon-->
         </a>
-        <!--begin::Menu-->
         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
             data-kt-menu="true">
-            <!--begin::Menu item-->
             <div class="menu-item px-3">
                 <a href="{{ route('site-users.show', $row->id) }}"
                     class="menu-link px-3">show</a>
             </div>
-            <!--end::Menu item-->
 
         </div>
-        <!--end::Menu-->
-    </td>
+    </td> --}}
     <!--end::Action=-->
 </tr>
 <!--end::Table row-->

@@ -53,6 +53,9 @@ class OrderDetails extends Model
         // 'room_cost',
         // 'total_cost',
         // 'hotel_id',
+        'receipt_image',
+        'receipt_notes',
+
         'created_at',
         'updated_at'
     ];
@@ -132,5 +135,10 @@ class OrderDetails extends Model
     public function visa_details()
     {
         return $this->hasMany(VisaDetails::class, 'order_details_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'assign_orders');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderDetails;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Users_role;
@@ -128,7 +129,12 @@ $user->roles()->attach($request->role_id);
      */
     public function show($id)
     {
-        //
+        $user = User::where('id',$id)->first();
+        $userRoles = $user->roles->all();
+        $userorders=$user->orders->all();
+        $roles=Role::all();
+        $rows = OrderDetails::orderBy("created_at", "Desc")->get();
+        return view($this->viewName . 'orders', compact(['user','userRoles','roles','rows','userorders']));
     }
 
     /**
@@ -231,5 +237,14 @@ $user->roles()->attach($request->role_id);
            return redirect()->back()->withInput()->with('flash_danger', 'Can’t delete This Row
            Because it related with another table');
        }
+    }
+
+    public function storeAssign(Request $request){
+
+$user=User::where('id',$request->get('user_id'))->first();
+$user->orders()->sync($request->get('checkboxlist'));
+// dd($request->get('checkboxlist'));
+return redirect()->back()->with('flash_del', 'Successfully Assign!');
+
     }
 }
