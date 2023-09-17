@@ -37,7 +37,7 @@ class GoogleController extends Controller
                     'email' => ($user->getEmail()) ? $user->getEmail() : $user->getName() . $user->getId() . "@g.com",
                     'password' => Hash::make($user->getName() . '@' . $user->getId()),
                     'first_name' => $user->user['given_name'],
-                    'last_name' => $user->user['family_name']
+                    'last_name' => isset($user->user['family_name']) ? $user->user['family_name'] : "",
                 ]);
             } else {
                 $saveUser = $GoogleNoEmailUser;
