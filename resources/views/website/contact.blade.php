@@ -130,8 +130,8 @@
     <section class="help_section socail_channels">
 
 
-        <img src=" {{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}" alt=" slider mask top">
-        <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt=" slider mask bottom">
+        <img class="w-100" src=" {{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}" alt=" slider mask top">
+        <img class="w-100" src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt=" slider mask bottom">
         <div class="container">
 
             <h5>
