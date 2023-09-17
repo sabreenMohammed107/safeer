@@ -55,7 +55,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
                     <a href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}</a>
                 </button>
                 <button class="{{ Request::segment(2)=='contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
-                    <a href={{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a>
+                    <a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a>
                 </button>
                 {{-- {{session()->get("SiteUser")["Name"]}} --}}
                 @if (session()->get('SiteUser'))
