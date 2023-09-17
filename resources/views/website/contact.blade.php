@@ -101,20 +101,19 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-sm-12 col-md-6 col-xl-4 mt-2"></div>
             <div class="col-sm-12 col-md-6 col-xl-4 mt-2">
                 <div class="card-content ">
                     <div class=" card" style="border: none">
 
                         {{-- <img src="{{ asset('/website_assets/images/contact/message.webp') }}" alt="messages logo "> --}}
-                        <div class="card-body ">
+                        <div class="card-body " style="margin: auto">
                             {{-- <div class="card_info"> --}}
 
                             <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank"> <img
                                     src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}"
-                                    width="200" alt="">
+                                    width="300" alt="">
                             </a>
-                            &nbsp;&nbsp;
                             <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank">
                                 <img src="{{ asset('/website_assets/images/qrNew.PNG') }}" width="90" alt="">
                             </a>
@@ -201,7 +200,7 @@
                         <div class="mb-3">
                             <textarea class="form-control{{ $errors->has('message') ? 'error' : '' }}" name="message" id="message" rows="3"
                                 placeholder="{{ __('links.send_msg') }}
-                                * " required>value="{{ old('message') }}"</textarea>
+                                * " required>{{ old('message') }}</textarea>
                             @if ($errors->has('message'))
                                 <div class="error">
                                     {{ $errors->first('message') }}
@@ -237,13 +236,13 @@
 
     </section>
 
-    <section class="details_office container">
+    <section class="details_office container" style="padding-top: 0">
         <div class="row mx-0  mb-3">
             @isset($branches[0])
                 <div class="col-sm-12 col-md-6">
                     <div class="offices_info">
                         <div class="help_info">
-                            <h6>
+                            <h6 class="mb-3">
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
                                     {{ $branches[0]->branch_enname }}
                                 @else
