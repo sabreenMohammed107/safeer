@@ -306,7 +306,7 @@
 
 
                                                        <div style="position: relative">
-                                                       <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="280"  alt="Dijital">
+                                                       <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="270"  alt="Dijital">
 
 
                                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
@@ -318,7 +318,7 @@
                                                         <?php
                                                         $im=QrCode::format('png')
                                                         ->merge('website_assets/images/q1.png', 0.4, true)
-                                                        ->size(80)->color(27, 34, 76)->errorCorrection('H')
+                                                        ->size(75)->color(27, 34, 76)->errorCorrection('H')
                                                         ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
 
                                                         ?>
