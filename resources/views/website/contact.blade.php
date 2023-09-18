@@ -13,12 +13,13 @@
 @section('content')
     <!-- socail channels -->
     <section class="socail_channels container">
-        <h5>@if (LaravelLocalization::getCurrentLocale() === 'en')
-            contact us via our social channels.
-
+        <h5>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                contact us via our social channels.
             @else
-            اتصل بنا عبر قنواتنا الاجتماعية.
-            @endif</h5>
+                اتصل بنا عبر قنواتنا الاجتماعية.
+            @endif
+        </h5>
 
         <div class="row mx-0">
             <div class="col-sm-12 col-md-6 col-xl-4">
@@ -30,20 +31,18 @@
                             <div class="card_info">
                                 <h6>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    Our Location
-
-                @else
-              موقعنا
-                @endif
+                                        Our Location
+                                    @else
+                                        موقعنا
+                                    @endif
 
                                 </h6>
                                 <span>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                    {{ $master->detailed_address_en }}
-                @else
-                {{ $master->detailed_address_ar }}
-                @endif
+                                        {{ $master->detailed_address_en }}
+                                    @else
+                                        {{ $master->detailed_address_ar }}
+                                    @endif
 
 
                                 </span>
@@ -63,11 +62,10 @@
                                 <h6>
 
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    phone number
-
-                @else
-              رقم التليفون
-                @endif
+                                        phone number
+                                    @else
+                                        رقم التليفون
+                                    @endif
                                 </h6>
                                 <span class="info">
                                     <a href="tel:{{ $master->phone }}"> {!! $master->phone !!}</a>
@@ -103,62 +101,62 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-sm-12 col-md-6 col-xl-4 mt-2"></div>
             <div class="col-sm-12 col-md-6 col-xl-4 mt-2">
-                <div class="card-content " >
+                <div class="card-content ">
                     <div class=" card" style="border: none">
 
                         {{-- <img src="{{ asset('/website_assets/images/contact/message.webp') }}" alt="messages logo "> --}}
-                        <div class="card-body ">
+                        <div class="card-body " style="margin: auto">
                             {{-- <div class="card_info"> --}}
 
-                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" > <img src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}" width="200" alt="">
-                                    </a>
-&nbsp;&nbsp;
-                                        <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank" >
-                                            <img src="{{ asset('/website_assets/images/qrNew.PNG') }}" width="90" alt="">
-                                        </a>
+                            <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank"> <img
+                                    src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}"
+                                    width="300" alt="">
+                            </a>
+                            <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank">
+                                <img src="{{ asset('/website_assets/images/qrNew.PNG') }}" width="90" alt="">
+                            </a>
 
-                             </div>
+                        </div>
                         {{-- </div>  --}}
                     </div>
                 </div>
             </div>
+        </div>
     </section>
     <!-- need help section -->
     <section class="help_section socail_channels">
 
 
-        <img src=" {{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}" alt=" slider mask top">
-        <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt=" slider mask bottom">
+        <img class="w-100" src=" {{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}" alt=" slider mask top">
+        <img class="w-100" src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt=" slider mask bottom">
         <div class="container">
 
-            <h5>  @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                We Provide Best Services <br>
-                Need Help?
+            <h5>
+                @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    We Provide Best Services <br>
+                    Need Help?
                 @else
-                نحن نقدم أفضل الخدمات <br>
-                تحتاج مساعدة؟
-                @endif </h5>
-                @if(Session::has('flash_success'))
-
-                <div class="alert alert-success alert-dismissible fade show" role="alert"
-
-                <strong ><i class="fa fa-check-circle"></i> {{session('flash_success')}}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-
+                    نحن نقدم أفضل الخدمات <br>
+                    تحتاج مساعدة؟
+                @endif
+            </h5>
+            @if (Session::has('flash_success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" <strong><i
+                        class="fa fa-check-circle"></i> {{ session('flash_success') }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             @endif
             @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div><br />
-        @endif
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div><br />
+            @endif
             <form action="{{ route('contact.store') }}" method="post">
                 @csrf
                 <div class="row mx-0">
@@ -176,7 +174,8 @@
                         </div>
                         <div class="mb-3">
                             <input type="email" class="form-control {{ $errors->has('email') ? 'error' : '' }}"
-                                name="email"  value="{{ old('email') }}" id="email" placeholder=" {{ __('links.email') }}
+                                name="email" value="{{ old('email') }}" id="email"
+                                placeholder=" {{ __('links.email') }}
                                 *" required>
                             @if ($errors->has('email'))
                                 <div class="error">
@@ -185,9 +184,11 @@
                             @endif
                         </div>
                         <div class="mb-3">
-                            <input type="number" value="{{ old('phone') }}" class="form-control {{ $errors->has('phone') ? 'error' : '' }}"
-                                name="phone" id="phone" placeholder="{{ __('links.mobile') }}
-                                *" required>
+                            <input type="number" value="{{ old('phone') }}"
+                                class="form-control {{ $errors->has('phone') ? 'error' : '' }}" name="phone"
+                                id="phone" placeholder="{{ __('links.mobile') }}
+                                *"
+                                required>
                             @if ($errors->has('phone'))
                                 <div class="error">
                                     {{ $errors->first('phone') }}
@@ -199,7 +200,7 @@
                         <div class="mb-3">
                             <textarea class="form-control{{ $errors->has('message') ? 'error' : '' }}" name="message" id="message" rows="3"
                                 placeholder="{{ __('links.send_msg') }}
-                                * " required>value="{{ old('message') }}"</textarea>
+                                * " required>{{ old('message') }}</textarea>
                             @if ($errors->has('message'))
                                 <div class="error">
                                     {{ $errors->first('message') }}
@@ -216,12 +217,13 @@
                         </div>
                     </div>
                     <div class="form-group mb-4">
-                        <input id="captcha" type="text" class="form-control" required placeholder="{{ __('links.enterCapcha') }}" name="captcha">
+                        <input id="captcha" type="text" class="form-control" required
+                            placeholder="{{ __('links.enterCapcha') }}" name="captcha">
                         @if ($errors->has('captcha'))
-                        <div class="error">
-                            {{ $errors->first('captcha') }}
-                        </div>
-                    @endif
+                            <div class="error">
+                                {{ $errors->first('captcha') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="col-12">
                         <div class="mb-3 mt-3">
@@ -234,28 +236,28 @@
 
     </section>
 
-    <section class="details_office container">
+    <section class="details_office container" style="padding-top: 0">
         <div class="row mx-0  mb-3">
             @isset($branches[0])
                 <div class="col-sm-12 col-md-6">
                     <div class="offices_info">
                         <div class="help_info">
-                            <h6>
+                            <h6 class="mb-3">
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                {{ $branches[0]->branch_enname }}
-                @else
-                {{ $branches[0]->branch_arname }}
-                @endif
+                                    {{ $branches[0]->branch_enname }}
+                                @else
+                                    {{ $branches[0]->branch_arname }}
+                                @endif
 
 
                             </h6>
-                            <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                {{ $branches[0]->detailed_address_en }}
+                            <span>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                    {{ $branches[0]->detailed_address_en }}
                                 @else
-                                {{ $branches[0]->detailed_address_ar }}
-                                @endif</span>
+                                    {{ $branches[0]->detailed_address_ar }}
+                                @endif
+                            </span>
                             {{-- <span> new york NY 10010</span> --}}
                             <span> phone :<br> {!! $branches[0]->phone !!}</span>
                             {{-- <span>fax: {{ $branches[0]->fax }}</span> --}}
@@ -279,15 +281,15 @@
     <!--  ending page  -->
 @endsection
 @section('adds_js')
-<script type="text/javascript">
-    $('#reload').click(function () {
-        $.ajax({
-            type: 'GET',
-            url: 'reload-captcha',
-            success: function (data) {
-                $(".captcha span").html(data.captcha);
-            }
+    <script type="text/javascript">
+        $('#reload').click(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'reload-captcha',
+                success: function(data) {
+                    $(".captcha span").html(data.captcha);
+                }
+            });
         });
-    });
-</script>
+    </script>
 @endsection

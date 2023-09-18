@@ -7,7 +7,7 @@
                     <img src="{{ asset('uploads/blogs') }}/{{$blog->image}}" alt=" blogimage">
                     <div class="card-body hotel_card_info">
                         <div class="card_info" style="height: 115px; max-height: 115px; overflow: hidden;">
-                            <h5><a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" >
+                            <h5 style="text-align: center;text-align-last:center"><a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" >
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                 {{$blog->en_title ?? ''}}
