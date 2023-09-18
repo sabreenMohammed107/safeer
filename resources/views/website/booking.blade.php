@@ -591,32 +591,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
             <input type="hidden" name="cost" value="{{$TotalVisasCost}}">
 
             @endif
-            <div class="my-3 px-3">
-                <div class="row">
 
-                    <div class="form-check mb-3">
-                        <input class="form-check-input terms" required type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                            I agree to all <a href="{{url('/terms')}}" target="_blank">Terms and Conditions</a> of Safer
-
-                            @else
-                            أوافق على جميع <a href="{{url('/terms')}}" target="_blank"> بنود وشروط </a> Safer
-                            @endif
-                        </label>
-                    </div>
-                    <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-info"> @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                            Place Order
-                            @else
-                            استكمال الطلب
-                            @endif</button>
-                    </div>
-
-                </div>
-            </div>
 
         </div>
         <div class="col-sm-12 col-md-6">
@@ -637,7 +612,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                         <div class="info_image">
                             <img src="{{ asset('uploads/hotels') }}/{{ $RoomCost->hotel_banner }}" alt=" blogimage" />
                         </div>
-                        <div class="info_title">
+                        <div class="info_title px-2">
                             <div class="card_info">
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 <h6> <a href="{{ url('/hotels/' . $RoomCost->hotel_id) }}"
@@ -758,7 +733,7 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                             <div class="info_image">
                                 <img src="{{ asset('uploads/tours') }}/{{ $TourRec->banner }}" alt=" blogimage" />
                             </div>
-                            <div class="info_title">
+                            <div class="info_title px-2">
                                 <div class="card_info">
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                                     <h6> <a href="{{ url('/hotels/' ) }}"
@@ -992,6 +967,34 @@ $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count*$Cost + $PaidChildren*$
                     <span id="gt" class="AfterT_txt"> <span>$</span>{{number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost)*(1 + (float)$tax_percentage/100),2,'.','')}} </span>
                 </div>
              </div>
+        </div>
+        <div class="col-12">
+            <div class="my-3 px-3">
+                <div class="row">
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input terms" required type="checkbox" value="" id="flexCheckChecked">
+                        <label class="form-check-label" for="flexCheckChecked">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            I agree to all <a href="{{url('/terms')}}" target="_blank">Terms and Conditions</a> of Safer
+
+                            @else
+                            أوافق على جميع <a href="{{url('/terms')}}" target="_blank"> بنود وشروط </a> Safer
+                            @endif
+                        </label>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-info"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            Place Order
+                            @else
+                            استكمال الطلب
+                            @endif</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 
