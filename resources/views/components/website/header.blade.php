@@ -57,12 +57,12 @@ $localVar=LaravelLocalization::getCurrentLocale();
                 <button class="{{ Request::segment(2)=='contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a>
                 </button>
-                {{-- <button class="{{ Request::segment(2)=='contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
-                    <a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a>
-                </button> --}}
+
                 {{-- {{session()->get("SiteUser")["Name"]}} --}}
                 @if (session()->get('SiteUser'))
+                <button class="offcan_buttons">
                 <a href="#">{{ session()->get('SiteUser')['Name'] }}</a>
+            </button>
                 @else
                 <button class="offcan_buttons">
                     <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteRegister'))}}">{{ __('links.signin') }}</a>
@@ -88,7 +88,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
                         <a  rel="alternate" hreflang="{{ $localeCode }}"
                             href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
-                            <img title="English" src="{{ asset('website_assets/images/united-states.png') }}" class="flag-img ">
+                            <img title="English" src="{{ asset('website_assets/images/united-states.png') }}" class="flag-img">
 
                         </a>
                     @endif
@@ -96,32 +96,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
                 </button>
 
 
-                 {{-- <button class="offcan_buttons_lang">
-                    <a class="dropdown-btn">{{ __('links.language') }} <i class="fa fa-caret-down"></i></a>
 
-                    <div class="dropdown-container">
-
-                        @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                        @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
-                            <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
-                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-
-                                <!--{{ $properties['native'] }}-->
-
-                                {{ __('links.ar') }}
-
-                            </a>
-                        @endif
-                        @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
-                            <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
-                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-
-                                {{ __('links.en') }}
-                            </a>
-                        @endif
-                        <!--|-->
-                    @endforeach  </div>
-                </button> --}}
 
             </div>
         </div>
@@ -224,40 +199,7 @@ $localVar=LaravelLocalization::getCurrentLocale();
                         </li>
                         @endif
 
-                        {{-- @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                            @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
-                                <a class="nav-link" rel="alternate" hreflang="{{ $localeCode }}"
-                                    href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
-                                    <!--{{ $properties['native'] }}-->
-
-                                    <img title="Arabic" src="{{ asset('img/flags/ar.png') }}" class="flag-img main-lang">
-                                </a>
-                            @endif
-                            @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
-                                <a class="nav-link" rel="alternate" hreflang="{{ $localeCode }}"
-                                    href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-
-                                    <img title="English" src="{{ asset('img/flags/en.png') }}" class="flag-img ">
-
-                                </a>
-                            @endif
-                            <!--|-->
-                        @endforeach --}}
-
-
-                        {{-- <li class=" profile_name">
-                            <button class="links hybrid btn profile_name_button" onclick="opendropdown()">
-                                <i class="fa-solid fa-globe"></i></button>
-                            <div class="logout_dropdown" id="logout_dropdown">
-
-                                <a class="links hybrid p-2" href=''><img title="Arabic"
-                                        src="{{ asset('img/flags/ar.png') }}" class="flag-img"> </a>
-                                <a class="links hybrid p-2" href=''><img title="English"
-                                        src="{{ asset('img/flags/en.png') }}" class="flag-img"> </a>
-                            </div>
-
-                        </li> --}}
                     </ul>
                 </div>
             </ul>
