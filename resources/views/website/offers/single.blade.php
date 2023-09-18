@@ -74,7 +74,7 @@
                 </h6>
                 @foreach ($latest as $obj)
                     <div class="blog_details">
-                        <img class="mx-2" style="height: 100px;width:130px" src="{{ asset('uploads/offers') }}/{{ $obj->image }}"
+                        <img class="mx-2" style="height: 100px;width:130px ;min-width:130px" src="{{ asset('uploads/offers') }}/{{ $obj->image }}"
                             alt="latest blog image">
                         <div class="blog_info">
                             <h6> <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $obj->id . '/' . $obj->slug) }}"
