@@ -77,7 +77,7 @@
                         <img class="mx-2" style="height: 100px;width:130px ;min-width:130px" src="{{ asset('uploads/offers') }}/{{ $obj->image }}"
                             alt="latest blog image">
                         <div class="blog_info">
-                            <h6> <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $obj->id . '/' . $obj->slug) }}"
+                            <h6 style="margin-bottom: 0;font-size: 16px"> <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $obj->id . '/' . $obj->slug) }}"
                                     class="stretched-link">
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                                         {{ strip_tags(Str::limit($obj->subtitle_en ?? '', $limit = 50, $end = '')) }}
