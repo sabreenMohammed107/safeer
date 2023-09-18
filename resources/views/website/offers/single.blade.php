@@ -22,7 +22,7 @@
                         <div class="col-12 ">
                             <div class="card-content">
                                 <div class="  hotels_card">
-                                  <img src="{{ asset('uploads/offers') }}/{{ $offer->image }}" class="w-100" alt=" single blogimage">
+                                  <img  src="{{ asset('uploads/offers') }}/{{ $offer->image }}" class="w-100" alt=" single blogimage">
                                   <div class="card-body hotel_card_info">
                                     <div class="card_info">
 
@@ -74,7 +74,7 @@
                 </h6>
                 @foreach ($latest as $obj)
                     <div class="blog_details">
-                        <img class="mx-2" src="{{ asset('uploads/offers') }}/{{ $obj->image }}"
+                        <img class="mx-2" style="height: 100px;width:130px" src="{{ asset('uploads/offers') }}/{{ $obj->image }}"
                             alt="latest blog image">
                         <div class="blog_info">
                             <h6> <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $obj->id . '/' . $obj->slug) }}"
