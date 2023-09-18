@@ -264,7 +264,7 @@
 
                          style="background-image: linear-gradient(hsla(0, 0%, 0%, 0.3),hsla(0, 0%, 0%, 0.3)) , url({{ asset('uploads/offers') }}/{{ $offer->image }});">
                           <div class="header_info">
-                            <h5><a href="#" class="stretched-link"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            <h5><a href="{{ LaravelLocalization::localizeUrl('/single-offer/'.$offer->id.'/'.$offer->slug) }}" class="stretched-link"> @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 {{$offer->city->en_city ?? ""}}
 
                                 @else
