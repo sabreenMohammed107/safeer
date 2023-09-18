@@ -60,8 +60,9 @@
                     <!--begin::Card toolbar-->
                     <div class="card-toolbar">
                         <!--begin::Add customer-->
-                        <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal"
-                            data-bs-target="#kt_modal_new_target">Add Offer</a>
+                        {{-- <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal"
+                            data-bs-target="#kt_modal_new_target">Add Offer</a> --}}
+                            <a href="{{ route('offers.create') }}" class="btn btn-primary">Add Offer</a>
 
                         <!--end::Add customer-->
                     </div>
@@ -86,7 +87,7 @@
                                 <th class="min-w-150px">image</th>
                                 <th class="min-w-250px">city</th>
                                 <th class="min-w-150px">Sub Title</th>
-
+                                <th class="min-w-150px">cost </th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
                             <!--end::Table row-->
@@ -140,6 +141,16 @@
                                         </div>
 
                                     </td>
+                                    <td>
+
+                                        <div class="d-flex">
+
+
+                                            <span class="symbol-label">{{ $row->cost }}</span>
+
+                                        </div>
+
+                                    </td>
                                     <!--end::Type=-->
                                     <!--begin::Action=-->
                                     <td class="text-end">
@@ -161,10 +172,13 @@
                                             data-kt-menu="true">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a data-bs-toggle="modal"
+                                                {{-- <a data-bs-toggle="modal"
                                                     data-bs-target="#kt_modal_new_targetEdit{{ $row->id }}"
-                                                    class="menu-link px-3">Edit</a>
-                                            </div>
+                                                    class="menu-link px-3">Edit</a> --}}
+                                                    <a href="{{ route('offers.edit', $row->id) }}"
+                                                        class="menu-link px-3">Edit</a>
+                                                </div>
+
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">

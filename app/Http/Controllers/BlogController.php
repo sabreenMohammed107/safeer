@@ -47,7 +47,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $categories = Blogs_category::get();
+        $categories = Blogs_category::where('id','!=',100)->get();
 
         return view($this->viewName . 'add', compact(['categories']));
 
@@ -95,7 +95,7 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        $categories = Blogs_category::get();
+        $categories = Blogs_category::where('id','!=',100)->get();
 
         return view($this->viewName . 'edit', compact(['blog','categories']));
     }

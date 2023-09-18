@@ -21,18 +21,21 @@ class MainController extends Controller
     {
         $Company = Company::first();
         $ExploreCities = Explore_city::where("active","=", 1)->get();
-        $Offers = Offer::where("active","=", 1)->get();
+         $Offers = Offer::where("active","=", 1)->where('status','!=','main')->get();
+         $mainOffer=Offer::where("active","=", 1)->where('status','=','main')->first();
         $Counters = Counter::get();
         $Countries = Country::where('flag',1)->get();
         $cities=City::where('country_id',1)->get();
         $BestHotels = Best_hotel::where('active','=',1)->orderBy("order")->get();
-        $BlogsCategories = Blogs_category::all();
-        $AllBlogs = Blog::take(4)->orderBy("id","desc")->get();
+        $BlogsCategories = Blogs_category::where('id','!=',100)->get();
+        $AllBlogs = Blog::where('blog_category_id','!=',100)->take(4)->orderBy("id","desc")->get();
+// $Offers=Blog::where('blog_category_id','=',100)->inRandomOrder()->limit(4)->get();
         return view("website.home",
             [
                 "Company" => $Company,
                 "ExploreCities" => $ExploreCities,
                 "Offers" => $Offers,
+                "mainOffer"=>$mainOffer,
                 "Countries" => $Countries,
                 "cities" => $cities,
                 "Counters" => $Counters,
