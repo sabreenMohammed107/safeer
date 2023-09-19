@@ -101,7 +101,7 @@ input:-moz-placeholder { text-align:right !important; }
 @endsection
 @section('content')
  <!-- newsearch section -->
- {{-- <section class="booking_hotels_section container">
+ <section class="booking_hotels_section container">
     <form action="{{ LaravelLocalization::localizeUrl('/transfers') }}" method="POST">
         @csrf
         <div class="hotel_details">
@@ -166,7 +166,7 @@ input:-moz-placeholder { text-align:right !important; }
 
         </div>
     </form>
-</section> --}}
+</section>
 <!--end search -->
 
     <section class="tours container mt-4">
