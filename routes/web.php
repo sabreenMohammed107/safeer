@@ -318,6 +318,8 @@ Route::post('receiptSave', [UsersOrderController::class, 'receiptSave'])->name('
     Route::resource('visa', VisaController::class);
     Route::resource('user-role', UsersRoleController::class);
     Route::post('storeAssign', [UsersRoleController::class, 'storeAssign'])->name('storeAssign');
+    Route::post('assignThisOrder', [UsersOrderController::class, 'storeAssign'])->name('assignThisOrder');
+
 
 
 });

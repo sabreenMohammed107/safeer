@@ -244,10 +244,119 @@
                 <a href="{{ route('users-orders.edit', $row->id ) }}"
                     class="menu-link px-3">edit</a>
             </div>
+
+             <!--begin::Menu item-->
+             <div class="menu-item px-3">
+                <a data-bs-toggle="modal"
+                    data-bs-target="#kt_modal_new_targetEdit{{$row->id}}"
+                    class="menu-link px-3">Assign</a>
+            </div>
+            <!--end::Menu item-->
         </div>
         <!--end::Menu-->
     </td>
     <!--end::Action=-->
+     <!--begin::Modal - New Target-->
+     <div class="modal fade" id="kt_modal_new_targetEdit{{ $row->id }}"
+        tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 justify-content-end">
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary"
+                        data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137"
+                                    width="16" height="2" rx="1"
+                                    transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect x="7.41422" y="6" width="16"
+                                    height="2" rx="1"
+                                    transform="rotate(45 7.41422 6)" fill="black" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--begin::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                    <!--begin:Form-->
+                    <form id="kt_modal_update_target_updateForm" class="form"
+                        action="{{ route('assignThisOrder') }}" method="post">
+                        @csrf
+
+                        <!--begin::Heading-->
+                        <input type="hidden" name="order_details_id" value="{{ $row->id }}"
+                            id="">
+                        <div class="mb-13 text-center">
+                            <!--begin::Title-->
+                            <h1 class="mb-3">Assign Order</h1>
+                            <!--end::Title-->
+
+                        </div>
+                        <!--end::Heading-->
+
+
+
+
+                        <div>
+                            <label class="fs-6 fw-bold form-label mt-3">
+                                <option value="">Select a Seller...</option>
+                                <i class="fas fa-exclamation-circle ms-1 fs-7"
+                                    data-bs-toggle="tooltip"
+                                    title="Interviewer who conducts the meeting with the interviewee"></i>
+                            </label>
+
+                            <select name="seller_id" required aria-label="Select a seller"
+                                data-control="select2"
+                                data-placeholder="Select a seller..."
+                                data-dropdown-parent="#kt_modal_new_targetEdit{{ $row->id }}"
+                                class="form-select form-select-solid fw-bolder">
+                                <option value=""></option>
+                                @foreach ($sellers as $seller)
+                                    <option value="{{ $seller->id }}"
+                                        {{ $row->tour_id == $seller->id ? 'selected' : '' }}>
+                                        {{ $seller->name ?? '' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Actions-->
+                        <div class="text-center mt-4">
+                            <div class="btn btn-sm btn-icon btn-active-color-primary"
+                                style="margin-right: 25px" data-bs-dismiss="modal">
+                                <button type="reset" id="kt_modal_update_target_cancel"
+                                    class="btn btn-light me-3"
+                                    data-dismiss="modal">Cancel</button>
+                            </div>
+                            <button type="submit" id="kt_modal_update_target_submit"
+                                class="btn btn-primary">
+                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-progress">Please wait...
+                                    <span
+                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end:Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Target-->
 </tr>
 <!--end::Table row-->
 @endforeach

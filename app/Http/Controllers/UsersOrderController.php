@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assign_order;
 use App\Models\Country;
 use App\Models\Nationality;
 use App\Models\OrderDetails;
 use App\Models\OrderPersons;
 use App\Models\RoomDetails;
+use App\Models\Status;
 use App\Models\TourDetails;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
+use App\Models\User;
+use App\Models\Users_role;
 use App\Models\Visa;
-use App\Models\Status;
 use App\Models\VisaDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+
 class UsersOrderController extends Controller
 {
     protected $object;
@@ -43,9 +48,17 @@ class UsersOrderController extends Controller
      */
     public function index()
     {
-        $rows = OrderDetails::orderBy("created_at", "Desc")->get();
 
-        return view($this->viewName . 'index', compact(['rows']));
+        $sellersIds = Users_role::where('role_id', 2)->pluck('user_id');
+        $sellers = User::whereIn('id', $sellersIds)->get();
+        if (Auth::check() && Auth::user()->hasRole('admin')) {
+            $rows = OrderDetails::orderBy("created_at", "Desc")->get();
+        } else{
+            $ordersIds = Assign_order::where('user_id', Auth::user()->id)->pluck('order_details_id');
+            $rows = OrderDetails::whereIn('id', $ordersIds)->get();
+        }
+
+        return view($this->viewName . 'index', compact(['rows', 'sellers']));
     }
 
     /**
@@ -128,7 +141,7 @@ class UsersOrderController extends Controller
     public function edit($id)
     {
         $order = OrderDetails::where('id', $id)->first();
-$statuses=Status::all();
+        $statuses = Status::all();
         if ($order->detail_type == 1) {
 
             $persons = OrderPersons::where('order_details_id', $id)->get();
@@ -137,7 +150,7 @@ $statuses=Status::all();
 
             $totalCost = 50;
             return view($this->viewName . 'edittoursDetails', compact(['order'
-                , 'tourDetails', 'persons', 'totalCost','statuses']));
+                , 'tourDetails', 'persons', 'totalCost', 'statuses']));
         }
 
         if ($order->detail_type == 2) {
@@ -147,22 +160,22 @@ $statuses=Status::all();
                 ->where('order_details.detail_type', 2)->where('order_details.id', $id)->select('transfer_details.*')->get();
 
             $totalCost = 50;
-            return view($this->viewName . 'edittransDetails', compact(['order', 'transfers', 'transDetails', 'persons', 'totalCost','statuses']));
+            return view($this->viewName . 'edittransDetails', compact(['order', 'transfers', 'transDetails', 'persons', 'totalCost', 'statuses']));
         }
 
         if ($order->detail_type == 3) {
             $persons = OrderPersons::where('order_details_id', $id)->get();
             $countries = Country::all();
-        $nationality_ids = Visa::pluck('nationality_id');
-        $nationalities = Nationality::whereIn('id',$nationality_ids)->get();
-        $visas = Visa::all();
+            $nationality_ids = Visa::pluck('nationality_id');
+            $nationalities = Nationality::whereIn('id', $nationality_ids)->get();
+            $visas = Visa::all();
             $visaDetails = VisaDetails::join("order_details", "visa_details.order_details_id", "=", "order_details.id")
                 ->where('order_details.detail_type', 3)->where('order_details.id', $id)->select('visa_details.*')->get();
             $totalCost = 50;
             return view($this->viewName . 'editvisaDetails', compact(['order',
-            'visaDetails', 'persons', 'totalCost'
+                'visaDetails', 'persons', 'totalCost'
 
-        ,'countries','nationality_ids','nationalities','visas','statuses']));
+                , 'countries', 'nationality_ids', 'nationalities', 'visas', 'statuses']));
         }
     }
 
@@ -352,40 +365,40 @@ $statuses=Status::all();
             'transfer_from' => $transfer->locationFrom->location_enname ?? '',
             'transfer_to' => $transfer->locationTo->location_enname ?? '',
             'car_model' => $transfer->carModel->model_arname ?? '',
-            'car_class' => $transfer->carClass->class_enname??'',
+            'car_class' => $transfer->carClass->class_enname ?? '',
             'hotel_name' => $request->hotel_name,
             'car_capacity' => $capacity,
 
             'is_return' => ($request->default_holder) ? true : false,
             'return_date' => ($request->default_holder) ? $request->return : null,
             'transfer_person_price' => $transfer->person_price,
-            'transfer_total_cost' => $transfer->person_price* $request->capacity,
+            'transfer_total_cost' => $transfer->person_price * $request->capacity,
         ]);
         return redirect()->back()->with('flash_del', 'Update transfer Details!');
     }
 
-    public function EditVisaDetails(Request $request){
-        $obj= VisaDetails::findOrFail($request->detail_id);
+    public function EditVisaDetails(Request $request)
+    {
+        $obj = VisaDetails::findOrFail($request->detail_id);
         if (optional($obj->visa_personal_photo)->isNotEmpty()) {
-            Storage::disk('public')->delete('uploads/visas/',$obj->visa_personal_photo);
+            Storage::disk('public')->delete('uploads/visas/', $obj->visa_personal_photo);
         }
         if (optional($obj->visa_passport_photo)->isNotEmpty()) {
-            Storage::disk('public')->delete('uploads/visas/',$obj->visa_passport_photo);
+            Storage::disk('public')->delete('uploads/visas/', $obj->visa_passport_photo);
         }
         $passport = Storage::disk('public')->put('uploads/visas/', $request->passport);
         $personal = Storage::disk('public')->put('uploads/visas/', $request->personal);
         VisaDetails::findOrFail($request->detail_id)->update([
             'visa_id' => $request->visa_id,
             'visa_personal_photo' => basename($personal),
-            'visa_passport_photo' =>basename($passport),
+            'visa_passport_photo' => basename($passport),
 
         ]);
-        $orderDetails = OrderDetails::where('id',$request->order_id)->update([
+        $orderDetails = OrderDetails::where('id', $request->order_id)->update([
             'holder_name' => $request->name,
             'holder_mobile' => $request->phone,
             'holder_email' => $request->email,
-         ]);
-
+        ]);
 
         return redirect()->back()->with('flash_del', 'Update Visa Details!');
     }
@@ -393,52 +406,69 @@ $statuses=Status::all();
     public function updateStatus(Request $request)
     {
 
-    $order = OrderDetails::where('id', $request->get('order'))->first();
-    $input = ['status_id'=>$request->get('value')];
+        $order = OrderDetails::where('id', $request->get('order'))->first();
+        $input = ['status_id' => $request->get('value')];
 
-    OrderDetails::where('id', $request->get('order'))->update($input);
-\Log::info($request->all());
-       return true;
-}
+        OrderDetails::where('id', $request->get('order'))->update($input);
+        \Log::info($request->all());
+        return true;
+    }
 
+    public function receiptSave(Request $request)
+    {
 
-public function receiptSave(Request $request){
-
-    $input = $request->except(['_token','order_id','receipt_image']);
-    $order=OrderDetails::where('id',$request->get('order_id'))->first();
+        $input = $request->except(['_token', 'order_id', 'receipt_image']);
+        $order = OrderDetails::where('id', $request->get('order_id'))->first();
         if ($request->hasFile('receipt_image')) {
             $attach_image = $request->file('receipt_image');
 
             $input['receipt_image'] = $this->UplaodImage($attach_image);
         }
 
-
         // Tour::findOrFail($request->get('tour_id'))->update($input);
-        if($order){
+        if ($order) {
             $order->update($input);
 
         }
         return redirect()->back()->with('flash_success', 'Successfully Saved!');
-}
+    }
 
+    public function UplaodImage($file_request)
+    {
+        //  This is Image Info..
+        $file = $file_request;
+        $name = $file->getClientOriginalName();
+        $ext = $file->getClientOriginalExtension();
+        $size = $file->getSize();
+        $path = $file->getRealPath();
+        $mime = $file->getMimeType();
 
-public function UplaodImage($file_request)
-      {
-          //  This is Image Info..
-          $file = $file_request;
-          $name = $file->getClientOriginalName();
-          $ext = $file->getClientOriginalExtension();
-          $size = $file->getSize();
-          $path = $file->getRealPath();
-          $mime = $file->getMimeType();
+        // Rename The Image ..
+        $imageName = $name;
+        $uploadPath = public_path('uploads/orders');
 
-          // Rename The Image ..
-          $imageName = $name;
-          $uploadPath = public_path('uploads/orders');
+        // Move The image..
+        $file->move($uploadPath, $imageName);
 
-          // Move The image..
-          $file->move($uploadPath, $imageName);
+        return $imageName;
+    }
 
-          return $imageName;
-      }
+    public function storeAssign(Request $request)
+    {
+
+        // $user = User::where('id', $request->get('seller_id'))->first();
+        // $input = [
+        //     'order_details_id' => $request->get('order_details_id'),
+        //     'user_id' => $request->get('seller_id'),
+        // ];
+        // Assign_order::create($input);
+
+        $user = Assign_order::firstOrCreate(
+            ['order_details_id' => $request->get('order_details_id')],
+            ['user_id' => $request->get('seller_id')]
+        );
+
+        return redirect()->back()->with('flash_del', 'Successfully Assign!');
+
+    }
 }

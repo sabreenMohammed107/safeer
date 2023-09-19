@@ -107,17 +107,17 @@
                                     <!--end::Checkbox-->
                                     <td>
                                         <div class="d-flex">
-                                        <input type="hidden" data-kt-ecommerce-category-filter="category_id"
-                                            value="{{ $row->id }}">
-                                        {{ $index + 1 }}
-                                    </div>
+                                            <input type="hidden" data-kt-ecommerce-category-filter="category_id"
+                                                value="{{ $row->id }}">
+                                            {{ $index + 1 }}
+                                        </div>
                                     </td>
                                     <td>
 
                                         <div class="d-flex">
 
 
-                                                {{ $row->tour->en_overview ?? '' }}</a>
+                                            {{ $row->tour->en_overview ?? '' }}</a>
 
 
                                         </div>
@@ -138,7 +138,7 @@
                                         <div class="d-flex">
 
 
-                                                {{ $row->ar_tag }}</a>
+                                            {{ $row->ar_tag }}</a>
 
 
                                         </div>
@@ -167,7 +167,7 @@
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a data-bs-toggle="modal"
-                                                    data-bs-target="#kt_modal_new_targetEdit{{$row->id}}"
+                                                    data-bs-target="#kt_modal_new_targetEdit{{ $row->id }}"
                                                     class="menu-link px-3">Edit</a>
                                             </div>
                                             <!--end::Menu item-->
@@ -178,7 +178,7 @@
 
 
                                                 <form id="delete_{{ $row->id }}"
-                                                    action="{{ route('tourTag.destroy',$row->id) }}" method="POST"
+                                                    action="{{ route('tourTag.destroy', $row->id) }}" method="POST"
                                                     style="display: none;">
                                                     @csrf
                                                     {{-- <input type="hidden" name="_method" value="delete"> --}}
@@ -196,7 +196,7 @@
 
 
                                     <!--begin::Modal - New Target-->
-                                    <div class="modal fade" id="kt_modal_new_targetEdit{{$row->id}}"
+                                    <div class="modal fade" id="kt_modal_new_targetEdit{{ $row->id }}"
                                         tabindex="-1" aria-hidden="true">
                                         <!--begin::Modal dialog-->
                                         <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -228,13 +228,12 @@
                                                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                                                     <!--begin:Form-->
                                                     <form id="kt_modal_update_target_updateForm" class="form"
-                                                        action="{{ route('tourTag.update', $row->id) }}"
-                                                        method="post">
+                                                        action="{{ route('tourTag.update', $row->id) }}" method="post">
                                                         @csrf
                                                         @method('PUT')
                                                         <!--begin::Heading-->
-                                                        <input type="hidden" name="tag_id"
-                                                            value="{{ $row->id }}" id="">
+                                                        <input type="hidden" name="tag_id" value="{{ $row->id }}"
+                                                            id="">
                                                         <div class="mb-13 text-center">
                                                             <!--begin::Title-->
                                                             <h1 class="mb-3">Update Tag</h1>
@@ -250,13 +249,11 @@
                                                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                                                 <span class="required"> En Tag</span>
                                                                 <i class="fas fa-exclamation-circle ms-2 fs-7"
-                                                                    data-bs-toggle="tooltip"
-                                                                    title="Enter  Tag"></i>
+                                                                    data-bs-toggle="tooltip" title="Enter  Tag"></i>
                                                             </label>
                                                             <!--end::Label-->
                                                             <input type="text" class="form-control form-control-solid"
-                                                                placeholder=" En Tag"
-                                                                name="en_tag"
+                                                                placeholder=" En Tag" name="en_tag"
                                                                 value="{{ $row->en_tag }}" />
                                                         </div>
                                                         <!--end::Input group-->
@@ -268,34 +265,39 @@
                                                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                                                 <span class="required"> Ar Tag</span>
                                                                 <i class="fas fa-exclamation-circle ms-2 fs-7"
-                                                                    data-bs-toggle="tooltip"
-                                                                    title="Enter  Tag"></i>
+                                                                    data-bs-toggle="tooltip" title="Enter  Tag"></i>
                                                             </label>
                                                             <!--end::Label-->
                                                             <input type="text" class="form-control form-control-solid"
-                                                                placeholder="Enter  ar Tag"
-                                                                name="ar_tag"
+                                                                placeholder="Enter  ar Tag" name="ar_tag"
                                                                 value="{{ $row->ar_tag }}" />
                                                         </div>
                                                         <!--end::Input group-->
 
 
-   <div>
-   <label class="fs-6 fw-bold form-label mt-3">
-    <option value="">Select a Tour...</option>
-    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i>
-</label>
+                                                        <div>
+                                                            <label class="fs-6 fw-bold form-label mt-3">
+                                                                <option value="">Select a Tour...</option>
+                                                                <i class="fas fa-exclamation-circle ms-1 fs-7"
+                                                                    data-bs-toggle="tooltip"
+                                                                    title="Interviewer who conducts the meeting with the interviewee"></i>
+                                                            </label>
 
-<select name="tour_id"  required aria-label="Select a Tour" data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_new_targetEdit{{$row->id}}" class="form-select form-select-solid fw-bolder">
-    <option value="" ></option>
-    @foreach($tours as $tour)
-    <option value="{{$tour->id}}" {{$row->tour_id == $tour->id ? 'selected': ''}}>
-        {{ $tour->city->en_city ??'' }}
-   </option>
-    @endforeach
-</select>
-</div>
-<!--end::Input group-->
+                                                            <select name="tour_id" required aria-label="Select a Tour"
+                                                                data-control="select2"
+                                                                data-placeholder="Select a Country..."
+                                                                data-dropdown-parent="#kt_modal_new_targetEdit{{ $row->id }}"
+                                                                class="form-select form-select-solid fw-bolder">
+                                                                <option value=""></option>
+                                                                @foreach ($tours as $tour)
+                                                                    <option value="{{ $tour->id }}"
+                                                                        {{ $row->tour_id == $tour->id ? 'selected' : '' }}>
+                                                                        {{ $tour->city->en_city ?? '' }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <!--end::Input group-->
 
                                                         <!--begin::Actions-->
                                                         <div class="text-center">
@@ -391,47 +393,50 @@
                                     title="Enter  En Tag"></i>
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid"
-                                placeholder="Enter  En Tag" name="en_tag" />
+                            <input type="text" class="form-control form-control-solid" placeholder="Enter  En Tag"
+                                name="en_tag" />
                         </div>
                         <!--end::Input group-->
 
-                                    <!--begin::Input group-->
+                        <!--begin::Input group-->
 
 
-                                    <div class="d-flex flex-column mb-8 fv-row">
-                                        <!--begin::Label-->
-                                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                            <span class="required"> Ar Tag</span>
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                                title="Enter  Ar Tag"></i>
-                                        </label>
-                                        <!--end::Label-->
-                                        <input type="text" class="form-control form-control-solid"
-                                            placeholder="Enter  ar Tag" name="ar_tag" />
-                                    </div>
-                                    <!--end::Input group-->
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                <span class="required"> Ar Tag</span>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                    title="Enter  Ar Tag"></i>
+                            </label>
+                            <!--end::Label-->
+                            <input type="text" class="form-control form-control-solid" placeholder="Enter  ar Tag"
+                                name="ar_tag" />
+                        </div>
+                        <!--end::Input group-->
 
 
-		<!--begin::Input group-->
-         <div class="fv-row mb-7">
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
 
-            <label class="fs-6 fw-bold form-label mt-3">
-                <option value="">Select Tour..</option>
-                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i>
-            </label>
+                            <label class="fs-6 fw-bold form-label mt-3">
+                                <option value="">Select Tour..</option>
+                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                    title="Interviewer who conducts the meeting with the interviewee"></i>
+                            </label>
 
-            <select name="tour_id"  required aria-label="Select a Country" data-control="select2" data-placeholder="Select a tour..." data-dropdown-parent="#kt_modal_new_target" class="form-select form-select-solid fw-bolder">
-                <option value="" ></option>
-                @foreach($tours as $tour)
-                <option value="{{$tour->id}}"  >
+                            <select name="tour_id" required aria-label="Select a Country" data-control="select2"
+                                data-placeholder="Select a tour..." data-dropdown-parent="#kt_modal_new_target"
+                                class="form-select form-select-solid fw-bolder">
+                                <option value=""></option>
+                                @foreach ($tours as $tour)
+                                    <option value="{{ $tour->id }}">
 
-                    {{ $tour->city->en_city ?? '' }} /{{$tour->en_overview}}
-                </option>
-                @endforeach
-            </select>
-        </div>
-        <!--end::Input group-->
+                                        {{ $tour->city->en_city ?? '' }} /{{ $tour->en_overview }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!--end::Input group-->
 
 
 
