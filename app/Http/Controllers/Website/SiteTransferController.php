@@ -78,9 +78,10 @@ class SiteTransferController extends Controller
         ->whereHas('locationFrom', function ($q) use ($city_id) {
             $q->where('city_id', $city_id);
         })
-        ->orwhereHas('locationTo', function ($q) use ($city_id) {
-            $q->where('city_id', $city_id);
-        })->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
+        // ->orwhereHas('locationTo', function ($q) use ($city_id) {
+        //     $q->where('city_id', $city_id);
+        // })
+        ->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
 
         $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
         $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
