@@ -198,7 +198,7 @@
                         @endif </h6>
                     <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                        {{ $Tour->city->country->ar_country }}
+                        {{ $Tour->city->country->en_country }}
                         @else
                         {{ $Tour->city->country->ar_country }}
                         @endif <span>|</span>@if (LaravelLocalization::getCurrentLocale() === 'en')
