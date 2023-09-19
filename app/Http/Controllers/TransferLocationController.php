@@ -34,9 +34,10 @@ class TransferLocationController extends Controller
     public function index()
     {
         $rows = Transfer_location::orderBy("created_at", "Desc")->get();
+        $cities = City::get();
 
 
-        return view($this->viewName . 'index', compact(['rows']));
+        return view($this->viewName . 'index', compact(['rows','cities']));
     }
 
     /**
