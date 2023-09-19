@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Transfer_location;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
