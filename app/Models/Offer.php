@@ -14,8 +14,18 @@ class Offer extends Model
         'subtitle_ar',
         'image',
         'active',
+        'cost',
+        'offer_enoverview',
+        'offer_aroverview',
+        'status',
 
     ];
+    public function getSlugAttribute(): string
+    {
+
+
+        return str_slug($this->subtitle_en);
+    }
 
     public function city()
     {

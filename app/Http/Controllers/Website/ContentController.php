@@ -10,6 +10,7 @@ use App\Models\Company_branch;
 use App\Models\Contact;
 use App\Models\Counter;
 use App\Models\Newsletter;
+use App\Models\Offer;
 use App\Models\Why_us;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -40,9 +41,9 @@ $whyUss=Why_us::all();
     {
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Company = Company::first();
-        $blogs = Blog::paginate(10);
-        $categories = Blogs_category::get();
-        $latest = Blog::take(5)->orderBy("created_at", "Desc")->get();
+        $blogs = Blog::where('blog_category_id','!=',100)->paginate(10);
+        $categories = Blogs_category::where('id','!=',100)->get();
+        $latest = Blog::where('blog_category_id','!=',100)->take(5)->orderBy("created_at", "Desc")->get();
         return view("website.blogs.blogs",
             [
                 "Company" => $Company,
@@ -57,7 +58,7 @@ $whyUss=Why_us::all();
     {
 
         if ($request->ajax()) {
-            $blogs = Blog::paginate(10);
+            $blogs = Blog::where('blog_category_id','!=',100)->paginate(10);
             return view("website.blogs.blogList",
                 [
 
@@ -73,8 +74,8 @@ $whyUss=Why_us::all();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Company = Company::first();
         $blog = Blog::where('id', $id)->first();
-        $categories = Blogs_category::get();
-        $latest = Blog::take(5)->orderBy("created_at", "Desc")->get();
+        $categories = Blogs_category::where('id','!=',100)->get();
+        $latest = Blog::where('blog_category_id','!=',100)->take(5)->orderBy("created_at", "Desc")->get();
         return view("website.blogs.single",
             [
                 "Company" => $Company,
@@ -84,7 +85,53 @@ $whyUss=Why_us::all();
                 "BreadCrumb" => $BreadCrumb,
             ]);
     }
+ /**
+  * offers
+  */
+  public function offers()
+  {
+      $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+      $Company = Company::first();
+      $offers = Offer::where('active','=',1)->paginate(10);
+      $latest = Offer::where('active','=',1)->take(5)->orderBy("created_at", "Desc")->get();
+      return view("website.offers.offers",
+          [
+              "Company" => $Company,
+              "offers" => $offers,
+              "latest" => $latest,
+              "BreadCrumb" => $BreadCrumb,
+          ]);
+  }
 
+  public function fetch_data_offer(Request $request)
+  {
+
+      if ($request->ajax()) {
+        $offers = Offer::where('active','=',1)->paginate(10);
+        return view("website.offers.offerList",
+              [
+
+                  "offers" => $offers,
+
+              ])->render();
+
+      }
+  }
+
+  public function singleOffer($id)
+  {
+      $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+      $Company = Company::first();
+      $offer = Offer::where('id', $id)->first();
+      $latest = Offer::where('active','=',1)->take(5)->orderBy("created_at", "Desc")->get();
+      return view("website.offers.single",
+          [
+              "Company" => $Company,
+              "offer" => $offer,
+              "latest" => $latest,
+              "BreadCrumb" => $BreadCrumb,
+          ]);
+  }
     // Create Contact Form
     public function createForm(Request $request)
     {

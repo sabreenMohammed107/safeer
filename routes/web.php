@@ -106,6 +106,13 @@ Route::group([
 
     Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
     Route::get('/single-blog/{id}/{slug?}', [ContentController::class, 'singleBlog'])->name('single-blog');
+
+    Route::get("/offers", [ContentController::class, 'offers']);
+
+    Route::get('offers/fetch_data', [ContentController::class, 'fetch_data_offer']);
+    Route::get('/single-offer/{id}/{slug?}', [ContentController::class, 'singleOffer'])->name('single-offer');
+
+
     Route::get('/contact', [ContentController::class, 'createForm']);
     Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
     Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
@@ -311,6 +318,8 @@ Route::post('receiptSave', [UsersOrderController::class, 'receiptSave'])->name('
     Route::resource('visa', VisaController::class);
     Route::resource('user-role', UsersRoleController::class);
     Route::post('storeAssign', [UsersRoleController::class, 'storeAssign'])->name('storeAssign');
+    Route::post('assignThisOrder', [UsersOrderController::class, 'storeAssign'])->name('assignThisOrder');
+
 
 
 });

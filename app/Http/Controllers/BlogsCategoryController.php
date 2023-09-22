@@ -33,7 +33,7 @@ class BlogsCategoryController extends Controller
      */
     public function index()
     {
-        $rows = Blogs_category::orderBy("created_at", "Desc")->get();
+        $rows = Blogs_category::where('id','!=',100)->orderBy("created_at", "Desc");
 
 
         return view($this->viewName . 'index', compact(['rows']));

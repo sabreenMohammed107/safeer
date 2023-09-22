@@ -73,22 +73,33 @@ class ToursController extends Controller
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
-        return view("website.tours.tours", [
-            "Company" => $Company,
-            "Cities" => $Cities,
-            "Countries" => $Countries,
-            "BreadCrumb" => $BreadCrumb,
-            "TourTypes" => $TourTypes,
+        // return view("website.tours.tours", [
+        //     "Company" => $Company,
+        //     "Cities" => $Cities,
+        //     "Countries" => $Countries,
+        //     "BreadCrumb" => $BreadCrumb,
+        //     "TourTypes" => $TourTypes,
+        //     "ToursRecommended" => $ToursRecommended,
+        //     "ToursByPrice" => $ToursByPrice,
+        //     "ToursByAlpha" => $ToursByAlpha,
+        //     "Count" => $ToursRecommended->count(),
+        //     "city_id" => $city_id,
+        //     "country_id" => $country_id,
+
+
+        // ]);
+        return view("website.tours.toursList",
+        [
+
             "ToursRecommended" => $ToursRecommended,
             "ToursByPrice" => $ToursByPrice,
             "ToursByAlpha" => $ToursByAlpha,
             "Count" => $ToursRecommended->count(),
-            "city_id" => $city_id,
-            "country_id" => $country_id,
+            "page_num" => $request->page_num,
 
+        ])->render();
+}
 
-        ]);
-    }
     public function all_tours(Request $request)
     {
 

@@ -47,7 +47,8 @@ class OfferController extends Controller
      */
     public function create()
     {
-        //
+        $cities = City::get();
+        return view($this->viewName . 'add',compact(['cities']));
     }
 
     /**
@@ -69,6 +70,12 @@ class OfferController extends Controller
             $input['active'] = '1';
         } else {
             $input['active'] = '0';
+        }
+        if ($request->has('status')) {
+
+            $input['status'] = 'main';
+        } else {
+            $input['status'] = 'basic';
         }
         Offer::create($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
@@ -92,7 +99,8 @@ class OfferController extends Controller
      */
     public function edit(Offer $offer)
     {
-        //
+        $cities = City::get();
+        return view($this->viewName . 'edit', compact(['offer','cities']));
     }
 
     /**
@@ -116,7 +124,12 @@ class OfferController extends Controller
         } else {
             $input['active'] = '0';
         }
+        if ($request->has('status')) {
 
+            $input['status'] = 'main';
+        } else {
+            $input['status'] = 'basic';
+        }
         // Tour::findOrFail($request->get('tour_id'))->update($input);
         $offer->update($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }

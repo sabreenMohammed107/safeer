@@ -103,7 +103,8 @@
 
                         <div class="choices">
                             <i class="fa-solid fa-location-dot"></i>
-                            <select class="form-select" required id="city_id" name="city_id" aria-label="Default select example">
+                            <select class="form-select" required id="city_id" name="city_id"
+                                aria-label="Default select example">
                                 <option value=""> ...</option>
                                 @foreach ($Cities as $city)
                                     <option value="{{ $city->id }}"
@@ -124,7 +125,7 @@
                     <div class="col-sm-12 col-md-6 col-xl-1 p-0 ">
                         <div class="main" id="room_main">
 
-                            <button class="btn" type="submit">
+                            <button id="buttonForm" class="btn" type="submit">
                                 {{ __('links.search') }}
                             </button>
                         </div>
@@ -199,8 +200,9 @@
                                     <div class="accordion-body">
                                         @foreach ($TourTypes as $Type)
                                             <div class="form-check">
-                                                <input class="form-check-input tour_types_id" data-id="{{ $Type->id }}"
-                                                    type="checkbox" value="" id="defaultCheck4">
+                                                <input class="form-check-input tour_types_id"
+                                                    data-id="{{ $Type->id }}" type="checkbox" value=""
+                                                    id="defaultCheck4">
                                                 <label class="form-check-label" for="defaultCheck4">
 
 
@@ -428,6 +430,36 @@
                 fetch_productdata(page, arr, arr_cities, arr_types);
 
             });
+
+            $("#buttonForm").click(function(e) {
+            e.preventDefault();
+            var url = "/tours";
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "POST",
+                data: {
+
+
+                    country_id: $('#country option:selected').val(),
+                    city_id: $('#city_id').find(":selected").val(),
+
+
+
+
+                },
+                success: function(result) {
+                    console.log(result);
+
+                    $("#table_data").html(result);
+                },
+                error: function(jqXHR, textStatus, error) {
+                    console.log(textStatus + " - " + jqXHR.responseText);
+                }
+            });
+        });
         });
         // End paginate product
         //function of pagination product
@@ -445,8 +477,8 @@
 
                     price_from: $("input[name=price_from]").val(),
                     price_to: $("input[name=price_to]").val(),
-                    country_id:country_id,
-                    city_id:city_id,
+                    country_id: country_id,
+                    city_id: city_id,
                 },
 
                 success: function(response) {
@@ -492,4 +524,6 @@
                 }
             });
         }
+
+
     </script>
