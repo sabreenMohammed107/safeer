@@ -527,7 +527,7 @@ function loadSlick(slickSlider, options) {
     $slickSlider = $(slickSlider);
     $slickSlider.slick(options);
 }
-</scipt>
+</script>
 </body>
 
 </html>

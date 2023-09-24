@@ -71,6 +71,7 @@
                 $TotalVisasCost = 0;
             @endphp
         @endif
+        {{-- <a href="www.google.com" class="delete_confirm">aaa</a> --}}
         <!-- passenger details -->
         <section class="passenger_section container">
             <h5> {{ __('links.cartDetails') }} </h5>
@@ -100,14 +101,14 @@
                                             تفاصيل مسئول الحجز:
                                         @endif
                                     </h6>
-                                    <div class="col-sm-12 col-md-6 col-xl-4">
+                                    {{-- <div class="col-sm-12 col-md-6 col-xl-4">
                                         <label class="form-label">
                                             {{ __('links.salutation') }}
                                         </label>
                                         <input type="text" name="adultsSal[]" required class="form-control"
                                             placeholder=" {{ __('links.mr') }}" aria-label="First name">
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-xl-4">
+                                    </div> --}}
+                                    <div class="col-sm-12 col-md-6 col-xl-8">
                                         <label class="form-label"> {{ __('links.cName') }} </label>
 
                                         <input type="text" name="adultsNames[]" required
@@ -396,14 +397,14 @@
                                                         تفاصيل مسئول الحجز:
                                                     @endif
                                                 </h6>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
+                                                {{-- <div class="col-sm-12 col-md-6 col-xl-4">
                                                     <label class="form-label">{{ __('links.salutation') }}
                                                     </label>
                                                     <input type="text" name="tour_adults_sal[{{ $index }}][]"
                                                         required class="form-control"
                                                         placeholder="{{ __('links.mr') }} " aria-label="First name">
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
+                                                </div> --}}
+                                                <div class="col-sm-12 col-md-6 col-xl-8">
                                                     <label class="form-label">{{ __('links.cName') }} </label>
 
                                                     <input type="text" name="tour_adults_name[{{ $index }}][]"
@@ -443,15 +444,15 @@
                                             </h6>
                                             @for ($j = 0; $j < $Tour->adults_count - 1; $j++)
                                                 <div class="row">
-                                                    <div class="col-sm-12 col-md-6 col-xl-4">
+                                                    {{-- <div class="col-sm-12 col-md-6 col-xl-4">
                                                         <label class="form-label">{{ __('links.salutation') }}
                                                         </label>
                                                         <input type="text"
                                                             name="tour_adults_sal[{{ $index }}][]" required
                                                             class="form-control" placeholder="{{ __('links.mr') }} MR"
                                                             aria-label="First name">
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-6 col-xl-4">
+                                                    </div> --}}
+                                                    <div class="col-sm-12 col-md-6 col-xl-8">
                                                         <label class="form-label">{{ __('links.cName') }} </label>
 
                                                         <input type="text"
@@ -728,14 +729,14 @@
                                                 @endif
                                             </h6>
                                             <div class="row">
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
+                                                {{-- <div class="col-sm-12 col-md-6 col-xl-4">
                                                     <label class="form-label">{{ __('links.salutation') }}
                                                     </label>
                                                     <input type="text" name="transferSal" class="form-control"
                                                         required="required" placeholder="{{ __('links.mr') }}"
                                                         aria-label="First name">
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
+                                                </div> --}}
+                                                <div class="col-sm-12 col-md-6 col-xl-8">
                                                     <label class="form-label">{{ __('links.cName') }} </label>
 
                                                     <input type="text" name="transferName"
@@ -1207,8 +1208,31 @@
 @endsection
 
 @section('adds_js')
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script>
+        $(".delete_confirm").click(function(){
+            $.confirm({
+                title: 'Confirm!',
+                content: 'Simple confirm!',
+                buttons: {
+                    confirm: function () {
+                        $.alert('Confirmed!');
+                    },
+                    cancel: function () {
+                        $.alert('Canceled!');
+                    },
+                    somethingElse: {
+                        text: 'Something else',
+                        btnClass: 'btn-blue',
+                        keys: ['enter', 'shift'],
+                        action: function(){
+                            $.alert('Something else?');
+                        }
+                    }
+                }
+            });
+        })
         $("#transHolderFlag").change(function() {
             debugger;
             var price = $("#t_price").val();
@@ -1272,3 +1296,5 @@
             obj.close();
         });
     </script>
+
+    @endsection
