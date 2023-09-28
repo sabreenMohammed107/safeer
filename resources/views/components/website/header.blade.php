@@ -44,6 +44,9 @@ $localVar=LaravelLocalization::getCurrentLocale();
                 <button class="{{ Request::segment(2)=='tours' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.tours') }}</a>
                 </button>
+                <button class="{{ Request::segment(2)=='offers' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                    <a href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{ __('links.offers') }}</a>
+                </button>
                 <button class="{{ Request::segment(2)=='transfers' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/transfers') }}">{{ __('links.transfer') }}</a>
                 </button>
@@ -79,8 +82,8 @@ $localVar=LaravelLocalization::getCurrentLocale();
                                 href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
                                 <!--{{ $properties['native'] }}-->
-
-                                <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" class="flag-img ">
+<span>عربي</span>
+                                {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" class="flag-img "> --}}
 
                             </a>
                         @endif
@@ -117,11 +120,16 @@ $localVar=LaravelLocalization::getCurrentLocale();
                 <li>
                     <a href="{{ LaravelLocalization::localizeUrl('/tours') }}" class="{{ Request::segment(1)=='tours' ? 'links hybrid active' : 'links hybrid' }}" >{{ __('links.tours') }} </a>
                 </li>
+
+                <li>
+                    <a href="{{ LaravelLocalization::localizeUrl('/offers') }}" class="{{ Request::segment(1)=='offers' ? 'links hybrid active' : 'links hybrid' }}" >{{ __('links.offers') }} </a>
+                </li>
                 <li>
                     <a href="{{ LaravelLocalization::localizeUrl('/transfers') }}" class="{{ Request::segment(1)=='transfers' ? 'links hybrid active' : 'links hybrid' }}" >{{ __('links.transfer') }} </a>
                 </li>
                 <li>
-                    <a href="{{ LaravelLocalization::localizeUrl('/visa') }}" class="{{ Request::segment(1)=='visa' ? 'links hybrid active' : 'links hybrid' }}" >{{ __('links.visa') }}</a>
+                    <a href="{{ LaravelLocalization::localizeUrl('/visa') }}" class="{{ Request::segment(1)=='visa' ? 'links hybrid active' : 'links hybrid' }}" >
+                        {{ __('links.visa') }}</a>
                 </li>
                 <li>
                     <a href="{{ LaravelLocalization::localizeUrl('/blogs') }}" class="{{ Request::segment(1)=='blogs' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.blogs') }}</a>
@@ -137,16 +145,16 @@ $localVar=LaravelLocalization::getCurrentLocale();
                             href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
                             <!--{{ $properties['native'] }}-->
-
-                            <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" style="width: 40px;height:40px" class="flag-img ">
+                            <span>عربي</span>
+                            {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" style="width: 40px;height:40px" class="flag-img "> --}}
 
                         </a>
                     @endif
                     @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
                         <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
                             href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-
-                           <img title="English" src="{{ asset('website_assets/images/united-states.png') }}" class="flag-img ">
+<span>EN</span>
+                           {{-- <img title="English" src="{{ asset('website_assets/images/united-states.png') }}" class="flag-img "> --}}
                         </a>
                     @endif
                     <!--|-->

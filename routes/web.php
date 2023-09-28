@@ -105,6 +105,8 @@ Route::group([
     Route::get("/blogs", [ContentController::class, 'blogs']);
 
     Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
+
+    Route::get('dynamicFilterBolgs/fetch', [ContentController::class, 'dynamicFilterBolgs'])->name('dynamicFilterBolgs.fetch');
     Route::get('/single-blog/{id}/{slug?}', [ContentController::class, 'singleBlog'])->name('single-blog');
 
     Route::get("/offers", [ContentController::class, 'offers']);

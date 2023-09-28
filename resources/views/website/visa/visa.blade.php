@@ -38,6 +38,7 @@
             /* border: 1px solid #555; */
             display: block;
             padding: 9px 4px 9px 40px;
+
             background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px center;
         }
 
@@ -78,6 +79,11 @@
             padding-left: 10px;
             padding-bottom: 5px;
             font-size: 1.2em;
+        }
+        .search_details_info input {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.1rem;
         }
     </style>
 
@@ -120,7 +126,11 @@
                         </label>
                         <select class="form-select form-select-solid dynamic" data-control="select2"
                             data-placeholder="Select an option" required data-show-subtext="true" data-live-search="true"
-                            id="country" data-dependent="sub" name="country[0]">
+                            id="country" data-dependent="sub" name="country[0]" @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            oninvalid="this.setCustomValidity('Please select an item from list')"
+                            @else
+                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')"
+                            @endif  oninput="setCustomValidity('')" >
                             <option value=""></option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}">
@@ -144,14 +154,24 @@
                         </label>
                         <select required class="form-select form-select-solid visa_type" data-control="select2 sub2"
                             data-placeholder="Select an option" data-show-subtext="true" data-live-search="true"
-                            id="sub" name="visa_type_id[0]">
+                            id="sub" name="visa_type_id[0]"
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            oninvalid="this.setCustomValidity('Please select an item from list')"
+                            @else
+                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')"
+                            @endif  oninput="setCustomValidity('')" >
                             <option value="">{{ __('links.select') }}</option>
                         </select>
                     </div>
                     <div class="col-md-6 col-xl-4 col-sm-12">
                         <label for="">{{ __('links.nationality') }} </label>
                         <select class="form-select nationality" required id="nationality"
-                            aria-label="Default select example" name="nation[0]">
+                            aria-label="Default select example" name="nation[0]"
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            oninvalid="this.setCustomValidity('Please select an item from list')"
+                            @else
+                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')"
+                            @endif  oninput="setCustomValidity('')" >
                             <option value="">{{ __('links.select') }}</option>
 
                         </select>
@@ -166,35 +186,58 @@
                             @endif
                         </label>
                         <input type="text" required name="name[0]"
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        oninvalid="this.setCustomValidity('Please Enter valid name')"
+                        @else
+                        oninvalid="this.setCustomValidity('يجب ادخال حقل الاسم')"
+                        @endif oninput="setCustomValidity('')"
                             placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en') Passenger Name
                                   @else اسم المسافر @endif" />
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label for="">{{ __('links.mobile') }} + @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                Country Code
-                            @else
-                                كود الدولة
-                            @endif
+                        <label for="">@if (LaravelLocalization::getCurrentLocale() === 'en')
+                            Country Code
+                        @else
+                            كود الدولة
+                        @endif + {{ __('links.mobile') }}
                         </label>
-                        <input type="tel" required name="phone[0]" placeholder="{{ __('links.mobile') }}" />
+                        <input type="tel" required name="phone[0]" placeholder="{{ __('links.mobile') }}" @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        oninvalid="this.setCustomValidity('Please Enter valid mobile')"
+                        @else
+                        oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')"
+                        @endif oninput="setCustomValidity('')" />
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">{{ __('links.email') }} </label>
-                        <input type="email" required name="email[0]" placeholder="{{ __('links.email') }}" />
+                        <input type="email" required name="email[0]" placeholder="{{ __('links.email') }}"
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        oninvalid="this.setCustomValidity('Please Enter valid Email')"
+                        @else
+                        oninvalid="this.setCustomValidity('يجب ادخال حقل البريد الإلكتروني')"
+                        @endif oninput="setCustomValidity('')"/>
                     </div>
 
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">{{ __('links.passImage') }} </label>
                         <input type="file" class="file" onchange="validateSize(this)" required name="passport[0]"
-                            placeholder="{{ __('links.passImage') }}" />
+                            placeholder="{{ __('links.passImage') }}"
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        oninvalid="this.setCustomValidity('Please Enter valid Image')"
+                        @else
+                        oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')"
+                        @endif oninput="setCustomValidity('')" />
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">{{ __('links.persImage') }} </label>
                         <input type="file" class="file" onchange="validateSize(this)" required name="personal[0]"
-                            placeholder="{{ __('links.persImage') }}" />
+                            placeholder="{{ __('links.persImage') }}"  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            oninvalid="this.setCustomValidity('Please Enter valid Image')"
+                            @else
+                            oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')"
+                            @endif oninput="setCustomValidity('')"/>
                     </div>
                     <div id="costBerVisa" style="display: none" class="col-sm-12 col-md-6 col-xl-4 mt-3">
 
@@ -309,6 +352,8 @@
         let localization = "{{ LaravelLocalization::getCurrentLocale() }}"
 
         $(document).ready(function() {
+
+
             var counter = 0;
 
             $("#visaaa").click(function() {
@@ -335,7 +380,12 @@
                     <select  class="form-select form-select-solid dynamic"
                                                                     data-control="select2" data-placeholder="Select an option" required
                                                                     data-show-subtext="true" data-live-search="true" id="country"
-                                                                    data-dependent="sub" name="country[` + counter + `]" onchange="fetch(this)">
+                                                                    data-dependent="sub" name="country[` + counter + `]" onchange="fetch(this)"
+                                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            oninvalid="this.setCustomValidity('Please select an item from list')"
+                            @else
+                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')"
+                            @endif oninput="setCustomValidity('')" >
                                                                     <option value=""></option>
                                                                     @foreach ($countries as $country)
                                                                         <option value="{{ $country->id }}">            @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -358,14 +408,23 @@ Visa type
                     <select required class="form-select form-select-solid visa_type"
                                                                     data-control="select2 sub2" data-placeholder="Select an option"
                                                                     data-show-subtext="true" data-live-search="true" id="sub"
-                                                                    name="visa_type_id[` + counter + `]" onchange="fetchNationality(this)" >
+                                                                    name="visa_type_id[` + counter + `]" onchange="fetchNationality(this)"
+                                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            oninvalid="this.setCustomValidity('Please select an item from list')"
+                            @else
+                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')"
+                            @endif  oninput="setCustomValidity('')" >
                                                                     <option value="">{{ __('links.select') }}</option>
                                                                 </select>
                     </div>
                 <div class="col-md-6 col-xl-4 col-sm-12">
                     <label for="">{{ __('links.nationality') }} </label>
                     <select class="form-select nationality" required  id="nationality" aria-label="Default select example"
-                    name="nation[` + counter + `]" onchange="fetchCost(this)" >
+                    name="nation[` + counter + `]" onchange="fetchCost(this)"  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            oninvalid="this.setCustomValidity('Please select an item from list')"
+                            @else
+                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')"
+                            @endif  oninput="setCustomValidity('')" >
                     <option value="">{{ __('links.select') }}</option>
 
                         </select>
@@ -378,28 +437,53 @@ Visa type
                                   @endif  </label>
                     <input type="text" name="name[` + counter + `]" required placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en') Passenger Name
               @else
-             اسم المسافر @endif " />
+             اسم المسافر @endif "  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        oninvalid="this.setCustomValidity('Please Enter valid Name')"
+                        @else
+                        oninvalid="this.setCustomValidity('يجب ادخال حقل الاسم')"
+                        @endif oninput="setCustomValidity('')" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
-                    <label for="">{{ __('links.mobile') }} + @if (LaravelLocalization::getCurrentLocale() === 'en')  Country Code
-              @else
-             كود الدولة  @endif </label>
-                    <input type="tel" name="phone[` + counter + `]" required placeholder="{{ __('links.mobile') }}" />
+                    <label for="">@if (LaravelLocalization::getCurrentLocale() === 'en')
+                            Country Code
+                        @else
+                            كود الدولة
+                        @endif + {{ __('links.mobile') }}  </label>
+                    <input type="tel" name="phone[` + counter + `]" required placeholder="{{ __('links.mobile') }}"
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        oninvalid="this.setCustomValidity('Please Enter valid mobile')"
+                        @else
+                        oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')"
+                        @endif oninput="setCustomValidity('')" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">{{ __('links.email') }}  </label>
-                    <input type="email" name="email[` + counter + `]" required placeholder="{{ __('links.email') }}" />
+                    <input type="email" name="email[` + counter + `]" required placeholder="{{ __('links.email') }}"
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        oninvalid="this.setCustomValidity('Please Enter valid Email')"
+                        @else
+                        oninvalid="this.setCustomValidity('يجب ادخال حقل البريد الإلكتروني')"
+                        @endif oninput="setCustomValidity('')" />
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">{{ __('links.passImage') }} </label>
-                    <input type="file" class="file" onchange="validateSize(this)" name="passport[` + counter + `]" required placeholder="{{ __('links.passImage') }}" />
+                    <input type="file" class="file" onchange="validateSize(this)" name="passport[` + counter + `]" required placeholder="{{ __('links.passImage') }}"
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        oninvalid="this.setCustomValidity('Please Enter valid Image')"
+                        @else
+                        oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')"
+                        @endif oninput="setCustomValidity('')" />
 
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">{{ __('links.persImage') }} </label>
-                    <input type="file" class="file" onchange="validateSize(this)" name="personal[` + counter + `]" required placeholder="{{ __('links.persImage') }}" />
+                    <input type="file" class="file" onchange="validateSize(this)" name="personal[` + counter + `]" required placeholder="{{ __('links.persImage') }}"  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                        oninvalid="this.setCustomValidity('Please Enter valid Image')"
+                        @else
+                        oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')"
+                        @endif oninput="setCustomValidity('')" />
                 </div>
                 <div  style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3 costBerVisa">
 

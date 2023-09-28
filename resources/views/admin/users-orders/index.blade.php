@@ -160,7 +160,12 @@
             @endif
 
             @if ($row->detail_type == 3)
-                Booking Visa
+            <?php
+             $visaDetail= App\Models\VisaDetails::where('order_details_id',$row->id)->first();
+             ?>
+
+                Booking Visa / {{ $visaDetail->visa->country->en_country ?? ''}}
+                {{-- {{$visaDetail->visa->nationality->en_nationality  }} --}}
             @endif
            </span>
     </td>

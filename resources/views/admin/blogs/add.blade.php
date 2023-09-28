@@ -160,7 +160,28 @@
                             </div>
                             <!--end::Input group-->
 
+ <!--begin::Input group-->
+ <div>
+    <!--begin::Label-->
+    <label class="form-label">En breif</label>
+    <!--end::Label-->
+    <!--begin::Editor-->
+    <textarea class="form-select form-select-solid"  name="en_bref"></textarea>
+    <!--end::Editor-->
 
+</div>
+<!--end::Input group-->
+<!--begin::Input group-->
+<div>
+    <!--begin::Label-->
+    <label class="form-label">Ar breif</label>
+    <!--end::Label-->
+    <!--begin::Editor-->
+    <textarea class="form-select form-select-solid"  name="ar_bref"></textarea>
+    <!--end::Editor-->
+
+</div>
+<!--end::Input group-->
 
                             <!--begin::Input group-->
                             <div>

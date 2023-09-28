@@ -553,9 +553,9 @@
                         <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$AllBlogs[0]->id.'/'.$AllBlogs[0]->slug) }}">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                            {!! $AllBlogs[0]->en_title !!}
+                            {!! $AllBlogs[0]->en_breif !!}
                             @else
-                            {!! $AllBlogs[0]->ar_title !!}
+                            {!! $AllBlogs[0]->ar_breif !!}
                             @endif
 
                         </a>
@@ -564,9 +564,9 @@
 
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                        {!! strip_tags(\Illuminate\Support\Str::limit($AllBlogs[0]->en_text ?? '', $limit = 800, $end = '...')) !!}
+                        {!! strip_tags(\Illuminate\Support\Str::limit($AllBlogs[0]->en_breif ?? '', $limit = 800, $end = '...')) !!}
                         @else
-                        {!! strip_tags(\Illuminate\Support\Str::limit($AllBlogs[0]->ar_text ?? '', $limit = 800, $end = '...')) !!}
+                        {!! strip_tags(\Illuminate\Support\Str::limit($AllBlogs[0]->ar_breif ?? '', $limit = 800, $end = '...')) !!}
                         @endif
                     </p>
                     <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$AllBlogs[0]->id.'/'.$AllBlogs[0]->slug) }}"   >
@@ -599,9 +599,9 @@
                            <p>
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                            {{ strip_tags(\Illuminate\Support\Str::limit($AllBlogs[$i]->en_text ?? '', $limit = 300, $end = '...')) }}
+                            {{ strip_tags(\Illuminate\Support\Str::limit($AllBlogs[$i]->en_breif ?? '', $limit = 300, $end = '...')) }}
                             @else
-                            {{ strip_tags(\Illuminate\Support\Str::limit($AllBlogs[$i]->ar_text ?? '', $limit = 300, $end = '...')) }}
+                            {{ strip_tags(\Illuminate\Support\Str::limit($AllBlogs[$i]->ar_breif ?? '', $limit = 300, $end = '...')) }}
                             @endif
 
                             </p>
@@ -645,9 +645,9 @@
                             <p>
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                            {{ strip_tags(\Illuminate\Support\Str::limit($blog->en_text ?? '', $limit = 300, $end = '...')) }}
+                            {{ strip_tags(\Illuminate\Support\Str::limit($blog->en_breif ?? '', $limit = 300, $end = '...')) }}
                             @else
-                            {{ strip_tags(\Illuminate\Support\Str::limit($blog->ar_text ?? '', $limit = 300, $end = '...')) }}
+                            {{ strip_tags(\Illuminate\Support\Str::limit($blog->ar_breif ?? '', $limit = 300, $end = '...')) }}
                             @endif
 
                             </p>

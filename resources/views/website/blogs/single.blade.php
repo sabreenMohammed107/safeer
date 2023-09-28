@@ -102,12 +102,11 @@
                     </a></h6>
                       <p>
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        {{ strip_tags(Str::limit($obj->en_text ?? '', $limit = 200, $end = '...')) }}
 
+                        {{Str::limit($obj->en_bref ?? '', $limit = 300, $end = '...') }}
                         @else
-                        {{ strip_tags(Str::limit($obj->ar_text ?? '', $limit = 200, $end = '...')) }}
+                        {{Str::limit($obj->ar_bref ?? '', $limit = 300, $end = '...') }}
                         @endif
-
 
                       </p>
                       {{-- <span> 20 nov 2020</span> --}}

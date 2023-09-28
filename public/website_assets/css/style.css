@@ -97,6 +97,7 @@ a {
 .main-wrapper img {
   height: 48px;
   display: block;
+  width: 100px;
 }
 .main-wrapper a {
   text-decoration: none;

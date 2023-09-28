@@ -144,10 +144,11 @@ class ToursController extends Controller
             $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
             $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
             $ToursByAlpha = $ToursRecommended->sortBy('en_name');
-
+            $Countries = Country::where('flag',1)->get();
             return view("website.tours.tours", [
                 "Company" => $Company,
                 "Cities" => $Cities,
+                "Countries" => $Countries,
                 "BreadCrumb" => $BreadCrumb,
                 "TourTypes" => $TourTypes,
                 "ToursRecommended" => $ToursRecommended,

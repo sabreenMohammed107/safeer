@@ -98,6 +98,8 @@ body { direction: rtl ; }
   .main-wrapper img {
     height: 48px;
     display: block;
+    /* new edit */
+    width: 100px;
   }
   .main-wrapper a {
     text-decoration: none;
@@ -161,7 +163,7 @@ body { direction: rtl ; }
     font-weight: 400;
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-left: 10px;
+    padding-left: 5px;
   }
   /* .navbar-nav > li > a:hover ,
   .register ul li a:hover{

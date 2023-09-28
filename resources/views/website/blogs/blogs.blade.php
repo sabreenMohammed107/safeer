@@ -36,12 +36,12 @@
                         $countBlogs = App\Models\Blog::where('blog_category_id', $category->id)->count();
                         ?>
                         <div class="categories">
-                            <span>@if (LaravelLocalization::getCurrentLocale() === 'en')
+                            <button class="btn link-offset-2 link-underline link-underline-opacity-0" onclick='getfilterBolgs({{ $category->id }})' >@if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                 {{ $category->en_category }}
                                 @else
                                 {{ $category->ar_category }}
-                                @endif</span>
+                                @endif</button>
                             <span>({{$countBlogs}})</span>
                         </div>
                     @endforeach
@@ -77,11 +77,9 @@
                                 <p>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                                    {{ strip_tags(Str::limit($obj->en_text ?? '', $limit = 200, $end = '...')) }}
-
+                                    {{Str::limit($obj->en_bref ?? '', $limit = 300, $end = '...') }}
                                     @else
-                                    {{ strip_tags(Str::limit($obj->ar_text ?? '', $limit = 200, $end = '...')) }}
-
+                                    {{Str::limit($obj->ar_bref ?? '', $limit = 300, $end = '...') }}
                                     @endif
 
 
@@ -106,6 +104,22 @@
 
 @section('adds_js')
     <script>
+ function getfilterBolgs(id){
+    $.ajax({
+        url: "{{route('dynamicFilterBolgs.fetch')}}",
+        method: "get",
+        data: {
+            catId: id,
+
+
+        },
+        success: function(result) {
+
+            $('#table_data').html(result);
+        }
+
+    })
+     }
         $(document).ready(function() {
 
             $(document).on('click', '.pagination a', function(event) {
