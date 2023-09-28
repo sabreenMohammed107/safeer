@@ -404,26 +404,31 @@
                                                         required class="form-control"
                                                         placeholder="{{ __('links.mr') }} " aria-label="First name">
                                                 </div> --}}
+                                                @if($index > 0)
+                                                <div class="col-12">
+                                                    <button type="button" onclick="copyData({{$index - 1}})" class="btn btn-outline-primary float-end mb-3">Copy Data from Above</button>
+                                                </div>
+                                                @endif
                                                 <div class="col-sm-12 col-md-6 col-xl-8">
                                                     <label class="form-label">{{ __('links.cName') }} </label>
 
                                                     <input type="text" name="tour_adults_name[{{ $index }}][]"
                                                         value="{{ session()->get('SiteUser')['Name'] }}" required
-                                                        class="form-control" placeholder="{{ __('links.cName') }} ">
+                                                        class="form-control" id="holder-name-{{$index}}" placeholder="{{ __('links.cName') }} ">
                                                 </div>
                                                 <div class="col-sm-12 col-md-6 col-xl-4">
                                                     <label class="form-label">{{ __('links.mobile') }} </label>
 
                                                     <input type="text"
                                                         name="tour_adults_mobile[{{ $index }}][]" required
-                                                        class="form-control" placeholder="{{ __('links.mobile') }} ">
+                                                        class="form-control" id="holder-phone-{{$index}}" placeholder="{{ __('links.mobile') }} ">
                                                 </div>
                                                 <div class="col-sm-12 col-md-8">
                                                     <label class="form-label">{{ __('links.email') }} </label>
 
                                                     <input type="text"
                                                         name="tour_adults_email[{{ $index }}][]" required
-                                                        class="form-control"
+                                                        class="form-control" id="holder-email-{{$index}}"
                                                         value="{{ session()->get('SiteUser')['Email'] }}"
                                                         placeholder="{{ __('links.email') }} ">
                                                 </div>
@@ -431,7 +436,7 @@
                                                     <label class="form-label">{{ __('links.pickupP') }}</label>
 
                                                     <input type="text" name="tour_pickup_point[{{ $index }}]"
-                                                        required class="form-control"
+                                                        required class="form-control" id="holder-pickup-{{$index}}"
                                                         placeholder="{{ __('links.pickupP') }}">
                                                 </div>
                                             </div>
@@ -515,7 +520,7 @@
 
                                                 <div class="col-12">
                                                     <label class="form-label">{{ __('links.notes') }} </label>
-                                                    <textarea class="form-control" name="tour_notes[{{ $index }}]" id="exampleFormControlTextarea1"
+                                                    <textarea class="form-control" name="tour_notes[{{ $index }}]" id="holder-notes-{{$index}}"
                                                         rows="3"></textarea>
                                                 </div>
                                                 <input type="hidden" name="tour_id[{{ $index }}]"
@@ -1211,6 +1216,22 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script>
+        function copyData(id){
+            var data = {
+                holder_name: $("#holder-name-" + id).val(),
+                holder_mobile: $("#holder-phone-" + id).val(),
+                holder_email: $("#holder-email-" + id).val(),
+                holder_pickup: $("#holder-pickup-" + id).val(),
+                holder_notes : $("#holder-notes-" + id).val(),
+            }
+            console.table(data);
+            $("#holder-name-" + (id + 1)).val(data.holder_name);
+            $("#holder-phone-" + (id + 1)).val(data.holder_mobile);
+            $("#holder-email-" + (id + 1)).val(data.holder_email);
+            $("#holder-pickup-" + (id + 1)).val(data.holder_pickup);
+            $("#holder-notes-" + (id + 1)).val(data.holder_notes);
+
+        }
         $(".delete_confirm").click(function(){
             $.confirm({
                 title: 'Confirm!',
