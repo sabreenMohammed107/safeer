@@ -160,28 +160,28 @@
                             </div>
                             <!--end::Input group-->
 
- <!--begin::Input group-->
- <div>
-    <!--begin::Label-->
-    <label class="form-label">En breif</label>
-    <!--end::Label-->
-    <!--begin::Editor-->
-    <textarea class="form-select form-select-solid"  name="en_bref"></textarea>
-    <!--end::Editor-->
+                            <!--begin::Input group-->
+                            <div>
+                                <!--begin::Label-->
+                                <label class="form-label">En breif</label>
+                                <!--end::Label-->
+                                <!--begin::Editor-->
+                                <textarea class="form-select form-select-solid" name="en_bref"></textarea>
+                                <!--end::Editor-->
 
-</div>
-<!--end::Input group-->
-<!--begin::Input group-->
-<div>
-    <!--begin::Label-->
-    <label class="form-label">Ar breif</label>
-    <!--end::Label-->
-    <!--begin::Editor-->
-    <textarea class="form-select form-select-solid"  name="ar_bref"></textarea>
-    <!--end::Editor-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div>
+                                <!--begin::Label-->
+                                <label class="form-label">Ar breif</label>
+                                <!--end::Label-->
+                                <!--begin::Editor-->
+                                <textarea class="form-select form-select-solid" name="ar_bref"></textarea>
+                                <!--end::Editor-->
 
-</div>
-<!--end::Input group-->
+                            </div>
+                            <!--end::Input group-->
 
                             <!--begin::Input group-->
                             <div>
@@ -304,8 +304,8 @@
             ],
             plugins: "advlist autolink link image lists charmap print preview code textcolor colorpicker",
             color_picker_callback: function(callback, value) {
-    callback('#FF00FF');
-  }
+                callback('#FF00FF');
+            }
         });
         tinymce.init({
             selector: '#kt_docs_tinymce_basic2',
@@ -316,8 +316,8 @@
             ],
             plugins: "advlist autolink link image lists charmap print preview code textcolor colorpicker",
             color_picker_callback: function(callback, value) {
-    callback('#FF00FF');
-  }
+                callback('#FF00FF');
+            }
         });
     </script>
 @endsection

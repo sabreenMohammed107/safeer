@@ -14,7 +14,7 @@ use App\Models\Explore_city;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-
+use Illuminate\Support\Facades\Lang as Lang;
 class MainController extends Controller
 {
     public function index()
@@ -70,7 +70,7 @@ class MainController extends Controller
     }
 
     public function terms(){
-        $BreadCrumb = [["url" => "/", "name" => "Terms & Condations"]];
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.term_condation')]];
         $Company = Company::first();
         return view("website.terms",
         [

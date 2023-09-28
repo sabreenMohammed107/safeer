@@ -31,6 +31,7 @@ use App\Http\Controllers\TourGalleryController;
 use App\Http\Controllers\ToursTagController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TransferLocationController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsersOrderController;
 use App\Http\Controllers\UsersRoleController;
 use App\Http\Controllers\VisaController;
@@ -222,6 +223,8 @@ All Admin Routes List
 --------------------------------------------*/
 Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashboard'], function () {
 //Route::middleware(['auth', 'user-access:admin'])->group(function () {
+    Route::get('/change-password', [UserController::class, 'changePassword'])->name('changePassword');
+    Route::post('/change-password', [UserController::class, 'changePasswordSave'])->name('postChangePassword');
 
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 

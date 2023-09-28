@@ -842,13 +842,18 @@
                                 </div>
                             </div>
                             <!--end::Menu item-->
-                            <!--begin::Menu separator-->
                             <div class="separator my-2"></div>
-                            <!--end::Menu separator-->
+                            <!--end::Menu separator changePassword-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="#" class="menu-link px-5">My Profile</a>
+                                <a href="{{ route('changePassword') }}" class="menu-link px-5">Change Password</a>
                             </div>
+                            <!--begin::Menu separator-->
+                            {{-- <div class="separator my-2"></div>
+
+                            <div class="menu-item px-5">
+                                <a href="#" class="menu-link px-5">My Profile</a>
+                            </div> --}}
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
                             {{-- <div class="menu-item px-5">
