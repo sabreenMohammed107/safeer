@@ -171,7 +171,6 @@ Route::group([
     Route::get("/safer/logout", [AuthController::class, 'Logout'])->name("siteLogout");
     // user profile
 
-    Route::get("/safer/profile/{id}", [AuthController::class, 'profile'])->name("siteProfile");
     //updateProfile
     Route::post("/safer/updateProfile", [AuthController::class, 'updateProfile'])->name("updateProfile");
 
@@ -210,6 +209,7 @@ Route::group([
         Route::get("/cart/visa", [BookingController::class, 'DeleteVisa'])->name("deleteVisa");
         Route::get("/cart/{id}", [BookingController::class, 'DeleteCartItem'])->name("deleteCartItem");
         Route::get("/Safer/OrderPlacement/{id}", [BookingController::class, 'SuccessOrder'])->name("successOrder");
+        Route::get("/safer/profile/{id}", [AuthController::class, 'profile'])->name("siteProfile");
 
     });
 });

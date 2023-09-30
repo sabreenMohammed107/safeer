@@ -139,6 +139,11 @@
                                         <input type="number" name="phone" class="form-control"
                                             value="{{ $userSite->phone }}" id="phonenumber" placeholder="{{ __('links.mobile') }}">
                                     </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <label for="pass">{{ __('links.password') }}</label>
+                                        <input type="password" name="password" class="form-control"
+                                         id="pass" placeholder="{{ __('links.password') }}">
+                                    </div>
                                     <div class="col-12">
                                         <label for="address">{{ __('links.address') }}</label>
                                         <input type="text" name="address" class="form-control"
