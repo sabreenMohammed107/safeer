@@ -177,6 +177,9 @@
                                                         <li><i class="fa-solid fa-angle-right"></i><a
                                                                 href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{ __('links.hotels') }}
                                                             </a></li>
+                                                            <li><i class="fa-solid fa-angle-right"></i><a
+                                                                href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{ __('links.offers') }}
+                                                            </a></li>
                                                         <li><i class="fa-solid fa-angle-right"></i><a
                                                                 href="{{ LaravelLocalization::localizeUrl('/terms') }}">{{ __('links.term_condation') }}</a></li>
 
@@ -252,7 +255,7 @@
                                                 <div class="info" style="margin-left: 25px;">
 
                                                     <span >
-                                                        00905521501111   00905016451111 </span>
+                                                        00905521501111 -  00905016451111 </span>
                                                 </div>
                                             </div>
                                              <div class="contact_info" style="margin-bottom: 10px;">

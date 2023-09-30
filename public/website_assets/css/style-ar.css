@@ -98,6 +98,8 @@ body { direction: rtl ; }
   .main-wrapper img {
     height: 48px;
     display: block;
+    /* new edit */
+    width: 100px;
   }
   .main-wrapper a {
     text-decoration: none;
@@ -153,15 +155,15 @@ body { direction: rtl ; }
 
   .navbar-nav > li > a {
 
-    font-size:17px;
+    font-size:15px;
     display: block;
     border-bottom: 1px solid #ddd;
     border-radius:1px;
     transition: all 0.4s ease;
-    font-weight: 400;
+    font-weight: 300;
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-left: 10px;
+    padding-left: 0;
   }
   /* .navbar-nav > li > a:hover ,
   .register ul li a:hover{

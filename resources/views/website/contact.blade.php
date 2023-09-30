@@ -68,7 +68,11 @@
                                     @endif
                                 </h6>
                                 <span class="info">
-                                    <a href="tel:{{ $master->phone }}"> {!! $master->phone !!}</a>
+                                    <a href="tel:{{ $master->phone }}">  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                        {!! $master->phone !!}
+                                    @else
+                                    {!! $master->ar_phone !!}
+                                    @endif</a>
                                 </span>
                                 {{-- <span class="info">
                               <a href="tel:011551112211">011551112211</a>
@@ -107,17 +111,28 @@
                     <div class=" card" style="border: none">
 
                         {{-- <img src="{{ asset('/website_assets/images/contact/message.webp') }}" alt="messages logo "> --}}
-                        <div class="card-body " style="margin: auto">
-                            {{-- <div class="card_info"> --}}
+                        <div class="card-body " style="margin: auto;display:flex">
 
-                            <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank"> <img
-                                    src="{{ asset('/website_assets/images/Dijital Doğrulama Sistemi Tursab Belge No 14079(2).png') }}"
-                                    width="300" alt="">
-                            </a>
-                            <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" target="_blank">
-                                <img src="{{ asset('/website_assets/images/qrNew.PNG') }}" width="90" alt="">
-                            </a>
+                             <div style="position: relative ;margin:0 10px">
+                                <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="270"  alt="Dijital">
 
+
+                                <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
+                                   bottom: 5px;right: 7px;" target="_blank" >
+                                 {{  QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34, 76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}}
+                             </a>
+</div>
+                            <a href="https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463" target="_blank" >
+                                <?php
+                                $im=QrCode::format('png')
+                                ->merge('website_assets/images/q1.png', 0.4, true)
+                                ->size(100)->color(27, 34, 76)->errorCorrection('H')
+                                ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
+
+                                ?>
+
+<img src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;">
+</a>
                         </div>
                         {{-- </div>  --}}
                     </div>
@@ -165,7 +180,7 @@
                             <input type="text" name="name" value="{{ old('name') }}"
                                 class="form-control {{ $errors->has('name') ? 'error' : '' }}" id="name"
                                 placeholder="{{ __('links.name') }}
-                                *" required>
+                                " required>
                             @if ($errors->has('name'))
                                 <div class="error">
                                     {{ $errors->first('name') }}
@@ -176,7 +191,7 @@
                             <input type="email" class="form-control {{ $errors->has('email') ? 'error' : '' }}"
                                 name="email" value="{{ old('email') }}" id="email"
                                 placeholder=" {{ __('links.email') }}
-                                *" required>
+                                " required>
                             @if ($errors->has('email'))
                                 <div class="error">
                                     {{ $errors->first('email') }}
@@ -187,7 +202,7 @@
                             <input type="number" value="{{ old('phone') }}"
                                 class="form-control {{ $errors->has('phone') ? 'error' : '' }}" name="phone"
                                 id="phone" placeholder="{{ __('links.mobile') }}
-                                *"
+                                "
                                 required>
                             @if ($errors->has('phone'))
                                 <div class="error">
@@ -200,7 +215,7 @@
                         <div class="mb-3">
                             <textarea class="form-control{{ $errors->has('message') ? 'error' : '' }}" name="message" id="message" rows="3"
                                 placeholder="{{ __('links.send_msg') }}
-                                * " required>{{ old('message') }}</textarea>
+                                " required>{{ old('message') }}</textarea>
                             @if ($errors->has('message'))
                                 <div class="error">
                                     {{ $errors->first('message') }}

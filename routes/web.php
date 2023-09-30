@@ -31,6 +31,7 @@ use App\Http\Controllers\TourGalleryController;
 use App\Http\Controllers\ToursTagController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TransferLocationController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsersOrderController;
 use App\Http\Controllers\UsersRoleController;
 use App\Http\Controllers\VisaController;
@@ -105,6 +106,8 @@ Route::group([
     Route::get("/blogs", [ContentController::class, 'blogs']);
 
     Route::get('blogs/fetch_data', [ContentController::class, 'fetch_data']);
+
+    Route::get('dynamicFilterBolgs/fetch', [ContentController::class, 'dynamicFilterBolgs'])->name('dynamicFilterBolgs.fetch');
     Route::get('/single-blog/{id}/{slug?}', [ContentController::class, 'singleBlog'])->name('single-blog');
 
     Route::get("/offers", [ContentController::class, 'offers']);
@@ -220,6 +223,8 @@ All Admin Routes List
 --------------------------------------------*/
 Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashboard'], function () {
 //Route::middleware(['auth', 'user-access:admin'])->group(function () {
+    Route::get('/change-password', [UserController::class, 'changePassword'])->name('changePassword');
+    Route::post('/change-password', [UserController::class, 'changePasswordSave'])->name('postChangePassword');
 
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 
@@ -229,13 +234,14 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::resource('room-types', RoomTypeController::class);
     //tours
     Route::resource('tours', TourController::class);
+    Route::post('dynamicdependentCat/fetch', [TourController::class, 'fetchCat'])->name('dynamicdependentCat.fetch');
+
     //hotels
     Route::resource('hotels', HotelController::class);
     //
 
     Route::get('autocompleteKeywords', [HotelController::class, 'autocompleteSearch'])->name('autocompleteKeywords');
 
-    Route::post('dynamicdependentCat/fetch', [MainController::class, 'fetchCat'])->name('dynamicdependentCat.fetch');
     //editingRooms
 
     Route::post('editingRooms', [HotelController::class, 'editingRooms'])->name('editingRooms');

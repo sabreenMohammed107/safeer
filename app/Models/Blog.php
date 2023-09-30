@@ -19,6 +19,8 @@ class Blog extends Model
     'blog_date',
     'blog_category_id',
     'active',
+    'en_breif',
+    'ar_breif'
 
     ];
     public function category()

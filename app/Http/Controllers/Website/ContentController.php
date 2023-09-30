@@ -85,6 +85,19 @@ $whyUss=Why_us::all();
                 "BreadCrumb" => $BreadCrumb,
             ]);
     }
+
+    public function dynamicFilterBolgs(Request $request){
+        if ($request->ajax()) {
+            $blogs = Blog::where('blog_category_id','=',$request->catId)->paginate(10);
+            return view("website.blogs.blogList",
+                [
+
+                    "blogs" => $blogs,
+
+                ])->render();
+
+        }
+    }
  /**
   * offers
   */

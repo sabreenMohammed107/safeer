@@ -17,9 +17,9 @@
                             <p>
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                                {{ strip_tags(Str::limit($blog->en_text ?? '', $limit = 300, $end = '...')) }}
+                                {{Str::limit($blog->en_bref ?? '', $limit = 300, $end = '...') }}
                                 @else
-                                {{ strip_tags(Str::limit($blog->ar_text ?? '', $limit = 300, $end = '...')) }}
+                                {{Str::limit($blog->ar_bref ?? '', $limit = 300, $end = '...') }}
                                 @endif
                         </div>
                     </div>
