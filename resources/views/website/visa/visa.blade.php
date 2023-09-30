@@ -239,7 +239,7 @@
                             oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')"
                             @endif oninput="setCustomValidity('')"/>
                     </div>
-                    <div id="costBerVisa" style="display: none" class="col-sm-12 col-md-6 col-xl-4 mt-3">
+                    <div id="costBerVisa" style="display: none" class="col-sm-12 col-md-12 col-xl-12 mt-3">
 
                         <h5><label for="">{{ __('links.costVis') }} </label><label class="visaCost"> 0 </label> $
                         </h5>
@@ -485,7 +485,7 @@ Visa type
                         oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')"
                         @endif oninput="setCustomValidity('')" />
                 </div>
-                <div  style="display: none"  class="col-sm-12 col-md-6 col-xl-4 mt-3 costBerVisa">
+                <div  style="display: none"  class="col-sm-12 col-md-12 col-xl-12 mt-3 costBerVisa">
 
 <h5><label for="">{{ __('links.costVis') }} </label><label class="visaCost">  50 </label> $</h5>
 <p class="visNotes">
