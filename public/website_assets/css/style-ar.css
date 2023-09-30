@@ -155,12 +155,12 @@ body { direction: rtl ; }
 
   .navbar-nav > li > a {
 
-    font-size:17px;
+    font-size:15px;
     display: block;
     border-bottom: 1px solid #ddd;
     border-radius:1px;
     transition: all 0.4s ease;
-    font-weight: 350;
+    font-weight: 300;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 0;
