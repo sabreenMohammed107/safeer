@@ -169,7 +169,7 @@
 
           </p>
           <div class="read">
-            <a href="{{ LaravelLocalization::localizeUrl('/about_us') }}"> {{ __('links.readMore') }}
+            <a href="{{ LaravelLocalization::localizeUrl('/about') }}"> {{ __('links.readMore') }}
               <i class="fa-solid fa-angle-right"></i>
               <i class="fa-solid fa-angle-right"></i>
             </a>

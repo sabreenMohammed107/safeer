@@ -217,8 +217,19 @@
         </span>
     </td>
     <td class="text-end pe-0">
-
-        <span class="fw-bolder text-dark">{{ $row->status->status ?? '' }}</span>
+@if($row->status_id ==2)
+        <button class="btn btn-sm btn-light" > <span class="fw-bolder text-success">
+            {{ $row->status->status ?? '' }}</span></button>
+        {{--  --}}
+@elseif ($row->status_id ==4)
+<button class="btn btn-sm btn-light" > <span class="fw-bolder text-danger">
+    {{ $row->status->status ?? '' }}</span></button>
+@else
+<button class="btn btn-sm btn-light" > <span class="fw-bolder text-dark">
+    {{ $row->status->status ?? '' }}</span></button>
+@endif
+        {{-- <span class="fw-bolder text-dark">
+            {{ $row->status->status ?? '' }}</span> --}}
     </td>
     <!--end::Status=-->
     <!--begin::Action=-->
