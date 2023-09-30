@@ -13,6 +13,7 @@ use App\Models\Tag;
 use App\Models\Tour_tag;
 use Illuminate\Database\QueryException;
 use File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TourController extends Controller
@@ -58,7 +59,7 @@ class TourController extends Controller
         $cities = City::get();
         $types = Tour_type::get();
         $features = Feature::all();
-        $countries = Country::all();
+        $countries =Country::where('flag',1)->get();
 
         $tags = Tag::get();
         // $eventSpecialzation=[];
@@ -160,7 +161,7 @@ class TourController extends Controller
         $tourFeatures = $tour->features->all();
 
 
-        $countries = Country::all();
+        $countries = Country::where('flag',1)->get();
         $tags = Tag::get();
         $tagsTour = Tour_tag::where('tour_id', $tour->id)->get();
 
@@ -297,4 +298,28 @@ class TourController extends Controller
 
           return $imageName;
       }
+
+       /**
+     * dependace sub category
+     */
+    public function fetchCat(Request $request)
+    {
+
+        $select = $request->get('select');
+        $value = $request->get('value');
+
+        $data = City::where('country_id', $value)->get();
+
+
+            $output = '<option value=""> Select City</option>';
+        foreach ($data as $row) {
+
+            $output .= '<option value="' . $row->id . '" >' . $row->en_city . '</option>';
+        }
+
+
+
+
+        echo $output;
+    }
 }
