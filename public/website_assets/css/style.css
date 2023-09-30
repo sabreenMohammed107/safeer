@@ -158,10 +158,10 @@ a {
   border-bottom: 1px solid #ddd;
   border-radius: 1px;
   transition: all 0.4s ease;
-  font-weight: 400;
+  font-weight: 350;
   padding-top: 5px;
   padding-bottom: 5px;
-  padding-left: 10px;
+  padding-left: 2px;
 }
 /* .navbar-nav > li > a:hover ,
 .register ul li a:hover{
