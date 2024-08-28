@@ -202,32 +202,32 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <a href="http://" class="pay-link  "> <img
-                                                            src="{{ asset('img/payment/visa.png') }}" alt="visa"
+                                                            src="{{ asset('img/payment/visa.webp') }}" alt="visa"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/google-pay.png') }}" alt="google-pay"
+                                                            src="{{ asset('img/payment/google-pay.webp') }}" alt="google-pay"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/apple-pay.png') }}" alt="apple-pay"
+                                                            src="{{ asset('img/payment/apple-pay.webp') }}" alt="apple-pay"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/mastercard.png') }}" alt="mastercard"
+                                                            src="{{ asset('img/payment/mastercard.webp') }}" alt="mastercard"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/samsung-pay.png') }}" alt="samsung-pay"
+                                                            src="{{ asset('img/payment/samsung-pay.webp') }}" alt="samsung-pay"
                                                             srcset=""></a>
 
 
                                                     <a href="http://" class="pay-link "> <img
-                                                            src="{{ asset('img/payment/stripe.png') }}" alt="stripe"
+                                                            src="{{ asset('img/payment/stripe.webp') }}" alt="stripe"
                                                             srcset=""></a>
 
                                                 </div>
@@ -309,24 +309,25 @@
 
 
                                                        <div style="position: relative">
-                                                       <img src="{{ asset('/website_assets/images/Dijital.png') }}" width="270"  alt="Dijital">
+                                                       <img src="{{ asset('/website_assets/images/Dijital.webp') }}" width="270"  alt="Dijital">
 
 
                                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
                                                       bottom: 5px;right: 7px;" target="_blank" >
-                                                    {{  QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34, 76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}}
+                                                    {{-- {{  QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34, 76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}} --}}
                                                 </a>
                                             </div>
                                                        <a href="https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463" target="_blank" >
                                                         <?php
-                                                        $im=QrCode::format('png')
-                                                        ->merge('website_assets/images/q1.png', 0.4, true)
-                                                        ->size(75)->color(27, 34, 76)->errorCorrection('H')
-                                                        ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
+                                                        // $im=QrCode::format('png')
+                                                        // ->merge('website_assets/images/q1.webp', 0.4, true)
+                                                        // ->size(75)->color(27, 34, 76)->errorCorrection('H')
+                                                        // ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
 
                                                         ?>
+{{--
+<img src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;"> --}}
 
-<img src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;">
 </a>
 
 

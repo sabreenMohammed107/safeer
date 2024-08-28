@@ -56,7 +56,7 @@ License: For each use you must have a valid license purchased only from above li
                     transform: translate(-50%, -50%);">
    <!--begin::Header-->
    <div
-   style="background-image: url({{asset('img/logo.jpg')}})
+   style="background-image: url({{asset('img/logo.webp')}})
 ;background-repeat: no-repeat;background-size: cover;height:300px ">
    <!--begin::Logo-->
 
@@ -67,7 +67,7 @@ License: For each use you must have a valid license purchased only from above li
 
                     <!--begin::Illustration-->
                     <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
-                        style="background-image: url(assets/media/illustrations/sigma-1/17.png)"></div>
+                        style="background-image: url(assets/media/illustrations/sigma-1/17.webp)"></div>
                     <!--end::Illustration-->
                 </div>
                 <!--end::Wrapper-->

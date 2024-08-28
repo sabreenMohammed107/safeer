@@ -7,9 +7,9 @@
     <div class="aside-logo flex-column-auto pt-9 pb-5" id="kt_aside_logo">
         <!--begin::Logo-->
         <a href="#">
-            <img alt="Logo" src="{{ asset('img/logo.jpg') }}" class="max-h-50px logo-default "
+            <img alt="Logo" src="{{ asset('img/logo.webp') }}" class="max-h-50px logo-default "
                 style="height: 120px" />
-            <img alt="Logo" src="{{ asset('img/logo.jpg') }}" class="max-h-50px logo-minimize "
+            <img alt="Logo" src="{{ asset('img/logo.webp') }}" class="max-h-50px logo-minimize "
                 style="height: 120px" />
         </a>
         <!--end::Logo-->

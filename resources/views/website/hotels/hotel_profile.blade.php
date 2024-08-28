@@ -957,7 +957,7 @@ if(isset($arrayData['result'])){
 
     @foreach ($Hotel->reviews as $rev)
     <div class="review_details">
-        <img src="{{asset("/website_assets/images/llogo.JPG")}}" alt="profile picture ">
+        <img src="{{asset("/website_assets/images/llogo.webp")}}" alt="profile picture ">
         <div class="review_info">
             <div class="heading">
 
