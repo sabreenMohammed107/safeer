@@ -157,7 +157,7 @@
                               <input type="text" class="end-date form-control" value="2012-04-19"> --}}
                               <div class="datepicker calender">
                                 <i class="fa-solid fa-calendar-days"></i>
-                                <input type="text" id="demo" class="demo" name="datefilter" value="" />
+                                <input type="text" id="1" class="demo" name="datefilter" value="" />
                               </div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-xl-2">
@@ -261,7 +261,7 @@
 
                     <div class="datepicker calender">
                       <i class="fa-solid fa-calendar-days"></i>
-                      <input type="text" id="demo" class="demo" name="datefilter" value="" />
+                      <input type="text" id="demo2" class="demo" name="datefilter" value="" />
                     </div>
                 </div>
                   <div class="col-sm-12 col-md-6 col-xl-2">
@@ -341,7 +341,7 @@
                         </div>
                         <div class="col-xl-3 col-md-6  col-sm-12 ">
                           <h5>CVN2 </h5>
-                          <input type="text" class="form-control" id="formGroupExampleInput" placeholder="CVN2">
+                          <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="CVN2">
                         </div>
 
                         <div class="col-xl-2 col-md-12 col-sm-12">
