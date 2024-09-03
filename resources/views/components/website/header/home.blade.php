@@ -116,7 +116,7 @@
 
                                     <div class="datepicker calender">
                                         <i class="fa-solid fa-calendar-days"></i>
-                                        <input type="text"  id="demo" name="from_date" class="demo"
+                                        <input type="text"  id="demo2" name="from_date" class="demo"
                                             value="" />
                                     </div>
                                 </div>
@@ -244,7 +244,7 @@
                                 <h5> check in <span>check </span> </h5>
                                 <div class="datepicker calender">
                                     <i class="fa-solid fa-calendar-days"></i>
-                                    <input type="text" id="demo" class="demo" name="datefilter"
+                                    <input type="text" id="demo3" class="demo" name="datefilter"
                                         value="" />
                                 </div>
                             </div>
@@ -372,7 +372,7 @@
 
                                 <div class="datepicker calender">
                                     <i class="fa-solid fa-calendar-days"></i>
-                                    <input type="text" id="demo" class="demo" name="datefilter"
+                                    <input type="text" id="demo4" class="demo" name="datefilter"
                                         value="" />
                                 </div>
                             </div>
@@ -493,7 +493,7 @@
                             </div>
                             <div class="col-xl-3 col-md-6  col-sm-12 ">
                                 <h5>CVN2 </h5>
-                                <input type="text" class="form-control" id="formGroupExampleInput"
+                                <input type="text" class="form-control" id="formGroupExampleInput2"
                                     placeholder="CVN2">
                             </div>
 

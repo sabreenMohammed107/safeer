@@ -41,12 +41,15 @@ menuToggle.forEach((itm)=>{
 })
 // change lang
 let myMainLang = document.querySelector('.profile_name');
-myMainLang.onclick = function () {
-    document.querySelectorAll('.profile_name img').forEach((lang) => {
+if(myMainLang){
+    myMainLang.onclick = function () {
+        document.querySelectorAll('.profile_name img').forEach((lang) => {
 
-        lang.classList.toggle('main-lang');
-    })
+            lang.classList.toggle('main-lang');
+        })
+    }
 }
+
 
 // fav-heart
 function setHeart(myfav){
