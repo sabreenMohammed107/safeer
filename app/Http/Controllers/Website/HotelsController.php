@@ -150,7 +150,8 @@ class HotelsController extends Controller
 
         $city_id = $id;
 
-        $HotelsRecommended = Room_type_cost::join('hotels', 'room_type_costs.hotel_id', '=', 'hotels.id')->orderBy('hotels.hotel_stars', 'desc')->whereHas('hotel', function ($q) use ($city_id) {
+        $HotelsRecommended = Room_type_cost::join('hotels', 'room_type_costs.hotel_id', '=', 'hotels.id')->orderBy('hotels.hotel_stars', 'desc')
+        ->whereHas('hotel', function ($q) use ($city_id) {
             $q->where('city_id', $city_id);
         })->groupBy('hotel_id')->paginate(6);
 

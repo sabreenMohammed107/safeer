@@ -1,13 +1,14 @@
 @if (session()->get('SiteUser'))
-<div class="cartbox">
-    <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('get_cart'))}}"><i class="fa-solid fa-cart-shopping"></i></a>
-    @if (session()->get('SiteUser') && session()->get('hasCart'))
-    <div class="cartCount"></div>
-    @endif
-</div>
+    <div class="cartbox">
+        <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('get_cart')) }}"><i
+                class="fa-solid fa-cart-shopping"></i></a>
+        @if (session()->get('SiteUser') && session()->get('hasCart'))
+            <div class="cartCount"></div>
+        @endif
+    </div>
 @endif
 <?php
-$localVar=LaravelLocalization::getCurrentLocale();
+$localVar = LaravelLocalization::getCurrentLocale();
 ?>
 <div class="main-wrapper">
     <nav class="navbar container">
@@ -16,11 +17,8 @@ $localVar=LaravelLocalization::getCurrentLocale();
 
         style=" margin: 0 0 0 15px;"
         @else
-        style=" margin: 0 15px 0 0;"
-        @endif
-
-
-        alt="logo">
+        style=" margin: 0 15px 0 0;" @endif
+            alt="logo">
         <!-- offcanvas nav bar    -->
         <button class="btn canvase_button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight">
@@ -32,69 +30,81 @@ $localVar=LaravelLocalization::getCurrentLocale();
                 <button type="button" class="canvase_close_button" data-bs-dismiss="offcanvas" aria-label="Close">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-                <button class="{{ Request::segment(2)==null? 'offcan_buttons active' : 'offcan_buttons' }} ">
+                <button class="{{ Request::segment(2) == null ? 'offcan_buttons active' : 'offcan_buttons' }} ">
                     <a href="{{ LaravelLocalization::localizeUrl('/') }} ">{{ __('links.home') }}</a>
                 </button>
                 {{-- <button class="{{ Request::segment(2)=='about' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}</a>
                 </button> --}}
-                <button class="{{ Request::segment(2)=='hotels' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                <button class="{{ Request::segment(2) == 'hotels' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{ __('links.hotels') }}</a>
                 </button>
-                <button class="{{ Request::segment(2)=='tours' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                <button class="{{ Request::segment(2) == 'tours' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.tours') }}</a>
                 </button>
-                <button class="{{ Request::segment(2)=='offers' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                <button class="{{ Request::segment(2) == 'offers' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{ __('links.offers') }}</a>
                 </button>
-                <button class="{{ Request::segment(2)=='transfers' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                <button class="{{ Request::segment(2) == 'transfers' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/transfers') }}">{{ __('links.transfer') }}</a>
                 </button>
-                <button class="{{ Request::segment(2)=='visa' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                <button class="{{ Request::segment(2) == 'visa' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/visa') }}">{{ __('links.visa') }}</a>
                 </button>
 
-                <button class="{{ Request::segment(2)=='blogs' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                <button class="{{ Request::segment(2) == 'blogs' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}</a>
                 </button>
-                <button class="{{ Request::segment(2)=='contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                <button class="{{ Request::segment(2) == 'contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a>
                 </button>
 
                 {{-- {{session()->get("SiteUser")["Name"]}} --}}
                 @if (session()->get('SiteUser'))
-                <button class="offcan_buttons">
-                <a href="#">{{ session()->get('SiteUser')['Name'] }}</a>
-            </button>
+                    <button class="offcan_buttons">
+                        <a href="#">{{ session()->get('SiteUser')['Name'] }}</a>
+                    </button>
                 @else
-                <button class="offcan_buttons">
-                    <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteRegister'))}}">{{ __('links.signin') }}</a>
-                </button>
-                <button class="offcan_buttons">
-                    <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteRegister'))}}">{{ __('links.signin_up2') }}</a>
-                </button>
+                    <button class="offcan_buttons">
+                        <a
+                            href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteRegister')) }}">{{ __('links.signin') }}</a>
+                    </button>
+                    <button class="offcan_buttons">
+                        <a
+                            href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteRegister')) }}">{{ __('links.signin_up2') }}</a>
+                    </button>
                 @endif
 
                 <button class="offcan_buttons">
                     @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                    @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
-                            <a  rel="alternate" hreflang="{{ $localeCode }}"
+                        @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
+                            <a rel="alternate" hreflang="{{ $localeCode }}"
                                 href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
                                 <!--{{ $properties['native'] }}-->
+<<<<<<< HEAD
+                                <span>عربي</span>
+                                {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" class="flag-img "> --}}
+=======
 <span>عربي</span>
                                 {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.webp') }}" class="flag-img "> --}}
+>>>>>>> 6d38ee86a3b64db3f4af24c12da1588b4f9bf5ca
 
                             </a>
                         @endif
                         @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
-                        <a  rel="alternate" hreflang="{{ $localeCode }}"
-                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                            <a rel="alternate" hreflang="{{ $localeCode }}"
+                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
+<<<<<<< HEAD
+                                <img title="English" src="{{ asset('website_assets/images/united-states.png') }}"
+                                    class="flag-img">
+=======
                             <img title="English" src="{{ asset('website_assets/images/united-states.webp') }}" class="flag-img">
+>>>>>>> 6d38ee86a3b64db3f4af24c12da1588b4f9bf5ca
 
-                        </a>
-                    @endif
+                            </a>
+                        @endif
                     @endforeach
                 </button>
 
@@ -109,40 +119,53 @@ $localVar=LaravelLocalization::getCurrentLocale();
             <ul class="navbar-nav ms-auto">
                 <!-- first link tab  -->
                 <li>
-                    <a href="{{ LaravelLocalization::localizeUrl('/') }} " class="{{ Request::segment(1)==null? 'links hybrid active' : 'links hybrid' }}"> {{ __('links.home') }}</a>
+                    <a href="{{ LaravelLocalization::localizeUrl('/') }} "
+                        class="{{ Request::segment(1) == null ? 'links hybrid active' : 'links hybrid' }}">
+                        {{ __('links.home') }}</a>
                 </li>
                 {{-- <li>
                     <a href="{{ LaravelLocalization::localizeUrl('/about') }}" class="{{ Request::segment(1)=='about' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.about_us') }} </a>
                 </li> --}}
                 <li>
-                    <a href="{{ LaravelLocalization::localizeUrl('/hotels') }}" class="{{ Request::segment(1)=='hotels' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.hotels') }} </a>
+                    <a href="{{ LaravelLocalization::localizeUrl('/hotels') }}"
+                        class="{{ Request::segment(1) == 'hotels' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.hotels') }}
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ LaravelLocalization::localizeUrl('/tours') }}" class="{{ Request::segment(1)=='tours' ? 'links hybrid active' : 'links hybrid' }}" >{{ __('links.tours') }} </a>
+                    <a href="{{ LaravelLocalization::localizeUrl('/tours') }}"
+                        class="{{ Request::segment(1) == 'tours' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.tours') }}
+                    </a>
                 </li>
 
                 <li>
-                    <a href="{{ LaravelLocalization::localizeUrl('/offers') }}" class="{{ Request::segment(1)=='offers' ? 'links hybrid active' : 'links hybrid' }}" >{{ __('links.offers') }} </a>
+                    <a href="{{ LaravelLocalization::localizeUrl('/offers') }}"
+                        class="{{ Request::segment(1) == 'offers' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.offers') }}
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ LaravelLocalization::localizeUrl('/transfers') }}" class="{{ Request::segment(1)=='transfers' ? 'links hybrid active' : 'links hybrid' }}" >{{ __('links.transfer') }} </a>
+                    <a href="{{ LaravelLocalization::localizeUrl('/transfers') }}"
+                        class="{{ Request::segment(1) == 'transfers' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.transfer') }}
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ LaravelLocalization::localizeUrl('/visa') }}" class="{{ Request::segment(1)=='visa' ? 'links hybrid active' : 'links hybrid' }}" >
+                    <a href="{{ LaravelLocalization::localizeUrl('/visa') }}"
+                        class="{{ Request::segment(1) == 'visa' ? 'links hybrid active' : 'links hybrid' }}">
                         {{ __('links.visa') }}</a>
                 </li>
                 <li>
-                    <a href="{{ LaravelLocalization::localizeUrl('/blogs') }}" class="{{ Request::segment(1)=='blogs' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.blogs') }}</a>
+                    <a href="{{ LaravelLocalization::localizeUrl('/blogs') }}"
+                        class="{{ Request::segment(1) == 'blogs' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.blogs') }}</a>
                 </li>
                 <li>
-                    <a href="{{ LaravelLocalization::localizeUrl('/contact') }}" class="{{ Request::segment(1)=='contact' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.contact_us') }}</a>
+                    <a href="{{ LaravelLocalization::localizeUrl('/contact') }}"
+                        class="{{ Request::segment(1) == 'contact' ? 'links hybrid active' : 'links hybrid' }}">{{ __('links.contact_us') }}</a>
                 </li>
-                <li >
+                <li>
 
                     @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                    @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
-                        <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
-                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                        @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
+                            <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
+                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
                             <!--{{ $properties['native'] }}-->
                             <span>عربي</span>
@@ -161,50 +184,54 @@ $localVar=LaravelLocalization::getCurrentLocale();
                 @endforeach
                         {{-- <a class="links hybrid p-2" href=''> AR </a>
                     <a class="links hybrid p-2" href=''>EN </a> --}}
-                    </li>
+                </li>
                 <div class="register">
 
 
                     <ul>
                         <span class="line sign_in already_loged"> <i class="fa-solid fa-user"></i> </span>
                         @if (session()->get('SiteUser'))
-                        <li class="sign_in">
-                            <?php
+                            <li class="sign_in">
+                                <?php
                                 $userId = session()->get('SiteUser')['ID'];
                                 ?>
 
-                            {{-- <a href="{{ route('siteProfile', $userId) }}" class="links hybrid sign_in">{{
+                                {{-- <a href="{{ route('siteProfile', $userId) }}" class="links hybrid sign_in">{{
                                 session()->get('SiteUser')['Name'] }}</a> --}}
 
 
-                            <a class="links hybrid sign_in already_loged">
-                                {{ session()->get('SiteUser')['Name'] }}
-                                <i class="fa-solid fa-arrow-down-short-wide"></i>
-                            </a>
-                            <ul class="menu user_info_options">
-                                <li><a href="{{ route('siteProfile', $userId) }}" class="links hybrid sign_in"><i
-                                            class="fa-solid fa-user"></i>{{ __('links.my_profile') }}</a></li>
-                                <li><a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('get_cart'))}}" class="links hybrid sign_in"><i class="fa-solid fa-cart-shopping"></i>
-                                    {{ __('links.cart') }}</a></li>
-                                {{-- <li><a href="#" class="links hybrid sign_in"><i
+                                <a class="links hybrid sign_in already_loged">
+                                    {{ session()->get('SiteUser')['Name'] }}
+                                    <i class="fa-solid fa-arrow-down-short-wide"></i>
+                                </a>
+                                <ul class="menu user_info_options">
+                                    <li><a href="{{ route('siteProfile', $userId) }}" class="links hybrid sign_in"><i
+                                                class="fa-solid fa-user"></i>{{ __('links.my_profile') }}</a></li>
+                                    <li><a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('get_cart')) }}"
+                                            class="links hybrid sign_in"><i class="fa-solid fa-cart-shopping"></i>
+                                            {{ __('links.cart') }}</a></li>
+                                    {{-- <li><a href="#" class="links hybrid sign_in"><i
                                             class="fa-solid fa-solid fa-bag-shopping"></i>My Orders</a></li> --}}
-                                <li><a class="links hybrid sign_in" href="{{ route('siteLogout') }}"><i
-                                            class="fa-solid fa-right-from-bracket"></i>{{ __('links.logout') }}</a></li>
-                            </ul>
+                                    <li><a class="links hybrid sign_in" href="{{ route('siteLogout') }}"><i
+                                                class="fa-solid fa-right-from-bracket"></i>{{ __('links.logout') }}</a>
+                                    </li>
+                                </ul>
 
 
 
-                        </li>
-                        {{-- <li class="sign_up">
+                            </li>
+                            {{-- <li class="sign_up">
                             <a href="{{ route('siteLogout') }}" class="links hybrid sign_up">Logout</a>
                         </li> --}}
                         @else
-                        <li class="sign_in">
-                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}" class="links hybrid sign_in">{{ __('links.signin') }}</a>
-                        </li>
-                        <li class="sign_up">
-                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteRegister'))}}" class="links hybrid sign_up">{{ __('links.signin_up2') }}</a>
-                        </li>
+                            <li class="sign_in">
+                                <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin')) }}"
+                                    class="links hybrid sign_in">{{ __('links.signin') }}</a>
+                            </li>
+                            <li class="sign_up">
+                                <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteRegister')) }}"
+                                    class="links hybrid sign_up">{{ __('links.signin_up2') }}</a>
+                            </li>
                         @endif
 
 
@@ -226,18 +253,13 @@ $localVar=LaravelLocalization::getCurrentLocale();
             <p><span class="whatsapp-name">{{ __('links.safer') }}</span><br><small>
                 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                Typically replies within few minutes
-                @else
-               سوف يتم التواصل معك خلال دقائق
-                @endif
+                    </small></p>
 
-            </small></p>
-
-          </div>
-          <div class='get-new hide'>
-            <div id='get-label'></div>
-            <div id='get-nama'></div>
-          </div>
+            </div>
+            <div class='get-new hide'>
+                <div id='get-label'></div>
+                <div id='get-nama'></div>
+            </div>
         </div>
         <div class='home-chat'>
 
@@ -262,28 +284,37 @@ $localVar=LaravelLocalization::getCurrentLocale();
                     مرحبا 👋<br><br>كيف يمكننى مساعدتك?
                     @endif
 
+                        </div>
+                        <div class="WhatsappChat__Time-sc-1wqac52-5 cqCDVm"></div>
+                    </div>
                 </div>
-                <div class="WhatsappChat__Time-sc-1wqac52-5 cqCDVm"></div>
-              </div>
             </div>
-          </div>
 
-          <div class='blanter-msg'>
-            <textarea id='chat-input' placeholder=' @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-            Write a response
+            <div class='blanter-msg'>
+                <textarea id='chat-input'
+                    placeholder=' @if (LaravelLocalization::getCurrentLocale() === 'en') Write a response
             @else
-           أكتب تعليق
-            @endif' maxlength='120' row='1'></textarea>
-            <a href='javascript:void;' id='send-it'><svg viewBox="0 0 448 448"><path d="M.213 32L0 181.333 320 224 0 266.667.213 416 448 224z"/></svg></a>
+           أكتب تعليق @endif'
+                    maxlength='120' row='1'></textarea>
+                <a href='javascript:void;' id='send-it'><svg viewBox="0 0 448 448">
+                        <path d="M.213 32L0 181.333 320 224 0 266.667.213 416 448 224z" />
+                    </svg></a>
 
-          </div>
+            </div>
         </div>
         <div id='get-number'></div><a class='close-chat my-1' href='javascript:void'>×</a>
-      </div>
+    </div>
 </div>
 
-  <a class='blantershow-chat' href='javascript:void' title='Show Chat'><svg width="20" viewBox="0 0 24 24"><defs/><path fill="#eceff1" d="M20.5 3.4A12.1 12.1 0 0012 0 12 12 0 001.7 17.8L0 24l6.3-1.7c2.8 1.5 5 1.4 5.8 1.5a12 12 0 008.4-20.3z"/><path fill="#4caf50" d="M12 21.8c-3.1 0-5.2-1.6-5.4-1.6l-3.7 1 1-3.7-.3-.4A9.9 9.9 0 012.1 12a10 10 0 0117-7 9.9 9.9 0 01-7 16.9z"/><path fill="#fafafa" d="M17.5 14.3c-.3 0-1.8-.8-2-.9-.7-.2-.5 0-1.7 1.3-.1.2-.3.2-.6.1s-1.3-.5-2.4-1.5a9 9 0 01-1.7-2c-.3-.6.4-.6 1-1.7l-.1-.5-1-2.2c-.2-.6-.4-.5-.6-.5-.6 0-1 0-1.4.3-1.6 1.8-1.2 3.6.2 5.6 2.7 3.5 4.2 4.2 6.8 5 .7.3 1.4.3 1.9.2.6 0 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg> Chat with Us</a>
+<a class='blantershow-chat' href='javascript:void' title='Show Chat'><svg width="20" viewBox="0 0 24 24">
+        <defs />
+        <path fill="#eceff1"
+            d="M20.5 3.4A12.1 12.1 0 0012 0 12 12 0 001.7 17.8L0 24l6.3-1.7c2.8 1.5 5 1.4 5.8 1.5a12 12 0 008.4-20.3z" />
+        <path fill="#4caf50"
+            d="M12 21.8c-3.1 0-5.2-1.6-5.4-1.6l-3.7 1 1-3.7-.3-.4A9.9 9.9 0 012.1 12a10 10 0 0117-7 9.9 9.9 0 01-7 16.9z" />
+        <path fill="#fafafa"
+            d="M17.5 14.3c-.3 0-1.8-.8-2-.9-.7-.2-.5 0-1.7 1.3-.1.2-.3.2-.6.1s-1.3-.5-2.4-1.5a9 9 0 01-1.7-2c-.3-.6.4-.6 1-1.7l-.1-.5-1-2.2c-.2-.6-.4-.5-.6-.5-.6 0-1 0-1.4.3-1.6 1.8-1.2 3.6.2 5.6 2.7 3.5 4.2 4.2 6.8 5 .7.3 1.4.3 1.9.2.6 0 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z" />
+    </svg> Chat with Us</a>
 <!--Start Social Icon-->
 {{-- <div class="fixed-icon">
 	<div class="f-icon f1"><a href="https://www.facebook.com/Safer4Free/" target="_blank" ><i class="fab fa-facebook-f"></i></a></div>
