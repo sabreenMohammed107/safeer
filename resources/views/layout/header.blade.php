@@ -117,7 +117,7 @@
                                         <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-40px me-4">
-                                                <img src="assets/media/avatars/300-6.jpg" alt="" />
+                                                <img src="assets/media/avatars/300-6.webp" alt="" />
                                             </div>
                                             <!--end::Symbol-->
                                             <!--begin::Title-->
@@ -132,7 +132,7 @@
                                         <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-40px me-4">
-                                                <img src="assets/media/avatars/300-2.jpg" alt="" />
+                                                <img src="assets/media/avatars/300-2.webp" alt="" />
                                             </div>
                                             <!--end::Symbol-->
                                             <!--begin::Title-->
@@ -147,7 +147,7 @@
                                         <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-40px me-4">
-                                                <img src="assets/media/avatars/300-9.jpg" alt="" />
+                                                <img src="assets/media/avatars/300-9.webp" alt="" />
                                             </div>
                                             <!--end::Symbol-->
                                             <!--begin::Title-->
@@ -162,7 +162,7 @@
                                         <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-40px me-4">
-                                                <img src="assets/media/avatars/300-14.jpg" alt="" />
+                                                <img src="assets/media/avatars/300-14.webp" alt="" />
                                             </div>
                                             <!--end::Symbol-->
                                             <!--begin::Title-->
@@ -177,7 +177,7 @@
                                         <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                             <!--begin::Symbol-->
                                             <div class="symbol symbol-40px me-4">
-                                                <img src="assets/media/avatars/300-11.jpg" alt="" />
+                                                <img src="assets/media/avatars/300-11.webp" alt="" />
                                             </div>
                                             <!--end::Symbol-->
                                             <!--begin::Title-->
@@ -820,7 +820,7 @@
                     <div class="d-flex align-items-center ms-2 ms-lg-3" id="kt_header_user_menu_toggle">
                         <!--begin::Menu wrapper-->
                         <div class="cursor-pointer symbol symbol-35px symbol-lg-35px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                            <img alt="Pic" src="{{asset('dist/assets/media/avatars/300-1.jpg')}}" />
+                            <img alt="Pic" src="{{asset('dist/assets/media/avatars/300-1.webp')}}" />
                         </div>
                         <!--begin::User account menu-->
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
@@ -829,7 +829,7 @@
                                 <div class="menu-content d-flex align-items-center px-3">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
-                                        <img alt="Logo" src="{{asset('dist/assets/media/avatars/300-1.jpg')}}" />
+                                        <img alt="Logo" src="{{asset('dist/assets/media/avatars/300-1.webp')}}" />
                                     </div>
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
@@ -1236,7 +1236,7 @@
                                     </div>
                                     <!--end::Section-->
                                     <!--begin::Image-->
-                                    <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom card-rounded-bottom max-h-175px min-h-175px" style="background-image:url('assets/media/illustrations/sigma-1/7.png')"></div>
+                                    <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom card-rounded-bottom max-h-175px min-h-175px" style="background-image:url('assets/media/illustrations/sigma-1/7.webp')"></div>
                                     <!--end::Image-->
                                 </div>
                                 <!--end::Wrapper-->
@@ -1798,7 +1798,7 @@
                                 <div class="d-flex mb-6">
                                     <!--begin::Symbol-->
                                     <div class="symbol symbol-60px symbol-2by3 flex-shrink-0 me-4">
-                                        <img src="assets/media/stock/600x400/img-17.jpg" class="mw-100" alt="" />
+                                        <img src="assets/media/stock/600x400/img-17.webp" class="mw-100" alt="" />
                                     </div>
                                     <!--end::Symbol-->
                                     <!--begin::Section-->
@@ -1825,7 +1825,7 @@
                                 <div class="d-flex mb-6">
                                     <!--begin::Symbol-->
                                     <div class="symbol symbol-60px symbol-2by3 flex-shrink-0 me-4">
-                                        <img src="assets/media/stock/600x400/img-10.jpg" class="mw-100" alt="" />
+                                        <img src="assets/media/stock/600x400/img-10.webp" class="mw-100" alt="" />
                                     </div>
                                     <!--end::Symbol-->
                                     <!--begin::Section-->
@@ -1852,7 +1852,7 @@
                                 <div class="d-flex mb-6">
                                     <!--begin::Symbol-->
                                     <div class="symbol symbol-60px symbol-2by3 flex-shrink-0 me-4">
-                                        <img src="assets/media/stock/600x400/img-1.jpg" class="mw-100" alt="" />
+                                        <img src="assets/media/stock/600x400/img-1.webp" class="mw-100" alt="" />
                                     </div>
                                     <!--end::Symbol-->
                                     <!--begin::Section-->
@@ -1879,7 +1879,7 @@
                                 <div class="d-flex mb-">
                                     <!--begin::Symbol-->
                                     <div class="symbol symbol-60px symbol-2by3 flex-shrink-0 me-4">
-                                        <img src="assets/media/stock/600x400/img-9.jpg" class="mw-100" alt="" />
+                                        <img src="assets/media/stock/600x400/img-9.webp" class="mw-100" alt="" />
                                     </div>
                                     <!--end::Symbol-->
                                     <!--begin::Section-->
@@ -2022,7 +2022,7 @@
                                     <div class="d-flex align-items-center">
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-35px me-4">
-                                            <img src="assets/media/avatars/300-2.jpg" alt="" />
+                                            <img src="assets/media/avatars/300-2.webp" alt="" />
                                         </div>
                                         <!--end::Symbol-->
                                         <!--begin::Title-->
@@ -2044,7 +2044,7 @@
                                     <div class="d-flex align-items-center">
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-35px me-4">
-                                            <img src="assets/media/avatars/300-1.jpg" alt="" />
+                                            <img src="assets/media/avatars/300-1.webp" alt="" />
                                         </div>
                                         <!--end::Symbol-->
                                         <!--begin::Title-->
@@ -2066,7 +2066,7 @@
                                     <div class="d-flex align-items-center">
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-35px me-4">
-                                            <img src="assets/media/avatars/300-5.jpg" alt="" />
+                                            <img src="assets/media/avatars/300-5.webp" alt="" />
                                         </div>
                                         <!--end::Symbol-->
                                         <!--begin::Title-->
@@ -2088,7 +2088,7 @@
                                     <div class="d-flex align-items-center">
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-35px me-4">
-                                            <img src="assets/media/avatars/300-20.jpg" alt="" />
+                                            <img src="assets/media/avatars/300-20.webp" alt="" />
                                         </div>
                                         <!--end::Symbol-->
                                         <!--begin::Title-->
@@ -2110,7 +2110,7 @@
                                     <div class="d-flex align-items-center">
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-35px me-4">
-                                            <img src="assets/media/avatars/300-23.jpg" alt="" />
+                                            <img src="assets/media/avatars/300-23.webp" alt="" />
                                         </div>
                                         <!--end::Symbol-->
                                         <!--begin::Title-->

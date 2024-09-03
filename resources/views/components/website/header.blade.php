@@ -12,8 +12,10 @@ $localVar = LaravelLocalization::getCurrentLocale();
 ?>
 <div class="main-wrapper">
     <nav class="navbar container">
-        <img src="{{ asset('/website_assets/images/logo3.jpg') }}"
-            @if (LaravelLocalization::getCurrentLocale() === 'en') style=" margin: 0 0 0 15px;"
+        <img src="{{ asset('/website_assets/images/logo3.webp') }}"
+        @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+        style=" margin: 0 0 0 15px;"
         @else
         style=" margin: 0 15px 0 0;" @endif
             alt="logo">
@@ -80,8 +82,13 @@ $localVar = LaravelLocalization::getCurrentLocale();
                                 href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
                                 <!--{{ $properties['native'] }}-->
+<<<<<<< HEAD
                                 <span>عربي</span>
                                 {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" class="flag-img "> --}}
+=======
+<span>عربي</span>
+                                {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.webp') }}" class="flag-img "> --}}
+>>>>>>> 6d38ee86a3b64db3f4af24c12da1588b4f9bf5ca
 
                             </a>
                         @endif
@@ -89,8 +96,12 @@ $localVar = LaravelLocalization::getCurrentLocale();
                             <a rel="alternate" hreflang="{{ $localeCode }}"
                                 href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
+<<<<<<< HEAD
                                 <img title="English" src="{{ asset('website_assets/images/united-states.png') }}"
                                     class="flag-img">
+=======
+                            <img title="English" src="{{ asset('website_assets/images/united-states.webp') }}" class="flag-img">
+>>>>>>> 6d38ee86a3b64db3f4af24c12da1588b4f9bf5ca
 
                             </a>
                         @endif
@@ -156,22 +167,22 @@ $localVar = LaravelLocalization::getCurrentLocale();
                             <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
                                 href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
-                                <!--{{ $properties['native'] }}-->
-                                <span>عربي</span>
-                                {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.png') }}" style="width: 40px;height:40px" class="flag-img "> --}}
+                            <!--{{ $properties['native'] }}-->
+                            <span>عربي</span>
+                            {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.webp') }}" style="width: 40px;height:40px" class="flag-img "> --}}
 
-                            </a>
-                        @endif
-                        @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
-                            <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
-                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                <span>EN</span>
-                                {{-- <img title="English" src="{{ asset('website_assets/images/united-states.png') }}" class="flag-img "> --}}
-                            </a>
-                        @endif
-                        <!--|-->
-                    @endforeach
-                    {{-- <a class="links hybrid p-2" href=''> AR </a>
+                        </a>
+                    @endif
+                    @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
+                        <a class="links hybrid p-2" rel="alternate" hreflang="{{ $localeCode }}"
+                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+<span>EN</span>
+                           {{-- <img title="English" src="{{ asset('website_assets/images/united-states.webp') }}" class="flag-img "> --}}
+                        </a>
+                    @endif
+                    <!--|-->
+                @endforeach
+                        {{-- <a class="links hybrid p-2" href=''> AR </a>
                     <a class="links hybrid p-2" href=''>EN </a> --}}
                 </li>
                 <div class="register">
@@ -236,16 +247,11 @@ $localVar = LaravelLocalization::getCurrentLocale();
 <div class="whatsapp-chat">
     <div id='whatsapp-chat' class='hide'>
         <div class='header-chat'>
-            <div class='head-home'>
-                <div class='info-avatar'>
-                    <img src="{{ asset('/website_assets/images/llogo.JPG') }}" alt="profile picture ">
-                </div>
-                <p><span class="whatsapp-name">{{ __('links.safer') }}</span><br><small>
-                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            Typically replies within few minutes
-                        @else
-                            سوف يتم التواصل معك خلال دقائق
-                        @endif
+          <div class='head-home'>
+            <div class='info-avatar'>
+                <img src="{{asset("/website_assets/images/llogo.webp")}}" alt="profile picture "></div>
+            <p><span class="whatsapp-name">{{ __('links.safer') }}</span><br><small>
+                @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                     </small></p>
 
@@ -259,24 +265,24 @@ $localVar = LaravelLocalization::getCurrentLocale();
 
         </div>
         <div class='start-chat'>
-            <div pattern="https://elfsight.com/assets/chats/patterns/whatsapp.png"
-                class="WhatsappChat__Component-sc-1wqac52-0 whatsapp-chat-body">
-                <div class="WhatsappChat__MessageContainer-sc-1wqac52-1 dAbFpq">
-                    <div style="opacity: 0;" class="WhatsappDots__Component-pks5bf-0 eJJEeC">
-                        <div class="WhatsappDots__ComponentInner-pks5bf-1 hFENyl">
-                            <div class="WhatsappDots__Dot-pks5bf-2 WhatsappDots__DotOne-pks5bf-3 ixsrax"></div>
-                            <div class="WhatsappDots__Dot-pks5bf-2 WhatsappDots__DotTwo-pks5bf-4 dRvxoz"></div>
-                            <div class="WhatsappDots__Dot-pks5bf-2 WhatsappDots__DotThree-pks5bf-5 kXBtNt"></div>
-                        </div>
-                    </div>
-                    <div style="opacity: 1;" class="WhatsappChat__Message-sc-1wqac52-4 kAZgZq">
-                        <div class="WhatsappChat__Author-sc-1wqac52-3 bMIBDo">{{ __('links.safer') }}</div>
-                        <div class="WhatsappChat__Text-sc-1wqac52-2 iSpIQi">
-                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                Hi there 👋<br><br>How can I help you?
-                            @else
-                                مرحبا 👋<br><br>كيف يمكننى مساعدتك?
-                            @endif
+          <div pattern="https://elfsight.com/assets/chats/patterns/whatsapp.webp" class="WhatsappChat__Component-sc-1wqac52-0 whatsapp-chat-body">
+            <div class="WhatsappChat__MessageContainer-sc-1wqac52-1 dAbFpq">
+              <div style="opacity: 0;" class="WhatsappDots__Component-pks5bf-0 eJJEeC">
+                <div class="WhatsappDots__ComponentInner-pks5bf-1 hFENyl">
+                  <div class="WhatsappDots__Dot-pks5bf-2 WhatsappDots__DotOne-pks5bf-3 ixsrax"></div>
+                  <div class="WhatsappDots__Dot-pks5bf-2 WhatsappDots__DotTwo-pks5bf-4 dRvxoz"></div>
+                  <div class="WhatsappDots__Dot-pks5bf-2 WhatsappDots__DotThree-pks5bf-5 kXBtNt"></div>
+                </div>
+              </div>
+              <div style="opacity: 1;" class="WhatsappChat__Message-sc-1wqac52-4 kAZgZq">
+                <div class="WhatsappChat__Author-sc-1wqac52-3 bMIBDo">{{ __('links.safer') }}</div>
+                <div class="WhatsappChat__Text-sc-1wqac52-2 iSpIQi">
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                    Hi there 👋<br><br>How can I help you?
+                    @else
+                    مرحبا 👋<br><br>كيف يمكننى مساعدتك?
+                    @endif
 
                         </div>
                         <div class="WhatsappChat__Time-sc-1wqac52-5 cqCDVm"></div>
