@@ -339,6 +339,8 @@ class AuthController extends Controller
     {
         $userSite = SiteUser::where('id', $request->get('userId'))->first();
         $input = $request->except(['_token', 'userId']);
+
+        $input['password'] = Hash::make($request->get('password'));
         $userSite->update($input);
         return redirect()->back();
 
