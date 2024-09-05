@@ -14,7 +14,7 @@
         <link rel="canonical" href="{{ url()->current() }}" />
 
         <meta property="og:url" content="https://safercom/" />
-    <meta property="og:image" content="./images/homePage/logo.webp" />
+    <meta property="og:image" content="{{ asset('/website_assets/images/homePage/logo.webp') }}" />
     <meta property="og:image:alt" content="Safer - Online hub for booking  trourism trips" />
     <meta property="og:site_name" content="safer.com" />
     <!-- twitter meta tags -->
@@ -25,14 +25,14 @@
     <meta name="twitter:description"
         content="Safer providing you online planning  your  next vacations and  booking trips around the world " />
     <meta name="twitter:url" content="https://safer.travel/" />
-    <meta name="twitter:image" content="/images/homePage/logo.webp" />
+    <meta name="twitter:image" content="{{ asset('/website_assets/images/homePage/logo.webp') }}" />
     <meta property="twitter:image:alt" content="Safer - Online hub for booking  trourism trips" />
     <!-- general meta tags  -->
     <meta name="canonical_tag" content="https://safer.travel/" />
     <meta name="title" content="Safer - Online hub for booking  trourism trips" />
     <meta name="description"
         content="Safer providing you online planning  your  next vacations and  booking trips around the world" />
-    <meta name="image" content="/images/homePage/logo.webp" />
+    <meta name="image" content="{{ asset('/website_assets/images/homePage/logo.webp') }}" />
     <meta property="image:alt" content="Safer - Online hub for booking  trourism trips" />
     <meta name="keywords"
         content="hotels tours transfer visa contact trip destination adults child nights checkin room explore adventure experience offers travel packages agents acitivties hotel  transfer honemoon safari pharonic newsletter   " />
@@ -85,7 +85,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @yield("adds_css")
-    <title> {{$title}} </title>
+    <title> {{$title}} | Safer - Online hub for booking  trourism trips</title>
 </head>
 
 <body>
