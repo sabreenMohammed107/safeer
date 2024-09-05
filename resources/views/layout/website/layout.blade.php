@@ -31,7 +31,7 @@
     <meta name="canonical_tag" content="https://safer.travel/" />
     <meta name="title" content="Safer - Online hub for booking  trourism trips" />
     <meta name="description"
-        content="Safer providing you online planning  your  next vacations and  booking trips around the world" />
+        content="Safer providing you online planning  your  next vacations and  booking trips around the world accommodations adults adventure agency airport egypt " />
     <meta name="image" content="{{ asset('/website_assets/images/homePage/logo.webp') }}" />
     <meta property="image:alt" content="Safer - Online hub for booking  trourism trips" />
     <meta name="keywords"

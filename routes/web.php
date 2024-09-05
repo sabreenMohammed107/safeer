@@ -80,7 +80,10 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
-
+Route::get('sitemap.xml', function() {
+    $sitemap = file_get_contents(public_path('sitemap.xml'));
+    return response($sitemap)->header('Content-Type', 'text/xml');
+});
 /*
 Routes Before Applying Authentication
  */
