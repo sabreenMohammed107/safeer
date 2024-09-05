@@ -31,7 +31,7 @@
     <meta name="canonical_tag" content="https://safer.travel/" />
     <meta name="title" content="Safer - Online hub for booking  trourism trips for traviling internal or outside egypt " />
     <meta name="description"
-        content="Plan and book your dream vacations with Safer. Our online platform offers secure, hassle-free trip planning and booking services for destinations worldwide. Start your next adventure today!" />
+        content="Plan and book your dream vacations with Safer. Our online platform offers secure, hassle-free trip planning and booking services for destinations worldwide." />
     <meta name="image" content="{{ asset('/website_assets/images/homePage/logo.webp') }}" />
     <meta property="image:alt" content="Safer - Online hub for booking  trourism trips" />
     <meta name="keywords"
@@ -85,7 +85,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @yield("adds_css")
-    <title> {{$title}} | Safer | Plan & Book Your Dream Vacations Worldwide</title>
+    <title> {{$title}} | Safer Book Your Dream Vacations</title>
 </head>
 
 <body>
