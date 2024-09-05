@@ -5,16 +5,12 @@
 @endsection
 @section("content")
 <style>
-
-    </style>
-
-
-
+</style>
   <!-- explore turkey -->
   <section class="investigtion">
     <div class="explore explore_position container">
         @if (LaravelLocalization::getCurrentLocale() === 'en')
-         <div class="row mx-0 explore_details ">
+         <div class="row mx-0 explore_details">
           <div class=" col-xl-2 col-md-12 col-sm-12">
             <div class="title">
               <div class="info">
@@ -140,7 +136,7 @@
     <div class="adventure container">
       <div class="row mx-0">
         <div class=" col-xl-5 col- md-5 col-sm-12">
-          <img src="{{ asset("/website_assets/images/homePage/$Company->image") }}" alt="why us image">
+          <img loading="lazy" src="{{ asset("/website_assets/images/homePage/$Company->image") }}" alt="why us image">
         </div>
 
         <div class=" col-xl-7 col- md-7 col-sm-12">
@@ -179,7 +175,7 @@
          </div>
         </div>
       </div>
-      <img src="{{ asset('/website_assets/images/homePage/birds (2).webp') }}" alt="birds image">
+      <img loading="lazy" src="{{ asset('/website_assets/images/homePage/birds (2).webp') }}" alt="birds image">
     </div>
     <!-- <img src="./images/homePage/birds.webp" alt="birds group"> -->
   </section>
@@ -321,7 +317,7 @@
                     <div class="card_image">
                         <a href="{{ LaravelLocalization::localizeUrl('/hotels/' . $Hotel->hotel->id) }}">
                         <div class="image_overlay">
-                    <img src="{{ asset('uploads/hotels') }}/{{$Hotel->hotel->hotel_banner}}" class="w-100" height="250" alt=" hotel image">
+                    <img loading="lazy" src="{{ asset('uploads/hotels') }}/{{$Hotel->hotel->hotel_banner}}" class="w-100" height="250" alt=" hotel image">
                         </div>
                         </a>
                     </div>
@@ -396,20 +392,20 @@
       </div>
       </div>
     </div>
-    <img src="{{asset("/website_assets/images/homePage/birds (2).webp")}}" alt="birds image">
-    <img src="{{asset("/website_assets/images/homePage/birds (2).webp")}}" alt="birds image">
+    <img loading="lazy" src="{{asset("/website_assets/images/homePage/birds (2).webp")}}" alt="birds image">
+    <img loading="lazy" src="{{asset("/website_assets/images/homePage/birds (2).webp")}}" alt="birds image">
     <!-- <img src="./images/homePage/slider-mask.webp" alt="slider mask"> -->
   </section>
   <!-- booking section -->
   <section class="booking">
 
-    <img class="w-100" src="{{ asset("/website_assets/images/homePage/slider-mask.webp") }}" alt="slider mask">
+    <img loading="lazy" class="w-100" src="{{ asset("/website_assets/images/homePage/slider-mask.webp") }}" alt="slider mask">
     <div class="booking_details">
       <div class="row mx-0">
         <div class=" col-xl-6 col- md-6 col-sm-12 p-0">
           <div class="images" style="background-image:url('@if($Company->book_img) {{asset("uploads/company/$Company->book_img")}} @else {{ asset("/website_assets/images/homePage/slider-mask.webp") }}  @endif') ">
             <button type="button" class="btn js-modal-btn " data-video-url="{{$Company->book_tour_vedio}}" data-bs-toggle="modal" data-bs-target="#video">
-              <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}" alt=" video play button">
+              <img loading="lazy" src="{{ asset('/website_assets/images/homePage/play_button.webp') }}" alt=" video play button">
             </button>
           </div>
         </div>
@@ -481,15 +477,15 @@
         </div>
         <div class=" col-xl-6 col- md-6 col-sm-12">
           <div class="images image-2" style="background-image:url('@if($Company->transport_img) {{asset("uploads/company/$Company->transport_img")}} @else {{ asset("/website_assets/images/homePage/slider-mask.webp") }}  @endif') " >
-            <img src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
-             <img src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
+            <img loading="lazy" src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
+             <img loading="lazy" src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
 
-            <img src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
+            <img  loading="lazy" src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
 
-            <img src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
+            <img  loading="lazy" src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="image mask">
 
             <button type="button" class="btn js-modal-btn "data-video-url="{{$Company->book_transport_vedio}}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}" alt=" video play button">
+              <img loading="lazy" src="{{ asset('/website_assets/images/homePage/play_button.webp') }}" alt=" video play button">
             </button>
           </div>
         </div>
@@ -499,7 +495,7 @@
   </section>
   <!-- blog section -->
     <section class="blog_section ">
-      <img src="{{ asset('/website_assets/images/homePage/birds (2).webp') }}" alt="birds image">
+      <img src="{{ asset('/website_assets/images/homePage/birds (2).webp') }}" loading="lazy" alt="birds image">
 
       <div class="blog_titles container">
         <div class="title_info">
@@ -546,7 +542,7 @@
               <div class="col-sm-12 col-md-12 col-xl-6">
                 <div class="blog_side">
                   <div class="blog_image left_image" style="background-image: url({{ asset('uploads/blogs') }}/{{$AllBlogs[0]->image}});">
-                    <!-- <img src="./images/homePage/blog/blog-1.webp" alt="blog image"> -->
+                    <!-- <img src="./images/homePage/blog/blog-1.webp" loading="lazy" alt="blog image"> -->
                   </div>
                   <div class="blog_info">
                     <h5 class="left_heading">
@@ -582,7 +578,7 @@
                     <div class="col-sm-12 col-xl-12">
                         <div class="blog_side_right">
                          <div class="blog_image ">
-                           <img width="150" src="{{ asset('uploads/blogs') }}/{{$AllBlogs[$i]->image}}" alt="blog image">
+                           <img loading="lazy" width="150" src="{{ asset('uploads/blogs') }}/{{$AllBlogs[$i]->image}}" alt="blog image">
                          </div>
                          <div class="blog_info">
                            <h5>
@@ -668,7 +664,7 @@
                     <div class="col-sm-12 col-xl-12">
                         <div class="blog_side_right">
                          <div class="blog_image">
-                            <img width="150" src="{{ asset('uploads/blogs') }}/{{$category_blog->image}}" alt="blog image">
+                            <img loading="lazy" width="150" src="{{ asset('uploads/blogs') }}/{{$category_blog->image}}" alt="blog image">
 
                          </div>
                          <div class="blog_info">

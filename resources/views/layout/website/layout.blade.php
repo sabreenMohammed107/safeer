@@ -201,32 +201,32 @@
                                                     </ul>
                                                 </div>
                                                 <div class="col-12">
-                                                    <a href="http://" class="pay-link  "> <img
+                                                    <a href="http://" class="pay-link  "> <img loading="lazy"
                                                             src="{{ asset('img/payment/visa.webp') }}" alt="visa"
                                                             srcset=""></a>
 
 
-                                                    <a href="http://" class="pay-link "> <img
+                                                    <a href="http://" class="pay-link "> <img loading="lazy"
                                                             src="{{ asset('img/payment/google-pay.webp') }}" alt="google-pay"
                                                             srcset=""></a>
 
 
-                                                    <a href="http://" class="pay-link "> <img
+                                                    <a href="http://" class="pay-link "> <img loading="lazy"
                                                             src="{{ asset('img/payment/apple-pay.webp') }}" alt="apple-pay"
                                                             srcset=""></a>
 
 
-                                                    <a href="http://" class="pay-link "> <img
+                                                    <a href="http://" class="pay-link "> <img loading="lazy"
                                                             src="{{ asset('img/payment/mastercard.webp') }}" alt="mastercard"
                                                             srcset=""></a>
 
 
-                                                    <a href="http://" class="pay-link "> <img
+                                                    <a href="http://" class="pay-link "> <img loading="lazy"
                                                             src="{{ asset('img/payment/samsung-pay.webp') }}" alt="samsung-pay"
                                                             srcset=""></a>
 
 
-                                                    <a href="http://" class="pay-link "> <img
+                                                    <a href="http://" class="pay-link "> <img loading="lazy"
                                                             src="{{ asset('img/payment/stripe.webp') }}" alt="stripe"
                                                             srcset=""></a>
 
@@ -309,7 +309,7 @@
 
 
                                                        <div style="position: relative">
-                                                       <img src="{{ asset('/website_assets/images/Dijital.webp') }}" width="270"  alt="Dijital">
+                                                       <img loading="lazy" src="{{ asset('/website_assets/images/Dijital.webp') }}" width="270"  alt="Dijital">
 
 
                                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
@@ -326,7 +326,7 @@
 
                                                         ?>
 {{--
-<img src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;"> --}}
+<img loading="lazy" src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;"> --}}
 
 </a>
 
