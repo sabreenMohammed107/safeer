@@ -23,23 +23,28 @@ function changeImageOnClick(event) {
 var images = [ "tour-details-1.webp","tour-details-2.webp","tour-details-3.webp" ];
 var slider = document.getElementById('mainImage');
 var prevoiusButton = document.getElementById('previous');
-var nextButton = document.getElementById('next');
-var imageIndex = 0;
-if(nextButton){
-nextButton.addEventListener('click' , function (){
-    imageIndex++;
-    link = "./images/tour-details/" + images[imageIndex];
-    slider.setAttribute('src' , link);
 
-    if(imageIndex == images.length - 1 ){
-        nextButton.setAttribute('disabled','');
-        prevoiusButton.removeAttribute('disabled','')
-    }
-    else{
-        prevoiusButton.removeAttribute('disabled','')
-    }
-})
-}
+var imageIndex = 0;
+
+document.addEventListener('DOMContentLoaded', function() {
+    var nextButton = document.getElementById('next');
+    if(nextButton){
+        nextButton.addEventListener('click' , function (){
+            imageIndex++;
+            link = "./images/tour-details/" + images[imageIndex];
+            slider.setAttribute('src' , link);
+
+            if(imageIndex == images.length - 1 ){
+                nextButton.setAttribute('disabled','');
+                prevoiusButton.removeAttribute('disabled','')
+            }
+            else{
+                prevoiusButton.removeAttribute('disabled','')
+            }
+        })
+        }
+});
+
 if(prevoiusButton){
 prevoiusButton.addEventListener('click' , function (){
     imageIndex--;
