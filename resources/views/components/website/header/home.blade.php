@@ -1,6 +1,25 @@
 <!-- slider -->
 
-<div class="slider_section">
+<div class="slider_section" data-bg-image="{{ asset('website_assets/images/homePage/turkey-slider-image.webp') }}">
+    <div class="slider_section_placeholder"></div>
+    <style>
+        .slider_section {
+    position: relative;
+}
+
+.slider_section_placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(asset('website_assets/images/homePage/home-slider-main-image-low.webp'));
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px);
+    transition: opacity 0.3s ease-in-out;
+}
+    </style>
     <div class="slider_details">
         <h1 >
             @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -510,6 +529,43 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderSection = document.querySelector('.slider_section');
+            if (sliderSection) {
+                const bgImage = sliderSection.getAttribute('data-bg-image');
+                if (bgImage) {
+                    const img = new Image();
+                    img.onload = function() {
+                        sliderSection.style.backgroundImage = `linear-gradient(rgba(28, 69, 130, 0.81), rgba(28, 69, 130, 0.81)), url(${bgImage})`;
+                        sliderSection.style.opacity = 1;
+                    };
+                    img.src = bgImage;
+                }
+            }
+            const placeholder = document.querySelector('.slider_section_placeholder');
 
+    if (sliderSection && placeholder) {
+        const bgImage = sliderSection.getAttribute('data-bg-image');
+        if (bgImage) {
+            const img = new Image();
+            img.onload = function() {
+                sliderSection.style.backgroundImage = `linear-gradient(rgba(28, 69, 130, 0.81), rgba(28, 69, 130, 0.81)), url(${bgImage})`;
+                sliderSection.style.backgroundSize = 'cover';
+                sliderSection.style.backgroundPosition = 'center';
+                placeholder.style.opacity = 0;
+                setTimeout(() => {
+                    placeholder.remove();
+                }, 300);
+            };
+            img.src = bgImage;
+        }
+    }
+        });
+
+
+
+
+        </script>
 </div>
 
