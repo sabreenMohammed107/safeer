@@ -545,22 +545,22 @@
             }
             const placeholder = document.querySelector('.slider_section_placeholder');
 
-    if (sliderSection && placeholder) {
-        const bgImage = sliderSection.getAttribute('data-bg-image');
-        if (bgImage) {
-            const img = new Image();
-            img.onload = function() {
-                sliderSection.style.backgroundImage = `linear-gradient(rgba(28, 69, 130, 0.81), rgba(28, 69, 130, 0.81)), url(${bgImage})`;
-                sliderSection.style.backgroundSize = 'cover';
-                sliderSection.style.backgroundPosition = 'center';
-                placeholder.style.opacity = 0;
-                setTimeout(() => {
-                    placeholder.remove();
-                }, 300);
-            };
-            img.src = bgImage;
-        }
-    }
+            if (sliderSection && placeholder) {
+                const bgImage = sliderSection.getAttribute('data-bg-image');
+                if (bgImage) {
+                    const img = new Image();
+                    img.onload = function() {
+                        sliderSection.style.backgroundImage = `linear-gradient(rgba(28, 69, 130, 0.81), rgba(28, 69, 130, 0.81)), url(${bgImage})`;
+                        sliderSection.style.backgroundSize = 'cover';
+                        sliderSection.style.backgroundPosition = 'center';
+                        placeholder.style.opacity = 0;
+                        setTimeout(() => {
+                            placeholder.remove();
+                        }, 300);
+                    };
+                    img.src = bgImage;
+                }
+            }
         });
 
 
