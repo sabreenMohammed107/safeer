@@ -10,10 +10,10 @@
     <meta property="og:title" content="Safer - Online hub for booking  trourism trips" />
     <meta property="og:description"
         content="Safer providing you online planning  your  next vacations and  booking trips around the world" />
-        <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
-        <link rel="canonical" href="{{ url()->current() }}" />
+    <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+    <link rel="canonical" href="{{ url()->current() }}" />
 
-        <meta property="og:url" content="https://safercom/" />
+    <meta property="og:url" content="https://safercom/" />
     <meta property="og:image" content="{{ asset('/website_assets/images/homePage/logo.webp') }}" />
     <meta property="og:image:alt" content="Safer - Online hub for booking  trourism trips" />
     <meta property="og:site_name" content="safer.com" />
@@ -29,7 +29,8 @@
     <meta property="twitter:image:alt" content="Safer - Online hub for booking  trourism trips" />
     <!-- general meta tags  -->
     <meta name="canonical_tag" content="https://safer.travel/" />
-    <meta name="title" content="Safer - Online hub for booking  trourism trips for traviling internal or outside egypt " />
+    <meta name="title"
+        content="Safer - Online hub for booking  trourism trips for traviling internal or outside egypt " />
     <meta name="description"
         content="Plan and book your dream vacations with Safer. Our online platform offers secure, hassle-free trip planning and booking services for destinations worldwide." />
     <meta name="image" content="{{ asset('/website_assets/images/homePage/logo.webp') }}" />
@@ -37,8 +38,8 @@
     <meta name="keywords"
         content="hotels tours transfer visa contact trip destination adults child nights checkin room explore adventure experience offers travel packages agents acitivties hotel  transfer honemoon safari pharonic newsletter   " />
 
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <!-- style sheets  -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- style sheets  -->
     <!-- fontawesome  -->
     <link rel="stylesheet" href="{{ asset('/website_assets/css/all.min.css') }}">
     <!-- fonts google -->
@@ -80,13 +81,14 @@
     <!-- icon -->
     <link rel="icon" href="{{ asset('/website_assets/images/homePage/logo.webp') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    @livewireStyles()
     @yield("adds_css")
     <title> {{$title}} | Safer Book Your Dream Vacations</title>
-    @livewireStyles()
 </head>
 
 <body>
@@ -125,8 +127,9 @@
                         <form action="{{url('/sendNewsLetter')}}" method="POST">
                             @csrf
                             <div class="input-group input">
-                                <input type="email" name="email" class="form-control" placeholder="{{ __('links.enter_email') }}"
-                                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <input type="email" name="email" class="form-control"
+                                    placeholder="{{ __('links.enter_email') }}" aria-label="Recipient's username"
+                                    aria-describedby="button-addon2">
                                 <button class="btn btn-outline-secondary" type="submit">
 
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -145,207 +148,224 @@
             </div>
         </div>
 
-                        <footer>
-                            <div class="container">
-                                <div class="row mx-0">
-                                    <div class="col-xl-4 col-md-12 col-sm-12">
-                                        <div class="left_info">
-                                            <h6>{{ __('links.about_us') }} </h6>
-                                            <p style="text-align: justify; padding:0 10px">
-                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+        <footer>
+            <div class="container">
+                <div class="row mx-0">
+                    <div class="col-xl-4 col-md-12 col-sm-12">
+                        <div class="left_info">
+                            <h6>{{ __('links.about_us') }} </h6>
+                            <p style="text-align: justify; padding:0 10px">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                                                {{$Company->overview_en}}
-                                                @else
-                                                {{$Company->overview_ar}}
-                                                @endif
-                                               </p>
-                                        </div>
+                                {{$Company->overview_en}}
+                                @else
+                                {{$Company->overview_ar}}
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                    <!-- useful links -->
+
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="useful_links">
+                            <h6>{{ __('links.useful') }} </h6>
+                            <div class="row mx-0">
+                                <div class="col-6">
+                                    <ul>
+                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                href="{{ LaravelLocalization::localizeUrl('/') }}"> {{ __('links.home')
+                                                }} </a>
+                                        </li>
+                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                href="{{ LaravelLocalization::localizeUrl('/about') }}">{{
+                                                __('links.about_us') }}
+                                            </a></li>
+                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{
+                                                __('links.hotels') }}
+                                            </a></li>
+                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{
+                                                __('links.offers') }}
+                                            </a></li>
+                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                href="{{ LaravelLocalization::localizeUrl('/terms') }}">{{
+                                                __('links.term_condation') }}</a></li>
+
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul>
+                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{
+                                                __('links.blogs') }}
+                                            </a></li>
+                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{
+                                                __('links.tours') }}
+                                            </a></li>
+                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                href="{{ LaravelLocalization::localizeUrl('/transfers') }}">{{
+                                                __('links.transfer') }}
+                                            </a></li>
+                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                                href="{{ LaravelLocalization::localizeUrl('/visa') }}">{{
+                                                __('links.visa') }} </a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                                <div class="col-12">
+                                    <a href="http://" class="pay-link  "> <img loading="lazy"
+                                            src="{{ asset('img/payment/visa.webp') }}" alt="visa" srcset=""></a>
+
+
+                                    <a href="http://" class="pay-link "> <img loading="lazy"
+                                            src="{{ asset('img/payment/google-pay.webp') }}" alt="google-pay"
+                                            srcset=""></a>
+
+
+                                    <a href="http://" class="pay-link "> <img loading="lazy"
+                                            src="{{ asset('img/payment/apple-pay.webp') }}" alt="apple-pay"
+                                            srcset=""></a>
+
+
+                                    <a href="http://" class="pay-link "> <img loading="lazy"
+                                            src="{{ asset('img/payment/mastercard.webp') }}" alt="mastercard"
+                                            srcset=""></a>
+
+
+                                    <a href="http://" class="pay-link "> <img loading="lazy"
+                                            src="{{ asset('img/payment/samsung-pay.webp') }}" alt="samsung-pay"
+                                            srcset=""></a>
+
+
+                                    <a href="http://" class="pay-link "> <img loading="lazy"
+                                            src="{{ asset('img/payment/stripe.webp') }}" alt="stripe" srcset=""></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- contact details -->
+                    <div class="col-xl-4 col-md-6">
+                        <div class="contact_details">
+                            <h6>{{ __('links.contact_us') }}</h6>
+
+                            <div class="contact_info" style="margin-bottom: 10px;">
+                                <div class="info">
+                                    <i class="fa-solid fa-phone"></i>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    <span>For individuals: </span>
+                                    @else
+                                    <span> للافراد :</span>
+                                    @endif
+
+                                </div>
+                            </div>
+                            <div class="contact_info" style="margin-bottom: 10px;">
+                                <div class="info" style="margin-left: 25px;">
+
+                                    <span>
+                                        00905521501111 - 00905016451111 </span>
+                                </div>
+                            </div>
+                            <div class="contact_info" style="margin-bottom: 10px;">
+                                <div class="info">
+                                    <i class="fa-solid fa-phone"></i>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    <span>
+                                        For companies: 00905445019185</span>
+                                    @else
+                                    <span>
+                                        للشركات: 00905445019185 </span>
+                                    @endif
+
+                                </div>
+                            </div>
+                            <div class="contact_info" style="margin-bottom: 10px;">
+                                <div class="info">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <span>Info@Safer.Travel</span>
+                                </div>
+                            </div>
+                            <div class="contact_info" style="margin-bottom: 10px;">
+                                <div class="info">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                                    <span>Sixth floor above Kababji Mahmoud Restaurant - Watan Square - Al-Fateh -
+                                        Istanbul - Turkey</span>
+
+                                    @else
+                                    <span>
+                                        الطابق السادس فوق مطعم كبابجي محمود - ساحة الوطن - الفاتح - اسطنبول -
+                                        تركيا</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="contact_info" style="margin:0">
+
+                                <div class="icons-container">
+                                    <div class="social-icons spinned">
+                                        <a class="item facebook" href="{{ $comFooter->facebook }}" target="_blank"><i
+                                                class="fa-brands fa-facebook-f"></i></a>
+                                        <a class="item youtube" href="{{ $comFooter->youtube }}" target="_blank"><i
+                                                class="fa-brands fa-youtube"></i></a>
+                                        <a class="item instagram" href="{{ $comFooter->instagram }}" target="_blank"><i
+                                                class="fa-brands fa-instagram"></i></a>
                                     </div>
-                                    <!-- useful links -->
-
-                                    <div class="col-xl-4 col-md-6 col-sm-12">
-                                        <div class="useful_links">
-                                            <h6>{{ __('links.useful') }} </h6>
-                                            <div class="row mx-0">
-                                                <div class="col-6">
-                                                    <ul>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ LaravelLocalization::localizeUrl('/') }}"> {{ __('links.home') }} </a>
-                                                        </li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}
-                                                            </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{ __('links.hotels') }}
-                                                            </a></li>
-                                                            <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{ __('links.offers') }}
-                                                            </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ LaravelLocalization::localizeUrl('/terms') }}">{{ __('links.term_condation') }}</a></li>
-
-                                                    </ul>
-                                                </div>
-                                                <div class="col-6">
-                                                    <ul>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                                href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}
-                                                            </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.tours') }}
-                                                            </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ LaravelLocalization::localizeUrl('/transfers') }}">{{ __('links.transfer') }}
-                                                            </a></li>
-                                                        <li><i class="fa-solid fa-angle-right"></i><a href="{{ LaravelLocalization::localizeUrl('/visa') }}">{{ __('links.visa') }} </a>
-                                                        </li>
+                                </div>
+                            </div>
+                            <div class="contact_info qr-code-custome">
 
 
-                                                    </ul>
-                                                </div>
-                                                <div class="col-12">
-                                                    <a href="http://" class="pay-link  "> <img loading="lazy"
-                                                            src="{{ asset('img/payment/visa.webp') }}" alt="visa"
-                                                            srcset=""></a>
+                                <div style="position: relative">
+                                    <img loading="lazy" src="{{ asset('/website_assets/images/Dijital.webp') }}"
+                                        width="270" alt="Dijital">
 
 
-                                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                                            src="{{ asset('img/payment/google-pay.webp') }}" alt="google-pay"
-                                                            srcset=""></a>
-
-
-                                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                                            src="{{ asset('img/payment/apple-pay.webp') }}" alt="apple-pay"
-                                                            srcset=""></a>
-
-
-                                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                                            src="{{ asset('img/payment/mastercard.webp') }}" alt="mastercard"
-                                                            srcset=""></a>
-
-
-                                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                                            src="{{ asset('img/payment/samsung-pay.webp') }}" alt="samsung-pay"
-                                                            srcset=""></a>
-
-
-                                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                                            src="{{ asset('img/payment/stripe.webp') }}" alt="stripe"
-                                                            srcset=""></a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- contact details -->
-                                    <div class="col-xl-4 col-md-6">
-                                        <div class="contact_details">
-                                            <h6>{{ __('links.contact_us') }}</h6>
-
-                                            <div class="contact_info" style="margin-bottom: 10px;">
-                                                <div class="info">
-                                                    <i class="fa-solid fa-phone"></i>
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                                    <span>For individuals: </span>
-                                                    @else
-                                                    <span> للافراد :</span>
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                            <div class="contact_info" style="margin-bottom: 10px;">
-                                                <div class="info" style="margin-left: 25px;">
-
-                                                    <span >
-                                                        00905521501111 -  00905016451111 </span>
-                                                </div>
-                                            </div>
-                                             <div class="contact_info" style="margin-bottom: 10px;">
-                                                <div class="info">
-                                                    <i class="fa-solid fa-phone"></i>
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                                    <span>
-                                                        For companies: 00905445019185</span>
-                                                    @else
-                                                    <span>
-                                                        للشركات: 00905445019185 </span>
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                            <div class="contact_info" style="margin-bottom: 10px;">
-                                                <div class="info">
-                                                    <i class="fa-solid fa-envelope"></i>
-                                                    <span>Info@Safer.Travel</span>
-                                                </div>
-                                            </div>
-                                            <div class="contact_info" style="margin-bottom: 10px;">
-                                                <div class="info">
-                                                    <i class="fa-solid fa-location-dot"></i>
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                                    <span>Sixth floor above Kababji Mahmoud Restaurant - Watan Square - Al-Fateh - Istanbul - Turkey</span>
-
-                                                    @else
-                                                    <span>
-                                                        الطابق السادس فوق مطعم كبابجي محمود - ساحة الوطن - الفاتح - اسطنبول - تركيا</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-                                            <div class="contact_info" style="margin:0">
-
-                                                <div class="icons-container">
-                                                    <div class="social-icons spinned">
-                                                        <a class="item facebook" href="{{ $comFooter->facebook }}" target="_blank" ><i
-                                                                class="fa-brands fa-facebook-f"></i></a>
-                                                        <a class="item youtube" href="{{ $comFooter->youtube }}" target="_blank" ><i
-                                                                class="fa-brands fa-youtube"></i></a>
-                                                        <a class="item instagram" href="{{ $comFooter->instagram }}" target="_blank" ><i
-                                                                class="fa-brands fa-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                             <div class="contact_info qr-code-custome" >
-
-
-                                                       <div style="position: relative">
-                                                       <img loading="lazy" src="{{ asset('/website_assets/images/Dijital.webp') }}" width="270"  alt="Dijital">
-
-
-                                                   <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
-                                                      bottom: 5px;right: 7px;" target="_blank" >
-                                                    {{-- {{  QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34, 76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}} --}}
-                                                </a>
-                                            </div>
-                                                       <a href="https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463" target="_blank" >
-                                                        <?php
+                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
+                                                      bottom: 5px;right: 7px;" target="_blank">
+                                        {{-- {{ QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34,
+                                        76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}}
+                                        --}}
+                                    </a>
+                                </div>
+                                <a href="https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463"
+                                    target="_blank">
+                                    <?php
                                                         // $im=QrCode::format('png')
                                                         // ->merge('website_assets/images/q1.webp', 0.4, true)
                                                         // ->size(75)->color(27, 34, 76)->errorCorrection('H')
                                                         // ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
 
                                                         ?>
-{{--
-<img loading="lazy" src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;"> --}}
+                                    {{--
+                                    <img loading="lazy" src="data:image/png;base64, {!! base64_encode($im)!!}"
+                                        style="margin-bottom: 10px;"> --}}
 
-</a>
+                                </a>
 
 
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
                             </div>
+                        </div>
+                    </div>
 
-                        </footer>
+                </div>
+            </div>
+
+        </footer>
     </section>
     <!-- footer -->
 
     <!-- copy right section -->
     <div class="copyright">
-        <input type="hidden" id="chat_whatsapp" value="{{ $Company->chat_whatsapp }}" >
+        <input type="hidden" id="chat_whatsapp" value="{{ $Company->chat_whatsapp }}">
         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
         <h6>All copyrights reserved to safer 2022 </h6>
@@ -353,13 +373,13 @@
         @else
         <span>
             جميع حقوق النشر محفوظة لشركة سافر 2022</span>
-            @endif
+        @endif
 
-        </div>
+    </div>
 
-        <!-- javascripts links -->
-        <!-- bootstrap 5.0v scripts -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    <!-- javascripts links -->
+    <!-- bootstrap 5.0v scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
     </script>
     <script src="{{ asset('/website_assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
@@ -381,14 +401,14 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js">
     </script>
     <link rel="stylesheet" type="text/css"
-    href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+        href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <script src="{{ asset('/website_assets/js/datepicker.js') }}"></script>
 
     <script src="{{ asset('/website_assets/js/momnet.js') }}"></script>
     {{-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> --}}
     <script src="{{ asset('/website_assets/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('/website_assets/js/date_picker.js') }}"></script>
-
+    @livewireScripts()
     <!-- Slick.s library -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.min.js') }}"></script>
@@ -403,11 +423,19 @@
     <script src="{{ asset('/website_assets/js/image_gllery.js')}}"></script>
     <!-- adding room -->
     <script src="{{ asset('/website_assets/js/main.js')}}"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer=""defer"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer" defer="defer"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js"
+        integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" defer="" defer"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"
+        integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" defer="defer"></script>
     {{-- <script src="{{ asset('/website_assets/js/datepicker-bs4.js?')}}" defer="defer"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    {{-- owl carousel --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script> {{-- owl carousel --}}
     <script>
         $(document).ready(function(){
             // whts pp
@@ -496,8 +524,8 @@ $(document).on("click", "#send-it", function() {
     <script src="{{ asset('/website_assets/js/adding_years_Select.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @yield("adds_js")
-<script>
-    let slickSliders = document.querySelectorAll('.slick-slider');
+    <script>
+        let slickSliders = document.querySelectorAll('.slick-slider');
 
 if ('IntersectionObserver' in window) {
   // IntersectionObserver Supported
@@ -532,8 +560,8 @@ function loadSlick(slickSlider, options) {
     $slickSlider = $(slickSlider);
     $slickSlider.slick(options);
 }
-</script>
-@livewireScripts()
+    </script>
+
 </body>
 
 </html>
