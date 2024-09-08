@@ -86,6 +86,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @yield("adds_css")
     <title> {{$title}} | Safer Book Your Dream Vacations</title>
+    @livewireStyles()
 </head>
 
 <body>
@@ -532,6 +533,7 @@ function loadSlick(slickSlider, options) {
     $slickSlider.slick(options);
 }
 </script>
+@livewireScripts()
 </body>
 
 </html>
