@@ -1,52 +1,53 @@
 <?php
 
-use App\Http\Controllers\AllFavHotelsController;
-use App\Http\Controllers\BestHotelController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\BlogsCategoryController;
-use App\Http\Controllers\CarClassController;
-use App\Http\Controllers\CarModelController;
 use App\Http\Controllers\CityController;
-use App\Http\Controllers\CompanyBranchController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TourController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisaController;
+use App\Http\Controllers\HotelController;
+use App\Http\Controllers\OfferController;
+use App\Http\Controllers\WhyUsController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CounterController;
 use App\Http\Controllers\CountryController;
-use App\Http\Controllers\ExploreCityController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\HotelController;
-use App\Http\Controllers\HotelPricesController;
-use App\Http\Controllers\HotelsTagController;
-use App\Http\Controllers\NationalityController;
-use App\Http\Controllers\OfferController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\CarClassController;
+use App\Http\Controllers\CarModelController;
 use App\Http\Controllers\RoomTypeController;
-use App\Http\Controllers\SiteAuth\AuthController;
-use App\Http\Controllers\SiteAuth\FaceBookController;
-use App\Http\Controllers\SiteAuth\GoogleController;
-use App\Http\Controllers\SiteContriesController;
-use App\Http\Controllers\SiteUsersController;
-use App\Http\Controllers\TourController;
-use App\Http\Controllers\TourGalleryController;
 use App\Http\Controllers\ToursTagController;
 use App\Http\Controllers\TransferController;
-use App\Http\Controllers\TransferLocationController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UsersOrderController;
-use App\Http\Controllers\UsersRoleController;
-use App\Http\Controllers\VisaController;
 use App\Http\Controllers\VisaTypeController;
+use App\Http\Controllers\BestHotelController;
+use App\Http\Controllers\HotelsTagController;
+use App\Http\Controllers\SiteUsersController;
+use App\Http\Controllers\UsersRoleController;
+use App\Http\Controllers\UsersOrderController;
+use App\Http\Controllers\ExploreCityController;
+use App\Http\Controllers\HotelPricesController;
+use App\Http\Controllers\NationalityController;
+use App\Http\Controllers\TourGalleryController;
+use App\Http\Controllers\AllFavHotelsController;
+use App\Http\Controllers\SiteContriesController;
+use App\Http\Controllers\Website\MainController;
+use App\Http\Controllers\BlogsCategoryController;
+use App\Http\Controllers\CompanyBranchController;
+use App\Http\Controllers\SiteAuth\AuthController;
+use App\Http\Controllers\Website\ToursController;
+use App\Http\Controllers\Website\HotelsController;
+use App\Http\Controllers\SiteAuth\GoogleController;
 use App\Http\Controllers\Website\BookingController;
 use App\Http\Controllers\Website\ContentController;
-use App\Http\Controllers\Website\HotelsController;
-use App\Http\Controllers\Website\MainController;
-use App\Http\Controllers\Website\SiteTransferController;
-use App\Http\Controllers\Website\ToursController;
+use App\Http\Controllers\TransferLocationController;
 use App\Http\Controllers\Website\VisaDataController;
-use App\Http\Controllers\WhyUsController;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SiteAuth\FaceBookController;
+use App\Http\Controllers\Website\SiteTransferController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -84,6 +85,7 @@ Route::get('sitemap.xml', function() {
     $sitemap = file_get_contents(public_path('sitemap.xml'));
     return response($sitemap)->header('Content-Type', 'text/xml');
 });
+
 /*
 Routes Before Applying Authentication
  */
@@ -92,6 +94,8 @@ Route::group([
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
 ], function () {
     Route::get("/", [MainController::class, 'index']);
+Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->name('load.section');
+
     Route::get("/hotels", [HotelsController::class, 'all_hotels']);
     Route::post("/hotels", [HotelsController::class, 'hotels']);
     Route::post("/hotels/retrieve", [HotelsController::class, 'fetch']);
