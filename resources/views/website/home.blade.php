@@ -4,14 +4,13 @@
 <x-website.header.home :company="$Company" :countries="$Countries" :cities="$cities" />
 @endsection
 @section("content")
-<style>
-</style>
+
 <!-- explore turkey -->
-<livewire:explore-section lazy />
+<livewire:explore-section  />
 {{--
 <x-website.home.offers :offers="$Offers" :title="$Company->limit_offer_endesc" /> --}}
 <!-- offers section -->
-<livewire:offers lazy />
+<livewire:offers  />
 
 <x-website.home.counters :counters="$Counters" />
 <!-- hotels section -->

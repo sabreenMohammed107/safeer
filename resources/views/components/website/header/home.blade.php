@@ -4,21 +4,21 @@
     <div class="slider_section_placeholder"></div>
     <style>
         .slider_section {
-    position: relative;
-}
+            position: relative;
+        }
 
-.slider_section_placeholder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(asset('website_assets/images/homePage/home-slider-main-image-low.webp'));
-    background-size: cover;
-    background-position: center;
-    filter: blur(10px);
-    transition: opacity 0.3s ease-in-out;
-}
+        .slider_section_placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url(asset('website_assets/images/homePage/home-slider-main-image-low.webp'));
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px);
+            transition: opacity 0.3s ease-in-out;
+        }
     </style>
     <div class="slider_details">
         <h1 >
