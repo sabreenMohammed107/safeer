@@ -41,9 +41,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- style sheets  -->
     <!-- fontawesome  -->
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/all.min.css') }}">
+    <link defer rel="stylesheet" href="{{ asset('/website_assets/css/all.min.css') }}">
     <!-- fonts google -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap"
+    <link defer href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap"
         rel="stylesheet">
     <!-- bootstrap -->
     @if (LaravelLocalization::getCurrentLocale() === 'en')
