@@ -164,7 +164,7 @@
              $visaDetail= App\Models\VisaDetails::where('order_details_id',$row->id)->first();
              ?>
 
-                Booking Visa / {{ $visaDetail->visa->country->en_country ?? ''}}
+                Booking Visa / {{ $visaDetail->visa->type->country->en_country ?? ''}}
                 {{-- {{$visaDetail->visa->nationality->en_nationality  }} --}}
             @endif
            </span>
