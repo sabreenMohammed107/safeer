@@ -38,8 +38,11 @@
                     </h6>
                     @foreach ($latest as $obj)
                         <div class="blog_details">
+                            <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $obj->id . '/' . $obj->slug) }}"
+                                class="stretched-link">
                             <img class="mx-2" style="height: 100px;width:130px" src="{{ asset('uploads/offers') }}/{{ $obj->image }}"
                                 alt="latest blog image">
+                            </a>
                             <div class="blog_info">
                                 <h6 style="margin-bottom: 0;font-size: 16px" > <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $obj->id . '/' . $obj->slug) }}"
                                         class="stretched-link">
