@@ -430,36 +430,37 @@
                 fetch_productdata(page, arr, arr_cities, arr_types);
 
             });
-
+            // Pass the localized URL to a JavaScript variable
+            var localizedUrl = "{{ LaravelLocalization::localizeUrl('/tours') }}";
             $("#buttonForm").click(function(e) {
-            e.preventDefault();
-            var url = "/tours";
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: url,
-                method: "POST",
-                data: {
+                e.preventDefault();
+                var url = localizedUrl;
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: url,
+                    method: "POST",
+                    data: {
 
 
-                    country_id: $('#country option:selected').val(),
-                    city_id: $('#city_id').find(":selected").val(),
+                        country_id: $('#country option:selected').val(),
+                        city_id: $('#city_id').find(":selected").val(),
 
 
 
 
-                },
-                success: function(result) {
-                    console.log(result);
+                    },
+                    success: function(result) {
+                        console.log(result);
 
-                    $("#table_data").html(result);
-                },
-                error: function(jqXHR, textStatus, error) {
-                    console.log(textStatus + " - " + jqXHR.responseText);
-                }
+                        $("#table_data").html(result);
+                    },
+                    error: function(jqXHR, textStatus, error) {
+                        console.log(textStatus + " - " + jqXHR.responseText);
+                    }
+                });
             });
-        });
         });
         // End paginate product
         //function of pagination product
@@ -494,9 +495,9 @@
         }
         //End function of pagination product
 
-
+        var localizedUrlRetrive = "{{ LaravelLocalization::localizeUrl('/tours/retrieve') }}";
         function fetch_tours() {
-            var url = "/tours/retrieve";
+            var url = localizedUrlRetrive;
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -524,6 +525,4 @@
                 }
             });
         }
-
-
     </script>
