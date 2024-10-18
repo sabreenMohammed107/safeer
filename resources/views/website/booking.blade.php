@@ -77,6 +77,7 @@
             <h5> {{ __('links.cartDetails') }} </h5>
             <form action="{{ url('/Book') }}" method="POST">
                 <div class="row mx-0">
+                    @if ($RoomCost)
                     <div class="col-12">
                         <h4 class="bg-info px-3 py-1 text-white">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -86,6 +87,7 @@
                             @endif
                         </h4>
                     </div>
+                    @endif
                     <div class="col-sm-12 col-md-6">
                         <input type="hidden" name="tax_percentage" value="{{ $tax_percentage }}">
                         @if ($RoomCost)

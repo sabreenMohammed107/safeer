@@ -283,7 +283,7 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'transfer_adult.between' =>'Adult number must be in 1 to ',
 
 //booking
-'preBook'=>'ALL YOUR PRE-BOOKED ROOMS',
+'preBook'=>'ALL YOUR BOOKED DETAILS',
 'cartDetails'=>'Cart Details',
 'single'=>'Single',
 'double'=>'Double',
