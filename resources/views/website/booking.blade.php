@@ -217,6 +217,7 @@
                         @endif
                     </div>
                     <div class="col-sm-12 col-md-6">
+                        @if ($RoomCost)
                         <div class="passenger_info">
                             @if ($RoomCost)
                                 <p class="receipt-title">
@@ -361,6 +362,7 @@
                                 </div>
                             @endif
                         </div>
+                        @endif
                     </div>
                     <div class="col-12 mb-4" style="border-bottom: 1px solid #d5d5d5">
                         <hr />
