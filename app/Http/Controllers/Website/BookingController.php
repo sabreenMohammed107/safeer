@@ -327,7 +327,7 @@ class BookingController extends Controller
                 }
                 $orderDetails = new OrderDetails();
                 $orderDetails->order_id = $order->id;
-                $orderDetails->holder_salutation = $request->adultsSal[0];
+                $orderDetails->holder_salutation = $request->adultsSal[0] ?? " ";
                 $orderDetails->holder_name = $request->adultsNames[0];
                 $orderDetails->holder_mobile = $request->adultsMobile[0];
                 $orderDetails->notes = $request->notes;
@@ -396,7 +396,7 @@ class BookingController extends Controller
                 for ($i = 0; $i < count($request->tour_id); $i++) {
                     $orderDetails = new OrderDetails();
                     $orderDetails->order_id = $order->id;
-                    $orderDetails->holder_salutation = $request->tour_adults_sal[$i][0];
+                    $orderDetails->holder_salutation = $request->tour_adults_sal[$i][0] ?? " ";
                     $orderDetails->holder_name = $request->tour_adults_name[$i][0];
                     $orderDetails->holder_mobile = $request->tour_adults_mobile[$i][0];
                     $orderDetails->notes = $request->tour_notes[$i];
@@ -420,7 +420,7 @@ class BookingController extends Controller
                     $TourElem->tour_id = (int) $request->tour_id[$i];
                     $TourElem->tour_name = $refTour->en_name;
                     $TourElem->tour_banner = $refTour->banner;
-                    $TourElem->tour_type = ($refTour->type->id == 1) ? 0 : 1;
+                    $TourElem->tour_type = $TourElem->tour_type = (isset($refTour->type) && $refTour->type->id == 1) ? 0 : 1;                    ;
                     $TourElem->total_cost = ((float) $refTour->tour_person_cost * $TotalPaidPersons); // Before Tax
                     $TourElem->tour_cost = ((float) $request->tour_cost[$i]); // Before Tax
                     $TourElem->tour_date = $request->tour_date[$i];
@@ -433,7 +433,7 @@ class BookingController extends Controller
                             $person = new OrderPersons();
                             $person->order_details_id = $orderDetails->id;
                             $person->person_type = 0; // Adult byte
-                            $person->person_salutation = $request->tour_adults_sal[$i][$j];
+                            $person->person_salutation = $request->tour_adults_sal[$i][$j] ?? "MR";
                             $person->person_name = $request->tour_adults_name[$i][$j];
                             $person->person_mobile = $request->tour_adults_mobile[$i][$j];
                             $person->person_cost = $refTour->tour_person_cost;
@@ -464,7 +464,7 @@ class BookingController extends Controller
                 $User = SiteUser::find(session()->get("SiteUser")["ID"]);
                 $orderDetails = new OrderDetails();
                 $orderDetails->order_id = $order->id;
-                $orderDetails->holder_salutation = $request->transferSal;
+                $orderDetails->holder_salutation = $request->transferSal ?? " ";
                 $orderDetails->holder_name = $request->transferName;
                 $orderDetails->holder_mobile = $request->transferMobile;
                 $orderDetails->holder_email = $request->transferEmail;
@@ -500,7 +500,7 @@ class BookingController extends Controller
                     /**
                      * Holder Here is the Visa holder (Phone, Name, Email) ---- Visa_Details contains -> (name, phone, email)
                      */
-                    $orderDetails->holder_salutation = "";
+                    $orderDetails->holder_salutation = " ";
                     $orderDetails->holder_name = $request->visa_name[$i];
                     $orderDetails->holder_mobile = $request->visa_phone[$i];
                     $orderDetails->holder_email = $request->visa_email[$i];

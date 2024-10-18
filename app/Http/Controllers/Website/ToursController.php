@@ -16,9 +16,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang as Lang;
 use Validator;
+
 class ToursController extends Controller
 {
-/*
+    /*
 
  */
     public function profile($id)
@@ -38,7 +39,7 @@ class ToursController extends Controller
             ->groupBy(["en_category", "features_categories.id"])->get();
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
-        $Countries = Country::where('flag',1)->get();
+        $Countries = Country::where('flag', 1)->get();
         $Cities = City::where('country_id', 1)->get();
         return view("website.tours.tourProfile", [
             "Company" => $Company,
@@ -59,17 +60,22 @@ class ToursController extends Controller
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         // $Cities = City::all();
         $TourTypes = Tour_type::all();
-        $Countries = Country::where('flag',1)->get();
-        if($request->country_id){
-            $Cities = City::where('country_id',$request->country_id)->get();
-        }else{
-            $Cities = City::where('country_id',1)->get();
+        $Countries = Country::where('flag', 1)->get();
+        if ($request->country_id) {
+            $Cities = City::where('country_id', $request->country_id)->get();
+        } else {
+            $Cities = City::where('country_id', 1)->get();
         }
 
         $city_id = $request->city_id;
         $country_id = $request->country_id;
-        $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')
-        ->where('city_id',$city_id)->paginate(6);
+        $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
+            ->orderBy('reviews.tour_id', 'desc')
+            ->groupBy('tours.id')
+            ->select('tours.*')
+            ->where('city_id', $city_id)
+            ->where('tours.active', 1)  // Add this line to filter by active tours
+            ->paginate(6);
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
@@ -88,17 +94,19 @@ class ToursController extends Controller
 
 
         // ]);
-        return view("website.tours.toursList",
-        [
+        return view(
+            "website.tours.toursList",
+            [
 
-            "ToursRecommended" => $ToursRecommended,
-            "ToursByPrice" => $ToursByPrice,
-            "ToursByAlpha" => $ToursByAlpha,
-            "Count" => $ToursRecommended->count(),
-            "page_num" => $request->page_num,
+                "ToursRecommended" => $ToursRecommended,
+                "ToursByPrice" => $ToursByPrice,
+                "ToursByAlpha" => $ToursByAlpha,
+                "Count" => $ToursRecommended->count(),
+                "page_num" => $request->page_num,
 
-        ])->render();
-}
+            ]
+        )->render();
+    }
 
     public function all_tours(Request $request)
     {
@@ -107,9 +115,14 @@ class ToursController extends Controller
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         // $Cities = City::all();
         $TourTypes = Tour_type::all();
-        $Countries = Country::where('flag',1)->get();
-        $Cities = City::where('country_id',1)->get();
-        $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
+        $Countries = Country::where('flag', 1)->get();
+        $Cities = City::where('country_id', 1)->get();
+        $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
+            ->orderBy('reviews.tour_id', 'desc')
+            ->groupBy('tours.id')
+            ->select('tours.*')
+            ->where('tours.active', 1)  // Add this line to filter only active tours
+            ->paginate(6);
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
@@ -135,29 +148,33 @@ class ToursController extends Controller
         $Cities = City::all();
         $TourTypes = Tour_type::all();
 
-            $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id');
+        $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
+            ->where("tours.city_id",  $id)
+            ->where('tours.active', 1);  // Filter for active tours
 
+        $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')
+            ->groupBy('tours.id')
+            ->select('tours.*')
+            ->paginate(6);
 
-                $filterTour->where("tours.city_id",  $id);
+        // Sorting the paginated results
+        $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
+        $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
+        $Countries = Country::where('flag', 1)->get();
+        return view("website.tours.tours", [
+            "Company" => $Company,
+            "Cities" => $Cities,
+            "Countries" => $Countries,
+            "BreadCrumb" => $BreadCrumb,
+            "TourTypes" => $TourTypes,
+            "ToursRecommended" => $ToursRecommended,
+            "ToursByPrice" => $ToursByPrice,
+            "ToursByAlpha" => $ToursByAlpha,
+            "Count" => $ToursRecommended->count(),
 
-            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
-            $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
-            $ToursByAlpha = $ToursRecommended->sortBy('en_name');
-            $Countries = Country::where('flag',1)->get();
-            return view("website.tours.tours", [
-                "Company" => $Company,
-                "Cities" => $Cities,
-                "Countries" => $Countries,
-                "BreadCrumb" => $BreadCrumb,
-                "TourTypes" => $TourTypes,
-                "ToursRecommended" => $ToursRecommended,
-                "ToursByPrice" => $ToursByPrice,
-                "ToursByAlpha" => $ToursByAlpha,
-                "Count" => $ToursRecommended->count(),
-
-            ]);
-        }
+        ]);
+    }
 
     public function fetch_data(Request $request)
     {
@@ -167,29 +184,39 @@ class ToursController extends Controller
             $city_id = $request->tour_cities_ids;
             $type_id = $request->tour_Types_ids;
 
-            $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id');
+            $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
+                ->where('tours.active', 1);  // Ensure only active tours are included
 
+            // Apply filters based on request input
             if ($request->tour_cities_ids) {
                 $filterTour->whereIn("tours.city_id", explode(',', $request->tour_cities_ids));
-                //
             }
+
             if ($request->tour_Types_ids) {
                 $filterTour->whereIn("tours.tour_type_id", explode(',', $request->tour_Types_ids));
-                //
             }
+
             if ($request->price_from && $request->price_to) {
                 $filterTour->whereBetween('tour_person_cost', [$request->price_from, $request->price_to]);
-                //
             }
+
             if ($request->city_id) {
-                $filterTour->where('city_id',$city_id);
-                //
+                $filterTour->where('tours.city_id', $request->city_id);  // Use $request->city_id directly instead of $city_id
             }
-            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
+
+            // Paginate the filtered results
+            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')
+                ->groupBy('tours.id')
+                ->select('tours.*')
+                ->paginate(6);
+
+            // Sort the paginated results
             $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
             $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
-            return view("website.tours.toursList",
+
+            return view(
+                "website.tours.toursList",
                 [
 
                     "ToursRecommended" => $ToursRecommended,
@@ -198,7 +225,8 @@ class ToursController extends Controller
                     "Count" => $ToursRecommended->count(),
                     "page_num" => $request->page_num,
 
-                ])->render();
+                ]
+            )->render();
         }
     }
 
@@ -208,26 +236,39 @@ class ToursController extends Controller
 
             $city_id = $request->tour_cities_ids;
             $type_id = $request->tour_Types_ids;
+            $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
+                ->where('tours.active', 1);  // Ensure only active tours are returned
 
-            $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id');
-
+            // Apply filters based on request input
             if ($request->tour_cities_ids) {
                 $filterTour->whereIn("tours.city_id", explode(',', $request->tour_cities_ids));
-                //
-            }
-            if ($request->tour_Types_ids) {
-                $filterTour->whereIn("tours.tour_type_id", explode(',', $request->tour_Types_ids));
-                //
-            }
-            if ($request->price_from && $request->price_to) {
-                $filterTour->whereBetween('tour_person_cost', [$request->price_from, $request->price_to]);
-                //
             }
 
-            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')->groupBy('tours.id')->select('tours.*')->paginate(6);
+            if ($request->tour_Types_ids) {
+                $filterTour->whereIn("tours.tour_type_id", explode(',', $request->tour_Types_ids));
+            }
+
+            if ($request->price_from && $request->price_to) {
+                $filterTour->whereBetween('tour_person_cost', [$request->price_from, $request->price_to]);
+            }
+
+            // If a specific city_id is provided, apply the filter
+            if ($request->city_id) {
+                $filterTour->where('tours.city_id', $request->city_id);
+            }
+
+            // Paginate the filtered results
+            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')
+                ->groupBy('tours.id')
+                ->select('tours.*')
+                ->paginate(6);
+
+            // Sort the paginated results
             $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
             $ToursByAlpha = $ToursRecommended->sortBy('en_name');
-            return view("website.tours.toursList",
+
+            return view(
+                "website.tours.toursList",
                 [
 
                     "ToursRecommended" => $ToursRecommended,
@@ -236,14 +277,15 @@ class ToursController extends Controller
                     "Count" => $ToursRecommended->count(),
                     "page_num" => $request->page_num,
 
-                ])->render();
+                ]
+            )->render();
         }
     }
 
     public function bookTours(Request $request)
     {
 
-        if(!session()->get("SiteUser")){
+        if (!session()->get("SiteUser")) {
             $sessionTourBook = [
                 // 'ID' => $request->id,
                 'tour_id' => $request->tour_id,
@@ -276,35 +318,36 @@ class ToursController extends Controller
         session()->put("hasCart", 1);
 
         return redirect()->to("/cart")->with("session-success", "Tour is added in your cart successfully");
-
     }
 
 
-    public function favourite($id){
+    public function favourite($id)
+    {
 
-        if(session()->get("SiteUser")){
-            $input=[
-                'tour_id'=>$id,
-                'user_id'=>session()->get("SiteUser")["ID"],
+        if (session()->get("SiteUser")) {
+            $input = [
+                'tour_id' => $id,
+                'user_id' => session()->get("SiteUser")["ID"],
             ];
             Favorite_hotels_tour::create($input);
             return redirect()->back();
-        }else{
+        } else {
             session()->put("AddFavTour", $id);
             return redirect("/safer/login");
         }
     }
 
-    public function removeFavourite($id){
+    public function removeFavourite($id)
+    {
 
-        if(session()->get("SiteUser")){
+        if (session()->get("SiteUser")) {
 
-            $fav=Favorite_hotels_tour::where('tour_id',$id)->where('user_id',session()->get("SiteUser")["ID"])->first();
-            if($fav){
+            $fav = Favorite_hotels_tour::where('tour_id', $id)->where('user_id', session()->get("SiteUser")["ID"])->first();
+            if ($fav) {
                 $fav->delete();
             }
             return redirect()->back();
-        }else{
+        } else {
             session()->put("RemFavTour", $id);
             return session()->get("RemFavTour");
             return redirect("/safer/login");
@@ -325,9 +368,8 @@ class ToursController extends Controller
             'captcha.captcha' => Lang::get('links.captcha_captcha'),
         ]);
 
-        if ($validator->fails())
-        {
-            return response()->json(['errors'=>$validator->errors()->all()]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
         }
         $Rev = new Review();
         $Rev->review_text = $request->review_text;
@@ -335,7 +377,7 @@ class ToursController extends Controller
         $Rev->tour_id = $request->tour_id;
         $Rev->review_date = now();
         $Rev->active = 1;
-        if(session()->get("SiteUser")){
+        if (session()->get("SiteUser")) {
             $Rev->user_id = session()->get("SiteUser")["ID"];
         }
         // $Rev->tour_id = 1; //temp
@@ -343,8 +385,6 @@ class ToursController extends Controller
         $Rev->save();
 
         // return redirect()->back();
-        return response()->json(['success'=>Lang::get('links.contactMsg')]);
-
+        return response()->json(['success' => Lang::get('links.contactMsg')]);
     }
-
 }
