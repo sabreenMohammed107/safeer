@@ -389,93 +389,7 @@
 
     </div>
 </section>
-<!-- included and not included section -->
 
-<section class="included container py-5">
-
-    @if (LaravelLocalization::getCurrentLocale() === 'en')
-    <h5> Tour facilities</h5>
-    @else
-    <h5>مرافق الرحلة</h5>
-    @endif
-    <div class="row mx-0">
-        <div class="col-sm-12 col-xl-6 pb-5">
-            @if (count($Tour->features))
-            @foreach ($FeaturesCategories as $k => $category)
-            <div class="accordion" id="accordionPanelsStayOpenExample{{ $k }}">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#panelsStayOpen-collapseTwo{{ $k }}" aria-expanded="false"
-                            aria-controls="panelsStayOpen-collapseTwo{{ $k }}">
-                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                            {{$category->en_category}}
-                            @else
-                            {{-- {{$category->ar_category}} --}}
-                            @endif
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseTwo{{ $k }}" class="accordion-collapse collapse show"
-                        aria-labelledby="panelsStayOpen-headingTwo">
-                        <div class="accordion-body">
-                            <div class="included_info">
-                                @foreach ($Tour->features as $feature)
-                                @if ($feature->feature_category_id == $category->id)
-                                <div class="include-1">
-                                    <img width="20" src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
-                                        alt="">
-
-                                    <span style="text-indent: 10px">@if (LaravelLocalization::getCurrentLocale() ===
-                                        'en')
-                                        {{$feature->en_feature}}
-
-                                        @else
-                                        {{$feature->ar_feature}}
-                                        @endif</span>
-                                </div>
-                                @endif
-                                @endforeach
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            @endforeach
-            @else
-
-            @if (LaravelLocalization::getCurrentLocale() === 'en')
-            No Tours facilities provided
-            @else
-            لا توجد مرافق للرحلة
-            @endif
-            @endif
-        </div>
-        <div class="col-sm-12 col-xl-6 ">
-
-            @if ($Tour->tour_vedio)
-            <div class="images image-2">
-                <!-- <img src="./images/tour-details/video.webp" class="w-100" alt="image mask"> -->
-                <button type="button" class="btn js-modal-btn " data-video-url="{{$Tour->tour_vedio}}"
-                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}"
-                        style="border-radius: 50%" alt=" video play button">
-                </button>
-
-            </div>
-            @endif
-
-            @if ($Tour->google_map)
-            <div class="map">
-                <iframe src="{{ $Tour->google_map }}" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            @endif
-
-        </div>
-</section>
 
 
 {{-- details new section --}}
@@ -817,6 +731,94 @@
     @endif
 </section>
 <!--  ending page  -->
+
+<!-- included and not included section -->
+
+<section class="included container py-5">
+
+    @if (LaravelLocalization::getCurrentLocale() === 'en')
+    <h5> Tour facilities</h5>
+    @else
+    <h5>مرافق الرحلة</h5>
+    @endif
+    <div class="row mx-0">
+        <div class="col-sm-12 col-xl-6 pb-5">
+            @if (count($Tour->features))
+            @foreach ($FeaturesCategories as $k => $category)
+            <div class="accordion" id="accordionPanelsStayOpenExample{{ $k }}">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseTwo{{ $k }}" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseTwo{{ $k }}">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+
+                            {{$category->en_category}}
+                            @else
+                            {{-- {{$category->ar_category}} --}}
+                            @endif
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo{{ $k }}" class="accordion-collapse collapse show"
+                        aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            <div class="included_info">
+                                @foreach ($Tour->features as $feature)
+                                @if ($feature->feature_category_id == $category->id)
+                                <div class="include-1">
+                                    <img width="20" src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
+                                        alt="">
+
+                                    <span style="text-indent: 10px">@if (LaravelLocalization::getCurrentLocale() ===
+                                        'en')
+                                        {{$feature->en_feature}}
+
+                                        @else
+                                        {{$feature->ar_feature}}
+                                        @endif</span>
+                                </div>
+                                @endif
+                                @endforeach
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @endforeach
+            @else
+
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+            No Tours facilities provided
+            @else
+            لا توجد مرافق للرحلة
+            @endif
+            @endif
+        </div>
+        <div class="col-sm-12 col-xl-6 ">
+
+            @if ($Tour->tour_vedio)
+            <div class="images image-2">
+                <!-- <img src="./images/tour-details/video.webp" class="w-100" alt="image mask"> -->
+                <button type="button" class="btn js-modal-btn " data-video-url="{{$Tour->tour_vedio}}"
+                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}"
+                        style="border-radius: 50%" alt=" video play button">
+                </button>
+
+            </div>
+            @endif
+
+            @if ($Tour->google_map)
+            <div class="map">
+                <iframe src="{{ $Tour->google_map }}" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            @endif
+
+        </div>
+</section>
 @endsection
 
 
