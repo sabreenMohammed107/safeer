@@ -642,7 +642,7 @@ $('.dynamic').change(function() {
 
 
         $.ajax({
-            url: "{{route('dynamicSearchCity.fetch')}}",
+            url: "{{ LaravelLocalization::localizeUrl(route('dynamicSearchCity.fetch')) }}",
             method: "get",
             data: {
                 select: select,
@@ -658,7 +658,7 @@ $('.dynamic').change(function() {
     }
 });
 
-               var path = "{{ route('autocomplete') }}";
+ var path = "{{ route('autocomplete') }}";
 
     $( "#searchId" ).autocomplete({
         source: function( request, response ) {
@@ -911,7 +911,7 @@ $('.dynamic').change(function() {
         function fetch_productdata(page, billColors, billSizes, billprices, category) {
             // alert(category)
             $.ajax({
-                url: "/fetch-hotel-filter?page=" + page,
+                url: "{{ LaravelLocalization::localizeUrl('/fetch-hotel-filter') }}?page=" + page,
                 data: {
  searchHotelId:$('#searchId').val(),
                     hotel_ids: $("input[name=hotel_ids]").val(),
@@ -936,7 +936,7 @@ $('.dynamic').change(function() {
 
 
         function fetch_hotels() {
-        var url = "/hotels/retrieve";
+            var url = "{{ LaravelLocalization::localizeUrl('/hotels/retrieve') }}";
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -966,7 +966,7 @@ $('.dynamic').change(function() {
         });
     }
     function search_hotels() {
-        var url = "/hotels/search";
+        var url = "{{ LaravelLocalization::localizeUrl('/hotels/search') }}";
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

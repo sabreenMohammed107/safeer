@@ -481,7 +481,7 @@ if ($(this).val() != '') {
 
 
     $.ajax({
-        url: "{{ route('dynamicSearchCity.fetch') }}",
+        url: "{{ LaravelLocalization::localizeUrl(route('dynamicSearchCity.fetch')) }}",
         method: "get",
         data: {
             select: select,
@@ -652,7 +652,7 @@ $(".CarModels_id").change(function(){
             var country_id = $('#country').find(":selected").val();
             var city_id = $('#city_id').find(":selected").val();
             $.ajax({
-                url: "/fetch-transfers-filter?page=" + page,
+                url: "{{ LaravelLocalization::localizeUrl('/fetch-transfers-filter') }}?page=" + page,
                 data: {
                     searchCarCapacity:$('#searchId').val(),
                     pickups_ids: $("input[name=pickups_ids]").val(),
@@ -683,10 +683,10 @@ $(".CarModels_id").change(function(){
         }
         //End function of pagination product
 
-
+        var localizedUrlRetrive = "{{ LaravelLocalization::localizeUrl('/transfers/retrieve') }}";
         function fetch_transfer() {
 
-        var url = "/transfers/retrieve";
+        var url = localizedUrlRetrive;
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -328,10 +328,8 @@
                 if ($(this).val() != '') {
                     var select = $(this).attr("id");
                     var value = $(this).val();
-
-
-                    $.ajax({
-                        url: "{{ route('dynamicSearchCity.fetch') }}",
+              $.ajax({
+                        url: "{{ LaravelLocalization::localizeUrl(route('dynamicSearchCity.fetch')) }}",
                         method: "get",
                         data: {
                             select: select,
@@ -470,7 +468,7 @@
             var country_id = $('#country').find(":selected").val();
             var city_id = $('#city_id').find(":selected").val();
             $.ajax({
-                url: "/fetch-tour-filter?page=" + page,
+                url: "{{ LaravelLocalization::localizeUrl('/fetch-tour-filter') }}?page=" + page,
                 data: {
 
                     tour_Types_ids: $("input[name=tour_types_ids]").val(),
