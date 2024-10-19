@@ -94,6 +94,7 @@
                             <th class="text-end min-w-100px">Created Date</th>
                             <th class="text-end min-w-100px">Grand Total</th>
                             <th class="text-end min-w-100px">Status</th>
+                            <th class="text-end min-w-100px">Assign</th>
                             <th class="text-end min-w-70px">Actions</th>
                         </tr>
                         <!--end::Table row-->
@@ -231,6 +232,10 @@
         {{-- <span class="fw-bolder text-dark">
             {{ $row->status->status ?? '' }}</span> --}}
     </td>
+    <td class="text-end pe-0">
+       {{-- assign --}}
+       {{ $row->status->status ?? '' }}
+            </td>
     <!--end::Status=-->
     <!--begin::Action=-->
     <td class="text-end">
