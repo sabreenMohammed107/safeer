@@ -141,4 +141,9 @@ class OrderDetails extends Model
     {
         return $this->belongsToMany(User::class, 'assign_orders');
     }
+
+    public function assignOrders()
+    {
+        return $this->belongsToMany(Assign_order::class, 'Assign_orders');
+    }
 }

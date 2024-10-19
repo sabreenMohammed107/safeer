@@ -92,4 +92,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(OrderDetails::class, 'assign_orders');
     }
+
+     /**
+     * The orders assigned to the user.
+     */
+    public function assignOrders()
+    {
+        return $this->belongsToMany(Assign_order::class, 'assign_order_user', 'user_id', 'assign_order_id');
+    }
 }
