@@ -660,26 +660,26 @@ $('.dynamic').change(function() {
 
  var path = "{{ route('autocomplete') }}";
 
-    $( "#searchId" ).autocomplete({
-        source: function( request, response ) {
-          $.ajax({
-            url: path,
-            type: 'GET',
-            dataType: "json",
-            data: {
-               search: request.term
-            },
-            success: function( data ) {
-               response( data );
-            }
-          });
-        },
-        select: function (event, ui) {
-           $('#searchId').val(ui.item.label);
-           console.log(ui.item);
-           return false;
-        }
-      });
+    // $( "#searchId" ).autocomplete({
+    //     source: function( request, response ) {
+    //       $.ajax({
+    //         url: path,
+    //         type: 'GET',
+    //         dataType: "json",
+    //         data: {
+    //            search: request.term
+    //         },
+    //         success: function( data ) {
+    //            response( data );
+    //         }
+    //       });
+    //     },
+    //     select: function (event, ui) {
+    //        $('#searchId').val(ui.item.label);
+    //        console.log(ui.item);
+    //        return false;
+    //     }
+    //   });
             var arr = [];
     var arr_countries = [];
     var arr_cities = [];
