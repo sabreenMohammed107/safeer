@@ -2997,6 +2997,7 @@ footer .contact_details .contact_info .social-icons .item:hover i.fa-brands {
 #whatsapp-chat {
     top: 15px;
     height: 100%;
+    z-index: 10000;
 }
 .WhatsappChat__Component-sc-1wqac52-0.whatsapp-chat-body {
     height: 100%;
@@ -3008,11 +3009,15 @@ footer .contact_details .contact_info .social-icons .item:hover i.fa-brands {
     height: 100%;
 }
 .start-chat {
-    height: 67%;
+    height: 20%;
 }
 a#send-it svg {
     margin-top: -72px;
+    padding-left: 10px;
 }
 a#send-it {
     background: transparent;
+}
+.header-chat {
+    margin-top: 100%;
 }

@@ -3033,14 +3033,24 @@ div.register {
     height: 100%;
 }
 .start-chat {
-    height: 67%;
+    height: 20%;
 }
 .WhatsappChat__Message-sc-1wqac52-4.kAZgZq {
     height: fit-content;
 }
 a#send-it svg {
     margin-top: -72px;
+    padding-left: 8px;
 }
 a#send-it {
     background: transparent;
+}
+.header-chat {
+    margin-top: 100%;
+}
+
+.header-chat p {
+    font-size: 14px;
+    padding-right: 15px;
+    line-height: 1.7;
 }

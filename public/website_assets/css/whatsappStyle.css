@@ -2,7 +2,7 @@
 a.blantershow-chat {
     position: fixed;
     right: 30px;
-    box-shadow: 0 1px 15px rgba(32, 33, 36, 0.28);
+    /* box-shadow: 0 1px 15px rgba(32, 33, 36, 0.28); */
 }
 .hide,
 .whatsapp-chat .show {
@@ -30,7 +30,7 @@ a.blantershow-chat {
     border-radius: 10px;
     bottom: 90px;
     overflow: hidden;
-    z-index: 99;
+    z-index: 10000;
     animation-name: showchat;
     animation-duration: 1s;
     transform: scale(1);
@@ -41,7 +41,7 @@ a.blantershow-chat {
     display: flex;
     font-weight: 400;
     justify-content: space-between;
-    z-index: 98;
+    z-index: 10001;
     bottom: 25px;
     font-size: 15px;
     padding: 10px 20px;
@@ -122,8 +122,8 @@ a#send-it {
 }
 a.close-chat {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 48%;
+    right: 11px;
     color: #fff;
     font-size: 30px;
 }
