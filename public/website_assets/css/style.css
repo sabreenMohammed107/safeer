@@ -3001,9 +3001,18 @@ footer .contact_details .contact_info .social-icons .item:hover i.fa-brands {
 .WhatsappChat__Component-sc-1wqac52-0.whatsapp-chat-body {
     height: 100%;
 }
+.WhatsappChat__Message-sc-1wqac52-4.kAZgZq {
+    height: fit-content;
+}
 .WhatsappChat__MessageContainer-sc-1wqac52-1.dAbFpq {
     height: 100%;
 }
 .start-chat {
     height: 67%;
+}
+a#send-it svg {
+    margin-top: -72px;
+}
+a#send-it {
+    background: transparent;
 }

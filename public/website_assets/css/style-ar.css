@@ -3035,3 +3035,12 @@ div.register {
 .start-chat {
     height: 67%;
 }
+.WhatsappChat__Message-sc-1wqac52-4.kAZgZq {
+    height: fit-content;
+}
+a#send-it svg {
+    margin-top: -72px;
+}
+a#send-it {
+    background: transparent;
+}

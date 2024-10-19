@@ -1,1 +1,266 @@
-#whatsapp-chat,a.blantershow-chat{position:fixed;right:30px;box-shadow:0 1px 15px rgba(32,33,36,.28)}.hide,.whatsapp-chat .show{animation-name:showhide;animation-duration:.5s;transform:scale(1);opacity:1}.hFENyl,.info-avatar,.whatsapp-chat-body{position:relative}.whatsapp-name{font-size:16px;font-weight:600;padding-bottom:0;margin-bottom:0;line-height:.5}#whatsapp-chat{box-sizing:border-box!important;outline:0!important;width:350px;border-radius:10px;bottom:90px;overflow:hidden;z-index:99;animation-name:showchat;animation-duration:1s;transform:scale(1)}a.blantershow-chat{background:#fff;color:#404040;display:flex;font-weight:400;justify-content:space-between;z-index:98;bottom:25px;font-size:15px;padding:10px 20px;border-radius:30px}.info-chat span,a.informasi{display:block}a.blantershow-chat svg{transform:scale(1.2);margin:0 10px 0 0}.header-chat{background:#095e54;color:#fff;padding:20px}.header-chat h3{margin:0 0 10px}.header-chat p{font-size:14px;line-height:1.7;margin:0}.info-avatar img{border-radius:100%;width:50px;float:left;margin:0 10px 0 0}a.informasi{padding:20px;overflow:hidden;animation-name:showhide;animation-duration:.5s}a.informasi:hover{background:#f1f1f1}#get-number,.hide,span.my-number{display:none}#get-label,span.chat-label{font-size:12px;color:#888}#get-nama,span.chat-nama{margin:5px 0 0;font-size:15px;font-weight:700;color:#222}#get-label,#get-nama{color:#fff}textarea#chat-input{border:none;font-family:Arial,sans-serif;width:100%;height:35px;outline:0;resize:none;padding:10px;font-size:14px}a#send-it{font-weight:700;background:#eee;height:24px;width:24px}a.close-chat{position:absolute;top:0;right:0;color:#fff;font-size:30px}@keyframes ZpjSY{0%,25%{background-color:#b6b5ba}15%{background-color:#111}}@keyframes hPhMsj{15%,35%{background-color:#b6b5ba}25%{background-color:#111}}@keyframes iUMejp{25%,45%{background-color:#b6b5ba}35%{background-color:#111}}@keyframes showhide{from{transform:scale(.5);opacity:0}}@keyframes showchat{from{transform:scale(0);opacity:0}}@media screen and (max-width:480px){#whatsapp-chat{width:auto;left:5%;right:5%;font-size:80%}}.eJJEeC,.kAZgZq,.whatsapp-message{opacity:0;box-shadow:rgba(0,0,0,.13) 0 1px .5px}.whatsapp-chat .show{display:block}.dAbFpq,.whatsapp-message-container{display:flex;z-index:1}.kAZgZq,.whatsapp-message{padding:7px 14px 6px;background-color:#fff;border-radius:0 8px 8px;position:relative;transition:.3s;transform-origin:center top 0px;z-index:2;margin-top:4px;margin-left:-54px;max-width:calc(100% - 66px)}.whatsapp-chat-body{padding:20px 20px 20px 10px;background-color:#e6ddd4}.eJJEeC{background-color:#fff;width:52.5px;height:32px;border-radius:16px;display:flex;-moz-box-pack:center;justify-content:center;-moz-box-align:center;align-items:center;margin-left:10px;transition:.1s;z-index:1}.hFENyl{display:flex}.dRvxoz,.ixsrax{height:5px;width:5px;margin:0 2px;border-radius:50%;display:inline-block;position:relative;animation-duration:1.2s;animation-iteration-count:infinite;animation-timing-function:linear;top:0}.ixsrax{background-color:#9e9da2;animation-name:ZpjSY}.dRvxoz{background-color:#b6b5ba;animation-name:hPhMsj}.bMIBDo{font-size:13px;font-weight:700;line-height:18px;color:rgba(0,0,0,.4)}.iSpIQi{font-size:14px;line-height:19px;margin-top:4px;color:#111}.cqCDVm{text-align:right;margin-top:4px;font-size:12px;line-height:16px;color:rgba(17,17,17,.5);margin-right:-8px;margin-bottom:-4px}
+#whatsapp-chat,
+a.blantershow-chat {
+    position: fixed;
+    right: 30px;
+    box-shadow: 0 1px 15px rgba(32, 33, 36, 0.28);
+}
+.hide,
+.whatsapp-chat .show {
+    animation-name: showhide;
+    animation-duration: 0.5s;
+    transform: scale(1);
+    opacity: 1;
+}
+.hFENyl,
+.info-avatar,
+.whatsapp-chat-body {
+    position: relative;
+}
+.whatsapp-name {
+    font-size: 16px;
+    font-weight: 600;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    line-height: 0.5;
+}
+#whatsapp-chat {
+    box-sizing: border-box !important;
+    outline: 0 !important;
+    width: 350px;
+    border-radius: 10px;
+    bottom: 90px;
+    overflow: hidden;
+    z-index: 99;
+    animation-name: showchat;
+    animation-duration: 1s;
+    transform: scale(1);
+}
+a.blantershow-chat {
+    background: #fff;
+    color: #404040;
+    display: flex;
+    font-weight: 400;
+    justify-content: space-between;
+    z-index: 98;
+    bottom: 25px;
+    font-size: 15px;
+    padding: 10px 20px;
+    border-radius: 30px;
+}
+.info-chat span,
+a.informasi {
+    display: block;
+}
+a.blantershow-chat svg {
+    transform: scale(1.2);
+    margin: 0 10px 0 0;
+}
+.header-chat {
+    background: #095e54;
+    color: #fff;
+    padding: 20px;
+}
+.header-chat h3 {
+    margin: 0 0 10px;
+}
+.header-chat p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+}
+.info-avatar img {
+    border-radius: 100%;
+    width: 50px;
+    float: left;
+    margin: 0 10px 0 0;
+}
+a.informasi {
+    padding: 20px;
+    overflow: hidden;
+    animation-name: showhide;
+    animation-duration: 0.5s;
+}
+a.informasi:hover {
+    background: #f1f1f1;
+}
+#get-number,
+.hide,
+span.my-number {
+    display: none;
+}
+#get-label,
+span.chat-label {
+    font-size: 12px;
+    color: #888;
+}
+#get-nama,
+span.chat-nama {
+    margin: 5px 0 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #222;
+}
+#get-label,
+#get-nama {
+    color: #fff;
+}
+textarea#chat-input {
+    border: none;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    height: 35px;
+    outline: 0;
+    resize: none;
+    padding: 10px;
+    font-size: 14px;
+}
+a#send-it {
+    font-weight: 700;
+    background: #eeeeee00;
+    height: 24px;
+    width: 24px;
+}
+a.close-chat {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    font-size: 30px;
+}
+@keyframes ZpjSY {
+    0%,
+    25% {
+        background-color: #b6b5ba;
+    }
+    15% {
+        background-color: #111;
+    }
+}
+@keyframes hPhMsj {
+    15%,
+    35% {
+        background-color: #b6b5ba;
+    }
+    25% {
+        background-color: #111;
+    }
+}
+@keyframes iUMejp {
+    25%,
+    45% {
+        background-color: #b6b5ba;
+    }
+    35% {
+        background-color: #111;
+    }
+}
+@keyframes showhide {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+}
+@keyframes showchat {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+@media screen and (max-width: 480px) {
+    #whatsapp-chat {
+        width: auto;
+        left: 5%;
+        right: 5%;
+        font-size: 80%;
+    }
+}
+.eJJEeC,
+.kAZgZq,
+.whatsapp-message {
+    opacity: 0;
+    box-shadow: rgba(0, 0, 0, 0.13) 0 1px 0.5px;
+}
+.whatsapp-chat .show {
+    display: block;
+}
+.dAbFpq,
+.whatsapp-message-container {
+    display: flex;
+    z-index: 1;
+}
+.kAZgZq,
+.whatsapp-message {
+    padding: 7px 14px 6px;
+    background-color: #fff;
+    border-radius: 0 8px 8px;
+    position: relative;
+    transition: 0.3s;
+    transform-origin: center top 0px;
+    z-index: 2;
+    margin-top: 4px;
+    margin-left: -54px;
+    max-width: calc(100% - 66px);
+}
+.whatsapp-chat-body {
+    padding: 20px 20px 20px 10px;
+    background-color: #e6ddd4;
+}
+.eJJEeC {
+    background-color: #fff;
+    width: 52.5px;
+    height: 32px;
+    border-radius: 16px;
+    display: flex;
+    -moz-box-pack: center;
+    justify-content: center;
+    -moz-box-align: center;
+    align-items: center;
+    margin-left: 10px;
+    transition: 0.1s;
+    z-index: 1;
+}
+.hFENyl {
+    display: flex;
+}
+.dRvxoz,
+.ixsrax {
+    height: 5px;
+    width: 5px;
+    margin: 0 2px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    top: 0;
+}
+.ixsrax {
+    background-color: #9e9da2;
+    animation-name: ZpjSY;
+}
+.dRvxoz {
+    background-color: #b6b5ba;
+    animation-name: hPhMsj;
+}
+.bMIBDo {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 18px;
+    color: rgba(0, 0, 0, 0.4);
+}
+.iSpIQi {
+    font-size: 14px;
+    line-height: 19px;
+    margin-top: 4px;
+    color: #111;
+}
+.cqCDVm {
+    text-align: right;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 16px;
+    color: rgba(17, 17, 17, 0.5);
+    margin-right: -8px;
+    margin-bottom: -4px;
+}
