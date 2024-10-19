@@ -3048,7 +3048,9 @@ a#send-it {
 .header-chat {
     margin-top: 100%;
 }
-
+#whatsapp-chat textarea {
+    padding-right: 30px !important;
+}
 .header-chat p {
     font-size: 14px;
     padding-right: 15px;
