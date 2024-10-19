@@ -40,10 +40,16 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- style sheets  -->
+    <style>
+        a#send-it svg {
+            max-width: 30px !important;
+        }
+    </style>
     <!-- fontawesome  -->
     <link defer rel="stylesheet" href="{{ asset('/website_assets/css/all.min.css') }}">
     <!-- fonts google -->
-    <link defer href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap"
+    <link defer
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap"
         rel="stylesheet">
     <!-- bootstrap -->
     @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -61,14 +67,22 @@
 
     @endif
     <!-- slick cdn link -->
-    {{-- <link rel="stylesheet" href="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.css') }}"> --}}
-    <link rel="preload" href="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.css') }}"></noscript>
+    {{--
+    <link rel="stylesheet" href="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.css') }}"> --}}
+    <link rel="preload" href="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.css') }}" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.css') }}">
+    </noscript>
     <!-- video poppp styele -->
-    <link rel="stylesheet"
-        {{-- href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}"> --}}
-        <link rel="preload" href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}"></noscript>
+    <link rel="stylesheet" {{--
+        href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}"> --}}
+    <link rel="preload" href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}">
+    </noscript>
     <!-- stylesheet  -->
     {{--
     <link rel="stylesheet" href="{{ asset('/website_assets/css/my-profile.css')}}"> --}}
@@ -84,20 +98,74 @@
     {{-- owl Carousel links --}}
     <!-- icon -->
     <link rel="icon" href="{{ asset('/website_assets/images/homePage/logo.webp') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}"> --}}
-    <link rel="preload" href="{{ asset('/website_assets/css/whatsappStyle.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}"></noscript>
-    {{-- <link rel="stylesheet"
+    {{--
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}"> --}}
+    <link rel="preload" href="{{ asset('/website_assets/css/whatsappStyle.css') }}" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}">
+    </noscript>
+    {{--
+    <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"> --}}
 
-        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"></noscript>
-        <link rel="preload" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"></noscript>
+    <link rel="preload"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
+    </noscript>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    </noscript>
 
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/livewire-css@1.x.x/dist/livewire.css"> --}}
-    {{-- <style>[wire\:loading][wire\:loading], [wire\:loading\.delay][wire\:loading\.delay], [wire\:loading\.inline-block][wire\:loading\.inline-block], [wire\:loading\.inline][wire\:loading\.inline], [wire\:loading\.block][wire\:loading\.block], [wire\:loading\.flex][wire\:loading\.flex], [wire\:loading\.table][wire\:loading\.table], [wire\:loading\.grid][wire\:loading\.grid], [wire\:loading\.inline-flex][wire\:loading\.inline-flex] {display: none;}[wire\:loading\.delay\.none][wire\:loading\.delay\.none], [wire\:loading\.delay\.shortest][wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter][wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short][wire\:loading\.delay\.short], [wire\:loading\.delay\.default][wire\:loading\.delay\.default], [wire\:loading\.delay\.long][wire\:loading\.delay\.long], [wire\:loading\.delay\.longer][wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest][wire\:loading\.delay\.longest] {display: none;}[wire\:offline][wire\:offline] {display: none;}[wire\:dirty]:not(textarea):not(input):not(select) {display: none;}:root {--livewire-progress-bar-color: #2299dd;}[x-cloak] {display: none !important;}</style> --}}
+    {{--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
+    {{--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/livewire-css@1.x.x/dist/livewire.css"> --}}
+    {{-- <style>
+        [wire\:loading][wire\:loading],
+        [wire\:loading\.delay][wire\:loading\.delay],
+        [wire\:loading\.inline-block][wire\:loading\.inline-block],
+        [wire\:loading\.inline][wire\:loading\.inline],
+        [wire\:loading\.block][wire\:loading\.block],
+        [wire\:loading\.flex][wire\:loading\.flex],
+        [wire\:loading\.table][wire\:loading\.table],
+        [wire\:loading\.grid][wire\:loading\.grid],
+        [wire\:loading\.inline-flex][wire\:loading\.inline-flex] {
+            display: none;
+        }
+
+        [wire\:loading\.delay\.none][wire\:loading\.delay\.none],
+        [wire\:loading\.delay\.shortest][wire\:loading\.delay\.shortest],
+        [wire\:loading\.delay\.shorter][wire\:loading\.delay\.shorter],
+        [wire\:loading\.delay\.short][wire\:loading\.delay\.short],
+        [wire\:loading\.delay\.default][wire\:loading\.delay\.default],
+        [wire\:loading\.delay\.long][wire\:loading\.delay\.long],
+        [wire\:loading\.delay\.longer][wire\:loading\.delay\.longer],
+        [wire\:loading\.delay\.longest][wire\:loading\.delay\.longest] {
+            display: none;
+        }
+
+        [wire\:offline][wire\:offline] {
+            display: none;
+        }
+
+        [wire\:dirty]:not(textarea):not(input):not(select) {
+            display: none;
+        }
+
+        :root {
+            --livewire-progress-bar-color: #2299dd;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+    </style> --}}
 
     @yield("adds_css")
     <title> {{$title}} | Safer Book Your Dream Vacations</title>
@@ -395,7 +463,9 @@
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
     </script>
     {{-- <script src="{{ asset('/website_assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js" integrity="sha512-72WD92hLs7T5FAXn3vkNZflWG6pglUDDpm87TeQmfSg8KnrymL2G30R7as4FmTwhgu9H7eSzDCX3mjitSecKnw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"
+        integrity="sha512-72WD92hLs7T5FAXn3vkNZflWG6pglUDDpm87TeQmfSg8KnrymL2G30R7as4FmTwhgu9H7eSzDCX3mjitSecKnw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- date picker range links -->
     {{-- <script src="  https://code.jquery.com/jquery-2.2.4.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -408,28 +478,30 @@
     <!--   double date picker -->
     <!-- Include Required Prerequisites -->
     {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script> --}}
-    <script defer type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
     <!-- Include Date Range Picker -->
-    <script defer type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js">
     </script>
-    <link defer rel="stylesheet" type="text/css"
+    <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-    <script defer src="{{ asset('/website_assets/js/datepicker.js') }}"></script>
+    <script src="{{ asset('/website_assets/js/datepicker.js') }}"></script>
 
     <script defer src="{{ asset('/website_assets/js/momnet.js') }}"></script>
     {{-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> --}}
-    <script defer src="{{ asset('/website_assets/js/bootstrap-datepicker.min.js') }}"></script>
-    <script defer src="{{ asset('/website_assets/js/date_picker.js') }}"></script>
+    <script src="{{ asset('/website_assets/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('/website_assets/js/date_picker.js') }}"></script>
     {{-- @livewireScripts --}}
-    {{-- <script src="/livewire/livewire.js?id=cc800bf4" data-csrf="6Q4tDB8Eyn8kXnlJrc3uRwdCtgGV1xoUmuO8EMvD" data-update-uri="/livewire/update" data-navigate-once="true"></script> --}}
+    {{-- <script src="/livewire/livewire.js?id=cc800bf4" data-csrf="6Q4tDB8Eyn8kXnlJrc3uRwdCtgGV1xoUmuO8EMvD"
+        data-update-uri="/livewire/update" data-navigate-once="true"></script> --}}
     <!-- Slick.s library -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="{{ asset('/website_assets/slick/slick-1.8.1/slick/slick.min.js') }}"></script>
     <!-- explore carsoul for turkey section -->
     <script src="{{ asset('/website_assets/js/explore_carsoul.js') }}"></script>
     <!-- video popup library -->
-    <script defer src="{{ asset('/website_assets/js/appleple-modal-video-78d211f/js/jquery-modal-video.min.js') }}"></script>
+    <script defer src="{{ asset('/website_assets/js/appleple-modal-video-78d211f/js/jquery-modal-video.min.js') }}">
+    </script>
     <script defer src="{{ asset('/website_assets/js/appleple-modal-video-78d211f/js/modal-video.js') }}"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script defer src="{{ asset('/website_assets/js/video.js') }}"></script>
