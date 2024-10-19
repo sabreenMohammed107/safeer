@@ -438,23 +438,26 @@
                 <input type="hidden" name="tour_id" value="{{ $Tour->id }}">
                 <div class="hotel_details">
                     <div class="row mx-0 p-0" style="align-items: center;">
+
                         <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                            <h5 style="text-align: center"> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            <h5 style="text-align: left">
                                 {{ $Tour->en_name }}
                                 @else
-                                {{ $Tour->ar_name }}
+                                <h5 style="text-align: right">
+                                    {{ $Tour->ar_name }}
 
-                                @endif </h5>
+                                    @endif </h5>
 
-                            <div class="choices">
-                                {{-- <i class="fa-solid fa-location-dot"></i> --}}
-                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                {{ $Tour->city->en_city ?? '' }}
-                                @else
-                                {{ $Tour->city->ar_city ?? '' }}
+                                <div class="choices">
+                                    {{-- <i class="fa-solid fa-location-dot"></i> --}}
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                    {{ $Tour->city->en_city ?? '' }}
+                                    @else
+                                    {{ $Tour->city->ar_city ?? '' }}
 
-                                @endif
-                            </div>
+                                    @endif
+                                </div>
                         </div>
 
 
