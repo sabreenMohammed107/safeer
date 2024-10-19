@@ -20,8 +20,7 @@
             transition: opacity 0.3s ease-in-out;
         }
     </style>
-    <div id="slider-details-container"></div>
-    <template id="slider-details-template">
+    <div id="slider-details-container">
         <div class="slider_details">
             <h1>
                 @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -531,21 +530,9 @@
                 </div>
             </div>
         </div>
-    </template>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-  // Existing code for background image loading
-
-  // Load slider details after a short delay
-  setTimeout(function() {
-    const template = document.getElementById('slider-details-template');
-    const container = document.getElementById('slider-details-container');
-    container.innerHTML = template.innerHTML;
-
-    // Initialize any necessary scripts or event listeners for the slider details
-    // For example, you might need to reinitialize date pickers or other plugins
-  }, 1000); // Adjust the delay as needed
-});
         document.addEventListener('DOMContentLoaded', function() {
             const sliderSection = document.querySelector('.slider_section');
             if (sliderSection) {
