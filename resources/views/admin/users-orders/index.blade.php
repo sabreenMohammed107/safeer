@@ -234,7 +234,7 @@
     </td>
     <td class="text-end pe-0">
        {{-- assign --}}
-       {{ $row->status->status ?? '' }}
+       {{ $row->users[0]->name ?? '' }}
             </td>
     <!--end::Status=-->
     <!--begin::Action=-->
