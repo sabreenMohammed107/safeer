@@ -1,100 +1,102 @@
-@extends('layout.website.layout', ['Company' => $Company, 'title' => "Safer | {$Tour->en_name}  Profile"])
+@extends('layout.website.layout', ['Company' => $Company, 'title' => "Safer | {$Tour->en_name} Profile"])
 
 @section('adds_css')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/tour-details.css') }}">
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel-details.css') }}">
-    <style>
-        #next,
-        #previous {
-            display: none;
-        }
+<link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
+<link rel="stylesheet" href="{{ asset('/website_assets/css/tour-details.css') }}">
+<link rel="stylesheet" href="{{ asset('/website_assets/css/hotel-details.css') }}">
+<style>
+    #next,
+    #previous {
+        display: none;
+    }
 
-        .avaliable span>a {
+    .avaliable span>a {
 
-            cursor: pointer;
-        }
+        cursor: pointer;
+    }
 
-        .tooltip-body {
+    .tooltip-body {
 
-            display: flex;
-        }
+        display: flex;
+    }
 
-        .tooltip-inner {
-            color: black !important;
-            border: 3px solid #1C4482 !important;
-            background-color: white !important;
-            display: flex !important;
-            padding: 5px 15px !important;
-            max-width: 300px !important; //define whatever width you want
-        }
+    .tooltip-inner {
+        color: black !important;
+        border: 3px solid #1C4482 !important;
+        background-color: white !important;
+        display: flex !important;
+        padding: 5px 15px !important;
+        max-width: 300px !important; //define whatever width you want
+    }
 
-        .tooltip-inner h5 {
-            text-align: left;
-            color: #1C4482 !important;
-        }
+    .tooltip-inner h5 {
+        text-align: left;
+        color: #1C4482 !important;
+    }
 
-        .tooltip-inner h6 {
-            text-align: left;
-            color: #1C4482 !important;
-        }
+    .tooltip-inner h6 {
+        text-align: left;
+        color: #1C4482 !important;
+    }
 
-        .tooltip-inner p {
+    .tooltip-inner p {
 
-            color: #7E7E7E !important;
-        }
+        color: #7E7E7E !important;
+    }
 
-        .popover-header button{
-            border:none !important;
-        }
-        .bookbox {
-            position: fixed;
-            z-index: 1000;
-            top: 30vh;
-            right: 0;
-            padding: 20px;
-            background: #fff;
-            border: 3px solid #1C4482;
-            border-right: 0;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-            opacity: .8;
-            transition: all .5s;
-        }
-        .bookbox a{
-           color: #1C4482 !important
-        }
-    </style>
+    .popover-header button {
+        border: none !important;
+    }
+
+    .bookbox {
+        position: fixed;
+        z-index: 1000;
+        top: 30vh;
+        right: 0;
+        padding: 20px;
+        background: #fff;
+        border: 3px solid #1C4482;
+        border-right: 0;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        opacity: .8;
+        transition: all .5s;
+    }
+
+    .bookbox a {
+        color: #1C4482 !important
+    }
+</style>
 @endsection
 @section('bottom-header')
 @if (LaravelLocalization::getCurrentLocale() === 'en')
 
 <x-website.header.general :title="$Tour->en_name . ' - '" :breadcrumb="$BreadCrumb" :current="$Tour->en_name" />
 
-                @else
-                <x-website.header.general :title="$Tour->ar_name . ' - '" :breadcrumb="$BreadCrumb" :current="$Tour->ar_name" />
+@else
+<x-website.header.general :title="$Tour->ar_name . ' - '" :breadcrumb="$BreadCrumb" :current="$Tour->ar_name" />
 
-                @endif
+@endif
 @endsection
 
 @section('content')
 
 <div class="bookbox">
-    <a  a rel="noopener"  href="#bookSection" >
+    <a a rel="noopener" href="#bookSection">
 
-    @if (LaravelLocalization::getCurrentLocale() === 'en')
+        @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                       Book Your Tour Now
-                        @else
-                        إحجز رحلتك الان
-                        @endif
-</a>
+        Book Your Tour Now
+        @else
+        إحجز رحلتك الان
+        @endif
+    </a>
 </div>
-    {{-- google reviews --}}
-    <?php
+{{-- google reviews --}}
+<?php
     // $cid =0x424a7b3906d2a73e;
     $cid = $Tour->google_place;
     //CID of a place can be genrated from https://pleper.com/index.php?do=tools&sdo=cid_converter
@@ -130,63 +132,62 @@
         // echo $whatIWant2;
     }
     ?>
-    {{-- @foreach ($reviews as $review)
+{{-- @foreach ($reviews as $review)
 {{$review['author_name']}}
 @endforeach --}}
-    {{-- end googlereviews --}}
-    @if (session('session-warning'))
-        <div class="alert alert-warning">
-            {{ session('session-warning') }}
-        </div>
-    @endif
-    @if (session('session-success'))
-        <div class="alert alert-success">
-            {{ session('session-success') }}
-        </div>
-    @endif
-    @if (session('session-danger'))
-        <div class="alert alert-danger">
-            {{ session('session-danger') }}
-        </div>
-    @endif
-    @if (session('session-info'))
-        <div class="alert alert-info">
-            {{ session('session-info') }}
-        </div>
-    @endif
-    <!-- tour details -->
-    <section class="container details_section">
-        <div class="row mx-0">
-            @if (count($TourGallery))
-                <div class="col-sm-12 col-xl-6">
-                    <div class="row mx-0 left_side_imgages">
-                        <div class="col-12 d-flex align-items-center justify-content-center image_cover ">
-                            <img id="mainImage" src="{{ asset('uploads/galleries') }}/{{ $TourGallery[0]->img ?? ' ' }}"
-                                class="w-100 mb-3" alt=" tour hotel image " />
-                            <button id="previous"> <i class="fa-solid fa-angle-left"></i></button>
-                            <button id="next"> <i class="fa-solid fa-angle-right"></i></button>
-                        </div>
-                        <div class="col-12">
-                            <div id="divId" onclick="changeImageOnClick(event)">
-                                @for ($i = 1; $i < 4; $i++)
-                                    @if (count($TourGallery) > $i)
-                                        <img class="imgStyle"
-                                            src="{{ asset('uploads/galleries') }}/{{ $TourGallery[$i]->img ?? ' ' }}"
-                                            alt=" tour hotel image " />
-                                    @endif
-                                @endfor
-                            </div>
-                        </div>
+{{-- end googlereviews --}}
+@if (session('session-warning'))
+<div class="alert alert-warning">
+    {{ session('session-warning') }}
+</div>
+@endif
+@if (session('session-success'))
+<div class="alert alert-success">
+    {{ session('session-success') }}
+</div>
+@endif
+@if (session('session-danger'))
+<div class="alert alert-danger">
+    {{ session('session-danger') }}
+</div>
+@endif
+@if (session('session-info'))
+<div class="alert alert-info">
+    {{ session('session-info') }}
+</div>
+@endif
+<!-- tour details -->
+<section class="container details_section">
+    <div class="row mx-0">
+        @if (count($TourGallery))
+        <div class="col-sm-12 col-xl-6">
+            <div class="row mx-0 left_side_imgages">
+                <div class="col-12 d-flex align-items-center justify-content-center image_cover ">
+                    <img id="mainImage" src="{{ asset('uploads/galleries') }}/{{ $TourGallery[0]->img ?? ' ' }}"
+                        class="w-100 mb-3" alt=" tour hotel image " />
+                    <button id="previous"> <i class="fa-solid fa-angle-left"></i></button>
+                    <button id="next"> <i class="fa-solid fa-angle-right"></i></button>
+                </div>
+                <div class="col-12">
+                    <div id="divId" onclick="changeImageOnClick(event)">
+                        @for ($i = 1; $i < 4; $i++) @if (count($TourGallery)> $i)
+                            <img class="imgStyle"
+                                src="{{ asset('uploads/galleries') }}/{{ $TourGallery[$i]->img ?? ' ' }}"
+                                alt=" tour hotel image " />
+                            @endif
+                            @endfor
                     </div>
                 </div>
-            @endif
-            {{--
+            </div>
+        </div>
+        @endif
+        {{--
     </div> --}}
 
-            @if (count($TourGallery))
-                <div class="col-sm-12 col-xl-6">
-                @else
-                    <div class="col-sm-12 col-xl-12">
+    @if (count($TourGallery))
+    <div class="col-sm-12 col-xl-6">
+        @else
+        <div class="col-sm-12 col-xl-12">
             @endif
             <div class="tour_info px-3">
                 <div class="titles">
@@ -206,17 +207,14 @@
                         {{ $Tour->city->en_city }}
                         @else
                         {{ $Tour->city->ar_city }}
-                        @endif  </span>
+                        @endif </span>
                     <div class="rating">
 
 
                         <span> ( {{ count($Tour->reviews) }} {{ __('links.review') }}) </span>
                     </div>
-                    <div class="sharing_icons"  @if (LaravelLocalization::getCurrentLocale() == 'ar')
-
-                    style="right:100% !important"
-
-                         @endif >
+                    <div class="sharing_icons" @if (LaravelLocalization::getCurrentLocale()=='ar' )
+                        style="right:100% !important" @endif>
                         {{-- <i class="fa-solid fa-share-nodes"></i> --}}
 
 
@@ -225,33 +223,35 @@
 
 
                         @php
-                            $favExist = 0;
-                            $favUser = App\Models\Favorite_hotels_tour::where('tour_id', $Tour->id)
-                                ->where('user_id', session()->get('SiteUser')['ID'])
-                                ->first();
-                            if ($favUser) {
-                                $favExist = 1;
-                            }
+                        $favExist = 0;
+                        $favUser = App\Models\Favorite_hotels_tour::where('tour_id', $Tour->id)
+                        ->where('user_id', session()->get('SiteUser')['ID'])
+                        ->first();
+                        if ($favUser) {
+                        $favExist = 1;
+                        }
                         @endphp
 
                         @else
-                            @php
-                                $favExist=0;
-                            @endphp
+                        @php
+                        $favExist=0;
+                        @endphp
                         @endif
-                        {{-- <span >
-                            <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i class="fa-solid fa-share-nodes"></i>
+                        {{-- <span>
+                            <a href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"><i
+                                    class="fa-solid fa-share-nodes"></i>
                             </a> </span> --}}
-                        <span >
-                            {{-- <a  href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"  ><i class="fa-solid fa-share-nodes"></i>
+                        <span>
+                            {{-- <a href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"><i
+                                    class="fa-solid fa-share-nodes"></i>
                             </a> --}}
                             @if($favExist==1)
-                        <a  href="{{ LaravelLocalization::localizeUrl('/removeFavouriteTours/' . $Tour->id) }}"  ><i
-                                 class="fa-regular fa-heart "  style="background-color: #1C4482; color:#fff"></i> </a>
+                            <a href="{{ LaravelLocalization::localizeUrl('/removeFavouriteTours/' . $Tour->id) }}"><i
+                                    class="fa-regular fa-heart " style="background-color: #1C4482; color:#fff"></i> </a>
 
-                                 @else
+                            @else
 
-                                <a  href="{{ LaravelLocalization::localizeUrl('/favouriteTours/' . $Tour->id) }}"  ><i
+                            <a href="{{ LaravelLocalization::localizeUrl('/favouriteTours/' . $Tour->id) }}"><i
                                     class="fa-regular fa-heart"></i> </a>
 
                             @endif </span>
@@ -262,7 +262,8 @@
                                 onclick="setHeart(this)" data-info-fav="not_added">
 
                             <label class="heart" for="fav"></label> --}}
-                        {{-- </div> --}}
+                            {{--
+                        </div> --}}
 
 
                         {{-- this is model modified by AHMEDsyd --}}
@@ -295,10 +296,10 @@
                     </div>
                 </div>
 
-                <h6>  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
                     Overview
                     @else
-                  نظرة عامة
+                    نظرة عامة
 
                     @endif </h6>
                 <p>
@@ -314,167 +315,167 @@
             </div>
         </div>
 
-        </div>
-    </section>
+    </div>
+</section>
 
-    <section class="tour_add_info container py-5">
-        <div class="row mx-0">
-            <div class="col-md-6 col-sm-12 col-xl-3">
-                <div class="tour_info_details">
-                    <img src="{{ asset('/website_assets/images/tour-details/tour_info/timer.webp') }}" alt=" timer image">
-                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        Tour Type
-                        @else
+<section class="tour_add_info container py-5">
+    <div class="row mx-0">
+        <div class="col-md-6 col-sm-12 col-xl-3">
+            <div class="tour_info_details">
+                <img src="{{ asset('/website_assets/images/tour-details/tour_info/timer.webp') }}" alt=" timer image">
+                <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    Tour Type
+                    @else
 
                     نوع الرحلة
-                        @endif  </h6>
-                    <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        {{ $Tour->type->en_name ?? '' }}
-                        @else
-                        {{ $Tour->type->ar_name ?? '' }}
+                    @endif </h6>
+                <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    {{ $Tour->type->en_name ?? '' }}
+                    @else
+                    {{ $Tour->type->ar_name ?? '' }}
 
-                        @endif </span>
-                </div>
+                    @endif </span>
             </div>
-            <div class="col-md-6 col-sm-12 col-xl-3">
-                <div class="tour_info_details ">
-                    <img src="{{ asset('/website_assets/images/tour-details/tour_info/requires-interpreter.webp') }}"
-                        alt=" requires-interpreter image">
-                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        Tour Language
-                        @else
-                      لغة الرحلة
-
-                        @endif  </h6>
-                    <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        {{ $Tour->tour_en_language }}
-                        @else
-
-                        {{ $Tour->tour_ar_language }}
-                        @endif  </span>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12 col-xl-3">
-                <div class="tour_info_details second_details">
-                    <img src="{{ asset('/website_assets/images/tour-details/tour_info/clock.webp') }}" alt=" clock image">
-                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        Tour Days
-                        @else
-
-ايام الرحلة
-                        @endif   </h6>
-                    <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        {{ $Tour->tour_en_days }}
-                        @else
-
-                        {{ $Tour->tour_ar_days }}
-                        @endif </span>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-sm-12 col-xl-3">
-                <div class="tour_info_details after_details">
-                    <img src="{{ asset('/website_assets/images/tour-details/tour_info/passenger-with-baggage.webp') }}"
-                        alt=" passenger-with-baggage image">
-                    <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        Cost / Person
-                        @else
-                      تكلفة/الشخص
-
-                        @endif  </h6>
-                    <span>{{ number_format($Tour->tour_person_cost, 2) }} $</span>
-                </div>
-            </div>
-
         </div>
-    </section>
-    <!-- included and not included section -->
+        <div class="col-md-6 col-sm-12 col-xl-3">
+            <div class="tour_info_details ">
+                <img src="{{ asset('/website_assets/images/tour-details/tour_info/requires-interpreter.webp') }}"
+                    alt=" requires-interpreter image">
+                <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    Tour Language
+                    @else
+                    لغة الرحلة
 
-    <section class="included container py-5">
+                    @endif </h6>
+                <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    {{ $Tour->tour_en_language }}
+                    @else
 
-        @if (LaravelLocalization::getCurrentLocale() === 'en')
-        <h5> Tour facilities</h5>
-@else
-<h5>مرافق الرحلة</h5>
-@endif
-        <div class="row mx-0">
-            <div class="col-sm-12 col-xl-6 pb-5">
-                @if (count($Tour->features))
-                    @foreach ($FeaturesCategories as $k => $category)
-                        <div class="accordion" id="accordionPanelsStayOpenExample{{ $k }}">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-collapseTwo{{ $k }}"
-                                        aria-expanded="false"
-                                        aria-controls="panelsStayOpen-collapseTwo{{ $k }}">
-                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    {{ $Tour->tour_ar_language }}
+                    @endif </span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12 col-xl-3">
+            <div class="tour_info_details second_details">
+                <img src="{{ asset('/website_assets/images/tour-details/tour_info/clock.webp') }}" alt=" clock image">
+                <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    Tour Days
+                    @else
+
+                    ايام الرحلة
+                    @endif </h6>
+                <span> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    {{ $Tour->tour_en_days }}
+                    @else
+
+                    {{ $Tour->tour_ar_days }}
+                    @endif </span>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12 col-xl-3">
+            <div class="tour_info_details after_details">
+                <img src="{{ asset('/website_assets/images/tour-details/tour_info/passenger-with-baggage.webp') }}"
+                    alt=" passenger-with-baggage image">
+                <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    Cost / Person
+                    @else
+                    تكلفة/الشخص
+
+                    @endif </h6>
+                <span>{{ number_format($Tour->tour_person_cost, 2) }} $</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- included and not included section -->
+
+<section class="included container py-5">
+
+    @if (LaravelLocalization::getCurrentLocale() === 'en')
+    <h5> Tour facilities</h5>
+    @else
+    <h5>مرافق الرحلة</h5>
+    @endif
+    <div class="row mx-0">
+        <div class="col-sm-12 col-xl-6 pb-5">
+            @if (count($Tour->features))
+            @foreach ($FeaturesCategories as $k => $category)
+            <div class="accordion" id="accordionPanelsStayOpenExample{{ $k }}">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseTwo{{ $k }}" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseTwo{{ $k }}">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                             {{$category->en_category}}
                             @else
                             {{-- {{$category->ar_category}} --}}
                             @endif
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseTwo{{ $k }}"
-                                    class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
-                                    <div class="accordion-body">
-                                        <div class="included_info">
-                                            @foreach ($Tour->features as $feature)
-                                                @if ($feature->feature_category_id == $category->id)
-                                                    <div class="include-1">
-                                                        <img width="20" src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
-                                                            alt="">
-
-                                                        <span style="text-indent: 10px">@if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                            {{$feature->en_feature}}
-
-                                                            @else
-                                                            {{$feature->ar_feature}}
-                                                            @endif</span>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    @endforeach
-                @else
-
-                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                    No Tours facilities provided
-            @else
-           لا توجد مرافق للرحلة
-            @endif
-                @endif
-            </div>
-            <div class="col-sm-12 col-xl-6 ">
-
-                @if ($Tour->tour_vedio)
-                    <div class="images image-2">
-                        <!-- <img src="./images/tour-details/video.webp" class="w-100" alt="image mask"> -->
-                        <button type="button" class="btn js-modal-btn " data-video-url="{{$Tour->tour_vedio}}"
-                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}"
-                               style="border-radius: 50%" alt=" video play button">
                         </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo{{ $k }}" class="accordion-collapse collapse show"
+                        aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            <div class="included_info">
+                                @foreach ($Tour->features as $feature)
+                                @if ($feature->feature_category_id == $category->id)
+                                <div class="include-1">
+                                    <img width="20" src="{{ asset('uploads/features') }}/{{$feature->icon ?? ' ' }}"
+                                        alt="">
 
-                    </div>
-                @endif
+                                    <span style="text-indent: 10px">@if (LaravelLocalization::getCurrentLocale() ===
+                                        'en')
+                                        {{$feature->en_feature}}
 
-                @if ($Tour->google_map)
-                    <div class="map">
-                        <iframe src="{{ $Tour->google_map }}" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        @else
+                                        {{$feature->ar_feature}}
+                                        @endif</span>
+                                </div>
+                                @endif
+                                @endforeach
+
+                            </div>
+                        </div>
                     </div>
-                @endif
+                </div>
 
             </div>
-    </section>
+            @endforeach
+            @else
+
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+            No Tours facilities provided
+            @else
+            لا توجد مرافق للرحلة
+            @endif
+            @endif
+        </div>
+        <div class="col-sm-12 col-xl-6 ">
+
+            @if ($Tour->tour_vedio)
+            <div class="images image-2">
+                <!-- <img src="./images/tour-details/video.webp" class="w-100" alt="image mask"> -->
+                <button type="button" class="btn js-modal-btn " data-video-url="{{$Tour->tour_vedio}}"
+                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}"
+                        style="border-radius: 50%" alt=" video play button">
+                </button>
+
+            </div>
+            @endif
+
+            @if ($Tour->google_map)
+            <div class="map">
+                <iframe src="{{ $Tour->google_map }}" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            @endif
+
+        </div>
+</section>
 
 
 {{-- details new section --}}
@@ -484,13 +485,13 @@
             <div class="fitered_data hotels">
                 <div class="filtrered_cards hotel_details">
 
-                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        <h5> tour details </h5>
-    @else
-    <h5 style="text-align: right">
-تفاصيل الرحلة
-</h5>
-    @endif
+                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    <h5> tour details </h5>
+                    @else
+                    <h5 style="text-align: right">
+                        تفاصيل الرحلة
+                    </h5>
+                    @endif
 
                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                     {!! $Tour->en_tours_details !!}
@@ -504,8 +505,8 @@
     </div>
 </section>
 
- <!-- search hitels and rooms avaliable  section -->
- <section class="rooms_search">
+<!-- search hitels and rooms avaliable  section -->
+<section class="rooms_search">
 
     <img src="{{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}" alt="slider mask">
     <img src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt="slider mask">
@@ -514,17 +515,17 @@
         <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
             book tour
             @else
-          احجز رحلة
+            احجز رحلة
 
-            @endif  </h5>
-        <section class="booking_hotels_section container" >
-            <form action="{{ LaravelLocalization::localizeUrl('/bookTours') }}"   method="POST">
+            @endif </h5>
+        <section class="booking_hotels_section container">
+            <form action="{{ LaravelLocalization::localizeUrl('/bookTours') }}" method="POST">
                 @csrf
                 <input type="hidden" name="tour_id" value="{{ $Tour->id }}">
                 <div class="hotel_details">
-                    <div class="row mx-0 p-0">
+                    <div class="row mx-0 p-0" style="align-items: center;">
                         <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
-                            <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            <h5 style="text-align: center"> @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 {{ $Tour->en_name }}
                                 @else
                                 {{ $Tour->ar_name }}
@@ -547,7 +548,7 @@
                             <h5>@if (LaravelLocalization::getCurrentLocale() === 'en')
                                 Tour Type
                                 @else
-                               نوع الرحلة
+                                نوع الرحلة
 
                                 @endif </h5>
 
@@ -564,11 +565,13 @@
                             <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
                                 Tour Date
                                 @else
-                              تاريخ الرحلة
+                                تاريخ الرحلة
 
-                                @endif  </h5>
+                                @endif </h5>
 
-                            <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control" name="tour_date" min="{{date('Y-m-d', strtotime('+1 day'))}}" max="2023-12-31" autocomplete="off" />
+                            <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control"
+                                name="tour_date" min="{{date('Y-m-d', strtotime('+1 day'))}}" max="2023-12-31"
+                                autocomplete="off" />
 
                         </div>
 
@@ -651,176 +654,175 @@
 
 
 </section>
-    <!-- rooms section -->
-    <section class="reviews container">
-        <div class="review_heading">
-            <h5>
-                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                tour review
-                @else
+<!-- rooms section -->
+<section class="reviews container">
+    <div class="review_heading">
+        <h5>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+            tour review
+            @else
 
             تعليقات الرحلة
-                @endif
-
-                @isset($arrayData['result'])
-                    <div><span style="margin-right:5px" class="Aq14fc" aria-hidden="true">
-
-
-                        </span>
-                        <span class="z3HNkc" aria-label="Rated 4.4 out of 5," role="img">
-                            <span style="width:62px"></span></span>
-                        <a class="hqzQac" style="white-space:nowrap;font-size:14px;margin-left:5px"
-                            href="{{ $Tour->google_reviews }}" target="_blank">
-                            {{ number_format((float) $result['rating'], 1, '.', '') }} Google {{ __('links.reviews') }}</a>
-                    </div>
-                @endisset
-            </h5>
-            <!-- modal -->
-            <!-- Button trigger modal -->
-            @if (session()->get('SiteUser'))
-                <button type="button" class="btn add_comment_button" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
-                    <i class="fa-solid fa-plus"></i> {{ __('links.addComment') }}
-                </button>
-            @else
-                <a href="{{ route('siteLogin') }}" class="btn add_comment_button"> <i class="fa-solid fa-plus"></i> {{ __('links.addComment') }}</a>
             @endif
-            {{-- <button type="button" class="btn add_comment_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+            @isset($arrayData['result'])
+            <div><span style="margin-right:5px" class="Aq14fc" aria-hidden="true">
+
+
+                </span>
+                <span class="z3HNkc" aria-label="Rated 4.4 out of 5," role="img">
+                    <span style="width:62px"></span></span>
+                <a class="hqzQac" style="white-space:nowrap;font-size:14px;margin-left:5px"
+                    href="{{ $Tour->google_reviews }}" target="_blank">
+                    {{ number_format((float) $result['rating'], 1, '.', '') }} Google {{ __('links.reviews') }}</a>
+            </div>
+            @endisset
+        </h5>
+        <!-- modal -->
+        <!-- Button trigger modal -->
+        @if (session()->get('SiteUser'))
+        <button type="button" class="btn add_comment_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="fa-solid fa-plus"></i> {{ __('links.addComment') }}
+        </button>
+        @else
+        <a href="{{ route('siteLogin') }}" class="btn add_comment_button"> <i class="fa-solid fa-plus"></i> {{
+            __('links.addComment') }}</a>
+        @endif
+        {{-- <button type="button" class="btn add_comment_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="fa-solid fa-plus"></i> add comment
         </button> --}}
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="{{ LaravelLocalization::localizeUrl('/tours/review/add') }}" method="POST">
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">{{ __('links.addComment') }} </h5>
-                                <input type="hidden" name="tour_id" value="{{ $Tour->id }}" />
-                                <button type="button" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="margin: unset;" @endif class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ LaravelLocalization::localizeUrl('/tours/review/add') }}" method="POST">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{ __('links.addComment') }} </h5>
+                            <input type="hidden" name="tour_id" value="{{ $Tour->id }}" />
+                            <button type="button" @if (LaravelLocalization::getCurrentLocale()==='ar' )
+                                style="margin: unset;" @endif class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="rating" id="rating_stars">
+                                <i onclick="changeRate(1)" class="fa-regular fa-star rate_1"></i>
+                                <i onclick="changeRate(2)" class="fa-regular fa-star rate_2"></i>
+                                <i onclick="changeRate(3)" class="fa-regular fa-star rate_3"></i>
+                                <i onclick="changeRate(4)" class="fa-regular fa-star rate_4"></i>
+                                <i onclick="changeRate(5)" class="fa-regular fa-star rate_5"></i>
+                                <input type="hidden" value="0" name="rate_val" />
                             </div>
-                            <div class="modal-body">
-                                <div class="rating" id="rating_stars">
-                                    <i onclick="changeRate(1)" class="fa-regular fa-star rate_1"></i>
-                                    <i onclick="changeRate(2)" class="fa-regular fa-star rate_2"></i>
-                                    <i onclick="changeRate(3)" class="fa-regular fa-star rate_3"></i>
-                                    <i onclick="changeRate(4)" class="fa-regular fa-star rate_4"></i>
-                                    <i onclick="changeRate(5)" class="fa-regular fa-star rate_5"></i>
-                                    <input type="hidden" value="0" name="rate_val" />
-                                </div>
-                                <div class="form-floating comment_input">
-                                    <textarea class="form-control" name="review_text" placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en')
+                            <div class="form-floating comment_input">
+                                <textarea class="form-control" name="review_text" placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                     Leave a comment here
                                     @else
                                   اترك تعليقك هنا
-                                    @endif " id="floatingTextarea2"
-                                        style="height: 100px"></textarea>
+                                    @endif " id="floatingTextarea2" style="height: 100px"></textarea>
+                            </div>
+                            <div class="form-floating my-1">
+                                <div class="captcha">
+                                    <span>{!! captcha_img() !!}</span>
+                                    <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                        &#x21bb;
+                                    </button>
                                 </div>
-                                <div class="form-floating my-1">
-                                    <div class="captcha">
-                                        <span>{!! captcha_img() !!}</span>
-                                        <button type="button" class="btn btn-danger" class="reload" id="reload">
-                                            &#x21bb;
-                                        </button>
-                                    </div>
+                            </div>
+                            <div class="form-floating my-1">
+                                <input id="captcha" type="text" class="form-control"
+                                    placeholder="{{ __('links.enterCapcha') }}" name="captcha">
+                                @if ($errors->has('captcha'))
+                                <div class="error">
+                                    {{ $errors->first('captcha') }}
                                 </div>
-                                <div class="form-floating my-1">
-                                    <input id="captcha" type="text" class="form-control"  placeholder="{{ __('links.enterCapcha') }}" name="captcha">
-                                    @if ($errors->has('captcha'))
-                                    <div class="error">
-                                        {{ $errors->first('captcha') }}
-                                    </div>
                                 @endif
-                                </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary comment_pop_btn">{{ __('links.addComment') }} </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary comment_pop_btn">{{ __('links.addComment') }}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        @isset($arrayData['result'])
-            @foreach ($reviews as $key => $review)
-                <div class="review_details">
-                    <img src="{{ $review['profile_photo_url'] }}" alt="profile picture ">
-                    <div class="review_info">
-                        <div class="heading">
-                            <h6>{{ $review['author_name'] }}
-                                <p> {{ $review['relative_time_description'] }}
-                                </p>
-                                <img src={{ asset('/website_assets/images/google-icon-isolated_68185-565.webp') }}
-                                    width='30'>
-                            </h6>
-
-                            <div class="rating">
-                                @for ($i = 0; $i < $review['rating']; $i++)
-                                    <i class="fa-solid fa-star"></i>
-                                @endfor
-                                @for ($i = 5; $i > $review['rating']; $i--)
-                                    <i class="fa-regular fa-star"></i>
-                                @endfor
-                            </div>
-                        </div>
-                        <p>
-                            {{ $review['text'] }}
-                        </p>
-                    </div>
-
-                </div>
-            @endforeach
-        @endisset
-
-
-        @foreach ($Tour->reviews as $rev)
-            <div class="review_details">
-                <img src="{{asset("/website_assets/images/llogo.webp")}}" alt="profile picture ">
-
-                <div class="review_info">
-                    <div class="heading">
-                        <h6> {{ $rev->user->name ?? ''}} </h6>
-
-                        <div class="rating">
-                            @for ($i = 0; $i < $rev->review_stars; $i++)
-                                <i class="fa-solid fa-star"></i>
-                            @endfor
-                            @for ($i = 5; $i > $rev->review_stars; $i--)
-                                <i class="fa-regular fa-star"></i>
-                            @endfor
-                        </div>
-                    </div>
-                    <p>
-                        {{ $rev->review_text }}
+    </div>
+    @isset($arrayData['result'])
+    @foreach ($reviews as $key => $review)
+    <div class="review_details">
+        <img src="{{ $review['profile_photo_url'] }}" alt="profile picture ">
+        <div class="review_info">
+            <div class="heading">
+                <h6>{{ $review['author_name'] }}
+                    <p> {{ $review['relative_time_description'] }}
                     </p>
+                    <img src={{ asset('/website_assets/images/google-icon-isolated_68185-565.webp') }} width='30'>
+                </h6>
+
+                <div class="rating">
+                    @for ($i = 0; $i < $review['rating']; $i++) <i class="fa-solid fa-star"></i>
+                        @endfor
+                        @for ($i = 5; $i > $review['rating']; $i--)
+                        <i class="fa-regular fa-star"></i>
+                        @endfor
                 </div>
-
             </div>
-        @endforeach
+            <p>
+                {{ $review['text'] }}
+            </p>
+        </div>
 
-        @if (count($Tour->reviews) > 10)
-            <button class="btn comments_button">
-                @if (LaravelLocalization::getCurrentLocale() === 'en')
+    </div>
+    @endforeach
+    @endisset
+
+
+    @foreach ($Tour->reviews as $rev)
+    <div class="review_details">
+        <img src="{{asset(" /website_assets/images/llogo.webp")}}" alt="profile picture ">
+
+        <div class="review_info">
+            <div class="heading">
+                <h6> {{ $rev->user->name ?? ''}} </h6>
+
+                <div class="rating">
+                    @for ($i = 0; $i < $rev->review_stars; $i++)
+                        <i class="fa-solid fa-star"></i>
+                        @endfor
+                        @for ($i = 5; $i > $rev->review_stars; $i--)
+                        <i class="fa-regular fa-star"></i>
+                        @endfor
+                </div>
+            </div>
+            <p>
+                {{ $rev->review_text }}
+            </p>
+        </div>
+
+    </div>
+    @endforeach
+
+    @if (count($Tour->reviews) > 10)
+    <button class="btn comments_button">
+        @if (LaravelLocalization::getCurrentLocale() === 'en')
 
         load all comments
-                @else
+        @else
 
-تحميل كافة التعليقات
-                @endif
-            </button>
+        تحميل كافة التعليقات
         @endif
-    </section>
-    <!--  ending page  -->
+    </button>
+    @endif
+</section>
+<!--  ending page  -->
 @endsection
 
 
 @section('adds_js')
-    <script>
-        // document.addEventListener('DOMContentLoaded', function () {
+<script>
+    // document.addEventListener('DOMContentLoaded', function () {
 
         // });
 
@@ -1003,5 +1005,5 @@
             document.getElementById("children").innerHTML = childNumber + ' children';
 
         }
-    </script>
+</script>
 @endsection
