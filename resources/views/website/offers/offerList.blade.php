@@ -11,10 +11,10 @@
                     <div class="card_info">
                         <h5 style="text-align: center;text-align-last:center"><a href="{{ LaravelLocalization::localizeUrl('/single-offer/'.$offer->id.'/'.$offer->slug) }}" >
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                       {{Str::limit($offer->subtitle_en ?? '', $limit = 40, $end = '...')}}
+                       {{Str::words($offer->subtitle_en ?? '', $limit = 7, $end = '...')}}
 
                         @else
-                      {{Str::limit($offer->subtitle_ar ?? '', $limit = 40, $end = '...')}}
+                      {{Str::words($offer->subtitle_ar ?? '', $limit = 7, $end = '...')}}
                         @endif
                     </a> </h5>
                 </div>
