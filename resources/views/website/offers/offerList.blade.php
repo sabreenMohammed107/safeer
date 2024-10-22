@@ -21,9 +21,9 @@
                     <span>
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                        {{ strip_tags(Str::limit($offer->offer_enoverview ?? '', $limit = 300, $end = '...')) }}
+                        {{ strip_tags(Str::words($offer->offer_enoverview ?? '', $limit = 35, $end = '...')) }}
                         @else
-                        {{ strip_tags(Str::limit($offer->offer_aroverview ?? '', $limit = 300, $end = '...')) }}
+                        {{ strip_tags(Str::words($offer->offer_aroverview ?? '', $limit = 35, $end = '...')) }}
                         @endif
                     </span>
 
