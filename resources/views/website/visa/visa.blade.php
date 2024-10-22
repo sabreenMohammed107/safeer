@@ -632,7 +632,7 @@ Visa type
 
                             $('.visaCost').text(result[0]);
                             $('.visaCostinp').val(result[0]);
-                            $('.visNotes').text(result[1]);
+                            $('.visNotes').html(result[1]);
                         },
                         error: function(xhr, status, error) {
                             var err = eval("(" + xhr.responseText + ")");
