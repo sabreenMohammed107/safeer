@@ -165,7 +165,7 @@
     <label class="form-label">En notes</label>
     <!--end::Label-->
     <!--begin::Editor-->
-    <textarea class="form-control form-control-solid" rows="3" name="en_notes"
+    <textarea class="form-control form-control-solid" id="kt_docs_tinymce_basic" rows="3" name="en_notes"
         placeholder="Type Visa En notes">{{ $row->en_notes }}</textarea>
     <!--end::Editor-->
 
@@ -179,7 +179,7 @@
     <label class="form-label">Ar notes</label>
     <!--end::Label-->
     <!--begin::Editor-->
-    <textarea class="form-control form-control-solid" rows="3" name="ar_notes"
+    <textarea class="form-control form-control-solid" id="kt_docs_tinymce_basic2" rows="3" name="ar_notes"
         placeholder="Type Visa Ar notes">{{ $row->ar_notes }}</textarea>
     <!--end::Editor-->
 
@@ -224,7 +224,35 @@
 
      <script src='https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js'></script>
 
+     <script src="{{ asset('dist/assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
+     <script>
 
+         tinymce.init({
+             selector: '#kt_docs_tinymce_basic',
+             menubar: false,
+
+             toolbar: ["styleselect fontselect fontsizeselect",
+                 "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
+                 "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code  | forecolor backcolor"
+             ],
+             plugins: "advlist autolink link image lists charmap print preview code textcolor colorpicker",
+             color_picker_callback: function(callback, value) {
+     callback('#FF00FF');
+   }
+         });
+         tinymce.init({
+            selector: '#kt_docs_tinymce_basic2',
+            menubar: false,
+            toolbar: ["styleselect fontselect fontsizeselect",
+                "undo redo | cut copy paste | bold italic | link image | alignleft aligncenter alignright alignjustify",
+                "bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview |  code forecolor | backcolor"
+            ],
+            plugins: "advlist autolink link image lists charmap print preview code textcolor colorpicker",
+            color_picker_callback: function(callback, value) {
+    callback('#FF00FF');
+  }
+        });
+         </script>
 
 
 @endsection

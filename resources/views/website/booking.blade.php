@@ -374,7 +374,7 @@
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
                                     Tours Reservation Details
                                 @else
-                                    تفاصيل حجز الرحلات
+                                    تفاصيل حجز الجولات
                                 @endif
                             </h4>
                             <div class="row">
@@ -1179,10 +1179,10 @@
                                         value="" id="flexCheckChecked">
                                     <label class="form-check-label" for="flexCheckChecked">
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                            I agree to all <a href="{{ url('/terms') }}" target="_blank">Terms and
+                                            I agree to all <a href="{{ LaravelLocalization::localizeUrl('/terms') }}" target="_blank">Terms and
                                                 Conditions</a> of Safer
                                         @else
-                                            أوافق على جميع <a href="{{ url('/terms') }}" target="_blank"> بنود وشروط
+                                            أوافق على جميع <a href="{{ LaravelLocalization::localizeUrl('/terms') }}" target="_blank"> بنود وشروط
                                             </a> Safer
                                         @endif
                                     </label>

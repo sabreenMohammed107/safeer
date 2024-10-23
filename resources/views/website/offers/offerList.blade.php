@@ -5,25 +5,25 @@
         <div class="card-content">
             <div class=" card  tours_card hotels_card">
                 <a href="{{ LaravelLocalization::localizeUrl('/single-offer/'.$offer->id.'/'.$offer->slug) }}" >
-                <img class="w-100" src="{{ asset('uploads/offers') }}/{{ $offer->image }}" alt=" blogimage">
+                <img class="w-100" style="height: 250px" src="{{ asset('uploads/offers') }}/{{ $offer->image }}" alt=" blogimage">
                 </a>
-                <div class="card-body hotel_card_info"  style="height: 115px; max-height: 115px; overflow: hidden;">
+                <div class="card-body hotel_card_info"  >
                     <div class="card_info">
                         <h5 style="text-align: center;text-align-last:center"><a href="{{ LaravelLocalization::localizeUrl('/single-offer/'.$offer->id.'/'.$offer->slug) }}" >
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                       {{$offer->subtitle_en}}
+                       {{Str::words($offer->subtitle_en ?? '', $limit = 7, $end = '...')}}
 
                         @else
-                      {{$offer->subtitle_ar}}
+                      {{Str::words($offer->subtitle_ar ?? '', $limit = 7, $end = '...')}}
                         @endif
                     </a> </h5>
                 </div>
                     <span>
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                        {{ strip_tags(Str::limit($offer->offer_enoverview ?? '', $limit = 300, $end = '...')) }}
+                        {{ strip_tags(Str::words($offer->offer_enoverview ?? '', $limit = 30, $end = '...')) }}
                         @else
-                        {{ strip_tags(Str::limit($offer->offer_aroverview ?? '', $limit = 300, $end = '...')) }}
+                        {{ strip_tags(Str::words($offer->offer_aroverview ?? '', $limit = 30, $end = '...')) }}
                         @endif
                     </span>
 

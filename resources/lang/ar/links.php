@@ -37,7 +37,7 @@ return [
     'home' => 'الرئيسية',
     'about_us' => 'من نحن',
     'hotels'=>'الفنادق',
-    'tours'=>'الرحلات',
+    'tours'=>'الجولات',
     'transfer' => 'الانتقالات',
     'visa' => 'التأشيرة',
     'blogs' => 'المقالات',
@@ -254,7 +254,7 @@ return [
 'next'=>'التالي',
 //tours
 'tourType'=>'نوع الرحلة',
-'availableTours'=>'الرحلات المتاحة',
+'availableTours'=>'الجولات المتاحة',
 'book'=>'احجز',
 'pickDate'=>'اختر تاريخ',
 'passenger'=>'مسافر',
@@ -293,7 +293,7 @@ return [
 
 
 //booking
-'preBook'=>'جميع التفاصيل الخاصة بالحجز  مسبقًا',
+'preBook'=>'جميع الخدمات الخاصة بالحجز  مسبقًا',
 'cartDetails'=>'تفاصيل السلة',
 'single'=>'فردي',
 'double'=>'زوجي',

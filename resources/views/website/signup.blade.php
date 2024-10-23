@@ -87,12 +87,12 @@
                     <input required class="form-check-input" type="checkbox" class="checked_input" value="" id="flexCheckDefault">
                     <label class="form-check-label confirmed" for="flexCheckDefault">
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        I confirmed that I have read and accepted the <a href="#" class="privacy">privacy policy </a>
+                        I confirmed that I have read and accepted the <a href="{{ LaravelLocalization::localizeUrl('/terms') }}" class="privacy">privacy policy </a>
 
                         @else
 
 
-لقد أكدت أنني قد قرأت ووافقت على <a href="#" class="privacy">سياسة الخصوصية </a>
+لقد أكدت أنني قد قرأت ووافقت على <a href="{{ LaravelLocalization::localizeUrl('/terms') }}" class="privacy">سياسة الخصوصية </a>
 
                         @endif
 
@@ -111,10 +111,9 @@
 
                 </span>
                 <section class="sign_socail">
-                    <button class="btn">
+                    {{-- <button class="btn">
                     <img src="{{ asset('/website_assets/images/signin-up/socail-logins/facebook.webp')}}" alt="facebook logo">
                         <a href="{{ route('facebook.login') }}" class="btn btn-facebook btn-user btn-block">
-                        {{-- <i class="fab fa-facebook-f fa-fw"></i> --}}
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
                         Login with Facebook
                         @else
@@ -124,7 +123,7 @@
                         @endif
 
                         </a>
-                    </button>
+                    </button> --}}
 
                     <button class="btn">
                       <img src="{{ asset('/website_assets/images/signin-up/socail-logins/google.webp')}}" alt="google logo">

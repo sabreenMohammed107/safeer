@@ -608,7 +608,7 @@ if(isset($arrayData['result'])){
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <div class="avaliable">
                                 <a
-                                                                href="{{ url('/terms') }}" target="_blank" >{{ __('links.term_condation') }}</a>
+                                                                href="{{ LaravelLocalization::localizeUrl('/terms') }}" target="_blank" >{{ __('links.term_condation') }}</a>
                                 {{-- <span>   @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                     avaliable
@@ -768,7 +768,7 @@ if(isset($arrayData['result'])){
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <div class="avaliable">
                                 <a
-                                href="{{ url('/terms') }}" target="_blank" >{{ __('links.term_condation') }}</a>
+                                href="{{ LaravelLocalization::localizeUrl('/terms') }}" target="_blank" >{{ __('links.term_condation') }}</a>
                                 {{-- <span>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
 
