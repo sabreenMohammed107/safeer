@@ -623,30 +623,6 @@ $('.dynamic').change(function() {
 $('#nights').val(diffInDays);
     return diffInDays;
 }
-document.addEventListener('DOMContentLoaded', function() {
-    const sections = document.querySelectorAll('.lazy-section');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                loadSection(entry.target);
-                observer.unobserve(entry.target);
-            }
-        });
-    });
-
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-
-    function loadSection(section) {
-        const url = section.dataset.url;
-        fetch(url)
-            .then(response => response.text())
-            .then(html => {
-                section.innerHTML = html;
-            });
-    }
-});
 </script>
 @endsection

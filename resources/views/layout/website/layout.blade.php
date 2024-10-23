@@ -448,11 +448,11 @@
         <input type="hidden" id="chat_whatsapp" value="{{ $Company->chat_whatsapp }}">
         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-        <h6>All copyrights reserved to safer 2022 </h6>
+        <h6>All copyrights reserved to safer 2024 </h6>
 
         @else
-        <span>
-            جميع حقوق النشر محفوظة لشركة سافر 2022</span>
+        <h6>
+            جميع حقوق النشر محفوظة لشركة سافر 2024</h6>
         @endif
 
     </div>

@@ -1,116 +1,117 @@
 @extends('layout.website.layout', ['Company' => $Company, 'title' => 'Safer | Visa'])
 
 @section('adds_css')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css">
 
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel.css') }}">
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/visa-search.css') }}">
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/visa-step-1.css') }}">
+<link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
+<link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
+<link rel="stylesheet" href="{{ asset('/website_assets/css/hotel.css') }}">
+<link rel="stylesheet" href="{{ asset('/website_assets/css/visa-search.css') }}">
+<link rel="stylesheet" href="{{ asset('/website_assets/css/visa-step-1.css') }}">
 
-    <style>
-        .pageActive {
-            color: white !important;
-            background-color: #210D3A !important;
-        }
+<style>
+    .pageActive {
+        color: white !important;
+        background-color: #210D3A !important;
+    }
 
-        .slider_section .slider_details {
-            height: 420px !important;
-        }
+    .slider_section .slider_details {
+        height: 420px !important;
+    }
 
-        .icons-container .social-icons .item i.fa-brands {
-            padding-top: 15px;
-        }
+    .icons-container .social-icons .item i.fa-brands {
+        padding-top: 15px;
+    }
 
-        input.nosubmit {
-            border: none;
+    input.nosubmit {
+        border: none;
 
-            margin: 0;
-            padding: 7px 8px;
-            font-size: 14px;
-            color: inherit;
-            border: 1px solid #0000001f;
-            border-radius: inherit;
-            width: 260px;
-            /* border: 1px solid #555; */
-            display: block;
-            padding: 9px 4px 9px 40px;
+        margin: 0;
+        padding: 7px 8px;
+        font-size: 14px;
+        color: inherit;
+        border: 1px solid #0000001f;
+        border-radius: inherit;
+        width: 260px;
+        /* border: 1px solid #555; */
+        display: block;
+        padding: 9px 4px 9px 40px;
 
-            background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px center;
-        }
+        background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px center;
+    }
 
-        .header-icon_search_custom:before {
-            content: '\0045';
-        }
+    .header-icon_search_custom:before {
+        content: '\0045';
+    }
 
-        [class*='header-']:before {
-            display: inline-block;
-            font-family: 'header_icons';
-            font-style: normal;
-            font-weight: normal;
-            line-height: 1;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+    [class*='header-']:before {
+        display: inline-block;
+        font-family: 'header_icons';
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-        .obj {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
+    .obj {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 
-        .booking_info .details>label {
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: capitalize;
-            color: #1C4482;
-            /* width: 80px; */
-            margin-right: 10px;
-            padding: 0;
-        }
+    .booking_info .details>label {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: capitalize;
+        color: #1C4482;
+        /* width: 80px; */
+        margin-right: 10px;
+        padding: 0;
+    }
 
-        .receipt-title {
-            border-bottom: 2px solid #00ACEE;
-            border-left: 2px solid #00ACEE;
-            font-weight: bold;
-            padding-left: 10px;
-            padding-bottom: 5px;
-            font-size: 1.2em;
-        }
-        .search_details_info input {
-    display: block;
-    width: 100%;
-    padding: 0.375rem 0.1rem;
-        }
-    </style>
+    .receipt-title {
+        border-bottom: 2px solid #00ACEE;
+        border-left: 2px solid #00ACEE;
+        font-weight: bold;
+        padding-left: 10px;
+        padding-bottom: 5px;
+        font-size: 1.2em;
+    }
+
+    .search_details_info input {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.1rem;
+    }
+</style>
 
 
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="{{ __('links.visa') }}" :breadcrumb="$BreadCrumb" current="{{ __('links.visa') }}" />
+<x-website.header.general title="{{ __('links.visa') }}" :breadcrumb="$BreadCrumb" current="{{ __('links.visa') }}" />
 @endsection
 @section('content')
 
-    <form action="{{ LaravelLocalization::localizeUrl('/Safer/BookVisa') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <section class="passenger_section container pt-5" id="passenger_section">
-            <p class="receipt-title">
-                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                    Pickup Your Visa
-                @else
-                    احصل على التأشيرة الخاصة بك
-                @endif
-            </p>
-            <div class=" search_details_info passenger_info_details hotel_details mt-3 ">
+<form action="{{ LaravelLocalization::localizeUrl('/Safer/BookVisa') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <section class="passenger_section container pt-5" id="passenger_section">
+        <p class="receipt-title">
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+            Pickup Your Visa
+            @else
+            احصل على التأشيرة الخاصة بك
+            @endif
+        </p>
+        <div class=" search_details_info passenger_info_details hotel_details mt-3 ">
 
-                <!-- <button  onclick="removePassenger(this)">
+            <!-- <button  onclick="removePassenger(this)">
                                   <i class="fa-solid fa-xmark"></i>
                                 </button> -->
-                {{-- <form data-category="1" > --}}
+            {{-- <form data-category="1"> --}}
                 <div class="passenger_info_title">
                     <h5> {{ __('links.passenger') }} </h5>
                     <!-- <span>1200 LE</span> -->
@@ -119,59 +120,55 @@
                     <div class="col-md-6 col-xl-4 col-sm-12 ">
                         <label for="">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                visa request country
+                            visa request country
                             @else
-                                الدولة المسافر إليها
+                            الدولة المسافر إليها
                             @endif
                         </label>
                         <select class="form-select form-select-solid dynamic" data-control="select2"
-                            data-placeholder="Select an option" required data-show-subtext="true" data-live-search="true"
-                            id="country" data-dependent="sub" name="country[0]" @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            oninvalid="this.setCustomValidity('Please select an item from list')"
-                            @else
-                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')"
-                            @endif  oninput="setCustomValidity('')" >
+                            data-placeholder="Select an option" required data-show-subtext="true"
+                            data-live-search="true" id="country" data-dependent="sub" name="country[0]"
+                            @if(LaravelLocalization::getCurrentLocale()==='en' )
+                            oninvalid="this.setCustomValidity('Please select an item from list')" @else
+                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')" @endif
+                            oninput="setCustomValidity('')">
                             <option value=""></option>
                             @foreach ($countries as $country)
-                                <option value="{{ $country->id }}">
-                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                        {{ $country->en_country }}
-                                    @else
-                                        {{ $country->ar_country }}
-                                    @endif
+                            <option value="{{ $country->id }}">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                {{ $country->en_country }}
+                                @else
+                                {{ $country->ar_country }}
+                                @endif
 
-                                </option>
+                            </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-6 col-xl-4 col-sm-12">
                         <label for="">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                Visa type
+                            Visa type
                             @else
-                                نوع الفيزا
+                            نوع الفيزا
                             @endif
                         </label>
                         <select required class="form-select form-select-solid visa_type" data-control="select2 sub2"
                             data-placeholder="Select an option" data-show-subtext="true" data-live-search="true"
-                            id="sub" name="visa_type_id[0]"
-                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            oninvalid="this.setCustomValidity('Please select an item from list')"
-                            @else
-                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')"
-                            @endif  oninput="setCustomValidity('')" >
+                            id="sub" name="visa_type_id[0]" @if (LaravelLocalization::getCurrentLocale()==='en' )
+                            oninvalid="this.setCustomValidity('Please select an item from list')" @else
+                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')" @endif
+                            oninput="setCustomValidity('')">
                             <option value="">{{ __('links.select') }}</option>
                         </select>
                     </div>
                     <div class="col-md-6 col-xl-4 col-sm-12">
                         <label for="">{{ __('links.nationality') }} </label>
                         <select class="form-select nationality" required id="nationality"
-                            aria-label="Default select example" name="nation[0]"
-                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            oninvalid="this.setCustomValidity('Please select an item from list')"
-                            @else
-                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')"
-                            @endif  oninput="setCustomValidity('')" >
+                            aria-label="Default select example" name="nation[0]" @if(LaravelLocalization::getCurrentLocale()==='en' )
+                            oninvalid="this.setCustomValidity('Please select an item from list')" @else
+                            oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')" @endif
+                            oninput="setCustomValidity('')">
                             <option value="">{{ __('links.select') }}</option>
 
                         </select>
@@ -180,64 +177,55 @@
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                Passenger Name
+                            Passenger Name
                             @else
-                                اسم المسافر
+                            اسم المسافر
                             @endif
                         </label>
-                        <input type="text" required name="name[0]"
-                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        oninvalid="this.setCustomValidity('Please Enter valid name')"
-                        @else
-                        oninvalid="this.setCustomValidity('يجب ادخال حقل الاسم')"
-                        @endif oninput="setCustomValidity('')"
-                            placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en') Passenger Name
+                        <input type="text" required name="name[0]" @if (LaravelLocalization::getCurrentLocale()==='en' )
+                            oninvalid="this.setCustomValidity('Please Enter valid name')" @else
+                            oninvalid="this.setCustomValidity('يجب ادخال حقل الاسم')" @endif
+                            oninput="setCustomValidity('')" placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en') Passenger Name
                                   @else اسم المسافر @endif" />
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">@if (LaravelLocalization::getCurrentLocale() === 'en')
                             Country Code
-                        @else
+                            @else
                             كود الدولة
-                        @endif + {{ __('links.mobile') }}
+                            @endif + {{ __('links.mobile') }}
                         </label>
-                        <input type="tel" required name="phone[0]" placeholder="{{ __('links.mobile') }}" @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        oninvalid="this.setCustomValidity('Please Enter valid mobile')"
-                        @else
-                        oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')"
-                        @endif oninput="setCustomValidity('')" />
+                        <input type="tel" required name="phone[0]" placeholder="{{ __('links.mobile') }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
+                        style="text-align: start"    oninvalid="this.setCustomValidity('Please Enter valid mobile')" @else
+                        style="text-align: end"    oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')" @endif
+                            oninput="setCustomValidity('')" />
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">{{ __('links.email') }} </label>
-                        <input type="email" required name="email[0]" placeholder="{{ __('links.email') }}"
-                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        oninvalid="this.setCustomValidity('Please Enter valid Email')"
-                        @else
-                        oninvalid="this.setCustomValidity('يجب ادخال حقل البريد الإلكتروني')"
-                        @endif oninput="setCustomValidity('')"/>
+                        <input type="email" required name="email[0]" placeholder="{{ __('links.email') }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
+                            oninvalid="this.setCustomValidity('Please Enter valid Email')" @else
+                            oninvalid="this.setCustomValidity('يجب ادخال حقل البريد الإلكتروني')" @endif
+                            oninput="setCustomValidity('')" />
                     </div>
 
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">{{ __('links.passImage') }} </label>
                         <input type="file" class="file" onchange="validateSize(this)" required name="passport[0]"
-                            placeholder="{{ __('links.passImage') }}"
-                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        oninvalid="this.setCustomValidity('Please Enter valid Image')"
-                        @else
-                        oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')"
-                        @endif oninput="setCustomValidity('')" />
+                            placeholder="{{ __('links.passImage') }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
+                            oninvalid="this.setCustomValidity('Please Enter valid Image')" @else
+                            oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')" @endif
+                            oninput="setCustomValidity('')" />
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">{{ __('links.persImage') }} </label>
                         <input type="file" class="file" onchange="validateSize(this)" required name="personal[0]"
-                            placeholder="{{ __('links.persImage') }}"  @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            oninvalid="this.setCustomValidity('Please Enter valid Image')"
-                            @else
-                            oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')"
-                            @endif oninput="setCustomValidity('')"/>
+                            placeholder="{{ __('links.persImage') }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
+                            oninvalid="this.setCustomValidity('Please Enter valid Image')" @else
+                            oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')" @endif
+                            oninput="setCustomValidity('')" />
                     </div>
                     <div id="costBerVisa" style="display: none" class="col-sm-12 col-md-12 col-xl-12 mt-3">
 
@@ -249,107 +237,108 @@
                         </p>
                     </div>
                 </div>
-                {{-- </form> --}}
+                {{--
+            </form> --}}
 
-            </div>
-        </section>
+        </div>
+    </section>
 
 
-        <section class="totals_section container">
-            <div class="total">
-                <p id="numform"></p>
-                <button id="visaaa">
-                    <i class="fa-solid fa-plus"></i>
-                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        Add 1 more passanger
-                    @else
-                        اضافة مسافر اخر
-                    @endif
-                    <!-- <a href="#" id="visaaa">Add</a> -->
-                </button>
-                <!-- <span>
+    <section class="totals_section container">
+        <div class="total">
+            <p id="numform"></p>
+            <button id="visaaa">
+                <i class="fa-solid fa-plus"></i>
+                @if (LaravelLocalization::getCurrentLocale() === 'en')
+                Add 1 more passanger
+                @else
+                اضافة مسافر اخر
+                @endif
+                <!-- <a href="#" id="visaaa">Add</a> -->
+            </button>
+            <!-- <span>
                                 Total price:  <span> 2400 LE</span>
                               </span> -->
+        </div>
+        <div class="total">
+            <div class="col-12 text-center my-4">
+                <button id="addToCart" type="submit">{{ __('links.add_cart') }}</button>
             </div>
-            <div class="total">
-                <div class="col-12 text-center my-4">
-                    <button id="addToCart" type="submit">{{ __('links.add_cart') }}</button>
-                </div>
+        </div>
+    </section>
+</form>
+
+<!-- booking section -->
+<section class="booking py-4">
+
+    <img class="w-100" src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="slider mask">
+    <div class="booking_details">
+        <div class="row mx-0">
+            <div class=" col-xl-6 col- md-6 col-sm-12 p-0">
+                {{-- <div class="images" style="background-image:url('@if ($Company->book_img) {{ asset("
+                    uploads/company/$Company->book_img") }} @else {{
+                    asset('/website_assets/images/homePage/slider-mask.webp') }} @endif') ">
+                    <button type="button" class="btn js-modal-btn " data-video-url="{{ $Company->book_tour_vedio }}"
+                        data-bs-toggle="modal" data-bs-target="#video">
+                        <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}"
+                            alt=" video play button">
+                    </button>
+
+                </div> --}}
+                <iframe width="100%" height="100%" <iframe width="560" height="315" src=" {{ $Company->visa_vedio }}"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
             </div>
-        </section>
-    </form>
+            <div class=" col-xl-6 col- md-6 col-sm-12 p-0">
+                <div class="right_side">
+                    <div class="heading">
+                        <h2>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            {{ $Company->visa_en_title }}
+                            @else
+                            {{ $Company->visa_ar_title }}
+                            @endif
 
-    <!-- booking section -->
-    <section class="booking py-4">
+                        </h2>
+                        <p>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            {{ $Company->visa_en_text }}
+                            @else
+                            {{ $Company->visa_ar_text }}
+                            @endif
 
-        <img class="w-100" src="{{ asset('/website_assets/images/homePage/slider-mask.webp') }}" alt="slider mask">
-        <div class="booking_details">
-            <div class="row mx-0">
-                <div class=" col-xl-6 col- md-6 col-sm-12 p-0">
-                    {{-- <div class="images"
-                        style="background-image:url('@if ($Company->book_img) {{ asset("uploads/company/$Company->book_img") }} @else {{ asset('/website_assets/images/homePage/slider-mask.webp') }} @endif') ">
-                        <button type="button" class="btn js-modal-btn "
-                            data-video-url="{{ $Company->book_tour_vedio }}" data-bs-toggle="modal"
-                            data-bs-target="#video">
-                            <img src="{{ asset('/website_assets/images/homePage/play_button.webp') }}"
-                                alt=" video play button">
-                        </button>
-
-                    </div> --}}
-                    <iframe width="100%" height="100%" <iframe width="560" height="315"
-                        src=" {{ $Company->visa_vedio }}" title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                </div>
-                <div class=" col-xl-6 col- md-6 col-sm-12 p-0">
-                    <div class="right_side">
-                        <div class="heading">
-                            <h2>
-                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    {{ $Company->visa_en_title }}
-                                @else
-                                    {{ $Company->visa_ar_title }}
-                                @endif
-
-                            </h2>
-                            <p>
-                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    {{ $Company->visa_en_text }}
-                                @else
-                                    {{ $Company->visa_ar_text }}
-                                @endif
-
-                            </p>
-                            {{-- <a href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.readMore') }}
-                                <i class="fa-solid fa-angle-right"></i>
-                                <i class="fa-solid fa-angle-right"></i>
-                            </a> --}}
-                        </div>
+                        </p>
+                        {{-- <a href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.readMore') }}
+                            <i class="fa-solid fa-angle-right"></i>
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a> --}}
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection
 @section('adds_js')
-    {{-- <script src="{{ asset('/website_assets/js/hotel_filters.js') }}"></script> --}}
+{{-- <script src="{{ asset('/website_assets/js/hotel_filters.js') }}"></script> --}}
 
-    {{-- <script src="  https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="{{ asset('/website_assets/js/typeahead.js') }}"></script>   --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{{-- <script src="  https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="{{ asset('/website_assets/js/typeahead.js') }}"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <!-- add adults  -->
-    <script src="{{ asset('/website_assets/js/add-adults.js') }}"></script>
-
-
+<!-- add adults  -->
+<script src="{{ asset('/website_assets/js/add-adults.js') }}"></script>
 
 
-    <script>
-        let localization = "{{ LaravelLocalization::getCurrentLocale() }}"
+
+
+<script>
+    let localization = "{{ LaravelLocalization::getCurrentLocale() }}"
 
         $(document).ready(function() {
 
@@ -453,7 +442,9 @@ Visa type
                     <input type="tel" name="phone[` + counter + `]" required placeholder="{{ __('links.mobile') }}"
                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                         oninvalid="this.setCustomValidity('Please Enter valid mobile')"
+                         style="text-align: start"
                         @else
+                         style="text-align: end"
                         oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')"
                         @endif oninput="setCustomValidity('')" />
 
@@ -797,4 +788,4 @@ Visa type
                 return true;
             }
         }
-    </script>
+</script>

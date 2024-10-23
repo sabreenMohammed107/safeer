@@ -1000,7 +1000,7 @@ footer .useful_links ul li:hover a {
 }
 .hotels .hotels_card .hotel_card_info .location {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     margin-bottom: 10px;
 }
 .hotels .hotels_card .hotel_card_info .location i {
