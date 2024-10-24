@@ -33,7 +33,7 @@ class SiteTransferController extends Controller
         $CarClass = Car_class::all();
         $Countries = Country::where('flag',1)->get();
         $Cities = City::where('country_id',1)->get();
-        $TransfersRecommended = Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id')->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
+        $TransfersRecommended = Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id')->orderBy('transfers.person_price', 'asc')->select('transfers.*')->paginate(6);
 
         $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
         $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
@@ -81,7 +81,7 @@ class SiteTransferController extends Controller
         ->orwhereHas('locationTo', function ($q) use ($city_id) {
             $q->where('city_id', $city_id);
         })
-        ->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
+        ->orderBy('transfers.person_price', 'asc')->select('transfers.*')->paginate(6);
 
         $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
         $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
@@ -144,7 +144,7 @@ class SiteTransferController extends Controller
 
             }
 
-            $TransfersRecommended = $filterTour->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
+            $TransfersRecommended = $filterTour->orderBy('transfers.person_price', 'asc')->select('transfers.*')->paginate(6);
             $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
             $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
 
@@ -189,7 +189,7 @@ class SiteTransferController extends Controller
 
             }
 
-            $TransfersRecommended = $filterTour->orderBy('transfers.id', 'desc')->select('transfers.*')->paginate(6);
+            $TransfersRecommended = $filterTour->orderBy('transfers.person_price', 'asc')->select('transfers.*')->paginate(6);
             $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
             $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
 \Log::info($request->all());

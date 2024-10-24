@@ -4,7 +4,9 @@
         <div class="col-sm-12 col-md-6 ">
             <div class="card-content">
                 <div class=" card  tours_card hotels_card">
+                    <a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" >
                     <img src="{{ asset('uploads/blogs') }}/{{$blog->image}}" alt=" blogimage">
+                    </a>
                     <div class="card-body hotel_card_info">
                         <div class="card_info" style="height: 115px; max-height: 115px; overflow: hidden;">
                             <h5 style="text-align: center;text-align-last:center"><a href="{{ LaravelLocalization::localizeUrl('/single-blog/'.$blog->id.'/'.$blog->slug) }}" >
