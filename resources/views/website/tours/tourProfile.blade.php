@@ -51,24 +51,17 @@
         border: none !important;
     }
 
-    .bookbox {
-        position: fixed;
-        z-index: 1000;
-        top: 30vh;
-        right: 0;
-        padding: 20px;
-        background: #fff;
-        border: 3px solid #1C4482;
-        border-right: 0;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-        opacity: .8;
-        transition: all .5s;
-    }
+
 
     .bookbox a {
         color: #1C4482 !important
     }
+
+    @media (min-width: 320px) and (max-width: 550px) {
+    #divId, .included_info {
+        flex-direction: column !important;
+    }
+}
 </style>
 @endsection
 @section('bottom-header')
@@ -1011,4 +1004,12 @@
 
         }
 </script>
+
+<style>
+    @media (min-width: 320px) and (max-width: 550px) {
+    #divId, .included_info {
+        flex-direction: column !important;
+    }
+}
+</style>
 @endsection

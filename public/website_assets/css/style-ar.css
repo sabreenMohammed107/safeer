@@ -3056,3 +3056,17 @@ a#send-it {
     padding-right: 15px;
     line-height: 1.7;
 }
+.bookbox {
+    position: fixed;
+    z-index: 1000;
+    top: 30vh;
+    left: 0;
+    padding: 20px;
+    background: #fff;
+    border: 3px solid #1C4482;
+    border-left: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    opacity: .8;
+    transition: all .5s;
+}

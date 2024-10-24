@@ -3024,3 +3024,17 @@ a#send-it {
 .header-chat {
     margin-top: 100%;
 }
+.bookbox {
+    position: fixed;
+    z-index: 1000;
+    top: 30vh;
+    right: 0;
+    padding: 20px;
+    background: #fff;
+    border: 3px solid #1C4482;
+    border-right: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    opacity: .8;
+    transition: all .5s;
+}
