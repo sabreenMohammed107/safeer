@@ -53,7 +53,30 @@ $localVar = LaravelLocalization::getCurrentLocale();
                 <button class="{{ Request::segment(2) == 'contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a>
                 </button>
+                <button class="offcan_buttons">
+                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                    @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
+                    <a  rel="alternate" hreflang="{{ $localeCode }}"
+                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
+                        <!--{{ $properties['native'] }}-->
+                        <span>عربي</span>
+                        {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.webp') }}"
+                            style="width: 40px;height:40px" class="flag-img "> --}}
+
+                    </a>
+                    @endif
+                    @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
+                    <a  rel="alternate" hreflang="{{ $localeCode }}"
+                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                        <span>EN</span>
+                        {{-- <img title="English" src="{{ asset('website_assets/images/united-states.webp') }}"
+                            class="flag-img "> --}}
+                    </a>
+                    @endif
+                    <!--|-->
+                    @endforeach
+                </button>
                 {{-- {{session()->get("SiteUser")["Name"]}} --}}
                 @if (session()->get('SiteUser'))
                 <button class="offcan_buttons">
@@ -70,30 +93,7 @@ $localVar = LaravelLocalization::getCurrentLocale();
                 </button>
                 @endif
 
-                <button class="offcan_buttons">
-                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                    @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
-                    <a rel="alternate" hreflang="{{ $localeCode }}"
-                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
-                        <!--{{ $properties['native'] }}-->
-                        <span>عربي</span>
-                        {{-- <img title="عربي" src="{{ asset('website_assets/images/saudi-arabia.webp') }}"
-                            class="flag-img "> --}}
-
-                    </a>
-                    @endif
-                    @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
-                    <a rel="alternate" hreflang="{{ $localeCode }}"
-                        href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-
-                        <img title="English" src="{{ asset('website_assets/images/united-states.webp') }}"
-                            class="flag-img">
-
-                    </a>
-                    @endif
-                    @endforeach
-                </button>
 
 
 
