@@ -256,7 +256,20 @@
                         <div class="left_filter">
                             <ul class="nav nav-pills " id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link sort_by active" data-val="rec" id="pills-home-tab"
+                                    <button class="nav-link sort_by active" data-val="price" id="pills-profile-tab"
+                                        data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
+                                        role="tab" aria-controls="pills-profile" aria-selected="false"
+                                        @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif>
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                            by Price
+                                        @else
+                                            بالسعر
+                                        @endif
+                                    </button>
+                                </li>
+
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link sort_by " data-val="rec" id="pills-home-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
                                         aria-controls="pills-home" aria-selected="truee" type="button" role="tab"
                                         aria-controls="pills-home" aria-selected="true"
@@ -265,18 +278,6 @@
                                             Recommended
                                         @else
                                             مستحسن
-                                        @endif
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link sort_by" data-val="price" id="pills-profile-tab"
-                                        data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
-                                        role="tab" aria-controls="pills-profile" aria-selected="false"
-                                        @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif>
-                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                            by Price
-                                        @else
-                                            بالسعر
                                         @endif
                                     </button>
                                 </li>

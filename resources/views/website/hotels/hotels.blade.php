@@ -558,17 +558,6 @@ input.nosubmit {
                                       مستحسن
                                         @endif</button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link sort_by" data-val="price" id="pills-profile-tab"
-                                        data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
-                                        role="tab" aria-controls="pills-profile" aria-selected="false" @if (LaravelLocalization::getCurrentLocale() === 'ar') style="font-size: 12px" @endif>
-                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                        by Price
-                                        @else
-                                       بالسعر
-                                        @endif</button>
-                                </li>
 
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by" data-val="alpha" id="pills-alpha-tab"

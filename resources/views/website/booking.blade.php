@@ -767,12 +767,13 @@
                                                         class="form-control" required="required"
                                                         placeholder="{{ __('links.email') }}">
                                                 </div>
-                                                <div class="col-sm-12">
+                                                <input type="hidden" name="transferJob" id="transferJob" value=" ">
+                                                {{-- <div class="col-sm-12">
                                                     <label class="form-label">{{ __('links.job') }}</label>
 
-                                                    <input type="text" name="transferJob" class="form-control"
+                                                    <input type="text" name="transferJob" value=" " class="form-control"
                                                         placeholder="{{ __('links.job') }}">
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-sm-12">
                                                     <label class="form-label">{{ __('links.hotel') }}</label>
 

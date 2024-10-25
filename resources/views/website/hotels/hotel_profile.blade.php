@@ -255,7 +255,7 @@ if(isset($arrayData['result'])){
 
                             {{$category->en_category}}
                             @else
-                            {{-- {{$category->ar_category}} --}}
+                            {{$category->ar_category}}
                             @endif
                         </button>
                     </h2>

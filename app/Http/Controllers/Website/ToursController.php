@@ -70,7 +70,8 @@ class ToursController extends Controller
         $city_id = $request->city_id;
         $country_id = $request->country_id;
         $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
-            ->orderBy('reviews.tour_id', 'desc')
+            // ->orderBy('reviews.tour_id', 'desc')
+             ->orderBy('tours.tour_person_cost', 'asc')
             ->groupBy('tours.id')
             ->select('tours.*')
             ->where('city_id', $city_id)
@@ -118,7 +119,8 @@ class ToursController extends Controller
         $Countries = Country::where('flag', 1)->get();
         $Cities = City::where('country_id', 1)->get();
         $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
-            ->orderBy('reviews.tour_id', 'desc')
+            // ->orderBy('reviews.tour_id', 'desc')
+            ->orderBy('tours.tour_person_cost', 'asc')
             ->groupBy('tours.id')
             ->select('tours.*')
             ->where('tours.active', 1)  // Add this line to filter only active tours
