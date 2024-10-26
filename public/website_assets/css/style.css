@@ -3038,3 +3038,13 @@ a#send-it {
     opacity: .8;
     transition: all .5s;
 }
+.offcanvas {
+    height: 100vh;
+
+}
+.offcanvas-body {
+    height: fit-content;
+}
+.offcan_buttons, .offcan_buttons_lang{
+    padding: 9px 1.25rem;
+}

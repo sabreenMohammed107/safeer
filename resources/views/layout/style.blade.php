@@ -25,7 +25,9 @@ href='https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-t
 
 <!-- CSS -->
 
+<style>
 
+</style>
 <!-- Script -->
 
 <style type="text/css">

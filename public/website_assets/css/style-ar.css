@@ -3070,3 +3070,6 @@ a#send-it {
     opacity: .8;
     transition: all .5s;
 }
+.offcan_buttons, .offcan_buttons_lang{
+    padding: 9px 1.25rem;
+}
