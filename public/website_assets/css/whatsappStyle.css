@@ -1,9 +1,4 @@
-#whatsapp-chat,
-a.blantershow-chat {
-    position: fixed;
-    left: 30px;
-    /* box-shadow: 0 1px 15px rgba(32, 33, 36, 0.28); */
-}
+
 .hide,
 .whatsapp-chat .show {
     animation-name: showhide;
