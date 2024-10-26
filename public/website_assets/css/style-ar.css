@@ -3076,8 +3076,10 @@ a#send-it {
 .offcanvas-body {
     height: fit-content;
     text-align: left;
+    text-align: -webkit-left;
 }
 .offcanvas-body button.offcan_buttons a{
 
     text-align: right;
 }
+

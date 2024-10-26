@@ -1,7 +1,7 @@
 #whatsapp-chat,
 a.blantershow-chat {
     position: fixed;
-    right: 30px;
+    left: 30px;
     /* box-shadow: 0 1px 15px rgba(32, 33, 36, 0.28); */
 }
 .hide,
@@ -53,7 +53,7 @@ a.informasi {
 }
 a.blantershow-chat svg {
     transform: scale(1.2);
-    margin: 0 10px 0 0;
+    margin: 0 10px 0 5px;
 }
 .header-chat {
     background: #095e54;
