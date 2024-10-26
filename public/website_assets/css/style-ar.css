@@ -220,12 +220,12 @@ a {
 }
 .offcan_buttons a,
 .offcan_buttons_lang a {
-    padding-left: 0;
+    padding-right: 0;
     color: var(--main-color);
     text-transform: capitalize;
     font-weight: 600;
     font-size: 19px;
-    text-align: left;
+    text-align: right;
     display: block;
     width: 100%;
 }
@@ -3072,4 +3072,12 @@ a#send-it {
 }
 .offcan_buttons, .offcan_buttons_lang{
     padding: 9px 1.25rem;
+}
+.offcanvas-body {
+    height: fit-content;
+    text-align: left;
+}
+.offcanvas-body button.offcan_buttons a{
+
+    text-align: right;
 }
