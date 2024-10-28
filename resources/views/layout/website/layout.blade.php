@@ -260,10 +260,10 @@
                                                 href="{{ LaravelLocalization::localizeUrl('/about') }}">{{
                                                 __('links.about_us') }}
                                             </a></li>
-                                        <li><i class="fa-solid fa-angle-right"></i><a
+                                        {{-- <li><i class="fa-solid fa-angle-right"></i><a
                                                 href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{
                                                 __('links.hotels') }}
-                                            </a></li>
+                                            </a></li> --}}
                                         <li><i class="fa-solid fa-angle-right"></i><a
                                                 href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{
                                                 __('links.offers') }}

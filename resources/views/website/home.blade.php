@@ -331,7 +331,7 @@
                     <div class="card-content">
                         <div class=" card hotels_card">
                             <div class="card_image">
-                                <a href="{{ LaravelLocalization::localizeUrl('/hotels/' . $Hotel->hotel->id) }}">
+                                <a href="#">
                                     <div class="image_overlay">
                                         <img loading="lazy"
                                             src="{{ asset('uploads/hotels') }}/{{$Hotel->hotel->hotel_banner}}"
@@ -385,7 +385,7 @@
 
                                         @endif </span>
                                 </div>
-                                <a href="{{ LaravelLocalization::localizeUrl('/hotels/' . $Hotel->hotel->id) }}">
+                                <a href="#">
                                     <p style="height: 130px;
                       overflow: hidden;
                       line-height: 2;">

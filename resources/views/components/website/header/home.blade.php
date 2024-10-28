@@ -45,15 +45,14 @@
                 <ul class="nav travel_tabs nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                            type="button" role="tab" aria-controls="home" aria-selected="true">{{ __('links.home')
-                            }}</button>
+                            type="button" role="tab" aria-controls="home" aria-selected="true">{{ __('links.tours') }}</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        {{-- <a class="nav-link" href="">tours</a> --}}
+                    {{-- <li class="nav-item" role="presentation">
+
                         <a href="{{ LaravelLocalization::localizeUrl('/tours') }}">
                             <button class="nav-link" type="button">{{ __('links.tours') }}</button>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item" role="presentation">
                         {{-- <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
                             type="button" role="tab" aria-controls="contact" aria-selected="false">travel</button> --}}
@@ -75,7 +74,7 @@
                 </ul>
                 <div class="tab-content travel_box_content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <form action="{{ LaravelLocalization::localizeUrl('/hotels') }}" method="POST">
+                        {{-- <form action="{{ LaravelLocalization::localizeUrl('/hotels') }}" method="POST">
                             @csrf
                             <div class="hotel_details">
                                 <div class="row mx-0 p-0">
@@ -141,14 +140,6 @@
                                     </div>
                                     <div class="col-sm-12 col-md-6 col-xl-1">
                                         <h5> {{ __('links.nights') }}</h5>
-                                        {{-- <select class="form-select" name="nights"
-                                            aria-label="Default select example">
-                                            @for ($i = 1; $i < 11; $i++) <option value="{{ $i }}" @if (session()->
-                                                has('sessionArr')) {{ Session::get('sessionArr')['nights'] == $i ?
-                                                'selected' : '' }} @endif>
-                                                {{ $i }} </option>
-                                                @endfor
-                                        </select> --}}
                                         <input type="text" readonly class="form-control" id="nights" name="nights"
                                             value="7">
                                     </div>
@@ -234,6 +225,70 @@
                                         <div class="main" id="room_main">
 
                                             <button class="btn" type="submit">
+                                                {{ __('links.search') }}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </form> --}}
+                        <form action="{{ LaravelLocalization::localizeUrl('/tours') }}" method="get">
+                            <div class="hotel_details">
+                                <div class="row mx-0 p-0">
+                                    <div class="col-sm-12 col-md-6 col-xl-5 p-s-0 ">
+                                        <h5> {{ __('links.destination') }}</h5>
+
+                                        <div class="choices">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                            <select class="form-select dynamic" required id="country"
+                                                aria-label="Default select example">
+                                                <option value=""> ...</option>
+                                                @foreach ($countries as $Country)
+                                                    <option value="{{ $Country->id }}"
+                                                        @isset($country_id) {{ $country_id == $Country->id ? 'selected' : '' }} @endisset>
+                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                            {{ $Country->en_country }}
+                                                        @else
+                                                            {{ $Country->ar_country }}
+                                                        @endif
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-12 col-md-6 col-xl-5 p-s-0 ">
+                                        <h5> {{ __('links.city') }}</h5>
+
+                                        <div class="choices">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                            <select class="form-select" required id="city_id" name="city_id"
+                                                aria-label="Default select example">
+                                                <option value=""> ...</option>
+                                                @foreach ($cities as $city)
+                                                    <option value="{{ $city->id }}"
+                                                        @isset($city_id) {{ $city_id == $city->id ? 'selected' : '' }} @endisset>
+
+                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                            {{ $city->en_city }}
+                                                        @else
+                                                            {{ $city->ar_city }}
+                                                        @endif
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-12 col-md-6 col-xl-1 p-0 ">
+                                        <div class="main" id="room_main">
+
+                                            <button id="buttonForm" class="btn" type="submit">
                                                 {{ __('links.search') }}
                                             </button>
                                         </div>

@@ -499,7 +499,7 @@ if ($(this).val() != '') {
             // $('.transfer_date').datepicker().datepicker('setDate', new Date());
             flatpickr(".transfer_date", {
     enableTime: true,
-    dateFormat: "Y-m-d H:i",
+    dateFormat: "Y-m-d H:i:s",
 
     defaultDate: startDate,
     minDate: startDate,
