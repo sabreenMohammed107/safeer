@@ -31,9 +31,9 @@ $localVar = LaravelLocalization::getCurrentLocale();
                 {{-- <button class="{{ Request::segment(2)=='about' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}</a>
                 </button> --}}
-                <button class="{{ Request::segment(2) == 'hotels' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                {{-- <button class="{{ Request::segment(2) == 'hotels' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{ __('links.hotels') }}</a>
-                </button>
+                </button> --}}
                 <button class="{{ Request::segment(2) == 'tours' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.tours') }}</a>
                 </button>
@@ -115,12 +115,12 @@ $localVar = LaravelLocalization::getCurrentLocale();
                         class="{{ Request::segment(1)=='about' ? 'links hybrid active' : 'links hybrid' }}">{{
                         __('links.about_us') }} </a>
                 </li> --}}
-                <li>
+                {{-- <li>
                     <a href="{{ LaravelLocalization::localizeUrl('/hotels') }}"
                         class="{{ Request::segment(1) == 'hotels' ? 'links hybrid active' : 'links hybrid' }}">{{
                         __('links.hotels') }}
                     </a>
-                </li>
+                </li> --}}
                 <li>
                     <a href="{{ LaravelLocalization::localizeUrl('/tours') }}"
                         class="{{ Request::segment(1) == 'tours' ? 'links hybrid active' : 'links hybrid' }}">{{
