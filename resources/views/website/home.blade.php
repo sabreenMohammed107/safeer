@@ -233,10 +233,10 @@
                                     @endif</h5>
                                 <p>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    {!! mainOffer->offer_enoverview !!}
+                                    {!! $mainOffer->offer_enoverview !!}
 
                                     @else
-                                    {!! $mainOffer->offer_aroverview!!}
+                                    {!!$mainOffer->offer_aroverview !!}
                                     @endif
                                 </p>
                                 <div class="start">

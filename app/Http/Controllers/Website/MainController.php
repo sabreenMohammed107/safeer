@@ -22,7 +22,7 @@ class MainController extends Controller
         $Company = Company::first();
         $ExploreCities = Explore_city::where("active","=", 1)->get();
          $Offers = Offer::where("active","=", 1)->where('status','!=','main')->inRandomOrder()->limit(4)->get();
-         $mainOffer=Offer::where("active","=", 1)->where('status','=','main')->first();
+         $mainOffer=Offer::where("active","=", 1)->where('status','=','main')->firstOrFail();
         $Counters = Counter::get();
         $Countries = Country::where('flag',1)->get();
         $cities=City::where('country_id',1)->get();
