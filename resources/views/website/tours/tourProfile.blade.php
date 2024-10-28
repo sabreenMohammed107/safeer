@@ -62,6 +62,10 @@
         flex-direction: column !important;
     }
 }
+.filtrered_cards.hotel_details div span img {
+    width: 100%;
+    object-fit: contain;
+}
 </style>
 @endsection
 @section('bottom-header')
@@ -164,7 +168,7 @@
                 <div class="col-12">
                     <div id="divId" onclick="changeImageOnClick(event)">
                         @for ($i = 1; $i < 4; $i++) @if (count($TourGallery)> $i)
-                            <img class="imgStyle"
+                            <img class="imgStyle col-4"
                                 src="{{ asset('uploads/galleries') }}/{{ $TourGallery[$i]->img ?? ' ' }}"
                                 alt=" tour hotel image " />
                             @endif
