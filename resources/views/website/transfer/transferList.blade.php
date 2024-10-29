@@ -78,7 +78,7 @@
                                     {{ __('links.pickDate') }}
 
                                 </label>
-                                <input type="text" id="transfer_date"    class="form-control transfer_date " name="transfer_date"  />
+                                <input type="text"   class="form-control transfer_date " name="transfer_date"  />
 
 
 
