@@ -5,7 +5,8 @@
             @foreach ($counters as $key => $Counter)
             <div class=" col-md-3 col-sm-12">
                 <div class="info">
-                  <img src="{{ asset("/website_assets/images/homePage/$Counter->image") }}" alt="plane image">
+
+                  <img src="{{ asset('uploads/counter') }}/{{ $Counter->image }}" alt="plane image">
                   <span>
                     {{$Counter->vlaue}}+
                   </span>
