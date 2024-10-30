@@ -444,13 +444,13 @@
                                                         placeholder="{{ __('links.pickupP') }}">
                                                 </div>
                                             </div>
-                                            <h6>
+                                            {{-- <h6>
                                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
                                                     Adults Details:
                                                 @else
                                                     تفاصيل البالغين:
                                                 @endif
-                                            </h6>
+                                            </h6> --}}
                                             @for ($j = 0; $j < $Tour->adults_count - 1; $j++)
                                                 <div class="row">
                                                     {{-- <div class="col-sm-12 col-md-6 col-xl-4">
