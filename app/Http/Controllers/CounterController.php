@@ -8,9 +8,10 @@ use App\Http\Requests\UpdateCounterRequest;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use File;
+
 class CounterController extends Controller
 {
-     protected $object;
+    protected $object;
     protected $viewName;
     protected $routeName;
 
@@ -58,14 +59,15 @@ class CounterController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->except(['_token','image']);
+        $input = $request->except(['_token', 'image']);
         if ($request->hasFile('image')) {
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
         }
         Counter::create($input);
-        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
+        return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');
+    }
 
     /**
      * Display the specified resource.
@@ -98,7 +100,7 @@ class CounterController extends Controller
     public function update(Request $request, Counter $counter)
     {
 
-        $input = $request->except(['_token','image']);
+        $input = $request->except(['_token', 'image']);
         if ($request->hasFile('image')) {
             $attach_image = $request->file('image');
 
@@ -107,7 +109,8 @@ class CounterController extends Controller
         Counter::findOrFail($request->get('counter_id'))->update($input);
         // $specialzation->update($input);
 
-        return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
+        return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -119,16 +122,15 @@ class CounterController extends Controller
     {
 
         $counter = Counter::where('id', $id)->first();
-         // Delete File ..
-         $file = $counter->image;
-         $file_name = public_path('uploads/counter/' . $file);
-         try {
-             File::delete($file_name);
+        // Delete File ..
+        $file = $counter->image;
+        $file_name = public_path('uploads/counter/' . $file);
+        try {
+            File::delete($file_name);
 
 
             $counter->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
-
         } catch (QueryException $q) {
             // return redirect()->back()->withInput()->with('flash_danger', $q->getMessage());
             return redirect()->back()->withInput()->with('flash_danger', 'Can’t delete This Row
@@ -137,25 +139,27 @@ class CounterController extends Controller
     }
 
 
-     /* uplaud image
+    /* uplaud image
        */
-      public function UplaodImage($file_request)
-      {
-          //  This is Image Info..
-          $file = $file_request;
-          $name = $file->getClientOriginalName();
-          $ext = $file->getClientOriginalExtension();
-          $size = $file->getSize();
-          $path = $file->getRealPath();
-          $mime = $file->getMimeType();
+    public function UplaodImage($file_request)
+    {
+        //  This is Image Info..
+        $file = $file_request;
+        $name = $file->getClientOriginalName();
+        $ext = $file->getClientOriginalExtension();
+        $size = $file->getSize();
+        $path = $file->getRealPath();
+        $mime = $file->getMimeType();
+        // Rename the image by removing spaces and special characters
+        $baseName = pathinfo($name, PATHINFO_FILENAME); // Get the filename without extension
+        $cleanName = preg_replace('/[^A-Za-z0-9]/', '_', $baseName); // Replace spaces and special chars with '_'
+        $imageName = $cleanName . '_' . time() . '.' . $ext; // Add a timestamp to ensure uniqueness
+        // Rename The Image ..
+        $uploadPath = public_path('uploads/counter');
 
-          // Rename The Image ..
-          $imageName = $name;
-          $uploadPath = public_path('uploads/counter');
+        // Move The image..
+        $file->move($uploadPath, $imageName);
 
-          // Move The image..
-          $file->move($uploadPath, $imageName);
-
-          return $imageName;
-      }
+        return $imageName;
     }
+}
