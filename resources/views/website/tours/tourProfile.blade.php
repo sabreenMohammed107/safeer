@@ -79,7 +79,7 @@
 @media (min-width: 320px) and (max-width: 550px) {
     #divId, .included_info {
         flex-direction: column !important;
-        align-items:end;
+        align-items:flex-start;
     }
 }
     </style>
