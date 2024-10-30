@@ -60,6 +60,12 @@
     @media (min-width: 320px) and (max-width: 550px) {
     #divId, .included_info {
         flex-direction: column !important;
+
+        align-items:end;
+
+        align-items:start;
+
+
     }
 }
 .filtrered_cards.hotel_details div span img {
@@ -67,6 +73,27 @@
     object-fit: contain;
 }
 </style>
+
+@if (LaravelLocalization::getCurrentLocale() === 'en')
+    <style>
+@media (min-width: 320px) and (max-width: 550px) {
+    #divId, .included_info {
+        flex-direction: column !important;
+        align-items:flex-start;
+    }
+}
+    </style>
+@else
+<style>
+
+@media (min-width: 320px) and (max-width: 550px) {
+    #divId, .included_info {
+        flex-direction: column !important;
+        align-items:start;
+    }
+}
+</style>
+@endif
 @endsection
 @section('bottom-header')
 @if (LaravelLocalization::getCurrentLocale() === 'en')

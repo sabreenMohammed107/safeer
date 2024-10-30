@@ -3061,4 +3061,7 @@ a.blantershow-chat {
 
 }
 
-
+.details.px-1 input#transfer_date {
+    font-weight: bolder;
+    font-size: 15px !important;
+}

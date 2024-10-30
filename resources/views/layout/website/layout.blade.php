@@ -442,7 +442,31 @@
         </footer>
     </section>
     <!-- footer -->
+    <button id="scrollToTop" class="scroll-to-top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+    <style>
+        .scroll-to-top {
+        position: fixed;
+        bottom: 75px;
+        right: 25px;
+        display: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #1b224c;
+        color: white;
+        border: none;
+        cursor: pointer;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
 
+    .scroll-to-top:hover {
+        background-color: #2d377a;
+        transform: translateY(-3px);
+    }
+    </style>
     <!-- copy right section -->
     <div class="copyright">
         <input type="hidden" id="chat_whatsapp" value="{{ $Company->chat_whatsapp }}">
@@ -647,6 +671,26 @@ function loadSlick(slickSlider, options) {
     $slickSlider.slick(options);
 }
     </script>
+    <script>
+        // Scroll to top functionality
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        };
+
+        scrollToTopButton.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        };
+        </script>
+<!-- Scroll to top button -->
 
 </body>
 
