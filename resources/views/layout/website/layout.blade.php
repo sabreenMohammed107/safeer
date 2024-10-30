@@ -39,6 +39,7 @@
         content="hotels tours transfer visa contact trip destination adults child nights checkin room explore adventure experience offers travel packages agents acitivties hotel  transfer honemoon safari pharonic newsletter   " />
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
     <!-- style sheets  -->
     <style>
         a#send-it svg {
@@ -691,6 +692,22 @@ function loadSlick(slickSlider, options) {
         };
         </script>
 <!-- Scroll to top button -->
+<script>
+    if ("{{ LaravelLocalization::getCurrentLocale() }}" === 'ar') {
+        // Configure flatpickr for Arabic
+        flatpickr.localize(flatpickr.l10ns.ar);
+
+        // Initialize all date inputs with Arabic locale
+        flatpickr("input[type=date], input.date-input, .flatpickr-input", {
+            locale: "ar",
+            dateFormat: "Y-m-d",
+            altFormat: "Y-m-d",
+            altInput: true,
+            altInputClass: "form-control",
+            numericArabic: true
+        });
+    }
+    </script>
 
 </body>
 
