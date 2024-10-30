@@ -104,8 +104,9 @@ class TourGalleryController extends Controller
      * @param  \App\Models\Gallery  $gallery
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGalleryRequest $request, Gallery $gallery)
+    public function update(UpdateGalleryRequest $request, $id)
     {
+        $gallery = Gallery::where('id', $id)->first();
         $input = $request->except(['_token','gallery_id','img']);
         if ($request->hasFile('img')) {
             $attach_image = $request->file('img');
@@ -151,23 +152,24 @@ class TourGalleryController extends Controller
 
     /* uplaud image
        */
-      public function UplaodImage($file_request)
+      public function uploadImage($file_request)
       {
-          //  This is Image Info..
+          // This is Image Info..
           $file = $file_request;
           $name = $file->getClientOriginalName();
           $ext = $file->getClientOriginalExtension();
-          $size = $file->getSize();
-          $path = $file->getRealPath();
-          $mime = $file->getMimeType();
 
-          // Rename The Image ..
-          $imageName = $name;
+          // Rename the image by removing spaces and special characters
+          $baseName = pathinfo($name, PATHINFO_FILENAME); // Get the filename without extension
+          $cleanName = preg_replace('/[^A-Za-z0-9]/', '_', $baseName); // Replace spaces and special chars with '_'
+          $imageName = $cleanName . '_' . time() . '.' . $ext; // Add a timestamp to ensure uniqueness
+
           $uploadPath = public_path('uploads/galleries');
 
-          // Move The image..
+          // Move the image
           $file->move($uploadPath, $imageName);
 
           return $imageName;
       }
+
 }
