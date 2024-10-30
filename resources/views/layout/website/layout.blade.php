@@ -692,8 +692,8 @@ function loadSlick(slickSlider, options) {
         };
         </script>
 <!-- Scroll to top button -->
+@if ("{{ LaravelLocalization::getCurrentLocale() }}" === 'ar')
 <script>
-    if ("{{ LaravelLocalization::getCurrentLocale() }}" === 'ar') {
         // Configure flatpickr for Arabic
         flatpickr.localize(flatpickr.l10ns.ar);
 
@@ -706,9 +706,9 @@ function loadSlick(slickSlider, options) {
             altInputClass: "form-control",
             numericArabic: true
         });
-    }
-    </script>
 
+    </script>
+@endif
 </body>
 
 </html>
