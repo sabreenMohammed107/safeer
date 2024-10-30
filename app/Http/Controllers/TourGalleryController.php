@@ -152,7 +152,7 @@ class TourGalleryController extends Controller
 
     /* uplaud image
        */
-      public function uploadImage($file_request)
+      public function UplaodImage($file_request)
       {
           // This is Image Info..
           $file = $file_request;
