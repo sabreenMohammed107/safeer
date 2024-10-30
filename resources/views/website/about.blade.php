@@ -158,4 +158,10 @@
 
     </section>
     <!--  ending page  -->
+
+    <style>
+        .benefits_info img {
+            max-width: 95px !important;
+        }
+    </style>
 @endsection
