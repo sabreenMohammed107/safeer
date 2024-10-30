@@ -84,12 +84,15 @@
 }
     </style>
 @else
+<style>
+
 @media (min-width: 320px) and (max-width: 550px) {
     #divId, .included_info {
         flex-direction: column !important;
         align-items:start;
     }
 }
+</style>
 @endif
 @endsection
 @section('bottom-header')
