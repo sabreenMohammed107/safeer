@@ -23,7 +23,14 @@ class VisaDataController extends Controller
 
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')], ["url" => "/visa", "name" => Lang::get('links.visa')]];
-        $countries = Country::where('flag',0)->get();
+        // $countries = Country::where('flag',0)->get();
+        $countries = Country::where('flag', 0)
+    ->when(app()->getLocale() === 'ar', function ($query) {
+        return $query->orderBy('ar_country');
+    }, function ($query) {
+        return $query->orderBy('en_country');
+    })
+    ->get();
         $nationality_ids = Visa::pluck('nationality_id');
         $nationalities = Nationality::whereIn('id',$nationality_ids)->get();
         return view("website.visa.visa", [
