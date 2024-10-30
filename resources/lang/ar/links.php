@@ -236,7 +236,7 @@ return [
 'turkey'=>'العالم',
 'readMore'=>'اقرأ المزيد',
 'bestHotels'=>'أفضل الفنادق',
-'nights'=>'ليالى',
+'nights'=>'الليلة',
 'destination'=>'الوجهة',
 'selectCity'=>'اختر المدينة',
 'city'=>'المدينة',
