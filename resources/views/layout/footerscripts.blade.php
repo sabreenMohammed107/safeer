@@ -61,5 +61,49 @@
 
 
 @yield('scripts')
+@if ("{{ LaravelLocalization::getCurrentLocale() }}" === 'ar')
+<script>
+        // Configure flatpickr for Arabic
+        flatpickr.localize(flatpickr.l10ns.ar);
+
+        // Initialize all date inputs with Arabic locale
+        flatpickr("input[type=date], input.date-input, .flatpickr-input", {
+            locale: "ar",
+            dateFormat: "Y-m-d",
+            altFormat: "Y-m-d",
+            altInput: true,
+            altInputClass: "form-control",
+            numericArabic: true
+        });
+
+    </script>
+@endif
+<script>
+    // Get tomorrow's date
+    let tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    // Format date as YYYY-MM-DD
+    let minDate = tomorrow.toISOString().split('T')[0];
+
+    // Set min attribute for all date inputs
+    document.querySelectorAll('input[type="date"], .date-input, .flatpickr-input').forEach(input => {
+        input.min = minDate;
+    });
+
+    // Configure flatpickr with minDate
+    flatpickr("input[type=date], input.date-input, .flatpickr-input", {
+        minDate: "today",
+        dateFormat: "Y-m-d",
+        altFormat: "Y-m-d",
+        altInput: true,
+        altInputClass: "form-control",
+        disable: [
+            function(date) {
+                return date < tomorrow;
+            }
+        ]
+    });
+    </script>
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->

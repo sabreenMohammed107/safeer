@@ -692,23 +692,7 @@ function loadSlick(slickSlider, options) {
         };
         </script>
 <!-- Scroll to top button -->
-@if ("{{ LaravelLocalization::getCurrentLocale() }}" === 'ar')
-<script>
-        // Configure flatpickr for Arabic
-        flatpickr.localize(flatpickr.l10ns.ar);
 
-        // Initialize all date inputs with Arabic locale
-        flatpickr("input[type=date], input.date-input, .flatpickr-input", {
-            locale: "ar",
-            dateFormat: "Y-m-d",
-            altFormat: "Y-m-d",
-            altInput: true,
-            altInputClass: "form-control",
-            numericArabic: true
-        });
-
-    </script>
-@endif
 </body>
 
 </html>
