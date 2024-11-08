@@ -51,7 +51,7 @@ input.nosubmit {
 .obj{
             position:absolute;
             top:0;
-            right:0;
+            left:0;
         }
 
         .booking_info .details >label {
