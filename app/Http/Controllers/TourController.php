@@ -164,7 +164,7 @@ class TourController extends Controller
         $countries = Country::where('flag',1)->get();
         $tags = Tag::get();
         $tagsTour = Tour_tag::where('tour_id', $tour->id)->get();
-
+        //  dd($tagsTour);
         return view($this->viewName . 'edit', compact([ 'tags', 'tagsTour', 'tour', 'cities', 'countries', 'types', 'features', 'tourFeatures']));
     }
 
@@ -210,7 +210,6 @@ class TourController extends Controller
 
             }
             if (!empty($request->get('tags'))) {
-
                 $tour->tags()->sync($request->tags);
 
             }

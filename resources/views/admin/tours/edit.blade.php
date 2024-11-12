@@ -256,24 +256,20 @@
                                                         data-bs-toggle="tooltip"
                                                         title="Interviewer who conducts the meeting with the interviewee"></i>
                                                 </label>
-
                                                 <select required class="form-select form-select-solid" name="tags[]"
-                                                    data-control="select2" data-placeholder="Select an option"
-                                                    data-allow-clear="true" multiple="multiple">
-                                                    <option></option>
+                                                data-control="select2" data-placeholder="Select an option"
+                                                data-allow-clear="true" multiple="multiple">
+                                                <option></option>
 
-                                                    @foreach ($tags as $tag)
+                                                @foreach ($tags as $tag)
+                                                    <option value="{{ $tag->id }}"
+                                                        {{ $tagsTour->contains(fn($sublist) => $sublist->tour_id == $tour->id && $sublist->tag_id == $tag->id) ? 'selected' : '' }}>
+                                                        {{ $tag->en_tag }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
 
-                                                        <option value="{{ $tag->id }}"
 
-                                                            @foreach ($tagsTour as $sublist) {{ $sublist->tour_id  == $tour->id ? 'selected' : '' }} @endforeach>
-                                                            {{ $tag->en_tag }}
-                                                        </option>
-
-                                                            @endforeach
-                                                </select>
-
-                                                </select>
                                             </div>
                                             <!--end::Input group-->
 
