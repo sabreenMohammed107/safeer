@@ -397,7 +397,7 @@ text-right
                             Pick up your car
                             @else
 
-التقط سيارتك
+أحجز سيارتك
                             @endif
                         </span>
                         <div class="left_filter">
