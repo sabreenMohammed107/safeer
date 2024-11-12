@@ -14,7 +14,6 @@ class Tour extends Model
         'banner',
         'city_id',
         'active',
-
         'en_name',
         'ar_name',
         'tour_type_id',
