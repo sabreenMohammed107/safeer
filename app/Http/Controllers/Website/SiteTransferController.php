@@ -32,7 +32,7 @@ class SiteTransferController extends Controller
         $CarModels = Car_model::all();
         $CarClass = Car_class::all();
         $Countries = Country::where('flag',1)->get();
-        $Cities = City::where('country_id',1)->get();
+        $Cities = [];
         $TransfersRecommended = Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id')->orderBy('transfers.person_price', 'asc')->select('transfers.*')->paginate(6);
 
         $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
@@ -69,7 +69,7 @@ class SiteTransferController extends Controller
         if($request->country_id){
             $Cities = City::where('country_id',$request->country_id)->get();
         }else{
-            $Cities = City::where('country_id',1)->get();
+            $Cities = [];
         }
         $city_id = $request->city_id;
         $country_id = $request->country_id;

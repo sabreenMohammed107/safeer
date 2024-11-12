@@ -64,7 +64,7 @@ class ToursController extends Controller
         if ($request->country_id) {
             $Cities = City::where('country_id', $request->country_id)->get();
         } else {
-            $Cities = City::where('country_id', 1)->get();
+            $Cities = [];
         }
 
         $city_id = $request->city_id;
@@ -126,7 +126,7 @@ class ToursController extends Controller
         // $Cities = City::all();
         $TourTypes = Tour_type::all();
         $Countries = Country::where('flag', 1)->get();
-        $Cities = City::where('country_id', 1)->get();
+        $Cities = [];
         $city_id = $request->city_id;
         $country_id = $request->country_id;
         $city_ids=City::where('country_id', $request->country_id)->pluck('id');

@@ -339,7 +339,7 @@
     </div>
 
     @if($TransfersRecommended->count() > 0)
-    {{--  <nav id="productt" aria-label="Page navigation page_pagination example">
+     <nav id="productt" aria-label="Page navigation page_pagination example">
         <ul class="pagination" id="product">
             @for ($i = 1; $i <= $TransfersRecommended->lastPage(); $i++)
                 <li class="page-item page-num"><a
@@ -349,7 +349,7 @@
             <input type="hidden" name="page_num" />
 
         </ul>
-    </nav>  --}}
-    {{ $TransfersRecommended->links('pagination::bootstrap-4') }}
+    </nav>
+    {{-- {{ $TransfersRecommended->links('pagination::bootstrap-4') }} --}}
     @endif
 </div>
