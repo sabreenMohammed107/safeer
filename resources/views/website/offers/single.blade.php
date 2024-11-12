@@ -45,9 +45,9 @@
                                     <p>
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
-                                        {!! $blog->offer_enoverview ?? '' !!}
+                                        {!! $offer->offer_enoverview ?? '' !!}
                                         @else
-                                        {!! $blog->offer_aroverview ?? '' !!}
+                                        {!! $offer->offer_aroverview ?? '' !!}
                                         @endif
                                      </p>
 
