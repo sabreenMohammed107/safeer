@@ -85,7 +85,7 @@ class ToursController extends Controller
     }
 
     // Get the paginated results
-    $ToursRecommended = $ToursRecommended->paginate(6);
+        $ToursRecommended = $ToursRecommended->paginate(6);
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
@@ -129,17 +129,20 @@ class ToursController extends Controller
         $Cities = City::where('country_id', 1)->get();
         $city_id = $request->city_id;
         $country_id = $request->country_id;
-
+        $city_ids=City::where('country_id', $request->country_id)->pluck('id');
         $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
-            ->orderBy('tours.tour_person_cost', 'asc')
-            ->groupBy('tours.id')
-            ->select('tours.*')
-            ->where('tours.active', 1);  // Filter for active tours
+        ->orderBy('tours.tour_person_cost', 'asc')
+        ->groupBy('tours.id')
+        ->select('tours.*')
+        ->where('tours.active', 1);  // Filter for active tours
 
-        // Check if city_id is provided
-        if ($city_id) {
-            $ToursRecommended->where('city_id', $city_id);
-        }
+    // Check if city_id is provided
+    if($country_id && !$city_id ){
+        $ToursRecommended->whereIn('city_id', $city_ids);
+    }
+    if ($city_id) {
+        $ToursRecommended->where('city_id', $city_id);
+    }
 
         // Get the paginated results
         $ToursRecommended = $ToursRecommended->paginate(6);
