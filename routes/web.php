@@ -38,6 +38,7 @@ use App\Http\Controllers\SiteContriesController;
 use App\Http\Controllers\Website\MainController;
 use App\Http\Controllers\BlogsCategoryController;
 use App\Http\Controllers\CompanyBranchController;
+use App\Http\Controllers\FeatureCategoryController;
 use App\Http\Controllers\SiteAuth\AuthController;
 use App\Http\Controllers\Website\ToursController;
 use App\Http\Controllers\Website\HotelsController;
@@ -332,7 +333,7 @@ Route::post('receiptSave', [UsersOrderController::class, 'receiptSave'])->name('
     Route::resource('user-role', UsersRoleController::class);
     Route::post('storeAssign', [UsersRoleController::class, 'storeAssign'])->name('storeAssign');
     Route::post('assignThisOrder', [UsersOrderController::class, 'storeAssign'])->name('assignThisOrder');
-
+    Route::resource('featureCategories', FeatureCategoryController::class);
 
 
 });
