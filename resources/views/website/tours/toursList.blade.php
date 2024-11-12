@@ -171,18 +171,18 @@
     @if ($ToursRecommended->count() > 0)
         <nav id="productt" aria-label="Page navigation page_pagination example">
             <ul class="pagination" id="product">
-                {{--  @for ($i = 1; $i <= $ToursRecommended->lastPage(); $i++)
+                 @for ($i = 1; $i <= $ToursRecommended->lastPage(); $i++)
                     <li class="page-item page-num"><a
                             class="page-link {{ $ToursRecommended->currentPage() == $i ? ' pageActive' : '' }}"
                             href="{{ $ToursRecommended->url($i) }}">{{ $i }}</a></li>
-                @endfor  --}}
-                {{-- <input type="hidden" name="page_num" /> --}}
-                {{-- @if ($ToursRecommended->currentPage() !== $ToursRecommended->lastPage())
+                @endfor
+                <input type="hidden" name="page_num" />
+                @if ($ToursRecommended->currentPage() !== $ToursRecommended->lastPage())
                 <li class="page-item page-inc">
                     <a class="page-link" href="{{ $ToursRecommended->nextPageUrl() }}">Next</a>
                 </li>
-            @endif --}}
-    {{ $TransfersRecommended->links('pagination::bootstrap-4') }}
+            @endif
+    {{-- {{ $TransfersRecommended->links('pagination::bootstrap-4') }} --}}
 
             </ul>
         </nav>
