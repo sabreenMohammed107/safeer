@@ -227,7 +227,10 @@ class ToursController extends Controller
             if ($request->city_id) {
                 $filterTour->where('tours.city_id', $request->city_id);  // Use $request->city_id directly instead of $city_id
             }
-
+            if($request->country_id && !$request->city_id ){
+                $city_ids=City::where('country_id', $request->country_id)->pluck('id');
+                $filterTour->whereIn('city_id', $city_ids);
+            }
             // Paginate the filtered results
             $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')
                 ->groupBy('tours.id')

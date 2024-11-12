@@ -423,9 +423,6 @@
 
                 });
 
-
-
-
                 fetch_productdata(page, arr, arr_cities, arr_types);
 
             });
