@@ -162,7 +162,14 @@
                                 <span class="menu-title">Tags</span>
                             </a>
                         </div>
-
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('featureCategories.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title"> Features Category</span>
+                            </a>
+                        </div>
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('features.index') }}">
                                 <span class="menu-bullet">
