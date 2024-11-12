@@ -50,13 +50,78 @@ $localVar = LaravelLocalization::getCurrentLocale();
                 <button class="{{ Request::segment(2) == 'blogs' ? 'offcan_buttons active' : 'offcan_buttons' }}">
                     <a href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}</a>
                 </button>
-                <button class="{{ Request::segment(2) == 'contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
-                    <a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a>
+                <button class="offcan_buttons dropdown-mobile">
+                    <a href="#" class="dropdown-toggle">حول سافر</a>
+                    <ul class="dropdown-menu-mobile">
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a></li>
+                        <li><a href="#">من نحن</a></li>
+                        <li><a href="#">كن وكيلنا</a></li>
+                        <li><a href="#">قسم التوظيف</a></li>
+                    </ul>
                 </button>
+
+                <style>
+                    .dropdown-mobile {
+                        position: relative;
+                    }
+
+                    .dropdown-menu-mobile {
+                        display: none;
+                        list-style: none;
+                        padding: 10px 0;
+                        margin: 0;
+                        background: #fff;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .dropdown-menu-mobile.show {
+                        display: block;
+                        background-color: #68c2e5;
+                    }
+
+                    .dropdown-menu-mobile li a {
+                        display: block;
+                        padding: 8px 20px;
+                        color: #1c4482;
+                        text-decoration: none;
+                    }
+
+                </style>
+
+                {{-- <button
+                    class="{{ Request::segment(2) == 'contact' ? 'offcan_buttons active' : 'offcan_buttons' }}">
+                    <a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a>
+                </button> --}}
+                {{--<button class="offcan_buttons dropdown">
+                    <li class="dropdown">
+                        <a href="#">Services</a>
+                        <ul class="sub-menu">
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="services-carousel.html">Service Carousel</a></li>
+                            <li><a href="agriculture-services.html">Agriculture services</a>
+                            </li>
+                            <li><a href="organic-services.html">Organic services</a></li>
+                            <li><a href="delivery-services.html">Delivery services</a></li>
+                            <li><a href="farming-products.html">Farming products</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    {{-- <a class="dropdown-toggle" data-bs-toggle="dropdown">
+                        {{ __('links.contact_us') }} <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Safeer 1</a></li>
+                        <li><a class="dropdown-item" href="#">Safeer 2</a></li>
+                        <li><a class="dropdown-item" href="#">Safeer 3</a></li>
+                        <li><a class="dropdown-item" href="#">Safeer 4</a></li>
+                    </ul>
+                </button>--}}
                 <button class="offcan_buttons">
                     @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                     @if (LaravelLocalization::getCurrentLocale() != 'ar' && $localeCode == 'ar')
-                    <a  rel="alternate" hreflang="{{ $localeCode }}"
+                    <a rel="alternate" hreflang="{{ $localeCode }}"
                         href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
 
                         <!--{{ $properties['native'] }}-->
@@ -67,7 +132,7 @@ $localVar = LaravelLocalization::getCurrentLocale();
                     </a>
                     @endif
                     @if (LaravelLocalization::getCurrentLocale() != 'en' && $localeCode == 'en')
-                    <a  rel="alternate" hreflang="{{ $localeCode }}"
+                    <a rel="alternate" hreflang="{{ $localeCode }}"
                         href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                         <span>EN</span>
                         {{-- <img title="English" src="{{ asset('website_assets/images/united-states.webp') }}"
@@ -150,11 +215,76 @@ $localVar = LaravelLocalization::getCurrentLocale();
                         class="{{ Request::segment(1) == 'blogs' ? 'links hybrid active' : 'links hybrid' }}">{{
                         __('links.blogs') }}</a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ LaravelLocalization::localizeUrl('/contact') }}"
                         class="{{ Request::segment(1) == 'contact' ? 'links hybrid active' : 'links hybrid' }}">{{
                         __('links.contact_us') }}</a>
+                </li> --}}
+                <li class="dropdown new-drop">
+                    <a href="#" class="links hybrid">حول سافر</a>
+                    <ul class="sub-menu">
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{
+                                __('links.contact_us') }}</a></li>
+                        <li><a href="services-carousel.html">من نحن</a></li>
+                        <li><a href="agriculture-services.html">كن وكيلنا</a>
+                        </li>
+                        <li><a href="organic-services.html">قسم التوظيف</a></li>
+
+                    </ul>
                 </li>
+                <style>
+                    li.dropdown.new-drop:hover ul {}
+
+                    li.dropdown.new-drop ul {
+                        padding: 8px !important;
+                        width: max-content;
+                        left: -18px;
+                        z-index: 989;
+                        border-radius: 15px;
+                    }
+
+                    li.dropdown.new-drop ul li {
+                        padding: 8px 16px 8px 8px !important;
+
+                    }
+
+                    li.dropdown.new-drop ul li:hover {
+                        background-color: #68c2e5;
+                        border-radius: 6px;
+
+                    }
+
+                    li.dropdown.new-drop ul li a {
+                        padding: 0 !important;
+                        margin: 0;
+                        width: 100%;
+                        color: #1c4482;
+                        text-decoration: none !important;
+                    }
+
+                    li.dropdown.new-drop ul li a::after {
+                        content: none !important;
+                    }
+
+                    li.dropdown.new-drop ul li:hover a {
+                        padding: 0 !important;
+                        margin: 0;
+                        width: 100%;
+                        text-decoration: none !important;
+                    }
+                </style>
+                {{-- <li class="dropdown">
+                    <a class="links hybrid dropdown-toggle" data-bs-toggle="dropdown">
+                        {{ __('links.contact_us') }} <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Item 1</a></li>
+                        <li><a class="dropdown-item" href="#">Item 2</a></li>
+                        <li><a class="dropdown-item" href="#">Item 3</a></li>
+                        <li><a class="dropdown-item" href="#">Item 4</a></li>
+                    </ul>
+                </li> --}}
+
                 <li>
 
                     @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
