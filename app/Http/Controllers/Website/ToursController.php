@@ -70,13 +70,18 @@ class ToursController extends Controller
         $city_id = $request->city_id;
         $country_id = $request->country_id;
         $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
-            // ->orderBy('reviews.tour_id', 'desc')
-             ->orderBy('tours.tour_person_cost', 'asc')
-            ->groupBy('tours.id')
-            ->select('tours.*')
-            ->where('city_id', $city_id)
-            ->where('tours.active', 1)  // Add this line to filter by active tours
-            ->paginate(6);
+        ->orderBy('tours.tour_person_cost', 'asc')
+        ->groupBy('tours.id')
+        ->select('tours.*')
+        ->where('tours.active', 1);  // Filter for active tours
+
+    // Check if city_id is provided
+    if ($city_id) {
+        $ToursRecommended->where('city_id', $city_id);
+    }
+
+    // Get the paginated results
+    $ToursRecommended = $ToursRecommended->paginate(6);
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 

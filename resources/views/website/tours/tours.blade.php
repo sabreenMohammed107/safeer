@@ -106,7 +106,7 @@
                             <select class="form-select" required id="city_id" name="city_id"
                                 aria-label="Default select example">
                                 <option value=""> ...</option>
-                                @foreach ($Cities as $city)
+                                {{-- @foreach ($Cities as $city)
                                     <option value="{{ $city->id }}"
                                         @isset($city_id) {{ $city_id == $city->id ? 'selected' : '' }} @endisset>
 
@@ -116,7 +116,7 @@
                                             {{ $city->ar_city }}
                                         @endif
                                     </option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
                         </div>
                     </div>
