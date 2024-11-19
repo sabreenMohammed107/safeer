@@ -224,7 +224,7 @@
                                                             <label for="">{{ __('links.passImage') }}
                                                                 -{{ $visaDetail->visa_passport_photo }} </label>
                                                             <input type="file" class="file form-control"
-                                                                onchange="validateSize(this)" required name="passport"
+                                                                onchange="validateSize(this)" {{ !$visaDetail->visa_passport_photo ? 'required' : '' }} name="passport"
                                                                 placeholder="{{ __('links.passImage') }}" />
 
                                                         </div>
@@ -232,7 +232,7 @@
                                                             <label for="">{{ __('links.persImage') }}
                                                                 -{{ $visaDetail->visa_personal_photo }} </label>
                                                             <input type="file" class="file form-control"
-                                                                onchange="validateSize(this)" required name="personal"
+                                                                onchange="validateSize(this)" {{ !$visaDetail->visa_personal_photo ? 'required' : '' }} name="personal"
                                                                 placeholder="{{ __('links.persImage') }}" />
                                                         </div>
 
