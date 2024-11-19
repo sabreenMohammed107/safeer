@@ -379,29 +379,56 @@ class UsersOrderController extends Controller
 
     public function EditVisaDetails(Request $request)
     {
-        $obj = VisaDetails::findOrFail($request->detail_id);
-        if (optional($obj->visa_personal_photo)->isNotEmpty()) {
-            Storage::disk('public')->delete('uploads/visas/', $obj->visa_personal_photo);
-        }
-        if (optional($obj->visa_passport_photo)->isNotEmpty()) {
-            Storage::disk('public')->delete('uploads/visas/', $obj->visa_passport_photo);
-        }
-        $passport = Storage::disk('public')->put('uploads/visas/', $request->passport);
-        $personal = Storage::disk('public')->put('uploads/visas/', $request->personal);
-        VisaDetails::findOrFail($request->detail_id)->update([
-            'visa_id' => $request->visa_id,
-            'visa_personal_photo' => basename($personal),
-            'visa_passport_photo' => basename($passport),
-
+        // Validate incoming request
+        $request->validate([
+            'detail_id' => 'required|exists:visa_details,id',
+            'order_id' => 'required|exists:order_details,id',
+            'passport' => 'nullable|file|mimes:jpg,jpeg,png',
+            'personal' => 'nullable|file|mimes:jpg,jpeg,png',
+            'visa_id' => 'required|integer',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
         ]);
-        $orderDetails = OrderDetails::where('id', $request->order_id)->update([
+
+        // Find VisaDetails record
+        $obj = VisaDetails::findOrFail($request->detail_id);
+
+        // Delete old files if they exist
+        if (!empty($obj->visa_personal_photo)) {
+            Storage::disk('public')->delete('uploads/visas/' . $obj->visa_personal_photo);
+        }
+        if (!empty($obj->visa_passport_photo)) {
+            Storage::disk('public')->delete('uploads/visas/' . $obj->visa_passport_photo);
+        }
+
+        // Upload new files if provided
+        $passportPath = $request->hasFile('passport')
+            ? $request->file('passport')->store('uploads/visas', 'public')
+            : $obj->visa_passport_photo;
+
+        $personalPath = $request->hasFile('personal')
+            ? $request->file('personal')->store('uploads/visas', 'public')
+            : $obj->visa_personal_photo;
+
+        // Update VisaDetails
+        $obj->update([
+            'visa_id' => $request->visa_id,
+            'visa_personal_photo' => $personalPath ? basename($personalPath) : null,
+            'visa_passport_photo' => $passportPath ? basename($passportPath) : null,
+        ]);
+
+        // Update OrderDetails
+        OrderDetails::where('id', $request->order_id)->update([
             'holder_name' => $request->name,
             'holder_mobile' => $request->phone,
             'holder_email' => $request->email,
         ]);
 
-        return redirect()->back()->with('flash_del', 'Update Visa Details!');
+        // Redirect back with a success message
+        return redirect()->back()->with('flash_del', 'Visa Details Updated Successfully!');
     }
+
 
     public function updateStatus(Request $request)
     {
