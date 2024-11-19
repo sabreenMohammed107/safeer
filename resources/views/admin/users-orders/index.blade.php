@@ -343,7 +343,7 @@
                                 <option value=""></option>
                                 @foreach ($sellers as $seller)
                                     <option value="{{ $seller->id }}"
-                                        {{ $row->tour_id == $seller->id ? 'selected' : '' }}>
+                                        {{ $row->user_id == $seller->id ? 'selected' : '' }}>
                                         {{ $seller->name ?? '' }}
                                     </option>
                                 @endforeach

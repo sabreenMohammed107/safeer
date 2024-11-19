@@ -463,10 +463,11 @@ class UsersOrderController extends Controller
         // ];
         // Assign_order::create($input);
 
-        $user = Assign_order::firstOrCreate(
-            ['order_details_id' => $request->get('order_details_id')],
-            ['user_id' => $request->get('seller_id')]
+        $user = Assign_order::updateOrCreate(
+            ['order_details_id' => $request->get('order_details_id')], // Match criteria
+            ['user_id' => $request->get('seller_id')] // Values to update or insert
         );
+
 
         return redirect()->back()->with('flash_del', 'Successfully Assign!');
 
