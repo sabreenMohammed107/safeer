@@ -53,11 +53,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        .obj {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+
 
         .booking_info .details>label {
             font-size: 12px;
@@ -99,7 +95,21 @@
             input[type="number"]::-webkit-input-placeholder {
                 text-align: right;
             }
+            .obj {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
         </style>
+
+    @else
+    <style>
+        .obj {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
     @endif
 
 
