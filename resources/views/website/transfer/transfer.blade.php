@@ -53,11 +53,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        .obj {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+
 
         .booking_info .details>label {
             font-size: 12px;
@@ -99,7 +95,21 @@
             input[type="number"]::-webkit-input-placeholder {
                 text-align: right;
             }
+            .obj {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
         </style>
+
+    @else
+    <style>
+        .obj {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
     @endif
 
 
@@ -649,7 +659,7 @@
         // End paginate product
         //function of pagination product
 
-        function fetch_productdata(page, arr, arr_pickups, arr_dropoff, arr_CarClass, arr_CarClass) {
+         function fetch_productdata(page, arr, arr_pickups, arr_dropoff, arr_CarClass, arr_CarClass) {
             // alert(category)
             var country_id = $('#country').find(":selected").val();
             var city_id = $('#city_id').find(":selected").val();
@@ -683,6 +693,9 @@
                 }
             });
         }
+
+
+
         //End function of pagination product
 
         var localizedUrlRetrive = "{{ LaravelLocalization::localizeUrl('/transfers/retrieve') }}";

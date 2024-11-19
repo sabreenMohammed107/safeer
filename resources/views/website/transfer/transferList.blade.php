@@ -379,6 +379,36 @@
     </div>
 
     @if ($TransfersRecommended->count() > 0)
+    <nav id="productt" aria-label="Page navigation">
+        <ul class="pagination" id="product">
+            {{-- Previous Page Link --}}
+            @if ($TransfersRecommended->currentPage() > 1)
+                <li class="page-item">
+                    <a class="page-link" href="{{ $TransfersRecommended->url($TransfersRecommended->currentPage() - 1) }}">&laquo;</a>
+                </li>
+            @endif
+
+            @for ($i = max(1, $TransfersRecommended->currentPage() - 2);
+                 $i <= min($TransfersRecommended->lastPage(), $TransfersRecommended->currentPage() + 2);
+                 $i++)
+                <li class="page-item page-num">
+                    <a class="page-link {{ $TransfersRecommended->currentPage() == $i ? 'pageActive' : '' }}"
+                       href="{{ $TransfersRecommended->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+
+            {{-- Next Page Link --}}
+            @if ($TransfersRecommended->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $TransfersRecommended->url($TransfersRecommended->currentPage() + 1) }}">&raquo;</a>
+                </li>
+            @endif
+        </ul>
+        <input type="hidden" name="page_num" />
+    </nav>
+@endif
+
+    {{--  @if ($TransfersRecommended->count() > 0)
         <nav id="productt" aria-label="Page navigation page_pagination example">
             <ul class="pagination" id="product">
                 @for ($i = 1; $i <= $TransfersRecommended->lastPage(); $i++)
@@ -390,6 +420,5 @@
 
             </ul>
         </nav>
-        {{-- {{ $TransfersRecommended->links('pagination::bootstrap-4') }} --}}
-    @endif
+    @endif  --}}
 </div>
