@@ -16,6 +16,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Concat;
 use Illuminate\Support\Facades\Lang as Lang;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Validator;
 class ContentController extends Controller
 {
@@ -219,18 +220,29 @@ $whyUss=Why_us::all();
 
 
     public function sendNewsLetter(Request $request){
-        try{
+      try{
+            $validator = FacadesValidator::make($request->all(), [
+                'email' => 'required',
 
+            ], [
+
+            ]);
+            if ($validator->fails()) {
+
+                return redirect()->back()->withInput()
+                    ->withErrors($validator->messages());
+
+            }
             $letter= Newsletter::create($request->all());
             // $emails = ['senior.steps.info@gmail.com','info@btsconsultant.com','nasser@btsconsultant.com'];
             // \Mail::to($emails)->send(new NewsLetterNotification($letter));
 
 
-             return redirect()->back()->with('message', Lang::get('links.contactMsg'));
-         }
+            return back() ->withInput($request->input())->with('flash_success',Lang::get('links.contactMsg'));
+        }
             catch(QueryException $q){
+                return back() ->withInput($request->input())->with('flash_error',Lang::get('links.empLetter'));
 
-             return redirect()->back()->with('message',Lang::get('links.empLetter'));
 
          }
     }

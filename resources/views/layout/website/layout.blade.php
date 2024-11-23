@@ -194,6 +194,21 @@
         <div class="newsletter">
             <div class="container">
                 <div class="row mx-0 align-items-center">
+                    @if (Session::has('flash_success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" <strong><i
+                            class="fa fa-check-circle"></i> {{ session('flash_success') }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div><br />
+                @endif
                     <div class="col-md-6 col-sm-12">
                         <span>
 
