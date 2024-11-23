@@ -159,4 +159,6 @@ class CompanyController extends Controller
 
         return view($this->viewName . 'contact', compact(['contacts']));
       }
+
+
 }

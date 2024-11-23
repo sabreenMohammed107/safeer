@@ -246,4 +246,23 @@ $whyUss=Why_us::all();
 
          }
     }
+
+    public function partners(){
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+        $Company = Company::first();
+        return view("website.partners",
+            [
+                "Company" => $Company,
+                "BreadCrumb" => $BreadCrumb,
+            ]);
+      }
+      public function careers(){
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+        $Company = Company::first();
+        return view("website.careers",
+            [
+                "Company" => $Company,
+                "BreadCrumb" => $BreadCrumb,
+            ]);
+      }
 }

@@ -129,6 +129,9 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
     Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
     Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
     Route::get('/reload-captcha', [ContentController::class, 'reloadCaptcha']);
+
+    Route::get('/partners', [ContentController::class, 'partners'])->name('partners');
+    Route::get('/careers', [ContentController::class, 'careers'])->name('careers');
     // outocomplete search
     // Route::get('/autocomplete-search', [HotelsController::class, 'autocompleteSearch']);
     Route::get('autocomplete', [HotelsController::class, 'autocompleteSearch'])->name('autocomplete');
@@ -305,7 +308,6 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::resource('company', CompanyController::class);
 
     Route::get('/contact', [CompanyController::class, 'contact'])->name('contact');
-
     //branch
     Route::resource('branch', CompanyBranchController::class);
 

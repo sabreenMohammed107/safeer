@@ -319,5 +319,6 @@ return [
 'lastName' =>'الاسم الاخير ',
 'submitProfile' =>' حفظ التعديلات',
 'enterCapcha' =>' ادخل رمز التحقق ',
-
+    'become_agent' => 'كن وكيلنا',
+    'careers' => 'قسم التوظيف',
 ];

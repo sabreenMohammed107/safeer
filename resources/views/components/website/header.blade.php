@@ -51,14 +51,15 @@ $localVar = LaravelLocalization::getCurrentLocale();
                     <a href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}</a>
                 </button>
                 <button class="offcan_buttons dropdown-mobile">
-                    <a href="#" class="dropdown-toggle">حول سافر</a>
+                    <a href="#" class="dropdown-toggle">{{ __('links.about_us') }}</a>
                     <ul class="dropdown-menu-mobile">
                         <li><a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{ __('links.contact_us') }}</a></li>
-                        <li><a href="#">من نحن</a></li>
-                        <li><a href="#">كن وكيلنا</a></li>
-                        <li><a href="#">قسم التوظيف</a></li>
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}</a></li>
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/partners') }}">{{ __('links.become_agent') }}</a></li>
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/careers') }}">{{ __('links.careers') }}</a></li>
                     </ul>
                 </button>
+
 
                 <style>
                     .dropdown-mobile {
@@ -220,15 +221,16 @@ $localVar = LaravelLocalization::getCurrentLocale();
                         class="{{ Request::segment(1) == 'contact' ? 'links hybrid active' : 'links hybrid' }}">{{
                         __('links.contact_us') }}</a>
                 </li> --}}
+
                 <li class="dropdown new-drop">
-                    <a href="#" class="links hybrid">حول سافر</a>
+                    <a href="#" class="links hybrid">{{ __('links.about_us') }} </a>
                     <ul class="sub-menu">
                         <li><a href="{{ LaravelLocalization::localizeUrl('/contact') }}">{{
                                 __('links.contact_us') }}</a></li>
-                        <li><a href="services-carousel.html">من نحن</a></li>
-                        <li><a href="agriculture-services.html">كن وكيلنا</a>
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/about') }}"> {{ __('links.about_us') }}</a></li>
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/partners') }}"> {{ __('links.become_agent') }}</a>
                         </li>
-                        <li><a href="organic-services.html">قسم التوظيف</a></li>
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/careers') }}"> {{ __('links.careers') }}</a></li>
 
                     </ul>
                 </li>

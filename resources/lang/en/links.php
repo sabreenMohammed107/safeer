@@ -309,6 +309,8 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'lastName' =>'Last name',
 'submitProfile' =>'submit profile',
 'enterCapcha' =>'Enter Captcha',
+'become_agent' => 'Become Our Agent',
+'careers' => 'Careers',
 ];
 
 
