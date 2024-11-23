@@ -32,20 +32,28 @@
                 </div>
             @endif
 
-            <form action="{{ LaravelLocalization::getLocalizedURL($localVar, route('password.update')) }}" method="POST">
+            <form method="POST" action="{{ route('password.update') }}">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
-                <input type="email" class="form-control mb-3" name="email" placeholder="{{ __('links.email') }}*" value="{{ old('email') }}" required>
-                <input type="password" class="form-control mb-3" name="password" placeholder="{{ __('links.password') }}*" required>
-                <input type="password" class="form-control mb-3" name="password_confirmation" placeholder="{{ __('links.confirm_password') }}*" required>
-                <button type="submit" class="btn sign_button">
-                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        Reset Password
-                    @else
-                        إعادة تعيين كلمة المرور
-                    @endif
-                </button>
+
+                <div>
+                    <label for="email">Email</label>
+                    <input id="email" type="email" name="email" value="{{ old('email', $email ?? '') }}" required>
+                </div>
+
+                <div>
+                    <label for="password">New Password</label>
+                    <input id="password" type="password" name="password" required>
+                </div>
+
+                <div>
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input id="password_confirmation" type="password" name="password_confirmation" required>
+                </div>
+
+                <button type="submit">Reset Password</button>
             </form>
+
         </div>
     </div>
 </div>

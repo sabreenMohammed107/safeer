@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Validator;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password;
+
 abstract class ItemType
 {
     const ROOM = 0;
@@ -408,6 +410,30 @@ public function resetPassword(Request $request)
     \DB::table('password_resets')->where('email', $request->email)->delete();
 
     return redirect()->route('login')->with('session-success', 'Password has been reset successfully.');
+}// Handle password update
+public function updatePassword(Request $request)
+{
+    // Validate the incoming request
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|confirmed|min:8',
+    ]);
+
+    // Attempt to reset the password
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function ($user, $password) {
+            $user->password = bcrypt($password);
+            $user->save();
+        }
+    );
+
+    if ($status === Password::PASSWORD_RESET) {
+        return redirect()->route('login')->with('status', __($status));
+    }
+
+    return back()->withErrors(['email' => [__($status)]]);
 }
 
 }

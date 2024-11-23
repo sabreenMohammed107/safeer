@@ -195,6 +195,7 @@ Route::get('/password/reset/{token}', function ($token) {
 
 // Handle password reset submission
 Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.reset');
+Route::post('/password/update', [AuthController::class, 'updatePassword'])->name('password.update');
 
     Route::get('/safer/reload-captcha-register', [ContentController::class, 'reloadCaptcha']);
 
