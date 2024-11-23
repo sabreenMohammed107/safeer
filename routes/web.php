@@ -49,6 +49,7 @@ use App\Http\Controllers\TransferLocationController;
 use App\Http\Controllers\Website\VisaDataController;
 use App\Http\Controllers\SiteAuth\FaceBookController;
 use App\Http\Controllers\Website\SiteTransferController;
+use App\Models\Company;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -176,6 +177,25 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
         Route::post("/safer/register", [AuthController::class, 'Register'])->name("ProceedRegister");
 
     });
+    //reset password
+// Show password reset request form
+Route::get('/password/reset', function () {
+    $Company = Company::first(); // Fetch the company data
+    return view('auth.password_reset', compact('Company'));
+})->name('password.request');
+
+// Handle reset email submission
+Route::post('/password/email', [AuthController::class, 'sendResetLink'])->name('password.email');
+
+// Show password reset form (with token)
+Route::get('/password/reset/{token}', function ($token) {
+    $Company = Company::first(); // Fetch the company data
+    return view('auth.reset', ['token' => $token, 'Company' => $Company]);
+})->name('password.reset.form');
+
+// Handle password reset submission
+Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.reset');
+
     Route::get('/safer/reload-captcha-register', [ContentController::class, 'reloadCaptcha']);
 
     // Logout

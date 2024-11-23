@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 abstract class ItemType
 {
     const ROOM = 0;
@@ -345,4 +346,68 @@ class AuthController extends Controller
         return redirect()->back();
 
     }
+
+
+
+    public function sendResetLink(Request $request)
+    {
+        // Validate incoming request
+        $request->validate([
+            'email' => 'required|email|exists:site_users,email', // Ensure the email exists
+        ]);
+
+        $user = SiteUser::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->with('session-danger', 'No account found with that email.');
+        }
+
+        // Generate reset token
+        $token = Str::random(60);
+
+        // Store the token
+        \DB::table('password_resets')->updateOrInsert(
+            ['email' => $user->email],
+            ['token' => $token, 'created_at' => now()]
+        );
+
+        // Send the reset email
+        Mail::send('emails.password_reset', ['token' => $token, 'user' => $user], function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('Password Reset Request');
+        });
+
+        return back()->with('session-success', 'A reset link has been sent to your email.');
+    }
+
+
+public function resetPassword(Request $request)
+{
+    // Validate the reset request
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email|exists:site_users,email',
+        'password' => 'required|min:8|confirmed',
+    ]);
+
+    $reset = \DB::table('password_resets')
+        ->where('email', $request->email)
+        ->where('token', $request->token)
+        ->first();
+
+    if (!$reset) {
+        return back()->with('session-danger', 'Invalid or expired reset token.');
+    }
+
+    // Reset the password
+    $user = SiteUser::where('email', $request->email)->first();
+    $user->password = Hash::make($request->password);
+    $user->save();
+
+    // Delete the reset token
+    \DB::table('password_resets')->where('email', $request->email)->delete();
+
+    return redirect()->route('login')->with('session-success', 'Password has been reset successfully.');
+}
+
 }
