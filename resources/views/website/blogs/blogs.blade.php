@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/blog.css') }}">
+    <style>
+        .filtrered_cards .tours_card img{max-height:257px;width:100%;}
+    </style>
 @endsection
 
 @section('bottom-header')
