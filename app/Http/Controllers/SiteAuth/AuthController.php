@@ -379,7 +379,7 @@ class AuthController extends Controller
                 ->subject('Password Reset Request');
         });
 
-        return back()->with('session-success', 'A reset link has been sent to your email.');
+        return back()->with('session-danger', 'A reset link has been sent to your email.');
     }
 
 
