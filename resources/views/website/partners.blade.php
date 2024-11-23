@@ -8,7 +8,7 @@
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="{{ __('links.partnes') }}" :breadcrumb="$BreadCrumb" current="" />
+    <x-website.header.general title="{{ __('links.become_agent') }}" :breadcrumb="$BreadCrumb" current="" />
 @endsection
 
 @section('content')
