@@ -37,21 +37,24 @@
                 <input type="hidden" name="token" value="{{ $token }}">
 
                 <div>
-                    <label for="email">Email</label>
+                    <label for="email" class="col-md-4 col-form-label text-md-end" >{{ __('Email Address') }}</label>
                     <input id="email" type="email" class="form-control" name="email" value="{{ old('email', $email ?? '') }}" required>
                 </div>
 
                 <div>
-                    <label for="password">New Password</label>
+                    <label for="password" class="col-md-4 col-form-label text-md-end" >{{ __('Password') }}</label>
                     <input id="password" type="password" class="form-control" name="password" required>
                 </div>
 
                 <div>
-                    <label for="password_confirmation">Confirm Password</label>
+                    <label for="password_confirmation" class="col-md-4 col-form-label text-md-end" >{{ __('Confirm Password') }}</label>
                     <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required>
                 </div>
-
-                <button type="submit">Reset Password</button>
+                <div class="col-md-6 offset-md-4">
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('save') }}
+                    </button>
+                </div>
             </form>
 
         </div>
