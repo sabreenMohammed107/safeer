@@ -31,7 +31,11 @@
                     @endforeach
                 </div>
             @endif
-
+            @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
             <form method="POST" action="{{ route('password.reset') }}">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
