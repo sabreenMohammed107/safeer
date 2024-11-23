@@ -379,12 +379,14 @@ class AuthController extends Controller
                 ->subject('Password Reset Request');
         });
 
-        return back()->with('session-danger', 'A reset link has been sent to your email.');
+        return back()->with('status', __('A reset link has been sent to your email.'));
+
     }
 
 
 public function resetPassword(Request $request)
 {
+    dd($request->all());
     // Validate the reset request
     $request->validate([
         'token' => 'required',
@@ -409,7 +411,7 @@ public function resetPassword(Request $request)
     // Delete the reset token
     \DB::table('password_resets')->where('email', $request->email)->delete();
 
-    return redirect()->route('login')->with('session-success', 'Password has been reset successfully.');
+    return redirect()->route('login')->with('status', 'Password has been reset successfully.');
 }// Handle password update
 public function updatePassword(Request $request)
 {
