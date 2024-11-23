@@ -410,7 +410,7 @@ public function resetPassword(Request $request)
     // Delete the reset token
     \DB::table('password_resets')->where('email', $request->email)->delete();
 
-    return redirect()->route('login')->with('session-success', 'Password has been reset successfully.');
+    return redirect()->route('login')->with('status', 'Password has been reset successfully.');
 }// Handle password update
 public function updatePassword(Request $request)
 {
