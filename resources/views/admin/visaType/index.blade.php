@@ -26,7 +26,6 @@
 @endsection
 
 @section('content')
-
     <!--begin::Post-->
     <div class="post fs-6 d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -204,12 +203,12 @@
                                                         <span class="svg-icon svg-icon-1">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none">
-                                                                <rect opacity="0.5" x="6" y="17.3137"
-                                                                    width="16" height="2" rx="1"
-                                                                    transform="rotate(-45 6 17.3137)" fill="black" />
-                                                                <rect x="7.41422" y="6" width="16"
+                                                                <rect opacity="0.5" x="6" y="17.3137" width="16"
                                                                     height="2" rx="1"
-                                                                    transform="rotate(45 7.41422 6)" fill="black" />
+                                                                    transform="rotate(-45 6 17.3137)" fill="black" />
+                                                                <rect x="7.41422" y="6" width="16" height="2"
+                                                                    rx="1" transform="rotate(45 7.41422 6)"
+                                                                    fill="black" />
                                                             </svg>
                                                         </span>
                                                         <!--end::Svg Icon-->
@@ -236,26 +235,33 @@
                                                         <!--end::Heading-->
                                                         <!--begin::Input group-->
 
- <!--end::Input-->
- <div class="d-flex flex-wrap gap-5">
-    <!--begin::Input group-->
-    <div class="fv-row w-100 flex-md-root">
-        <label class="fs-6 fw-bold form-label mt-3">
-            <option value="">Select country..</option>
-            {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
-        </label>
-        <!--end::Label-->
-        <select required class="form-select form-select-solid "
-            data-control="select2" data-placeholder="Select an option" required
-            data-show-subtext="true" data-live-search="true" name="country_id" >
-            <option value=""></option>
-            @foreach ($countries as $country)
-                <option value="{{ $country->id }}" {{ $row->country_id == $country->id ? 'selected' : '' }} >{{ $country->en_country }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-</div>
+                                                        <!--end::Input-->
+                                                        <div class="d-flex flex-wrap gap-5">
+                                                            <!--begin::Input group-->
+                                                            <div class="fv-row w-100 flex-md-root">
+
+                                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                                    <option value="">Select a Country...</option>
+                                                                    <i class="fas fa-exclamation-circle ms-1 fs-7"
+                                                                        data-bs-toggle="tooltip"
+                                                                        title="Interviewer who conducts the meeting with the interviewee"></i>
+                                                                </label>
+
+                                                                <select name="country_id" required
+                                                                    aria-label="Select a Country" data-control="select2"
+                                                                    data-placeholder="Select a Country..."
+                                                                    data-dropdown-parent="#kt_modal_new_targetEdit{{ $row->id }}"
+                                                                    class="form-select form-select-solid fw-bolder">
+                                                                    <option value=""></option>
+                                                                    @foreach ($countries as $country)
+                                                                        <option value="{{ $country->id }}"
+                                                                            {{ $row->country_id == $country->id ? 'selected' : '' }}>
+                                                                            {{ $country->en_country }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
 
                                                         <div class="d-flex flex-column mb-8 fv-row">
                                                             <!--begin::Input group-->
@@ -330,8 +336,8 @@
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none">
-                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
-                                    rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                    transform="rotate(-45 6 17.3137)" fill="black" />
                                 <rect x="7.41422" y="6" width="16" height="2" rx="1"
                                     transform="rotate(45 7.41422 6)" fill="black" />
                             </svg>
@@ -356,28 +362,30 @@
                         </div>
                         <!--end::Heading-->
 
-  <!--end::Input-->
-  <div class="d-flex flex-wrap gap-5">
-    <!--begin::Input group-->
-    <!--begin::Input group-->
-    <div class="fv-row w-100 flex-md-root">
-        <label class="fs-6 fw-bold form-label mt-3">
-            <option value="">Select country..</option>
-            {{-- <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Interviewer who conducts the meeting with the interviewee"></i> --}}
-        </label>
-        <!--end::Label-->
-        <select required class="form-select form-select-solid "
-            data-control="select2" data-placeholder="Select an option" required
-            data-show-subtext="true" data-live-search="true" name="country_id" >
-            <option value=""></option>
-            @foreach ($countries as $country)
-                <option value="{{ $country->id }}">{{ $country->en_country }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+                        <!--end::Input-->
+                        <div class="d-flex flex-wrap gap-5">
+                            <!--begin::Input group-->
+                            <!--begin::Input group-->
+                            <div class="fv-row w-100 flex-md-root">
+                                <label class="fs-6 fw-bold form-label mt-3">
+                                    <option value="">Select Country..</option>
+                                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                        title="Interviewer who conducts the meeting with the interviewee"></i>
+                                </label>
 
-</div>
+                                <select name="country_id" required aria-label="Select a Country" data-control="select2"
+                                    data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_new_target"
+                                    class="form-select form-select-solid fw-bolder">
+                                    <option value=""></option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}">
+                                            {{ $country->en_country }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
 
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Input group-->
@@ -395,8 +403,8 @@
 
 
 
-</div>
-<!--end:checkbox-->
+                        </div>
+                        <!--end:checkbox-->
 
 
                         <!--begin::Actions-->
