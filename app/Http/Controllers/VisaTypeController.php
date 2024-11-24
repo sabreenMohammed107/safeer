@@ -34,7 +34,7 @@ class VisaTypeController extends Controller
     public function index()
     {
         $rows = Visa_type::orderBy("created_at", "Desc")->get();
-        $countries = Country::all();
+        $countries = Country::where('flag',0)->get();
 
 
         return view($this->viewName . 'index', compact(['rows','countries']));
