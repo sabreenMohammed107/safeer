@@ -101,11 +101,11 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
 
 
 // new static page of our agents
-    Route::get("/agents", function(){
-        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-        $Company = Company::first();
-        return view('website.Agents' , compact('BreadCrumb' , 'Company'));
-    });
+    // Route::get("/agents", function(){
+    //     $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+    //     $Company = Company::first();
+    //     return view('website.Agents' , compact('BreadCrumb' , 'Company'));
+    // });
 
 
     Route::get("/hotels", [HotelsController::class, 'all_hotels']);
