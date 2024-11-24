@@ -55,7 +55,7 @@ class ToursController extends Controller
     //
     public function tours(Request $request)
     {
-
+        // return $request->city_id;
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         // $Cities = City::all();
@@ -81,7 +81,7 @@ class ToursController extends Controller
         $ToursRecommended->whereIn('city_id', $city_ids);
     }
     if ($city_id) {
-        $ToursRecommended->where('city_id', $city_id);
+        $ToursRecommended->whereIn('city_id', $city_id);
     }
 
     // Get the paginated results
