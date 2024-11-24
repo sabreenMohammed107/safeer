@@ -333,7 +333,7 @@ class BookingController extends Controller
                 $orderDetails->notes = $request->notes;
                 $orderDetails->detail_type = 0;
                                     //add status column
-                                    $orderDetails->status_id = 1;
+                                    $orderDetails->status_id = 5;
                 $orderDetails->save();
 
                 $RoomDetail = new RoomDetails();
@@ -404,7 +404,7 @@ class BookingController extends Controller
                     $orderDetails->pickup_point = $request->tour_pickup_point[$i];
                     $orderDetails->holder_email = $request->tour_adults_email[$i][0];
                                         //add status column
-                                        $orderDetails->status_id = 1;
+                                        $orderDetails->status_id = 5;
                     $orderDetails->save();
 
                     $refTour = Tour::find((int) $request->tour_id[$i]);
@@ -472,7 +472,7 @@ class BookingController extends Controller
                 $orderDetails->notes = $request->transferNotes;
                 $orderDetails->detail_type = 2; // Transfer
                 //add status column
-                $orderDetails->status_id = 1;
+                $orderDetails->status_id = 5;
                 $orderDetails->save();
 
                 $TransferDetail = new TransferDetails();
@@ -507,7 +507,7 @@ class BookingController extends Controller
                     $orderDetails->notes = " ";
                     $orderDetails->detail_type = 3; // Visa option
                     //add status column
-                    $orderDetails->status_id = 1;
+                    $orderDetails->status_id = 5;
                     $orderDetails->save();
 
                     $VisaDetail = new VisaDetails();

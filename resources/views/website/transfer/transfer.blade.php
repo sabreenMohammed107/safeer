@@ -701,7 +701,8 @@
         var localizedUrlRetrive = "{{ LaravelLocalization::localizeUrl('/transfers/retrieve') }}";
 
         function fetch_transfer() {
-
+            var country_id = $('#country').find(":selected").val();
+            var city_id = $('#city_id').find(":selected").val();
             var url = localizedUrlRetrive;
             $.ajax({
                 headers: {
@@ -718,7 +719,8 @@
                     CarModels_ids: $("input[name=CarModels_ids]").val(),
                     CarClass_ids: $("input[name=CarClass_ids]").val(),
 
-
+                    country_id: country_id,
+                    city_id: city_id,
                 },
                 success: function(result) {
                     console.log(result);
