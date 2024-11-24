@@ -174,57 +174,70 @@ class SiteTransferController extends Controller
 
     public function fetch(Request $request)
     {
-        if ($request->ajax()) {
+        \Log::info($request->all());
+    if ($request->ajax()) {
+        $filterTour = Transfer::query();
 
-            $filterTour = Transfer::leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id');
+        // Join the car_models table
+        $filterTour->leftJoin('car_models', 'transfers.car_model_id', '=', 'car_models.id');
 
-            if ($request->pickups_ids) {
-                $filterTour->whereIn("from_location_id", explode(',', $request->pickups_ids));
-                //
-            }
-            if ($request->dropoff_ids) {
-                $filterTour->whereIn("to_location_id", explode(',', $request->dropoff_ids));
-                //
-            }
-            if ($request->CarModels_ids) {
-                $filterTour->whereIn("car_model_id", explode(',', $request->CarModels_ids));
-                //
-            }
-            if ($request->CarClass_ids) {
-                $filterTour->whereIn("class_id", explode(',', $request->CarClass_ids));
-                //
-            }
-            if ($request->searchCarCapacity) {
-                $filterTour->where("car_models.capacity", '<=', $request->searchCarCapacity);
-            }
-            if ($request->city_id) {
-                $city_id = $request->city_id;
-                $filterTour->whereHas('locationFrom', function ($q) use ($city_id) {
-                    $q->where('city_id', $city_id);
-                })
-                    ->orwhereHas('locationTo', function ($q) use ($city_id) {
-                        $q->where('city_id', $city_id);
-                    });
-            }
-
-            $TransfersRecommended = $filterTour->orderBy('transfers.person_price', 'asc')->select('transfers.*')->paginate(6);
-            $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
-            $TransfersByAlpha = $TransfersRecommended->sortBy('car_models.model_enname');
-            \Log::info($request->all());
-            return view(
-                "website.transfer.transferList",
-                [
-
-                    "TransfersRecommended" => $TransfersRecommended,
-                    "TransfersByPrice" => $TransfersByPrice,
-                    "TransfersByAlpha" => $TransfersByAlpha,
-                    "Count" => $TransfersRecommended->count(),
-                    "page_num" => $request->page_num,
-
-                ]
-            )->render();
+        // Apply filters
+        if ($request->pickups_ids) {
+            $filterTour->whereIn("from_location_id", explode(',', $request->pickups_ids));
         }
+
+        if ($request->dropoff_ids) {
+            $filterTour->whereIn("to_location_id", explode(',', $request->dropoff_ids));
+        }
+
+        if ($request->CarModels_ids) {
+            $filterTour->whereIn("transfers.car_model_id", explode(',', $request->CarModels_ids)); // Specify transfers table
+        }
+
+        if ($request->CarClass_ids) {
+            $filterTour->whereIn("class_id", explode(',', $request->CarClass_ids));
+        }
+
+        if ($request->searchCarCapacity) {
+            $filterTour->where("car_models.capacity", '<=', $request->searchCarCapacity);
+        }
+
+        if ($request->city_id) {
+            $city_id = $request->city_id;
+            $filterTour->where(function ($query) use ($city_id) {
+                $query->whereHas('locationFrom', function ($q) use ($city_id) {
+                    $q->where('city_id', $city_id);
+                })->orWhereHas('locationTo', function ($q) use ($city_id) {
+                    $q->where('city_id', $city_id);
+                });
+            });
+        }
+
+        // Fetch the filtered data
+        $TransfersRecommended = $filterTour->orderBy('transfers.person_price', 'asc')
+            ->select('transfers.*', 'car_models.model_enname', 'car_models.capacity')
+            ->paginate(6);
+
+        // Sorting
+        $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
+        $TransfersByAlpha = $TransfersRecommended->sortBy('model_enname');
+
+        \Log::info($request->all());
+
+        return view(
+            "website.transfer.transferList",
+            [
+                "TransfersRecommended" => $TransfersRecommended,
+                "TransfersByPrice" => $TransfersByPrice,
+                "TransfersByAlpha" => $TransfersByAlpha,
+                "Count" => $TransfersRecommended->count(),
+                "page_num" => $request->page_num,
+            ]
+        )->render();
     }
+}
+
+
 
     public function bookTransfer(Request $request)
     {
