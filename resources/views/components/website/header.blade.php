@@ -150,7 +150,7 @@ $localVar = LaravelLocalization::getCurrentLocale();
                 </button>
                 @else
                 <button class="offcan_buttons">
-                    <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteRegister')) }}">{{
+                    <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin')) }}#login_forms">{{
                         __('links.signin') }}</a>
                 </button>
                 <button class="offcan_buttons">
@@ -354,7 +354,7 @@ $localVar = LaravelLocalization::getCurrentLocale();
                         </li> --}}
                         @else
                         <li class="sign_in">
-                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin')) }}"
+                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin')) }}#login_forms"
                                 class="links hybrid sign_in">{{ __('links.signin') }}</a>
                         </li>
                         <li class="sign_up">

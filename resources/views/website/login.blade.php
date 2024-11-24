@@ -46,7 +46,7 @@
                 {{ session('session-info') }}
             </div>
         @endif
-                <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                <h5  id="login_forms"> @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                     Sign in To SAFER
                     @else
