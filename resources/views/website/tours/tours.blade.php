@@ -398,6 +398,8 @@
 
                 console.log(selected_values);
                 
+                fetch_tours();
+                
             });  
 
 
@@ -554,6 +556,11 @@
 
         var localizedUrlRetrive = "{{ LaravelLocalization::localizeUrl('/tours/retrieve') }}";
         function fetch_tours() {
+            const selected_values = $('input[name="filter_cities_ids[]"]:checked')
+                .map(function () {
+                    return +$(this).val();
+                })
+                .get();
             var url = localizedUrlRetrive;
             $.ajax({
                 headers: {
@@ -565,7 +572,7 @@
 
 
                     tour_Types_ids: $("input[name=tour_types_ids]").val(),
-                    tour_cities_ids: $("input[name=tour_cities_ids]").val(),
+                    tour_cities_ids: selected_values,
 
                     price_from: $("input[name=price_from]").val(),
                     price_to: $("input[name=price_to]").val(),
