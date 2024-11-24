@@ -197,6 +197,15 @@ class SiteTransferController extends Controller
             if ($request->searchCarCapacity) {
                 $filterTour->where("car_models.capacity", '<=', $request->searchCarCapacity);
             }
+            if ($request->city_id) {
+                $city_id = $request->city_id;
+                $filterTour->whereHas('locationFrom', function ($q) use ($city_id) {
+                    $q->where('city_id', $city_id);
+                })
+                    ->orwhereHas('locationTo', function ($q) use ($city_id) {
+                        $q->where('city_id', $city_id);
+                    });
+            }
 
             $TransfersRecommended = $filterTour->orderBy('transfers.person_price', 'asc')->select('transfers.*')->paginate(6);
             $TransfersByPrice = $TransfersRecommended->sortBy('person_price');
