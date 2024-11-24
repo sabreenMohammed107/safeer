@@ -98,7 +98,7 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/owl.theme.default.css') }}">
     {{-- owl Carousel links --}}
     <!-- icon -->
-    <link rel="icon" href="{{ asset('/website_assets/images/homePage/logo.webp') }}">
+    <link rel="icon" href="{{ asset('/website_assets/images/t.jpeg') }}">
     {{--
     <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}"> --}}
     <link rel="preload" href="{{ asset('/website_assets/css/whatsappStyle.css') }}" as="style"
