@@ -13,6 +13,7 @@ use App\Models\Review;
 use App\Models\Tour;
 use App\Models\Tour_type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang as Lang;
 use Validator;
@@ -22,6 +23,16 @@ class ToursController extends Controller
     /*
 
  */
+protected $orderByColumn;
+protected $orderByCity;
+public function __construct()
+{
+    // Determine the column to order by based on the current locale
+    $locale = App::getLocale();
+    $this->orderByColumn = $locale === 'ar' ? 'ar_country' : 'en_country';
+    $this->orderByCity = $locale === 'ar' ? 'ar_city' : 'en_city';
+}
+
     public function profile($id)
     {
 
@@ -39,8 +50,8 @@ class ToursController extends Controller
             ->groupBy(["en_category","ar_category", "features_categories.id"])->get();
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
-        $Countries = Country::where('flag', 1)->get();
-        $Cities = City::where('country_id', 1)->get();
+        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        $Cities = City::where('country_id', 1)->orderBy($this->orderByCity)->get();
         return view("website.tours.tourProfile", [
             "Company" => $Company,
             "Tour" => $Tour,
@@ -60,9 +71,9 @@ class ToursController extends Controller
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         // $Cities = City::all();
         $TourTypes = Tour_type::all();
-        $Countries = Country::where('flag', 1)->get();
+        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
         if ($request->country_id) {
-            $Cities = City::where('country_id', $request->country_id)->get();
+            $Cities = City::where('country_id', $request->country_id)->orderBy($this->orderByCity)->get();
         } else {
             $Cities = [];
         }
@@ -125,7 +136,7 @@ class ToursController extends Controller
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         // $Cities = City::all();
         $TourTypes = Tour_type::all();
-        $Countries = Country::where('flag', 1)->get();
+        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
         $Cities = [];
         $city_id = $request->city_id;
         $country_id = $request->country_id;
@@ -169,7 +180,7 @@ class ToursController extends Controller
 
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-        $Cities = City::all();
+        $Cities = City::orderBy($this->orderByCity)->get();
         $TourTypes = Tour_type::all();
 
         $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
@@ -185,7 +196,7 @@ class ToursController extends Controller
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
-        $Countries = Country::where('flag', 1)->get();
+        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
         return view("website.tours.tours", [
             "Company" => $Company,
             "Cities" => $Cities,
@@ -260,10 +271,10 @@ class ToursController extends Controller
     public function fetch(Request $request)
     {
         if ($request->ajax()) {
-            
+
             $city_id = $request->tour_cities_ids;
             $type_id = $request->tour_Types_ids;
-            
+
             $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
                 ->where('tours.active', 1);  // Ensure only active tours are returned
 

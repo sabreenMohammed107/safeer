@@ -15,13 +15,23 @@ use App\Models\Tour_type;
 use App\Models\Transfer;
 use App\Models\Transfer_location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Support\Facades\Lang as Lang;
 
 class SiteTransferController extends Controller
 {
-    //
+    protected $orderByColumn;
+    protected $orderByCity;
+    public function __construct()
+    {
+        // Determine the column to order by based on the current locale
+        $locale = App::getLocale();
+        $this->orderByColumn = $locale === 'ar' ? 'ar_country' : 'en_country';
+        $this->orderByCity = $locale === 'ar' ? 'ar_city' : 'en_city';
+    }
+     //
     public function all_transfer(Request $request)
     {
 
@@ -29,7 +39,7 @@ class SiteTransferController extends Controller
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $CarModels = Car_model::all();
         $CarClass = Car_class::all();
-        $Countries = Country::where('flag', 1)->get();
+        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
         $Cities = [];
         if ($request->city_id) {
             $pickups = Transfer_location::where('city_id',$request->city_id)->get();
@@ -68,9 +78,9 @@ class SiteTransferController extends Controller
         $CarModels = Car_model::all();
         $CarClass = Car_class::all();
 
-        $Countries = Country::where('flag', 1)->get();
+        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
         if ($request->country_id) {
-            $Cities = City::where('country_id', $request->country_id)->get();
+            $Cities = City::where('country_id', $request->country_id)->orderBy($this->orderByCity)->get();
         } else {
             $Cities = [];
         }
