@@ -55,7 +55,7 @@ class ToursController extends Controller
     //
     public function tours(Request $request)
     {
-
+        // return $request->city_id;
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         // $Cities = City::all();
@@ -81,7 +81,7 @@ class ToursController extends Controller
         $ToursRecommended->whereIn('city_id', $city_ids);
     }
     if ($city_id) {
-        $ToursRecommended->where('city_id', $city_id);
+        $ToursRecommended->whereIn('city_id', $city_id);
     }
 
     // Get the paginated results
@@ -260,15 +260,16 @@ class ToursController extends Controller
     public function fetch(Request $request)
     {
         if ($request->ajax()) {
-
+            
             $city_id = $request->tour_cities_ids;
             $type_id = $request->tour_Types_ids;
+            
             $filterTour = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
                 ->where('tours.active', 1);  // Ensure only active tours are returned
 
             // Apply filters based on request input
             if ($request->tour_cities_ids) {
-                $filterTour->whereIn("tours.city_id", explode(',', $request->tour_cities_ids));
+                $filterTour->whereIn("tours.city_id", $city_id);
             }
 
             if ($request->tour_Types_ids) {
@@ -280,9 +281,9 @@ class ToursController extends Controller
             }
 
             // If a specific city_id is provided, apply the filter
-            if ($request->city_id) {
-                $filterTour->where('tours.city_id', $request->city_id);
-            }
+            // if ($request->city_id) {
+            //     $filterTour->where('tours.city_id', $request->city_id);
+            // }
 
             // Paginate the filtered results
             $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')

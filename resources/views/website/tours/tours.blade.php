@@ -165,7 +165,7 @@
                                 </h2>
                                 <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                     aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
+                                    <div class="accordion-body" id="city_filter_box">
                                         @foreach ($Cities as $City)
                                             <div class="form-check">
                                                 <input class="form-check-input tour_cities_id"
@@ -323,6 +323,22 @@
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> --}}
     <script>
         $(document).ready(function() {
+            $("#city_id").change(() => {
+                var country_id = $('#country').find(":selected").val();
+                var city_id = $('#city_id').find(":selected").val();
+                var city_label = $('#city_id').find(":selected").text();
+                $('#city_filter_box').html('');
+                $('#city_filter_box').append(`
+                        <div class="form-check">
+                            <input class="form-check-input tour_cities_id" checked="checked"
+                                data-id="${city_id}" type="checkbox" value="${city_id}" name="filter_cities_ids[]"
+                                id="defaultCheck4">
+                            <label class="form-check-label" for="defaultCheck4">
+                                ${city_label}
+                            </label>
+                        </div>
+                `);
+            });
 
             $('.dynamic').change(function() {
 
@@ -338,13 +354,55 @@
 
                         },
                         success: function(result) {
-
                             $('#city_id').html(result);
+
+                            var regex = /<option value="(\d+)">/g;
+                            var result_idx = ["",...Array.from(result.matchAll(regex), match => match[1])];
+                            var result_values = result.replace(/<\/option><option value="(\d+)">/g, ',').replace(/<\/option>/g, '').replace(/<option value="(\d*)">/g, '').split(',');
+
+                            var result_array = result_idx.map((item, index) => {
+                                return {
+                                    id: item,
+                                    value: result_values[index]
+                                }
+                            });
+
+                            $('#city_filter_box').html('');
+                            for (let i = 1; i < result_array.length; i++) {
+                                $('#city_filter_box').append(`
+                                        <div class="form-check">
+                                            <input class="form-check-input tour_cities_id" name="filter_cities_ids[]"
+                                                data-id="${result_array[i].id}" type="checkbox" value="${result_array[i].id}"
+                                                id="defaultCheck4">
+                                            <label class="form-check-label" for="defaultCheck4">
+                                                ${result_array[i].value}
+                                            </label>
+                                        </div>
+                                `);
+                            }
                         }
 
                     })
                 }
             });
+
+            $("#city_filter_box").on('change', '.tour_cities_id', function () {
+                const id = $(this).val();
+
+                // TODO :: fetch tours based on such id
+                const selected_values = $('input[name="filter_cities_ids[]"]:checked')
+                .map(function () {
+                    return $(this).val();
+                })
+                .get();
+
+                console.log(selected_values);
+                
+                fetch_tours();
+                
+            });  
+
+
 
             var arr = [];
 
@@ -429,6 +487,11 @@
             // Pass the localized URL to a JavaScript variable
             var localizedUrl = "{{ LaravelLocalization::localizeUrl('/tours') }}";
             $("#buttonForm").click(function(e) {
+                const selected_values = $('input[name="filter_cities_ids[]"]:checked')
+                .map(function () {
+                    return +$(this).val();
+                })
+                .get();
                 e.preventDefault();
                 var url = localizedUrl;
                 $.ajax({
@@ -441,8 +504,8 @@
 
 
                         country_id: $('#country option:selected').val(),
-                        city_id: $('#city_id').find(":selected").val(),
-
+                        city_id: selected_values,
+                        
 
 
 
@@ -493,6 +556,11 @@
 
         var localizedUrlRetrive = "{{ LaravelLocalization::localizeUrl('/tours/retrieve') }}";
         function fetch_tours() {
+            const selected_values = $('input[name="filter_cities_ids[]"]:checked')
+                .map(function () {
+                    return +$(this).val();
+                })
+                .get();
             var url = localizedUrlRetrive;
             $.ajax({
                 headers: {
@@ -504,7 +572,7 @@
 
 
                     tour_Types_ids: $("input[name=tour_types_ids]").val(),
-                    tour_cities_ids: $("input[name=tour_cities_ids]").val(),
+                    tour_cities_ids: selected_values,
 
                     price_from: $("input[name=price_from]").val(),
                     price_to: $("input[name=price_to]").val(),
