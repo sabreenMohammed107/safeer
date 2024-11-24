@@ -189,7 +189,7 @@
 
             @if($ToursRecommended->currentPage() < $ToursRecommended->lastPage())
                 <li class="page-item">
-                    <a class="page-link" href="{{ $ToursRecommended->url($ToursRecommended->currentPage() + 1) }}">Next</a>
+                    <a class="page-link" href="{{ $ToursRecommended->url($ToursRecommended->currentPage() + 1) }}">{{ __('links.next') }}</a>
                 </li>
             @endif
         </ul>
