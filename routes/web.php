@@ -52,6 +52,7 @@ use App\Http\Controllers\Website\SiteTransferController;
 use App\Models\Company;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
+use Illuminate\Support\Facades\Lang as Lang;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -97,6 +98,15 @@ Route::group([
 ], function () {
     Route::get("/", [MainController::class, 'index']);
 Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->name('load.section');
+
+
+// new static page of our agents
+    Route::get("/agents", function(){
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+        $Company = Company::first();
+        return view('website.Agents' , compact('BreadCrumb' , 'Company'));
+    });
+
 
     Route::get("/hotels", [HotelsController::class, 'all_hotels']);
     Route::post("/hotels", [HotelsController::class, 'hotels']);
