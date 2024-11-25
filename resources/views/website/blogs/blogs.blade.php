@@ -129,6 +129,10 @@
                 event.preventDefault();
                 var page = $(this).attr('href').split('page=')[1];
                 fetch_data(page);
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
 
             function fetch_data(page) {
