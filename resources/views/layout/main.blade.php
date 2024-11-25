@@ -31,7 +31,7 @@ License: For each use you must have a valid license purchased only from above li
 
     	<!--begin::Body-->
 	<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-fixed aside-default-enabled">
-       <!--begin::Root-->
+       <!--begin::Root-->class="container-fluid d-flex align-items-stretch justify-content-between"
 <div class="d-flex flex-column flex-root">
     <!--begin::Page-->
          @if(Session::has('flash_del'))
