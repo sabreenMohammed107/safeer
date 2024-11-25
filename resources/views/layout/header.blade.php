@@ -3,8 +3,9 @@
 
     <!--begin::Header-->
     <div id="kt_header" class="header" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
-        <!--begin::Container-->
+
         <div class="container-fluid d-flex align-items-stretch justify-content-between">
+
             <!--begin::Logo bar-->
             <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                 <!--begin::Aside Toggle-->
