@@ -37,7 +37,7 @@
     @endif
         {{-- <h5 class="text-primary fw-bold fs-2 my-4"> Cart Details </h5> --}}
         <div class="row mx-0">
-            <div class="col-md-8 col-12">
+            <div class="col-lg-8 col-12">
                 @php
                     $TotalCost = 0;
                 @endphp
@@ -110,7 +110,7 @@
                 @endforeach
 
             </div>
-            <div class="col-md-4 col-12">
+            <div class="col-lg-4 col-12">
                 <div class="passenger_info">
                     <div class="booking_info_card">
                         @foreach ($RoomCosts as $RoomC)
