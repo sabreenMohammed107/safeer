@@ -401,7 +401,7 @@
                                             <!--end::Input group-->
 
                                             <div class="fv-row w-100 flex-md-root">
-                                                <label class="required form-label">Private Cost</label>
+                                                <label class="required form-label">Private Persons No</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input required type="number" min="1"
