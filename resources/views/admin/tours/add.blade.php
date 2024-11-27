@@ -400,8 +400,23 @@
                                             </div>
                                             <!--end::Input group-->
 
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="required form-label">Private Cost</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input required type="number" min="1"
+                                                    name="private_number" class="form-control mb-2"
+                                                    placeholder="private_number" value="1" />
+                                                <!--end::Input-->
+                                            </div>
 
 
+
+                                        </div>
+
+
+
+                                        <div class="d-flex flex-wrap gap-5">
                                             <div class="fv-row w-100 flex-md-root">
                                                 <label class=" form-label">duration</label>
                                                 <!--end::Label-->
@@ -410,12 +425,6 @@
                                                     placeholder="duration" value="" />
                                                 <!--end::Input-->
                                             </div>
-
-                                        </div>
-
-
-
-                                        <div class="d-flex flex-wrap gap-5">
                                             <div class="fv-row w-100 flex-md-root">
                                                 <label class=" form-label">Url Vedio</label>
                                                 <!--end::Label-->

@@ -151,6 +151,8 @@ class BookingController extends Controller
                 'tours.en_name',
                 'tours.ar_name',
                 'tours.id',
+                'tours.tour_type_id',
+                'tours.private_number',
                 'cart.id',
                 'cart.tour_date',
                 'tour_person_cost',
@@ -406,14 +408,17 @@ class BookingController extends Controller
                                         //add status column
                                         $orderDetails->status_id = 5;
                     $orderDetails->save();
-
+                    $TotalPaidPersons = null;
                     $refTour = Tour::find((int) $request->tour_id[$i]);
+                    if($refTour->tour_type_id !== 1){
                     $TotalPaidPersons = $request->tour_adults_count[$i];
                     for ($j = 0; $j < $request->tour_children_count[$i]; $j++) {
                         if ($request->tour_ages[$i] && explode(",", $request->tour_ages[$i])[$j] > 2) {
                             $TotalPaidPersons++;
                         }
                     }
+                    }
+
 
                     $TourElem = new TourDetails();
                     $TourElem->order_details_id = $orderDetails->id;
@@ -421,7 +426,13 @@ class BookingController extends Controller
                     $TourElem->tour_name = $refTour->en_name;
                     $TourElem->tour_banner = $refTour->banner;
                     $TourElem->tour_type = $TourElem->tour_type = (isset($refTour->type) && $refTour->type->id == 1) ? 0 : 1;                    ;
-                    $TourElem->total_cost = ((float) $refTour->tour_person_cost * $TotalPaidPersons); // Before Tax
+                   if( $refTour->tour_type_id == 1){
+                    $TourElem->total_cost = ((float) $request->tour_cost[$i]);
+
+                   }else{
+                     $TourElem->total_cost = ((float) $refTour->tour_person_cost * $TotalPaidPersons); // Before Tax
+
+                   }
                     $TourElem->tour_cost = ((float) $request->tour_cost[$i]); // Before Tax
                     $TourElem->tour_date = $request->tour_date[$i];
                     $TourElem->adults_count = (int) $request->tour_adults_count[$i];

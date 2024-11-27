@@ -323,7 +323,7 @@ public function __construct()
 
     public function bookTours(Request $request)
     {
-
+        $tour = Tour::find($request->tour_id);
         if (!session()->get("SiteUser")) {
             $sessionTourBook = [
                 // 'ID' => $request->id,
@@ -331,6 +331,8 @@ public function __construct()
                 'tour_date' => date_format(date_create($request->tour_date), "Y-m-d"),
                 'adultsNumber' => $request->adultsNumber,
                 'childNumber' => $request->childNumber,
+                'private_number_count' =>$request->private_number_count,
+                'tour_type_id' =>$tour->tour_type_id,
                 'ages' => $request->ages,
                 'itemType' => 1, // Tour
             ];
@@ -344,8 +346,9 @@ public function __construct()
         $CartItem = new Cart();
         $CartItem->user_id = session()->get("SiteUser")["ID"];
         $CartItem->tour_id = $request->tour_id;
-        $CartItem->adults_count = $request->adultsNumber;
-        $CartItem->children_count = $request->childNumber;
+        $CartItem->adults_count = $request->adultsNumber ?? 0;
+        $CartItem->children_count = $request->childNumber ?? 0;
+        $CartItem->private_number_count = $request->private_number_count;
         $CartItem->tour_date = date_format(date_create($request->tour_date), "Y-m-d");
         $CartItem->item_type = 1; // -> Tour
         if (!$request->ages) {

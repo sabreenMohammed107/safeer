@@ -546,6 +546,87 @@
             <form action="{{ LaravelLocalization::localizeUrl('/bookTours') }}" method="POST">
                 @csrf
                 <input type="hidden" name="tour_id" value="{{ $Tour->id }}">
+                @if($Tour->tour_type_id == 1)
+                <div class="hotel_details">
+                    <div class="row mx-0 p-0" style="align-items: center;">
+
+                        <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            <h5 style="text-align: left">
+                                {{ $Tour->en_name }}
+                                @else
+                                <h5 style="text-align: right">
+                                    {{ $Tour->ar_name }}
+
+                                    @endif </h5>
+
+                                <div class="choices">
+                                    {{-- <i class="fa-solid fa-location-dot"></i> --}}
+                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                    {{ $Tour->city->en_city ?? '' }}
+                                    @else
+                                    {{ $Tour->city->ar_city ?? '' }}
+
+                                    @endif
+                                </div>
+                        </div>
+
+
+                        <div class="col-sm-12 col-md-6 col-xl-2 p-s-0 ">
+                            <h5>@if (LaravelLocalization::getCurrentLocale() === 'en')
+                                Tour Type
+                                @else
+                                نوع الرحلة
+
+                                @endif </h5>
+
+                            <div class="choices">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                {{ $Tour->type->en_name ?? '' }}
+                                @else
+                                {{ $Tour->type->ar_name ?? '' }}
+
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-xl-3 p-0 ">
+                            <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                Tour Date
+                                @else
+                                تاريخ الرحلة
+
+                                @endif </h5>
+
+                            <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control"
+                                name="tour_date" min="{{date('Y-m-d', strtotime('+1 day'))}}" max="2023-12-31"
+                                autocomplete="off" />
+
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-xl-3">
+
+                            <h5> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                 Persons No.
+                                @else
+
+                                  عدد الأشخاص.
+                                @endif</h5>
+                                <input type="number" name="private_number_count" id="private_number_count"
+                                class="form-control" value="1" max="{{ $Tour->private_number }}" />
+
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-xl-1 p-0 ">
+                            <div class="main" id="room_main">
+
+                                <button class="btn" type="submit">
+                                    {{ __('links.book') }}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                @else
                 <div class="hotel_details">
                     <div class="row mx-0 p-0" style="align-items: center;">
 
@@ -675,6 +756,8 @@
 
                     </div>
                 </div>
+                @endif
+
             </form>
         </section>
     </div>

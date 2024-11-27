@@ -29,7 +29,8 @@ class Tour extends Model
         'en_notes',
         'ar_notes',
         'en_tours_details',
-        'ar_tours_details'
+        'ar_tours_details',
+        'private_number'
 
     ];
 // this is a recommended way to declare event handlers
