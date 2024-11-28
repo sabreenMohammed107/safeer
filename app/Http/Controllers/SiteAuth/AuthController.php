@@ -76,8 +76,8 @@ class AuthController extends Controller
                 $CartItem->user_id = session()->get("SiteUser")["ID"];
                 $CartItem->room_type_cost_id = session()->get("cartItem")["ID"];
                 $CartItem->room_cap = session()->get("cartItem")["Cap"];
-                $CartItem->adults_count = session()->get("cartItem")["adultsNumber"];
-                $CartItem->children_count = session()->get("cartItem")["childNumber"];
+                $CartItem->adults_count = session()->get("cartItem")["adultsNumber"] ?? 0;
+                $CartItem->children_count = session()->get("cartItem")["childNumber"] ?? 0;
                 $CartItem->rooms_count = session()->get("cartItem")["roomsNumber"];
                 $CartItem->nights = session()->get("cartItem")["Nights"];
                 $CartItem->from_date = session()->get("cartItem")["from_date"];
@@ -93,8 +93,8 @@ class AuthController extends Controller
                 $CartItem = new Cart();
                 $CartItem->user_id = session()->get("SiteUser")["ID"];
                 $CartItem->tour_id = session()->get("cartItem")["tour_id"];
-                $CartItem->adults_count = session()->get("cartItem")["adultsNumber"];
-                $CartItem->children_count = session()->get("cartItem")["childNumber"];
+                $CartItem->adults_count = session()->get("cartItem")["adultsNumber"] ?? 0;
+                $CartItem->children_count = session()->get("cartItem")["childNumber"] ?? 0;
                 $CartItem->tour_date = session()->get("cartItem")["tour_date"];
                 if (!session()->get("cartItem")["ages"]) {
                     $CartItem->ages = null;

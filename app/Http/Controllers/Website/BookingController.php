@@ -351,8 +351,8 @@ class BookingController extends Controller
                 $RoomDetail->to_date = $request->to_date;
                 $RoomDetail->from_date = $request->from_date;
                 $RoomDetail->nights = $request->nights;
-                $RoomDetail->adults_count = $request->adults_count;
-                $RoomDetail->children_count = $request->children_count;
+                $RoomDetail->adults_count = $request->adults_count ?? 0;
+                $RoomDetail->children_count = $request->children_count ?? 0;
                 $RoomDetail->rooms_count = $cartitem->rooms_count;
                 $RoomDetail->save();
 
