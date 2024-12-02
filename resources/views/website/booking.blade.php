@@ -596,7 +596,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @if ($Tour->tour_type_id == 1)
+                                                @if (isset($Tour) && $Tour->tour_type_id == 1)
                                                     <div class="remain_info mb-3">
                                                         <div class="date">
 
@@ -1196,7 +1196,7 @@
                                         قبل ضريبة القيمة المضافة
                                     @endif
 
-                                    @if ($Tour->tour_type_id == 1)
+                                    @if (isset($Tour) && $Tour->tour_type_id == 1)
                                     <span
                                     class="float-end text-end BeforeT_txt">${{ number_format($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost, 2, '.', '') }}
                                 </span>
@@ -1215,7 +1215,7 @@
                                         بعد ضريبة القيمة المضافة
                                     @endif
                                     <span class="float-end text-end">
-                                        @if ($Tour->tour_type_id == 1)
+                                        @if (isset($Tour) && $Tour->tour_type_id == 1)
                                         <span
                                         class="BeforeT_txt">${{ number_format($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost, 2, '.', '') }}</span>
                                     X {{ (float) $tax_percentage / 100 }} <br> <span
@@ -1242,7 +1242,7 @@
                                     @endif
                                 </h5>
                                 <span id="gt" class="AfterT_txt">
-                                    @if ($Tour->tour_type_id == 1)
+                                    @if (isset($Tour) && $Tour->tour_type_id == 1)
                                     <span>$</span>{{ number_format(($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100), 2, '.', '') }}
                                 </span>
                                     @else
