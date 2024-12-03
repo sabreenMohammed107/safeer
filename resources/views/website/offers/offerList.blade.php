@@ -20,10 +20,11 @@
                 </div>
                     <span>
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                        {{ strip_tags(Str::words($offer->offer_enoverview ?? '', $limit = 30, $end = '...')) }}
+                        {{ Str::words(strip_tags($offer->offer_enoverview ?? ''), 30, '...') }}
+                        {{-- {{ strip_tags(Str::words($offer->offer_enoverview ?? '', $limit = 30, $end = '...')) }} --}}
                         @else
-                        {{ strip_tags(Str::words($offer->offer_aroverview ?? '', $limit = 30, $end = '...')) }}
+                        {{ Str::words(strip_tags($offer->offer_aroverview ?? ''), 30, '...') }}
+                        {{-- {{ strip_tags(Str::words($offer->offer_aroverview ?? '', $limit = 30, $end = '...')) }} --}}
                         @endif
                     </span>
 

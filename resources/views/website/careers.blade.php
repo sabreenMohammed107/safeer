@@ -83,9 +83,9 @@
         </h6>
         <p>
             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                If you are excited to join the Safer team, please submit your details here: <a href="https://bit.ly/SaferJobs" target="_blank">https://bit.ly/SaferJobs</a>. We welcome all applicants and look forward to adding new members to our team!
+                If you are excited to join the Safer team, please submit your details here: https://bit.ly/SaferJobs. We welcome all applicants and look forward to adding new members to our team!
             @else
-                إذا كنت متحمسًا للانضمام إلى فريق سافر، يرجى كتابة كل بياناتك هنا <a href="https://bit.ly/SaferJobs" target="_blank">https://bit.ly/SaferJobs</a>. نحن نرحب بجميع المتقدمين ونتطلع إلى إضافة أعضاء جدد لفريقنا!
+                إذا كنت متحمسًا للانضمام إلى فريق سافر، يرجى كتابة كل بياناتك هنا https://bit.ly/SaferJobs. نحن نرحب بجميع المتقدمين ونتطلع إلى إضافة أعضاء جدد لفريقنا!
             @endif
         </p>
 

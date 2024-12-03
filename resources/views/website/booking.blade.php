@@ -1022,7 +1022,7 @@
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
                                             Visa Applications Details
                                         @else
-                                            تفاصيل طلبات التأشيرة
+                                            تفاصيل طلبات التاشيرات
                                         @endif
                                     </h4>
                                 </div>
@@ -1128,7 +1128,7 @@
                                             @if (LaravelLocalization::getCurrentLocale() === 'en')
                                                 Visa Application Receipt
                                             @else
-                                                ايصال التأشيرة
+                                                ايصال التاشيرات
                                             @endif
                                         </p>
                                         <div class="booking_info_card">

@@ -103,7 +103,7 @@
             @if (LaravelLocalization::getCurrentLocale() === 'en')
             Pickup Your Visa
             @else
-            احصل على التأشيرة الخاصة بك
+            احصل على التاشيرات الخاصة بك
             @endif
         </p>
         <div class=" search_details_info passenger_info_details hotel_details mt-3 ">
