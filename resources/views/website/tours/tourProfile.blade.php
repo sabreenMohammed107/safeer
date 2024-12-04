@@ -598,7 +598,7 @@
                                 @endif </h5>
 
                             <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control"
-                                name="tour_date" min="{{date('Y-m-d', strtotime('+1 day'))}}" max="2023-12-31"
+                               required name="tour_date" min="{{date('Y-m-d', strtotime('+1 day'))}}" max="2023-12-31"
                                 autocomplete="off" />
 
                         </div>
@@ -678,7 +678,7 @@
                                 @endif </h5>
 
                             <input type="text" id="end_date" placeholder="DD/MM/YYYY" class="form-control"
-                                name="tour_date" min="{{date('Y-m-d', strtotime('+1 day'))}}" max="2023-12-31"
+                               required name="tour_date" min="{{date('Y-m-d', strtotime('+1 day'))}}" max="2023-12-31"
                                 autocomplete="off" />
 
                         </div>
