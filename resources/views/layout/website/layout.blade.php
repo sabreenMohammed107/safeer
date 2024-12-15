@@ -191,7 +191,7 @@
 
     <!--  ending page  -->
     <section class="ending">
-        <div class="newsletter">
+        <div id="newsletter" class="newsletter">
             <div class="container">
                 <div class="row mx-0 align-items-center">
                     @if (Session::has('flash_success'))

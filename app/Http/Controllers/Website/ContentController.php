@@ -220,31 +220,38 @@ $whyUss=Why_us::all();
     }
 
 
-    public function sendNewsLetter(Request $request){
-      try{
+    public function sendNewsLetter(Request $request) {
+        try {
             $validator = FacadesValidator::make($request->all(), [
-                'email' => 'required',
-
+                'email' => 'required|email',
             ], [
-
+                'email.required' => 'The email field is required.',
+                'email.email' => 'Please provide a valid email address.',
             ]);
+
             if ($validator->fails()) {
-
-                return redirect()->back()->withInput()
-                    ->withErrors($validator->messages());
-
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors($validator->messages())
+                    ->withFragment('newsletter'); // Redirects to the #newsletter section
             }
-            $letter= Newsletter::create($request->all());
-            $emails = ['senior.steps.info@gmail.com','Info@Safer.Travel','sabreenm312@gmail.com'];
+
+            $letter = Newsletter::create($request->all());
+            $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com'];
             \Mail::to($emails)->send(new NewsLetterNotification($letter));
-            return back() ->withInput($request->input())->with('flash_success',Lang::get('links.contactMsg'));
+
+            return redirect()->back()
+                ->withInput($request->input())
+                ->with('flash_success', Lang::get('links.contactMsg'))
+                ->withFragment('newsletter'); // Redirects to the #newsletter section
+        } catch (QueryException $q) {
+            return redirect()->back()
+                ->withInput($request->input())
+                ->with('flash_error', Lang::get('links.empLetter'))
+                ->withFragment('newsletter'); // Redirects to the #newsletter section
         }
-            catch(QueryException $q){
-                return back() ->withInput($request->input())->with('flash_error',Lang::get('links.empLetter'));
-
-
-         }
     }
+
 
     public function partners(){
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
