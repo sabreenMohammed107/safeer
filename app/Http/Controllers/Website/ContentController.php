@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewsLetterNotification;
 use App\Models\Blog;
 use App\Models\Blogs_category;
 use App\Models\Company;
@@ -234,10 +235,8 @@ $whyUss=Why_us::all();
 
             }
             $letter= Newsletter::create($request->all());
-            // $emails = ['senior.steps.info@gmail.com','info@btsconsultant.com','nasser@btsconsultant.com'];
-            // \Mail::to($emails)->send(new NewsLetterNotification($letter));
-
-
+            $emails = ['senior.steps.info@gmail.com','Info@Safer.Travel','sabreenm312@gmail.com'];
+            \Mail::to($emails)->send(new NewsLetterNotification($letter));
             return back() ->withInput($request->input())->with('flash_success',Lang::get('links.contactMsg'));
         }
             catch(QueryException $q){

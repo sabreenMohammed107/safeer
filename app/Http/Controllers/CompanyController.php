@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Contact;
+use App\Models\Newsletter;
 
 class CompanyController extends Controller
 {
@@ -160,5 +161,10 @@ class CompanyController extends Controller
         return view($this->viewName . 'contact', compact(['contacts']));
       }
 
+public function newsletter(){
+    $contacts = Newsletter::orderBy("created_at", "Desc")->get();
 
+
+    return view($this->viewName . 'newsletter', compact(['contacts']));
+}
 }

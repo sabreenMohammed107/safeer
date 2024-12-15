@@ -318,6 +318,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::resource('company', CompanyController::class);
 
     Route::get('/contact', [CompanyController::class, 'contact'])->name('contact');
+    Route::get('/newsletterEmails', [CompanyController::class, 'newsletter'])->name('newsletterEmails');
     //branch
     Route::resource('branch', CompanyBranchController::class);
 
