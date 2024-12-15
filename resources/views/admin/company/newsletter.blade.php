@@ -84,7 +84,8 @@
                                         value="1" />
                                 </div>
                             </th>
-                            <th class="text-end min-w-100px">Email</th>
+                            <th class="text-start min-w-100px">Created at</th>
+                            <th class="text-start min-w-100px">Email</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -95,11 +96,16 @@
  <!--begin::Table row-->
  <tr>
     <!--begin::Checkbox-->
+
     <td>
         <div class="form-check form-check-sm form-check-custom form-check-solid">
             <input class="form-check-input" type="checkbox" value="1" />
         </div>
     </td>
+    <td class="text-end pe-0" data-order="15">
+        <span class="fw-bolder ms-3">{{$row->created_at->diffForHumans();}}</span>
+    </td>
+
     <td class="text-end pe-0" data-order="15">
         <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
         <span class="fw-bolder ms-3">{{ $row->email ?? '' }}</span>
