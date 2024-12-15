@@ -102,11 +102,11 @@
             <input class="form-check-input" type="checkbox" value="1" />
         </div>
     </td>
-    <td class="text-center pe-0" data-order="15">
+    <td class="text-start pe-0" data-order="15">
         <span class="fw-bolder ms-3">{{ $row->created_at->format('d-m-Y') }}</span>
     </td>
 
-    <td class="text-start pe-0" data-order="15">
+    <td class="text-center pe-0" data-order="15">
         <input type="hidden" name="" id=""  data-kt-ecommerce-category-filter="category_id" value="{{$row->id}}" >
         <span class="fw-bolder ms-3">{{ $row->email ?? '' }}</span>
     </td>
