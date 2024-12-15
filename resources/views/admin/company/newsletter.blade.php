@@ -85,7 +85,7 @@
                                 </div>
                             </th>
                             <th class="text-start min-w-100px">Created at</th>
-                            <th class="text-start min-w-100px">Email</th>
+                            <th class="text-center min-w-100px">Email</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -102,7 +102,7 @@
             <input class="form-check-input" type="checkbox" value="1" />
         </div>
     </td>
-    <td class="text-end pe-0" data-order="15">
+    <td class="text-center pe-0" data-order="15">
         <span class="fw-bolder ms-3">{{ $row->created_at->format('d-m-Y') }}</span>
     </td>
 
