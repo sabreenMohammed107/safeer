@@ -14,4 +14,9 @@ class Country extends Model
         'flag'
 
     ];
+    public function cities()
+    {
+        return $this->hasMany(City::class);
+    }
+
 }

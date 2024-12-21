@@ -14,4 +14,10 @@ class Transfer_location extends Model
         'city_id',
 
     ];
+
+    public function transfers()
+    {
+        return $this->hasMany(Transfer::class, 'from_location_id')
+            ->orWhereHas('locationTo');
+    }
 }

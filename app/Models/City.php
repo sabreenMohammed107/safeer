@@ -26,5 +26,9 @@ class City extends Model
     }
 
 
+    public function transferLocations()
+    {
+        return $this->hasMany(Transfer_location::class);
+    }
 
 }

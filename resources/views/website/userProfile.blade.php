@@ -28,13 +28,13 @@
                         @endif  id="v-pills-account-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-account" type="button" role="tab" aria-controls="v-pills-account"
                             aria-selected="true"> <i class="fa-solid fa-user account_icon"></i> {{ __('links.myAccount') }}  </button>
-                        <button class="nav-link" @if (LaravelLocalization::getCurrentLocale() === 'ar')
+                        {{-- <button class="nav-link" @if (LaravelLocalization::getCurrentLocale() === 'ar')
 
                         style="text-align: right !important"
                         @endif  id="v-pills-favorite-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-favorite" type="button" role="tab"
                             aria-controls="v-pills-favorite" aria-selected="false"> <i
-                                class="fa-regular fa-heart"></i>{{ __('links.myFavorite') }}  </button>
+                                class="fa-regular fa-heart"></i>{{ __('links.myFavorite') }}  </button> --}}
                         <button class="nav-link" @if (LaravelLocalization::getCurrentLocale() === 'ar')
 
                         style="text-align: right !important"

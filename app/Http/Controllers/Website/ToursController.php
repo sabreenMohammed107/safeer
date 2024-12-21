@@ -23,15 +23,15 @@ class ToursController extends Controller
     /*
 
  */
-protected $orderByColumn;
-protected $orderByCity;
-public function __construct()
-{
-    // Determine the column to order by based on the current locale
-    $locale = App::getLocale();
-    $this->orderByColumn = $locale === 'ar' ? 'ar_country' : 'en_country';
-    $this->orderByCity = $locale === 'ar' ? 'ar_city' : 'en_city';
-}
+    protected $orderByColumn;
+    protected $orderByCity;
+    public function __construct()
+    {
+        // Determine the column to order by based on the current locale
+        $locale = App::getLocale();
+        $this->orderByColumn = $locale === 'ar' ? 'ar_country' : 'en_country';
+        $this->orderByCity = $locale === 'ar' ? 'ar_city' : 'en_city';
+    }
 
     public function profile($id)
     {
@@ -43,14 +43,22 @@ public function __construct()
         $TourGallery = Gallery::where([["tour_id", '=', $id], ["active", '=', 1]])->take(4)->get();
         // return $HotelTourGallery;
         $FeaturesCategories = DB::table("tour_features")
-            ->select("en_category","ar_category", "features_categories.id")
+            ->select("en_category", "ar_category", "features_categories.id")
             ->leftJoin("features", "features.id", "=", "tour_features.feature_id")
             ->leftJoin("features_categories", "features.feature_category_id", "=", "features_categories.id")
             ->where("tour_id", '=', $id)
-            ->groupBy(["en_category","ar_category", "features_categories.id"])->get();
+            ->groupBy(["en_category", "ar_category", "features_categories.id"])->get();
         // Hotels_feature::with(["feature"])->where("hotel_id", "=", $id)->groupBy("feature->feature_category_id")->get();
 
-        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        // $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        $Countries = Country::where('flag', 1)
+            ->whereHas('cities', function ($query) {
+                $query->whereHas('tours', function ($query) {
+                    $query->where('active', 1);
+                });
+            })
+            ->orderBy($this->orderByColumn)
+            ->get();
         $Cities = City::where('country_id', 1)->orderBy($this->orderByCity)->get();
         return view("website.tours.tourProfile", [
             "Company" => $Company,
@@ -71,7 +79,15 @@ public function __construct()
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         // $Cities = City::all();
         $TourTypes = Tour_type::all();
-        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        // $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        $Countries = Country::where('flag', 1)
+            ->whereHas('cities', function ($query) {
+                $query->whereHas('tours', function ($query) {
+                    $query->where('active', 1);
+                });
+            })
+            ->orderBy($this->orderByColumn)
+            ->get();
         if ($request->country_id) {
             $Cities = City::where('country_id', $request->country_id)->orderBy($this->orderByCity)->get();
         } else {
@@ -80,22 +96,22 @@ public function __construct()
 
         $city_id = $request->city_id;
         $country_id = $request->country_id;
-        $city_ids=City::where('country_id', $request->country_id)->pluck('id');
+        $city_ids = City::where('country_id', $request->country_id)->pluck('id');
         $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
-        ->orderBy('tours.tour_person_cost', 'asc')
-        ->groupBy('tours.id')
-        ->select('tours.*')
-        ->where('tours.active', 1);  // Filter for active tours
+            ->orderBy('tours.tour_person_cost', 'asc')
+            ->groupBy('tours.id')
+            ->select('tours.*')
+            ->where('tours.active', 1);  // Filter for active tours
 
-    // Check if city_id is provided
-    if($country_id && !$city_id ){
-        $ToursRecommended->whereIn('city_id', $city_ids);
-    }
-    if ($city_id) {
-        $ToursRecommended->whereIn('city_id', $city_id);
-    }
+        // Check if city_id is provided
+        if ($country_id && !$city_id) {
+            $ToursRecommended->whereIn('city_id', $city_ids);
+        }
+        if ($city_id) {
+            $ToursRecommended->whereIn('city_id', $city_id);
+        }
 
-    // Get the paginated results
+        // Get the paginated results
         $ToursRecommended = $ToursRecommended->paginate(6);
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
@@ -136,24 +152,32 @@ public function __construct()
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         // $Cities = City::all();
         $TourTypes = Tour_type::all();
-        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        // $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        $Countries = Country::where('flag', 1)
+            ->whereHas('cities', function ($query) {
+                $query->whereHas('tours', function ($query) {
+                    $query->where('active', 1);
+                });
+            })
+            ->orderBy($this->orderByColumn)
+            ->get();
         $Cities = [];
         $city_id = $request->city_id;
         $country_id = $request->country_id;
-        $city_ids=City::where('country_id', $request->country_id)->pluck('id');
+        $city_ids = City::where('country_id', $request->country_id)->pluck('id');
         $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
-        ->orderBy('tours.tour_person_cost', 'asc')
-        ->groupBy('tours.id')
-        ->select('tours.*')
-        ->where('tours.active', 1);  // Filter for active tours
+            ->orderBy('tours.tour_person_cost', 'asc')
+            ->groupBy('tours.id')
+            ->select('tours.*')
+            ->where('tours.active', 1);  // Filter for active tours
 
-    // Check if city_id is provided
-    if($country_id && !$city_id ){
-        $ToursRecommended->whereIn('city_id', $city_ids);
-    }
-    if ($city_id) {
-        $ToursRecommended->where('city_id', $city_id);
-    }
+        // Check if city_id is provided
+        if ($country_id && !$city_id) {
+            $ToursRecommended->whereIn('city_id', $city_ids);
+        }
+        if ($city_id) {
+            $ToursRecommended->where('city_id', $city_id);
+        }
 
         // Get the paginated results
         $ToursRecommended = $ToursRecommended->paginate(6);
@@ -196,7 +220,15 @@ public function __construct()
         $ToursByPrice = $ToursRecommended->sortBy('tour_person_cost');
         $ToursByAlpha = $ToursRecommended->sortBy('en_name');
 
-        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        // $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        $Countries = Country::where('flag', 1)
+            ->whereHas('cities', function ($query) {
+                $query->whereHas('tours', function ($query) {
+                    $query->where('active', 1);
+                });
+            })
+            ->orderBy($this->orderByColumn)
+            ->get();
         return view("website.tours.tours", [
             "Company" => $Company,
             "Cities" => $Cities,
@@ -238,8 +270,8 @@ public function __construct()
             if ($request->city_id) {
                 $filterTour->where('tours.city_id', $request->city_id);  // Use $request->city_id directly instead of $city_id
             }
-            if($request->country_id && !$request->city_id ){
-                $city_ids=City::where('country_id', $request->country_id)->pluck('id');
+            if ($request->country_id && !$request->city_id) {
+                $city_ids = City::where('country_id', $request->country_id)->pluck('id');
                 $filterTour->whereIn('city_id', $city_ids);
             }
             // Paginate the filtered results
@@ -331,8 +363,8 @@ public function __construct()
                 'tour_date' => date_format(date_create($request->tour_date), "Y-m-d"),
                 'adultsNumber' => $request->adultsNumber,
                 'childNumber' => $request->childNumber,
-                'private_number_count' =>$request->private_number_count,
-                'tour_type_id' =>$tour->tour_type_id,
+                'private_number_count' => $request->private_number_count,
+                'tour_type_id' => $tour->tour_type_id,
                 'ages' => $request->ages,
                 'itemType' => 1, // Tour
             ];

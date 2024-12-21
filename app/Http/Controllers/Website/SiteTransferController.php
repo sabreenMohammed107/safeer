@@ -39,7 +39,14 @@ class SiteTransferController extends Controller
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $CarModels = Car_model::all();
         $CarClass = Car_class::all();
-        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        // $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        $Countries = Country::whereHas('cities', function ($query) {
+            $query->whereHas('transferLocations', function ($query) {
+                $query->whereHas('transfers');
+            });
+        })
+        ->orderBy('en_country', 'asc')
+        ->get();
         $Cities = [];
         if ($request->city_id) {
             $pickups = Transfer_location::where('city_id',$request->city_id)->get();
@@ -78,7 +85,14 @@ class SiteTransferController extends Controller
         $CarModels = Car_model::all();
         $CarClass = Car_class::all();
 
-        $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        // $Countries = Country::where('flag', 1)->orderBy($this->orderByColumn)->get();
+        $Countries = Country::whereHas('cities', function ($query) {
+            $query->whereHas('transferLocations', function ($query) {
+                $query->whereHas('transfers');
+            });
+        })
+        ->orderBy('en_country', 'asc')
+        ->get();
         if ($request->country_id) {
             $Cities = City::where('country_id', $request->country_id)->orderBy($this->orderByCity)->get();
         } else {
