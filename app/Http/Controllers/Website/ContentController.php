@@ -46,6 +46,8 @@ $whyUss=Why_us::all();
         $blogs = Blog::where('blog_category_id','!=',100)->paginate(10);
         $categories = Blogs_category::where('id','!=',100)->get();
         $latest = Blog::where('blog_category_id','!=',100)->take(5)->orderBy("created_at", "Desc")->get();
+        $offer = Offer::where('active', 1)->where('poster', 1)->inRandomOrder()->first();
+
         return view("website.blogs.blogs",
             [
                 "Company" => $Company,
@@ -53,6 +55,7 @@ $whyUss=Why_us::all();
                 "categories" => $categories,
                 "latest" => $latest,
                 "BreadCrumb" => $BreadCrumb,
+                "offer" => $offer,
             ]);
     }
 
@@ -78,6 +81,8 @@ $whyUss=Why_us::all();
         $blog = Blog::where('id', $id)->first();
         $categories = Blogs_category::where('id','!=',100)->get();
         $latest = Blog::where('blog_category_id','!=',100)->take(5)->orderBy("created_at", "Desc")->get();
+        $offer = Offer::where('active', 1)->where('poster', 1)->inRandomOrder()->first();
+
         return view("website.blogs.single",
             [
                 "Company" => $Company,
@@ -85,6 +90,7 @@ $whyUss=Why_us::all();
                 "categories" => $categories,
                 "latest" => $latest,
                 "BreadCrumb" => $BreadCrumb,
+                "offer" => $offer,
             ]);
     }
 

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->longText('offer_enoverview')->nullable();
             $table->longText('offer_aroverview')->nullable();
             $table->enum('status', ['main', 'basic']);
+            $table->integer('poster')->default(0);
+            $table->string('poster_image')->nullable();
         });
     }
 

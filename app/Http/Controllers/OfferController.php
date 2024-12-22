@@ -65,11 +65,22 @@ class OfferController extends Controller
 
             $input['image'] = $this->UplaodImage($attach_image);
         }
+        if ($request->hasFile('poster_image')) {
+            $poster_image = $request->file('poster_image');
+
+            $input['poster_image'] = $this->UplaodPoster($poster_image);
+        }
         if ($request->has('active')) {
 
             $input['active'] = '1';
         } else {
             $input['active'] = '0';
+        }
+        if ($request->has('poster')) {
+
+            $input['poster'] = '1';
+        } else {
+            $input['poster'] = '0';
         }
         if ($request->has('status')) {
 
@@ -118,11 +129,22 @@ class OfferController extends Controller
 
             $input['image'] = $this->UplaodImage($attach_image);
         }
+        if ($request->hasFile('poster_image')) {
+            $poster_image = $request->file('poster_image');
+
+            $input['poster_image'] = $this->UplaodPoster($poster_image);
+        }
         if ($request->has('active')) {
 
             $input['active'] = '1';
         } else {
             $input['active'] = '0';
+        }
+        if ($request->has('poster')) {
+
+            $input['poster'] = '1';
+        } else {
+            $input['poster'] = '0';
         }
         if ($request->has('status')) {
 
@@ -144,10 +166,13 @@ class OfferController extends Controller
     {
         $tour = Offer::where('id', $id)->first();
         // Delete File ..
-        $file = $tour->banner;
+        $file = $tour->image;
         $file_name = public_path('uploads/ofers/' . $file);
+        $file2 = $tour->poster_image;
+        $file_name2 = public_path('uploads/ofers/' . $file2);
         try {
             File::delete($file_name);
+            File::delete($file_name2);
 
             $tour->delete();
             return redirect()->back()->with('flash_del', 'Successfully Delete!');
@@ -163,6 +188,26 @@ class OfferController extends Controller
      /* uplaud image
        */
       public function UplaodImage($file_request)
+      {
+          //  This is Image Info..
+          $file = $file_request;
+          $name = $file->getClientOriginalName();
+          $ext = $file->getClientOriginalExtension();
+          $size = $file->getSize();
+          $path = $file->getRealPath();
+          $mime = $file->getMimeType();
+
+          // Rename The Image ..
+          $imageName = $name;
+          $uploadPath = public_path('uploads/offers');
+
+          // Move The image..
+          $file->move($uploadPath, $imageName);
+
+          return $imageName;
+      }
+
+      public function UplaodPoster($file_request)
       {
           //  This is Image Info..
           $file = $file_request;

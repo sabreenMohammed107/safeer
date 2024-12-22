@@ -83,6 +83,50 @@
 
                         </div>
                         <!--end::Card body-->
+                        <div class="card-header">
+                            <!--begin::Card title-->
+                            <div class="card-title">
+                                <h2>Poster</h2>
+                            </div>
+                            <!--end::Card title-->
+                        </div>
+                         <!--begin::Card body-->
+                         <div class="card-body text-center pt-0">
+                            <!--begin::Image input-->
+                            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
+                                style="background-image: url(assets/media/svg/files/blank-image.svg)">
+                                <!--begin::Preview existing avatar-->
+                                <div class="image-input-wrapper w-150px h-150px"></div>
+                                <!--end::Preview existing avatar-->
+                                <!--begin::Label-->
+                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                    <!--begin::Icon-->
+                                    <i class="bi bi-pencil-fill fs-7"></i>
+                                    <!--end::Icon-->
+                                    <!--begin::Inputs-->
+                                    <input type="file" name="poster_image" accept=".png, .jpg, .jpeg" />
+                                    <input type="hidden" name="avatar_remove" />
+                                    <!--end::Inputs-->
+                                </label>
+                                <!--end::Label-->
+                                <!--begin::Cancel-->
+                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                    <i class="bi bi-x fs-2"></i>
+                                </span>
+                                <!--end::Cancel-->
+                                <!--begin::Remove-->
+                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                    <i class="bi bi-x fs-2"></i>
+                                </span>
+                                <!--end::Remove-->
+                            </div>
+                            <!--end::Image input-->
+
+                        </div>
+                        <!--end::Card body-->
                     </div>
                     <!--end::Thumbnail settings-->
 
@@ -222,7 +266,20 @@
 
                             </div>
                             <!--end:checkbox-->
+                            <div class="d-flex flex-wrap gap-5 mt-4">
+                                <!--begin::Input group-->
+                                <div class="fv-row w-100 flex-md-root">
+                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" name="poster[]" value="1"
+                                            id="flexSwitchDefault" />
+                                        <label class="form-check-label" for="flexSwitchDefault">
+                                            Poster
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--end::Input group-->
 
+                            </div>
                         </div>
                         <!--end::Card header-->
                     </div>

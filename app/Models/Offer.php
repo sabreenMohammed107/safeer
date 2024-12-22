@@ -18,6 +18,8 @@ class Offer extends Model
         'offer_enoverview',
         'offer_aroverview',
         'status',
+        'poster',
+        'poster_image',
 
     ];
     public function getSlugAttribute(): string

@@ -72,6 +72,41 @@
             <!--end::Image input-->
         </div>
         <!--end::Image input wrapper-->
+
+         <!--begin::Card header-->
+         <div class="card-header">
+            <!--begin::Card title-->
+            <div class="card-title">
+                <h2> Edit Poster</h2>
+            </div>
+            <!--end::Card title-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Image input wrapper-->
+        <div class="card-body text-center pt-0">
+            <!--begin::Image input-->
+            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
+                style="background-image: url('{{ asset('uploads/offers') }}/{{ $offer->poster_image }}')">
+                <div class="image-input-wrapper w-150px h-150px"
+                    style="background-image: url(' {{ asset('uploads/offers') }}/{{ $offer->poster_image }}')">
+
+                </div>
+                <!--end::Preview existing avatar-->
+                <!--begin::Edit-->
+                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                    <i class="bi bi-pencil-fill fs-7"></i>
+                    <!--begin::Inputs-->
+                    <input type="file" name="poster_image" accept=".png, .jpg, .jpeg" />
+                    <input type="hidden" name="avatar_remove" />
+                    <!--end::Inputs-->
+                </label>
+                <!--end::Edit-->
+
+            </div>
+            <!--end::Image input-->
+        </div>
+        <!--end::Image input wrapper-->
     </div>
     <!--end::Thumbnail settings-->
 
@@ -218,6 +253,20 @@
 
                             </div>
                             <!--end:checkbox-->
+                            <div class="d-flex flex-wrap gap-5 mt-4">
+                                <!--begin::Input group-->
+                                <div class="fv-row w-100 flex-md-root">
+                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" name="poster[]" value="1"
+                                            id="flexSwitchDefault" {{ $offer->poster == 1 ? ' checked' : '' }} />
+                                        <label class="form-check-label" for="flexSwitchDefault">
+                                            Poster
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--end::Input group-->
+
+                            </div>
                         </div>
                         <!--end::Card header-->
                     </div>
