@@ -24,7 +24,7 @@ abstract class ItemType
 {
     const ROOM = 0;
     const TOUR = 1;
-// etc.
+    // etc.
 }
 class BookingController extends Controller
 {
@@ -74,7 +74,6 @@ class BookingController extends Controller
         session()->put("hasCart", 1);
 
         return redirect()->to("/cart")->with("session-success", Lang::get('links.roomMsg'));
-
     }
     public function ExBookRoom(int $id, int $cap)
     {
@@ -334,8 +333,8 @@ class BookingController extends Controller
                 $orderDetails->holder_mobile = $request->adultsMobile[0];
                 $orderDetails->notes = $request->notes;
                 $orderDetails->detail_type = 0;
-                                    //add status column
-                                    $orderDetails->status_id = 5;
+                //add status column
+                $orderDetails->status_id = 5;
                 $orderDetails->save();
 
                 $RoomDetail = new RoomDetails();
@@ -405,18 +404,18 @@ class BookingController extends Controller
                     $orderDetails->detail_type = 1; // Tour Type Option [1]
                     $orderDetails->pickup_point = $request->tour_pickup_point[$i];
                     $orderDetails->holder_email = $request->tour_adults_email[$i][0];
-                                        //add status column
-                                        $orderDetails->status_id = 5;
+                    //add status column
+                    $orderDetails->status_id = 5;
                     $orderDetails->save();
                     $TotalPaidPersons = null;
                     $refTour = Tour::find((int) $request->tour_id[$i]);
-                    if($refTour->tour_type_id !== 1){
-                    $TotalPaidPersons = $request->tour_adults_count[$i];
-                    for ($j = 0; $j < $request->tour_children_count[$i]; $j++) {
-                        if ($request->tour_ages[$i] && explode(",", $request->tour_ages[$i])[$j] > 2) {
-                            $TotalPaidPersons++;
+                    if ($refTour->tour_type_id !== 1) {
+                        $TotalPaidPersons = $request->tour_adults_count[$i];
+                        for ($j = 0; $j < $request->tour_children_count[$i]; $j++) {
+                            if ($request->tour_ages[$i] && explode(",", $request->tour_ages[$i])[$j] > 2) {
+                                $TotalPaidPersons++;
+                            }
                         }
-                    }
                     }
 
 
@@ -425,14 +424,13 @@ class BookingController extends Controller
                     $TourElem->tour_id = (int) $request->tour_id[$i];
                     $TourElem->tour_name = $refTour->en_name;
                     $TourElem->tour_banner = $refTour->banner;
-                    $TourElem->tour_type = $TourElem->tour_type = (isset($refTour->type) && $refTour->type->id == 1) ? 0 : 1;                    ;
-                   if( $refTour->tour_type_id == 1){
-                    $TourElem->total_cost = ((float) $request->tour_cost[$i]);
+                    $TourElem->tour_type = $TourElem->tour_type = (isset($refTour->type) && $refTour->type->id == 1) ? 0 : 1;;
+                    if ($refTour->tour_type_id == 1) {
+                        $TourElem->total_cost = ((float) $request->tour_cost[$i]);
+                    } else {
+                        $TourElem->total_cost = ((float) $refTour->tour_person_cost * $TotalPaidPersons); // Before Tax
 
-                   }else{
-                     $TourElem->total_cost = ((float) $refTour->tour_person_cost * $TotalPaidPersons); // Before Tax
-
-                   }
+                    }
                     $TourElem->tour_cost = ((float) $request->tour_cost[$i]); // Before Tax
                     $TourElem->tour_date = $request->tour_date[$i];
                     $TourElem->adults_count = (int) $request->tour_adults_count[$i];
@@ -468,7 +466,6 @@ class BookingController extends Controller
                         }
                     }
                 }
-
             }
 
             if ($request->transfer_id) {
@@ -529,7 +526,6 @@ class BookingController extends Controller
                     $VisaDetail->visa_passport_photo = $request->visa_passport_photo[$i];
                     $VisaDetail->visa_date = date_format(now(), "Y-m-d");
                     $VisaDetail->save();
-
                 }
             }
             // return "passed";
@@ -539,6 +535,26 @@ class BookingController extends Controller
             session()->forget("hasCart");
 
             DB::commit();
+            //send email
+            if($order){
+                $cost = 0;
+                foreach ($order->order_details as $index => $item) {
+                    if ($item->detail_type == 0) // Room
+                    {
+                        $cost += $item->room_details[0]->total_cost;
+                    } else if ($item->detail_type == 1) { // Tour
+                        $cost += $item->tours_details[0]->total_cost;
+                    } else if ($item->detail_type == 2) { // Transfer
+                        $cost += $item->transfer_details[0]->transfer_total_cost;
+                    } else if ($item->detail_type == 3) { // Visa
+                        $cost += $item->visa_details[0]->visa_cost; // To be completed
+                    }
+                }
+                $orderData=[$cost,$order];
+                $userSite = SiteUser::where('id', $order->user_id)->first();
+                $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com',$userSite->email];
+                \Mail::to($emails)->send(new OrderNotification($orderData));
+            }
 
             // all good
         } catch (\Exception $e) {
@@ -559,28 +575,28 @@ class BookingController extends Controller
         foreach ($order->order_details as $index => $item) {
             if ($item->detail_type == 0) // Room
             {
-            $Cost += $item->room_details[0]->total_cost;
-        } else if ($item->detail_type == 1) { // Tour
-            $Cost += $item->tours_details[0]->total_cost;
-        } else if ($item->detail_type == 2) { // Transfer
-            $Cost += $item->transfer_details[0]->transfer_total_cost;
-        } else if ($item->detail_type == 3) { // Visa
-            $Cost += $item->visa_details[0]->visa_cost; // To be completed
+                $Cost += $item->room_details[0]->total_cost;
+            } else if ($item->detail_type == 1) { // Tour
+                $Cost += $item->tours_details[0]->total_cost;
+            } else if ($item->detail_type == 2) { // Transfer
+                $Cost += $item->transfer_details[0]->transfer_total_cost;
+            } else if ($item->detail_type == 3) { // Visa
+                $Cost += $item->visa_details[0]->visa_cost; // To be completed
+            }
         }
-    }
-    $BreadCrumb = [];
-    $Company = Company::first();
+        $BreadCrumb = [];
+        $Company = Company::first();
 
-    $Counters = Counter::get();
-    return view(
-        "website.bookingSuccess",
-        [
-            "Company" => $Company,
-            "Counters" => $Counters,
-            "BreadCrumb" => $BreadCrumb,
-            "Order" => $order,
-            "Cost" => $Cost, // Before Tax
-        ]
-    );
-}
+        $Counters = Counter::get();
+        return view(
+            "website.bookingSuccess",
+            [
+                "Company" => $Company,
+                "Counters" => $Counters,
+                "BreadCrumb" => $BreadCrumb,
+                "Order" => $order,
+                "Cost" => $Cost, // Before Tax
+            ]
+        );
+    }
 }
