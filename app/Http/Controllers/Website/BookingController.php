@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderNotification;
 use App\Models\Cart;
 use App\Models\Company;
 use App\Models\Counter;
