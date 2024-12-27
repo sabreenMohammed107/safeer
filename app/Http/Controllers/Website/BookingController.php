@@ -553,8 +553,8 @@ class BookingController extends Controller
                 }
                 $orderData=[$cost,$order];
                 $userSite = SiteUser::where('id', $order->user_id)->first();
-                $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com',$userSite->email];
-                \Mail::to($emails)->send(new OrderNotification($orderData));
+                // $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com',$userSite->email];
+                // \Mail::to($emails)->send(new OrderNotification($orderData));
             }
 
             // all good

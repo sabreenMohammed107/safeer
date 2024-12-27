@@ -243,8 +243,8 @@ $whyUss=Why_us::all();
             }
 
             $letter = Newsletter::create($request->all());
-            $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com'];
-            \Mail::to($emails)->send(new NewsLetterNotification($letter));
+            // $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com'];
+            // \Mail::to($emails)->send(new NewsLetterNotification($letter));
 
             return redirect()->back()
                 ->withInput($request->input())
