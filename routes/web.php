@@ -67,6 +67,7 @@ use Illuminate\Support\Facades\Lang as Lang;
 Route::get('/applicant', function () {
     return view('website.applicantForm');
 });
+
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
