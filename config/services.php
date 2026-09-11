@@ -34,12 +34,12 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'), //USE FROM FACEBOOK DEVELOPER ACCOUNT
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'), //USE FROM FACEBOOK DEVELOPER ACCOUNT
-        'redirect' => 'https://safer.travel/facebook/callback/'
+        'redirect' => env('FACEBOOK_REDIRECT_URL', 'https://safer.travel/facebook/callback/')
     ],
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'), //USE FROM Google DEVELOPER ACCOUNT
         'client_secret' => env('GOOGLE_CLIENT_SECRET'), //USE FROM Google DEVELOPER ACCOUNT
-        'redirect' => 'https://safer.travel/google/callback'
+        'redirect' => env('GOOGLE_REDIRECT_URL', 'https://safer.travel/google/callback')
     ],
 
 ];

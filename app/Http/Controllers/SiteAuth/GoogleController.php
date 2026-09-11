@@ -9,7 +9,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\InvalidStateException;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class GoogleController extends Controller
@@ -56,9 +58,24 @@ class GoogleController extends Controller
             return AuthController::LoginProcess($saveUser);
 
             // return redirect()->to(LaravelLocalization::localizeUrl("/"));
+        } catch (InvalidStateException $th) {
+            // Session/state mismatch (expired session, stale/replayed callback,
+            // or the callback was opened in a different session than the one
+            // that started the redirect). Clear the leftover OAuth session
+            // state so it can't cause the same mismatch on the next attempt,
+            // then send the user back to the login page instead of
+            // surfacing a raw exception.
+            Log::warning('Google OAuth callback: invalid state', ['message' => $th->getMessage()]);
+
+            session()->forget(['state', 'code_verifier']);
+
+            return redirect()->to(LaravelLocalization::localizeUrl("/safer/login"))
+                ->with("session-warning", "Google login expired or failed due to session mismatch. Please try again.");
         } catch (\Throwable $th) {
-            redirect()->to(LaravelLocalization::localizeUrl("/"));
-            throw $th;
+            Log::error('Google OAuth callback failed', ['message' => $th->getMessage()]);
+
+            return redirect()->to(LaravelLocalization::localizeUrl("/"))
+                ->with("session-warning", "Google login failed, please try again.");
         }
     }
 }
