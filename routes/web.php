@@ -242,10 +242,10 @@ Route::post('/password/update', [AuthController::class, 'updatePassword'])->name
         Route::get('callback', [FaceBookController::class, 'callbackFromFacebook'])->name('callback');
     });
     // Google
-    Route::prefix('google')->name('google.')->group(function () {
-        Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
-        Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
-    });
+   Route::prefix('auth')->name('google.')->group(function () {
+    Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
+    Route::any('callback-google', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
+});
     // End Social Media Login
 
     Route::middleware(['is-site-auth'])->group(function () {
@@ -397,3 +397,4 @@ mcmr cash
 4- php artisan cache:clear
 5- php artisan route:clear
 -----------*/
+

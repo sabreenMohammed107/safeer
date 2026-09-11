@@ -39,7 +39,7 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'), //USE FROM Google DEVELOPER ACCOUNT
         'client_secret' => env('GOOGLE_CLIENT_SECRET'), //USE FROM Google DEVELOPER ACCOUNT
-        'redirect' => env('GOOGLE_REDIRECT_URL', 'https://safer.travel/google/callback')
+        'redirect' => env('GOOGLE_REDIRECT', 'https://safer.travel/auth/callback-google')
     ],
 
 ];

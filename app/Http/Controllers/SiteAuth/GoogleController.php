@@ -18,7 +18,9 @@ class GoogleController extends Controller
 {
     public function loginWithGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+    ->redirectUrl('https://safer.travel/auth/callback-google')
+    ->redirect();
     }
 
     public function callbackFromGoogle()
