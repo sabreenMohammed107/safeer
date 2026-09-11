@@ -16,11 +16,10 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class GoogleController extends Controller
 {
-    public function loginWithGoogle()
+   public function loginWithGoogle()
     {
-        return Socialite::driver('google')
-    ->redirectUrl('https://safer.travel/auth/callback-google')
-    ->redirect();
+    return Socialite::driver('google')
+       return Socialite::driver('google')->redirect();
     }
 
     public function callbackFromGoogle()
