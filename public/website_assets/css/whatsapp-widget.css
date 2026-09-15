@@ -1,0 +1,162 @@
+/* =========================================================
+   Modern WhatsApp floating widget (safer.travel)
+   Used by: resources/views/components/website/whatsapp-widget.blade.php
+   Replaces the legacy whatsappStyle.css "Blanter" fake-chat popup.
+   ========================================================= */
+
+:root {
+    --wa-fab-size: 60px;
+    --wa-fab-size-sm: 52px;
+    --wa-fab-green: #25d366;
+    --wa-fab-green-dark: #1ebe5b;
+    --wa-fab-offset-bottom: 24px;
+    --wa-fab-offset-side: 24px;
+}
+
+.wa-fab {
+    position: fixed;
+    bottom: var(--wa-fab-offset-bottom);
+    right: var(--wa-fab-offset-side);
+    z-index: 9998; /* below any modal/offcanvas overlay, above page content */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* optional accompanying text ("Chat with us" / "تواصل معنا") */
+.wa-fab__label {
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    background: #ffffff;
+    color: #111b21;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(17, 27, 33, .15);
+    transition: max-width .35s ease, opacity .25s ease, padding .35s ease;
+}
+
+.wa-fab:hover .wa-fab__label,
+.wa-fab:focus-visible .wa-fab__label,
+.wa-fab.wa-fab--peek .wa-fab__label {
+    max-width: 240px;
+    opacity: 1;
+    padding: 10px 16px;
+}
+
+.wa-fab__icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--wa-fab-size);
+    height: var(--wa-fab-size);
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--wa-fab-green), var(--wa-fab-green-dark));
+    box-shadow: 0 8px 20px rgba(37, 211, 102, .45);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.wa-fab__icon svg {
+    position: relative;
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    fill: #ffffff;
+}
+
+.wa-fab:hover .wa-fab__icon,
+.wa-fab:focus-visible .wa-fab__icon {
+    transform: scale(1.07);
+    box-shadow: 0 10px 26px rgba(37, 211, 102, .55);
+}
+
+.wa-fab:focus-visible {
+    outline: 2px solid var(--wa-fab-green-dark);
+    outline-offset: 4px;
+    border-radius: 999px;
+}
+
+/* soft pulse rings behind the icon (2 staggered rings, not a jarring blink) */
+.wa-fab__icon::before,
+.wa-fab__icon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 50%;
+    background: var(--wa-fab-green);
+    opacity: .55;
+    animation: wa-pulse 2.6s ease-out infinite;
+}
+
+.wa-fab__icon::after {
+    animation-delay: 1.3s;
+}
+
+@keyframes wa-pulse {
+    0% {
+        transform: scale(1);
+        opacity: .55;
+    }
+
+    70% {
+        transform: scale(1.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1.9);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .wa-fab__icon::before,
+    .wa-fab__icon::after {
+        animation: none;
+        display: none;
+    }
+
+    .wa-fab__icon,
+    .wa-fab__label {
+        transition: none;
+    }
+}
+
+/* mobile: smaller button, tighter offsets, keeps clear of the safe-area/footer */
+@media (max-width: 576px) {
+    .wa-fab {
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        right: 16px;
+        gap: 8px;
+    }
+
+    .wa-fab__icon {
+        width: var(--wa-fab-size-sm);
+        height: var(--wa-fab-size-sm);
+    }
+
+    .wa-fab__icon svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .wa-fab__label {
+        font-size: 13px;
+    }
+
+    .wa-fab:hover .wa-fab__label,
+    .wa-fab.wa-fab--peek .wa-fab__label {
+        max-width: 180px;
+    }
+}

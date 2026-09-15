@@ -54,18 +54,15 @@
         rel="stylesheet">
     <!-- bootstrap -->
     @if (LaravelLocalization::getCurrentLocale() === 'en')
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/bootstrap/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('/website_assets/css/bootstrap/bootstrap.min.css') }}">
     @else
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/bootstrap/bootstrap-ar.min.css') }}">
-
+        <link rel="stylesheet" href="{{ asset('/website_assets/css/bootstrap/bootstrap-ar.min.css') }}">
     @endif
     <!-- normalize -->
     @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ asset('/website_assets/css/normalize.css') }}">
     @else
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/normalize-ar.css') }}">
-
+        <link rel="stylesheet" href="{{ asset('/website_assets/css/normalize-ar.css') }}">
     @endif
     <!-- slick cdn link -->
     {{--
@@ -77,9 +74,9 @@
     </noscript>
     <!-- video poppp styele -->
     <link rel="stylesheet" {{--
-        href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}"> --}}
-    <link rel="preload" href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
+        href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}"> --}} <link rel="preload"
+        href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet"
             href="{{ asset('/website_assets/js/appleple-modal-video-78d211f/css/modal-video.min.css') }}">
@@ -88,10 +85,9 @@
     {{--
     <link rel="stylesheet" href="{{ asset('/website_assets/css/my-profile.css')}}"> --}}
     @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('/website_assets/css/style.css') }}">
     @else
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/style-ar.css') }}">
+        <link rel="stylesheet" href="{{ asset('/website_assets/css/style-ar.css') }}">
     @endif
     {{-- owl Carousel links --}}
     <link rel="stylesheet" href="{{ asset('/website_assets/css/owl.carousel.min.css') }}">
@@ -99,13 +95,14 @@
     {{-- owl Carousel links --}}
     <!-- icon -->
     <link rel="icon" href="{{ asset('/website_assets/images/t.jpeg') }}">
-    {{--
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}"> --}}
-    <link rel="preload" href="{{ asset('/website_assets/css/whatsappStyle.css') }}" as="style"
+    {{-- Modern WhatsApp floating widget styles (see components/website/whatsapp-widget.blade.php) --}}
+    <link rel="preload" href="{{ asset('/website_assets/css/whatsapp-widget.css') }}" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsappStyle.css') }}">
+        <link rel="stylesheet" href="{{ asset('/website_assets/css/whatsapp-widget.css') }}">
     </noscript>
+    {{-- Reusable Toast Notification system (newsletter form and any flash_success/flash_error redirect) --}}
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/toast.css') }}">
     {{--
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"> --}}
@@ -167,15 +164,26 @@
             display: none !important;
         }
     </style> --}}
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KWV4FRFJ');</script>
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KWV4FRFJ');
+    </script>
     <!-- End Google Tag Manager -->
-    @yield("adds_css")
-    <title> {{$title}} | Safer Book Your Dream Vacations</title>
+    @yield('adds_css')
+    <title> {{ $title }} | Safer Book Your Dream Vacations</title>
 </head>
 
 <body>
@@ -184,61 +192,77 @@
 
     <section class="landing_section ">
         <x-website.header />
-        @yield("bottom-header")
+        @yield('bottom-header')
     </section>
 
-    @yield("content")
+    @yield('content')
 
     <!--  ending page  -->
     <section class="ending">
         <div id="newsletter" class="newsletter">
             <div class="container">
                 <div class="row mx-0 align-items-center">
+                    {{--
+                        Feedback is now shown as a floating Toast (see toast.css/toast.js)
+                        instead of a static inline alert box. This session-flash bridge only
+                        fires for the non-JS fallback path (the AJAX submit in
+                        newsletter-form.js shows the toast directly from the JSON response).
+                        Any other controller on the site that redirects back with
+                        flash_success / flash_error / validation errors to a page using this
+                        layout gets the same toast automatically.
+                    --}}
                     @if (Session::has('flash_success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert" <strong><i
-                            class="fa fa-check-circle"></i> {{ session('flash_success') }}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div><br />
-                @endif
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                window.SaferToast && window.SaferToast.success(@json(session('flash_success')));
+                            });
+                        </script>
+                    @endif
+                    @if (Session::has('flash_error'))
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                window.SaferToast && window.SaferToast.error(@json(session('flash_error')));
+                            });
+                        </script>
+                    @endif
+                    @if ($errors->any())
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                window.SaferToast && window.SaferToast.error(@json($errors->first()));
+                            });
+                        </script>
+                    @endif
                     <div class="col-md-6 col-sm-12">
                         <span>
 
 
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                            Prepare yourself and let's <br>
-                            explore the beauty of the world
+                                Prepare yourself and let's <br>
+                                explore the beauty of the world
                             @else
-                            جهز نفسك <br>
-                            لإستكشاف جمال العالم
+                                جهز نفسك <br>
+                                لإستكشاف جمال العالم
                             @endif
 
                         </span>
                     </div>
 
                     <div class="col-md-6 col-sm-12">
-                        <form action="{{url('/sendNewsLetter')}}" method="POST">
+                        {{-- route(), not url('/sendNewsLetter'), so the request keeps the
+                             current /ar prefix and the controller resolves the right locale
+                             for the success/error message (see routes/web.php) --}}
+                        <form id="newsletter-form" action="{{ route('sendNewsLetter') }}" method="POST">
                             @csrf
                             <div class="input-group input">
-                                <input type="email" name="email" class="form-control"
+                                <input type="email" name="email" class="form-control" required
                                     placeholder="{{ __('links.enter_email') }}" aria-label="Recipient's username"
                                     aria-describedby="button-addon2">
                                 <button class="btn btn-outline-secondary" type="submit">
 
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                    Join our newsletter
+                                        Join our newsletter
                                     @else
-                                    اشترك في صحيفتنا الإخبارية
+                                        اشترك في صحيفتنا الإخبارية
                                     @endif
                                 </button>
                             </div>
@@ -258,10 +282,9 @@
                             <h6>{{ __('links.about_us') }} </h6>
                             <p style="text-align: justify; padding:0 10px">
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                {{$Company->overview_en}}
+                                    {{ $Company->overview_en }}
                                 @else
-                                {{$Company->overview_ar}}
+                                    {{ $Company->overview_ar }}
                                 @endif
                             </p>
                         </div>
@@ -275,44 +298,39 @@
                                 <div class="col-6">
                                     <ul>
                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/') }}"> {{ __('links.home')
-                                                }} </a>
+                                                href="{{ LaravelLocalization::localizeUrl('/') }}">
+                                                {{ __('links.home') }} </a>
                                         </li>
                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/about') }}">{{
-                                                __('links.about_us') }}
+                                                href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}
                                             </a></li>
                                         {{-- <li><i class="fa-solid fa-angle-right"></i><a
                                                 href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{
                                                 __('links.hotels') }}
                                             </a></li> --}}
                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{
-                                                __('links.offers') }}
+                                                href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{ __('links.offers') }}
                                             </a></li>
                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/terms') }}">{{
-                                                __('links.term_condation') }}</a></li>
+                                                href="{{ LaravelLocalization::localizeUrl('/terms') }}">{{ __('links.term_condation') }}</a>
+                                        </li>
 
                                     </ul>
                                 </div>
                                 <div class="col-6">
                                     <ul>
                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{
-                                                __('links.blogs') }}
+                                                href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}
                                             </a></li>
                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{
-                                                __('links.tours') }}
+                                                href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.tours') }}
                                             </a></li>
                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/transfers') }}">{{
-                                                __('links.transfer') }}
+                                                href="{{ LaravelLocalization::localizeUrl('/transfers') }}">{{ __('links.transfer') }}
                                             </a></li>
                                         <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/visa') }}">{{
-                                                __('links.visa') }} </a>
+                                                href="{{ LaravelLocalization::localizeUrl('/visa') }}">{{ __('links.visa') }}
+                                            </a>
                                         </li>
 
 
@@ -320,7 +338,8 @@
                                 </div>
                                 <div class="col-12">
                                     <a href="http://" class="pay-link  "> <img loading="lazy"
-                                            src="{{ asset('img/payment/visa.webp') }}" alt="visa" srcset=""></a>
+                                            src="{{ asset('img/payment/visa.webp') }}" alt="visa"
+                                            srcset=""></a>
 
 
                                     <a href="http://" class="pay-link "> <img loading="lazy"
@@ -344,7 +363,8 @@
 
 
                                     <a href="http://" class="pay-link "> <img loading="lazy"
-                                            src="{{ asset('img/payment/stripe.webp') }}" alt="stripe" srcset=""></a>
+                                            src="{{ asset('img/payment/stripe.webp') }}" alt="stripe"
+                                            srcset=""></a>
 
                                 </div>
                             </div>
@@ -359,10 +379,9 @@
                                 <div class="info">
                                     <i class="fa-solid fa-phone"></i>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                    <span>For individuals: </span>
+                                        <span>For individuals: </span>
                                     @else
-                                    <span> للافراد :</span>
+                                        <span> للافراد :</span>
                                     @endif
 
                                 </div>
@@ -378,12 +397,11 @@
                                 <div class="info">
                                     <i class="fa-solid fa-phone"></i>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                    <span>
-                                        For companies: 00905445019185</span>
+                                        <span>
+                                            For companies: 00905445019185</span>
                                     @else
-                                    <span>
-                                        للشركات: 00905445019185 </span>
+                                        <span>
+                                            للشركات: 00905445019185 </span>
                                     @endif
 
                                 </div>
@@ -398,14 +416,12 @@
                                 <div class="info">
                                     <i class="fa-solid fa-location-dot"></i>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                    <span>Sixth floor above Kababji Mahmoud Restaurant - Watan Square - Al-Fateh -
-                                        Istanbul - Turkey</span>
-
+                                        <span>Sixth floor above Kababji Mahmoud Restaurant - Watan Square - Al-Fateh -
+                                            Istanbul - Turkey</span>
                                     @else
-                                    <span>
-                                        الطابق السادس فوق مطعم كبابجي محمود - ساحة الوطن - الفاتح - اسطنبول -
-                                        تركيا</span>
+                                        <span>
+                                            الطابق السادس فوق مطعم كبابجي محمود - ساحة الوطن - الفاتح - اسطنبول -
+                                            تركيا</span>
                                     @endif
                                 </div>
                             </div>
@@ -414,12 +430,12 @@
 
                                 <div class="icons-container">
                                     <div class="social-icons spinned">
-                                        <a class="item facebook" href="{{ $comFooter->facebook }}" target="_blank"><i
-                                                class="fa-brands fa-facebook-f"></i></a>
+                                        <a class="item facebook" href="{{ $comFooter->facebook }}"
+                                            target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                                         <a class="item youtube" href="{{ $comFooter->youtube }}" target="_blank"><i
                                                 class="fa-brands fa-youtube"></i></a>
-                                        <a class="item instagram" href="{{ $comFooter->instagram }}" target="_blank"><i
-                                                class="fa-brands fa-instagram"></i></a>
+                                        <a class="item instagram" href="{{ $comFooter->instagram }}"
+                                            target="_blank"><i class="fa-brands fa-instagram"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -431,8 +447,10 @@
                                         width="270" alt="Dijital">
 
 
-                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
-                                                      bottom: 5px;right: 7px;" target="_blank">
+                                    <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1"
+                                        style="position: absolute;
+                                                      bottom: 5px;right: 7px;"
+                                        target="_blank">
                                         {{-- {{ QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34,
                                         76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}}
                                         --}}
@@ -441,12 +459,11 @@
                                 <a href="https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463"
                                     target="_blank">
                                     <?php
-                                                        // $im=QrCode::format('png')
-                                                        // ->merge('website_assets/images/q1.webp', 0.4, true)
-                                                        // ->size(75)->color(27, 34, 76)->errorCorrection('H')
-                                                        // ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
-
-                                                        ?>
+                                    // $im=QrCode::format('png')
+                                    // ->merge('website_assets/images/q1.webp', 0.4, true)
+                                    // ->size(75)->color(27, 34, 76)->errorCorrection('H')
+                                    // ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
+                                    ?>
                                     {{--
                                     <img loading="lazy" src="data:image/png;base64, {!! base64_encode($im)!!}"
                                         style="margin-bottom: 10px;"> --}}
@@ -467,38 +484,38 @@
     <button id="scrollToTop" class="scroll-to-top">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
+    <x-website.whatsapp-widget />
     <style>
         .scroll-to-top {
-        position: fixed;
-        bottom: 75px;
-        right: 25px;
-        display: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: #1b224c;
-        color: white;
-        border: none;
-        cursor: pointer;
-        z-index: 999;
-        transition: all 0.3s ease;
-    }
+            position: fixed;
+            /* raised above the WhatsApp widget (public/website_assets/css/whatsapp-widget.css)
+               so the two floating buttons never overlap */
+            bottom: 100px;
+            right: 25px;
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #1b224c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
 
-    .scroll-to-top:hover {
-        background-color: #2d377a;
-        transform: translateY(-3px);
-    }
+        .scroll-to-top:hover {
+            background-color: #2d377a;
+            transform: translateY(-3px);
+        }
     </style>
     <!-- copy right section -->
     <div class="copyright">
-        <input type="hidden" id="chat_whatsapp" value="{{ $Company->chat_whatsapp }}">
         @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-        <h6>All copyrights reserved to safer 2024 </h6>
-
+            <h6>All copyrights reserved to safer {{ date('Y') }} </h6>
         @else
-        <h6>
-            جميع حقوق النشر محفوظة لشركة سافر 2024</h6>
+            <h6>
+                جميع حقوق النشر محفوظة لشركة سافر {{ date('Y') }}</h6>
         @endif
 
     </div>
@@ -527,8 +544,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
     <!-- Include Date Range Picker -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js">
-    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <script src="{{ asset('/website_assets/js/datepicker.js') }}"></script>
@@ -552,9 +568,9 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script defer src="{{ asset('/website_assets/js/video.js') }}"></script>
     <!-- image gallery  -->
-    <script src="{{ asset('/website_assets/js/image_gllery.js')}}"></script>
+    <script src="{{ asset('/website_assets/js/image_gllery.js') }}"></script>
     <!-- adding room -->
-    <script src="{{ asset('/website_assets/js/main.js')}}"></script>
+    <script src="{{ asset('/website_assets/js/main.js') }}"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js"
         integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" defer="" defer"></script> --}}
@@ -568,130 +584,86 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script> {{-- owl carousel --}}
+    {{-- Modern WhatsApp floating widget behavior (peek animation only —
+         the button itself is a plain wa.me link, no click handler needed) --}}
+    <script defer src="{{ asset('/website_assets/js/whatsapp-widget.js') }}"></script>
+    {{-- Reusable Toast Notification engine + Newsletter form AJAX submission --}}
+    <script defer src="{{ asset('/website_assets/js/toast.js') }}"></script>
+    <script defer src="{{ asset('/website_assets/js/newsletter-form.js') }}"></script>
     <script>
-        $(document).ready(function(){
-            // whts pp
-$(document).on("click", "#send-it", function() {
-  var a = document.getElementById("chat-input");
-  var chat_whatsapp=document.getElementById("chat_whatsapp").value;
-  if ("" != a.value) {
-    var b = $("#get-number").text(),
-      c = document.getElementById("chat-input").value,
-      d = "https://web.whatsapp.com/send",
-      e = b,
-      f = "&text=" +  c;
-    if (
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      )
-    )
-      var d = "whatsapp://send";
-    //  +905444668838
-    var g = d + "?phone="+chat_whatsapp + e + f;
-    window.open(g, "_blank");
-  }
-}),
-  $(document).on("click", ".informasi", function() {
-    (document.getElementById("get-number").innerHTML = $(this)
-      .children(".my-number")
-      .text()),
-      $(".start-chat,.get-new")
-        .addClass("show")
-        .removeClass("hide"),
-      $(".home-chat,.head-home")
-        .addClass("hide")
-        .removeClass("show"),
-      (document.getElementById("get-nama").innerHTML = $(this)
-        .children(".info-chat")
-        .children(".chat-nama")
-        .text()),
-      (document.getElementById("get-label").innerHTML = $(this)
-        .children(".info-chat")
-        .children(".chat-label")
-        .text());
-  }),
-  $(document).on("click", ".close-chat", function() {
-    $("#whatsapp-chat")
-      .addClass("hide")
-      .removeClass("show");
-  }),
-  $(document).on("click", ".blantershow-chat", function() {
-    $("#whatsapp-chat")
-      .addClass("show")
-      .removeClass("hide");
-  });
-                $(".owl-carousel").owlCarousel({
-                    items:4,
-                    loop:true,
-                    margin:10,
-                    autoplay:true,
-                    autoplayTimeout:3000,
-                    autoplayHoverPause:true,
-                    responsiveClass:true,
-                    responsive:{
-                        0:{
-                            items:1,
+        $(document).ready(function() {
+            $(".owl-carousel").owlCarousel({
+                items: 4,
+                loop: true,
+                margin: 10,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
 
-                        },
-                        600:{
-                            items:2,
-                            margin:0
-                        },
-                        900:{
-                            items:3,
-                            margin:0
+                    },
+                    600: {
+                        items: 2,
+                        margin: 0
+                    },
+                    900: {
+                        items: 3,
+                        margin: 0
 
-                        },
-                        1345:{
-                            items:4,
-                            margin:0
-                        }
+                    },
+                    1345: {
+                        items: 4,
+                        margin: 0
                     }
-                });
+                }
             });
+        });
     </script>
-    <script src="{{ asset('/website_assets/js/owl.carousel.min.js')}}"></script>
+    <script src="{{ asset('/website_assets/js/owl.carousel.min.js') }}"></script>
     {{-- owl carousel --}}
-    <script src="{{ asset('/website_assets/js/add_room.js')}}"></script>
-    <script src="{{ asset('/website_assets/js/adding_years_Select.js')}}"></script>
+    <script src="{{ asset('/website_assets/js/add_room.js') }}"></script>
+    <script src="{{ asset('/website_assets/js/adding_years_Select.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    @yield("adds_js")
+    @yield('adds_js')
     <script>
         let slickSliders = document.querySelectorAll('.slick-slider');
 
-if ('IntersectionObserver' in window) {
-  // IntersectionObserver Supported
-  let config = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.0
-      };
+        if ('IntersectionObserver' in window) {
+            // IntersectionObserver Supported
+            let config = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.0
+            };
 
-  let observer = new IntersectionObserver(onChange, config);
-  slickSliders.forEach(slider => observer.observe(slider));
+            let observer = new IntersectionObserver(onChange, config);
+            slickSliders.forEach(slider => observer.observe(slider));
 
-  function onChange(elements, observer) {
-    elements.forEach(element => {
-      if (element.isIntersecting) {
-        console.log("element intersecting", element.target);
+            function onChange(elements, observer) {
+                elements.forEach(element => {
+                    if (element.isIntersecting) {
+                        console.log("element intersecting", element.target);
 
-          var options = {};
-        // Stop watching and load the slickSlider
-        loadSlick(element.target, options);
-        observer.unobserve(element.target);
-      }
-    });
-  }
+                        var options = {};
+                        // Stop watching and load the slickSlider
+                        loadSlick(element.target, options);
+                        observer.unobserve(element.target);
+                    }
+                });
+            }
 
-} else {
-  // IntersectionObserver NOT Supported
-  slickSliders.forEach(slickSlider => loadSlick(slickSlider));
-}
+        } else {
+            // IntersectionObserver NOT Supported
+            slickSliders.forEach(slickSlider => loadSlick(slickSlider));
+        }
 
-function loadSlick(slickSlider, options) {
-    $slickSlider = $(slickSlider);
-    $slickSlider.slick(options);
-}
+        function loadSlick(slickSlider, options) {
+            $slickSlider = $(slickSlider);
+            $slickSlider.slick(options);
+        }
     </script>
     <script>
         // Scroll to top functionality
@@ -711,8 +683,8 @@ function loadSlick(slickSlider, options) {
                 behavior: 'smooth'
             });
         };
-        </script>
-<!-- Scroll to top button -->
+    </script>
+    <!-- Scroll to top button -->
 
 </body>
 

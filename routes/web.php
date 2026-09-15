@@ -101,12 +101,8 @@ Route::group([
 Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->name('load.section');
 
 
-// new static page of our agents
-    // Route::get("/agents", function(){
-    //     $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
-    //     $Company = Company::first();
-    //     return view('website.Agents' , compact('BreadCrumb' , 'Company'));
-    // });
+// static page for our travel agents program
+    Route::get("/agents", [ContentController::class, 'agents'])->name('agents');
 
 
     Route::get("/hotels", [HotelsController::class, 'all_hotels']);
@@ -138,7 +134,7 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
 
     Route::get('/contact', [ContentController::class, 'createForm']);
     Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
-    Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter']);
+    Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter'])->name('sendNewsLetter');
     Route::get('/reload-captcha', [ContentController::class, 'reloadCaptcha']);
 
     Route::get('/partners', [ContentController::class, 'partners'])->name('partners');

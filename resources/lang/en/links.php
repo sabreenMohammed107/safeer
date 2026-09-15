@@ -3,6 +3,7 @@
 return [
   /*----header*/
   'safer'=>'Safer',
+  'whatsapp_cta'=>'Chat with us',
   'register'=>'Register',
   'address' => 'Address',
   'phone' => 'Phone',
@@ -12,6 +13,8 @@ return [
   'ar' => 'عربى',
   'how_register'=>'How it works',
   'joinNow'=>'Join Us Now',
+  'applyNow'=>'Apply Now',
+  'agents'=>'Agents',
   'wait'=>'Moments and you will be taken back to the home page...  ',
  'register_message'=>'Successfully Registered',
  'welcome'=>'Welcome',
@@ -88,7 +91,7 @@ return [
 'dawnload_catalog'=>'Download Catalog',
 'dawnload_profile'=>'Download TDS',
 'tade_mark'=>'Copyright ',
-'copy_right'=>'All rights reserved To ABGAD',
+'copy_right'=>'All rights reserved To SAFER',
 'windows'=>'Windows',
 'noise_reduction'=>'Noise Reduction',
 'energy_solution'=>'Energy Solution',
@@ -266,6 +269,10 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'roomMsg'=>'Room is added in your cart successfully',
 'contactMsg'=>'We have received your message and would like to thank you for writing to us.',
 'empLetter'=>'Empty Newsletter !!!',
+'newsletter_success'=>'Thank you for subscribing to our newsletter!',
+'newsletter_duplicate'=>'This email is already subscribed to our newsletter.',
+'newsletter_required'=>'Please enter your email address.',
+'newsletter_invalid'=>'Please enter a valid email address.',
 'transpurchase'=>'Can‘t Purchase multiple transfer items in one time',
 'transCart'=>'Transfer is added in your cart successfully',
 'visaMsg'=>'Visa(s) is added in your cart successfully',
@@ -312,5 +319,3 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'become_agent' => 'Become Our Agent',
 'careers' => 'Careers',
 ];
-
-

@@ -226,36 +226,74 @@ $whyUss=Why_us::all();
     }
 
 
-    public function sendNewsLetter(Request $request) {
-        try {
-            $validator = FacadesValidator::make($request->all(), [
-                'email' => 'required|email',
-            ], [
-                'email.required' => 'The email field is required.',
-                'email.email' => 'Please provide a valid email address.',
-            ]);
+    public function sendNewsLetter(Request $request)
+    {
+        $wantsJson = $request->ajax() || $request->wantsJson();
 
-            if ($validator->fails()) {
-                return redirect()->back()
-                    ->withInput()
-                    ->withErrors($validator->messages())
-                    ->withFragment('newsletter'); // Redirects to the #newsletter section
+        $validator = FacadesValidator::make($request->all(), [
+            'email' => 'required|email',
+        ], [
+            'email.required' => Lang::get('links.newsletter_required'),
+            'email.email' => Lang::get('links.newsletter_invalid'),
+        ]);
+
+        if ($validator->fails()) {
+            $message = $validator->errors()->first('email');
+
+            if ($wantsJson) {
+                return response()->json(['status' => 'error', 'message' => $message], 422);
             }
 
-            $letter = Newsletter::create($request->all());
-            // $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com'];
-            // \Mail::to($emails)->send(new NewsLetterNotification($letter));
+            return redirect()->back()
+                ->withInput()
+                ->withErrors($validator->messages())
+                ->withFragment('newsletter'); // Redirects to the #newsletter section
+        }
+
+        $email = $request->input('email');
+
+        // No unique DB constraint on newsletters.email, so check explicitly
+        // rather than relying on a QueryException that would never fire.
+        if (Newsletter::where('email', $email)->exists()) {
+            $message = Lang::get('links.newsletter_duplicate');
+
+            if ($wantsJson) {
+                return response()->json(['status' => 'error', 'message' => $message], 409);
+            }
 
             return redirect()->back()
                 ->withInput($request->input())
-                ->with('flash_success', Lang::get('links.contactMsg'))
-                ->withFragment('newsletter'); // Redirects to the #newsletter section
+                ->with('flash_error', $message)
+                ->withFragment('newsletter');
+        }
+
+        try {
+            $letter = Newsletter::create(['email' => $email]);
+            // $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com'];
+            // \Mail::to($emails)->send(new NewsLetterNotification($letter));
         } catch (QueryException $q) {
+            $message = Lang::get('links.newsletter_duplicate');
+
+            if ($wantsJson) {
+                return response()->json(['status' => 'error', 'message' => $message], 409);
+            }
+
             return redirect()->back()
                 ->withInput($request->input())
-                ->with('flash_error', Lang::get('links.empLetter'))
-                ->withFragment('newsletter'); // Redirects to the #newsletter section
+                ->with('flash_error', $message)
+                ->withFragment('newsletter');
         }
+
+        $message = Lang::get('links.newsletter_success');
+
+        if ($wantsJson) {
+            return response()->json(['status' => 'success', 'message' => $message]);
+        }
+
+        return redirect()->back()
+            ->withInput($request->input())
+            ->with('flash_success', $message)
+            ->withFragment('newsletter'); // Redirects to the #newsletter section
     }
 
 
@@ -272,6 +310,16 @@ $whyUss=Why_us::all();
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
         $Company = Company::first();
         return view("website.careers",
+            [
+                "Company" => $Company,
+                "BreadCrumb" => $BreadCrumb,
+            ]);
+      }
+
+      public function agents(){
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+        $Company = Company::first();
+        return view("website.Agents",
             [
                 "Company" => $Company,
                 "BreadCrumb" => $BreadCrumb,
