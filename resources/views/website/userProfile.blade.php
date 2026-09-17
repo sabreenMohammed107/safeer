@@ -28,13 +28,13 @@
                         @endif  id="v-pills-account-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-account" type="button" role="tab" aria-controls="v-pills-account"
                             aria-selected="true"> <i class="fa-solid fa-user account_icon"></i> {{ __('links.myAccount') }}  </button>
-                        {{-- <button class="nav-link" @if (LaravelLocalization::getCurrentLocale() === 'ar')
+                        <button class="nav-link" @if (LaravelLocalization::getCurrentLocale() === 'ar')
 
                         style="text-align: right !important"
                         @endif  id="v-pills-favorite-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-favorite" type="button" role="tab"
                             aria-controls="v-pills-favorite" aria-selected="false"> <i
-                                class="fa-regular fa-heart"></i>{{ __('links.myFavorite') }}  </button> --}}
+                                class="fa-regular fa-heart"></i>{{ __('links.myFavorite') }}  </button>
                         <button class="nav-link" @if (LaravelLocalization::getCurrentLocale() === 'ar')
 
                         style="text-align: right !important"
@@ -179,16 +179,16 @@
                                                 data-bs-target="#pills-hotels" type="button" role="tab"
                                                 aria-controls="pills-hotels" aria-selected="true">{{ __('links.hotels') }} </button>
                                         </li>
-                                        {{-- <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="pills-tours-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-tours" type="button" role="tab"
-                                            aria-controls="pills-tours" aria-selected="false"> tours</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="pills-trips-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-trips" type="button" role="tab"
-                                            aria-controls="pills-trips" aria-selected="false"> trips</button>
-                                    </li> --}}
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="pills-trips-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-trips" type="button" role="tab"
+                                                aria-controls="pills-trips" aria-selected="false">{{ __('links.tours') }}</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="pills-offers-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-offers" type="button" role="tab"
+                                                aria-controls="pills-offers" aria-selected="false">{{ __('links.offers') }}</button>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -198,14 +198,10 @@
                                         <div class="tab-content" id="pills-tabContent">
                                             <div class="tab-pane fade show active w-100" id="pills-hotels"
                                                 role="tabpanel" aria-labelledby="pills-hotels-tab" tabindex="0">
-                                                <div id="loadData">
-                                                    <?php
-                                                    $last_id = 0;
-
-                                                    ?>
-                                                    @foreach ($data as $fav)
-                                                    @if($fav->hotel)
-                                                        <div class="card-content">
+                                                <div id="favHotelsList" class="fav-list" data-fav-empty-target="#favHotelsEmpty">
+                                                    @foreach ($favHotels as $fav)
+                                                        @if($fav->hotel)
+                                                        <div class="card-content" data-fav-row>
                                                             <div class=" card setted_tour_cards ">
                                                                 <div class="card_image">
                                                                     <div class="image_overlay">
@@ -223,7 +219,11 @@
                                                                             @endif –
                                                                             {{ $fav->hotel->hotel_stars ?? ''}} Stars</h6>
                                                                         <span>
-                                                                            <i class="fa-regular fa-heart"></i>
+                                                                            <button type="button" class="fav-toggle-btn is-fav"
+                                                                                data-fav-type="hotel" data-fav-id="{{ $fav->hotel_id }}"
+                                                                                aria-label="{{ __('links.add_favorites') }}">
+                                                                                <i class="fa-solid fa-heart is-fav-icon"></i>
+                                                                            </button>
                                                                         </span>
                                                                     </div>
                                                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -260,449 +260,125 @@
                                                                             <span> ({{ $fav->hotel->totalreviews }} {{ __('links.review') }})
                                                                             </span>
                                                                         </div>
-                                                                        {{-- <span class="hotels_price"> $ 140</span> --}}
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        @php
-                                                            $last_id = $fav->id;
-
-                                                        @endphp
                                                         @endif
                                                     @endforeach
-
                                                 </div>
-
-
-
-                                            </div>
-                                            <div class="tab-pane fade w-100" id="pills-tours" role="tabpanel"
-                                                aria-labelledby="pills-tours-tab" tabindex="0">
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-1.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
-                                                                </div>
-                                                                <span class="hotels_price"> $ 140</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-4.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
-                                                                </div>
-                                                                <span class="hotels_price"> $ 140</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-5.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
-                                                                </div>
-                                                                <span class="hotels_price"> $ 140</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-3.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
-                                                                </div>
-                                                                <span class="hotels_price"> $ 140</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-4.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
-                                                                </div>
-                                                                <span class="hotels_price"> $ 140</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
+                                                @include('website.partials.favorite-empty', ['type' => 'hotels', 'id' => 'favHotelsEmpty', 'url' => '/hotels', 'hidden' => $favHotels->isNotEmpty()])
                                             </div>
                                             <div class="tab-pane fade w-100" id="pills-trips" role="tabpanel"
                                                 aria-labelledby="pills-trips-tab" tabindex="0">
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-1.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
+                                                <div id="favToursList" class="fav-list" data-fav-empty-target="#favToursEmpty">
+                                                    @foreach ($favTours as $fav)
+                                                        @if($fav->tour)
+                                                        <div class="card-content" data-fav-row>
+                                                            <div class=" card setted_tour_cards ">
+                                                                <div class="card_image">
+                                                                    <div class="image_overlay">
+                                                                        <img src="{{ asset('uploads/tours') }}/{{ $fav->tour->banner ?? '' }}"
+                                                                            alt=" blogimage">
+                                                                    </div>
                                                                 </div>
-                                                                <span class="hotels_price"> $ 140</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-4.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
+                                                                <div class="card-body  setted_info">
+                                                                    <div class="card_info">
+                                                                        <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                                            {{ $fav->tour->en_name ?? '' }}
+                                                                            @else
+                                                                            {{ $fav->tour->ar_name ?? '' }}
+                                                                            @endif</h6>
+                                                                        <span>
+                                                                            <button type="button" class="fav-toggle-btn is-fav"
+                                                                                data-fav-type="tour" data-fav-id="{{ $fav->tour_id }}"
+                                                                                aria-label="{{ __('links.add_favorites') }}">
+                                                                                <i class="fa-solid fa-heart is-fav-icon"></i>
+                                                                            </button>
+                                                                        </span>
+                                                                    </div>
+                                                                    <span class="duartion"> <i class="fa-solid fa-location-dot"></i>
+                                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                                            {{ $fav->tour->city->en_city ?? '' }}
+                                                                        @else
+                                                                            {{ $fav->tour->city->ar_city ?? '' }}
+                                                                        @endif
+                                                                    </span>
+                                                                    <p>
+                                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                                            {!! \Illuminate\Support\Str::limit(strip_tags($fav->tour->en_notes ?? ''), $limit = 200, $end = '') !!}
+                                                                        @else
+                                                                            {!! \Illuminate\Support\Str::limit(strip_tags($fav->tour->ar_notes ?? ''), $limit = 200, $end = '') !!}
+                                                                        @endif
+                                                                    </p>
+                                                                    <div class="price">
+                                                                        <span class="hotels_price"><span
+                                                                                style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> $ {{ $fav->tour->tour_person_cost }}</span>
+                                                                    </div>
                                                                 </div>
-                                                                <span class="hotels_price"> $ 140</span>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                        @endif
+                                                    @endforeach
                                                 </div>
-
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-5.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
+                                                @include('website.partials.favorite-empty', ['type' => 'tours', 'id' => 'favToursEmpty', 'url' => '/tours', 'hidden' => $favTours->isNotEmpty()])
+                                            </div>
+                                            <div class="tab-pane fade w-100" id="pills-offers" role="tabpanel"
+                                                aria-labelledby="pills-offers-tab" tabindex="0">
+                                                <div id="favOffersList" class="fav-list" data-fav-empty-target="#favOffersEmpty">
+                                                    @foreach ($favOffers as $fav)
+                                                        @if($fav->offer)
+                                                        <div class="card-content" data-fav-row>
+                                                            <div class=" card  tours_card hotels_card">
+                                                                <div class="card_image">
+                                                                    <img class="w-100" style="height: 250px" src="{{ asset('uploads/offers') }}/{{ $fav->offer->image ?? '' }}"
+                                                                        alt=" blogimage">
                                                                 </div>
-                                                                <span class="hotels_price"> $ 140</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-3.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
+                                                                <div class="card-body hotel_card_info">
+                                                                    <div class="card_info">
+                                                                        <h5 style="text-align: center;text-align-last:center">
+                                                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                                                {{ Str::words($fav->offer->subtitle_en ?? '', $limit = 7, $end = '...') }}
+                                                                            @else
+                                                                                {{ Str::words($fav->offer->subtitle_ar ?? '', $limit = 7, $end = '...') }}
+                                                                            @endif
+                                                                        </h5>
+                                                                        <span>
+                                                                            <button type="button" class="fav-toggle-btn is-fav"
+                                                                                data-fav-type="offer" data-fav-id="{{ $fav->offer_id }}"
+                                                                                aria-label="{{ __('links.add_favorites') }}">
+                                                                                <i class="fa-solid fa-heart is-fav-icon"></i>
+                                                                            </button>
+                                                                        </span>
+                                                                    </div>
+                                                                    <span>
+                                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                                            {{ Str::words(strip_tags($fav->offer->offer_enoverview ?? ''), 30, '...') }}
+                                                                        @else
+                                                                            {{ Str::words(strip_tags($fav->offer->offer_aroverview ?? ''), 30, '...') }}
+                                                                        @endif
+                                                                    </span>
+                                                                    <p>
+                                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                                                            {{ $fav->offer->city->en_city ?? '' }}
+                                                                        @else
+                                                                            {{ $fav->offer->city->ar_city ?? '' }}
+                                                                        @endif
+                                                                        -
+                                                                        <span>
+                                                                            {{ $fav->offer->cost }} $
+                                                                        </span>
+                                                                    </p>
                                                                 </div>
-                                                                <span class="hotels_price"> $ 140</span>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                        @endif
+                                                    @endforeach
                                                 </div>
-
-
-                                                <div class="card-content">
-                                                    <div class=" card setted_tour_cards ">
-                                                        <div class="card_image">
-                                                            <div class="image_overlay">
-                                                                <img src="./images/homePage/hotels/hotel-4.webp"
-                                                                    alt=" blogimage">
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body  setted_info">
-                                                            <div class="card_info">
-                                                                <h6>Venice, Rome and Milan – 9 Days 8</h6>
-                                                                <span>
-                                                                    <i class="fa-regular fa-heart"></i>
-                                                                </span>
-                                                            </div>
-                                                            <span> <i class="fa-solid fa-location-dot"></i> turkey
-                                                                <span>|</span> istanbul</span>
-                                                            <p>
-                                                                Amet minim mollit non deserunt ullamco est sit aliqua dolor
-                                                                do
-                                                                amet
-                                                            </p>
-                                                            <div class="price">
-                                                                <div class="rating">
-
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-
-                                                                    <span> ( 5 review) </span>
-                                                                </div>
-                                                                <span class="hotels_price"> $ 140</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
+                                                @include('website.partials.favorite-empty', ['type' => 'offers', 'id' => 'favOffersEmpty', 'url' => '/offers', 'hidden' => $favOffers->isNotEmpty()])
                                             </div>
                                         </div>
-
                                     </div>
-                                    <input type="text" style="opacity: 0;" id="last"
-                                        value="{{ $last_id }}">
-                                    @if ($data->count() >= 1 && $allRows->count() > $data->count())
-                                        <button id="loadBtn"
-                                            onclick="loadMoreData(document.getElementById('last').value);"
-                                            class="btn load_button">Load More Rooms</button>
-                                    @endif
-                                    {{-- <button class="btn load_button">
-                                        load more
-                                    </button> --}}
                                 </div>
 
                             </div>
@@ -1045,39 +721,24 @@
 
 
     <script>
-        function loadMoreData(id) {
-
-            $.ajax({
-                url: '{{ url('load-rooms-data') }}',
-                data: {
-                    id: id,
-
-                },
-
-                type: "GET",
-                headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}',
-                },
-                success: function(data) {
-
-                    $('#loadData').append(data.output);
-                    document.getElementById('last').value = data.last_id;
-                    if (data.last_id <= 1) {
-
-                        document.getElementById('loadBtn').style.display = 'none';
-                    } else {
-
-                        document.getElementById('loadBtn').style.display = 'block';
-                    }
-
-                },
-                error: function() {
-
-                    document.getElementById('loadBtn').style.display = 'none';
+        $(function () {
+            $('#v-pills-favorite').on('favourite:toggled', '.fav-toggle-btn', function (e, favourited) {
+                if (favourited) {
+                    return;
                 }
 
+                var $row = $(this).closest('[data-fav-row]');
+                var $list = $row.closest('.fav-list');
+
+                $row.fadeOut(200, function () {
+                    $row.remove();
+
+                    if ($list.find('[data-fav-row]').length === 0) {
+                        $($list.data('fav-empty-target')).removeClass('d-none').show();
+                    }
+                });
             });
-        }
+        });
     </script>
     <!--  ending page  -->
 @endsection

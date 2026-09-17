@@ -32,6 +32,8 @@ $(function () {
                 setTimeout(function () {
                     $icon.removeClass('fav-pulse');
                 }, 300);
+
+                $btn.trigger('favourite:toggled', [favourited]);
             },
             error: function (jqXHR) {
                 if (jqXHR.status === 401 && jqXHR.responseJSON && jqXHR.responseJSON.redirect) {

@@ -237,9 +237,24 @@ class AuthController extends Controller
     {
         $userSite = SiteUser::where('id', $id)->first();
         $orderData = [];
-        // $data=$userSite->favorites();
-        $data = Favorite_hotels_tour::where('user_id', $id)->orderBy('id', 'DESC')->limit(3)->get();
-        $allRows = Favorite_hotels_tour::where('user_id', $id)->orderBy('id', 'DESC')->get();
+
+        $favUserId = session()->get('SiteUser')['ID'] ?? null;
+
+        $favHotels = $favUserId
+            ? Favorite_hotels_tour::where('user_id', $favUserId)->whereNotNull('hotel_id')
+                ->with(['hotel.city.country'])->orderBy('id', 'DESC')->get()
+            : collect();
+
+        $favTours = $favUserId
+            ? Favorite_hotels_tour::where('user_id', $favUserId)->whereNotNull('tour_id')
+                ->with(['tour.city'])->orderBy('id', 'DESC')->get()
+            : collect();
+
+        $favOffers = $favUserId
+            ? Favorite_hotels_tour::where('user_id', $favUserId)->whereNotNull('offer_id')
+                ->with(['offer.city'])->orderBy('id', 'DESC')->get()
+            : collect();
+
         $order = Orders::where('user_id', $id)->first();
         if($order){
             $orderData = OrderDetails::where('order_id', $order->id)->get();
@@ -251,91 +266,11 @@ class AuthController extends Controller
                 "Company" => $Company,
                 "userSite" => $userSite,
                 "BreadCrumb" => $BreadCrumb,
-                "data" => $data,
-                "allRows" => $allRows,
+                "favHotels" => $favHotels,
+                "favTours" => $favTours,
+                "favOffers" => $favOffers,
                 "orderData" => $orderData,
             ]);
-    }
-
-    public function loadMoreData(Request $request)
-    {
-        if ($request->id > 0) {
-            //info($request->id);
-            \Log::info('clicked');
-
-            $data = Favorite_hotels_tour::where('user_id', session()->get("SiteUser")["ID"])->where('id', '<', $request->id)->limit(3)->orderBy('id', 'DESC')->get();
-        }
-        $allRows = Favorite_hotels_tour::where('user_id', session()->get("SiteUser")["ID"])->orderBy('id', 'DESC')->get();
-        $output = '';
-        $last_id = '';
-
-        if (!$data->isEmpty()) {
-            $limit = 0;
-            $end = 0;
-            $i = 0;
-            foreach ($data as $row) {
-                $output .= '<div class="card-content">
-                    <div class=" card setted_tour_cards ">
-                        <div class="card_image">
-                            <div class="image_overlay">
-
-                                    <img src="' . asset('uploads/hotels') . '/' . $row->hotel->hotel_banner . '"
-                                    alt=" blogimage">
-                            </div>
-                        </div>
-                        <div class="card-body  setted_info">
-                            <div class="card_info">
-                                <h6>' . $row->hotel->hotel_enname . '  –
-                                    ' . $row->hotel->hotel_stars . 'Stars</h6>
-                                <span>
-                                    <i class="fa-regular fa-heart"></i>
-                                </span>
-                            </div>
-                            <span> <i class="fa-solid fa-location-dot"></i>';
-                if ($row->hotel->city && $row->hotel->city->country) {
-                    $output .= $row->hotel->city->country->en_country . ' <span>|</span>';
-                }
-                if ($row->hotel->city) {
-                    $output .= $row->hotel->city->en_city . '</span>';
-                }
-
-                $output .= '<p>
-                                ' . $row->hotel->hotel_enoverview . '
-
-                            </p>
-                            <div class="price">
-                                <div class="rating">
-                                ';
-
-                for ($i = 0; $i < $row->hotel->hotel_stars; $i++) {
-                    $output .= '
-                                        <i class="fa-solid fa-star"></i>';
-                }
-
-                for ($i = 5; $i > $row->hotel->hotel_stars; $i--) {
-                    $output .= '<i class="fa-regular fa-star"></i>';
-                }
-
-                $output .= '<span> (' . $row->hotel->totalreviews . ' review) </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>';
-
-                $last_id = $row->id;
-
-            }
-
-        }
-
-        \Log::info($output);
-        $arr = [
-            'output' => $output,
-            'last_id' => $last_id,
-        ];
-        // return json_encode($arr);
-        return response()->json($arr);
     }
 
     public function updateProfile(Request $request)

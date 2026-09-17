@@ -215,7 +215,6 @@ Route::post('/password/update', [AuthController::class, 'updatePassword'])->name
     //updateProfile
     Route::post("/safer/updateProfile", [AuthController::class, 'updateProfile'])->name("updateProfile");
 
-    Route::get('load-rooms-data', [AuthController::class, 'loadMoreData'])->name('load-rooms-data');
 
     //hotelByCity
     Route::get("/hotelByCity/{id}", [HotelsController::class, 'getHotelByCity'])->name("hotelByCity");
