@@ -32,14 +32,14 @@ public function __construct()
     public function index()
     {
         $Company = Company::first();
-        $ExploreCities = Explore_city::where("active","=", 1)->get();
-         $Offers = Offer::where("active","=", 1)->where('status','!=','main')->inRandomOrder()->limit(4)->get();
+        $ExploreCities = Explore_city::where("active","=", 1)->with('city')->get();
+         $Offers = Offer::where("active","=", 1)->where('status','!=','main')->with('city')->inRandomOrder()->limit(4)->get();
          $mainOffer=Offer::where("active","=", 1)->where('status','=','main')->firstOrFail();
         $Counters = Counter::get();
         $Countries = Country::where('flag',1)->orderBy($this->orderByColumn)->get();
         $cities=City::where('country_id',1)->get();
-        $BestHotels = Best_hotel::where('active','=',1)->orderBy("order")->get();
-        $BlogsCategories = Blogs_category::where('id','!=',100)->get();
+        $BestHotels = Best_hotel::where('active','=',1)->with('hotel')->orderBy("order")->get();
+        $BlogsCategories = Blogs_category::where('id','!=',100)->with('blogs')->get();
         $AllBlogs = Blog::where('blog_category_id','!=',100)->take(4)->orderBy("id","desc")->get();
 // $Offers=Blog::where('blog_category_id','=',100)->inRandomOrder()->limit(4)->get();
         $favHotelIds = [];

@@ -22,7 +22,7 @@
                         <div class="col-12 ">
                             <div class="card-content">
                                 <div class="  hotels_card">
-                                  <img  src="{{ asset('uploads/offers') }}/{{ $offer->image }}" class="w-100" alt=" single blogimage">
+                                  <img  src="{{ asset('uploads/offers') }}/{{ $offer->image }}" class="w-100" loading="lazy" alt=" single blogimage">
                                   <div class="card-body hotel_card_info">
                                     <div class="card_info">
 
@@ -88,7 +88,7 @@
                         <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $obj->id . '/' . $obj->slug) }}"
                             class="stretched-link">
                         <img class="mx-2" style="height: 100px;width:130px ;min-width:130px" src="{{ asset('uploads/offers') }}/{{ $obj->image }}"
-                            alt="latest blog image">
+                            loading="lazy" width="130" height="100" alt="latest blog image">
                         </a>
                         <div class="blog_info">
                             <h6 style="margin-bottom: 0;font-size: 16px"> <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $obj->id . '/' . $obj->slug) }}"

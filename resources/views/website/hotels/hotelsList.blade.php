@@ -11,7 +11,7 @@
                                 <div class="image_overlay">
 
                                     <img src=" {{ asset('uploads/hotels') }}/{{ $HRec->hotel->hotel_banner }}"
-                                        alt=" blogimage">
+                                        loading="lazy" width="350" height="210" alt=" blogimage">
                                 </div>
                             </div>
                             <div class="card-body  setted_info">
@@ -103,7 +103,7 @@
                                 <div class="image_overlay">
 
                                     <img src="{{ asset('uploads/hotels') }}/{{ $HPrice->hotel->hotel_banner }}"
-                                        alt=" blogimage">
+                                        loading="lazy" width="350" height="210" alt=" blogimage">
                                 </div>
                             </div>
                             <div class="card-body  setted_info">
@@ -182,7 +182,7 @@
                                 <div class="image_overlay">
 
                                     <img src="{{ asset('uploads/hotels') }}/{{ $HAlpha->hotel->hotel_banner }}"
-                                        alt=" blogimage">
+                                        loading="lazy" width="350" height="210" alt=" blogimage">
                                 </div>
                             </div>
                             <div class="card-body  setted_info">

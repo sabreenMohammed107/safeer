@@ -6,7 +6,7 @@
                 <div class=" card  tours_card hotels_card">
                     <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $offer->id . '/' . $offer->slug) }}">
                         <img class="w-100" style="height: 250px" src="{{ asset('uploads/offers') }}/{{ $offer->image }}"
-                            alt=" blogimage">
+                            loading="lazy" width="350" height="250" alt=" blogimage">
                     </a>
                     <div class="card-body hotel_card_info">
                         <div class="card_info">

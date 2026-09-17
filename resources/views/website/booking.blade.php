@@ -236,7 +236,7 @@
                                         <div class="booking_info_card_info">
                                             <div class="info_image">
                                                 <img src="{{ asset('uploads/hotels') }}/{{ $RoomCost->hotel_banner }}"
-                                                    alt=" blogimage" />
+                                                    loading="lazy" alt=" blogimage" />
                                             </div>
                                             <div class="info_title px-2">
                                                 <div class="card_info">

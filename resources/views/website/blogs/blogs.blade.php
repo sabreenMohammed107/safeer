@@ -53,7 +53,7 @@
                         @isset($offer)
                         <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $offer->id . '/' . $offer->slug) }}"
                             class="stretched-link">
-                            <img src="{{ asset('uploads/offers') }}/{{ $offer->poster_image }}" alt="banner image">
+                            <img src="{{ asset('uploads/offers') }}/{{ $offer->poster_image }}" loading="lazy" alt="banner image">
 
                         </a>
                         @endisset

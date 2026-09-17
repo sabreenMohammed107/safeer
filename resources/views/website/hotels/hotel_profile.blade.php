@@ -138,7 +138,7 @@ if(isset($arrayData['result'])){
 
                             <img class="imgStyle"
                                 src="{{ asset('uploads/galleries') }}/{{$HotelTourGallery[$i]->img ?? " "}}"
-                                alt=" tour hotel image " />
+                                loading="lazy" alt=" tour hotel image " />
                             @endif
 
                             @endfor

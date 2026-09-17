@@ -323,7 +323,7 @@
                                             <div class="image_overlay">
                                                 <img loading="lazy"
                                                     src="{{ asset('uploads/hotels') }}/{{ $Hotel->hotel->hotel_banner }}"
-                                                    class="w-100" height="250" alt=" hotel image">
+                                                    class="w-100" width="350" height="250" alt=" hotel image">
                                             </div>
                                         </a>
                                     </div>

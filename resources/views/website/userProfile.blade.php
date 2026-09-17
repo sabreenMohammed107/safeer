@@ -206,7 +206,7 @@
                                                                 <div class="card_image">
                                                                     <div class="image_overlay">
                                                                         <img src="{{ asset('uploads/hotels') }}/{{ $fav->hotel->hotel_banner ?? '' }}"
-                                                                            alt=" blogimage">
+                                                                            loading="lazy" width="350" height="210" alt=" blogimage">
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body  setted_info">
@@ -332,7 +332,7 @@
                                                             <div class=" card  tours_card hotels_card">
                                                                 <div class="card_image">
                                                                     <img class="w-100" style="height: 250px" src="{{ asset('uploads/offers') }}/{{ $fav->offer->image ?? '' }}"
-                                                                        alt=" blogimage">
+                                                                        loading="lazy" width="350" height="250" alt=" blogimage">
                                                                 </div>
                                                                 <div class="card-body hotel_card_info">
                                                                     <div class="card_info">

@@ -53,7 +53,7 @@
                 @endphp
                 <div class="card-content">
                     <div class=" card setted_tour_cards ">
-                      <img src="{{ asset('uploads/hotels') }}/{{$Room->hotel_banner}}" alt=" blogimage">
+                      <img src="{{ asset('uploads/hotels') }}/{{$Room->hotel_banner}}" loading="lazy" alt=" blogimage">
                       <div class="card-body setted_info">
                         @if (LaravelLocalization::getCurrentLocale() === 'en')
                         <div class="card_info">
