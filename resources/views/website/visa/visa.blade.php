@@ -4,6 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
 
 <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
 <link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
@@ -85,6 +86,47 @@
         display: block;
         width: 100%;
         padding: 0.375rem 0.1rem;
+    }
+
+    /* Country code + mobile number field */
+    .phone_field {
+        direction: ltr;
+    }
+
+    .phone_field .iti {
+        display: block;
+        width: 100%;
+    }
+
+    .phone_field .iti input {
+        display: block;
+        width: 100%;
+        padding: .375rem .75rem .375rem .75rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: transparent;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        font-size: 12px;
+        text-align: left;
+    }
+
+    .phone_field .iti input:focus {
+        outline: none;
+        border-color: #1C4482;
+        box-shadow: 0 0 0 0.1rem rgba(28, 68, 130, 0.15);
+    }
+
+    .phone_field .iti--separate-dial-code .iti__selected-flag {
+        background-color: #f8f9fa;
+        border-right: 1px solid #ced4da;
+        border-radius: .25rem 0 0 .25rem;
+    }
+
+    .phone_field .iti__country-list {
+        text-align: left;
+        z-index: 20;
     }
 </style>
 
@@ -190,17 +232,21 @@
 
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
-                        <label for="">@if (LaravelLocalization::getCurrentLocale() === 'en')
-                            Country Code
+                        <label for="">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            Mobile Number
                             @else
-                            كود الدولة
-                            @endif + {{ __('links.mobile') }}
+                            رقم الجوال
+                            @endif
                         </label>
-                        <input type="tel" required name="phone[0]" placeholder="{{ __('links.mobile') }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
-                        style="text-align: start"    oninvalid="this.setCustomValidity('Please Enter valid mobile')" @else
-                        style="text-align: end"    oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')" @endif
-                            oninput="setCustomValidity('')" />
-
+                        <div class="phone_field">
+                            <input type="tel" class="phone-input" required placeholder="{{ __('links.mobile') }}"
+                                @if(LaravelLocalization::getCurrentLocale()==='en' )
+                                oninvalid="this.setCustomValidity('Please Enter valid mobile')" @else
+                                oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')" @endif
+                                oninput="setCustomValidity('')" />
+                            <input type="hidden" class="phone-hidden" name="phone[0]" />
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-4">
                         <label for="">{{ __('links.email') }} </label>
@@ -331,6 +377,9 @@
 {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<!-- country code + mobile number field -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+
 <!-- add adults  -->
 <script src="{{ asset('/website_assets/js/add-adults.js') }}"></script>
 
@@ -340,8 +389,70 @@
 <script>
     let localization = "{{ LaravelLocalization::getCurrentLocale() }}"
 
+        // Initialize the country-code + mobile-number field (intl-tel-input) on every
+        // ".phone-input" that hasn't been initialized yet (initial + dynamically added rows).
+        function initPhoneInputs() {
+            $('.phone-input').each(function() {
+                if ($(this).data('iti')) {
+                    return;
+                }
+                var iti = window.intlTelInput(this, {
+                    initialCountry: "sa",
+                    preferredCountries: ["sa", "ae", "eg", "kw", "qa", "bh", "om"],
+                    separateDialCode: true,
+                    autoPlaceholder: "off",
+                    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+                });
+                $(this).data('iti', iti);
+                syncPhoneHidden(this);
+            });
+        }
+
+        // Keep the hidden "phone[i]" input (the one actually submitted to the backend)
+        // in sync with the full international number selected in the widget.
+        function syncPhoneHidden(input) {
+            var iti = $(input).data('iti');
+            if (!iti) {
+                return;
+            }
+            var $hidden = $(input).closest('.phone_field').find('.phone-hidden');
+            var full = iti.getNumber();
+            if (!full && $(input).val()) {
+                full = '+' + iti.getSelectedCountryData().dialCode + $(input).val();
+            }
+            $hidden.val(full);
+        }
+
+        $(document).on('input change countrychange', '.phone-input', function() {
+            syncPhoneHidden(this);
+        });
+
+        $(document).on('submit', 'form', function(e) {
+            var valid = true;
+            $('.phone-input').each(function() {
+                var iti = $(this).data('iti');
+                if (!iti) {
+                    return;
+                }
+                syncPhoneHidden(this);
+                if ($.trim(this.value) !== '' && typeof iti.isValidNumber === 'function' && !iti.isValidNumber()) {
+                    valid = false;
+                    this.setCustomValidity(localization === 'en' ?
+                        'Please enter a valid mobile number' :
+                        'يجب إدخال رقم هاتف صحيح');
+                    this.reportValidity();
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+
         $(document).ready(function() {
 
+            initPhoneInputs();
 
             var counter = 0;
 
@@ -435,19 +546,19 @@ Visa type
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">@if (LaravelLocalization::getCurrentLocale() === 'en')
-                            Country Code
+                            Mobile Number
                         @else
-                            كود الدولة
-                        @endif + {{ __('links.mobile') }}  </label>
-                    <input type="tel" name="phone[` + counter + `]" required placeholder="{{ __('links.mobile') }}"
-                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        oninvalid="this.setCustomValidity('Please Enter valid mobile')"
-                         style="text-align: start"
-                        @else
-                         style="text-align: end"
-                        oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')"
-                        @endif oninput="setCustomValidity('')" />
-
+                            رقم الجوال
+                        @endif  </label>
+                    <div class="phone_field">
+                        <input type="tel" class="phone-input" required placeholder="{{ __('links.mobile') }}"
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            oninvalid="this.setCustomValidity('Please Enter valid mobile')"
+                            @else
+                            oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')"
+                            @endif oninput="setCustomValidity('')" />
+                        <input type="hidden" class="phone-hidden" name="phone[` + counter + `]" />
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-xl-4">
                     <label for="">{{ __('links.email') }}  </label>
@@ -498,6 +609,7 @@ Visa type
 
                 `;
                 $('#passenger_section').append(x);
+                initPhoneInputs();
             });
             // $('.dynamic').change(function() {
             //     if ($(this).val() != '') {

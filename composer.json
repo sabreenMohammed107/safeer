@@ -5,9 +5,10 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.4.1",
+        "php": "^8.2",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^3.7",
         "laravel/framework": "^9.19",
         "laravel/helpers": "^1.5",
         "laravel/sanctum": "^3.0",
@@ -17,12 +18,14 @@
         "livewire/livewire": "^2.12",
         "mcamara/laravel-localization": "^1.8",
         "mews/captcha": "^3.3",
-        "simplesoftwareio/simple-qrcode": "^4.2"
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "symfony/css-selector": "^6.4"
     },
     "require-dev": {
+        "doctrine/instantiator": "^1.5",
         "fakerphp/faker": "^1.9.1",
         "laracademy/generators": "^3.6",
-        "laravel/pint": "^1.0",
+        "laravel/pint": "1.13.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
