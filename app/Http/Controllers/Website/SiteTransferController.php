@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Website\Concerns\Favouritable;
 use App\Models\Cart;
 use App\Models\Car_class;
 use App\Models\Car_model;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\Favorite_hotels_tour;
 use App\Models\Gallery;
 use App\Models\Tour;
 use App\Models\Tour_type;
@@ -22,6 +24,8 @@ use Illuminate\Support\Facades\Lang as Lang;
 
 class SiteTransferController extends Controller
 {
+    use Favouritable;
+
     protected $orderByColumn;
     protected $orderByCity;
     public function __construct()
@@ -30,6 +34,23 @@ class SiteTransferController extends Controller
         $locale = App::getLocale();
         $this->orderByColumn = $locale === 'ar' ? 'ar_country' : 'en_country';
         $this->orderByCity = $locale === 'ar' ? 'ar_city' : 'en_city';
+    }
+
+    private function favouriteTransferIds()
+    {
+        if (!session()->get("SiteUser")) {
+            return [];
+        }
+
+        return Favorite_hotels_tour::where('user_id', session()->get("SiteUser")["ID"])
+            ->whereNotNull('transfer_id')
+            ->pluck('transfer_id')
+            ->toArray();
+    }
+
+    public function favouriteToggle($id)
+    {
+        return $this->toggleFavourite('transfer_id', (int) $id);
     }
      //
     public function all_transfer(Request $request)
@@ -72,6 +93,7 @@ class SiteTransferController extends Controller
             "Count" => $TransfersRecommended->count(),
             "Cities" => $Cities,
             "Countries" => $Countries,
+            "favTransferIds" => $this->favouriteTransferIds(),
         ]);
     }
 
@@ -134,6 +156,7 @@ class SiteTransferController extends Controller
             "Countries" => $Countries,
             "city_id" => $city_id,
             "country_id" => $country_id,
+            "favTransferIds" => $this->favouriteTransferIds(),
 
         ]);
     }
@@ -189,6 +212,7 @@ class SiteTransferController extends Controller
                     "TransfersByAlpha" => $TransfersByAlpha,
                     "Count" => $TransfersRecommended->count(),
                     "page_num" => $request->page_num,
+                    "favTransferIds" => $this->favouriteTransferIds(),
 
 
                 ]
@@ -256,6 +280,7 @@ class SiteTransferController extends Controller
                 "TransfersByAlpha" => $TransfersByAlpha,
                 "Count" => $TransfersRecommended->count(),
                 "page_num" => $request->page_num,
+                "favTransferIds" => $this->favouriteTransferIds(),
             ]
         )->render();
     }

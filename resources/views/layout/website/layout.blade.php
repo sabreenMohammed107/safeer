@@ -571,6 +571,16 @@
     <script src="{{ asset('/website_assets/js/image_gllery.js') }}"></script>
     <!-- adding room -->
     <script src="{{ asset('/website_assets/js/main.js') }}"></script>
+    <!-- add-to-favourite AJAX toggle -->
+    <script>
+        var FAV_URLS = {
+            hotel: "{{ LaravelLocalization::localizeUrl('/favourite/hotel/__ID__') }}",
+            tour: "{{ LaravelLocalization::localizeUrl('/favourite/tour/__ID__') }}",
+            transfer: "{{ LaravelLocalization::localizeUrl('/favourite/transfer/__ID__') }}",
+            offer: "{{ LaravelLocalization::localizeUrl('/favourite/offer/__ID__') }}"
+        };
+    </script>
+    <script src="{{ asset('/website_assets/js/favourite.js') }}"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.4/dayjs.min.js"
         integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" defer="" defer"></script> --}}

@@ -18,6 +18,17 @@
                                         {{ Str::words($offer->subtitle_ar ?? '', $limit = 7, $end = '...') }}
                                     @endif
                                 </a> </h5>
+                            @php
+                                $isFav = session()->get('SiteUser') && in_array($offer->id, $favOfferIds ?? []);
+                            @endphp
+                            <span>
+                                <button type="button"
+                                    class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                    data-fav-type="offer" data-fav-id="{{ $offer->id }}"
+                                    aria-label="{{ __('links.add_favorites') }}">
+                                    <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                </button>
+                            </span>
                         </div>
                         <span>
                             @if (LaravelLocalization::getCurrentLocale() === 'en')

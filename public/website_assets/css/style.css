@@ -3065,3 +3065,50 @@ a.blantershow-chat {
     font-weight: bolder;
     font-size: 15px !important;
 }
+
+/* add-to-favourite AJAX toggle button */
+.fav-toggle-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 5;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, .92);
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.fav-toggle-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .24);
+}
+.fav-toggle-btn:active {
+    transform: scale(.92);
+}
+.fav-toggle-btn i.fa-heart {
+    font-size: 16px;
+    line-height: 1;
+    color: #9098a3;
+    transition: color .15s ease;
+}
+.fav-toggle-btn:hover i.fa-heart {
+    color: #e0245e;
+}
+.fav-toggle-btn i.fa-heart.is-fav-icon {
+    color: #e0245e;
+}
+.fa-heart.fav-pulse {
+    animation: favPulse .3s ease;
+}
+@keyframes favPulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+}

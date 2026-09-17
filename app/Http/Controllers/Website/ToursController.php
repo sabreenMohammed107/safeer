@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Website\Concerns\Favouritable;
 use App\Models\Cart;
 use App\Models\City;
 use App\Models\Company;
@@ -20,11 +21,26 @@ use Validator;
 
 class ToursController extends Controller
 {
+    use Favouritable;
+
     /*
 
  */
     protected $orderByColumn;
     protected $orderByCity;
+
+    private function favouriteTourIds()
+    {
+        if (!session()->get("SiteUser")) {
+            return [];
+        }
+
+        return Favorite_hotels_tour::where('user_id', session()->get("SiteUser")["ID"])
+            ->whereNotNull('tour_id')
+            ->pluck('tour_id')
+            ->toArray();
+    }
+
     public function __construct()
     {
         // Determine the column to order by based on the current locale
@@ -69,6 +85,7 @@ class ToursController extends Controller
 
             "Countries" => $Countries,
             "Cities" => $Cities,
+            "favTourIds" => $this->favouriteTourIds(),
         ]);
     }
     //
@@ -140,6 +157,7 @@ class ToursController extends Controller
                 "ToursByAlpha" => $ToursByAlpha,
                 "Count" => $ToursRecommended->count(),
                 "page_num" => $request->page_num,
+                "favTourIds" => $this->favouriteTourIds(),
 
             ]
         )->render();
@@ -195,6 +213,7 @@ class ToursController extends Controller
             "ToursByPrice" => $ToursByPrice,
             "ToursByAlpha" => $ToursByAlpha,
             "Count" => $ToursRecommended->count(),
+            "favTourIds" => $this->favouriteTourIds(),
 
         ]);
     }
@@ -239,6 +258,7 @@ class ToursController extends Controller
             "ToursByPrice" => $ToursByPrice,
             "ToursByAlpha" => $ToursByAlpha,
             "Count" => $ToursRecommended->count(),
+            "favTourIds" => $this->favouriteTourIds(),
 
         ]);
     }
@@ -294,6 +314,7 @@ class ToursController extends Controller
                     "ToursByAlpha" => $ToursByAlpha,
                     "Count" => $ToursRecommended->count(),
                     "page_num" => $request->page_num,
+                    "favTourIds" => $this->favouriteTourIds(),
 
                 ]
             )->render();
@@ -347,6 +368,7 @@ class ToursController extends Controller
                     "ToursByAlpha" => $ToursByAlpha,
                     "Count" => $ToursRecommended->count(),
                     "page_num" => $request->page_num,
+                    "favTourIds" => $this->favouriteTourIds(),
 
                 ]
             )->render();
@@ -395,37 +417,9 @@ class ToursController extends Controller
     }
 
 
-    public function favourite($id)
+    public function favouriteToggle($id)
     {
-
-        if (session()->get("SiteUser")) {
-            $input = [
-                'tour_id' => $id,
-                'user_id' => session()->get("SiteUser")["ID"],
-            ];
-            Favorite_hotels_tour::create($input);
-            return redirect()->back();
-        } else {
-            session()->put("AddFavTour", $id);
-            return redirect("/safer/login");
-        }
-    }
-
-    public function removeFavourite($id)
-    {
-
-        if (session()->get("SiteUser")) {
-
-            $fav = Favorite_hotels_tour::where('tour_id', $id)->where('user_id', session()->get("SiteUser")["ID"])->first();
-            if ($fav) {
-                $fav->delete();
-            }
-            return redirect()->back();
-        } else {
-            session()->put("RemFavTour", $id);
-            return session()->get("RemFavTour");
-            return redirect("/safer/login");
-        }
+        return $this->toggleFavourite('tour_id', (int) $id);
     }
 
 

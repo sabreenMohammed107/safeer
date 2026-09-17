@@ -194,15 +194,15 @@ if(isset($arrayData['result'])){
                     @endif >
                         {{-- <i class="fa-solid fa-share-nodes"></i> --}}
 
-
-                            @if (session()->get('SiteUser'))
-                            <a href="{{ LaravelLocalization::localizeUrl('/favourite/' . $Hotel->id) }}"
-                                ><i class="fa-regular fa-heart"></i> </a>
-                            @else
-
-                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}"
-                            ><i class="fa-regular fa-heart"></i></a>
-                            @endif
+                            @php
+                                $isFav = session()->get('SiteUser') && in_array($Hotel->id, $favHotelIds ?? []);
+                            @endphp
+                            <button type="button"
+                                class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                data-fav-type="hotel" data-fav-id="{{ $Hotel->id }}"
+                                aria-label="{{ __('links.add_favorites') }}">
+                                <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                            </button>
 
                     </div>
                 </div>

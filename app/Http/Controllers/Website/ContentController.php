@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Website\Concerns\Favouritable;
 use App\Mail\NewsLetterNotification;
 use App\Models\Blog;
 use App\Models\Blogs_category;
@@ -10,6 +11,7 @@ use App\Models\Company;
 use App\Models\Company_branch;
 use App\Models\Contact;
 use App\Models\Counter;
+use App\Models\Favorite_hotels_tour;
 use App\Models\Newsletter;
 use App\Models\Offer;
 use App\Models\Why_us;
@@ -21,6 +23,25 @@ use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Validator;
 class ContentController extends Controller
 {
+    use Favouritable;
+
+    private function favouriteOfferIds()
+    {
+        if (!session()->get("SiteUser")) {
+            return [];
+        }
+
+        return Favorite_hotels_tour::where('user_id', session()->get("SiteUser")["ID"])
+            ->whereNotNull('offer_id')
+            ->pluck('offer_id')
+            ->toArray();
+    }
+
+    public function favouriteToggle($id)
+    {
+        return $this->toggleFavourite('offer_id', (int) $id);
+    }
+
     public function about()
     {
         $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
@@ -121,6 +142,7 @@ $whyUss=Why_us::all();
               "offers" => $offers,
               "latest" => $latest,
               "BreadCrumb" => $BreadCrumb,
+              "favOfferIds" => $this->favouriteOfferIds(),
           ]);
   }
 
@@ -133,6 +155,7 @@ $whyUss=Why_us::all();
               [
 
                   "offers" => $offers,
+                  "favOfferIds" => $this->favouriteOfferIds(),
 
               ])->render();
 
@@ -151,6 +174,7 @@ $whyUss=Why_us::all();
               "offer" => $offer,
               "latest" => $latest,
               "BreadCrumb" => $BreadCrumb,
+              "favOfferIds" => $this->favouriteOfferIds(),
           ]);
   }
     // Create Contact Form

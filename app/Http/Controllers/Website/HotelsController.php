@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Website\Concerns\Favouritable;
 use App\Models\Cart;
 use App\Models\City;
 use App\Models\Company;
@@ -20,6 +21,20 @@ use Illuminate\Support\Facades\Lang as Lang;
 use Validator;
 class HotelsController extends Controller
 {
+    use Favouritable;
+
+    private function favouriteHotelIds()
+    {
+        if (!session()->get("SiteUser")) {
+            return [];
+        }
+
+        return Favorite_hotels_tour::where('user_id', session()->get("SiteUser")["ID"])
+            ->whereNotNull('hotel_id')
+            ->pluck('hotel_id')
+            ->toArray();
+    }
+
     public function profile($id)
     {
         //return session("SiteUser");
@@ -64,6 +79,7 @@ class HotelsController extends Controller
             "Countries" => $Countries,
             'HasRoom' => $HasRoomCart,
             "Cities" => $Cities,
+            "favHotelIds" => $this->favouriteHotelIds(),
         ]);
     }
 
@@ -128,7 +144,8 @@ class HotelsController extends Controller
             "HotelsByAlpha" => $HotelsByAlpha,
             "Count" => $HotelsRecommended->count(),
             "todate" => $todate,
-            'enddate'=>$enddate
+            'enddate'=>$enddate,
+            "favHotelIds" => $this->favouriteHotelIds(),
         ]);
     }
 
@@ -176,7 +193,8 @@ class HotelsController extends Controller
             "HotelsByAlpha" => $HotelsByAlpha,
             "Count" => $HotelsRecommended->count(),
             "todate" => $todate,
-            'enddate'=>$enddate
+            'enddate'=>$enddate,
+            "favHotelIds" => $this->favouriteHotelIds(),
         ]);
     }
 
@@ -215,6 +233,7 @@ class HotelsController extends Controller
             "Count" => $HotelsRecommended->count(),
             "todate" => $todate,
             "enddate" => $enddate,
+            "favHotelIds" => $this->favouriteHotelIds(),
         ]);
     }
 
@@ -284,6 +303,7 @@ class HotelsController extends Controller
                     // "page_num" => $request->page_num,
                     "todate" =>$todate,
                     "enddate" =>$enddate,
+                    "favHotelIds" => $this->favouriteHotelIds(),
 
                 ])->render();
         }
@@ -361,6 +381,7 @@ class HotelsController extends Controller
                     "page_num" => $request->page_num,
                     "todate" =>$todate,
                     "enddate" =>$enddate,
+                    "favHotelIds" => $this->favouriteHotelIds(),
 
                 ])->render();
         }
@@ -407,35 +428,9 @@ class HotelsController extends Controller
     }
 
 
-    public function favourite($id){
-
-        if(session()->get("SiteUser")){
-            $input=[
-                'hotel_id'=>$id,
-                'user_id'=>session()->get("SiteUser")["ID"],
-            ];
-            Favorite_hotels_tour::create($input);
-            return redirect()->back();
-        }else{
-            session()->put("AddFavHotel", $id);
-            return redirect("/safer/login");
-        }
-    }
-
-    public function removeFavourite($id){
-
-        if(session()->get("SiteUser")){
-
-            $fav=Favorite_hotels_tour::where('hotel_id',$id)->where('user_id',session()->get("SiteUser")["ID"])->first();
-            if($fav){
-                $fav->delete();
-            }
-            return redirect()->back();
-        }else{
-            session()->put("RemFavHotel", $id);
-            return session()->get("RemFavHotel");
-            return redirect("/safer/login");
-        }
+    public function favouriteToggle($id)
+    {
+        return $this->toggleFavourite('hotel_id', (int) $id);
     }
 
 

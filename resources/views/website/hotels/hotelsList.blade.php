@@ -43,76 +43,16 @@
                              –
                                             {{ $HRec->hotel->hotel_stars }} Stars</a></h6>
                                     <span>
-
-                                        @if (session()->get('SiteUser'))
-
-
-
-                                            @php
-                                                $favExist = 0;
-                                                $favUser = App\Models\Favorite_hotels_tour::where('hotel_id', $HRec->hotel_id)
-                                                    ->where('user_id', session()->get('SiteUser')['ID'])
-                                                    ->first();
-                                                if ($favUser) {
-                                                    $favExist = 1;
-                                                }
-                                            @endphp
-
-                                            @else
-                                                @php
-                                                    $favExist=0;
-                                                @endphp
-                                            @endif
-                                            <span >
-                                                @if($favExist==1)
-                                            <a  href="{{ LaravelLocalization::localizeUrl('/removeFavourite/' . $HRec->hotel_id) }}"  ><i
-                                                     class="fa-regular fa-heart card_info_hover"></i> </a>
-
-                                                     @else
-
-                                                     @if (session()->get('SiteUser'))
-                                                     <a href="{{ LaravelLocalization::localizeUrl('/favourite/' . $HRec->hotel_id) }}"><i
-                                                             class="fa-regular fa-heart"></i> </a>
-                                                 @else
-                                                     <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}"><i class="fa-regular fa-heart"></i></a>
-                                                 @endif
-
-                                                @endif </span>
-
-
-                                    <div class="modal fade  addFavDialog" id="staticBackdrop{{ $HRec->hotel_id }}"
-                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Add
-                                                        Favorite
-
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h3>Add To Favorite</h3>
-                                                    <h6> <a class="">{{ $HRec->hotel->hotel_enname }} –
-                                                            {{ $HRec->hotel->hotel_stars }} Stars</a></h6>
-
-                                                </div>
-                                                <div class="modal-footer">
-
-                                                    @if (session()->get('SiteUser'))
-                                                        <a href="{{ url('/favourite/' . $HRec->hotel_id) }}"
-                                                            class="btn btn-primary" onclick="setHeart(this)"
-                                                            data-bs-dismiss="modal">Add </a>
-                                                    @else
-                                                        <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}" class="btn btn-primary"
-                                                            onclick="setHeart(this)" data-bs-dismiss="modal">Add </a>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        @php
+                                            $isFav = session()->get('SiteUser') && in_array($HRec->hotel_id, $favHotelIds ?? []);
+                                        @endphp
+                                        <button type="button"
+                                            class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                            data-fav-type="hotel" data-fav-id="{{ $HRec->hotel_id }}"
+                                            aria-label="{{ __('links.add_favorites') }}">
+                                            <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart card_info_hover {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                        </button>
+                                    </span>
                                 </div>
                                 <span> <i
                                         class="fa-solid fa-location-dot"></i>
@@ -183,51 +123,16 @@
                                             @endif –
                                             {{ $HPrice->hotel->hotel_stars }} {{ __('links.stars') }}</a></h6>
                                     <span>
-
-                                        @if (session()->get('SiteUser'))
-                                            <a href="{{ LaravelLocalization::localizeUrl('/favourite/' . $HPrice->hotel_id) }}"><i
-                                                    class="fa-regular fa-heart"></i> </a>
-                                        @else
-                                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}"><i class="fa-regular fa-heart"></i></a>
-                                        @endif
+                                        @php
+                                            $isFav = session()->get('SiteUser') && in_array($HPrice->hotel_id, $favHotelIds ?? []);
+                                        @endphp
+                                        <button type="button"
+                                            class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                            data-fav-type="hotel" data-fav-id="{{ $HPrice->hotel_id }}"
+                                            aria-label="{{ __('links.add_favorites') }}">
+                                            <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                        </button>
                                     </span>
-
-                                    <div class="modal fade addFavDialog" id="static{{ $HPrice->hotel_id }}Backdrop"
-                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">@if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                                        Add
-                                                        Favorite
-                                                        @else
-                                                      اضافة للمفضله
-                                                        @endif</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h3>Add To Favorite</h3>
-                                                    <h6> <a class="">{{ $HPrice->hotel->hotel_enname }} –
-                                                            {{ $HPrice->hotel->hotel_stars }} Stars</a></h6>
-
-                                                </div>
-                                                <div class="modal-footer">
-
-                                                    @if (session()->get('SiteUser'))
-                                                        <a href="{{ url('/favourite/' . $HPrice->hotel_id) }}"
-                                                            class="btn btn-primary" onclick="setHeart(this)"
-                                                            data-bs-dismiss="modal">Add </a>
-                                                    @else
-                                                        <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}" class="btn btn-primary"
-                                                            onclick="setHeart(this)" data-bs-dismiss="modal">Add </a>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <span> <i class="fa-solid fa-location-dot"></i>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -298,55 +203,16 @@
                                             @endif –
                                             {{ $HAlpha->hotel->hotel_stars }} Stars</a></h6>
                                     <span>
-
-                                        @if (session()->get('SiteUser'))
-                                            <a href="
-                                            {{ LaravelLocalization::localizeUrl('/favourite/' . $HAlpha->hotel_id) }}"><i
-                                                    class="fa-regular fa-heart"></i> </a>
-                                        @else
-                                            <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}"><i
-                                                    class="fa-regular fa-heart"></i></a>
-                                        @endif
+                                        @php
+                                            $isFav = session()->get('SiteUser') && in_array($HAlpha->hotel_id, $favHotelIds ?? []);
+                                        @endphp
+                                        <button type="button"
+                                            class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                            data-fav-type="hotel" data-fav-id="{{ $HAlpha->hotel_id }}"
+                                            aria-label="{{ __('links.add_favorites') }}">
+                                            <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                        </button>
                                     </span>
-                                    {{-- <div class="heart" data-bs-toggle="modal"
-                                            data-bs-target="#staticBack{{ $HAlpha->hotel_id }}drop">
-                                            {{-- <input type="checkbox" id="fav" type="submit modl_fav_add_remov"
-                                                onclick="setHeart(this)" data-info-fav="not_added">
-
-                                            <label class="heart" for="fav"></label> --}}
-                                    {{-- </div> --}}
-                                    <div class="modal fade addFavDialog" id="staticBack{{ $HAlpha->hotel_id }}drop"
-                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Add
-                                                        Favorite</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h3>Add To Favorite</h3>
-                                                    <h6> <a class="stretched-link">{{ $HAlpha->hotel->hotel_enname }}
-                                                            –
-                                                            {{ $HAlpha->hotel->hotel_stars }} Stars</a></h6>
-
-                                                </div>
-                                                <div class="modal-footer">
-
-                                                    @if (session()->get('SiteUser'))
-                                                        <a href="{{ url('/favourite/' . $HAlpha->hotel_id) }}"
-                                                            class="btn btn-primary" onclick="setHeart(this)"
-                                                            data-bs-dismiss="modal">Add </a>
-                                                    @else
-                                                        <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('siteLogin'))}}" class="btn btn-primary"
-                                                            onclick="setHeart(this)" data-bs-dismiss="modal">Add </a>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <span> <i class="fa-solid fa-location-dot"></i>
 

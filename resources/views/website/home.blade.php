@@ -339,35 +339,17 @@
                                                         {{ $Hotel->hotel->hotel_arname }}
                                             @endif
                                             </h5>
-                                            @if (session()->get('SiteUser'))
-                                                @php
-                                                    $favExist = 0;
-                                                    $favUser = App\Models\Favorite_hotels_tour::where(
-                                                        'hotel_id',
-                                                        $Hotel->hotel->id,
-                                                    )
-                                                        ->where('user_id', session()->get('SiteUser')['ID'])
-                                                        ->first();
-                                                    if ($favUser) {
-                                                        $favExist = 1;
-                                                    }
-                                                @endphp
-                                            @else
-                                                @php
-                                                    $favExist = 0;
-                                                @endphp
-                                            @endif
+                                            @php
+                                                $isFav = session()->get('SiteUser') && in_array($Hotel->hotel->id, $favHotelIds ?? []);
+                                            @endphp
                                             <span>
-                                                @if ($favExist == 1)
-                                                    <a
-                                                        href="{{ LaravelLocalization::localizeUrl('/removeFavourite/' . $Hotel->hotel->id) }}"><i
-                                                            class="fa-regular fa-heart card_info_hover"
-                                                            style="color: #1C4482;font-weight: 600;"></i> </a>
-                                                @else
-                                                    <a
-                                                        href="{{ LaravelLocalization::localizeUrl('/favourite/' . $Hotel->hotel->id) }}"><i
-                                                            class="fa-regular fa-heart"></i> </a>
-                                                @endif
+                                                <button type="button"
+                                                    class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                                    data-fav-type="hotel" data-fav-id="{{ $Hotel->hotel->id }}"
+                                                    aria-label="{{ __('links.add_favorites') }}">
+                                                    <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart card_info_hover {{ $isFav ? 'is-fav-icon' : '' }}"
+                                                        @if ($isFav) style="color: #1C4482;font-weight: 600;" @endif></i>
+                                                </button>
                                             </span>
                                         </div>
                                         <a href="#">

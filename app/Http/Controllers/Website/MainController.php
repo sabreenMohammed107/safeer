@@ -11,6 +11,7 @@ use App\Models\Company;
 use App\Models\Counter;
 use App\Models\Country;
 use App\Models\Explore_city;
+use App\Models\Favorite_hotels_tour;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -41,6 +42,14 @@ public function __construct()
         $BlogsCategories = Blogs_category::where('id','!=',100)->get();
         $AllBlogs = Blog::where('blog_category_id','!=',100)->take(4)->orderBy("id","desc")->get();
 // $Offers=Blog::where('blog_category_id','=',100)->inRandomOrder()->limit(4)->get();
+        $favHotelIds = [];
+        if (session()->get("SiteUser")) {
+            $favHotelIds = Favorite_hotels_tour::where('user_id', session()->get("SiteUser")["ID"])
+                ->whereNotNull('hotel_id')
+                ->pluck('hotel_id')
+                ->toArray();
+        }
+
         return view("website.home",
             [
                 "Company" => $Company,
@@ -52,7 +61,8 @@ public function __construct()
                 "Counters" => $Counters,
                 "BestHotels" => $BestHotels,
                 "BlogsCategories" => $BlogsCategories,
-                "AllBlogs" => $AllBlogs
+                "AllBlogs" => $AllBlogs,
+                "favHotelIds" => $favHotelIds,
             ]);
     }
 

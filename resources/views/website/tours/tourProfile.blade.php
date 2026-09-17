@@ -241,44 +241,18 @@
                         style="right:100% !important" @endif>
                         {{-- <i class="fa-solid fa-share-nodes"></i> --}}
 
-
-                        @if (session()->get('SiteUser'))
-
-
-
                         @php
-                        $favExist = 0;
-                        $favUser = App\Models\Favorite_hotels_tour::where('tour_id', $Tour->id)
-                        ->where('user_id', session()->get('SiteUser')['ID'])
-                        ->first();
-                        if ($favUser) {
-                        $favExist = 1;
-                        }
+                            $isFav = session()->get('SiteUser') && in_array($Tour->id, $favTourIds ?? []);
                         @endphp
-
-                        @else
-                        @php
-                        $favExist=0;
-                        @endphp
-                        @endif
-                        {{-- <span>
-                            <a href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"><i
-                                    class="fa-solid fa-share-nodes"></i>
-                            </a> </span> --}}
                         <span>
-                            {{-- <a href="{{ url('/removeFavouriteTours/' . $Tour->id) }}"><i
-                                    class="fa-solid fa-share-nodes"></i>
-                            </a> --}}
-                            @if($favExist==1)
-                            <a href="{{ LaravelLocalization::localizeUrl('/removeFavouriteTours/' . $Tour->id) }}"><i
-                                    class="fa-regular fa-heart " style="background-color: #1C4482; color:#fff"></i> </a>
-
-                            @else
-
-                            <a href="{{ LaravelLocalization::localizeUrl('/favouriteTours/' . $Tour->id) }}"><i
-                                    class="fa-regular fa-heart"></i> </a>
-
-                            @endif </span>
+                            <button type="button"
+                                class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                data-fav-type="tour" data-fav-id="{{ $Tour->id }}"
+                                aria-label="{{ __('links.add_favorites') }}">
+                                <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"
+                                    @if ($isFav) style="background-color: #1C4482; color:#fff" @endif></i>
+                            </button>
+                        </span>
 
                         {{-- <div class="heart" data-bs-toggle="modal"
                             data-bs-target="#staticBack{{ $Tour->hotel_id }}drop">

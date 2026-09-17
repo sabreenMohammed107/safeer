@@ -24,6 +24,15 @@
                                         @endif
                                     </span>
                                 </a>
+                                @php
+                                    $isFav = session()->get('SiteUser') && in_array($HRec->id, $favTransferIds ?? []);
+                                @endphp
+                                <button type="button"
+                                    class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                    data-fav-type="transfer" data-fav-id="{{ $HRec->id }}"
+                                    aria-label="{{ __('links.add_favorites') }}">
+                                    <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                </button>
                                 <div class="card_info">
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                                         <h6> {{ $HRec->carModel->model_enname ?? '' }} {{ __('links.to') }}
@@ -150,6 +159,15 @@
                                         @endif
                                     </span>
                                 </a>
+                                @php
+                                    $isFav = session()->get('SiteUser') && in_array($HPrice->id, $favTransferIds ?? []);
+                                @endphp
+                                <button type="button"
+                                    class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                    data-fav-type="transfer" data-fav-id="{{ $HPrice->id }}"
+                                    aria-label="{{ __('links.add_favorites') }}">
+                                    <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                </button>
                                 <div class="card_info">
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                                         <h6> {{ $HPrice->carModel->model_enname ?? '' }} {{ __('links.to') }}
@@ -272,6 +290,15 @@
                                         @endif
                                     </span>
                                 </a>
+                                @php
+                                    $isFav = session()->get('SiteUser') && in_array($HAlpha->id, $favTransferIds ?? []);
+                                @endphp
+                                <button type="button"
+                                    class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                    data-fav-type="transfer" data-fav-id="{{ $HAlpha->id }}"
+                                    aria-label="{{ __('links.add_favorites') }}">
+                                    <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                </button>
                                 <div class="card_info">
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                                         <h6> {{ $HAlpha->carModel->model_enname ?? '' }} {{ __('links.to') }}

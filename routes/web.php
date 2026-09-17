@@ -110,10 +110,8 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
     Route::post("/hotels/retrieve", [HotelsController::class, 'fetch']);
     Route::post("/hotels/search", [HotelsController::class, 'search']);
     Route::get("/hotels/{id}", [HotelsController::class, 'profile']);
-    //favourite
-    Route::get("/favourite/{id}", [HotelsController::class, 'favourite']);
-    //removeFavourite
-    Route::get("/removeFavourite/{id}", [HotelsController::class, 'removeFavourite']);
+    //favourite (AJAX toggle)
+    Route::post("/favourite/hotel/{id}", [HotelsController::class, 'favouriteToggle'])->name('favourite.hotel.toggle');
     Route::post("/hotels/{id}/fetch", [HotelsController::class, 'fetch_hotel_cards']);
     Route::get("/hotels/review/add", [HotelsController::class, 'add_review']);
     Route::get('/fetch-hotel-filter', [HotelsController::class, 'fetch_data'])->name('fetch-hotel-filter');
@@ -130,6 +128,8 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
 
     Route::get('offers/fetch_data', [ContentController::class, 'fetch_data_offer']);
     Route::get('/single-offer/{id}/{slug?}', [ContentController::class, 'singleOffer'])->name('single-offer');
+    //favourite (AJAX toggle)
+    Route::post("/favourite/offer/{id}", [ContentController::class, 'favouriteToggle'])->name('favourite.offer.toggle');
 
 
     Route::get('/contact', [ContentController::class, 'createForm']);
@@ -151,11 +151,8 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
     Route::post("/bookTours", [ToursController::class, 'bookTours']);
     //getTourByCity
     Route::get("/tourByCity/{id}", [ToursController::class, 'getTourByCity'])->name("tourByCity");
-    //removeFavouriteTours
-
-    Route::get("/removeFavouriteTours/{id}", [ToursController::class, 'removeFavourite']);
-    //favouriteTours
-    Route::get("/favouriteTours/{id}", [ToursController::class, 'favourite']);
+    //favourite (AJAX toggle)
+    Route::post("/favourite/tour/{id}", [ToursController::class, 'favouriteToggle'])->name('favourite.tour.toggle');
     Route::get("/tours/review/add", [ToursController::class, 'add_review']);
 
     //transfer
@@ -164,6 +161,8 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
     Route::get('/fetch-transfers-filter', [SiteTransferController::class, 'fetch_data'])->name('fetch-transfers-filter');
     Route::post("/transfers/retrieve", [SiteTransferController::class, 'fetch']);
     Route::post("/bookTransfer", [SiteTransferController::class, 'bookTransfer']);
+    //favourite (AJAX toggle)
+    Route::post("/favourite/transfer/{id}", [SiteTransferController::class, 'favouriteToggle'])->name('favourite.transfer.toggle');
     //visa
     Route::get("/visa", [VisaDataController::class, 'all_visa']);
     Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas']);
