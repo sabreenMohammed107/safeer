@@ -68,11 +68,13 @@
                                     @endif
                                 </h6>
                                 <span class="info">
-                                    <a href="tel:{{ $master->phone }}">  @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                        {!! $master->phone !!}
-                                    @else
-                                    {!! $master->ar_phone !!}
-                                    @endif</a>
+                                    <a href="tel:{{ $master->phone }}">
+                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                            {!! $master->phone !!}
+                                        @else
+                                            {!! $master->ar_phone !!}
+                                        @endif
+                                    </a>
                                 </span>
                                 {{-- <span class="info">
                               <a href="tel:011551112211">011551112211</a>
@@ -113,26 +115,29 @@
                         {{-- <img src="{{ asset('/website_assets/images/contact/message.webp') }}" alt="messages logo "> --}}
                         <div class="card-body " style="margin: auto;display:flex">
 
-                             <div style="position: relative ;margin:0 10px">
-                                <img src="{{ asset('/website_assets/images/Dijital.webp') }}" width="270"  alt="Dijital">
+                            <div style="position: relative ;margin:0 10px">
+                                <img src="{{ asset('/website_assets/images/Dijital.webp') }}" width="270"
+                                    alt="Dijital">
 
 
-                                <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1" style="position: absolute;
-                                   bottom: 5px;right: 7px;" target="_blank" >
-                                 {{-- {{  QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34, 76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}} --}}
-                             </a>
-</div>
-                            <a href="https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463" target="_blank" >
+                                <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1"
+                                    style="position: absolute;
+                                   bottom: 5px;right: 7px;"
+                                    target="_blank">
+                                    {{-- {{  QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34, 76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}} --}}
+                                </a>
+                            </div>
+                            <a href="https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463"
+                                target="_blank">
                                 <?php
                                 // $im=QrCode::format('png')
                                 // ->merge('website_assets/images/q1.webp', 0.4, true)
                                 // ->size(100)->color(27, 34, 76)->errorCorrection('H')
                                 // ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
-
                                 ?>
 
-{{-- <img src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;"> --}}
-</a>
+                                {{-- <img src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;"> --}}
+                            </a>
                         </div>
                         {{-- </div>  --}}
                     </div>
@@ -144,8 +149,10 @@
     <section class="help_section socail_channels">
 
 
-        <img class="w-100" src=" {{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}" alt=" slider mask top">
-        <img class="w-100" src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}" alt=" slider mask bottom">
+        <img class="w-100" src=" {{ asset('/website_assets/images/hotel-details/slider-mask_top.webp') }}"
+            alt=" slider mask top">
+        <img class="w-100" src="{{ asset('/website_assets/images/hotel-details/slider-mask-bottom.webp') }}"
+            alt=" slider mask bottom">
         <div class="container">
 
             <h5>
@@ -218,8 +225,8 @@
                     </div>
                     <div class="col-md-12 col-xl-6 col-sm-12">
                         <div class="mb-3">
-                            <textarea class="form-control{{ $errors->has('message') ? 'error' : '' }}" name="message" id="message" rows="3"
-                                placeholder="{{ __('links.send_msg') }}
+                            <textarea class="form-control{{ $errors->has('message') ? 'error' : '' }}" name="message" id="message"
+                                rows="3" placeholder="{{ __('links.send_msg') }}
                                 " required>{{ old('message') }}</textarea>
                             @if ($errors->has('message'))
                                 <div class="error">
@@ -295,7 +302,43 @@
 
         </div>
 
+        <div class="row mx-0  mb-3">
+            @isset($branches[1])
+                <div class="col-sm-12 col-md-6">
+                    <div class="offices_info">
+                        <div class="help_info">
+                            <h6 class="mb-3">
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                    {{ $branches[1]->branch_enname }}
+                                @else
+                                    {{ $branches[1]->branch_arname }}
+                                @endif
 
+
+                            </h6>
+                            <span>
+                                @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                    {{ $branches[1]->detailed_address_en }}
+                                @else
+                                    {{ $branches[1]->detailed_address_ar }}
+                                @endif
+                            </span>
+                            {{-- <span> new york NY 10010</span> --}}
+                            <span> phone :<br> {!! $branches[1]->phone !!}</span>
+                            {{-- <span>fax: {{ $branches[1]->fax }}</span> --}}
+                            <span>email: {{ $branches[1]->email }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <iframe src=" {{ $branches[1]->google_map }}" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            @endisset
+
+
+
+        </div>
     </section>
 
     <!--  ending page  -->

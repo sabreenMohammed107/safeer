@@ -223,7 +223,7 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 
 'useful'=>'useful links',
 'services_offers'=>'Services & Offers',
-'policies'=>'Legal & Policies',
+'policies'=>'Legal and Policies',
 'shipping_policies'=>'Shipping Policies',
 'exchange_return_policy'=>'Exchange & Return Policy',
 'terms_of_service'=>'Terms of Service',

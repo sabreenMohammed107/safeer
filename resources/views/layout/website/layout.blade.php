@@ -256,7 +256,8 @@
                             {{-- Honeypot field: hidden from real users, spam bots tend to fill every input --}}
                             <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
                                 <label for="hp_website">Leave this field blank</label>
-                                <input type="text" name="hp_website" id="hp_website" tabindex="-1" autocomplete="off">
+                                <input type="text" name="hp_website" id="hp_website" tabindex="-1"
+                                    autocomplete="off">
                             </div>
                             <div class="input-group input">
                                 <input type="email" name="email" class="form-control" required
@@ -322,9 +323,10 @@
                         <div class="useful_links">
                             <h6>{{ __('links.services_offers') }}</h6>
                             <ul>
-                                <li><i class="fa-solid fa-angle-right"></i><a
+
+                                {{-- <li><i class="fa-solid fa-angle-right"></i><a
                                         href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{ __('links.hotels') }}
-                                    </a></li>
+                                    </a></li> --}}
                                 <li><i class="fa-solid fa-angle-right"></i><a
                                         href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.tours') }}
                                     </a></li>
@@ -337,6 +339,9 @@
                                 <li><i class="fa-solid fa-angle-right"></i><a
                                         href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{ __('links.offers') }}
                                     </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/terms') }}">{{ __('links.term_condation') }}</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -469,8 +474,7 @@
                 <div class="row mx-0 footer-payments-row">
                     <div class="col-12 footer-payments text-center">
                         <a href="http://" class="pay-link  "> <img loading="lazy"
-                                src="{{ asset('img/payment/visa.webp') }}" alt="visa"
-                                srcset=""></a>
+                                src="{{ asset('img/payment/visa.webp') }}" alt="visa" srcset=""></a>
 
 
                         <a href="http://" class="pay-link "> <img loading="lazy"
@@ -479,8 +483,7 @@
 
 
                         <a href="http://" class="pay-link "> <img loading="lazy"
-                                src="{{ asset('img/payment/apple-pay.webp') }}" alt="apple-pay"
-                                srcset=""></a>
+                                src="{{ asset('img/payment/apple-pay.webp') }}" alt="apple-pay" srcset=""></a>
 
 
                         <a href="http://" class="pay-link "> <img loading="lazy"
@@ -494,8 +497,7 @@
 
 
                         <a href="http://" class="pay-link "> <img loading="lazy"
-                                src="{{ asset('img/payment/stripe.webp') }}" alt="stripe"
-                                srcset=""></a>
+                                src="{{ asset('img/payment/stripe.webp') }}" alt="stripe" srcset=""></a>
                     </div>
                 </div>
             </div>
