@@ -35,7 +35,7 @@
                 <form action="{{ LaravelLocalization::getLocalizedURL($localVar, route('ProceedRegister'))}}" method="POST">
                     @csrf
                     {{-- Honeypot field: hidden from real users, spam bots tend to fill every input --}}
-                    <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+                    <div class="visually-hidden" aria-hidden="true">
                         <label for="hp_website">Leave this field blank</label>
                         <input type="text" name="hp_website" id="hp_website" tabindex="-1" autocomplete="off">
                     </div>

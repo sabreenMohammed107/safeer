@@ -146,7 +146,7 @@
             <form action="{{ route('contact.store') }}" method="post">
                 @csrf
                 {{-- Honeypot field: hidden from real users, spam bots tend to fill every input --}}
-                <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+                <div class="visually-hidden" aria-hidden="true">
                     <label for="website">Leave this field blank</label>
                     <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
                 </div>
