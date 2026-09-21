@@ -107,42 +107,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-6 col-xl-4 mt-2"></div>
-            <div class="col-sm-12 col-md-6 col-xl-4 mt-2">
-                <div class="card-content ">
-                    <div class=" card" style="border: none">
-
-                        {{-- <img src="{{ asset('/website_assets/images/contact/message.webp') }}" alt="messages logo "> --}}
-                        <div class="card-body " style="margin: auto;display:flex">
-
-                            <div style="position: relative ;margin:0 10px">
-                                <img src="{{ asset('/website_assets/images/Dijital.webp') }}" width="270"
-                                    alt="Dijital">
-
-
-                                <a href="https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1"
-                                    style="position: absolute;
-                                   bottom: 5px;right: 7px;"
-                                    target="_blank">
-                                    {{-- {{  QrCode::size(60)->color(255, 255, 255)->backgroundColor(27, 34, 76)->generate('https://www.tursab.org.tr/pl/qr/AFEHS231182135358d44e025792c4c1')}} --}}
-                                </a>
-                            </div>
-                            <a href="https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463"
-                                target="_blank">
-                                <?php
-                                // $im=QrCode::format('png')
-                                // ->merge('website_assets/images/q1.webp', 0.4, true)
-                                // ->size(100)->color(27, 34, 76)->errorCorrection('H')
-                                // ->generate('https://etbis.eticaret.gov.tr/sitedogrulama/8317670085184517?638099226044423463');
-                                ?>
-
-                                {{-- <img src="data:image/png;base64, {!! base64_encode($im)!!}" style="margin-bottom: 10px;"> --}}
-                            </a>
-                        </div>
-                        {{-- </div>  --}}
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
     <!-- need help section -->
@@ -225,8 +189,8 @@
                     </div>
                     <div class="col-md-12 col-xl-6 col-sm-12">
                         <div class="mb-3">
-                            <textarea class="form-control{{ $errors->has('message') ? 'error' : '' }}" name="message" id="message"
-                                rows="3" placeholder="{{ __('links.send_msg') }}
+                            <textarea class="form-control{{ $errors->has('message') ? 'error' : '' }}" name="message" id="message" rows="3"
+                                placeholder="{{ __('links.send_msg') }}
                                 " required>{{ old('message') }}</textarea>
                             @if ($errors->has('message'))
                                 <div class="error">
@@ -286,9 +250,16 @@
                                 @endif
                             </span>
                             {{-- <span> new york NY 10010</span> --}}
-                            <span> phone :<br> {!! $branches[0]->phone !!}</span>
-                            {{-- <span>fax: {{ $branches[0]->fax }}</span> --}}
-                            <span>email: {{ $branches[0]->email }}</span>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                <span> phone :<br> {!! $branches[0]->phone !!}</span>
+                                {{-- <span>fax: {{ $branches[0]->fax }}</span> --}}
+                                <span>email: {{ $branches[0]->email }}</span>
+                            @else
+                                <span> هاتف :<br> {!! $branches[0]->ar_phone !!}</span>
+                                {{-- <span>fax: {{ $branches[0]->fax }}</span> --}}
+                                <span>البريد الإلكتروني: {{ $branches[0]->email }}</span>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -324,9 +295,15 @@
                                 @endif
                             </span>
                             {{-- <span> new york NY 10010</span> --}}
-                            <span> phone :<br> {!! $branches[1]->phone !!}</span>
-                            {{-- <span>fax: {{ $branches[1]->fax }}</span> --}}
-                            <span>email: {{ $branches[1]->email }}</span>
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                <span> phone :<br> {!! $branches[1]->phone !!}</span>
+                                {{-- <span>fax: {{ $branches[1]->fax }}</span> --}}
+                                <span>email: {{ $branches[1]->email }}</span>
+                            @else
+                                <span> هاتف :<br> {!! $branches[1]->ar_phone !!}</span>
+                                {{-- <span>fax: {{ $branches[1]->fax }}</span> --}}
+                                <span>البريد الإلكتروني: {{ $branches[1]->email }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>

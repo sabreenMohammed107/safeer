@@ -2992,11 +2992,6 @@ footer .contact_details .contact_info .social-icons .item:hover i.fa-brands {
     margin-bottom: 2px;
     padding: 5px 10px;
 }
-.contact_info.qr-code-custome img {
-    background-color: #fff;
-    padding: 3px;
-    margin: 0 0 0 15px;
-}
 .fixed-icon {
     position: fixed;
     top: 150px !important;
