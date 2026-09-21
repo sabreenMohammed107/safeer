@@ -281,8 +281,8 @@
 
         <footer>
             <div class="container">
-                <div class="row mx-0">
-                    <div class="col-xl-4 col-md-12 col-sm-12">
+                <div class="row mx-0 footer-row">
+                    <div class="col-12 col-md-6 col-lg-3">
                         <div class="left_info">
                             <h6>{{ __('links.about_us') }} </h6>
                             <p style="text-align: justify; padding:0 10px">
@@ -294,89 +294,74 @@
                             </p>
                         </div>
                     </div>
-                    <!-- useful links -->
-
-                    <div class="col-xl-4 col-md-6 col-sm-12">
+                    <!-- explore -->
+                    <div class="col-12 col-md-6 col-lg-2">
                         <div class="useful_links">
-                            <h6>{{ __('links.useful') }} </h6>
-                            <div class="row mx-0">
-                                <div class="col-6">
-                                    <ul>
-                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/') }}">
-                                                {{ __('links.home') }} </a>
-                                        </li>
-                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}
-                                            </a></li>
-                                        {{-- <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{
-                                                __('links.hotels') }}
-                                            </a></li> --}}
-                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{ __('links.offers') }}
-                                            </a></li>
-                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/terms') }}">{{ __('links.term_condation') }}</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                                <div class="col-6">
-                                    <ul>
-                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}
-                                            </a></li>
-                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.tours') }}
-                                            </a></li>
-                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/transfers') }}">{{ __('links.transfer') }}
-                                            </a></li>
-                                        <li><i class="fa-solid fa-angle-right"></i><a
-                                                href="{{ LaravelLocalization::localizeUrl('/visa') }}">{{ __('links.visa') }}
-                                            </a>
-                                        </li>
-
-
-                                    </ul>
-                                </div>
-                                <div class="col-12">
-                                    <a href="http://" class="pay-link  "> <img loading="lazy"
-                                            src="{{ asset('img/payment/visa.webp') }}" alt="visa"
-                                            srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                            src="{{ asset('img/payment/google-pay.webp') }}" alt="google-pay"
-                                            srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                            src="{{ asset('img/payment/apple-pay.webp') }}" alt="apple-pay"
-                                            srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                            src="{{ asset('img/payment/mastercard.webp') }}" alt="mastercard"
-                                            srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                            src="{{ asset('img/payment/samsung-pay.webp') }}" alt="samsung-pay"
-                                            srcset=""></a>
-
-
-                                    <a href="http://" class="pay-link "> <img loading="lazy"
-                                            src="{{ asset('img/payment/stripe.webp') }}" alt="stripe"
-                                            srcset=""></a>
-
-                                </div>
-                            </div>
+                            <h6>{{ __('links.explore') }}</h6>
+                            <ul>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/') }}">{{ __('links.home') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/agents') }}">{{ __('links.become_agent') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/careers') }}">{{ __('links.careers') }}
+                                    </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- services & offers -->
+                    <div class="col-12 col-md-6 col-lg-2">
+                        <div class="useful_links">
+                            <h6>{{ __('links.services_offers') }}</h6>
+                            <ul>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/hotels') }}">{{ __('links.hotels') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/tours') }}">{{ __('links.tours') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/transfers') }}">{{ __('links.transfer') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/visa') }}">{{ __('links.visa') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/offers') }}">{{ __('links.offers') }}
+                                    </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- legal & policies -->
+                    <div class="col-12 col-md-6 col-lg-2">
+                        <div class="useful_links">
+                            <h6>{{ __('links.policies') }}</h6>
+                            <ul>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/policies/shipping-policies') }}#shipping-policies">{{ __('links.shipping_policies') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/policies/exchange-return-policy') }}#exchange-return-policy">{{ __('links.exchange_return_policy') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/policies/terms-of-service') }}#terms-of-service">{{ __('links.terms_of_service') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/policies/privacy-policy') }}#privacy-policy">{{ __('links.privacy_policy') }}
+                                    </a></li>
+                            </ul>
                         </div>
                     </div>
                     <!-- contact details -->
-                    <div class="col-xl-4 col-md-6">
+                    <div class="col-12 col-lg-3">
                         <div class="contact_details">
                             <h6>{{ __('links.contact_us') }}</h6>
 
@@ -480,6 +465,38 @@
                         </div>
                     </div>
 
+                </div>
+                <div class="row mx-0 footer-payments-row">
+                    <div class="col-12 footer-payments text-center">
+                        <a href="http://" class="pay-link  "> <img loading="lazy"
+                                src="{{ asset('img/payment/visa.webp') }}" alt="visa"
+                                srcset=""></a>
+
+
+                        <a href="http://" class="pay-link "> <img loading="lazy"
+                                src="{{ asset('img/payment/google-pay.webp') }}" alt="google-pay"
+                                srcset=""></a>
+
+
+                        <a href="http://" class="pay-link "> <img loading="lazy"
+                                src="{{ asset('img/payment/apple-pay.webp') }}" alt="apple-pay"
+                                srcset=""></a>
+
+
+                        <a href="http://" class="pay-link "> <img loading="lazy"
+                                src="{{ asset('img/payment/mastercard.webp') }}" alt="mastercard"
+                                srcset=""></a>
+
+
+                        <a href="http://" class="pay-link "> <img loading="lazy"
+                                src="{{ asset('img/payment/samsung-pay.webp') }}" alt="samsung-pay"
+                                srcset=""></a>
+
+
+                        <a href="http://" class="pay-link "> <img loading="lazy"
+                                src="{{ asset('img/payment/stripe.webp') }}" alt="stripe"
+                                srcset=""></a>
+                    </div>
                 </div>
             </div>
 

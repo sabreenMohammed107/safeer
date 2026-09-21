@@ -58,7 +58,7 @@ return [
   'signin_up2'=>'sign up',
   'signin_up3'=>'Please fill out form carefully for registration',
   'sign_out'=>'Sign Out',
-  'privacy_policy'=>'privacy policy',
+  'privacy_policy'=>'Privacy Policy',
   'term_condation'=>'Terms and Conditions',
   'wishlist'=>'Wishlist',
   'track_order'=>'Track your Order',
@@ -222,6 +222,11 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'name_regex'=>'UserName should be at least 4 characters, special characters not allowed ',
 
 'useful'=>'useful links',
+'services_offers'=>'Services & Offers',
+'policies'=>'Legal & Policies',
+'shipping_policies'=>'Shipping Policies',
+'exchange_return_policy'=>'Exchange & Return Policy',
+'terms_of_service'=>'Terms of Service',
 // home page
 'explore'=>'Explore',
 'turkey'=>'The World',

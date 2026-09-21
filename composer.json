@@ -15,6 +15,7 @@
         "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
+        "league/commonmark": "^2.4",
         "livewire/livewire": "^2.12",
         "mcamara/laravel-localization": "^1.8",
         "mews/captcha": "^3.3",

@@ -36,6 +36,7 @@ use App\Http\Controllers\TourGalleryController;
 use App\Http\Controllers\AllFavHotelsController;
 use App\Http\Controllers\SiteContriesController;
 use App\Http\Controllers\Website\MainController;
+use App\Http\Controllers\Website\PolicyController;
 use App\Http\Controllers\BlogsCategoryController;
 use App\Http\Controllers\CompanyBranchController;
 use App\Http\Controllers\FeatureCategoryController;
@@ -239,6 +240,7 @@ Route::post('/password/update', [AuthController::class, 'updatePassword'])
     Route::get("/safer/room/{id}/book/{cap}", [BookingController::class, 'BookRoom'])->name("bookRoom");
     Route::get("/safer/room/{id}/book/{cap}/exchange", [BookingController::class, 'ExBookRoom'])->name("exBookRoom");
     Route::get("/terms", [MainController::class, 'terms'])->name("terms");
+    Route::get("/policies/{slug?}", [PolicyController::class, 'show'])->name("policies");
 
     /**
      * fast login using social media

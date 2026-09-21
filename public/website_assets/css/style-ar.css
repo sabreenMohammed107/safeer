@@ -1349,14 +1349,27 @@ footer {
     color: var(--text-color);
     position: relative;
     z-index: 8;
+    padding-top: 50px;
+    padding-bottom: 40px;
 }
-footer h6 {
-    font-size: 24px;
-    text-transform: capitalize;
+footer .footer-row > [class*="col-"] {
     margin-bottom: 28px;
 }
+footer .footer-row > [class*="col-"]:last-child {
+    margin-bottom: 0;
+}
+@media (min-width: 992px) {
+    footer .footer-row > [class*="col-"] {
+        margin-bottom: 0;
+    }
+}
+footer h6 {
+    font-size: 19px;
+    text-transform: capitalize;
+    margin-bottom: 18px;
+}
 footer .left_info p {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 200;
     width: 85%;
 }
@@ -1365,21 +1378,36 @@ footer .useful_links ul {
     padding: 0;
 }
 footer .useful_links ul li {
-    margin-bottom: 14px;
+    margin-bottom: 10px;
 }
 footer .useful_links ul li i {
     margin-right: 6px;
-    font-size: 14px;
+    font-size: 13px;
 }
 footer .useful_links ul li a {
-    font-size: 15px;
+    font-size: 14px;
     color: #efecec;
     text-transform: capitalize;
+}
+footer .footer-payments-row {
+    margin-top: 12px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+}
+footer .footer-payments {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 20px;
+}
+footer .footer-payments .pay-link {
+    padding: 0 !important;
 }
 footer .contact_details .contact_info {
     display: flex;
     align-items: center;
-    margin-bottom: 27px;
+    margin-bottom: 18px;
 }
 footer .contact_details .contact_info i {
     margin-right: 10px;
@@ -2959,11 +2987,8 @@ footer .contact_details .contact_info .social-icons .item:hover i.fa-brands {
     width: 100%;
     margin-top: 5px;
 }
-.useful_links .pay-link img {
-    width: 70px;
-}
-.useful_links .pay-link {
-    padding-right: 27px;
+.footer-payments .pay-link img {
+    width: 60px;
 }
 .f-icon,
 .f-icon:hover {
@@ -3011,14 +3036,11 @@ section.investigtion .explore.explore_position.container .explore_details {
 footer .left_info p {
     margin-right: 0 !important;
 }
-.useful_links .pay-link {
-    padding-left: 27px !important;
-}
 .hotel_details .col-sm-12.col-md-6.col-xl-3.p-0 h5,
 div.register {
     direction: ltr;
 }
-.useful_links .row ul li i.fa-solid.fa-angle-right {
+.useful_links ul li i.fa-solid.fa-angle-right {
     scale: -1;
     padding-right: 5px;
 }
