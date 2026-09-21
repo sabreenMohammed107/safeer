@@ -10,6 +10,8 @@ use App\Models\Favorite_hotels_tour;
 use App\Models\OrderDetails;
 use App\Models\Orders;
 use App\Models\SiteUser;
+use App\Rules\NoUrl;
+use App\Rules\NotBotEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -160,15 +162,15 @@ class AuthController extends Controller
 
     public function Register(Request $request)
     {
-        // $validated = $request->validate([
-        //     'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'email', 'max:255'],
-        //     'phone' => ['numeric'],
-        //     'password' => ['required', 'string', 'min:8'],
-        // ]);
+        // Honeypot check: hidden field, invisible to real visitors, that
+        // spam bots fill in anyway because they auto-populate every input.
+        if (!empty($request->input('hp_website'))) {
+            return redirect()->to(LaravelLocalization::localizeUrl('/safer/login'));
+        }
+
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'name' => ['required', 'string', 'max:255', new NoUrl],
+            'email' => ['required', 'string', 'email:rfc,dns', 'max:255', new NotBotEmail],
             'phone' => ['numeric'],
             'password' => ['required', 'string', 'min:8'],
             'captcha' => ['required','captcha'],
@@ -288,33 +290,34 @@ class AuthController extends Controller
 
     public function sendResetLink(Request $request)
     {
-        // Validate incoming request
+        // Only format is validated here — `exists:site_users,email` was
+        // removed because it let anyone probe which emails have accounts
+        // (a validation error meant "no account", success meant "account
+        // exists"), and combined with no rate limiting let this endpoint be
+        // used to mail-bomb any known address with reset emails.
         $request->validate([
-            'email' => 'required|email|exists:site_users,email', // Ensure the email exists
+            'email' => 'required|email',
         ]);
 
         $user = SiteUser::where('email', $request->email)->first();
 
-        if (!$user) {
-            return back()->with('session-danger', 'No account found with that email.');
+        // Always respond the same way whether or not the account exists,
+        // so the response itself can't be used to enumerate registered users.
+        if ($user) {
+            $token = Str::random(60);
+
+            \DB::table('password_resets')->updateOrInsert(
+                ['email' => $user->email],
+                ['token' => $token, 'created_at' => now()]
+            );
+
+            Mail::send('emails.password_reset', ['token' => $token, 'user' => $user], function ($message) use ($user) {
+                $message->to($user->email)
+                    ->subject('Password Reset Request');
+            });
         }
 
-        // Generate reset token
-        $token = Str::random(60);
-
-        // Store the token
-        \DB::table('password_resets')->updateOrInsert(
-            ['email' => $user->email],
-            ['token' => $token, 'created_at' => now()]
-        );
-
-        // Send the reset email
-        Mail::send('emails.password_reset', ['token' => $token, 'user' => $user], function ($message) use ($user) {
-            $message->to($user->email)
-                ->subject('Password Reset Request');
-        });
-
-        return back()->with('status', __('A reset link has been sent to your email.'));
+        return back()->with('status', __('If an account exists for that email, a reset link has been sent.'));
 
     }
 

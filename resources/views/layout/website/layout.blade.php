@@ -253,6 +253,11 @@
                              for the success/error message (see routes/web.php) --}}
                         <form id="newsletter-form" action="{{ route('sendNewsLetter') }}" method="POST">
                             @csrf
+                            {{-- Honeypot field: hidden from real users, spam bots tend to fill every input --}}
+                            <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+                                <label for="hp_website">Leave this field blank</label>
+                                <input type="text" name="hp_website" id="hp_website" tabindex="-1" autocomplete="off">
+                            </div>
                             <div class="input-group input">
                                 <input type="email" name="email" class="form-control" required
                                     placeholder="{{ __('links.enter_email') }}" aria-label="Recipient's username"

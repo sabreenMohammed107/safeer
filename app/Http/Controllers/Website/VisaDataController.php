@@ -8,10 +8,12 @@ use App\Models\Company;
 use App\Models\Country;
 use App\Models\Visa_type;
 use App\Models\Nationality;
+use App\Rules\NoUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Lang as Lang;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -148,9 +150,38 @@ echo $output;
     }
     public function bookVisas(Request $request)
     {
-        // return $request->passport[0]->getClientOriginalName();
-        // $passport = uniqid() . $request->passport[0]->getClientOriginalName();
-        // return $request;
+        // Honeypot check: hidden field, invisible to real visitors, that
+        // spam bots fill in anyway because they auto-populate every input.
+        if (!empty($request->input('hp_website'))) {
+            return redirect()->to("/cart")->with("session-success", Lang::get('links.visaMsg'));
+        }
+
+        // Previously this endpoint saved uploaded files and inserted DB rows
+        // with zero validation: any file type (including executable scripts)
+        // could be uploaded, and name/email fields accepted anything.
+        $validator = Validator::make($request->all(), [
+            'country' => ['required', 'array', 'min:1'],
+            'country.*' => ['required', 'integer'],
+            'visa_type_id' => ['required', 'array'],
+            'visa_type_id.*' => ['required', 'integer'],
+            'nation' => ['required', 'array'],
+            'nation.*' => ['required', 'integer'],
+            'name' => ['required', 'array'],
+            'name.*' => ['required', 'string', 'max:255', new NoUrl],
+            'email' => ['required', 'array'],
+            'email.*' => ['required', 'email:rfc,dns'],
+            'phone' => ['nullable', 'array'],
+            'phone.*' => ['nullable', 'string', 'max:30'],
+            'passport' => ['required', 'array'],
+            'passport.*' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+            'personal' => ['required', 'array'],
+            'personal.*' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->messages());
+        }
+
         $Visas = [];
         for ($i = 0; $i < count($request->country); $i++) {
             $visObj = Visa::where('visa_type_id', $request->visa_type_id[$i])->where('nationality_id', $request->nation[$i])->first();

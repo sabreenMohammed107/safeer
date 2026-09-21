@@ -133,8 +133,12 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
 
 
     Route::get('/contact', [ContentController::class, 'createForm']);
-    Route::post('/contact', [ContentController::class, 'ContactUsForm'])->name('contact.store');
-    Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter'])->name('sendNewsLetter');
+    Route::post('/contact', [ContentController::class, 'ContactUsForm'])
+        ->middleware('throttle:5,1') // max 5 contact submissions per minute per IP
+        ->name('contact.store');
+    Route::post('/sendNewsLetter', [ContentController::class, 'sendNewsLetter'])
+        ->middleware('throttle:3,1') // max 3 subscribe attempts per minute per IP
+        ->name('sendNewsLetter');
     Route::get('/reload-captcha', [ContentController::class, 'reloadCaptcha']);
 
     Route::get('/partners', [ContentController::class, 'partners'])->name('partners');
@@ -148,7 +152,7 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
     Route::get('/fetch-tour-filter', [ToursController::class, 'fetch_data'])->name('fetch-tour-filter');
     Route::post("/tours/retrieve", [ToursController::class, 'fetch']);
     Route::get("/tours/{id}/{slug?}", [ToursController::class, 'profile']);
-    Route::post("/bookTours", [ToursController::class, 'bookTours']);
+    Route::post("/bookTours", [ToursController::class, 'bookTours'])->middleware('throttle:15,1');
     //getTourByCity
     Route::get("/tourByCity/{id}", [ToursController::class, 'getTourByCity'])->name("tourByCity");
     //favourite (AJAX toggle)
@@ -160,12 +164,12 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
     Route::post("/transfers", [SiteTransferController::class, 'transfer']);
     Route::get('/fetch-transfers-filter', [SiteTransferController::class, 'fetch_data'])->name('fetch-transfers-filter');
     Route::post("/transfers/retrieve", [SiteTransferController::class, 'fetch']);
-    Route::post("/bookTransfer", [SiteTransferController::class, 'bookTransfer']);
+    Route::post("/bookTransfer", [SiteTransferController::class, 'bookTransfer'])->middleware('throttle:15,1');
     //favourite (AJAX toggle)
     Route::post("/favourite/transfer/{id}", [SiteTransferController::class, 'favouriteToggle'])->name('favourite.transfer.toggle');
     //visa
     Route::get("/visa", [VisaDataController::class, 'all_visa']);
-    Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas']);
+    Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas'])->middleware('throttle:5,1');
     //dynamicvisatype.fetch
     Route::get('dynamicvisatype/fetch', [VisaDataController::class, 'fetchCat'])->name('dynamicvisatype.fetch');
     //dynamicnationality.fetch
@@ -178,12 +182,16 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
     Route::middleware(['prevent-relogin'])->group(function () {
         //site-login
         Route::get("/safer/login", [ContentController::class, 'loginSite'])->name("siteLogin");
-        Route::post("/safer/login", [AuthController::class, 'Login'])->name("ProceedLogin");
+        Route::post("/safer/login", [AuthController::class, 'Login'])
+            ->middleware('throttle:5,1') // brute-force / credential-stuffing guard
+            ->name("ProceedLogin");
 
         //signupSite
         Route::get("/safer/register", [ContentController::class, 'signupSite'])->name("siteRegister");
 
-        Route::post("/safer/register", [AuthController::class, 'Register'])->name("ProceedRegister");
+        Route::post("/safer/register", [AuthController::class, 'Register'])
+            ->middleware('throttle:5,1') // fake-account creation guard
+            ->name("ProceedRegister");
 
     });
     //reset password
@@ -194,7 +202,9 @@ Route::get('/password/reset', function () {
 })->name('password.request');
 
 // Handle reset email submission
-Route::post('/password/email', [AuthController::class, 'sendResetLink'])->name('password.email');
+Route::post('/password/email', [AuthController::class, 'sendResetLink'])
+    ->middleware('throttle:3,1') // prevents mail-bombing an inbox with reset emails
+    ->name('password.email');
 
 // Show password reset form (with token)
 Route::get('/password/reset/{token}', function ($token) {
@@ -203,8 +213,12 @@ Route::get('/password/reset/{token}', function ($token) {
 })->name('password.reset.form');
 
 // Handle password reset submission
-Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.reset');
-Route::post('/password/update', [AuthController::class, 'updatePassword'])->name('password.update');
+Route::post('/password/reset', [AuthController::class, 'resetPassword'])
+    ->middleware('throttle:5,1')
+    ->name('password.reset');
+Route::post('/password/update', [AuthController::class, 'updatePassword'])
+    ->middleware('throttle:5,1')
+    ->name('password.update');
 
     Route::get('/safer/reload-captcha-register', [ContentController::class, 'reloadCaptcha']);
 
