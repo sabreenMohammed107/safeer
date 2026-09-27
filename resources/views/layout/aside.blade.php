@@ -665,6 +665,37 @@
                     <!-- end blog -->
                 @endif
                 @if (Auth::user()->hasRole('admin'))
+                    <!-- start team -->
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Team</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('teams.index') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Team List</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('teams.create') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Add Team Member</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end team -->
+                @endif
+                @if (Auth::user()->hasRole('admin'))
                     <!-- start user data -->
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">

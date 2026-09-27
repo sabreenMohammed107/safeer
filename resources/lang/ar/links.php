@@ -339,4 +339,5 @@ return [
 'enterCapcha' =>' ادخل رمز التحقق ',
     'become_agent' => 'كن وكيلنا',
     'careers' => 'قسم التوظيف',
+    'team' => 'فريق العمل',
 ];

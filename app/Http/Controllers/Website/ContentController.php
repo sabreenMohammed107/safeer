@@ -14,6 +14,7 @@ use App\Models\Counter;
 use App\Models\Favorite_hotels_tour;
 use App\Models\Newsletter;
 use App\Models\Offer;
+use App\Models\Team;
 use App\Models\Why_us;
 use App\Rules\NoUrl;
 use App\Rules\NotBotEmail;
@@ -377,6 +378,23 @@ $whyUss=Why_us::all();
             [
                 "Company" => $Company,
                 "BreadCrumb" => $BreadCrumb,
+            ]);
+      }
+
+      public function team(){
+        $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+        $Company = Company::first();
+
+        $activeTeam = Team::where('active', 1)->orderBy('order', 'asc');
+        $FeaturedTeam = (clone $activeTeam)->where('featured', 1)->get();
+        $GeneralTeam = (clone $activeTeam)->where('featured', 0)->get();
+
+        return view("website.team",
+            [
+                "Company" => $Company,
+                "BreadCrumb" => $BreadCrumb,
+                "FeaturedTeam" => $FeaturedTeam,
+                "GeneralTeam" => $GeneralTeam,
             ]);
       }
 

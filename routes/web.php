@@ -7,6 +7,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisaController;
 use App\Http\Controllers\HotelController;
@@ -144,6 +145,7 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
 
     Route::get('/partners', [ContentController::class, 'partners'])->name('partners');
     Route::get('/careers', [ContentController::class, 'careers'])->name('careers');
+    Route::get('/team', [ContentController::class, 'team'])->name('team');
     // outocomplete search
     // Route::get('/autocomplete-search', [HotelsController::class, 'autocompleteSearch']);
     Route::get('autocomplete', [HotelsController::class, 'autocompleteSearch'])->name('autocomplete');
@@ -290,6 +292,10 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::resource('tours', TourController::class);
     Route::post('tours-reorder', [TourController::class, 'reorder'])->name('tours.reorder');
     Route::post('dynamicdependentCat/fetch', [TourController::class, 'fetchCat'])->name('dynamicdependentCat.fetch');
+
+    //teams
+    Route::resource('teams', TeamController::class);
+    Route::post('teams-reorder', [TeamController::class, 'reorder'])->name('teams.reorder');
 
     //hotels
     Route::resource('hotels', HotelController::class);

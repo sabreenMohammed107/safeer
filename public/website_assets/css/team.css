@@ -1,0 +1,222 @@
+/* Team page */
+.team_page {
+    padding: 60px 0;
+}
+
+/* Two-column layout: featured members in a sticky left column, the rest of
+   the team in a responsive grid on the right. CSS Grid's inline axis
+   follows `direction`, so this mirrors correctly for RTL (Arabic) without
+   any extra overrides — the featured column stays the "start" column in
+   both directions. */
+.team_layout {
+    display: grid;
+    grid-template-columns: minmax(260px, 320px) 1fr;
+    gap: 40px;
+    /* Deliberately NOT align-items:start — a grid item shrinks to its own
+       content height under "start" alignment, which would leave the sticky
+       inner wrapper with no room in its cell to travel. Default "stretch"
+       makes .team_featured_col's box match the (taller) grid row, so its
+       sticky child below has somewhere to go as the page scrolls. */
+}
+
+.team_layout.team_layout--single {
+    display: block;
+}
+
+/* Featured column: stretches to the row's full height (see note above) so
+   the sticky element inside it — which keeps its own natural, shorter
+   height — has room to travel before it needs to stick. */
+.team_featured_col {
+    min-width: 0;
+}
+
+.team_featured_sticky {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.team_featured_card {
+    background-color: #1c4482;
+    border-radius: 16px;
+    padding: 26px;
+    position: relative;
+    overflow: hidden;
+}
+
+.team_featured_card .team_featured_photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: #12335f;
+    border: 4px solid #68c2e5;
+    margin-bottom: 18px;
+}
+
+.team_featured_card .team_featured_photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team_featured_card .team_featured_info {
+    position: relative;
+    z-index: 1;
+}
+
+.team_featured_card h3 {
+    color: #fff;
+    font-weight: 800;
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.team_featured_card .team_job {
+    color: #68c2e5;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.team_featured_card p {
+    color: #eef4fb;
+    line-height: 1.8;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+/* Soft brand-colored glow, purely decorative, tucked behind the content. */
+.team_featured_card::after {
+    content: "";
+    position: absolute;
+    top: -50px;
+    inset-inline-end: -50px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: #68c2e5;
+    opacity: 0.12;
+}
+
+/* Right column */
+.team_general_col {
+    min-width: 0;
+}
+
+.team_general_col .section_heading {
+    margin-bottom: 30px;
+}
+
+.team_page .section_heading h4 {
+    color: #1c4482;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.team_page .section_heading p {
+    color: #5f5858;
+    max-width: 620px;
+}
+
+.team_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px;
+}
+
+.team_grid .team_card {
+    text-align: center;
+    background-color: #fff;
+    border-radius: 14px;
+    box-shadow: 0 3px 6px #00000014;
+    overflow: hidden;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.team_grid .team_card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 18px #00000022;
+}
+
+.team_grid .team_card .team_card_photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #e9eef5;
+    overflow: hidden;
+}
+
+.team_grid .team_card .team_card_photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team_grid .team_card .team_card_body {
+    padding: 18px 12px 22px;
+}
+
+.team_grid .team_card h6 {
+    color: #1c4482;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.team_grid .team_card span {
+    color: #68c2e5;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.team_empty {
+    text-align: center;
+    color: #5f5858;
+    padding: 40px 0;
+}
+
+/* Responsive */
+@media (min-width: 1200px) {
+    .team_grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 991px) {
+    .team_layout {
+        display: block;
+    }
+
+    .team_featured_col {
+        margin-bottom: 40px;
+    }
+
+    .team_featured_sticky {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .team_featured_card {
+        flex: 1 1 260px;
+    }
+
+    .team_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 575px) {
+    .team_featured_sticky {
+        flex-direction: column;
+    }
+
+    .team_grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}

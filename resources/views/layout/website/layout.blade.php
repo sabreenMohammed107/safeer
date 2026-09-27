@@ -307,6 +307,9 @@
                                         href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}
                                     </a></li>
                                 <li><i class="fa-solid fa-angle-right"></i><a
+                                        href="{{ LaravelLocalization::localizeUrl('/team') }}">{{ __('links.team') }}
+                                    </a></li>
+                                <li><i class="fa-solid fa-angle-right"></i><a
                                         href="{{ LaravelLocalization::localizeUrl('/blogs') }}">{{ __('links.blogs') }}
                                     </a></li>
                                 <li><i class="fa-solid fa-angle-right"></i><a
