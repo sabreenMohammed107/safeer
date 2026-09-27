@@ -433,6 +433,14 @@
                                                     placeholder="tour_vedio" value="" />
                                                 <!--end::Input-->
                                             </div>
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Order / ترتيب العرض</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="number" min="0" name="order" class="form-control mb-2"
+                                                    placeholder="Leave blank to add at the end" value="" />
+                                                <!--end::Input-->
+                                            </div>
 
 
                                             <!--begin::checkbox-->

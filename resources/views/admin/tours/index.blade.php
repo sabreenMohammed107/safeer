@@ -76,6 +76,7 @@
                         <thead>
                             <!--begin::Table row-->
                             <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                <th class="w-25px" title="Drag to reorder"></th>
                                 <th class="w-10px pe-2">
                                     <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                         <input class="form-check-input" type="checkbox" data-kt-check="true"
@@ -87,6 +88,7 @@
                                 <th class="min-w-150px">city</th>
                                 <th class="min-w-150px">En Name</th>
                                 <th class="min-w-150px">Ar Name</th>
+                                <th class="min-w-70px">Order</th>
  <th class="min-w-150px text-end">Active</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
@@ -97,7 +99,21 @@
                         <tbody class="fw-bold text-gray-600">
                             @foreach ($rows as $index => $row)
                                 <!--begin::Table row-->
-                                <tr>
+                                <tr data-tour-id="{{ $row->id }}">
+                                    <!--begin::Drag handle-->
+                                    <td class="text-center">
+                                        <span class="tour-drag-handle" title="Drag to reorder">
+                                            <svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="2" cy="2" r="1.5" />
+                                                <circle cx="8" cy="2" r="1.5" />
+                                                <circle cx="2" cy="8" r="1.5" />
+                                                <circle cx="8" cy="8" r="1.5" />
+                                                <circle cx="2" cy="14" r="1.5" />
+                                                <circle cx="8" cy="14" r="1.5" />
+                                            </svg>
+                                        </span>
+                                    </td>
+                                    <!--end::Drag handle-->
                                     <!--begin::Checkbox-->
                                     <td>
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -151,6 +167,10 @@
 
                                         </div>
 
+                                    </td>
+
+                                    <td>
+                                        <span class="tour-order-value">{{ $row->order }}</span>
                                     </td>
 
                                         <!--begin::Status=-->
@@ -566,4 +586,190 @@
         <!--end::Modal dialog-->
     </div>
     <!--end::Modal - New Target-->
+
+    <style>
+        .tour-drag-handle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            color: #a1a5b7;
+            cursor: grab;
+            touch-action: none;
+        }
+        .tour-drag-handle:active {
+            cursor: grabbing;
+        }
+        #kt_ecommerce_category_table tbody tr.tour-row-chosen {
+            background-color: #f1faff;
+        }
+        #kt_ecommerce_category_table tbody tr.tour-row-ghost {
+            opacity: 0.4;
+        }
+        #kt_ecommerce_category_table tbody tr.tour-row-disabled .tour-drag-handle {
+            cursor: not-allowed;
+            opacity: 0.4;
+        }
+        .tour-reorder-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            min-width: 260px;
+        }
+    </style>
+@endsection
+
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+    <script>
+        // categories.js (loaded just above, shared by nearly every admin
+        // index page) defers its own DataTable init the same way — via
+        // KTUtil.onDOMContentLoaded, not by running inline. Doing the same
+        // here guarantees this code runs *after* that DataTable actually
+        // exists, instead of racing it.
+        KTUtil.onDOMContentLoaded(function () {
+            var csrfToken = "{{ csrf_token() }}";
+            var reorderUrl = "{{ route('tours.reorder') }}";
+            var tableEl = document.getElementById('kt_ecommerce_category_table');
+            if (!tableEl) {
+                return;
+            }
+            var tbody = tableEl.querySelector('tbody');
+
+            function showReorderToast(message, isError) {
+                var wrapper = document.createElement('div');
+                wrapper.className = 'toast show tour-reorder-toast';
+                wrapper.setAttribute('role', 'alert');
+                wrapper.innerHTML =
+                    '<div class="toast-header">' +
+                        '<strong class="me-auto">' + (isError ? 'Error' : 'Success') + '</strong>' +
+                        '<button type="button" class="btn-close" aria-label="Close"></button>' +
+                    '</div>' +
+                    '<div class="toast-body' + (isError ? ' text-danger' : '') + '">' + message + '</div>';
+
+                document.body.appendChild(wrapper);
+                wrapper.querySelector('.btn-close').addEventListener('click', function () {
+                    wrapper.remove();
+                });
+                window.setTimeout(function () {
+                    wrapper.remove();
+                }, 4000);
+            }
+
+            function renumberOrderColumn() {
+                tbody.querySelectorAll('tr').forEach(function (row, index) {
+                    var span = row.querySelector('.tour-order-value');
+                    if (span) {
+                        span.textContent = index + 1;
+                    }
+                });
+            }
+
+            function currentRowOrder() {
+                return Array.prototype.map.call(tbody.querySelectorAll('tr'), function (row) {
+                    return parseInt(row.getAttribute('data-tour-id'), 10);
+                });
+            }
+
+            function setSaving(isSaving) {
+                sortable.option('disabled', isSaving || searchIsActive());
+                tbody.classList.toggle('tour-row-disabled', isSaving);
+            }
+
+            function searchIsActive() {
+                var searchInput = document.querySelector('[data-kt-ecommerce-category-filter="search"]');
+                return !!(searchInput && searchInput.value.trim().length > 0);
+            }
+
+            // Show every tour on one page — dragging across DataTables' own
+            // pagination isn't supported, so pagination is turned off instead
+            // of trying to reorder a partially-hidden list.
+            if (window.jQuery && jQuery.fn.DataTable && jQuery.fn.DataTable.isDataTable(tableEl)) {
+                var dt = jQuery(tableEl).DataTable();
+                dt.page.len(-1).draw(false);
+            }
+
+            var sortable = Sortable.create(tbody, {
+                handle: '.tour-drag-handle',
+                animation: 150,
+                ghostClass: 'tour-row-ghost',
+                chosenClass: 'tour-row-chosen',
+                onEnd: function (evt) {
+                    if (evt.oldIndex === evt.newIndex) {
+                        return;
+                    }
+
+                    var previousOrder = currentRowOrder().slice();
+                    // The row already moved in the array position because the
+                    // DOM node moved; rebuild "previous" by undoing that move.
+                    var movedId = previousOrder.splice(evt.newIndex, 1)[0];
+                    previousOrder.splice(evt.oldIndex, 0, movedId);
+
+                    renumberOrderColumn();
+                    setSaving(true);
+
+                    var newOrder = currentRowOrder();
+
+                    fetch(reorderUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({ order: newOrder })
+                    })
+                        .then(function (response) {
+                            return response.json().then(function (data) {
+                                return { ok: response.ok, data: data || {} };
+                            });
+                        })
+                        .then(function (result) {
+                            if (result.ok && result.data.status === 'success') {
+                                showReorderToast(result.data.message || 'Tour order updated successfully', false);
+                                // DataTables caches its own row order internally and
+                                // only knows about our drag via this raw DOM move, so
+                                // a later unrelated action (e.g. deleting another row,
+                                // which redraws the table from that cache) could snap
+                                // the list back to the pre-drag order. Reloading right
+                                // after a successful save keeps the table and the
+                                // database in sync and matches what a hard refresh
+                                // would show.
+                                window.setTimeout(function () {
+                                    window.location.reload();
+                                }, 700);
+                            } else {
+                                throw new Error(result.data.message || 'Could not save the new order.');
+                            }
+                        })
+                        .catch(function (error) {
+                            // Revert the row to where it was before the drag.
+                            var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+                            var rowsById = {};
+                            rows.forEach(function (row) {
+                                rowsById[row.getAttribute('data-tour-id')] = row;
+                            });
+                            previousOrder.forEach(function (id) {
+                                tbody.appendChild(rowsById[id]);
+                            });
+                            renumberOrderColumn();
+                            showReorderToast(error.message || 'Could not save the new order. Please try again.', true);
+                            setSaving(false);
+                        });
+                }
+            });
+
+            // Reordering across a filtered subset can't be mapped back to a
+            // safe global order, so dragging is disabled while a search
+            // filter is active — clear the search box to reorder again.
+            var searchInput = document.querySelector('[data-kt-ecommerce-category-filter="search"]');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function () {
+                    sortable.option('disabled', searchIsActive());
+                });
+            }
+        });
+    </script>
 @endsection

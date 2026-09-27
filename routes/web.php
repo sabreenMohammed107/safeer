@@ -288,6 +288,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::resource('room-types', RoomTypeController::class);
     //tours
     Route::resource('tours', TourController::class);
+    Route::post('tours-reorder', [TourController::class, 'reorder'])->name('tours.reorder');
     Route::post('dynamicdependentCat/fetch', [TourController::class, 'fetchCat'])->name('dynamicdependentCat.fetch');
 
     //hotels

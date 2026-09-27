@@ -39,7 +39,7 @@ class StoreTourRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'order' => ['nullable', 'integer', 'min:0'],
         ];
     }
 }

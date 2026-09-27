@@ -42,7 +42,9 @@ class TourController extends Controller
      */
     public function index()
     {
-        $rows = Tour::orderBy("created_at", "Desc")->get();
+        // Ordered by the drag-and-drop `order` column so the table reflects
+        // whatever sequence was last saved from the admin UI.
+        $rows = Tour::orderBy("order", "asc")->orderBy("created_at", "Desc")->get();
         $cities = City::get();
 
         return view($this->viewName . 'index', compact(['rows', 'cities']));
@@ -100,6 +102,10 @@ class TourController extends Controller
                 $input['active'] = '0';
             }
 
+            if (!isset($input['order']) || $input['order'] === '') {
+                // No order given: append it to the end of the current list.
+                $input['order'] = (int) Tour::max('order') + 1;
+            }
 
             $tour = Tour::create($input);
             if (!empty($request->get('features'))) {
@@ -202,6 +208,10 @@ class TourController extends Controller
                 $input['active'] = '0';
             }
 
+            if (!isset($input['order']) || $input['order'] === '') {
+                // No order given: append it to the end of the current list.
+                $input['order'] = (int) Tour::max('order') + 1;
+            }
 
             $tour->update($input);
             if (!empty($request->get('features'))) {
@@ -253,6 +263,52 @@ class TourController extends Controller
             return redirect()->back()->withInput()->with('flash_danger', 'Can’t delete This Row
             Because it related with another table');
         }
+    }
+
+    /**
+     * Bulk-persist a new drag-and-drop display order for tours.
+     *
+     * Expects { order: [id1, id2, id3, ...] } — the tour ids in their new
+     * top-to-bottom sequence. Position in the array (1-based) becomes each
+     * tour's new `order` value, applied in one query inside a transaction.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reorder(Request $request)
+    {
+        $validated = $request->validate([
+            'order' => ['required', 'array', 'min:1'],
+            'order.*' => ['integer', 'distinct', 'exists:tours,id'],
+        ]);
+
+        try {
+            DB::transaction(function () use ($validated) {
+                $ids = $validated['order'];
+
+                $caseParts = [];
+                $bindings = [];
+                foreach ($ids as $position => $id) {
+                    $caseParts[] = 'WHEN ? THEN ?';
+                    $bindings[] = $id;
+                    $bindings[] = $position + 1;
+                }
+
+                $placeholders = implode(',', array_fill(0, count($ids), '?'));
+                $sql = 'UPDATE tours SET `order` = CASE id ' . implode(' ', $caseParts) . ' END WHERE id IN (' . $placeholders . ')';
+
+                DB::statement($sql, array_merge($bindings, $ids));
+            });
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Could not save the new order. Please try again.',
+            ], 500);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Tour order updated successfully',
+        ]);
     }
 
 

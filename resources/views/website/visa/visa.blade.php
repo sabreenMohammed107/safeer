@@ -336,7 +336,7 @@
                     </button>
 
                 </div> --}}
-                <iframe width="100%" height="100%" <iframe width="560" height="315" src=" {{ $Company->visa_vedio }}"
+                <iframe width="100%" height="100%" src="{{ $Company->visa_vedio }}"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowfullscreen></iframe>
@@ -485,7 +485,7 @@
                     <select  class="form-select form-select-solid dynamic"
                                                                     data-control="select2" data-placeholder="Select an option" required
                                                                     data-show-subtext="true" data-live-search="true" id="country"
-                                                                    data-dependent="sub" name="country[` + counter + `]" onchange="fetch(this)"
+                                                                    data-dependent="sub" name="country[` + counter + `]" onchange="fetchVisaCountryType(this)"
                                                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                             oninvalid="this.setCustomValidity('Please select an item from list')"
                             @else
@@ -822,7 +822,7 @@ Visa type
             }
         }
 
-        function fetch(elem) {
+        function fetchVisaCountryType(elem) {
             if ($(elem).val() != '') {
                 var select = $(elem).attr("id");
                 var value = $(elem).val();

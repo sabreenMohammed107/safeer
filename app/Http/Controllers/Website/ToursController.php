@@ -115,7 +115,7 @@ class ToursController extends Controller
         $country_id = $request->country_id;
         $city_ids = City::where('country_id', $request->country_id)->pluck('id');
         $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
-            ->orderBy('tours.tour_person_cost', 'asc')
+            ->orderBy('tours.order', 'asc')
             ->groupBy('tours.id')
             ->select('tours.*')
             ->where('tours.active', 1);  // Filter for active tours
@@ -184,7 +184,7 @@ class ToursController extends Controller
         $country_id = $request->country_id;
         $city_ids = City::where('country_id', $request->country_id)->pluck('id');
         $ToursRecommended = Tour::leftJoin('reviews', 'reviews.tour_id', '=', 'tours.id')
-            ->orderBy('tours.tour_person_cost', 'asc')
+            ->orderBy('tours.order', 'asc')
             ->groupBy('tours.id')
             ->select('tours.*')
             ->where('tours.active', 1);  // Filter for active tours
@@ -230,7 +230,7 @@ class ToursController extends Controller
             ->where("tours.city_id",  $id)
             ->where('tours.active', 1);  // Filter for active tours
 
-        $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')
+        $ToursRecommended = $filterTour->orderBy('tours.order', 'asc')
             ->groupBy('tours.id')
             ->select('tours.*')
             ->paginate(6);
@@ -295,7 +295,7 @@ class ToursController extends Controller
                 $filterTour->whereIn('city_id', $city_ids);
             }
             // Paginate the filtered results
-            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')
+            $ToursRecommended = $filterTour->orderBy('tours.order', 'asc')
                 ->groupBy('tours.id')
                 ->select('tours.*')
                 ->paginate(6);
@@ -350,7 +350,7 @@ class ToursController extends Controller
             // }
 
             // Paginate the filtered results
-            $ToursRecommended = $filterTour->orderBy('reviews.tour_id', 'desc')
+            $ToursRecommended = $filterTour->orderBy('tours.order', 'asc')
                 ->groupBy('tours.id')
                 ->select('tours.*')
                 ->paginate(6);

@@ -30,20 +30,22 @@
                                             @endif
                                         </a>
                                     </h6>
-                                    <span>
-                                        ${{ $HRec->tour_person_cost }}
-                                    </span>
-                                    @php
-                                        $isFav = session()->get('SiteUser') && in_array($HRec->id, $favTourIds ?? []);
-                                    @endphp
-                                    <span>
-                                        <button type="button"
-                                            class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
-                                            data-fav-type="tour" data-fav-id="{{ $HRec->id }}"
-                                            aria-label="{{ __('links.add_favorites') }}">
-                                            <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
-                                        </button>
-                                    </span>
+                                    <div class="card_info_actions">
+                                        <span>
+                                            ${{ $HRec->tour_person_cost }}
+                                        </span>
+                                        @php
+                                            $isFav = session()->get('SiteUser') && in_array($HRec->id, $favTourIds ?? []);
+                                        @endphp
+                                        <span>
+                                            <button type="button"
+                                                class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                                data-fav-type="tour" data-fav-id="{{ $HRec->id }}"
+                                                aria-label="{{ __('links.add_favorites') }}">
+                                                <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                                 <span class="duartion"> <i class="fa-solid fa-location-dot"></i>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -96,20 +98,22 @@
                                             @endif
                                         </a>
                                     </h6>
-                                    <span>
-                                        ${{ $HPrice->tour_person_cost }}
-                                    </span>
-                                    @php
-                                        $isFav = session()->get('SiteUser') && in_array($HPrice->id, $favTourIds ?? []);
-                                    @endphp
-                                    <span>
-                                        <button type="button"
-                                            class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
-                                            data-fav-type="tour" data-fav-id="{{ $HPrice->id }}"
-                                            aria-label="{{ __('links.add_favorites') }}">
-                                            <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
-                                        </button>
-                                    </span>
+                                    <div class="card_info_actions">
+                                        <span>
+                                            ${{ $HPrice->tour_person_cost }}
+                                        </span>
+                                        @php
+                                            $isFav = session()->get('SiteUser') && in_array($HPrice->id, $favTourIds ?? []);
+                                        @endphp
+                                        <span>
+                                            <button type="button"
+                                                class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                                data-fav-type="tour" data-fav-id="{{ $HPrice->id }}"
+                                                aria-label="{{ __('links.add_favorites') }}">
+                                                <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                                 <span class="duartion"> <i class="fa-solid fa-location-dot"></i>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -159,20 +163,22 @@
                                                 {{ $HAlpha->ar_name }}
                                             @endif
                                         </a> </h6>
-                                    <span>
-                                        ${{ $HAlpha->tour_person_cost }}
-                                    </span>
-                                    @php
-                                        $isFav = session()->get('SiteUser') && in_array($HAlpha->id, $favTourIds ?? []);
-                                    @endphp
-                                    <span>
-                                        <button type="button"
-                                            class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
-                                            data-fav-type="tour" data-fav-id="{{ $HAlpha->id }}"
-                                            aria-label="{{ __('links.add_favorites') }}">
-                                            <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
-                                        </button>
-                                    </span>
+                                    <div class="card_info_actions">
+                                        <span>
+                                            ${{ $HAlpha->tour_person_cost }}
+                                        </span>
+                                        @php
+                                            $isFav = session()->get('SiteUser') && in_array($HAlpha->id, $favTourIds ?? []);
+                                        @endphp
+                                        <span>
+                                            <button type="button"
+                                                class="fav-toggle-btn {{ $isFav ? 'is-fav' : '' }}"
+                                                data-fav-type="tour" data-fav-id="{{ $HAlpha->id }}"
+                                                aria-label="{{ __('links.add_favorites') }}">
+                                                <i class="{{ $isFav ? 'fa-solid' : 'fa-regular' }} fa-heart {{ $isFav ? 'is-fav-icon' : '' }}"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                                 <span class="duartion"> <i class="fa-solid fa-location-dot"></i>
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
