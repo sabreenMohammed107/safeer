@@ -128,6 +128,12 @@
         text-align: left;
         z-index: 20;
     }
+
+    .visa-guest-choice {
+        border: 1px solid #e4e6ef;
+        border-radius: 8px;
+        background: #f8f9fb;
+    }
 </style>
 
 
@@ -138,7 +144,31 @@
 @endsection
 @section('content')
 
-<form action="{{ LaravelLocalization::localizeUrl('/Safer/BookVisa') }}" method="POST" enctype="multipart/form-data">
+@php
+    $isGuest = !session()->get('SiteUser');
+@endphp
+
+<div class="container mt-3">
+    @if (session('session-success'))
+        <div class="alert alert-success">
+            {{ session('session-success') }}
+        </div>
+    @endif
+    @if (session('session-danger'))
+        <div class="alert alert-danger">
+            {{ session('session-danger') }}
+        </div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <p class="mb-1">{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+</div>
+
+<form action="{{ $isGuest ? route('visa.guest.store') : LaravelLocalization::localizeUrl('/Safer/BookVisa') }}" method="POST" enctype="multipart/form-data">
     @csrf
     {{-- Honeypot field: hidden from real users, spam bots tend to fill every input --}}
     <div class="visually-hidden" aria-hidden="true">
@@ -174,7 +204,7 @@
                         </label>
                         <select class="form-select form-select-solid dynamic" data-control="select2"
                             data-placeholder="Select an option" required data-show-subtext="true"
-                            data-live-search="true" id="country" data-dependent="sub" name="country[0]"
+                            data-live-search="true" id="country" data-dependent="sub" name="{{ $isGuest ? 'country' : 'country[0]' }}"
                             @if(LaravelLocalization::getCurrentLocale()==='en' )
                             oninvalid="this.setCustomValidity('Please select an item from list')" @else
                             oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')" @endif
@@ -202,7 +232,7 @@
                         </label>
                         <select required class="form-select form-select-solid visa_type" data-control="select2 sub2"
                             data-placeholder="Select an option" data-show-subtext="true" data-live-search="true"
-                            id="sub" name="visa_type_id[0]" @if (LaravelLocalization::getCurrentLocale()==='en' )
+                            id="sub" name="{{ $isGuest ? 'visa_type_id' : 'visa_type_id[0]' }}" @if (LaravelLocalization::getCurrentLocale()==='en' )
                             oninvalid="this.setCustomValidity('Please select an item from list')" @else
                             oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')" @endif
                             oninput="setCustomValidity('')">
@@ -212,7 +242,7 @@
                     <div class="col-md-6 col-xl-4 col-sm-12">
                         <label for="">{{ __('links.nationality') }} </label>
                         <select class="form-select nationality" required id="nationality"
-                            aria-label="Default select example" name="nation[0]" @if(LaravelLocalization::getCurrentLocale()==='en' )
+                            aria-label="Default select example" name="{{ $isGuest ? 'nation' : 'nation[0]' }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
                             oninvalid="this.setCustomValidity('Please select an item from list')" @else
                             oninvalid="this.setCustomValidity('من فضلك اختر عنصر من القائمة ')" @endif
                             oninput="setCustomValidity('')">
@@ -221,7 +251,18 @@
                         </select>
                     </div>
 
-                    <div class="col-sm-12 col-md-6 col-xl-4">
+                    @if ($isGuest)
+                    <div class="col-12" id="guestChoiceButtons">
+                        <div class="visa-guest-choice my-4 p-3">
+                            <p class="mb-3">{{ __('links.visa_guest_prompt') }}</p>
+                            <a class="btn btn-outline-primary me-2"
+                                href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(), route('siteLogin')) }}">{{ __('links.visa_guest_login') }}</a>
+                            <button type="button" id="continueAsGuestBtn" class="btn btn-primary">{{ __('links.visa_guest_continue') }}</button>
+                        </div>
+                    </div>
+                    @endif
+
+                    <div class="col-sm-12 col-md-6 col-xl-4 personal-field-group" @if($isGuest) style="display:none" @endif>
                         <label for="">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
                             Passenger Name
@@ -229,14 +270,14 @@
                             اسم المسافر
                             @endif
                         </label>
-                        <input type="text" required name="name[0]" @if (LaravelLocalization::getCurrentLocale()==='en' )
+                        <input type="text" required name="{{ $isGuest ? 'name' : 'name[0]' }}" @if (LaravelLocalization::getCurrentLocale()==='en' )
                             oninvalid="this.setCustomValidity('Please Enter valid name')" @else
                             oninvalid="this.setCustomValidity('يجب ادخال حقل الاسم')" @endif
                             oninput="setCustomValidity('')" placeholder="@if (LaravelLocalization::getCurrentLocale() === 'en') Passenger Name
                                   @else اسم المسافر @endif" />
 
                     </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
+                    <div class="col-sm-12 col-md-6 col-xl-4 personal-field-group" @if($isGuest) style="display:none" @endif>
                         <label for="">
                             @if (LaravelLocalization::getCurrentLocale() === 'en')
                             Mobile Number
@@ -250,29 +291,29 @@
                                 oninvalid="this.setCustomValidity('Please Enter valid mobile')" @else
                                 oninvalid="this.setCustomValidity('يجب ادخال حقل الهاتف')" @endif
                                 oninput="setCustomValidity('')" />
-                            <input type="hidden" class="phone-hidden" name="phone[0]" />
+                            <input type="hidden" class="phone-hidden" name="{{ $isGuest ? 'phone' : 'phone[0]' }}" />
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
+                    <div class="col-sm-12 col-md-6 col-xl-4 personal-field-group" @if($isGuest) style="display:none" @endif>
                         <label for="">{{ __('links.email') }} </label>
-                        <input type="email" required name="email[0]" placeholder="{{ __('links.email') }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
+                        <input type="email" required name="{{ $isGuest ? 'email' : 'email[0]' }}" placeholder="{{ __('links.email') }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
                             oninvalid="this.setCustomValidity('Please Enter valid Email')" @else
                             oninvalid="this.setCustomValidity('يجب ادخال حقل البريد الإلكتروني')" @endif
                             oninput="setCustomValidity('')" />
                     </div>
 
-                    <div class="col-sm-12 col-md-6 col-xl-4">
+                    <div class="col-sm-12 col-md-6 col-xl-4 personal-field-group" @if($isGuest) style="display:none" @endif>
                         <label for="">{{ __('links.passImage') }} </label>
-                        <input type="file" class="file" onchange="validateSize(this)" required name="passport[0]"
+                        <input type="file" class="file" onchange="validateSize(this)" required name="{{ $isGuest ? 'passport' : 'passport[0]' }}"
                             placeholder="{{ __('links.passImage') }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
                             oninvalid="this.setCustomValidity('Please Enter valid Image')" @else
                             oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')" @endif
                             oninput="setCustomValidity('')" />
 
                     </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
+                    <div class="col-sm-12 col-md-6 col-xl-4 personal-image-field" style="display:none">
                         <label for="">{{ __('links.persImage') }} </label>
-                        <input type="file" class="file" onchange="validateSize(this)" required name="personal[0]"
+                        <input type="file" class="file" onchange="validateSize(this)" name="{{ $isGuest ? 'personal' : 'personal[0]' }}"
                             placeholder="{{ __('links.persImage') }}" @if(LaravelLocalization::getCurrentLocale()==='en' )
                             oninvalid="this.setCustomValidity('Please Enter valid Image')" @else
                             oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')" @endif
@@ -296,6 +337,7 @@
 
 
     <section class="totals_section container">
+        @if (!$isGuest)
         <div class="total">
             <p id="numform"></p>
             <button id="visaaa">
@@ -311,9 +353,10 @@
                                 Total price:  <span> 2400 LE</span>
                               </span> -->
         </div>
-        <div class="total">
+        @endif
+        <div class="total personal-field-group" @if($isGuest) style="display:none" @endif>
             <div class="col-12 text-center my-4">
-                <button id="addToCart" type="submit">{{ __('links.add_cart') }}</button>
+                <button id="addToCart" type="submit">{{ $isGuest ? __('links.visa_guest_submit') : __('links.add_cart') }}</button>
             </div>
         </div>
     </section>
@@ -393,6 +436,31 @@
 
 <script>
     let localization = "{{ LaravelLocalization::getCurrentLocale() }}"
+    var uaeCountryId = "{{ $uaeCountryId }}";
+    var isGuestPage = {{ $isGuest ? 'true' : 'false' }};
+    // Only relevant when isGuestPage is true: flips once "Continue as Guest"
+    // is clicked, since guests never see any personal fields before that.
+    var guestContinued = false;
+
+    // Personal Image is only required (and only shown) for the UAE, and for
+    // guests it must additionally stay hidden until they've chosen to
+    // continue as a guest. Both conditions are re-evaluated together here so
+    // neither toggle silently overwrites the other's inline display style.
+    function refreshPersonalImageVisibility(row) {
+        var group = row.find('.personal-image-field');
+        var input = group.find('input[type=file]');
+        var isUAE = row.find('.dynamic').val() === uaeCountryId;
+        var personalFieldsVisible = !isGuestPage || guestContinued;
+
+        if (isUAE && personalFieldsVisible) {
+            group.show();
+            input.prop('required', true);
+        } else {
+            group.hide();
+            input.prop('required', false);
+            input.val('');
+        }
+    }
 
         // Initialize the country-code + mobile-number field (intl-tel-input) on every
         // ".phone-input" that hasn't been initialized yet (initial + dynamically added rows).
@@ -458,6 +526,13 @@
         $(document).ready(function() {
 
             initPhoneInputs();
+
+            $("#continueAsGuestBtn").click(function() {
+                $(".personal-field-group").show();
+                $("#guestChoiceButtons").hide();
+                guestContinued = true;
+                refreshPersonalImageVisibility($(this).closest('.row.mx-0'));
+            });
 
             var counter = 0;
 
@@ -584,9 +659,9 @@ Visa type
                         @endif oninput="setCustomValidity('')" />
 
                 </div>
-                <div class="col-sm-12 col-md-6 col-xl-4">
+                <div class="col-sm-12 col-md-6 col-xl-4 personal-image-field" style="display:none">
                     <label for="">{{ __('links.persImage') }} </label>
-                    <input type="file" class="file" onchange="validateSize(this)" name="personal[` + counter + `]" required placeholder="{{ __('links.persImage') }}"  @if (LaravelLocalization::getCurrentLocale() === 'en')
+                    <input type="file" class="file" onchange="validateSize(this)" name="personal[` + counter + `]" placeholder="{{ __('links.persImage') }}"  @if (LaravelLocalization::getCurrentLocale() === 'en')
                         oninvalid="this.setCustomValidity('Please Enter valid Image')"
                         @else
                         oninvalid="this.setCustomValidity('يجب ادخال حقل الصورة')"
@@ -648,6 +723,7 @@ Visa type
 
 
             $('.dynamic').change(function() {
+                refreshPersonalImageVisibility($(this).closest('.row.mx-0'));
                 if ($(this).val() != '') {
                     var select = $(this).attr("id");
                     var value = $(this).val();
@@ -823,6 +899,7 @@ Visa type
         }
 
         function fetchVisaCountryType(elem) {
+            refreshPersonalImageVisibility($(elem).closest('.row.mx-0'));
             if ($(elem).val() != '') {
                 var select = $(elem).attr("id");
                 var value = $(elem).val();

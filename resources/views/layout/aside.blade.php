@@ -618,6 +618,14 @@
                                 </a>
                             </div>
 
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('visa-leads.index') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Visa Guest Leads</span>
+                                </a>
+                            </div>
 
                         </div>
                     </div>

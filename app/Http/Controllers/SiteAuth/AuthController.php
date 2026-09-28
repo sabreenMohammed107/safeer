@@ -155,6 +155,12 @@ class AuthController extends Controller
             }
             session()->forget("RemFavHotel");
             $redirect_url = LaravelLocalization::localizeUrl('/hotels');
+        } else if (session()->get("redirect_url")) {
+            // Returns the user to the page they were on before being sent to
+            // /safer/login (stashed in ContentController::loginSite from
+            // session("_previous")), e.g. a guest who clicked "Login" on /visa.
+            $redirect_url = session()->get("redirect_url");
+            session()->forget("redirect_url");
         }
 
         return redirect($redirect_url);

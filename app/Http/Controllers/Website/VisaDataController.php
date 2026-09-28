@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Visa;
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\VisaLead;
 use App\Models\Visa_type;
 use App\Models\Nationality;
 use App\Rules\NoUrl;
@@ -19,6 +20,17 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class VisaDataController extends Controller
 {
+    /**
+     * The Personal Image field is only required (and only shown) when the
+     * traveller's visa request country is the UAE. Countries have no stable
+     * ISO/code column in this schema, so it's looked up by name each time
+     * rather than hardcoding an id that could differ across environments.
+     */
+    private function uaeCountryId()
+    {
+        return Country::where('en_country', 'United Arab Emirates')->value('id');
+    }
+
     //
     public function all_visa()
     {
@@ -40,6 +52,7 @@ class VisaDataController extends Controller
             "countries" => $countries,
             "nationalities" => $nationalities,
             "BreadCrumb" => $BreadCrumb,
+            "uaeCountryId" => $this->uaeCountryId(),
 
         ]);
 
@@ -159,7 +172,9 @@ echo $output;
         // Previously this endpoint saved uploaded files and inserted DB rows
         // with zero validation: any file type (including executable scripts)
         // could be uploaded, and name/email fields accepted anything.
-        $validator = Validator::make($request->all(), [
+        $uaeCountryId = $this->uaeCountryId();
+
+        $rules = [
             'country' => ['required', 'array', 'min:1'],
             'country.*' => ['required', 'integer'],
             'visa_type_id' => ['required', 'array'],
@@ -174,9 +189,20 @@ echo $output;
             'phone.*' => ['nullable', 'string', 'max:30'],
             'passport' => ['required', 'array'],
             'passport.*' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
-            'personal' => ['required', 'array'],
-            'personal.*' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
-        ]);
+            'personal' => ['nullable', 'array'],
+        ];
+
+        // Personal Image is only required for passengers whose visa request
+        // country is the UAE; every other row may submit it empty.
+        foreach ((array) $request->input('country', []) as $i => $countryId) {
+            $isUaeRow = $uaeCountryId !== null && (int) $countryId === (int) $uaeCountryId;
+            $rules["personal.{$i}"] = [
+                $isUaeRow ? 'required' : 'nullable',
+                'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120',
+            ];
+        }
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator->messages());
@@ -186,13 +212,16 @@ echo $output;
         for ($i = 0; $i < count($request->country); $i++) {
             $visObj = Visa::where('visa_type_id', $request->visa_type_id[$i])->where('nationality_id', $request->nation[$i])->first();
             $passport = Storage::disk('public')->put('uploads/visas/', $request->passport[$i]);
-            $personal = Storage::disk('public')->put('uploads/visas/', $request->personal[$i]);
+            $personal = null;
+            if ($request->hasFile("personal.{$i}")) {
+                $personal = Storage::disk('public')->put('uploads/visas/', $request->file('personal')[$i]);
+            }
             $elem = [
                 'name' => $request->name[$i],
                 'phone' => $request->phone[$i],
                 'email' => $request->email[$i],
                 'passport' => basename($passport),
-                'personal' => basename($personal),
+                'personal' => $personal ? basename($personal) : null,
 
             ];
             if ($visObj) {
@@ -231,5 +260,55 @@ echo $output;
         session()->put("hasCart", 1);
 
         return redirect()->to("/cart")->with("session-success", Lang::get('links.visaMsg'));
+    }
+
+    public function storeGuestLead(Request $request)
+    {
+        // Honeypot check, same as bookVisas: hidden field real visitors never
+        // fill, but spam bots auto-populate every input.
+        if (!empty($request->input('hp_website'))) {
+            return redirect()->to(LaravelLocalization::localizeUrl('/visa'))->with("session-success", Lang::get('links.visa_guest_success'));
+        }
+
+        $uaeCountryId = $this->uaeCountryId();
+        $personalRequired = $uaeCountryId !== null && (int) $request->input('country') === (int) $uaeCountryId;
+
+        $validator = Validator::make($request->all(), [
+            'country' => ['required', 'integer', 'exists:countries,id'],
+            'visa_type_id' => ['required', 'integer', 'exists:visa_types,id'],
+            'nation' => ['required', 'integer', 'exists:nationalities,id'],
+            'name' => ['required', 'string', 'max:255', new NoUrl],
+            'email' => ['required', 'email:rfc,dns'],
+            'phone' => ['required', 'string', 'max:30'],
+            'passport' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+            'personal' => [$personalRequired ? 'required' : 'nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->messages());
+        }
+
+        $visObj = Visa::where('visa_type_id', $request->visa_type_id)->where('nationality_id', $request->nation)->first();
+
+        $passport = Storage::disk('public')->put('uploads/visa-leads/', $request->file('passport'));
+        $personal = null;
+        if ($request->hasFile('personal')) {
+            $personal = Storage::disk('public')->put('uploads/visa-leads/', $request->file('personal'));
+        }
+
+        VisaLead::create([
+            'country_id' => $request->country,
+            'visa_type_id' => $request->visa_type_id,
+            'nationality_id' => $request->nation,
+            'visa_id' => $visObj->id ?? null,
+            'passenger_name' => $request->name,
+            'mobile_number' => $request->phone,
+            'email' => $request->email,
+            'passport_image' => basename($passport),
+            'personal_image' => $personal ? basename($personal) : null,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->to(LaravelLocalization::localizeUrl('/visa'))->with("session-success", Lang::get('links.visa_guest_success'));
     }
 }

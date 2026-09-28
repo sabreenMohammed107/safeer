@@ -10,6 +10,7 @@ use App\Http\Controllers\TourController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisaController;
+use App\Http\Controllers\VisaLeadController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\WhyUsController;
@@ -173,6 +174,7 @@ Route::get('/load-section/{name}', [SectionController::class ,'loadSection'])->n
     //visa
     Route::get("/visa", [VisaDataController::class, 'all_visa']);
     Route::post("/Safer/BookVisa", [VisaDataController::class, 'bookVisas'])->middleware('throttle:5,1');
+    Route::post("/Safer/BookVisaGuest", [VisaDataController::class, 'storeGuestLead'])->middleware('throttle:5,1')->name('visa.guest.store');
     //dynamicvisatype.fetch
     Route::get('dynamicvisatype/fetch', [VisaDataController::class, 'fetchCat'])->name('dynamicvisatype.fetch');
     //dynamicnationality.fetch
@@ -383,6 +385,7 @@ Route::post('receiptSave', [UsersOrderController::class, 'receiptSave'])->name('
     Route::resource('nationalities', NationalityController::class);
     Route::resource('visaType', VisaTypeController::class);
     Route::resource('visa', VisaController::class);
+    Route::resource('visa-leads', VisaLeadController::class)->except(['create', 'store']);
     Route::resource('user-role', UsersRoleController::class);
     Route::post('storeAssign', [UsersRoleController::class, 'storeAssign'])->name('storeAssign');
     Route::post('assignThisOrder', [UsersOrderController::class, 'storeAssign'])->name('assignThisOrder');
