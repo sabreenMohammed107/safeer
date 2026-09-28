@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SiteAuth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\SiteAuth\Services\RememberMeService;
+use App\Mail\PasswordResetMail;
 use App\Models\Cart;
 use App\Models\Company;
 use App\Models\Favorite_hotels_tour;
@@ -14,6 +15,7 @@ use App\Rules\NoUrl;
 use App\Rules\NotBotEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -309,6 +311,9 @@ class AuthController extends Controller
 
         // Always respond the same way whether or not the account exists,
         // so the response itself can't be used to enumerate registered users.
+        // The mail send is wrapped in its own try-catch for the same reason:
+        // an SMTP failure must never surface as a different response (or a
+        // 500) only for accounts that actually exist.
         if ($user) {
             $token = Str::random(60);
 
@@ -317,10 +322,14 @@ class AuthController extends Controller
                 ['token' => $token, 'created_at' => now()]
             );
 
-            Mail::send('emails.password_reset', ['token' => $token, 'user' => $user], function ($message) use ($user) {
-                $message->to($user->email)
-                    ->subject('Password Reset Request');
-            });
+            try {
+                Mail::to($user->email)->send(new PasswordResetMail($token, $user));
+            } catch (\Throwable $e) {
+                Log::error('Password reset email failed to send.', [
+                    'email' => $user->email,
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
 
         return back()->with('status', __('If an account exists for that email, a reset link has been sent.'));
@@ -344,6 +353,13 @@ public function resetPassword(Request $request)
         ->first();
 
     if (!$reset) {
+        return back()->with('session-danger', 'Invalid or expired reset token.');
+    }
+
+    $expiryMinutes = config('auth.passwords.users.expire', 60);
+    if (now()->diffInMinutes($reset->created_at) > $expiryMinutes) {
+        \DB::table('password_resets')->where('email', $request->email)->delete();
+
         return back()->with('session-danger', 'Invalid or expired reset token.');
     }
 

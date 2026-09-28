@@ -1,71 +1,90 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>News Letter</title>
-	<!--<link type="image/x-icon" rel="icon" href="images/icon.ico">-->
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+@extends('emails.layout')
 
-<style>
-body {
-    margin: 2em;
-    font-family: Arial;
-}
+@section('title', 'New Order Confirmation')
 
-.tablerounededCorner {
-    border: 1px solid #7a7b7b;
-    background-color: #54676529;
-    /* border-radius: 1.2em; */
-}
+@section('content')
+    <h2>Thank You For Your Order!</h2>
+    <p>Dear {{ $customer->name ?? $customer->first_name ?? 'Customer' }},</p>
+    <p>Your order has been received successfully, and our team will get in touch with you shortly to complete the process.</p>
 
-.roundedTable {
-    border-collapse: collapse;
-    /* border-radius: 1.2em; */
-    overflow: hidden;
-    width: 100%;
-    margin: 0;
-}
+    <table class="data-table">
+        <tr>
+            <th>Order Number</th>
+            <td>#{{ $order->id }}</td>
+        </tr>
+        <tr>
+            <th>Customer Name</th>
+            <td>{{ $customer->name ?? $customer->first_name ?? '-' }}</td>
+        </tr>
+        <tr>
+            <th>Customer Email</th>
+            <td>{{ $customer->email ?? '-' }}</td>
+        </tr>
+        @if (!empty($customer->phone))
+            <tr>
+                <th>Customer Phone</th>
+                <td>{{ $customer->phone }}</td>
+            </tr>
+        @endif
+        <tr>
+            <th>Order Date</th>
+            <td>{{ optional($order->created_at)->format('d-m-Y H:i') }}</td>
+        </tr>
+    </table>
 
-.roundedTable th,
-.roundedTable td {
-    padding: .6em;
-    background: #54676529;
-    border-bottom: 1px solid white;
-}
+    @if ($order->order_details->count())
+        <table class="data-table">
+            <tr>
+                <th>Item</th>
+                <th>Details</th>
+                <th>Cost</th>
+            </tr>
+            @foreach ($order->order_details as $item)
+                @php
+                    $label = 'Booking';
+                    $details = '';
+                    $itemCost = 0;
 
-.roundedTable th {
-    text-align: left;
-}
-th, td {
-  border: 1px solid white;
-  padding: 8px;
-}
+                    switch ($item->detail_type) {
+                        case 0: // Room
+                            $room = $item->room_details->first();
+                            $label = 'Hotel Room';
+                            $details = $room->room_type ?? '';
+                            $itemCost = $room->total_cost ?? 0;
+                            break;
+                        case 1: // Tour
+                            $tour = $item->tours_details->first();
+                            $label = 'Tour';
+                            $details = $tour->tour_name ?? '';
+                            $itemCost = $tour->total_cost ?? 0;
+                            break;
+                        case 2: // Transfer
+                            $transfer = $item->transfer_details->first();
+                            $label = 'Transfer';
+                            $details = ($transfer->transfer_from ?? '') . ' → ' . ($transfer->transfer_to ?? '');
+                            $itemCost = $transfer->transfer_total_cost ?? 0;
+                            break;
+                        case 3: // Visa
+                            $visa = $item->visa_details->first();
+                            $label = 'Visa';
+                            $details = $item->holder_name ?? '';
+                            $itemCost = $visa->visa_cost ?? 0;
+                            break;
+                    }
+                @endphp
+                <tr>
+                    <td>{{ $label }}</td>
+                    <td>{{ $details }}</td>
+                    <td>{{ number_format((float) $itemCost, 2) }}</td>
+                </tr>
+            @endforeach
+        </table>
+    @endif
 
+    <p style="font-size: 17px; font-weight: bold; color: #1C4482;">
+        Total Cost: {{ number_format($cost * (1 + (float) $order->tax_percentage / 100), 2) }}
+    </p>
 
-/* .roundedTable tr:last-child td {
-    border-bottom: none;
-} */
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-}
-
-
-</style>
-</head>
-<body>
-<h3>New Order</h3>
-<div class="tablerounededCorner">
-    <p class="my-2">Dear Customer,</p>
-    <p class="my-2">Thank you for placing your order! It has been received successfully, and we will get in touch with you shortly to complete the process.</p>
-    <p class="my-2 ">Order Number: {{$order->id}} – Please keep it for reference.</p>
-    <p class="my-2 ">Total Cost: ${{number_format($cost * (1 + (float)$order->tax_percentage/100),2,'.','')}}</p>
-    <p class="my-2">If you have any questions, feel free to contact us at Info@Safer.Travel</p>
-    <p class="my-2">Best regards,</p>
-    <p class="my-2">The Customer Service Team at Safer Travel Company</p>
-</div>
-
-</body>
-</html>
+    <p>If you have any questions, feel free to contact us at {{ config('mail.admin_address', 'info@safer.travel') }}.</p>
+    <p>Best regards,<br>The Customer Service Team at Safer Travel</p>
+@endsection

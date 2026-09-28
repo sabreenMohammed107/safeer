@@ -98,6 +98,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Admin Notification Address
+    |--------------------------------------------------------------------------
+    |
+    | Where site-facing notifications (new orders, newsletter signups,
+    | contact form submissions) are sent. Kept in config instead of hardcoded
+    | in controllers so it can be changed per-environment via .env.
+    |
+    */
+
+    'admin_address' => env('MAIL_ADMIN_ADDRESS', 'info@safer.travel'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Markdown Mail Settings
     |--------------------------------------------------------------------------
     |

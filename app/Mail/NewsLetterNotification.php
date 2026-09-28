@@ -11,17 +11,22 @@ class NewsLetterNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     protected $letter;
+    protected string $heading;
+    protected string $emailSubject;
 
-    public function __construct($letter)
+    /**
+     * @param  \App\Models\Newsletter|\App\Models\Contact  $letter  Any model with at least an
+     *         `email` and `created_at`; `emails.newsLetter` shows any of
+     *         `name`, `phone`, `message` it additionally finds on it.
+     */
+    public function __construct($letter, string $heading = 'New Newsletter Subscription', string $emailSubject = 'New Newsletter Subscription')
     {
         $this->letter = $letter;
+        $this->heading = $heading;
+        $this->emailSubject = $emailSubject;
     }
+
     /**
      * Build the message.
      *
@@ -29,7 +34,11 @@ class NewsLetterNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.newsLetter')->with('letter', $this->letter);
-
+        return $this->subject($this->emailSubject)
+            ->view('emails.newsLetter')
+            ->with([
+                'letter' => $this->letter,
+                'heading' => $this->heading,
+            ]);
     }
 }

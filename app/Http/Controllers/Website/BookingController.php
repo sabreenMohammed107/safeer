@@ -20,6 +20,8 @@ use App\Models\VisaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang as Lang;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 abstract class ItemType
 {
@@ -551,10 +553,20 @@ class BookingController extends Controller
                         $cost += $item->visa_details[0]->visa_cost; // To be completed
                     }
                 }
-                $orderData=[$cost,$order];
                 $userSite = SiteUser::where('id', $order->user_id)->first();
-                // $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com',$userSite->email];
-                // \Mail::to($emails)->send(new OrderNotification($orderData));
+
+                // The order is already committed at this point, so a mail
+                // failure here must never surface as an error response to the
+                // customer — it's caught and logged, not rethrown.
+                try {
+                    $recipients = array_filter([$userSite->email ?? null, config('mail.admin_address')]);
+                    Mail::to($recipients)->send(new OrderNotification($order, $cost));
+                } catch (\Throwable $e) {
+                    Log::error('Order confirmation email failed to send.', [
+                        'order_id' => $order->id,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
             }
 
             // all good

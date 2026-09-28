@@ -22,6 +22,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Concat;
 use Illuminate\Support\Facades\Lang as Lang;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Validator;
 class ContentController extends Controller
@@ -226,13 +228,26 @@ $whyUss=Why_us::all();
 
         }
         //  Store data in database, stripping any HTML/script tags first
-        Contact::create([
+        $contact = Contact::create([
             'name' => strip_tags($request->input('name')),
             'email' => strip_tags($request->input('email')),
             'phone' => strip_tags($request->input('phone')),
             'message' => strip_tags($request->input('message')),
         ]);
-        //
+
+        // The contact record is already saved, so a mail failure here must
+        // never turn a successful submission into an error for the visitor.
+        try {
+            Mail::to(config('mail.admin_address'))->send(
+                new NewsLetterNotification($contact, 'New Contact Form Submission', 'New Contact Form Submission')
+            );
+        } catch (\Throwable $e) {
+            Log::error('Contact form notification email failed to send.', [
+                'contact_id' => $contact->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
         return back() ->withInput($request->input())->with('flash_success',Lang::get('links.contactMsg'));
     }
     public function reloadCaptcha()
@@ -334,8 +349,6 @@ $whyUss=Why_us::all();
 
         try {
             $letter = Newsletter::create(['email' => $email]);
-            // $emails = ['senior.steps.info@gmail.com', 'Info@Safer.Travel', 'sabreenm312@gmail.com'];
-            // \Mail::to($emails)->send(new NewsLetterNotification($letter));
         } catch (QueryException $q) {
             $message = Lang::get('links.newsletter_duplicate');
 
@@ -347,6 +360,19 @@ $whyUss=Why_us::all();
                 ->withInput($request->input())
                 ->with('flash_error', $message)
                 ->withFragment('newsletter');
+        }
+
+        // The subscription is already saved, so a mail failure here must
+        // never turn a successful signup into an error for the visitor.
+        // Kept in its own try-catch, separate from the QueryException catch
+        // above, since a mail failure is not a QueryException.
+        try {
+            Mail::to(config('mail.admin_address'))->send(new NewsLetterNotification($letter));
+        } catch (\Throwable $e) {
+            Log::error('Newsletter notification email failed to send.', [
+                'newsletter_id' => $letter->id,
+                'error' => $e->getMessage(),
+            ]);
         }
 
         $message = Lang::get('links.newsletter_success');

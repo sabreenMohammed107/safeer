@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Orders;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,17 +12,21 @@ class OrderNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    protected $orderData;
+    protected Orders $order;
+    protected float $cost;
 
-    public function __construct($orderData)
+    public function __construct(Orders $order, float $cost)
     {
-        $this->orderData = $orderData;
+        $this->order = $order->loadMissing([
+            'user',
+            'order_details.room_details',
+            'order_details.tours_details',
+            'order_details.transfer_details',
+            'order_details.visa_details',
+        ]);
+        $this->cost = $cost;
     }
+
     /**
      * Build the message.
      *
@@ -29,6 +34,12 @@ class OrderNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.order')->with(['order' => $this->orderData[1], 'cost' => $this->orderData[0]]);
+        return $this->subject('New Order Confirmation - Order #' . $this->order->id)
+            ->view('emails.order')
+            ->with([
+                'order' => $this->order,
+                'cost' => $this->cost,
+                'customer' => $this->order->user,
+            ]);
     }
 }
