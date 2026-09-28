@@ -59,8 +59,7 @@ $localVar = LaravelLocalization::getCurrentLocale();
                         </li>
                         <li><a href="{{ LaravelLocalization::localizeUrl('/about') }}">{{ __('links.about_us') }}</a>
                         </li>
-                        <li><a class="dropdown-item"
-                                href="{{ LaravelLocalization::localizeUrl('/team') }}">{{ __('links.team') }}</a></li>
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/team') }}">{{ __('links.team') }}</a></li>
                         <li><a
                                 href="{{ LaravelLocalization::localizeUrl('/agents') }}">{{ __('links.become_agent') }}</a>
                         </li>
@@ -234,8 +233,7 @@ $localVar = LaravelLocalization::getCurrentLocale();
                         </li>
                         <li><a href="{{ LaravelLocalization::localizeUrl('/about') }}"> {{ __('links.about_us') }}</a>
                         </li>
-                        <li><a class="dropdown-item"
-                                href="{{ LaravelLocalization::localizeUrl('/team') }}">{{ __('links.team') }}</a></li>
+                        <li><a href="{{ LaravelLocalization::localizeUrl('/team') }}">{{ __('links.team') }}</a></li>
                         <li><a href="{{ LaravelLocalization::localizeUrl('/agents') }}">
                                 {{ __('links.become_agent') }}</a>
                         </li>
