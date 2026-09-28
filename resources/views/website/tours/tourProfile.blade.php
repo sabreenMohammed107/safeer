@@ -501,20 +501,28 @@
             @endif --}}
                 @if ($Tour->tour_vedio)
                     @php
-                        // تحويل رابط يوتيوب العادي إلى رابط embed
-                        $videoUrl = $Tour->tour_vedio;
-                        if (str_contains($videoUrl, 'watch?v=')) {
-                            $videoUrl = str_replace('watch?v=', 'embed/', $videoUrl);
-                            // إزالة أي معاملات إضافية مثل &t=1s
-                            $videoUrl = strtok($videoUrl, '&');
-                        } elseif (str_contains($videoUrl, 'youtu.be/')) {
-                            $videoUrl = str_replace('youtu.be/', 'www.youtube.com/embed/', $videoUrl);
-                        }
+                        // استخراج معرف فيديو يوتيوب من رابط watch?v= أو youtu.be/
+                        preg_match(
+                            '/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/',
+                            $Tour->tour_vedio,
+                            $matches,
+                        );
+                        $youtubeId = $matches[1] ?? null;
+                        $youtubeThumbnail = $youtubeId
+                            ? 'https://img.youtube.com/vi/' . $youtubeId . '/hqdefault.jpg'
+                            : null;
+                        $videoUrl = $youtubeId
+                            ? 'https://www.youtube.com/embed/' . $youtubeId
+                            : $Tour->tour_vedio;
                     @endphp
 
-                    <div class="images image-2">
-                        <button type="button" class="btn js-modal-btn" data-video-url="{{ $videoUrl }}"
-                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <div class="images image-2 position-relative">
+                        @if ($youtubeThumbnail)
+                            <img src="{{ $youtubeThumbnail }}" class="w-100"
+                                style="object-fit: cover; border-radius: 12px;" alt="{{ $Tour->title ?? 'video thumbnail' }}">
+                        @endif
+                        <button type="button" class="btn js-modal-btn position-absolute top-50 start-50 translate-middle"
+                            data-video-url="{{ $videoUrl }}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             <img src="{{ asset('website_assets/images/homePage/play_button.webp') }}"
                                 style="border-radius: 50%; cursor: pointer;" alt="video play button">
                         </button>
