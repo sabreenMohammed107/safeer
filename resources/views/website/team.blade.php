@@ -54,9 +54,9 @@
                         <div class="section_heading">
                             <h4>
                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    Meet the Rest of Our Team
+                                    Meet Our Team
                                 @else
-                                    تعرف على باقي أعضاء فريقنا
+                                    تعرف على أعضاء فريقنا
                                 @endif
                             </h4>
                         </div>

@@ -152,7 +152,7 @@
                             </div>
                             <!--end::Input-->
 
-                            <div>
+                            <div id="xx">
                                 <label class="fs-6 fw-bold form-label mt-3">
                                     <option value="">Select a City...</option>
 
@@ -160,8 +160,8 @@
 
                                 <select name="city_id" required aria-label="Select a City"
                                     data-control="select2"
-                                    data-placeholder="Select a Country..."
-                                    data-dropdown-parent="#kt_modal_new_targetEdit{{ $offer->id }}"
+                                    data-placeholder="Select a City..."
+                                    data-dropdown-parent="#xx"
                                     class="form-select form-select-solid fw-bolder">
                                     <option value=""></option>
                                     @foreach ($cities as $city)
