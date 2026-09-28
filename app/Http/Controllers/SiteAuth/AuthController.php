@@ -332,7 +332,11 @@ class AuthController extends Controller
             }
         }
 
-        return back()->with('status', __('If an account exists for that email, a reset link has been sent.'));
+        // Redirect (rather than back()) so the request form can't be
+        // resubmitted via a browser refresh/back-button, which previously
+        // let a user re-trigger the send just by staying on the page.
+        return redirect()->route('siteLogin')
+            ->with('session-success', __('If an account exists for that email, a reset link has been sent.'));
 
     }
 

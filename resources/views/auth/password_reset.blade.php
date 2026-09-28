@@ -24,13 +24,8 @@
                 @endif
             </p>
 
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <form action="{{ LaravelLocalization::getLocalizedURL($localVar, route('password.email')) }}" method="POST">
+            <form action="{{ LaravelLocalization::getLocalizedURL($localVar, route('password.email')) }}" method="POST"
+                onsubmit="this.querySelector('button[type=submit]').disabled = true;">
                 @csrf
                 @if ($errors->any())
                     <div class="alert alert-danger">
