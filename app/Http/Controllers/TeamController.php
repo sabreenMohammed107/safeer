@@ -96,7 +96,9 @@ class TeamController extends Controller
     public function update(UpdateTeamRequest $request, $id)
     {
         $row = Team::findOrFail($id);
-        $input = $request->except(['_token', '_method', 'image']);
+        // `order` is managed exclusively from the index page's reorder controls
+        // (see reorder() below) — never touched from the edit form.
+        $input = $request->except(['_token', '_method', 'image', 'order']);
 
         if ($request->hasFile('image')) {
             $input['image'] = $this->UplaodImage($request->file('image'));
@@ -104,10 +106,6 @@ class TeamController extends Controller
 
         $input['featured'] = $request->has('featured') ? 1 : 0;
         $input['active'] = $request->has('active') ? 1 : 0;
-
-        if (!isset($input['order']) || $input['order'] === '') {
-            $input['order'] = (int) Team::max('order') + 1;
-        }
 
         $row->update($input);
 

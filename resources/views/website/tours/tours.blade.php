@@ -284,7 +284,7 @@
                                     </button>
                                 </li>
 
-                                <li class="nav-item" role="presentation">
+                                {{-- <li class="nav-item" role="presentation">
                                     <button class="nav-link sort_by" data-val="alpha" id="pills-alpha-tab"
                                         data-bs-toggle="pill" data-bs-target="#pills-alpha" type="button"
                                         role="tab" aria-controls="pills-alpha" aria-selected="false"
@@ -296,7 +296,7 @@
                                             ترتيب ابجدي
                                         @endif
                                     </button>
-                                </li>
+                                </li> --}}
                                 <input type="hidden" name="sort_by" />
                             </ul>
 
@@ -347,7 +347,7 @@
                 if ($(this).val() != '') {
                     var select = $(this).attr("id");
                     var value = $(this).val();
-              $.ajax({
+                    $.ajax({
                         url: "{{ LaravelLocalization::localizeUrl(route('dynamicSearchCity.fetch')) }}",
                         method: "get",
                         data: {
@@ -359,8 +359,12 @@
                             $('#city_id').html(result);
 
                             var regex = /<option value="(\d+)">/g;
-                            var result_idx = ["",...Array.from(result.matchAll(regex), match => match[1])];
-                            var result_values = result.replace(/<\/option><option value="(\d+)">/g, ',').replace(/<\/option>/g, '').replace(/<option value="(\d*)">/g, '').split(',');
+                            var result_idx = ["", ...Array.from(result.matchAll(regex), match =>
+                                match[1])];
+                            var result_values = result.replace(
+                                    /<\/option><option value="(\d+)">/g, ',').replace(
+                                    /<\/option>/g, '').replace(/<option value="(\d*)">/g, '')
+                                .split(',');
 
                             var result_array = result_idx.map((item, index) => {
                                 return {
@@ -388,21 +392,21 @@
                 }
             });
 
-            $("#city_filter_box").on('change', '.tour_cities_id', function () {
+            $("#city_filter_box").on('change', '.tour_cities_id', function() {
                 const id = $(this).val();
 
                 // TODO :: fetch tours based on such id
                 const selected_values = $('input[name="filter_cities_ids[]"]:checked')
-                .map(function () {
-                    return $(this).val();
-                })
-                .get();
+                    .map(function() {
+                        return $(this).val();
+                    })
+                    .get();
 
                 console.log(selected_values);
-                
+
                 fetch_tours();
-                
-            });  
+
+            });
 
 
 
@@ -490,10 +494,10 @@
             var localizedUrl = "{{ LaravelLocalization::localizeUrl('/tours') }}";
             $("#buttonForm").click(function(e) {
                 const selected_values = $('input[name="filter_cities_ids[]"]:checked')
-                .map(function () {
-                    return +$(this).val();
-                })
-                .get();
+                    .map(function() {
+                        return +$(this).val();
+                    })
+                    .get();
                 e.preventDefault();
                 var url = localizedUrl;
                 $.ajax({
@@ -507,7 +511,7 @@
 
                         country_id: $('#country option:selected').val(),
                         city_id: selected_values,
-                        
+
 
 
 
@@ -557,9 +561,10 @@
         //End function of pagination product
 
         var localizedUrlRetrive = "{{ LaravelLocalization::localizeUrl('/tours/retrieve') }}";
+
         function fetch_tours() {
             const selected_values = $('input[name="filter_cities_ids[]"]:checked')
-                .map(function () {
+                .map(function() {
                     return +$(this).val();
                 })
                 .get();

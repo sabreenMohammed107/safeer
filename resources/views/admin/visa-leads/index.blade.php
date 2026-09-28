@@ -87,7 +87,10 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="fw-bolder">{{ $row->passenger_name }}</span>
+                                        <input type="hidden" data-kt-ecommerce-category-filter="category_id"
+                                            value="{{ $row->id }}">
+                                        <span class="fw-bolder"
+                                            data-kt-ecommerce-category-filter="category_name">{{ $row->passenger_name }}</span>
                                     </td>
                                     <td>{{ $row->mobile_number }}</td>
                                     <td>{{ $row->email }}</td>

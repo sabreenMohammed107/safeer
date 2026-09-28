@@ -189,7 +189,9 @@ class TourController extends Controller
         try {
             // Disable foreign key checks!
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            $input = $request->except(['_token', 'thumbnail', 'banner']);
+            // `order` is managed exclusively from the index page's reorder controls
+            // (see reorder() below) — never touched from the edit form.
+            $input = $request->except(['_token', 'thumbnail', 'banner', 'order']);
             if ($request->hasFile('thumbnail')) {
                 $attach_image = $request->file('thumbnail');
 
@@ -206,11 +208,6 @@ class TourController extends Controller
                 $input['active'] = '1';
             } else {
                 $input['active'] = '0';
-            }
-
-            if (!isset($input['order']) || $input['order'] === '') {
-                // No order given: append it to the end of the current list.
-                $input['order'] = (int) Tour::max('order') + 1;
             }
 
             $tour->update($input);

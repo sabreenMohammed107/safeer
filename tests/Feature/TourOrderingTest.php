@@ -125,8 +125,12 @@ class TourOrderingTest extends TestCase
         $this->assertSame(11, $tour->order);
     }
 
-    public function test_admin_can_update_a_tours_order()
+    public function test_updating_a_tour_does_not_change_its_order()
     {
+        // The `order` field was removed from the edit form: order is managed
+        // exclusively via the tours.reorder drag-and-drop endpoint now, so the
+        // regular update endpoint must ignore an `order` value even if one is
+        // present in the request (e.g. a stray/forged field).
         $tour = Tour::create(['en_name' => 'Movable Tour', 'active' => 1, 'order' => 1]);
 
         $admin = $this->makeAdmin('admin_order_test3@example.com');
@@ -136,7 +140,7 @@ class TourOrderingTest extends TestCase
             'order' => 42,
         ])->assertRedirect(route('tours.index'));
 
-        $this->assertSame(42, $tour->fresh()->order);
+        $this->assertSame(1, $tour->fresh()->order);
     }
 
     public function test_admin_can_bulk_reorder_tours_via_the_drag_and_drop_endpoint()

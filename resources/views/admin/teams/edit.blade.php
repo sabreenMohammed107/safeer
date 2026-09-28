@@ -79,11 +79,6 @@
                                     @checked($row->featured) id="teamFeaturedSwitch" />
                                 <label class="form-check-label" for="teamFeaturedSwitch">Featured</label>
                             </div>
-                            <div class="fv-row">
-                                <label class="form-label">Order</label>
-                                <input type="number" min="0" name="order" class="form-control mb-2"
-                                    value="{{ $row->order }}" />
-                            </div>
                         </div>
                     </div>
                     <!--end::Status-->

@@ -134,6 +134,66 @@
         border-radius: 8px;
         background: #f8f9fb;
     }
+
+    /* Unified action-button system for "Continue as Guest" / "Login / Register".
+       Every rule below is scoped under #guestChoiceButtons (an ID selector) so
+       it reliably outranks visa-step-1.css's `.passenger_info_details button`
+       rule (specificity: 1 class + 1 element). That shared rule targets *every*
+       <button> inside this section for the small circular "remove passenger"
+       control — background:#f5f5f5, border:none, border-radius:50%, padding:5px 7px,
+       position:absolute; top/right:13px — and without out-ranking it,
+       #continueAsGuestBtn (a <button>) inherits all of that and renders as
+       unstyled/misplaced text instead of a button. #loginRegisterBtn is an <a>
+       so it was never affected by that rule, which is why only the primary
+       button looked broken. */
+    #guestChoiceButtons .visa-btn {
+        position: static;
+        top: auto;
+        right: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 46px;
+        padding: 0 28px;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1;
+        border-radius: 10px;
+        border: 1px solid #1C4482;
+        text-decoration: none;
+        text-transform: capitalize;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background-color .2s ease, color .2s ease, border-color .2s ease, opacity .2s ease;
+    }
+
+    /* Primary / default action */
+    #guestChoiceButtons .visa-btn--primary {
+        background-color: #1C4482;
+        border-color: #1C4482;
+        color: #fff;
+    }
+
+    #guestChoiceButtons .visa-btn--primary:hover,
+    #guestChoiceButtons .visa-btn--primary:focus {
+        opacity: .85;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* Secondary / outlined action */
+    #guestChoiceButtons .visa-btn--outline {
+        background-color: transparent;
+        border-color: #1C4482;
+        color: #1C4482;
+    }
+
+    #guestChoiceButtons .visa-btn--outline:hover,
+    #guestChoiceButtons .visa-btn--outline:focus {
+        background-color: #1C4482;
+        color: #fff;
+        text-decoration: none;
+    }
 </style>
 
 
@@ -255,9 +315,16 @@
                     <div class="col-12" id="guestChoiceButtons">
                         <div class="visa-guest-choice my-4 p-3">
                             <p class="mb-3">{{ __('links.visa_guest_prompt') }}</p>
-                            <a class="btn btn-outline-primary me-2"
-                                href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(), route('siteLogin')) }}">{{ __('links.visa_guest_login') }}</a>
-                            <button type="button" id="continueAsGuestBtn" class="btn btn-primary">{{ __('links.visa_guest_continue') }}</button>
+                            <div class="d-flex align-items-center gap-3 mt-3">
+                                <button type="button" id="continueAsGuestBtn"
+                                    class="visa-btn visa-btn--primary" aria-pressed="true">
+                                    {{ __('links.visa_guest_continue') }}
+                                </button>
+                                <a id="loginRegisterBtn" class="visa-btn visa-btn--outline"
+                                    href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(), route('siteLogin')) }}">
+                                    {{ __('links.visa_guest_login') }}
+                                </a>
+                            </div>
                         </div>
                     </div>
                     @endif
