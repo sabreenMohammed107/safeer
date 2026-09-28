@@ -214,7 +214,11 @@ Route::post('/password/email', [AuthController::class, 'sendResetLink'])
 // Show password reset form (with token)
 Route::get('/password/reset/{token}', function ($token) {
     $Company = Company::first(); // Fetch the company data
-    return view('auth.reset', ['token' => $token, 'Company' => $Company]);
+    return view('auth.reset', [
+        'token' => $token,
+        'email' => request()->query('email'),
+        'Company' => $Company,
+    ]);
 })->name('password.reset.form');
 
 // Handle password reset submission
@@ -274,6 +278,34 @@ Route::prefix('auth')->name('google.')->group(function () {
 
     });
 });
+
+/*------------------------------------------
+--------------------------------------------
+Admin Dashboard Password Reset
+(Distinct URIs/names from the site-user /password/* routes above, which are
+scoped to the `site_users` table — these target the admin `users` table via
+Laravel's built-in Password broker, already configured for it in
+config/auth.php.)
+--------------------------------------------
+--------------------------------------------*/
+Route::get('/dashboard/password/reset', function () {
+    $Company = Company::first();
+    return view('auth.admin_password_email', compact('Company'));
+})->name('admin.password.request');
+
+Route::post('/dashboard/password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->middleware('throttle:3,1')
+    ->name('admin.password.email');
+
+Route::get('/dashboard/password/reset/{token}', function ($token) {
+    $Company = Company::first();
+    return view('auth.admin_password_reset', [
+        'token' => $token,
+        'email' => request('email'),
+        'Company' => $Company,
+    ]);
+})->name('admin.password.reset.form');
+
 /*------------------------------------------
 --------------------------------------------
 All Admin Routes List

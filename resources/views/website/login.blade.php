@@ -77,13 +77,13 @@
                             @endif
                         </label>
                     </div>
-                    {{-- <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('password.request')) }}" class="text-primary">
-                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        Forgot Password?
-                    @else
-                        نسيت كلمة المرور؟
-                    @endif
-                </a> --}}
+                    <a href="{{ LaravelLocalization::getLocalizedURL($localVar, route('password.request')) }}" class="text-primary">
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            Forgot Password?
+                        @else
+                            نسيت كلمة المرور؟
+                        @endif
+                    </a>
 
                 </form>
                 <span class="or_title">

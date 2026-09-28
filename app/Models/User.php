@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Mail\AdminPasswordResetMail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
@@ -62,6 +64,21 @@ class User extends Authenticatable
 
 
      /**
+     * Send the password reset link via our own branded Mailable instead of
+     * Laravel's default notification, whose built-in mail template hardcodes
+     * a link via route('password.reset', ...) — a name already claimed by
+     * the unrelated site-user reset flow in routes/web.php. This keeps the
+     * admin reset link pointed at admin.password.reset.form instead.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        Mail::to($this->email)->send(new AdminPasswordResetMail($token, $this));
+    }
+
+    /**
      * The roles that belong to the user.
      */
     public function roles()
