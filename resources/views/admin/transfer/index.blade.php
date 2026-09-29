@@ -139,7 +139,7 @@
         </td>
         <!--end::Price=-->
         <td class="text-end pe-0">
-            <span class="fw-bolder text-dark">{{ $row->person_price ?? '' }}</span>
+            <span class="fw-bolder text-dark">{{ $row->person_price !== null ? money($row->person_price) : '' }}</span>
         </td>
         <!--begin::Action=-->
         <td class="text-end">

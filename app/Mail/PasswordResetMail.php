@@ -19,6 +19,11 @@ class PasswordResetMail extends Mailable
     {
         $this->token = $token;
         $this->user = $user;
+
+        // Must be set here, not in build(): Mailable::render()/send() read
+        // $this->locale to decide the active locale *before* build() runs,
+        // so calling ->locale() inside build() is always one step too late.
+        $this->locale(app()->getLocale());
     }
 
     /**
@@ -28,7 +33,7 @@ class PasswordResetMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Reset Your Safer Travel Password')
+        return $this->subject(__('emails.password_reset_subject'))
             ->view('emails.password_reset')
             ->with([
                 'token' => $this->token,

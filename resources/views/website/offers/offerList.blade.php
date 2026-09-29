@@ -48,7 +48,7 @@
                             @endif
                             -
                             <span>
-                                {{ $offer->cost }} $
+                                {{ money($offer->cost) }}
                             </span>
 
                     </div>

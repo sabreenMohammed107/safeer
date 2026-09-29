@@ -31,8 +31,21 @@ class AppServiceProvider extends ServiceProvider
         Builder::defaultStringLength(191);
         $master=Company_branch::where('master_flag',1)->firstorfail();
         $comFooter=Company::where('id',1)->firstorfail();
-        $localVar=LaravelLocalization::getCurrentLocale();
-        //
-        View::share(['comFooter'=>$comFooter,'localVar'=>$localVar]);
+        View::share('comFooter', $comFooter);
+
+        // `localVar` must NOT be computed here: AppServiceProvider::boot()
+        // runs before RouteServiceProvider loads routes/web.php, which is
+        // where LaravelLocalization::setLocale() detects the locale from the
+        // URL's locale prefix — so LaravelLocalization::getCurrentLocale()
+        // at this point is always stale (falls back to the browser's
+        // Accept-Language header or the app default, never the actual
+        // current page's locale). Every view that doesn't locally recompute
+        // $localVar itself (most don't) then generates links/form actions
+        // for the wrong locale. A view composer runs per-view at render
+        // time — after routing has resolved the real locale — so it picks
+        // up the correct value.
+        View::composer('*', function ($view) {
+            $view->with('localVar', LaravelLocalization::getCurrentLocale());
+        });
     }
 }

@@ -388,7 +388,7 @@
                             تكلفة/الشخص
                         @endif
                     </h6>
-                    <span>{{ number_format($Tour->tour_person_cost, 2) }} $</span>
+                    <span>{{ money($Tour->tour_person_cost) }}</span>
                 </div>
             </div>
 

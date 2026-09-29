@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -12,6 +12,7 @@
             background-color: #f4f6f9;
             font-family: Arial, Helvetica, sans-serif;
             color: #333333;
+            direction: {{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }};
         }
 
         .email-wrapper {
@@ -69,7 +70,7 @@
         table.data-table td {
             padding: 10px;
             border-bottom: 1px solid #e4e6ef;
-            text-align: left;
+            text-align: {{ app()->getLocale() === 'ar' ? 'right' : 'left' }};
             font-size: 14px;
         }
 
@@ -88,7 +89,7 @@
             @yield('content')
         </div>
         <div class="email-footer">
-            &copy; {{ date('Y') }} Safer Travel. All rights reserved.<br>
+            &copy; {{ date('Y') }} Safer Travel. {{ __('emails.footer_rights') }}<br>
             {{ config('mail.admin_address', 'info@safer.travel') }}
         </div>
     </div>

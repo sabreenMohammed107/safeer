@@ -80,7 +80,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $roomDetail->hotel->hotel_
 </td>
 <!--begin::Price=-->
 <td class="text-center pe-0">
-<span class="fw-bolder text-dark">{{ $roomDetail->room_cost ?? '' }} $</span>
+<span class="fw-bolder text-dark">{{ $roomDetail->room_cost !== null ? money($roomDetail->room_cost) : '' }}</span>
 </td>
 <!--end::Price=-->
 
@@ -111,7 +111,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $roomDetail->hotel->hotel_
     </td>
     <!--end::Status=-->
     <td class="text-end pe-0">
-        <span class="fw-bolder text-dark">{{ $roomDetail->total_cost ?? '' }} $</span>
+        <span class="fw-bolder text-dark">{{ $roomDetail->total_cost !== null ? money($roomDetail->total_cost) : '' }}</span>
         </td>
 </tr>
 <!--end::Table row-->
@@ -285,7 +285,7 @@ data-kt-ecommerce-category-filter="category_name" >{{$person->person_salutation 
 <span class="fw-bolder ms-3">{{ $person->mobile ?? '' }}</span>
 </td>
 <td class="text-center pe-0" data-order="15">
-    <span class="fw-bolder ms-3">{{ $person->person_cost ?? '' }}</span>
+    <span class="fw-bolder ms-3">{{ $person->person_cost !== null ? money($person->person_cost) : '' }}</span>
     </td>
     <td class="text-center pe-0" data-order="15">
         <span class="fw-bolder ms-3">{{ $person->age ?? '' }}</span>

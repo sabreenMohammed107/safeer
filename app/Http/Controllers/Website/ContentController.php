@@ -239,7 +239,7 @@ $whyUss=Why_us::all();
         // never turn a successful submission into an error for the visitor.
         try {
             Mail::to(config('mail.admin_address'))->send(
-                new NewsLetterNotification($contact, 'New Contact Form Submission', 'New Contact Form Submission')
+                new NewsLetterNotification($contact, __('emails.contact_subject'))
             );
         } catch (\Throwable $e) {
             Log::error('Contact form notification email failed to send.', [

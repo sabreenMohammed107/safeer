@@ -96,12 +96,12 @@ data-kt-ecommerce-category-filter="category_name" >{{ $detail->transfer_date ?? 
 <!--end::Status=-->
 <!--begin::Status=-->
 <td class="text-end pe-0">
-    <span class="fw-bolder text-dark">{{ $detail->transfer_person_price ?? '' }} $</span>
+    <span class="fw-bolder text-dark">{{ $detail->transfer_person_price !== null ? money($detail->transfer_person_price) : '' }}</span>
     </td>
     <!--end::Status=-->
     <!--begin::Status=-->
 <td class="text-end pe-0">
-    <span class="fw-bolder text-dark">{{ $detail->transfer_total_cost ?? '' }} $</span>
+    <span class="fw-bolder text-dark">{{ $detail->transfer_total_cost !== null ? money($detail->transfer_total_cost) : '' }}</span>
     </td>
 
     <td class="text-end pe-0">

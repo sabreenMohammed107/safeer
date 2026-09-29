@@ -288,8 +288,8 @@
                                                 {{ $Type }}
                                                 ({{ $RoomCost->food_bev_type }})
                                                 <span class=" text-end">{{ $RoomCost->rooms_count }} X
-                                                    ${{ number_formaT($Cost, 2, '.', '') }} <br> <span class="fw-bold">
-                                                        ${{ number_format((float) $RoomCost->rooms_count * $Cost, 2, '.', '') }}</span></span>
+                                                    {{ money($Cost) }} <br> <span class="fw-bold">
+                                                        {{ money((float) $RoomCost->rooms_count * $Cost) }}</span></span>
                                             </p>
                                             <br>
                                             <p class="mb-0 pb-0">
@@ -316,18 +316,18 @@
                                                         {{ $PaidChildren }} X Paid Childs (Age From
                                                         {{ $RoomCost->child_age_from }} To {{ $RoomCost->child_age_to }})
                                                         <span class=" text-end">{{ $PaidChildren }} X
-                                                            ${{ number_format($RoomCost->child_age_cost, 2, '.', '') }}
+                                                            {{ money($RoomCost->child_age_cost) }}
                                                             <br>
                                                             <span
-                                                                class="fw-bold">${{ number_format($PaidChildren * $RoomCost->child_age_cost, 2, '.', '') }}</span></span><br>
+                                                                class="fw-bold">{{ money($PaidChildren * $RoomCost->child_age_cost) }}</span></span><br>
                                                     @else
                                                         {{ $PaidChildren }} X الاطفال المدفوعة (Age From
                                                         {{ $RoomCost->child_age_from }} الي {{ $RoomCost->child_age_to }})
                                                         <span class=" text-end">{{ $PaidChildren }} X
-                                                            ${{ number_format($RoomCost->child_age_cost, 2, '.', '') }}
+                                                            {{ money($RoomCost->child_age_cost) }}
                                                             <br>
                                                             <span
-                                                                class="fw-bold">${{ number_format($PaidChildren * $RoomCost->child_age_cost, 2, '.', '') }}</span></span><br>
+                                                                class="fw-bold">{{ money($PaidChildren * $RoomCost->child_age_cost) }}</span></span><br>
                                                     @endif
                                                 </p>
 
@@ -335,18 +335,18 @@
                                             @endif
                                             <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
                                                 <span
-                                                    class=" text-end fw-bold">${{ number_format((float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost, 2, '.', '') }}</span><br>
+                                                    class=" text-end fw-bold">{{ money((float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost) }}</span><br>
                                             </p>
                                             <br>
                                             <p class="mb-0 pb-0">
                                                 @if (LaravelLocalization::getCurrentLocale() === 'en')
                                                     Booking for {{ $RoomCost->nights }} nights<span
                                                         class=" text-end fw-bold">{{ $RoomCost->nights }} X
-                                                        ${{ number_format((float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost, 2, '.', '') }}</span><br>
+                                                        {{ money((float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost) }}</span><br>
                                                 @else
                                                     الحجز من {{ $RoomCost->nights }} ليالي<span
                                                         class=" text-end fw-bold">{{ $RoomCost->nights }} X
-                                                        ${{ number_format((float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost, 2, '.', '') }}</span><br>
+                                                        {{ money((float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost) }}</span><br>
                                                 @endif
                                             </p>
                                             <div class="grand_total">
@@ -357,8 +357,7 @@
                                                         المجموع الفرعي
                                                     @endif
                                                 </h6>
-                                                <span class="h6"> {{ number_format((float) $TotalCost, 2, '.', '') }}
-                                                    <span class="h6">$</span></span>
+                                                <span class="h6"> {{ money((float) $TotalCost) }}</span>
                                             </div>
                                             <br>
                                         </div>
@@ -633,7 +632,7 @@
                                                                 @endif
                                                             </h6>
                                                             <span class="h6">
-                                                                ${{ $Tour->tour_person_cost }}</span></span>
+                                                                {{ money($Tour->tour_person_cost) }}</span>
                                                         </div>
 
                                                         <br>
@@ -648,8 +647,8 @@
                                                         <p class="mb-0 pb-0">
                                                             {{ $Tour->adults_count }} X {{ __('links.adult') }} <span
                                                                 class=" text-end">{{ $Tour->adults_count }} X
-                                                                ${{ $Tour->tour_person_cost }}<br><span
-                                                                    class="fw-bold">${{ $Tour->adults_count * $Tour->tour_person_cost }}</span></span>
+                                                                {{ money($Tour->tour_person_cost) }}<br><span
+                                                                    class="fw-bold">{{ money($Tour->adults_count * $Tour->tour_person_cost) }}</span></span>
                                                         </p>
                                                         <br>
                                                         <p class="mb-0 pb-0">
@@ -671,16 +670,16 @@
                                                                 Childs
                                                                 <span
                                                                     class=" text-end">{{ $TotalPaidPersons[$index] - $Tour->adults_count }}
-                                                                    X ${{ $Tour->tour_person_cost }} <br> <span
-                                                                        class="fw-bold text-end">${{ ($TotalPaidPersons[$index] - $Tour->adults_count) * $Tour->tour_person_cost }}</span></span><br>
+                                                                    X {{ money($Tour->tour_person_cost) }} <br> <span
+                                                                        class="fw-bold text-end">{{ money(($TotalPaidPersons[$index] - $Tour->adults_count) * $Tour->tour_person_cost) }}</span></span><br>
                                                             @else
                                                                 {{ $TotalPaidPersons[$index] - $Tour->adults_count }} X
                                                                 اطفال
                                                                 مدفوعة
                                                                 <span
                                                                     class=" text-end">{{ $TotalPaidPersons[$index] - $Tour->adults_count }}
-                                                                    X ${{ $Tour->tour_person_cost }} <br> <span
-                                                                        class="fw-bold text-end">${{ ($TotalPaidPersons[$index] - $Tour->adults_count) * $Tour->tour_person_cost }}</span></span><br>
+                                                                    X {{ money($Tour->tour_person_cost) }} <br> <span
+                                                                        class="fw-bold text-end">{{ money(($TotalPaidPersons[$index] - $Tour->adults_count) * $Tour->tour_person_cost) }}</span></span><br>
                                                             @endif
                                                         </p>
 
@@ -688,7 +687,7 @@
                                                         <p class="mb-0 pb-0"
                                                             style="border-top: 1px solid rgb(184, 184, 184)">
                                                             <span
-                                                                class=" text-end fw-bold">${{ $TotalPaidPersons[$index] * $Tour->tour_person_cost }}</span><br>
+                                                                class=" text-end fw-bold">{{ money($TotalPaidPersons[$index] * $Tour->tour_person_cost) }}</span><br>
                                                         </p>
                                                         <br>
                                                         <div class="grand_total">
@@ -700,7 +699,7 @@
                                                                 @endif
                                                             </h6>
                                                             <span class="h6">
-                                                                ${{ $TotalPaidPersons[$index] * $Tour->tour_person_cost }}</span></span>
+                                                                {{ money($TotalPaidPersons[$index] * $Tour->tour_person_cost) }}</span>
                                                         </div>
 
                                                         <br>
@@ -763,7 +762,7 @@
                                                         <strong>{{ $TransferCost->to_location_enname }}</strong>
                                                     </p>
                                                     <p class="mb-0">Transportation Fees:
-                                                        <strong>{{ $TransferCost->person_price }}$</strong>
+                                                        <strong>{{ money($TransferCost->person_price) }}</strong>
                                                     </p>
                                                 @else
                                                     <p class="mb-0">موديل السيارة:
@@ -782,7 +781,7 @@
                                                         <strong>{{ $TransferCost->to_location_arname ?? '' }}</strong>
                                                     </p>
                                                     <p class="mb-0">تكلفة الرحلة:
-                                                        <strong>{{ $TransferCost->person_price }}$</strong>
+                                                        <strong>{{ money($TransferCost->person_price) }}</strong>
                                                     </p>
                                                 @endif
 
@@ -966,7 +965,7 @@
                                                     @else
                                                         رسوم الإنتقال
                                                     @endif <span
-                                                        class=" t_rec">${{ $TransferCost->person_price }}</span><br>
+                                                        class=" t_rec">{{ money($TransferCost->person_price) }}</span><br>
                                                 </p>
                                                 <br>
                                                 <p class="mb-0 pb-0">
@@ -985,7 +984,7 @@
                                                     @else
                                                         المجموع الفرعي
                                                     @endif <span
-                                                        class=" text-end fw-bold t_rec">${{ number_format((float) $TransferCost->person_price, 2, '.', '') }}</span><br>
+                                                        class=" text-end fw-bold t_rec">{{ money((float) $TransferCost->person_price) }}</span><br>
                                                 </p>
                                                 <br>
                                                 <div class="grand_total">
@@ -997,7 +996,7 @@
                                                         @endif
                                                     </h6>
                                                     <span class="h6 t_rec">
-                                                        ${{ number_format((float) $TransferCost->person_price, 2, '.', '') }}</span></span>
+                                                        {{ money((float) $TransferCost->person_price) }}</span>
                                                 </div>
 
                                                 <br>
@@ -1087,7 +1086,7 @@
                                                 <div class="col-sm-12 col-md-6 col-xl-4">
                                                     <label class="form-label">{{ __('links.fees') }} </label>
 
-                                                    <p class="fw-bold">{{ $visa->cost }}$</p>
+                                                    <p class="fw-bold">{{ money($visa->cost) }}</p>
                                                 </div>
                                                 <div class="col-sm-12 col-md-6 col-xl-4">
                                                     <label class="form-label">{{ __('links.mobile') }} </label>
@@ -1145,13 +1144,13 @@
                                                             {{ $_visa->ar_type }}:
                                                         @endif <span
                                                             class="">{{ $_visa->groupped_count }} X
-                                                            ${{ $_visa->sum_costs }}<span></span>
+                                                            {{ money($_visa->sum_costs) }}<span></span>
                                                     </p>
                                                 @endforeach
 
                                                 <br>
                                                 <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                                                    <span class=" text-end fw-bold">${{ $TotalVisasCost }}</span><br>
+                                                    <span class=" text-end fw-bold">{{ money($TotalVisasCost) }}</span><br>
                                                 </p>
                                                 <br>
                                                 <div class="grand_total">
@@ -1162,7 +1161,7 @@
                                                             المجموع الفرعي
                                                         @endif
                                                     </h6>
-                                                    <span class="h6"> {{ $TotalVisasCost }}$</span></span>
+                                                    <span class="h6"> {{ money($TotalVisasCost) }}</span>
                                                 </div>
 
                                                 <br>
@@ -1198,11 +1197,11 @@
 
                                     @if (isset($Tour) && $Tour->tour_type_id == 1)
                                     <span
-                                    class="float-end text-end BeforeT_txt">${{ number_format($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost, 2, '.', '') }}
+                                    class="float-end text-end BeforeT_txt">{{ money($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) }}
                                 </span>
                                     @else
                                     <span
-                                        class="float-end text-end BeforeT_txt">${{ number_format($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost, 2, '.', '') }}
+                                        class="float-end text-end BeforeT_txt">{{ money($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) }}
                                     </span>
                                     @endif
                                     <br>
@@ -1217,16 +1216,16 @@
                                     <span class="float-end text-end">
                                         @if (isset($Tour) && $Tour->tour_type_id == 1)
                                         <span
-                                        class="BeforeT_txt">${{ number_format($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost, 2, '.', '') }}</span>
+                                        class="BeforeT_txt">{{ money($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) }}</span>
                                     X {{ (float) $tax_percentage / 100 }} <br> <span
-                                        class="fw-bold AfterT_txt">${{ number_format((float) ($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100), 2, '.', '') }}</span></span><br>
+                                        class="fw-bold AfterT_txt">{{ money((float) ($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}</span></span><br>
                                 <input type="hidden" name="BeforeT"
                                     value="{{ number_format((float) ($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost), 2, '.', '') }}" />
                                         @else
                                         <span
-                                            class="BeforeT_txt">${{ number_format($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost, 2, '.', '') }}</span>
+                                            class="BeforeT_txt">{{ money($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) }}</span>
                                         X {{ (float) $tax_percentage / 100 }} <br> <span
-                                            class="fw-bold AfterT_txt">${{ number_format((float) ($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100), 2, '.', '') }}</span></span><br>
+                                            class="fw-bold AfterT_txt">{{ money((float) ($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}</span></span><br>
                                     <input type="hidden" name="BeforeT"
                                         value="{{ number_format((float) ($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost), 2, '.', '') }}" />
                                @endif
@@ -1243,10 +1242,10 @@
                                 </h5>
                                 <span id="gt" class="AfterT_txt">
                                     @if (isset($Tour) && $Tour->tour_type_id == 1)
-                                    <span>$</span>{{ number_format(($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100), 2, '.', '') }}
+                                    {{ money(($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}
                                 </span>
                                     @else
-                                    <span>$</span>{{ number_format(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100), 2, '.', '') }}
+                                    {{ money(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}
                                 </span>
                                 @endif
                             </div>

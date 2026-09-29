@@ -86,7 +86,7 @@
                                         <span> ({{ $HRec->totalreviews }} {{ __('links.review') }}) </span>
                                     </div>
                                     <span class="hotels_price"><span
-                                            style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> $ {{ $minPrice ?? $HRec->single_cost }}</span>
+                                            style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> {{ money($minPrice ?? $HRec->single_cost) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -164,8 +164,8 @@
                                         <span> ({{ $HPrice->totalreviews }} {{ __('links.review') }}) </span>
                                     </div>
                                     <span class="hotels_price"><span
-                                            style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> $ {{ $HPrice->single_cost }}</span>
-                                    {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
+                                            style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> {{ money($HPrice->single_cost) }}</span>
+                                    {{-- <span class="hotels_price"> {{ money($HPrice->cost) }}</span> --}}
                                 </div>
                             </div>
                         </div>
@@ -245,8 +245,8 @@
                                         <span> ({{ $HAlpha->totalreviews }} {{ __('links.review') }}) </span>
                                     </div>
                                     <span class="hotels_price"><span
-                                            style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> $ {{ $HAlpha->single_cost }}</span>
-                                    {{-- <span class="hotels_price"> $ {{$HPrice->cost}}</span> --}}
+                                            style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> {{ money($HAlpha->single_cost) }}</span>
+                                    {{-- <span class="hotels_price"> {{ money($HPrice->cost) }}</span> --}}
                                 </div>
                             </div>
                         </div>

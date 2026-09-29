@@ -102,7 +102,7 @@
                                 @endfor
 
                           </div>
-                          <span class="hotels_price"> $@if($Room->room_cap == 1){{$Room->single_cost}}@elseif($Room->room_cap == 2){{$Room->double_cost}}@else{{$Room->triple_cost}}@endif</span>
+                          <span class="hotels_price"> @if($Room->room_cap == 1){{ money($Room->single_cost) }}@elseif($Room->room_cap == 2){{ money($Room->double_cost) }}@else{{ money($Room->triple_cost) }}@endif</span>
                         </div>
                       </div>
                     </div>
@@ -141,7 +141,7 @@
                                    ثلاتية
                                     @endif @endif
 
-                                    <span class="float-end">$@if($RoomC->room_cap == 1) {{$RoomC->single_cost}} @elseif($RoomC->room_cap == 2) {{$RoomC->double_cost}} @else {{$RoomC->triple_cost}} @endif</span>
+                                    <span class="float-end">@if($RoomC->room_cap == 1) {{ money($RoomC->single_cost) }} @elseif($RoomC->room_cap == 2) {{ money($RoomC->double_cost) }} @else {{ money($RoomC->triple_cost) }} @endif</span>
                                 </p>
                             </div>
                         @endforeach
@@ -153,7 +153,7 @@
 
 المجموع الإجمالي
                                 @endif </h5>
-                            <span> {{$TotalCost}} <span>$</span></span>
+                            <span> {{ money($TotalCost) }}</span>
                         </div>
                         <button class="btn d-block w-100 mt-4 btn-primary">@if (LaravelLocalization::getCurrentLocale() === 'en')
 

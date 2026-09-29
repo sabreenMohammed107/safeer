@@ -50,7 +50,7 @@
                                             @else
                                             {{$offer->city->ar_city ?? ""}}
                                             @endif
-                                            - {{ $offer->cost }} $
+                                            - {{ money($offer->cost) }}
 
                                         </p>
                                     <p>
@@ -110,7 +110,7 @@
 
 
                             </p>
-                            <span> {{ $obj->cost }} $</span>
+                            <span> {{ money($obj->cost) }}</span>
                         </div>
                     </div>
                 @endforeach

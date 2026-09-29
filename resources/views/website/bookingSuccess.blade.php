@@ -46,7 +46,7 @@
         <p class="my-2">Dear Customer,</p>
         <p class="my-2">Thank you for placing your order! It has been received successfully, and we will get in touch with you shortly to complete the process.</p>
         <p class="my-2 ">Order Number: {{$Order->id}} – Please keep it for reference.</p>
-        <p class="my-2 ">Total Cost: ${{number_format($Cost * (1 + (float)$Order->tax_percentage/100),2,'.','')}}</p>
+        <p class="my-2 ">Total Cost: {{ money($Cost * (1 + (float)$Order->tax_percentage/100)) }}</p>
         <p class="my-2">If you have any questions, feel free to contact us at Info@Safer.Travel</p>
         <p class="my-2">Best regards,</p>
         <p class="my-2">The Customer Service Team at Safer Travel Company</p>
@@ -57,7 +57,7 @@
         <p class="my-2">عزيزي العميل،</p>
         <p class="my-2">شكرًا لتقديم طلبكم! تم استلامه بنجاح، وسنتواصل معكم في أسرع وقت لإتمام الإجراءات.</p>
         <p class="my-2 ">رقم الطلب: {{$Order->id}} – احتفظ به للمراجعة.</p>
-        <p class="my-2 ">التكلفة الإجمالية: ${{number_format($Cost * (1 + (float)$Order->tax_percentage/100),2,'.','')}}</p>
+        <p class="my-2 ">التكلفة الإجمالية: {{ money($Cost * (1 + (float)$Order->tax_percentage/100)) }}</p>
         <p class="my-2">لأي استفسارات، يمكنكم التواصل معنا عبر Info@Safer.Travel</p>
         <p class="my-2">تقبلوا تحياتنا،</p>
         <p class="my-2">فريق خدمة العملاء لدى شركة سافر السياحية</p>

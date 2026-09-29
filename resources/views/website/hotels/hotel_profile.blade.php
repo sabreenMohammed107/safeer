@@ -638,7 +638,7 @@ if(isset($arrayData['result'])){
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <span class="price_info">
-                                {{ __('links.costDay') }} {{$Room->single_cost}} $
+                                {{ __('links.costDay') }} {{ money($Room->single_cost) }}
                             </span>
                         </div>
 
@@ -719,7 +719,7 @@ if(isset($arrayData['result'])){
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <span class="price_info">
-                                {{ __('links.costDay') }} {{$Room->double_cost}} $
+                                {{ __('links.costDay') }} {{ money($Room->double_cost) }}
                             </span>
                         </div>
 
@@ -799,7 +799,7 @@ if(isset($arrayData['result'])){
                         </div>
                         <div class="col-xl-2 col-sm-12 col-md-6">
                             <span class="price_info">
-                                {{ __('links.costDay') }}{{$Room->triple_cost}} $
+                                {{ __('links.costDay') }} {{ money($Room->triple_cost) }}
                             </span>
                         </div>
 

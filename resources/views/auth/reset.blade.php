@@ -6,17 +6,17 @@
 @endsection
 
 @section("content")
-<div class="row mx-0">
-    <div class="col-md-6 offset-md-3">
-        <div class="slider_details side_right_details">
-            <h5>
+<div class="d-flex justify-content-center align-items-start py-5" style="min-height: 60vh;">
+    <div class="w-100 px-3" style="max-width: 480px;">
+        <div class="slider_details side_right_details" style="align-items: stretch; padding: 40px 30px;">
+            <h5 style="text-align: center;">
                 @if (LaravelLocalization::getCurrentLocale() === 'en')
                     Reset Your Password
                 @else
                     إعادة تعيين كلمة المرور
                 @endif
             </h5>
-            <p>
+            <p style="text-align: center;">
                 @if (LaravelLocalization::getCurrentLocale() === 'en')
                     Enter your new password below.
                 @else

@@ -1,16 +1,16 @@
 @extends('emails.layout')
 
-@section('title', 'Reset Your Password')
+@section('title', __('emails.password_reset_title'))
 
 @section('content')
-    <h2>Password Reset Request</h2>
-    <p>Hi {{ $user->name ?? $user->first_name ?? 'there' }},</p>
-    <p>We received a request to reset the password for your Safer Travel account ({{ $user->email }}). Click the button below to choose a new one:</p>
+    <h2>{{ __('emails.password_reset_title') }}</h2>
+    <p>{{ __('emails.password_reset_greeting', ['name' => $user->name ?? $user->first_name ?? 'there']) }}</p>
+    <p>{{ __('emails.password_reset_intro', ['email' => $user->email]) }}</p>
     <p style="text-align: center; margin: 28px 0;">
         <a class="btn-primary" href="{{ route('password.reset.form', ['token' => $token, 'email' => $user->email]) }}">
-            Reset Password
+            {{ __('emails.password_reset_button') }}
         </a>
     </p>
-    <p>This link will expire in {{ config('auth.passwords.users.expire', 60) }} minutes for your security.</p>
-    <p>If you didn't request a password reset, you can safely ignore this email — your password will remain unchanged.</p>
+    <p>{{ __('emails.password_reset_expiry', ['minutes' => config('auth.passwords.users.expire', 60)]) }}</p>
+    <p>{{ __('emails.password_reset_ignore') }}</p>
 @endsection

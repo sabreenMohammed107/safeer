@@ -63,7 +63,7 @@
 
 
                                 </p>
-                                <span> {{ $obj->cost }} $</span>
+                                <span> {{ money($obj->cost) }}</span>
                             </div>
                         </div>
                     @endforeach

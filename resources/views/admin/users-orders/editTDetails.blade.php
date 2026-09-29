@@ -81,7 +81,7 @@
                             </td>
                             <!--end::Qty=-->
                             <td class="text-center pe-0" data-order="15">
-                                <span class="fw-bolder ms-3"><?php echo number_format($detail->tour_cost, 2) . '$'; ?></span>
+                                <span class="fw-bolder ms-3"><?php echo money($detail->tour_cost); ?></span>
                             </td>
                             <td class="text-center pe-0" data-order="15">
                                 <span class="fw-bolder ms-3">{{ $detail->tour_date ?? '' }}</span>
@@ -99,7 +99,7 @@
                             <!--end::Status=-->
                             <!--begin::Status=-->
                             <td class="text-end pe-0">
-                                <span class="fw-bolder text-dark"><?php echo number_format($detail->total_cost, 2) . '$'; ?> </span>
+                                <span class="fw-bolder text-dark"><?php echo money($detail->total_cost); ?> </span>
                             </td>
                             <!--end::Status=-->
                             <td class="text-end pe-0">
@@ -512,7 +512,7 @@
                             </td>
 
                             <td class="text-end pe-0" data-order="15">
-                                <span class="fw-bolder ms-3">{{ $person->person_cost ?? '' }} $</span>
+                                <span class="fw-bolder ms-3">{{ $person->person_cost !== null ? money($person->person_cost) : '' }}</span>
                             </td>
                             <td class="text-end pe-0">
                                 <a data-bs-toggle="modal" data-bs-target="#kt_modal_new_person{{ $person->id }}"

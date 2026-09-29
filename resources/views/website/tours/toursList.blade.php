@@ -32,7 +32,7 @@
                                     </h6>
                                     <div class="card_info_actions">
                                         <span>
-                                            ${{ $HRec->tour_person_cost }}
+                                            {{ money($HRec->tour_person_cost) }}
                                         </span>
                                         @php
                                             $isFav = session()->get('SiteUser') && in_array($HRec->id, $favTourIds ?? []);
@@ -100,7 +100,7 @@
                                     </h6>
                                     <div class="card_info_actions">
                                         <span>
-                                            ${{ $HPrice->tour_person_cost }}
+                                            {{ money($HPrice->tour_person_cost) }}
                                         </span>
                                         @php
                                             $isFav = session()->get('SiteUser') && in_array($HPrice->id, $favTourIds ?? []);
@@ -165,7 +165,7 @@
                                         </a> </h6>
                                     <div class="card_info_actions">
                                         <span>
-                                            ${{ $HAlpha->tour_person_cost }}
+                                            {{ money($HAlpha->tour_person_cost) }}
                                         </span>
                                         @php
                                             $isFav = session()->get('SiteUser') && in_array($HAlpha->id, $favTourIds ?? []);

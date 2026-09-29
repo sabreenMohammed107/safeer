@@ -146,7 +146,7 @@
                                         <div class="d-flex">
 
 
-                                            <span class="symbol-label">{{ $row->cost }}</span>
+                                            <span class="symbol-label">{{ money($row->cost) }}</span>
 
                                         </div>
 

@@ -97,7 +97,7 @@ data-kt-ecommerce-category-filter="category_name" >{{ $visaDetail->visa->type->e
 
 <!--begin::Status=-->
 <td class="text-end pe-0">
-<span class="fw-bolder text-dark">{{ $visaDetail->visa_cost ?? '' }} $</span>
+<span class="fw-bolder text-dark">{{ $visaDetail->visa_cost !== null ? money($visaDetail->visa_cost) : '' }}</span>
 </td>
 <!--end::Status=-->
 

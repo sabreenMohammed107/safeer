@@ -99,7 +99,7 @@
 
                             <!--begin::Status=-->
                             <td class="text-end pe-0">
-                                <span class="fw-bolder text-dark">{{ $visaDetail->visa_cost ?? '' }} $</span>
+                                <span class="fw-bolder text-dark">{{ $visaDetail->visa_cost !== null ? money($visaDetail->visa_cost) : '' }}</span>
                             </td>
                             <!--end::Status=-->
                             <td class="text-end pe-0">
@@ -176,7 +176,7 @@
                                                                 @foreach ($visas as $visa)
                                                                     <option value="{{ $visa->id }}"
                                                                         {{ $visaDetail->visa_id == $visa->id ? 'selected' : '' }}>
-                                                                        {{ $visa->country->en_country ?? '' }}{{ $visa->type->en_type ?? '' }}{{ $visa->nationality->en_nationality ?? '' }}{{ $visa->cost }}
+                                                                        {{ $visa->country->en_country ?? '' }}{{ $visa->type->en_type ?? '' }}{{ $visa->nationality->en_nationality ?? '' }}{{ money($visa->cost) }}
                                                                         {{-- @isset($visa->country)
                                             @php
 

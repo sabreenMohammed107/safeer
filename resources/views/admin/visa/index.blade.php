@@ -135,7 +135,7 @@
 
          <!--begin::Price=-->
          <td class="text-end pe-0">
-            <span class="fw-bolder text-dark">{{ $row->cost ?? '' }}</span>
+            <span class="fw-bolder text-dark">{{ $row->cost !== null ? money($row->cost) : '' }}</span>
         </td>
         <!--end::Price=-->
         <td class="text-end pe-0">

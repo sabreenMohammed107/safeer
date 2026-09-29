@@ -25,6 +25,11 @@ class OrderNotification extends Mailable
             'order_details.visa_details',
         ]);
         $this->cost = $cost;
+
+        // Must be set here, not in build(): Mailable::render()/send() read
+        // $this->locale to decide the active locale *before* build() runs,
+        // so calling ->locale() inside build() is always one step too late.
+        $this->locale(app()->getLocale());
     }
 
     /**
@@ -34,7 +39,7 @@ class OrderNotification extends Mailable
      */
     public function build()
     {
-        return $this->subject('New Order Confirmation - Order #' . $this->order->id)
+        return $this->subject(__('emails.order_subject', ['id' => $this->order->id]))
             ->view('emails.order')
             ->with([
                 'order' => $this->order,

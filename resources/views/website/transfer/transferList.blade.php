@@ -83,15 +83,15 @@
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                                         <span>
                                             <p style="margin-bottom:0"><a href=""
-                                                    style="color:#1C4482;font-weight: 700"> $
-                                                    {{ number_format($HRec->person_price, 2) }} </a>
+                                                    style="color:#1C4482;font-weight: 700">
+                                                    {{ money($HRec->person_price) }} </a>
                                                 {{ __('links.drCost') }} </p>
                                         </span>
                                     @else
                                         <span>
                                             <p style="margin-bottom:0"> {{ __('links.drCost') }} <a href=""
-                                                    style="color:#1C4482;font-weight: 700"> $
-                                                    {{ number_format($HRec->person_price, 2) }} </a> </p>
+                                                    style="color:#1C4482;font-weight: 700">
+                                                    {{ money($HRec->person_price) }} </a> </p>
                                         </span>
                                     @endif
 
@@ -218,15 +218,15 @@
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                                         <span>
                                             <p style="margin-bottom:0"><a href=""
-                                                    style="color:#1C4482;font-weight: 700"> $
-                                                    {{ number_format($HPrice->person_price, 2) }} </a>
+                                                    style="color:#1C4482;font-weight: 700">
+                                                    {{ money($HPrice->person_price) }} </a>
                                                 {{ __('links.drCost') }} </p>
                                         </span>
                                     @else
                                         <span>
                                             <p style="margin-bottom:0"> {{ __('links.drCost') }} <a href=""
-                                                    style="color:#1C4482;font-weight: 700"> $
-                                                    {{ number_format($HPrice->person_price, 2) }} </a> </p>
+                                                    style="color:#1C4482;font-weight: 700">
+                                                    {{ money($HPrice->person_price) }} </a> </p>
                                         </span>
                                     @endif
 
@@ -351,15 +351,15 @@
                                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                                         <span>
                                             <p style="margin-bottom:0"><a href=""
-                                                    style="color:#1C4482;font-weight: 700"> $
-                                                    {{ number_format($HAlpha->person_price, 2) }} </a>
+                                                    style="color:#1C4482;font-weight: 700">
+                                                    {{ money($HAlpha->person_price) }} </a>
                                                 {{ __('links.drCost') }} </p>
                                         </span>
                                     @else
                                         <span>
                                             <p style="margin-bottom:0"> {{ __('links.drCost') }} <a href=""
-                                                    style="color:#1C4482;font-weight: 700"> $
-                                                    {{ number_format($HAlpha->person_price, 2) }} </a> </p>
+                                                    style="color:#1C4482;font-weight: 700">
+                                                    {{ money($HAlpha->person_price) }} </a> </p>
                                         </span>
                                     @endif
 

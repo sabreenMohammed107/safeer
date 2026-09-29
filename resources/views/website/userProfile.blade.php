@@ -313,7 +313,7 @@
                                                                     </p>
                                                                     <div class="price">
                                                                         <span class="hotels_price"><span
-                                                                                style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> $ {{ $fav->tour->tour_person_cost }}</span>
+                                                                                style="color:#5f5858;font-size: 16px;font-weight: 300">{{ __('links.start') }}</span> {{ money($fav->tour->tour_person_cost) }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -366,7 +366,7 @@
                                                                         @endif
                                                                         -
                                                                         <span>
-                                                                            {{ $fav->offer->cost }} $
+                                                                            {{ money($fav->offer->cost) }}
                                                                         </span>
                                                                     </p>
                                                                 </div>
@@ -435,7 +435,7 @@
                                                         <td>{{ $order->order->adults_count }}</td>
                                                         <td>{{ $order->order->children_count }}</td>
                                                         <td>{{ $order->order->rooms_count }}</td>
-                                                        <td>{{ $order->total_cost }}</td>
+                                                        <td>{{ money($order->total_cost) }}</td>
                                                       </tr>
                                                     @endforeach
 

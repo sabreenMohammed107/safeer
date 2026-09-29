@@ -53,7 +53,7 @@
                                         @endif</h6>
                                     <span></span>
                                 </div>
-                                <span> {{$mainOffer->cost}} $</span>
+                                <span> {{ money($mainOffer->cost) }}</span>
                                 <button class="btn">
                                     <a href="{{ LaravelLocalization::localizeUrl('/offers') }}">
                                         @if(LaravelLocalization::getCurrentLocale() === 'en')
@@ -95,7 +95,7 @@
                                             @endif
                                         </span>
                                         <span>
-                                            {{$offer->cost}} $
+                                            {{ money($offer->cost) }}
                                         </span>
                                     </div>
 
@@ -204,7 +204,7 @@
                                     <span> {{$Hotel->hotel->details_enaddress}} </span>
                                 </div>
                                 <div class="price">
-                                    <span>$ 140 </span>
+                                    <span>{{ money(140) }}</span>
                                     <span>/{{ __('links.nights') }}</span>
                                 </div>
                             </div>

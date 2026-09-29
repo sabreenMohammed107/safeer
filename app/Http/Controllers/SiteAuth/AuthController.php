@@ -336,7 +336,7 @@ class AuthController extends Controller
         // resubmitted via a browser refresh/back-button, which previously
         // let a user re-trigger the send just by staying on the page.
         return redirect()->route('siteLogin')
-            ->with('session-success', __('If an account exists for that email, a reset link has been sent.'));
+            ->with('session-success', __('links.reset_link_sent'));
 
     }
 
@@ -357,14 +357,14 @@ public function resetPassword(Request $request)
         ->first();
 
     if (!$reset) {
-        return back()->with('session-danger', 'Invalid or expired reset token.');
+        return back()->with('session-danger', __('links.invalid_or_expired_reset_token'));
     }
 
     $expiryMinutes = config('auth.passwords.users.expire', 60);
     if (now()->diffInMinutes($reset->created_at) > $expiryMinutes) {
         \DB::table('password_resets')->where('email', $request->email)->delete();
 
-        return back()->with('session-danger', 'Invalid or expired reset token.');
+        return back()->with('session-danger', __('links.invalid_or_expired_reset_token'));
     }
 
     // Reset the password
@@ -375,7 +375,7 @@ public function resetPassword(Request $request)
     // Delete the reset token
     \DB::table('password_resets')->where('email', $request->email)->delete();
 
-    return redirect()->route('siteLogin')->with('session-success', 'Password has been reset successfully.');
+    return redirect()->route('siteLogin')->with('session-success', __('links.password_reset_success'));
 }// Handle password update
 public function updatePassword(Request $request)
 {
