@@ -5,12 +5,9 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tour-details.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel-details.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/tour-gallery.css') }}">
     <style>
-        #next,
-        #previous {
-            display: none;
-        }
-
         .avaliable span>a {
 
             cursor: pointer;
@@ -184,24 +181,89 @@
     <section class="container details_section">
         <div class="row mx-0">
             @if (count($TourGallery))
+                @php
+                    $isRtl = LaravelLocalization::getCurrentLocale() !== 'en';
+                    $tourName = $isRtl ? $Tour->ar_name : $Tour->en_name;
+                    $hasMany = count($TourGallery) > 1;
+                @endphp
                 <div class="col-sm-12 col-xl-6">
-                    <div class="row mx-0 left_side_imgages">
-                        <div class="col-12 d-flex align-items-center justify-content-center image_cover ">
-                            <img id="mainImage" src="{{ asset('uploads/galleries') }}/{{ $TourGallery[0]->img ?? ' ' }}"
-                                class="w-100 mb-3" alt=" tour hotel image " />
-                            <button id="previous"> <i class="fa-solid fa-angle-left"></i></button>
-                            <button id="next"> <i class="fa-solid fa-angle-right"></i></button>
-                        </div>
-                        <div class="col-12">
-                            <div id="divId" onclick="changeImageOnClick(event)">
-                                @for ($i = 1; $i < 4; $i++)
-                                    @if (count($TourGallery) > $i)
-                                        <img class="imgStyle col-4"
-                                            src="{{ asset('uploads/galleries') }}/{{ $TourGallery[$i]->img ?? ' ' }}"
-                                            alt=" tour hotel image " />
-                                    @endif
-                                @endfor
+                    <div class="tour-gallery {{ $hasMany ? '' : 'is-single' }}" dir="{{ $isRtl ? 'rtl' : 'ltr' }}">
+                        <div class="swiper tour-gallery__main" id="tourGalleryMain">
+                            <div class="swiper-wrapper">
+                                @foreach ($TourGallery as $image)
+                                    <div class="swiper-slide">
+                                        <img src="{{ asset('uploads/galleries') }}/{{ $image->img }}"
+                                            alt="{{ $tourName }} - {{ $loop->iteration }}"
+                                            @if (!$loop->first) loading="lazy" @endif />
+                                    </div>
+                                @endforeach
                             </div>
+
+                            @if ($hasMany)
+                                <button type="button" class="tour-gallery__nav tour-gallery__nav--prev"
+                                    aria-label="{{ $isRtl ? 'الصورة السابقة' : 'Previous image' }}">
+                                    <i class="fa-solid {{ $isRtl ? 'fa-angle-right' : 'fa-angle-left' }}"></i>
+                                </button>
+                                <button type="button" class="tour-gallery__nav tour-gallery__nav--next"
+                                    aria-label="{{ $isRtl ? 'الصورة التالية' : 'Next image' }}">
+                                    <i class="fa-solid {{ $isRtl ? 'fa-angle-left' : 'fa-angle-right' }}"></i>
+                                </button>
+                                <div class="tour-gallery__counter"></div>
+                                <div class="tour-gallery__progress"><span></span></div>
+                            @endif
+                            <button type="button" class="tour-gallery__expand"
+                                aria-label="{{ $isRtl ? 'عرض الصور بملء الشاشة' : 'View fullscreen' }}">
+                                <i class="fa-solid fa-expand"></i>
+                            </button>
+                        </div>
+
+                        @if ($hasMany)
+                            <div class="swiper tour-gallery__thumbs" id="tourGalleryThumbs">
+                                <div class="swiper-wrapper">
+                                    @foreach ($TourGallery as $image)
+                                        <div class="swiper-slide">
+                                            <img src="{{ asset('uploads/galleries') }}/{{ $image->img }}"
+                                                alt="" loading="lazy" />
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    {{-- fullscreen popup (moved to <body> by JS) --}}
+                    <div class="tour-lightbox" id="tourLightbox" dir="{{ $isRtl ? 'rtl' : 'ltr' }}" role="dialog"
+                        aria-modal="true" aria-label="{{ $tourName }}" aria-hidden="true">
+                        <div class="tour-lightbox__dialog">
+                        <div class="tour-lightbox__bar">
+                            <span class="tour-lightbox__counter"></span>
+                            <button type="button" class="tour-lightbox__close"
+                                aria-label="{{ $isRtl ? 'إغلاق' : 'Close' }}">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="swiper tour-lightbox__swiper" id="tourLightboxSwiper">
+                            <div class="swiper-wrapper">
+                                @foreach ($TourGallery as $image)
+                                    <div class="swiper-slide">
+                                        <div class="swiper-zoom-container">
+                                            <img src="{{ asset('uploads/galleries') }}/{{ $image->img }}"
+                                                alt="{{ $tourName }} - {{ $loop->iteration }}" loading="lazy" />
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @if ($hasMany)
+                            <button type="button" class="tour-gallery__nav tour-lightbox__nav--prev"
+                                aria-label="{{ $isRtl ? 'الصورة السابقة' : 'Previous image' }}">
+                                <i class="fa-solid {{ $isRtl ? 'fa-angle-right' : 'fa-angle-left' }}"></i>
+                            </button>
+                            <button type="button" class="tour-gallery__nav tour-lightbox__nav--next"
+                                aria-label="{{ $isRtl ? 'الصورة التالية' : 'Next image' }}">
+                                <i class="fa-solid {{ $isRtl ? 'fa-angle-left' : 'fa-angle-right' }}"></i>
+                            </button>
+                        @endif
                         </div>
                     </div>
                 </div>
@@ -947,10 +1009,123 @@
 
 
 @section('adds_js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
     <script>
-        // document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
+            var gallery = document.querySelector('.tour-gallery');
+            if (!gallery || typeof Swiper === 'undefined') return;
 
-        // });
+            var isSingle = gallery.classList.contains('is-single');
+            var counter = gallery.querySelector('.tour-gallery__counter');
+            var progressBar = gallery.querySelector('.tour-gallery__progress');
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            var thumbs = isSingle ? null : new Swiper('#tourGalleryThumbs', {
+                slidesPerView: 'auto',
+                spaceBetween: 10,
+                freeMode: true,
+                watchSlidesProgress: true,
+            });
+
+            var formatCount = function(swiper) {
+                return (swiper.realIndex + 1) + ' / ' + swiper.slides.length;
+            };
+
+            var main = new Swiper('#tourGalleryMain', {
+                speed: 600,
+                rewind: true,
+                grabCursor: !isSingle,
+                allowTouchMove: !isSingle,
+                keyboard: { enabled: !isSingle, onlyInViewport: true },
+                navigation: isSingle ? false : {
+                    prevEl: gallery.querySelector('.tour-gallery__nav--prev'),
+                    nextEl: gallery.querySelector('.tour-gallery__nav--next'),
+                },
+                thumbs: thumbs ? { swiper: thumbs } : undefined,
+                autoplay: (isSingle || reduceMotion) ? false : {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                },
+                on: {
+                    init: function(swiper) { if (counter) counter.textContent = formatCount(swiper); },
+                    slideChange: function(swiper) { if (counter) counter.textContent = formatCount(swiper); },
+                    autoplayTimeLeft: function(swiper, time, progress) {
+                        progressBar.style.setProperty('--tg-progress', 1 - progress);
+                    },
+                },
+            });
+
+            if (progressBar && reduceMotion) progressBar.hidden = true;
+
+            /* ---------- fullscreen popup ---------- */
+            var lightbox = document.getElementById('tourLightbox');
+            // move to <body> so no transformed ancestor can break position:fixed
+            document.body.appendChild(lightbox);
+            var lbCounter = lightbox.querySelector('.tour-lightbox__counter');
+            var lastFocused = null;
+
+            var lb = new Swiper('#tourLightboxSwiper', {
+                speed: 400,
+                rewind: true,
+                zoom: { maxRatio: 3 },
+                keyboard: { enabled: false },
+                allowTouchMove: !isSingle,
+                navigation: isSingle ? false : {
+                    prevEl: lightbox.querySelector('.tour-lightbox__nav--prev'),
+                    nextEl: lightbox.querySelector('.tour-lightbox__nav--next'),
+                },
+                on: {
+                    init: function(swiper) { lbCounter.textContent = formatCount(swiper); },
+                    slideChange: function(swiper) { lbCounter.textContent = formatCount(swiper); },
+                    click: function(swiper, e) {
+                        // clicking the dark area around the photo closes the popup
+                        if (e.target.tagName !== 'IMG') closeLightbox();
+                    },
+                },
+            });
+
+            function openLightbox() {
+                if (lightbox.classList.contains('is-open')) return;
+                lastFocused = document.activeElement;
+                lb.update();
+                lb.slideTo(main.realIndex, 0);
+                lightbox.classList.add('is-open');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                if (main.autoplay) main.autoplay.stop();
+                main.keyboard.disable();
+                lb.keyboard.enable();
+                lightbox.querySelector('.tour-lightbox__close').focus();
+            }
+
+            function closeLightbox() {
+                if (!lightbox.classList.contains('is-open')) return;
+                lb.zoom.out();
+                lightbox.classList.remove('is-open');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                lb.keyboard.disable();
+                main.slideTo(lb.realIndex, 0);
+                if (!isSingle) main.keyboard.enable();
+                if (main.params.autoplay.enabled) main.autoplay.start();
+                if (lastFocused) lastFocused.focus();
+            }
+
+            // Swiper's click only fires on a real click, not after a drag;
+            // arrows/expand live inside the slider, so ignore clicks on buttons
+            main.on('click', function(swiper, e) {
+                if (!e.target.closest('button')) openLightbox();
+            });
+            gallery.querySelector('.tour-gallery__expand').addEventListener('click', openLightbox);
+            lightbox.querySelector('.tour-lightbox__close').addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeLightbox();
+            });
+        });
 
 
         $(document).ready(function() {
