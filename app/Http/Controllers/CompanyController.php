@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Contact;
 use App\Models\Newsletter;
+use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
@@ -166,5 +167,45 @@ public function newsletter(){
 
 
     return view($this->viewName . 'newsletter', compact(['contacts']));
+}
+
+/**
+ * Export newsletter subscribers as a CSV file (opens in Excel).
+ * With no `ids` query param, exports every subscriber; with
+ * `ids[]=...`, exports only the selected rows.
+ */
+public function exportNewsletter(Request $request)
+{
+    $ids = $request->query('ids', []);
+
+    $query = Newsletter::orderBy('created_at', 'desc');
+    if (!empty($ids)) {
+        $query->whereIn('id', $ids);
+    }
+    $contacts = $query->get();
+
+    $filename = 'newsletter-subscribers-' . now()->format('Y-m-d-His') . '.csv';
+
+    $headers = [
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+    ];
+
+    $callback = function () use ($contacts) {
+        $file = fopen('php://output', 'w');
+        // UTF-8 BOM so Excel correctly detects encoding instead of mangling non-ASCII emails.
+        fwrite($file, "\xEF\xBB\xBF");
+        fputcsv($file, ['Email', 'Created At']);
+        foreach ($contacts as $row) {
+            $createdAt = optional($row->created_at)->format('Y-m-d H:i:s');
+            // Wrapped as ="..." so Excel treats it as literal text instead of
+            // auto-converting it to its internal date type, which is what
+            // was producing "####" in a narrow column regardless of content.
+            fputcsv($file, [$row->email, '="' . $createdAt . '"']);
+        }
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
 }
 }

@@ -270,7 +270,7 @@ Route::prefix('auth')->name('google.')->group(function () {
     Route::middleware(['is-site-auth'])->group(function () {
         //Route::get("/safeer/test", [AuthController::class, 'testSessions']);
         Route::get("/cart", [BookingController::class, 'Cart'])->name("get_cart");
-        Route::post("/Book", [BookingController::class, 'MakeOrder']);
+        Route::post("/Book", [BookingController::class, 'MakeOrder'])->name('makeOrder');
         Route::get("/cart/visa", [BookingController::class, 'DeleteVisa'])->name("deleteVisa");
         Route::get("/cart/{id}", [BookingController::class, 'DeleteCartItem'])->name("deleteCartItem");
         Route::get("/Safer/OrderPlacement/{id}", [BookingController::class, 'SuccessOrder'])->name("successOrder");
@@ -372,6 +372,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
 
     Route::get('/contact', [CompanyController::class, 'contact'])->name('contact');
     Route::get('/newsletterEmails', [CompanyController::class, 'newsletter'])->name('newsletterEmails');
+    Route::get('/newsletterEmails/export', [CompanyController::class, 'exportNewsletter'])->name('newsletterEmails.export');
     //branch
     Route::resource('branch', CompanyBranchController::class);
 

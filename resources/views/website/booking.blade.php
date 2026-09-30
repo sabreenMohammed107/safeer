@@ -76,7 +76,7 @@
         <!-- passenger details -->
         <section class="passenger_section container">
             <h5> {{ __('links.cartDetails') }} </h5>
-            <form action="{{ url('/Book') }}" method="POST">
+            <form action="{{ LaravelLocalization::getLocalizedURL($localVar, route('makeOrder')) }}" method="POST">
                 <div class="row mx-0">
                     @if ($RoomCost)
                         <div class="col-12">
@@ -603,13 +603,13 @@
                                                         <h5>{{ __('links.tours') }} </h5>
                                                         <p class="mb-0 pb-0">
                                                             @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                {{ $Tour->private_number  }}
+                                                                {{ $Tour->private_number }}
                                                                 <span class="">
                                                                     allowed number of people</span><br>
-                                                                @else
-                                                                    {{ $Tour->private_number }}
-                                                                    <span class="">
-                                                                        عدد الأشخاص المسموح</span><br>
+                                                            @else
+                                                                {{ $Tour->private_number }}
+                                                                <span class="">
+                                                                    عدد الأشخاص المسموح</span><br>
                                                             @endif
                                                         </p>
                                                         {{-- <p class="mb-0 pb-0">
@@ -1021,7 +1021,7 @@
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
                                             Visa Applications Details
                                         @else
-                                            تفاصيل طلبات التاشيرات
+                                            تفاصيل طلبات التأشيرات
                                         @endif
                                     </h4>
                                 </div>
@@ -1127,7 +1127,7 @@
                                             @if (LaravelLocalization::getCurrentLocale() === 'en')
                                                 Visa Application Receipt
                                             @else
-                                                ايصال التاشيرات
+                                                ايصال التأشيرات
                                             @endif
                                         </p>
                                         <div class="booking_info_card">
@@ -1150,7 +1150,8 @@
 
                                                 <br>
                                                 <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                                                    <span class=" text-end fw-bold">{{ money($TotalVisasCost) }}</span><br>
+                                                    <span
+                                                        class=" text-end fw-bold">{{ money($TotalVisasCost) }}</span><br>
                                                 </p>
                                                 <br>
                                                 <div class="grand_total">
@@ -1196,13 +1197,13 @@
                                     @endif
 
                                     @if (isset($Tour) && $Tour->tour_type_id == 1)
-                                    <span
-                                    class="float-end text-end BeforeT_txt">{{ money($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) }}
-                                </span>
+                                        <span
+                                            class="float-end text-end BeforeT_txt">{{ money($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) }}
+                                        </span>
                                     @else
-                                    <span
-                                        class="float-end text-end BeforeT_txt">{{ money($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) }}
-                                    </span>
+                                        <span
+                                            class="float-end text-end BeforeT_txt">{{ money($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) }}
+                                        </span>
                                     @endif
                                     <br>
                                 </p>
@@ -1215,87 +1216,88 @@
                                     @endif
                                     <span class="float-end text-end">
                                         @if (isset($Tour) && $Tour->tour_type_id == 1)
-                                        <span
-                                        class="BeforeT_txt">{{ money($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) }}</span>
+                                            <span
+                                                class="BeforeT_txt">{{ money($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) }}</span>
+                                            X {{ (float) $tax_percentage / 100 }} <br> <span
+                                                class="fw-bold AfterT_txt">{{ money((float) ($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}</span>
+                                    </span><br>
+                                    <input type="hidden" name="BeforeT"
+                                        value="{{ number_format((float) ($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost), 2, '.', '') }}" />
+                                @else
+                                    <span
+                                        class="BeforeT_txt">{{ money($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) }}</span>
                                     X {{ (float) $tax_percentage / 100 }} <br> <span
-                                        class="fw-bold AfterT_txt">{{ money((float) ($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}</span></span><br>
-                                <input type="hidden" name="BeforeT"
-                                    value="{{ number_format((float) ($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost), 2, '.', '') }}" />
-                                        @else
-                                        <span
-                                            class="BeforeT_txt">{{ money($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) }}</span>
-                                        X {{ (float) $tax_percentage / 100 }} <br> <span
-                                            class="fw-bold AfterT_txt">{{ money((float) ($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}</span></span><br>
+                                        class="fw-bold AfterT_txt">{{ money((float) ($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}</span></span><br>
                                     <input type="hidden" name="BeforeT"
                                         value="{{ number_format((float) ($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost), 2, '.', '') }}" />
-                               @endif
-                                    </p>
-                                <br />
-                            </div>
-                            <div class="grand_total final">
-                                <h5>
-                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                        grand total
-                                    @else
-                                        المجموع الإجمالي
-                                    @endif
-                                </h5>
-                                <span id="gt" class="AfterT_txt">
-                                    @if (isset($Tour) && $Tour->tour_type_id == 1)
-                                    {{ money(($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}
-                                </span>
-                                    @else
-                                    {{ money(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="my-3 px-3">
-                            <div class="row">
+    @endif
+    </p>
+    <br />
+    </div>
+    <div class="grand_total final">
+        <h5>
+            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                grand total
+            @else
+                المجموع الإجمالي
+            @endif
+        </h5>
+        <span id="gt" class="AfterT_txt">
+            @if (isset($Tour) && $Tour->tour_type_id == 1)
+                {{ money(($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}
+        </span>
+    @else
+        {{ money(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}
+        </span>
+        @endif
+    </div>
+    </div>
+    </div>
+    <div class="col-12">
+        <div class="my-3 px-3">
+            <div class="row">
 
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input terms" style="float:none" required type="checkbox"
-                                        value="" id="flexCheckChecked">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                            I agree to all <a href="{{ LaravelLocalization::localizeUrl('/terms') }}"
-                                                target="_blank">Terms and
-                                                Conditions</a> of Safer
-                                        @else
-                                            أوافق على جميع <a href="{{ LaravelLocalization::localizeUrl('/terms') }}"
-                                                target="_blank"> بنود وشروط
-                                            </a> Safer
-                                        @endif
-                                    </label>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-info">
-                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                            Place Order
-                                        @else
-                                            استكمال الطلب
-                                        @endif
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input terms" style="float:none" required type="checkbox" value=""
+                        id="flexCheckChecked">
+                    <label class="form-check-label" for="flexCheckChecked">
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            I agree to all <a href="{{ LaravelLocalization::localizeUrl('/terms') }}"
+                                target="_blank">Terms and
+                                Conditions</a> of Safer
+                        @else
+                            أوافق على جميع <a href="{{ LaravelLocalization::localizeUrl('/terms') }}" target="_blank">
+                                بنود وشروط
+                            </a> Safer
+                        @endif
+                    </label>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-info">
+                        @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            Place Order
+                        @else
+                            استكمال الطلب
+                        @endif
+                    </button>
                 </div>
 
-            </form>
-
-        </section>
-    @else
-        <div class="container bg-light-info text-center p-5">
-            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                Nothing is Added to cart
-            @else
-                لا شىء مضاف الى عربة التسوق
-            @endif
+            </div>
         </div>
+    </div>
+    </div>
+
+    </form>
+
+    </section>
+@else
+    <div class="container bg-light-info text-center p-5">
+        @if (LaravelLocalization::getCurrentLocale() === 'en')
+            Nothing is Added to cart
+        @else
+            لا شىء مضاف الى عربة التسوق
+        @endif
+    </div>
     @endif
 @endsection
 

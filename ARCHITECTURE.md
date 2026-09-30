@@ -2,7 +2,7 @@
 
 > **Purpose:** This file is the canonical reference for the safer.travel codebase. It is meant to be read by Claude (and any dev) at the start of future sessions so the project's structure, routes, and known issues don't need to be re-explained. Keep it updated as the project evolves — treat drift here as a bug.
 >
-> Last verified against the codebase: 2026-09-14 (branch `main`, commit `28ecc47`).
+> Last verified against the codebase: 2026-09-30 (branch `feature/client-updates`) — email localization, `AppServiceProvider`'s `$localVar` composer fix, and the `/Book` route-name addition were verified directly against the code at that point; the rest of this file predates that and may have drifted further.
 
 ---
 
@@ -22,7 +22,7 @@
 | Auth (public site) | **Custom, parallel** session-based auth — not Laravel's `Auth` facade. Login/register/logout handled by `App\Http\Controllers\SiteAuth\AuthController`, session key `SiteUser`, model `App\Models\SiteUser`, guarded by `is-site-auth` / `prevent-relogin` middleware |
 | Social login | `laravel/socialite` — Google (`SiteAuth\GoogleController`) and Facebook (`SiteAuth\FaceBookController`) |
 | Localization | `mcamara/laravel-localization` — locale prefix routing, `en`/`ar` supported, translations in `resources/lang/{en,ar}/*.php` |
-| Mail | SMTP (`MAIL_MAILER=smtp` in `.env`) — no Mailgun/Postmark/SES actually configured (those are Laravel defaults left unused); Blade mail views in `resources/views/emails/` (`order`, `newsLetter`, `password_reset`) |
+| Mail | SMTP (`MAIL_MAILER=smtp` in `.env`) — no Mailgun/Postmark/SES actually configured (those are Laravel defaults left unused); Blade mail views in `resources/views/emails/` (`layout` — shared branded wrapper, RTL-aware; `order`, `newsLetter`, `password_reset`, `admin_password_reset`); site-facing ones render in the requester's active locale (`resources/lang/{en,ar}/emails.php`) — see §5 |
 | Captcha | `mews/captcha` (used on contact/register forms) |
 | QR codes | `simplesoftwareio/simple-qrcode` |
 | Third-party data services | **No Airtable integration found in the codebase.** All data is local MySQL via Eloquent — do not assume Airtable is wired in unless it's added later. |
@@ -126,7 +126,7 @@ All public routes are wrapped in a locale-prefixed group (`LaravelLocalization::
 | User profile (site) | `GET /safer/profile/{id}` (auth: `is-site-auth`) | `AuthController@profile` (name `siteProfile`) |
 | Update profile | `POST /safer/updateProfile` | `AuthController@updateProfile` |
 | Cart | `GET /cart` (auth: `is-site-auth`) | `BookingController@Cart` (name `get_cart`) |
-| Place order | `POST /Book` (auth: `is-site-auth`) | `BookingController@MakeOrder` |
+| Place order | `POST /Book` (auth: `is-site-auth`, route name `makeOrder`) | `BookingController@MakeOrder` |
 | Order confirmation | `GET /Safer/OrderPlacement/{id}` (auth: `is-site-auth`) | `BookingController@SuccessOrder` (name `successOrder`) → `website.bookingSuccess` view |
 | Room booking | `GET /safer/room/{id}/book/{cap}` | `BookingController@BookRoom` (name `bookRoom`) |
 | Terms | `GET /terms` | `MainController@terms` |
@@ -178,6 +178,8 @@ Plus non-resource admin endpoints: order-editing AJAX actions (`EditTourDetails`
 - Site-auth-gated public routes use `is-site-auth` middleware, **not** `auth`.
 - Admin-only routes use `auth` + `user-access:admin`.
 - Check `Company::first()` for any site-wide settings (contact info, WhatsApp number, social links) rather than hardcoding.
+- **Never use `url('/path')` for a form `action` or link that must respect the current locale** — it just concatenates `APP_URL` with a literal path and never consults routing, so it always generates the unprefixed (default-locale) URL regardless of what locale the page is displaying. Use a named route instead: `route('name')` alone is already locale-safe (it resolves against whatever prefix was registered for the *current* request), or wrap it in `LaravelLocalization::getLocalizedURL($localVar, route('name'))` to match the dominant existing pattern. `$localVar` is supplied globally to every view via a `View::composer('*', ...)` in `AppServiceProvider::boot()` — it must stay a composer, not a `View::share()`, because provider `boot()` runs before `RouteServiceProvider` loads `routes/web.php` (where the locale is actually detected from the URL prefix), so anything computed directly in `boot()` is always stale. This exact bug (`url('/Book')` in `booking.blade.php`) caused order-confirmation emails to always send in English regardless of site language — see `tests/Feature/LocaleAwareLinksTest.php` and `EmailLocalizationAuditTest.php` for the regression coverage.
+- All 4 outgoing site emails (password reset, order confirmation, newsletter signup, contact form) render in the locale active when the triggering request was made, via each Mailable's constructor calling `$this->locale(app()->getLocale())` — this **must** happen in the constructor, not in `build()`; `Mailable::render()`/`send()` read `$this->locale` *before* invoking `build()`, so setting it there silently has no effect. `App\Mail\AdminPasswordResetMail` (admin dashboard password reset) is the one exception — intentionally English-only, since `/dashboard` routes sit outside the locale-prefixed group and the admin panel has no language switcher.
 
 ---
 

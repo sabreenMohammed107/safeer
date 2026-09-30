@@ -58,12 +58,12 @@
                 <!--end::Card title-->
                 <!--begin::Card toolbar-->
                 <div class="card-toolbar">
-                    <!--begin::Add customer-->
-                      <!--begin::Add product-->
-                                        {{-- <a href="{{ route('blogs.create') }}" class="btn btn-primary">Add Blog</a> --}}
-                                        <!--end::Add product-->
-
-                    <!--end::Add customer-->
+                    <a href="{{ route('newsletterEmails.export') }}" class="btn btn-light-primary me-2">
+                        Export All
+                    </a>
+                    <button type="button" id="exportSelectedBtn" class="btn btn-primary">
+                        Export Selected
+                    </button>
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -99,7 +99,7 @@
 
     <td>
         <div class="form-check form-check-sm form-check-custom form-check-solid">
-            <input class="form-check-input" type="checkbox" value="1" />
+            <input class="form-check-input newsletter-row-checkbox" type="checkbox" value="{{ $row->id }}" />
         </div>
     </td>
     <td class="text-start pe-0" data-order="15">
@@ -130,3 +130,21 @@
 <!--end::Post-->
 @endsection
 
+@section('scripts')
+    <script>
+        document.getElementById('exportSelectedBtn').addEventListener('click', function () {
+            var ids = Array.prototype.map.call(
+                document.querySelectorAll('.newsletter-row-checkbox:checked'),
+                function (checkbox) { return checkbox.value; }
+            );
+
+            if (ids.length === 0) {
+                alert('Please select at least one row to export.');
+                return;
+            }
+
+            var params = ids.map(function (id) { return 'ids[]=' + encodeURIComponent(id); }).join('&');
+            window.location.href = "{{ route('newsletterEmails.export') }}?" + params;
+        });
+    </script>
+@endsection
