@@ -400,6 +400,9 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::post('EditTransDetails', [UsersOrderController::class, 'EditTransDetails'])->name('EditTransDetails');
 
     Route::post('EditVisaDetails', [UsersOrderController::class, 'EditVisaDetails'])->name('EditVisaDetails');
+    Route::get('visa-details/{visaDetail}/download/{field}', [UsersOrderController::class, 'downloadVisaImage'])
+        ->name('visaDetails.download')
+        ->where('field', 'passport|personal');
 //receiptSave
 Route::post('receiptSave', [UsersOrderController::class, 'receiptSave'])->name('receiptSave');
 

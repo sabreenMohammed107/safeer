@@ -429,6 +429,31 @@ class UsersOrderController extends Controller
         return redirect()->back()->with('flash_del', 'Visa Details Updated Successfully!');
     }
 
+    /**
+     * Force-download a visa applicant's passport or personal photo.
+     *
+     * The stored filename is a random hash generated on upload (no original
+     * filename is kept), so the download is given a readable name instead —
+     * "passport-visa-{id}.{ext}" / "personal-photo-visa-{id}.{ext}" — while
+     * preserving the real file extension.
+     */
+    public function downloadVisaImage(VisaDetails $visaDetail, string $field)
+    {
+        $filename = $field === 'passport'
+            ? $visaDetail->visa_passport_photo
+            : $visaDetail->visa_personal_photo;
+
+        abort_if(empty($filename), 404);
+
+        $path = public_path('uploads/visas/' . $filename);
+        abort_unless(file_exists($path), 404);
+
+        $label = $field === 'passport' ? 'passport' : 'personal-photo';
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $downloadName = "{$label}-visa-{$visaDetail->id}." . $extension;
+
+        return response()->download($path, $downloadName);
+    }
 
     public function updateStatus(Request $request)
     {

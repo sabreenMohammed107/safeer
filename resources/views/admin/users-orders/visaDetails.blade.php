@@ -50,14 +50,23 @@ value="1" />
  <!--end::Checkbox-->
  <td>
     <!--begin:: Avatar -->
-    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-        <a href="#">
-            <div class="symbol-label fs-3 bg-light-danger text-danger">
-                <img src="{{ asset('uploads/visas') }}/{{ $visaDetail->visa_passport_photo }}"
-                    class="w-100" alt="">
+    @if ($visaDetail->visa_passport_photo)
+        <div class="d-flex align-items-center gap-2">
+            <div class="symbol symbol-circle symbol-50px overflow-hidden">
+                <a href="#" class="image-preview-trigger" data-full-src="{{ asset('uploads/visas') }}/{{ $visaDetail->visa_passport_photo }}"
+                    data-title="Passport Image">
+                    <div class="symbol-label fs-3 bg-light-danger text-danger">
+                        <img src="{{ asset('uploads/visas') }}/{{ $visaDetail->visa_passport_photo }}"
+                            class="w-100" alt="Passport">
+                    </div>
+                </a>
             </div>
-        </a>
-    </div>
+            <a href="{{ route('visaDetails.download', ['visaDetail' => $visaDetail->id, 'field' => 'passport']) }}"
+                class="btn btn-icon btn-sm btn-light-primary" title="Download passport image">
+                <i class="bi bi-download"></i>
+            </a>
+        </div>
+    @endif
     <!--end::Avatar-->
 </td>
 <!--begin::Category=-->
@@ -75,14 +84,23 @@ data-kt-ecommerce-category-filter="category_name" >{{ $visaDetail->visa->type->e
 </td>
 <td>
     <!--begin:: Avatar -->
-    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-        <a href="#">
-            <div class="symbol-label fs-3 bg-light-danger text-danger">
-                <img src="{{ asset('uploads/visas') }}/{{ $visaDetail->visa_personal_photo }}"
-                    class="w-100" alt="">
+    @if ($visaDetail->visa_personal_photo)
+        <div class="d-flex align-items-center gap-2">
+            <div class="symbol symbol-circle symbol-50px overflow-hidden">
+                <a href="#" class="image-preview-trigger" data-full-src="{{ asset('uploads/visas') }}/{{ $visaDetail->visa_personal_photo }}"
+                    data-title="Personal Photo">
+                    <div class="symbol-label fs-3 bg-light-danger text-danger">
+                        <img src="{{ asset('uploads/visas') }}/{{ $visaDetail->visa_personal_photo }}"
+                            class="w-100" alt="Personal photo">
+                    </div>
+                </a>
             </div>
-        </a>
-    </div>
+            <a href="{{ route('visaDetails.download', ['visaDetail' => $visaDetail->id, 'field' => 'personal']) }}"
+                class="btn btn-icon btn-sm btn-light-primary" title="Download personal photo">
+                <i class="bi bi-download"></i>
+            </a>
+        </div>
+    @endif
     <!--end::Avatar-->
 </td>
 <!--begin::Qty=-->
@@ -207,3 +225,36 @@ data-kt-ecommerce-category-filter="category_name" >{{$order->holder_salutation ?
 </div>
 
 </div>
+
+<!--begin::Image preview modal (shared by every thumbnail trigger on this page)-->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imagePreviewModalLabel">Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="imagePreviewModalImg" src="" alt="Preview" class="img-fluid rounded" />
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Image preview modal-->
+
+<script>
+    // Event delegation on document: works for every .image-preview-trigger
+    // on the page without binding a listener per thumbnail.
+    document.addEventListener('click', function (e) {
+        var trigger = e.target.closest('.image-preview-trigger');
+        if (!trigger) return;
+        e.preventDefault();
+
+        document.getElementById('imagePreviewModalImg').src = trigger.dataset.fullSrc;
+        document.getElementById('imagePreviewModalLabel').textContent = trigger.dataset.title || 'Image Preview';
+
+        var modalEl = document.getElementById('imagePreviewModal');
+        var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+    });
+</script>
