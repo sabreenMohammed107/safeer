@@ -50,25 +50,9 @@
                         <!--begin::Image input wrapper-->
                         <div class="card-body text-center pt-0">
                             <!--begin::Image input-->
-                            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
-                                style="background-image: url('{{ asset('uploads/company') }}/{{ $company->image }}')">
-                                <div class="image-input-wrapper w-150px h-150px"
-                                    style="background-image: url(' {{ asset('uploads/company') }}/{{ $company->image }}')">
-
-                                </div>
-                                <!--end::Preview existing avatar-->
-                                <!--begin::Edit-->
-                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                                    <i class="bi bi-pencil-fill fs-7"></i>
-                                    <!--begin::Inputs-->
-                                    <input type="file" name="image" accept=".png, .jpg, .jpeg" />
-                                    <input type="hidden" name="avatar_remove" />
-                                    <!--end::Inputs-->
-                                </label>
-                                <!--end::Edit-->
-
-                            </div>
+                            @include('admin.partials.image-picker', [
+                                'current' => $company->image ? asset('uploads/company/' . $company->image) : null,
+                            ])
                             <!--end::Image input-->
                         </div>
                         <!--end::Image input wrapper-->
@@ -545,29 +529,10 @@
                                         <div class="d-flex flex-wrap gap-5 mt-4">
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
-                                                <div class="image-input image-input-empty image-input-outline mb-3"
-                                                    data-kt-image-input="true"
-                                                    style="background-image: url('{{ asset('uploads/company') }}/{{ $company->master_page_img_bg }}')">
-                                                    <div class="image-input-wrapper w-150px h-150px"
-                                                        style="background-image: url(' {{ asset('uploads/company') }}/{{ $company->master_page_img_bg }}')">
-
-                                                    </div>
-                                                    <!--end::Preview existing avatar-->
-                                                    <!--begin::Edit-->
-                                                    <label
-                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                                        title="Change avatar">
-                                                        <i class="bi bi-pencil-fill fs-7"></i>
-                                                        <!--begin::Inputs-->
-                                                        <input type="file" name="master_page_img_bg"
-                                                            accept=".png, .jpg, .jpeg" />
-                                                        <input type="hidden" name="avatar_remove" />
-                                                        <!--end::Inputs-->
-                                                    </label>
-                                                    <!--end::Edit-->
-
-                                                </div>
+                                                @include('admin.partials.image-picker', [
+                                                    'name' => 'master_page_img_bg',
+                                                    'current' => $company->master_page_img_bg ? asset('uploads/company/' . $company->master_page_img_bg) : null,
+                                                ])
                                             </div>
                                         </div>
                                         <!--end::Image input-->
@@ -853,13 +818,15 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
                                                 <!--begin::Label-->
-                                                <label for="book_img" class="btn btn-danger"> Book image  </label>
+                                                <label class="form-label">Book image</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                {{ $company->book_img }}
-                                                <input type="file" id="book_img" style="visibility: hidden" name="book_img"
-                                                    class="form-control mb-2" placeholder=""
-                                                    value="{{ $company->book_img }}" />
+                                                <div style="max-width: 300px;">
+                                                    @include('admin.partials.image-picker', [
+                                                        'name' => 'book_img',
+                                                        'current' => $company->book_img ? asset('uploads/company/' . $company->book_img) : null,
+                                                    ])
+                                                </div>
 
 
                                             </div>
@@ -946,13 +913,15 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
                                                 <!--begin::Label-->
-                                                <label for="book_img2" class="btn btn-danger"> Transport image  </label>
+                                                <label class="form-label">Transport image</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                {{ $company->transport_img }}
-                                                <input type="file" id="book_img2" style="visibility: hidden" name="transport_img"
-                                                    class="form-control mb-2" placeholder=""
-                                                    value="{{ $company->transport_img }}" />
+                                                <div style="max-width: 300px;">
+                                                    @include('admin.partials.image-picker', [
+                                                        'name' => 'transport_img',
+                                                        'current' => $company->transport_img ? asset('uploads/company/' . $company->transport_img) : null,
+                                                    ])
+                                                </div>
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Gallery;
 use App\Http\Requests\StoreGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
@@ -12,6 +13,8 @@ use File;
 
 class TourGalleryController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -64,6 +67,8 @@ class TourGalleryController extends Controller
             $attach_image = $request->file('img');
 
             $input['img'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'img', 'galleries')) {
+            $input['img'] = $picked;
         }
         if ($request->has('active')) {
 
@@ -112,6 +117,8 @@ class TourGalleryController extends Controller
             $attach_image = $request->file('img');
 
             $input['img'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'img', 'galleries')) {
+            $input['img'] = $picked;
         }
         if ($request->has('active')) {
 

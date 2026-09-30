@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Offer;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
@@ -10,6 +11,8 @@ use Illuminate\Database\QueryException;
 use File;
 class OfferController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -64,11 +67,15 @@ class OfferController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'offers')) {
+            $input['image'] = $picked;
         }
         if ($request->hasFile('poster_image')) {
             $poster_image = $request->file('poster_image');
 
             $input['poster_image'] = $this->UplaodPoster($poster_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'poster_image', 'offers')) {
+            $input['poster_image'] = $picked;
         }
         if ($request->has('active')) {
 
@@ -128,11 +135,15 @@ class OfferController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'offers')) {
+            $input['image'] = $picked;
         }
         if ($request->hasFile('poster_image')) {
             $poster_image = $request->file('poster_image');
 
             $input['poster_image'] = $this->UplaodPoster($poster_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'poster_image', 'offers')) {
+            $input['poster_image'] = $picked;
         }
         if ($request->has('active')) {
 

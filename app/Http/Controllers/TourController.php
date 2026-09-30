@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Tour;
 use App\Http\Requests\StoreTourRequest;
 use App\Http\Requests\UpdateTourRequest;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\DB;
 
 class TourController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -88,12 +91,16 @@ class TourController extends Controller
                 $attach_image = $request->file('thumbnail');
 
                 $input['thumbnail'] = $this->UplaodImage($attach_image);
+            } elseif ($picked = $this->pickedLibraryImage($request, 'thumbnail', 'tours')) {
+                $input['thumbnail'] = $picked;
             }
 
             if ($request->hasFile('banner')) {
                 $attach_banner = $request->file('banner');
 
                 $input['banner'] = $this->UplaodBanner($attach_banner);
+            } elseif ($picked = $this->pickedLibraryImage($request, 'banner', 'tours')) {
+                $input['banner'] = $picked;
             }
             if ($request->has('active')) {
 
@@ -196,12 +203,16 @@ class TourController extends Controller
                 $attach_image = $request->file('thumbnail');
 
                 $input['thumbnail'] = $this->UplaodImage($attach_image);
+            } elseif ($picked = $this->pickedLibraryImage($request, 'thumbnail', 'tours')) {
+                $input['thumbnail'] = $picked;
             }
 
             if ($request->hasFile('banner')) {
                 $attach_banner = $request->file('banner');
 
                 $input['banner'] = $this->UplaodBanner($attach_banner);
+            } elseif ($picked = $this->pickedLibraryImage($request, 'banner', 'tours')) {
+                $input['banner'] = $picked;
             }
             if ($request->has('active')) {
 

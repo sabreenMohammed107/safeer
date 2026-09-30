@@ -40,24 +40,7 @@
                             </div>
                         </div>
                         <div class="card-body text-center pt-0">
-                            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
-                                style="background-image: url(assets/media/svg/files/blank-image.svg)">
-                                <div class="image-input-wrapper w-150px h-150px"></div>
-                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change photo">
-                                    <i class="bi bi-pencil-fill fs-7"></i>
-                                    <input type="file" name="image" accept=".png, .jpg, .jpeg" />
-                                    <input type="hidden" name="avatar_remove" />
-                                </label>
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel photo">
-                                    <i class="bi bi-x fs-2"></i>
-                                </span>
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove photo">
-                                    <i class="bi bi-x fs-2"></i>
-                                </span>
-                            </div>
+                            @include('admin.partials.image-picker')
                         </div>
                     </div>
                     <!--end::Thumbnail settings-->

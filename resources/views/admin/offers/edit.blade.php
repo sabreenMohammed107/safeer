@@ -50,25 +50,9 @@
         <!--begin::Image input wrapper-->
         <div class="card-body text-center pt-0">
             <!--begin::Image input-->
-            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
-                style="background-image: url('{{ asset('uploads/offers') }}/{{ $offer->image }}')">
-                <div class="image-input-wrapper w-150px h-150px"
-                    style="background-image: url(' {{ asset('uploads/offers') }}/{{ $offer->image }}')">
-
-                </div>
-                <!--end::Preview existing avatar-->
-                <!--begin::Edit-->
-                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                    <i class="bi bi-pencil-fill fs-7"></i>
-                    <!--begin::Inputs-->
-                    <input type="file" name="image" accept=".png, .jpg, .jpeg" />
-                    <input type="hidden" name="avatar_remove" />
-                    <!--end::Inputs-->
-                </label>
-                <!--end::Edit-->
-
-            </div>
+            @include('admin.partials.image-picker', [
+                'current' => $offer->image ? asset('uploads/offers/' . $offer->image) : null,
+            ])
             <!--end::Image input-->
         </div>
         <!--end::Image input wrapper-->
@@ -85,25 +69,10 @@
         <!--begin::Image input wrapper-->
         <div class="card-body text-center pt-0">
             <!--begin::Image input-->
-            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
-                style="background-image: url('{{ asset('uploads/offers') }}/{{ $offer->poster_image }}')">
-                <div class="image-input-wrapper w-150px h-150px"
-                    style="background-image: url(' {{ asset('uploads/offers') }}/{{ $offer->poster_image }}')">
-
-                </div>
-                <!--end::Preview existing avatar-->
-                <!--begin::Edit-->
-                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                    <i class="bi bi-pencil-fill fs-7"></i>
-                    <!--begin::Inputs-->
-                    <input type="file" name="poster_image" accept=".png, .jpg, .jpeg" />
-                    <input type="hidden" name="avatar_remove" />
-                    <!--end::Inputs-->
-                </label>
-                <!--end::Edit-->
-
-            </div>
+            @include('admin.partials.image-picker', [
+                'name' => 'poster_image',
+                'current' => $offer->poster_image ? asset('uploads/offers/' . $offer->poster_image) : null,
+            ])
             <!--end::Image input-->
         </div>
         <!--end::Image input wrapper-->

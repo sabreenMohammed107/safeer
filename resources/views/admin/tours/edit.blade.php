@@ -54,25 +54,10 @@
                              <!--begin::Image input wrapper-->
                         <div class="card-body text-center pt-0">
                             <!--begin::Image input-->
-                            <div class="image-input image-input-empty image-input-outline mb-3" data-kt-image-input="true"
-                                style="background-image: url('{{ asset('uploads/tours') }}/{{ $tour->banner }}')">
-                                <div class="image-input-wrapper w-150px h-150px"
-                                    style="background-image: url(' {{ asset('uploads/tours') }}/{{ $tour->banner }}')">
-
-                                </div>
-                                <!--end::Preview existing avatar-->
-                                <!--begin::Edit-->
-                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                                    <i class="bi bi-pencil-fill fs-7"></i>
-                                    <!--begin::Inputs-->
-                                    <input type="file" name="banner" accept=".png, .jpg, .jpeg" />
-                                    <input type="hidden" name="avatar_remove" />
-                                    <!--end::Inputs-->
-                                </label>
-                                <!--end::Edit-->
-
-                            </div>
+                            @include('admin.partials.image-picker', [
+                                'name' => 'banner',
+                                'current' => $tour->banner ? asset('uploads/tours/' . $tour->banner) : null,
+                            ])
                             <!--end::Image input-->
                         </div>
                         <!--end::Image input wrapper-->

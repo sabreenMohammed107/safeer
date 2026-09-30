@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Explore_city;
 use App\Http\Requests\StoreExplore_cityRequest;
 use App\Http\Requests\UpdateExplore_cityRequest;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 use File;
 class ExploreCityController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -64,6 +67,8 @@ class ExploreCityController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'explore')) {
+            $input['image'] = $picked;
         }
         Explore_city::create($input);
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
@@ -104,6 +109,8 @@ class ExploreCityController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'explore')) {
+            $input['image'] = $picked;
         }
         Explore_city::findOrFail($request->get('explore_id'))->update($input);
         // $specialzation->update($input);

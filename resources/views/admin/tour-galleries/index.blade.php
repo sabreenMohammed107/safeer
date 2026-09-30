@@ -245,31 +245,11 @@
                                                             <!--begin::Image input wrapper-->
                                                             <div class="mt-1">
                                                                 <!--begin::Image input-->
-                                                                <div class="image-input image-input-outline"
-                                                                    data-kt-image-input="true"
-                                                                    style="background-image: url(' {{ asset('uploads/galleries') }}/{{ $row->img }}')">
-                                                                    <!--begin::Preview existing avatar-->
-
-                                                                    <div class="image-input-wrapper w-100px h-100px"
-                                                                        style="background-image: url(' {{ asset('uploads/galleries') }}/{{ $row->img }}')">
-
-                                                                    </div>
-                                                                    <!--end::Preview existing avatar-->
-                                                                    <!--begin::Edit-->
-                                                                    <label
-                                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                                        data-kt-image-input-action="change"
-                                                                        data-bs-toggle="tooltip" title="Change avatar">
-                                                                        <i class="bi bi-pencil-fill fs-7"></i>
-                                                                        <!--begin::Inputs-->
-                                                                        <input type="file" name="img"
-                                                                            accept=".png, .jpg, .jpeg" />
-                                                                        <input type="hidden" name="avatar_remove" />
-                                                                        <!--end::Inputs-->
-                                                                    </label>
-                                                                    <!--end::Edit-->
-
-                                                                </div>
+                                                                @include('admin.partials.image-picker', [
+                                                                    'name' => 'img',
+                                                                    'current' => $row->img ? asset('uploads/galleries/' . $row->img) : null,
+                                                                    'size' => 100,
+                                                                ])
                                                                 <!--end::Image input-->
                                                             </div>
                                                             <!--end::Image input wrapper-->
@@ -437,41 +417,9 @@
                             <!--begin::Card body-->
                             <div class="card-body text-center pt-0">
                                 <!--begin::Image input-->
-                                <div class="image-input image-input-empty image-input-outline mb-3"
-                                    data-kt-image-input="true"
-                                    style="background-image: url(assets/media/svg/files/blank-image.svg)">
-                                    <!--begin::Preview existing avatar-->
-                                    <div class="image-input-wrapper w-150px h-150px"></div>
-                                    <!--end::Preview existing avatar-->
-                                    <!--begin::Label-->
-                                    <label
-                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                        title="Change avatar">
-                                        <i class="bi bi-pencil-fill fs-7"></i>
-                                        <!--begin::Inputs-->
-                                        <input type="file" name="img" accept=".png, .jpg, .jpeg" />
-                                        <input type="hidden" name="avatar_remove" />
-                                        <!--end::Inputs-->
-                                    </label>
-                                    <!--end::Label-->
-                                    <!--begin::Cancel-->
-                                    <span
-                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                        data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
-                                        title="Cancel avatar">
-                                        <i class="bi bi-x fs-2"></i>
-                                    </span>
-                                    <!--end::Cancel-->
-                                    <!--begin::Remove-->
-                                    <span
-                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                        data-kt-image-input-action="remove" data-bs-toggle="tooltip"
-                                        title="Remove avatar">
-                                        <i class="bi bi-x fs-2"></i>
-                                    </span>
-                                    <!--end::Remove-->
-                                </div>
+                                @include('admin.partials.image-picker', [
+                                    'name' => 'img',
+                                ])
                                 <!--end::Image input-->
 
                             </div>

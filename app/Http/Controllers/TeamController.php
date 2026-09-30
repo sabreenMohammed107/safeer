@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Team;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 
 class TeamController extends Controller
 {
+    use PicksServerImages;
+
     protected $viewName;
     protected $routeName;
 
@@ -54,10 +57,11 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
-        $input = $request->except(['_token', 'image']);
+        $input = $request->except(['_token', 'image', 'library_image']);
 
-        if ($request->hasFile('image')) {
-            $input['image'] = $this->UplaodImage($request->file('image'));
+        // New upload, or an existing image picked from the server library.
+        if ($image = $this->resolveImage($request, 'teams')) {
+            $input['image'] = $image;
         }
 
         $input['featured'] = $request->has('featured') ? 1 : 0;
@@ -98,10 +102,11 @@ class TeamController extends Controller
         $row = Team::findOrFail($id);
         // `order` is managed exclusively from the index page's reorder controls
         // (see reorder() below) — never touched from the edit form.
-        $input = $request->except(['_token', '_method', 'image', 'order']);
+        $input = $request->except(['_token', '_method', 'image', 'library_image', 'order']);
 
-        if ($request->hasFile('image')) {
-            $input['image'] = $this->UplaodImage($request->file('image'));
+        // New upload, or an existing image picked from the server library.
+        if ($image = $this->resolveImage($request, 'teams')) {
+            $input['image'] = $image;
         }
 
         $input['featured'] = $request->has('featured') ? 1 : 0;
@@ -179,19 +184,5 @@ class TeamController extends Controller
             'status' => 'success',
             'message' => 'Team order updated successfully',
         ]);
-    }
-
-    /**
-     * Upload a team member's photo.
-     */
-    public function UplaodImage($file_request)
-    {
-        $file = $file_request;
-        $imageName = time() . '_' . $file->getClientOriginalName();
-        $uploadPath = public_path('uploads/teams');
-
-        $file->move($uploadPath, $imageName);
-
-        return $imageName;
     }
 }

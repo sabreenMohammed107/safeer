@@ -41,22 +41,9 @@
                             </div>
                         </div>
                         <div class="card-body text-center pt-0">
-                            <div class="image-input image-input-outline mb-3" data-kt-image-input="true"
-                                style="background-image: url('{{ asset('uploads/teams') }}/{{ $row->image }}')">
-                                <div class="image-input-wrapper w-150px h-150px"
-                                    style="background-image: url('{{ asset('uploads/teams') }}/{{ $row->image }}')">
-                                </div>
-                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change photo">
-                                    <i class="bi bi-pencil-fill fs-7"></i>
-                                    <input type="file" name="image" accept=".png, .jpg, .jpeg" />
-                                    <input type="hidden" name="avatar_remove" />
-                                </label>
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel photo">
-                                    <i class="bi bi-x fs-2"></i>
-                                </span>
-                            </div>
+                            @include('admin.partials.image-picker', [
+                                'current' => $row->image ? asset('uploads/teams/' . $row->image) : null,
+                            ])
                         </div>
                     </div>
                     <!--end::Thumbnail settings-->

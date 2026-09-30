@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Blog;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
@@ -10,6 +11,8 @@ use Illuminate\Database\QueryException;
 use File;
 class BlogController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -66,6 +69,8 @@ class BlogController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'blogs')) {
+            $input['image'] = $picked;
         }
         if ($request->has('active')) {
 
@@ -114,6 +119,8 @@ class BlogController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'blogs')) {
+            $input['image'] = $picked;
         }
         if ($request->has('active')) {
 

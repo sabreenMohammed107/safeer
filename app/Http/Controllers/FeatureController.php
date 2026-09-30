@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Feature;
 use App\Http\Requests\StoreFeatureRequest;
 use App\Http\Requests\UpdateFeatureRequest;
@@ -10,6 +11,8 @@ use Illuminate\Database\QueryException;
 use File;
 class FeatureController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -63,6 +66,8 @@ class FeatureController extends Controller
             $attach_image = $request->file('icon');
 
             $input['icon'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'icon', 'features')) {
+            $input['icon'] = $picked;
         }
 
         Feature::create($input);
@@ -105,6 +110,8 @@ class FeatureController extends Controller
             $attach_image = $request->file('icon');
 
             $input['icon'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'icon', 'features')) {
+            $input['icon'] = $picked;
         }
 
 

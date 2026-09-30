@@ -32,6 +32,7 @@ class UpdateTeamRequest extends FormRequest
             'en_description' => ['nullable', 'string'],
             'ar_description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'max:4096'],
+            'library_image' => ['nullable', 'string', 'max:255'],
             'order' => ['nullable', 'integer', 'min:0'],
         ];
     }

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Car_model;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use File;
 class CarModelController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -64,6 +67,8 @@ class CarModelController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'carModels')) {
+            $input['image'] = $picked;
         }
         if ($request->has('active')) {
 
@@ -111,6 +116,8 @@ class CarModelController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'carModels')) {
+            $input['image'] = $picked;
         }
         if ($request->has('active')) {
 

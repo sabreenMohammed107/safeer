@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Gallery;
 use App\Http\Requests\StoreGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
@@ -11,6 +12,8 @@ use Illuminate\Database\QueryException;
 use File;
 class GalleryController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -96,6 +99,14 @@ class GalleryController extends Controller
                 Gallery::create($input);
             }
         }
+        // Images picked from the server library: one gallery row each, same as uploads.
+        foreach ($this->pickedLibraryImages($request, 'files', 'galleries') as $imageName) {
+            Gallery::create([
+                'active' => $request->has('active') ? '1' : '0',
+                'img' => $imageName,
+                'hotel_id' => $request->get('hotel_id'),
+            ]);
+        }
         return redirect()->route($this->routeName.'index')->with('flash_success', 'Successfully Saved!');    }
 
 
@@ -135,6 +146,8 @@ class GalleryController extends Controller
             $attach_image = $request->file('img');
 
             $input['img'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'img', 'galleries')) {
+            $input['img'] = $picked;
         }
         if ($request->has('active')) {
 

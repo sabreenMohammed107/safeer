@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Why_us;
 use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request;
 use File;
 class WhyUsController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -63,6 +66,8 @@ class WhyUsController extends Controller
             $attach_image = $request->file('image');
 
             $input['icon'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'whyUs')) {
+            $input['icon'] = $picked;
         }
 
         Why_us::create($input);
@@ -106,6 +111,8 @@ class WhyUsController extends Controller
             $attach_image = $request->file('image');
 
             $input['icon'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'whyUs')) {
+            $input['icon'] = $picked;
         }
 
 

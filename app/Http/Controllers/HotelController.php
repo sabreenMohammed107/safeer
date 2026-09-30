@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Http\Requests\StoreHotelRequest;
 use App\Http\Requests\UpdateHotelRequest;
 use App\Models\City;
@@ -24,6 +25,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class HotelController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -90,12 +93,16 @@ class HotelController extends Controller
                 $attach_image = $request->file('hotel_logo');
 
                 $input['hotel_logo'] = $this->UplaodImage($attach_image);
+            } elseif ($picked = $this->pickedLibraryImage($request, 'hotel_logo', 'hotels')) {
+                $input['hotel_logo'] = $picked;
             }
 
             if ($request->hasFile('hotel_banner')) {
                 $attach_banner = $request->file('hotel_banner');
 
                 $input['hotel_banner'] = $this->UplaodBanner($attach_banner);
+            } elseif ($picked = $this->pickedLibraryImage($request, 'hotel_banner', 'hotels')) {
+                $input['hotel_banner'] = $picked;
             }
             if ($request->has('active')) {
 
@@ -205,12 +212,16 @@ class HotelController extends Controller
                 $attach_image = $request->file('hotel_logo');
 
                 $input['hotel_logo'] = $this->UplaodImage($attach_image);
+            } elseif ($picked = $this->pickedLibraryImage($request, 'hotel_logo', 'hotels')) {
+                $input['hotel_logo'] = $picked;
             }
 
             if ($request->hasFile('hotel_banner')) {
                 $attach_banner = $request->file('hotel_banner');
 
                 $input['hotel_banner'] = $this->UplaodImage($attach_banner);
+            } elseif ($picked = $this->pickedLibraryImage($request, 'hotel_banner', 'hotels')) {
+                $input['hotel_banner'] = $picked;
             }
 
             if ($request->has('active')) {

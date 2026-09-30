@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Counter;
 use App\Http\Requests\StoreCounterRequest;
 use App\Http\Requests\UpdateCounterRequest;
@@ -11,6 +12,8 @@ use File;
 
 class CounterController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -64,6 +67,8 @@ class CounterController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'counter')) {
+            $input['image'] = $picked;
         }
         Counter::create($input);
         return redirect()->route($this->routeName . 'index')->with('flash_success', 'Successfully Saved!');
@@ -105,6 +110,8 @@ class CounterController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'counter')) {
+            $input['image'] = $picked;
         }
         Counter::findOrFail($request->get('counter_id'))->update($input);
         // $specialzation->update($input);

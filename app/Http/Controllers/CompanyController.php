@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\PicksServerImages;
 use App\Models\Company;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    use PicksServerImages;
+
     protected $object;
     protected $viewName;
     protected $routeName;
@@ -99,21 +102,29 @@ class CompanyController extends Controller
             $attach_image = $request->file('image');
 
             $input['image'] = $this->UplaodImage($attach_image);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'image', 'company')) {
+            $input['image'] = $picked;
         }
         if ($request->hasFile('master_page_img_bg')) {
             $attach_image2 = $request->file('master_page_img_bg');
 
             $input['master_page_img_bg'] = $this->UplaodImage($attach_image2);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'master_page_img_bg', 'company')) {
+            $input['master_page_img_bg'] = $picked;
         }
         if ($request->hasFile('book_img')) {
             $attach_image3 = $request->file('book_img');
 
             $input['book_img'] = $this->UplaodImage($attach_image3);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'book_img', 'company')) {
+            $input['book_img'] = $picked;
         }
         if ($request->hasFile('transport_img')) {
             $attach_image4 = $request->file('transport_img');
 
             $input['transport_img'] = $this->UplaodImage($attach_image4);
+        } elseif ($picked = $this->pickedLibraryImage($request, 'transport_img', 'company')) {
+            $input['transport_img'] = $picked;
         }
         $company->update($input);
         return redirect()->route($this->routeName. 'edit',$company->id)->with('flash_success', 'Successfully Saved!');    }
