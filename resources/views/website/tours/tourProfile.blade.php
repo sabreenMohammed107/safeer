@@ -191,7 +191,8 @@
                         <div class="swiper tour-gallery__main" id="tourGalleryMain">
                             <div class="swiper-wrapper">
                                 @foreach ($TourGallery as $image)
-                                    <div class="swiper-slide">
+                                    <div class="swiper-slide"
+                                        style="--slide-bg: url('{{ asset('uploads/galleries') }}/{{ $image->img }}')">
                                         <img src="{{ asset('uploads/galleries') }}/{{ $image->img }}"
                                             alt="{{ $tourName }} - {{ $loop->iteration }}"
                                             @if (!$loop->first) loading="lazy" @endif />
@@ -245,7 +246,8 @@
                         <div class="swiper tour-lightbox__swiper" id="tourLightboxSwiper">
                             <div class="swiper-wrapper">
                                 @foreach ($TourGallery as $image)
-                                    <div class="swiper-slide">
+                                    <div class="swiper-slide"
+                                        style="--slide-bg: url('{{ asset('uploads/galleries') }}/{{ $image->img }}')">
                                         <div class="swiper-zoom-container">
                                             <img src="{{ asset('uploads/galleries') }}/{{ $image->img }}"
                                                 alt="{{ $tourName }} - {{ $loop->iteration }}" loading="lazy" />

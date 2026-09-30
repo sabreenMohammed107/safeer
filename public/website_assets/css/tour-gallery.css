@@ -18,35 +18,33 @@
     box-shadow: 0 18px 40px -18px rgba(28, 68, 130, .45), 0 4px 12px rgba(0, 0, 0, .06);
 }
 
-.tour-gallery__main .swiper-slide {
+/* Images are often flyers with prices/text, so never crop them:
+   show the whole image (contain) over a blurred copy of itself. */
+.tour-gallery__main .swiper-slide,
+.tour-lightbox__swiper .swiper-slide {
+    position: relative;
     overflow: hidden;
 }
 
+.tour-gallery__main .swiper-slide::before,
+.tour-lightbox__swiper .swiper-slide::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    background: var(--slide-bg) center / cover no-repeat;
+    filter: blur(18px) brightness(.85);
+    transform: scale(1.1);
+}
+
 .tour-gallery__main .swiper-slide img {
+    position: relative;
+    z-index: 1;
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transform: scale(1.06);
-    transition: transform 6s ease;
+    object-fit: contain;
     user-select: none;
     -webkit-user-drag: none;
-}
-
-/* slow "Ken Burns" zoom-out on the visible slide */
-.tour-gallery__main .swiper-slide-active img {
-    transform: scale(1);
-}
-
-/* soft gradient so the controls stay readable on bright photos */
-.tour-gallery__main::after {
-    content: "";
-    position: absolute;
-    inset: auto 0 0 0;
-    height: 30%;
-    background: linear-gradient(to top, rgba(0, 0, 0, .35), transparent);
-    pointer-events: none;
-    z-index: 1;
 }
 
 /* ---------- arrows ---------- */
@@ -275,10 +273,15 @@
     background: #eef2f8;
 }
 
+.tour-lightbox__swiper .swiper-zoom-container {
+    position: relative;
+    z-index: 1;
+}
+
 .tour-lightbox__swiper .swiper-zoom-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .tour-lightbox .tour-gallery__nav {
@@ -289,12 +292,9 @@
 .tour-lightbox__nav--next { inset-inline-end: 14px; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 1199.98px) {
-    .tour-gallery { --tg-main-ratio: 16 / 9; }
-}
 
 @media (max-width: 767.98px) {
-    .tour-gallery { --tg-radius: 14px; --tg-main-ratio: 4 / 3; }
+    .tour-gallery { --tg-radius: 14px; }
     .tour-gallery__nav { width: 38px; height: 38px; font-size: .95rem; }
     .tour-gallery__nav--prev { inset-inline-start: 10px; }
     .tour-gallery__nav--next { inset-inline-end: 10px; }
@@ -305,8 +305,4 @@
     .tour-lightbox__dialog { border-radius: 14px; }
     .tour-lightbox__nav--prev { inset-inline-start: 10px; }
     .tour-lightbox__nav--next { inset-inline-end: 10px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .tour-gallery__main .swiper-slide img { transition: none; transform: none; }
 }
