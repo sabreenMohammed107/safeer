@@ -211,11 +211,24 @@
             font-weight: 700;
         }
 
+        /* 3 cards per row on desktop, 2 on tablet, 1 on mobile */
         .visNotes {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 14px;
             margin-top: 14px;
+        }
+
+        @media (max-width: 1199.98px) {
+            .visNotes {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .visNotes {
+                grid-template-columns: minmax(0, 1fr);
+            }
         }
 
         .visa-notes-card {
@@ -224,6 +237,12 @@
             border-radius: 10px;
             padding: 14px 18px;
             box-shadow: 0 2px 6px rgba(28, 68, 130, 0.06);
+            overflow-wrap: anywhere;
+        }
+
+        /* intro heading line ("Important instructions ...") spans the full row */
+        .visa-notes-card--title {
+            grid-column: 1 / -1;
         }
 
         .visa-notes-card p,
@@ -611,8 +630,13 @@
                 return;
             }
 
-            sections.forEach(function($section) {
+            sections.forEach(function($section, index) {
                 var $card = $('<div class="visa-notes-card"></div>');
+                // a one-line first section is the intro heading of the whole
+                // list, so it gets a full-width row above the card grid
+                if (index === 0 && $section.length === 1 && sections.length > 1) {
+                    $card.addClass('visa-notes-card--title');
+                }
                 $section.each(function() {
                     $card.append($(this).clone());
                 });
