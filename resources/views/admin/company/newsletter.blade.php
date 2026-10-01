@@ -133,18 +133,43 @@
 @section('scripts')
     <script>
         document.getElementById('exportSelectedBtn').addEventListener('click', function () {
-            var ids = Array.prototype.map.call(
-                document.querySelectorAll('.newsletter-row-checkbox:checked'),
-                function (checkbox) { return checkbox.value; }
-            );
+            // Rows on other DataTables pages are detached from the document,
+            // so collect checkboxes from every row DataTables holds.
+            var table = document.getElementById('kt_ecommerce_category_table');
+            var rows = (window.jQuery && jQuery.fn.DataTable && jQuery.fn.DataTable.isDataTable(table))
+                ? jQuery(table).DataTable().rows().nodes().toArray()
+                : [table];
+            var ids = [];
+            rows.forEach(function (row) {
+                row.querySelectorAll('.newsletter-row-checkbox:checked').forEach(function (checkbox) {
+                    ids.push(checkbox.value);
+                });
+            });
 
             if (ids.length === 0) {
                 alert('Please select at least one row to export.');
                 return;
             }
 
-            var params = ids.map(function (id) { return 'ids[]=' + encodeURIComponent(id); }).join('&');
-            window.location.href = "{{ route('newsletterEmails.export') }}?" + params;
+            // POST, not a GET query string: with "select all" the ids made the
+            // URL longer than Apache allows ("Request-URI Too Long").
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = "{{ route('newsletterEmails.export.selected') }}";
+            form.style.display = 'none';
+            var token = document.createElement('input');
+            token.type = 'hidden';
+            token.name = '_token';
+            token.value = "{{ csrf_token() }}";
+            form.appendChild(token);
+            var idsInput = document.createElement('input');
+            idsInput.type = 'hidden';
+            idsInput.name = 'ids';
+            idsInput.value = ids.join(',');
+            form.appendChild(idsInput);
+            document.body.appendChild(form);
+            form.submit();
+            form.remove();
         });
     </script>
 @endsection

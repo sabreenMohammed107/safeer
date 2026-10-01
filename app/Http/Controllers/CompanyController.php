@@ -182,12 +182,17 @@ public function newsletter(){
 
 /**
  * Export newsletter subscribers as a CSV file (opens in Excel).
- * With no `ids` query param, exports every subscriber; with
- * `ids[]=...`, exports only the selected rows.
+ * GET (no ids) exports every subscriber. "Export Selected" POSTs the chosen
+ * ids as one comma-separated `ids` field, since a long id list doesn't fit in
+ * a URL; `ids[]=...` arrays are still accepted.
  */
 public function exportNewsletter(Request $request)
 {
-    $ids = $request->query('ids', []);
+    $ids = $request->input('ids', []);
+    if (is_string($ids)) {
+        $ids = explode(',', $ids);
+    }
+    $ids = array_values(array_filter(array_map('intval', (array) $ids)));
 
     $query = Newsletter::orderBy('created_at', 'desc');
     if (!empty($ids)) {
