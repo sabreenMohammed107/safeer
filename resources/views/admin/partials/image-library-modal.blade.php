@@ -103,24 +103,35 @@
                 credentials: 'same-origin'
             })
                 .then(function (response) {
-                    if (!response.ok) throw new Error(response.status);
-                    return response.json();
+                    if (response.ok) return response.json();
+                    // Surface the server's reason (the endpoint returns one as JSON).
+                    return response.json().catch(function () { return {}; }).then(function (data) {
+                        throw new Error(data.message || ('Server error ' + response.status));
+                    });
                 })
                 .then(function (data) {
                     if (myRequest !== requestId) return;
                     hasMore = data.has_more;
                     loadedOnce = true;
                     grid.insertAdjacentHTML('beforeend', data.html);
-                    totalEl.textContent = '(' + data.total + ')';
+                    // complete=false: the server ran out of its time budget while
+                    // indexing a very large uploads folder; later requests add the rest.
+                    totalEl.textContent = '(' + data.total + (data.complete === false ? '+, still indexing…' : '') + ')';
                     statusEl.innerHTML = data.total ? '' : (term ? 'No matching images.' : 'No images found in public/uploads.');
                     statusEl.style.display = data.total ? 'none' : '';
                     moreWrap.style.display = hasMore ? '' : 'none';
                     markSelected();
                 })
-                .catch(function () {
+                .catch(function (error) {
                     if (myRequest !== requestId) return;
-                    statusEl.innerHTML = '<span class="text-danger">Could not load the images.</span> ' +
-                        '<button type="button" class="btn btn-sm btn-light ms-2" data-role="retry">Retry</button>';
+                    var message = document.createElement('span');
+                    message.className = 'text-danger';
+                    message.textContent = (error && error.message && error.message.indexOf('Could not load') === 0)
+                        ? error.message : 'Could not load the images.';
+                    statusEl.innerHTML = '';
+                    statusEl.appendChild(message);
+                    statusEl.insertAdjacentHTML('beforeend',
+                        ' <button type="button" class="btn btn-sm btn-light ms-2" data-role="retry">Retry</button>');
                     statusEl.style.display = '';
                 })
                 .then(function () {

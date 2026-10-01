@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Support\ServerImageLibrary;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class ImageLibraryController extends Controller
@@ -19,9 +18,9 @@ class ImageLibraryController extends Controller
      * time, from `offset` = how many are already shown), and on search.
      *
      * Only lists files: no image decoding happens here (see thumb()), so a
-     * broken or huge upload can't make the list fail. The file list is cached
-     * until an upload folder changes (see ServerImageLibrary::cachedImages()),
-     * so opening the library doesn't rescan public/uploads each time.
+     * broken or huge upload can't make the list fail. The file list is a
+     * per-folder cache refreshed only where folders changed, with a time budget
+     * (see ServerImageLibrary::index()), so a request never scans everything.
      */
     public function index(Request $request)
     {
@@ -30,7 +29,9 @@ class ImageLibraryController extends Controller
             $limit = $offset === 0 ? self::FIRST_BATCH : self::MORE_BATCH;
             $term = mb_strtolower(trim((string) $request->query('q', '')));
 
-            $images = ServerImageLibrary::cachedImages();
+            // Time-boxed so a slow uploads folder can't run into PHP's time limit.
+            $index = ServerImageLibrary::index(15.0);
+            $images = $index['images'];
 
             if ($term !== '') {
                 $images = array_values(array_filter(
@@ -47,11 +48,13 @@ class ImageLibraryController extends Controller
                 ])->render(),
                 'total' => $total,
                 'has_more' => $offset + $limit < $total,
+                'complete' => $index['complete'],
             ]);
         } catch (\Throwable $e) {
             Log::error('Image library listing failed', ['exception' => $e]);
 
-            return response()->json(['message' => 'Could not load the images.'], 500);
+            // Admin-only endpoint: show the real reason instead of a bare 500.
+            return response()->json(['message' => 'Could not load the images: ' . $e->getMessage()], 500);
         }
     }
 

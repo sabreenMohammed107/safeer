@@ -4,7 +4,6 @@ namespace App\Support;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
-use Symfony\Component\Finder\Finder;
 
 /**
  * The admin "choose from server" image library: lists reusable images under
@@ -26,116 +25,147 @@ class ServerImageLibrary
 
     public const EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
+    private const CACHE_KEY = 'server-image-library.v4';
+
     /**
-     * All pickable images under public/uploads, newest first.
+     * All pickable images under public/uploads (newest first), with no time
+     * limit. For the CLI (image-library:warm); web requests use index().
      *
      * @return array<int, array{path: string, name: string, url: string}>
      */
-    public static function images(): array
-    {
-        $root = public_path('uploads');
-        if (!File::isDirectory($root)) {
-            return [];
-        }
-
-        // Private folders (customer documents) are skipped while walking, not
-        // filtered afterwards, so they cost nothing however large they grow.
-        $files = Finder::create()->files()->in($root)->exclude(static::PRIVATE_FOLDERS)->ignoreDotFiles(true);
-
-        $images = [];
-        foreach ($files as $file) {
-            $path = str_replace('\\', '/', $file->getRelativePathname());
-
-            if (!static::isPickable($path)) {
-                continue;
-            }
-
-            try {
-                $mtime = $file->getMTime();
-            } catch (\RuntimeException $e) {
-                // Deleted while we were listing (on Windows it can linger in the
-                // listing until its last handle closes) — just leave it out.
-                continue;
-            }
-
-            $images[] = [
-                'path' => $path,
-                'name' => $file->getFilename(),
-                'url' => static::publicUrl('uploads/' . $path),
-                'mtime' => $mtime,
-            ];
-        }
-
-        usort($images, fn ($a, $b) => $b['mtime'] <=> $a['mtime']);
-
-        return array_map(function ($image) {
-            unset($image['mtime']);
-            return $image;
-        }, $images);
-    }
-
-    /**
-     * images(), cached until something under public/uploads changes.
-     *
-     * Rescanning every file is slow on a big uploads folder, so the list is
-     * kept indefinitely and rebuilt only when the folders' fingerprint changes:
-     * a folder's mtime changes whenever a file is added to or removed from it,
-     * and checking a few dozen folder mtimes is near-instant. A daily rebuild
-     * also catches files replaced in place under the same name.
-     */
     public static function cachedImages(): array
     {
-        $cached = Cache::get('server-image-library.v3');
-
-        if (is_array($cached)
-            && time() - ($cached['built_at'] ?? 0) < 86400
-            && static::foldersFingerprint($cached['dirs']) === $cached['fingerprint']) {
-            return $cached['images'];
-        }
-
-        $images = static::images();
-        $dirs = static::watchedFolders($images);
-        Cache::forever('server-image-library.v3', [
-            'dirs' => $dirs,
-            'fingerprint' => static::foldersFingerprint($dirs),
-            'built_at' => time(),
-            'images' => $images,
-        ]);
-
-        return $images;
+        return static::index(null)['images'];
     }
 
     /**
-     * Folders whose mtime tells us the list may be stale: public/uploads, its
-     * top-level folders, and every folder that holds a library image. A new
-     * folder anywhere changes the mtime of its parent, which is one of these.
+     * All pickable images under public/uploads, newest first.
+     *
+     * Kept as a per-folder index in the cache: each folder's file list is
+     * stored with that folder's mtime, which changes whenever a file is added
+     * to or removed from it. Each call only checks folder mtimes (one cheap
+     * stat per folder) and re-reads the folders that changed, so a big uploads
+     * folder is never rescanned as a whole on a web request.
+     *
+     * $budget caps the seconds spent re-reading folders (web requests must
+     * finish well before PHP's time limit). When it runs out, folders not yet
+     * read are left out (or served from their previous listing) and
+     * `complete` is false; the next call carries on where this one stopped.
+     *
+     * @return array{images: array<int, array{path: string, name: string, url: string}>, complete: bool}
      */
-    private static function watchedFolders(array $images): array
+    public static function index(?float $budget = 15.0): array
     {
         $root = public_path('uploads');
-        $dirs = [$root => true];
-        foreach (glob($root . '/*', GLOB_ONLYDIR) ?: [] as $dir) {
-            if (!in_array(basename($dir), static::PRIVATE_FOLDERS, true)) {
-                $dirs[$dir] = true;
+        if (!is_dir($root)) {
+            return ['images' => [], 'complete' => true];
+        }
+
+        $deadline = $budget === null ? null : microtime(true) + $budget;
+        $old = Cache::get(static::CACHE_KEY);
+        $old = is_array($old) ? $old : [];
+        $new = [];
+        $complete = true;
+        $changed = false;
+        $scanned = 0; // folders read this call; the first is always finished, so every call makes progress
+
+        clearstatcache();
+        $queue = [''];
+        while ($queue) {
+            $rel = array_shift($queue);
+            $dir = $rel === '' ? $root : $root . '/' . $rel;
+            $mtime = @filemtime($dir);
+            if ($mtime === false) {
+                $changed = true; // folder removed
+                continue;
+            }
+
+            $previous = $old[$rel] ?? null;
+            if ($previous && $previous['mtime'] === $mtime) {
+                $entry = $previous;
+            } else {
+                $outOfTime = $scanned > 0 && $deadline && microtime(true) > $deadline;
+                $entry = $outOfTime ? null : static::scanFolder($dir, $rel, $mtime, $scanned > 0 ? $deadline : null);
+                $scanned++;
+                if ($entry === null) {
+                    // Out of time: keep the old listing if there is one, finish next call.
+                    $complete = false;
+                    if (!$previous) {
+                        continue;
+                    }
+                    $entry = $previous;
+                } else {
+                    $changed = true;
+                }
+            }
+
+            $new[$rel] = $entry;
+            foreach ($entry['dirs'] as $sub) {
+                $queue[] = $sub;
             }
         }
-        foreach ($images as $image) {
-            $dirs[dirname($root . '/' . $image['path'])] = true;
+
+        if ($changed || count($new) !== count($old)) {
+            Cache::forever(static::CACHE_KEY, $new);
         }
 
-        return array_keys($dirs);
+        $files = [];
+        foreach ($new as $entry) {
+            foreach ($entry['files'] as $file) {
+                $files[] = $file;
+            }
+        }
+        usort($files, fn ($a, $b) => $b['mtime'] <=> $a['mtime']);
+
+        return [
+            'images' => array_map(fn ($file) => [
+                'path' => $file['path'],
+                'name' => $file['name'],
+                'url' => static::publicUrl('uploads/' . $file['path']),
+            ], $files),
+            'complete' => $complete,
+        ];
     }
 
-    /** Hash of the given folders' mtimes. */
-    private static function foldersFingerprint(array $dirs): string
+    /**
+     * One folder's direct contents (not recursive): its pickable images and
+     * its subfolders (private folders and symlinks skipped). Null if the
+     * deadline passed part-way, so a half-read folder is never cached.
+     */
+    private static function scanFolder(string $dir, string $rel, int $mtime, ?float $deadline): ?array
     {
-        clearstatcache();
-        $parts = [];
-        foreach ($dirs as $dir) {
-            $parts[] = $dir . '=' . @filemtime($dir);
+        $entry = ['mtime' => $mtime, 'files' => [], 'dirs' => []];
+        $names = @scandir($dir);
+        if ($names === false) {
+            return $entry; // unreadable: treat as empty
         }
 
-        return md5(implode('|', $parts));
+        foreach ($names as $i => $name) {
+            if ($name === '' || $name[0] === '.') {
+                continue;
+            }
+            if ($deadline && $i % 200 === 0 && microtime(true) > $deadline) {
+                return null;
+            }
+
+            $childRel = $rel === '' ? $name : $rel . '/' . $name;
+            $full = $dir . '/' . $name;
+
+            // Images are recognised by name first, so only they get stat'ed.
+            if (in_array(strtolower(pathinfo($name, PATHINFO_EXTENSION)), static::EXTENSIONS, true) && static::isPickable($childRel)) {
+                $fileMtime = @filemtime($full);
+                if ($fileMtime !== false && is_file($full)) {
+                    $entry['files'][] = ['path' => $childRel, 'name' => $name, 'mtime' => $fileMtime];
+                    continue;
+                }
+            }
+
+            if (!in_array($name, static::PRIVATE_FOLDERS, true) && !is_link($full) && is_dir($full)) {
+                $entry['dirs'][] = $childRel;
+            }
+        }
+
+        return $entry;
     }
 
     /**
