@@ -148,8 +148,17 @@
 .team_grid .team_card .team_card_photo {
     width: 100%;
     aspect-ratio: 1 / 1;
-    background-color: #e9eef5;
     overflow: hidden;
+}
+
+/* Person silhouette shown behind the photo, and on its own when the image fails to load. */
+.team_grid .team_card .team_card_photo,
+.team_featured_card .team_featured_photo {
+    background: #e9eef5 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 24 24' fill='%23b5c3da'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.team_featured_card .team_featured_photo {
+    background-color: #12335f;
 }
 
 .team_grid .team_card .team_card_photo img {
@@ -212,13 +221,77 @@
     }
 }
 
+@media (max-width: 767px) {
+    /* Site CSS drops .container's side padding on small screens; keep cards off the edges. */
+    .team_page {
+        padding: 36px 16px;
+    }
+}
+
 @media (max-width: 575px) {
     .team_featured_sticky {
         flex-direction: column;
+        gap: 20px;
+    }
+
+    /* In a column the tablet rule's `flex: 1 1 260px` becomes a 260px *height*
+       basis, which squeezed the card and (with overflow:hidden) clipped the
+       name, job and bio. Let the card take its natural height instead. */
+    .team_featured_card {
+        flex: 0 0 auto;
+        padding: 18px;
+        text-align: center;
+    }
+
+    .team_featured_card .team_featured_photo {
+        aspect-ratio: 4 / 3;
+        border-width: 3px;
+        margin-bottom: 16px;
+    }
+
+    .team_featured_card h3 {
+        font-size: 19px;
+    }
+
+    .team_featured_card .team_job {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .team_featured_card p {
+        font-size: 13.5px;
+        line-height: 1.75;
+    }
+
+    .team_general_col .section_heading {
+        margin-bottom: 18px;
+    }
+
+    .team_page .section_heading h4 {
+        font-size: 20px;
     }
 
     .team_grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
+        gap: 14px;
+    }
+
+    .team_grid .team_card {
+        border-radius: 12px;
+    }
+
+    .team_grid .team_card .team_card_body {
+        padding: 12px 8px 14px;
+    }
+
+    .team_grid .team_card h6 {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .team_grid .team_card span {
+        display: block;
+        font-size: 12px;
+        line-height: 1.4;
     }
 }

@@ -137,8 +137,21 @@ $whyUss=Why_us::all();
   * offers
   */
   /**
-   * Active offers narrowed by the optional `city_id` / `date` search filters,
-   * shared by the full page and its AJAX pagination/search endpoint.
+   * A real Y-m-d date from the request, or null — so input like 2026-13-45
+   * is ignored instead of overflowing into a different day.
+   */
+  private function requestDate(Request $request, string $key): ?string
+  {
+      $date = $request->input($key);
+      $parsed = is_string($date) ? \DateTime::createFromFormat('!Y-m-d', $date) : false;
+
+      return $parsed && $parsed->format('Y-m-d') === $date ? $date : null;
+  }
+
+  /**
+   * Active offers narrowed by the optional `city_id` and `date_from` / `date_to`
+   * period filters (inclusive; either end may be left open), shared by the
+   * full page and its AJAX pagination/search endpoint.
    */
   private function filteredOffers(Request $request)
   {
@@ -148,11 +161,16 @@ $whyUss=Why_us::all();
           $offers->where('city_id', (int) $request->city_id);
       }
 
-      // Ignore anything that isn't a real Y-m-d date (e.g. 2026-13-45).
-      $date = $request->input('date');
-      $parsed = is_string($date) ? \DateTime::createFromFormat('!Y-m-d', $date) : false;
-      if ($parsed && $parsed->format('Y-m-d') === $date) {
-          $offers->whereDate('offer_date', $date);
+      $from = $this->requestDate($request, 'date_from');
+      $to = $this->requestDate($request, 'date_to');
+      if ($from && $to && $from > $to) {
+          [$from, $to] = [$to, $from];
+      }
+      if ($from) {
+          $offers->whereDate('offer_date', '>=', $from);
+      }
+      if ($to) {
+          $offers->whereDate('offer_date', '<=', $to);
       }
 
       return $offers->orderBy("created_at", "Desc")->paginate(10)->withQueryString();
@@ -175,7 +193,8 @@ $whyUss=Why_us::all();
               "latest" => $latest,
               "Cities" => $Cities,
               "city_id" => $request->city_id,
-              "date" => $request->date,
+              "date_from" => $this->requestDate($request, 'date_from'),
+              "date_to" => $this->requestDate($request, 'date_to'),
               "BreadCrumb" => $BreadCrumb,
               "favOfferIds" => $this->favouriteOfferIds(),
           ]);

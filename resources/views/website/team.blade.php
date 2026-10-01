@@ -22,7 +22,8 @@
                                 <div class="team_featured_card">
                                     <div class="team_featured_photo">
                                         <img src="{{ asset('uploads/teams') }}/{{ $member->image }}"
-                                            alt="{{ LaravelLocalization::getCurrentLocale() === 'en' ? $member->en_name : $member->ar_name }}">
+                                            alt="{{ LaravelLocalization::getCurrentLocale() === 'en' ? $member->en_name : $member->ar_name }}"
+                                            loading="lazy" onerror="this.style.visibility='hidden'">
                                     </div>
                                     <div class="team_featured_info">
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
@@ -66,7 +67,8 @@
                                 <div class="team_card">
                                     <div class="team_card_photo">
                                         <img src="{{ asset('uploads/teams') }}/{{ $member->image }}"
-                                            alt="{{ LaravelLocalization::getCurrentLocale() === 'en' ? $member->en_name : $member->ar_name }}">
+                                            alt="{{ LaravelLocalization::getCurrentLocale() === 'en' ? $member->en_name : $member->ar_name }}"
+                                            loading="lazy" onerror="this.style.visibility='hidden'">
                                     </div>
                                     <div class="team_card_body">
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')

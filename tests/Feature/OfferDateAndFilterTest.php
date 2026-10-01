@@ -199,7 +199,8 @@ class OfferDateAndFilterTest extends TestCase
         $this->get('/offers')
             ->assertOk()
             ->assertSee('id="offers_search_form"', false)
-            ->assertSee('name="date"', false)
+            ->assertSee('name="date_from"', false)
+            ->assertSee('name="date_to"', false)
             ->assertSee('Filter City With Offer')
             ->assertDontSee('Filter City Without Offer');
     }
@@ -217,16 +218,56 @@ class OfferDateAndFilterTest extends TestCase
         $this->assertStringNotContainsString('Dubai Offer', $grid);
     }
 
-    public function test_public_offers_can_be_filtered_by_date()
+    public function test_public_offers_can_be_filtered_by_a_date_period_inclusive_of_both_ends()
     {
         $city = $this->makeCity('Filter City');
-        $this->makeOffer('November Offer', $city, '2026-11-01');
-        $this->makeOffer('December Offer', $city, '2026-12-01');
+        $this->makeOffer('Before Period Offer', $city, '2026-10-31');
+        $this->makeOffer('Period Start Offer', $city, '2026-11-01');
+        $this->makeOffer('Mid Period Offer', $city, '2026-11-15');
+        $this->makeOffer('Period End Offer', $city, '2026-11-30');
+        $this->makeOffer('After Period Offer', $city, '2026-12-01');
 
-        $grid = $this->resultsGrid('/offers?date=2026-12-01');
+        $grid = $this->resultsGrid('/offers?date_from=2026-11-01&date_to=2026-11-30');
 
-        $this->assertStringContainsString('December Offer', $grid);
-        $this->assertStringNotContainsString('November Offer', $grid);
+        $this->assertStringContainsString('Period Start Offer', $grid);
+        $this->assertStringContainsString('Mid Period Offer', $grid);
+        $this->assertStringContainsString('Period End Offer', $grid);
+        $this->assertStringNotContainsString('Before Period Offer', $grid);
+        $this->assertStringNotContainsString('After Period Offer', $grid);
+    }
+
+    public function test_only_a_from_date_returns_offers_on_or_after_it()
+    {
+        $city = $this->makeCity('Filter City');
+        $this->makeOffer('Old Offer', $city, '2026-10-31');
+        $this->makeOffer('Upcoming Offer', $city, '2026-11-01');
+
+        $grid = $this->resultsGrid('/offers?date_from=2026-11-01');
+
+        $this->assertStringContainsString('Upcoming Offer', $grid);
+        $this->assertStringNotContainsString('Old Offer', $grid);
+    }
+
+    public function test_only_a_to_date_returns_offers_on_or_before_it()
+    {
+        $city = $this->makeCity('Filter City');
+        $this->makeOffer('Early Offer', $city, '2026-11-01');
+        $this->makeOffer('Late Offer', $city, '2026-11-02');
+
+        $grid = $this->resultsGrid('/offers?date_to=2026-11-01');
+
+        $this->assertStringContainsString('Early Offer', $grid);
+        $this->assertStringNotContainsString('Late Offer', $grid);
+    }
+
+    public function test_a_reversed_period_is_swapped_instead_of_returning_nothing()
+    {
+        $city = $this->makeCity('Filter City');
+        $this->makeOffer('Inside Offer', $city, '2026-11-15');
+
+        $grid = $this->resultsGrid('/offers?date_from=2026-11-30&date_to=2026-11-01');
+
+        $this->assertStringContainsString('Inside Offer', $grid);
     }
 
     public function test_public_offers_can_be_filtered_by_city_and_date_together()
@@ -237,7 +278,7 @@ class OfferDateAndFilterTest extends TestCase
         $this->makeOffer('Cairo Dec Offer', $cairo, '2026-12-01');
         $this->makeOffer('Dubai Dec Offer', $dubai, '2026-12-01');
 
-        $grid = $this->resultsGrid('/offers?city_id=' . $cairo->id . '&date=2026-12-01');
+        $grid = $this->resultsGrid('/offers?city_id=' . $cairo->id . '&date_from=2026-12-01&date_to=2026-12-01');
 
         $this->assertStringContainsString('Cairo Dec Offer', $grid);
         $this->assertStringNotContainsString('Cairo Nov Offer', $grid);
@@ -249,7 +290,7 @@ class OfferDateAndFilterTest extends TestCase
         $city = $this->makeCity('Filter City');
         $this->makeOffer('Hidden Offer', $city, '2026-11-01', ['active' => 0]);
 
-        $grid = $this->resultsGrid('/offers?city_id=' . $city->id . '&date=2026-11-01');
+        $grid = $this->resultsGrid('/offers?city_id=' . $city->id . '&date_from=2026-11-01&date_to=2026-11-01');
 
         $this->assertStringNotContainsString('Hidden Offer', $grid);
         $this->assertStringContainsString(__('links.no_offers_found'), $grid);
@@ -260,7 +301,7 @@ class OfferDateAndFilterTest extends TestCase
         $city = $this->makeCity('Filter City');
         $this->makeOffer('Any Date Offer', $city, '2026-11-01');
 
-        $this->get('/offers?city_id=' . $city->id . '&date=2026-13-45')
+        $this->get('/offers?city_id=' . $city->id . '&date_from=2026-13-45&date_to=2026-02-30')
             ->assertOk()
             ->assertSee('Any Date Offer');
     }
@@ -276,7 +317,7 @@ class OfferDateAndFilterTest extends TestCase
             $this->makeOffer("Cairo Ajax Offer {$i}", $cairo, '2026-11-01');
         }
 
-        $response = $this->get('/offers/fetch_data?city_id=' . $cairo->id . '&date=2026-11-01', [
+        $response = $this->get('/offers/fetch_data?city_id=' . $cairo->id . '&date_from=2026-11-01&date_to=2026-11-30', [
             'X-Requested-With' => 'XMLHttpRequest',
         ]);
 

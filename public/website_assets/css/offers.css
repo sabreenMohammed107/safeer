@@ -10,7 +10,7 @@
 }
 
 /* Clear the location/calendar icon (.hotel_details .choices i sits at left: 6px in both LTR and RTL). */
-.offers_search #offer_date {
+.offers_search .offer_date_input {
     padding-left: 28px;
 }
 

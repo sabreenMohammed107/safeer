@@ -349,6 +349,8 @@ return [
     'invalid_or_expired_reset_token' => 'رابط إعادة التعيين غير صالح أو منتهي الصلاحية.',
     'password_reset_success' => 'تم إعادة تعيين كلمة المرور بنجاح.',
     'date' => 'التاريخ',
+    'date_from' => 'من تاريخ',
+    'date_to' => 'إلى تاريخ',
     'all_cities' => 'كل المدن',
     'no_offers_found' => 'لا توجد عروض مطابقة لبحثك.',
     'availableOffers' => 'العروض المتاحة',

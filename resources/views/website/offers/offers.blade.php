@@ -19,7 +19,7 @@
         <form id="offers_search_form" action="{{ LaravelLocalization::localizeUrl('/offers') }}" method="GET">
             <div class="hotel_details">
                 <div class="row mx-0 p-0">
-                    <div class="col-sm-12 col-md-6 col-xl-5 p-s-0 ">
+                    <div class="col-sm-12 col-md-12 col-xl-4 p-s-0 ">
                         <h5> {{ __('links.city') }}</h5>
 
                         <div class="choices">
@@ -40,14 +40,25 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-12 col-md-6 col-xl-5 p-s-0 ">
-                        <h5> {{ __('links.date') }}</h5>
+                    <div class="col-sm-12 col-md-6 col-xl-3 p-s-0 ">
+                        <h5> {{ __('links.date_from') }}</h5>
 
                         <div class="choices">
                             <i class="fa-solid fa-calendar-days"></i>
-                            <input type="text" class="form-control" id="offer_date" name="date"
-                                value="{{ $date }}" placeholder="{{ __('links.pickDate') }}" autocomplete="off"
-                                aria-label="{{ __('links.date') }}">
+                            <input type="text" class="form-control offer_date_input" id="offer_date_from"
+                                name="date_from" value="{{ $date_from }}" placeholder="{{ __('links.pickDate') }}"
+                                autocomplete="off" aria-label="{{ __('links.date_from') }}">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-xl-3 p-s-0 ">
+                        <h5> {{ __('links.date_to') }}</h5>
+
+                        <div class="choices">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <input type="text" class="form-control offer_date_input" id="offer_date_to"
+                                name="date_to" value="{{ $date_to }}" placeholder="{{ __('links.pickDate') }}"
+                                autocomplete="off" aria-label="{{ __('links.date_to') }}">
                         </div>
                     </div>
 
@@ -123,9 +134,22 @@
         $(document).ready(function() {
             var $form = $('#offers_search_form');
 
-            flatpickr('#offer_date', {
+            // Keep the period valid: "to" can't be before "from" and vice versa.
+            var toPicker = flatpickr('#offer_date_to', {
                 dateFormat: 'Y-m-d',
                 allowInput: true,
+                minDate: $('#offer_date_from').val() || null,
+                onChange: function(selected, dateStr) {
+                    fromPicker.set('maxDate', dateStr || null);
+                },
+            });
+            var fromPicker = flatpickr('#offer_date_from', {
+                dateFormat: 'Y-m-d',
+                allowInput: true,
+                maxDate: $('#offer_date_to').val() || null,
+                onChange: function(selected, dateStr) {
+                    toPicker.set('minDate', dateStr || null);
+                },
             });
 
             $form.on('submit', function(event) {

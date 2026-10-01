@@ -339,6 +339,8 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'invalid_or_expired_reset_token' => 'Invalid or expired reset token.',
 'password_reset_success' => 'Password has been reset successfully.',
 'date' => 'Date',
+'date_from' => 'From Date',
+'date_to' => 'To Date',
 'all_cities' => 'All Cities',
 'no_offers_found' => 'No offers match your search.',
 'availableOffers' => 'Available Offers',
