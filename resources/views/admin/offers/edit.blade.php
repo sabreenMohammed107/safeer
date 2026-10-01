@@ -282,8 +282,12 @@
 @section('scripts')
 <script src="{{asset('dist/assets/plugins/custom/tinymce/tinymce.bundle.js')}}"></script>
     <script>
-        // Own instance (not type="date"): the layout's global flatpickr blocks past dates.
-        flatpickr('#offer_date', { dateFormat: 'Y-m-d', allowInput: true });
+        // Own instance, created after layout/footerscripts' global flatpickr has run: that one
+        // targets `.flatpickr-input` and disables past dates, so initialising earlier would let
+        // it re-grab this field and blank any past offer date.
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('#offer_date', { dateFormat: 'Y-m-d', allowInput: true });
+        });
 
 tinymce.init({
     selector: '#kt_docs_tinymce_basic',
