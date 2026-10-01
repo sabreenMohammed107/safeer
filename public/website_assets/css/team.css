@@ -46,9 +46,10 @@
     overflow: hidden;
 }
 
+/* Featured photos are shown whole at their natural aspect ratio (no fixed
+   frame + object-fit crop), since they're often wide office/portrait shots. */
 .team_featured_card .team_featured_photo {
     width: 100%;
-    aspect-ratio: 1 / 1;
     border-radius: 14px;
     overflow: hidden;
     background-color: #12335f;
@@ -57,10 +58,14 @@
 }
 
 .team_featured_card .team_featured_photo img {
+    display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
+    height: auto;
+}
+
+/* Image failed to load: keep a frame so the placeholder silhouette shows. */
+.team_featured_card .team_featured_photo.is-missing {
+    aspect-ratio: 4 / 3;
 }
 
 .team_featured_card .team_featured_info {
@@ -244,7 +249,6 @@
     }
 
     .team_featured_card .team_featured_photo {
-        aspect-ratio: 4 / 3;
         border-width: 3px;
         margin-bottom: 16px;
     }

@@ -23,7 +23,7 @@
                                     <div class="team_featured_photo">
                                         <img src="{{ asset('uploads/teams') }}/{{ $member->image }}"
                                             alt="{{ LaravelLocalization::getCurrentLocale() === 'en' ? $member->en_name : $member->ar_name }}"
-                                            loading="lazy" onerror="this.style.visibility='hidden'">
+                                            loading="lazy" onerror="this.style.display='none';this.parentNode.classList.add('is-missing')">
                                     </div>
                                     <div class="team_featured_info">
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
