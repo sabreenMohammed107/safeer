@@ -46,11 +46,17 @@ class TourController extends Controller
     public function index()
     {
         // Ordered by the drag-and-drop `order` column so the table reflects
-        // whatever sequence was last saved from the admin UI.
-        $rows = Tour::orderBy("order", "asc")->orderBy("created_at", "Desc")->get();
-        $cities = City::get();
+        // whatever sequence was last saved from the admin UI. Only the columns
+        // the table shows are selected (tours carry several large text columns),
+        // and the city is eager-loaded instead of one query per row.
+        $rows = Tour::select(['id', 'city_id', 'banner', 'en_name', 'ar_name', 'order', 'active'])
+            ->with('city:id,en_city')
+            ->orderBy('order', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
 
-        return view($this->viewName . 'index', compact(['rows', 'cities']));
+        return view($this->viewName . 'index', compact('rows'));
     }
 
 
@@ -284,10 +290,19 @@ class TourController extends Controller
      */
     public function reorder(Request $request)
     {
+        // No per-item `exists` rule: that runs one query per id. The ids are
+        // checked in a single whereIn count below instead.
         $validated = $request->validate([
-            'order' => ['required', 'array', 'min:1'],
-            'order.*' => ['integer', 'distinct', 'exists:tours,id'],
+            'order' => ['required', 'array', 'min:1', 'max:5000'],
+            'order.*' => ['integer', 'distinct'],
         ]);
+
+        if (Tour::whereIn('id', $validated['order'])->count() !== count($validated['order'])) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Some tours no longer exist. Please refresh the page.',
+            ], 422);
+        }
 
         try {
             DB::transaction(function () use ($validated) {

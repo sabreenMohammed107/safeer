@@ -97,7 +97,7 @@
                         <!--end::Table head-->
                         <!--begin::Table body-->
                         <tbody class="fw-bold text-gray-600">
-                            @foreach ($rows as $index => $row)
+                            @foreach ($rows as $row)
                                 <!--begin::Table row-->
                                 <tr data-tour-id="{{ $row->id }}">
                                     <!--begin::Drag handle-->
@@ -127,7 +127,8 @@
                                             <a href="#">
                                                 <div class="symbol-label fs-3 bg-light-danger text-danger">
                                                     <img src="{{ asset('uploads/tours') }}/{{ $row->banner }}"
-                                                        class="w-100" alt="">
+                                                        class="w-100" alt="" width="50" height="50"
+                                                        loading="lazy" decoding="async">
                                                 </div>
                                             </a>
                                         </div>
@@ -233,155 +234,6 @@
 
 
 
-                                    <!--begin::Modal - New Target-->
-                                    <div class="modal fade" id="kt_modal_new_targetEdit{{ $row->id }}"
-                                        tabindex="-1" aria-hidden="true">
-                                        <!--begin::Modal dialog-->
-                                        <div class="modal-dialog modal-dialog-centered mw-650px">
-                                            <!--begin::Modal content-->
-                                            <div class="modal-content rounded">
-                                                <!--begin::Modal header-->
-                                                <div class="modal-header pb-0 border-0 justify-content-end">
-                                                    <!--begin::Close-->
-                                                    <div class="btn btn-sm btn-icon btn-active-color-primary"
-                                                        data-bs-dismiss="modal">
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                                        <span class="svg-icon svg-icon-1">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none">
-                                                                <rect opacity="0.5" x="6" y="17.3137"
-                                                                    width="16" height="2" rx="1"
-                                                                    transform="rotate(-45 6 17.3137)" fill="black" />
-                                                                <rect x="7.41422" y="6" width="16"
-                                                                    height="2" rx="1"
-                                                                    transform="rotate(45 7.41422 6)" fill="black" />
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->
-                                                    </div>
-                                                    <!--end::Close-->
-                                                </div>
-                                                <!--begin::Modal header-->
-                                                <!--begin::Modal body-->
-                                                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                                                    <!--begin:Form-->
-                                                    <form id="kt_modal_update_target_updateForm" class="form"
-                                                        action="{{ route('tours.update', $row->id) }}" method="post"
-                                                        enctype="multipart/form-data">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <!--begin::Heading-->
-                                                        <div class="mb-13 text-center">
-                                                            <!--begin::Title-->
-                                                            <h1 class="mb-3">Update Tours</h1>
-                                                            <!--end::Title-->
-
-                                                        </div>
-                                                        <!--end::Heading-->
-                                                        <!--begin::Input group-->
-                                                        <div class="mb-7">
-                                                            <!--begin::Label-->
-                                                            <label class="fs-6 fw-bold mb-3">
-                                                                <span>Update Avatar</span>
-                                                                <i class="fas fa-exclamation-circle ms-1 fs-7"
-                                                                    data-bs-toggle="tooltip"
-                                                                    title="Allowed file types: png, jpg, jpeg."></i>
-                                                            </label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Image input wrapper-->
-                                                            <div class="mt-1">
-                                                                <!--begin::Image input-->
-                                                                @include('admin.partials.image-picker', [
-                                                                    'name' => 'banner',
-                                                                    'current' => $row->banner ? asset('uploads/tours/' . $row->banner) : null,
-                                                                    'size' => 100,
-                                                                ])
-                                                                <!--end::Image input-->
-                                                            </div>
-                                                            <!--end::Image input wrapper-->
-                                                        </div>
-
-
-                                                        <div class="d-flex flex-column mb-8 fv-row">
-                                                            <!--begin::Input group-->
-                                                            <div class="d-flex flex-column mb-8">
-                                                                <label class="fs-6 fw-bold mb-2">En Overview</label>
-                                                                <textarea class="form-control form-control-solid" rows="3" name="en_overview" placeholder="Type En Overview">{{ $row->en_overview }}</textarea>
-                                                            </div>
-                                                            <!--end::Input group-->
-
-                                                            <!--begin::Input group-->
-                                                            <div class="d-flex flex-column mb-8">
-                                                                <label class="fs-6 fw-bold mb-2">Ar Overview</label>
-                                                                <textarea class="form-control form-control-solid" rows="3" name="ar_overview" placeholder="Type Ar Overview">{{ $row->ar_overview }}</textarea>
-                                                            </div>
-                                                            {{-- select --}}
-                                                            <div>
-                                                                <label class="fs-6 fw-bold form-label mt-3">
-                                                                    <option value="">Select a City...</option>
-
-                                                                </label>
-
-                                                                <select name="city_id" required aria-label="Select a City"
-                                                                    data-control="select2"
-                                                                    data-placeholder="Select a Country..."
-                                                                    data-dropdown-parent="#kt_modal_new_targetEdit{{ $row->id }}"
-                                                                    class="form-select form-select-solid fw-bolder">
-                                                                    <option value=""></option>
-                                                                    @foreach ($cities as $city)
-                                                                        <option value="{{ $city->id }}"
-                                                                            {{ $row->city_id == $city->id ? 'selected' : '' }}>
-                                                                            {{ $city->en_city }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <!--end::Input group-->
-                                                            <!--begin::Input group-->
-                                                            <div class="d-flex flex-column mb-8">
-                                                                <div
-                                                                    class="form-check form-switch form-check-custom form-check-solid">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        name="active[]" value="1"
-                                                                        id="flexSwitchDefault2"
-                                                                        {{ $row->active == 1 ? 'checked' : '' }} />
-                                                                    <label class="form-check-label"
-                                                                        for="flexSwitchDefault2">
-                                                                        Active
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <!--end::Input group-->
-
-
-                                                            <!--begin::Actions-->
-                                                            <div class="text-center">
-                                                                <div class="btn btn-sm btn-icon btn-active-color-primary"
-                                                                    style="margin-right: 25px" data-bs-dismiss="modal">
-                                                                    <button type="reset"
-                                                                        id="kt_modal_update_target_cancel"
-                                                                        class="btn btn-light me-3"
-                                                                        data-dismiss="modal">Cancel</button>
-                                                                </div>
-                                                                <button type="submit" id="kt_modal_update_target_submit"
-                                                                    class="btn btn-primary">
-                                                                    <span class="indicator-label">Submit</span>
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                </button>
-                                                            </div>
-                                                            <!--end::Actions-->
-                                                    </form>
-                                                    <!--end:Form-->
-                                                </div>
-                                                <!--end::Modal body-->
-                                            </div>
-                                            <!--end::Modal content-->
-                                        </div>
-                                        <!--end::Modal dialog-->
-                                    </div>
-                                    <!--end::Modal - New Target-->
                                 </tr>
                                 <!--end::Table row-->
                             @endforeach
@@ -397,143 +249,6 @@
         <!--end::Container-->
     </div>
     <!--end::Post-->
-    <!--begin::Modal - New Target-->
-    <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-650px">
-            <!--begin::Modal content-->
-            <div class="modal-content rounded">
-                <!--begin::Modal header-->
-                <div class="modal-header pb-0 border-0 justify-content-end">
-                    <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                        <span class="svg-icon svg-icon-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2"
-                                    rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                    transform="rotate(45 7.41422 6)" fill="black" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                    </div>
-                    <!--end::Close-->
-                </div>
-                <!--begin::Modal header-->
-                <!--begin::Modal body-->
-                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                    <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" action="{{ route('tours.store') }}"
-                        method="post" enctype="multipart/form-data">
-                        @csrf
-                        <!--begin::Heading-->
-                        <div class="mb-13 text-center">
-                            <!--begin::Title-->
-                            <h1 class="mb-3">Set Tours Field</h1>
-                            <!--end::Title-->
-
-                        </div>
-                        <!--end::Heading-->
-                        <!--begin::Thumbnail settings-->
-                        <div class="card card-flush py-4">
-                            <!--begin::Card header-->
-                            <div class="card-header">
-                                <!--begin::Card title-->
-                                <div class="card-title">
-                                    <h2>Image</h2>
-                                </div>
-                                <!--end::Card title-->
-                            </div>
-                            <!--end::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body text-center pt-0">
-                                <!--begin::Image input-->
-                                @include('admin.partials.image-picker', [
-                                    'name' => 'banner',
-                                ])
-                                <!--end::Image input-->
-
-                            </div>
-                            <!--end::Card body-->
-                        </div>
-                        <!--end::Thumbnail settings-->
-                        <!--begin::Input group-->
-
-
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Input group-->
-                            <div class="d-flex flex-column mb-8">
-                                <label class="fs-6 fw-bold mb-2">En Overview</label>
-                                <textarea class="form-control form-control-solid" rows="3" name="en_overview" placeholder="Type En Overview"></textarea>
-                            </div>
-                            <!--end::Input group-->
-
-                            <!--begin::Input group-->
-                            <div class="d-flex flex-column mb-8">
-                                <label class="fs-6 fw-bold mb-2">Ar Overview</label>
-                                <textarea class="form-control form-control-solid" rows="3" name="ar_overview" placeholder="Type Ar Overview"></textarea>
-                            </div>
-                            {{-- select --}}
-                            <div id="xx">
-                                <label class="fs-6 fw-bold form-label mt-3">
-                                    <option value="">Select a City...</option>
-
-                                </label>
-
-                                <select name="city_id" required aria-label="Select a City"
-                                    data-control="select2"
-                                    data-placeholder="Select a City..."
-                                    data-dropdown-parent="#xx"
-                                    class="form-select form-select-solid fw-bolder">
-                                    <option value=""></option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}"
-                                           >
-                                            {{ $city->en_city }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="d-flex flex-column mb-8">
-                                <div
-                                    class="form-check form-switch form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox"
-                                        name="active[]" value="1"
-                                        id="flexSwitchDefault2"
-                                        checked />
-                                    <label class="form-check-label"
-                                        for="flexSwitchDefault2">
-                                        Active
-                                    </label>
-                                </div>
-                            </div>
-                            <!--end::Input group-->
-
-                        <!--begin::Actions-->
-                        <div class="text-center">
-                            <button type="reset" id="kt_modal_new_target_cancel"
-                                class="btn btn-light me-3">Cancel</button>
-                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
-                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                        </div>
-                        <!--end::Actions-->
-                    </form>
-                    <!--end:Form-->
-                </div>
-                <!--end::Modal body-->
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div>
-    <!--end::Modal - New Target-->
 
     <style>
         .tour-drag-handle {
@@ -633,9 +348,32 @@
             // Show every tour on one page — dragging across DataTables' own
             // pagination isn't supported, so pagination is turned off instead
             // of trying to reorder a partially-hidden list.
+            var dt = null;
             if (window.jQuery && jQuery.fn.DataTable && jQuery.fn.DataTable.isDataTable(tableEl)) {
-                var dt = jQuery(tableEl).DataTable();
+                dt = jQuery(tableEl).DataTable();
                 dt.page.len(-1).draw(false);
+            }
+
+            // DataTables keeps its own copy of the row sequence and only sees
+            // our drag as a raw DOM move, so a later redraw (search, delete)
+            // would snap rows back to the pre-drag order. Rewrite its display
+            // arrays to match the DOM. This is cheap and avoids both a page
+            // reload and a full redraw. The table is created with `order: []`,
+            // so these arrays are the only thing deciding row order. Dragging
+            // is disabled while searching, so the DOM always holds every row.
+            function syncDataTableOrder() {
+                if (!dt) {
+                    return;
+                }
+                var settings = dt.settings()[0];
+                var indexes = Array.prototype.map.call(tbody.querySelectorAll('tr'), function (row) {
+                    return dt.row(row).index();
+                });
+                if (indexes.length !== settings.aiDisplayMaster.length || indexes.indexOf(undefined) !== -1) {
+                    return;
+                }
+                settings.aiDisplayMaster = indexes.slice();
+                settings.aiDisplay = indexes.slice();
             }
 
             var sortable = Sortable.create(tbody, {
@@ -677,17 +415,8 @@
                         .then(function (result) {
                             if (result.ok && result.data.status === 'success') {
                                 showReorderToast(result.data.message || 'Tour order updated successfully', false);
-                                // DataTables caches its own row order internally and
-                                // only knows about our drag via this raw DOM move, so
-                                // a later unrelated action (e.g. deleting another row,
-                                // which redraws the table from that cache) could snap
-                                // the list back to the pre-drag order. Reloading right
-                                // after a successful save keeps the table and the
-                                // database in sync and matches what a hard refresh
-                                // would show.
-                                window.setTimeout(function () {
-                                    window.location.reload();
-                                }, 700);
+                                syncDataTableOrder();
+                                setSaving(false);
                             } else {
                                 throw new Error(result.data.message || 'Could not save the new order.');
                             }
