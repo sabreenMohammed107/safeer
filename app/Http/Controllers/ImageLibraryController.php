@@ -25,6 +25,7 @@ class ImageLibraryController extends Controller
     public function index(Request $request)
     {
         try {
+            $started = microtime(true);
             $offset = max(0, (int) $request->query('offset', 0));
             $limit = $offset === 0 ? self::FIRST_BATCH : self::MORE_BATCH;
             $term = mb_strtolower(trim((string) $request->query('q', '')));
@@ -32,6 +33,7 @@ class ImageLibraryController extends Controller
             // Time-boxed so a slow uploads folder can't run into PHP's time limit.
             $index = ServerImageLibrary::index(15.0);
             $images = $index['images'];
+            $indexed = microtime(true);
 
             if ($term !== '') {
                 $images = array_values(array_filter(
@@ -41,15 +43,35 @@ class ImageLibraryController extends Controller
             }
 
             $total = count($images);
+            $html = view('admin.partials.image-library-items', [
+                'libraryImages' => array_slice($images, $offset, $limit),
+            ])->render();
+            $rendered = microtime(true);
+
+            // Where the time went, visible in DevTools > Network > (request) > Timing.
+            // "boot" = Laravel start-up before this method; a long wait that isn't
+            // in any of these is the server queueing the request before PHP ran.
+            $ms = fn ($from, $to) => round(($to - $from) * 1000, 1);
+            $timing = [
+                'boot' => defined('LARAVEL_START') ? $ms(LARAVEL_START, $started) : 0,
+                'index' => $ms($started, $indexed),
+                'render' => $ms($indexed, $rendered),
+            ];
+            $stats = $index['stats'];
+            if (array_sum($timing) > 3000) {
+                Log::warning('Image library request was slow', $timing + $stats + ['images' => $total]);
+            }
 
             return response()->json([
-                'html' => view('admin.partials.image-library-items', [
-                    'libraryImages' => array_slice($images, $offset, $limit),
-                ])->render(),
+                'html' => $html,
                 'total' => $total,
                 'has_more' => $offset + $limit < $total,
                 'complete' => $index['complete'],
-            ]);
+            ])->header('Server-Timing', implode(', ', [
+                "boot;dur={$timing['boot']}",
+                "index;dur={$timing['index']};desc=\"cache {$stats['cache']}, {$stats['folders']} folders, {$stats['rescanned']} re-read\"",
+                "render;dur={$timing['render']}",
+            ]));
         } catch (\Throwable $e) {
             Log::error('Image library listing failed', ['exception' => $e]);
 

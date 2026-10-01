@@ -52,7 +52,7 @@ class ServerImageLibrary
      * read are left out (or served from their previous listing) and
      * `complete` is false; the next call carries on where this one stopped.
      *
-     * @return array{images: array<int, array{path: string, name: string, url: string}>, complete: bool}
+     * @return array{images: array<int, array{path: string, name: string, url: string}>, complete: bool, stats: array}
      */
     public static function index(?float $budget = 15.0): array
     {
@@ -118,6 +118,12 @@ class ServerImageLibrary
         usort($files, fn ($a, $b) => $b['mtime'] <=> $a['mtime']);
 
         return [
+            // For the endpoint's Server-Timing / slow-request log.
+            'stats' => [
+                'cache' => $old ? 'warm' : 'cold',
+                'folders' => count($new),
+                'rescanned' => $scanned,
+            ],
             'images' => array_map(fn ($file) => [
                 'path' => $file['path'],
                 'name' => $file['name'],

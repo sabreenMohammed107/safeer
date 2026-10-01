@@ -23,8 +23,9 @@ Artisan::command('inspire', function () {
 // Safe to run any time (e.g. after a deploy or a bulk upload); existing
 // thumbnails are reused.
 Artisan::command('image-library:warm', function () {
+    $started = microtime(true);
     $images = \App\Support\ServerImageLibrary::cachedImages();
-    $this->info(count($images) . ' images listed.');
+    $this->info(count($images) . ' images listed in ' . round(microtime(true) - $started, 2) . 's.');
 
     $made = 0;
     $failed = 0;
