@@ -317,6 +317,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::post('/change-password', [UserController::class, 'changePasswordSave'])->name('postChangePassword');
 
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+    Route::get('/image-library', [\App\Http\Controllers\ImageLibraryController::class, 'index'])->name('admin.image-library');
 
     //cities
     Route::resource('cities', CityController::class);

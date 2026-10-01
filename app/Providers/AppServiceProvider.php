@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\Company;
 use App\Models\Company_branch;
-use App\Support\ServerImageLibrary;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\View;
@@ -49,10 +48,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('localVar', LaravelLocalization::getCurrentLocale());
         });
 
-        // Images for the admin "choose from server" modal. The modal is rendered
-        // once per page (by the first image-picker), so the folder is scanned once.
-        View::composer('admin.partials.image-library-modal', function ($view) {
-            $view->with('libraryImages', ServerImageLibrary::images());
-        });
+        // The admin "choose from server" image list is no longer built here: the
+        // modal fetches it on first open (ImageLibraryController).
     }
 }

@@ -172,19 +172,21 @@ class TourController extends Controller
      */
     public function edit(Tour $tour)
     {
-        $cities = City::get();
-        $types = Tour_type::get();
-        $features = Feature::all();
+        $types = Tour_type::get(['id', 'en_name']);
+        $features = Feature::get(['id', 'en_feature']);
+        $countries = Country::where('flag', 1)->get(['id', 'en_country']);
+        $tags = Tag::get(['id', 'en_tag']);
 
+        // Ids only, for O(1) "selected" checks in the view.
+        $tourFeatureIds = $tour->features()->pluck('features.id')->all();
+        $tourTagIds = Tour_tag::where('tour_id', $tour->id)->pluck('tag_id')->all();
 
-        $tourFeatures = $tour->features->all();
+        // Cities of the tour's current country (the country select reloads them
+        // via AJAX when changed). Null-safe: a tour without a city used to crash.
+        $countryId = optional($tour->city)->country_id;
+        $citiesCat = $countryId ? City::where('country_id', $countryId)->get(['id', 'en_city']) : collect();
 
-
-        $countries = Country::where('flag',1)->get();
-        $tags = Tag::get();
-        $tagsTour = Tour_tag::where('tour_id', $tour->id)->get();
-        //  dd($tagsTour);
-        return view($this->viewName . 'edit', compact([ 'tags', 'tagsTour', 'tour', 'cities', 'countries', 'types', 'features', 'tourFeatures']));
+        return view($this->viewName . 'edit', compact(['tags', 'tourTagIds', 'tour', 'citiesCat', 'countries', 'types', 'features', 'tourFeatureIds', 'countryId']));
     }
 
     /**

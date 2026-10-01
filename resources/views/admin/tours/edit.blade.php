@@ -155,15 +155,11 @@
                                                     <option value=""></option>
                                                     @foreach ($countries as $country)
                                                         <option value="{{ $country->id }}"
-                                                            @if ($tour->city) {{ $tour->city->country_id == $country->id ? 'selected' : '' }} @endif >{{ $country->en_country }}
+                                                            {{ $countryId == $country->id ? 'selected' : '' }}>{{ $country->en_country }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <?php
-
-                                            $citiesCat = App\Models\City::where('country_id', $tour->city->country_id)->get();
-                                            ?>
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
                                                 <label class="fs-6 fw-bold form-label mt-3">
@@ -221,7 +217,7 @@
                                                     <option></option>
                                                     @foreach ($features as $feature)
                                                     <option value="{{ $feature->id }}"
-                                                        @foreach ($tourFeatures as $sublist) {{ $sublist->pivot->feature_id == $feature->id ? 'selected' : '' }} @endforeach>
+                                                        {{ in_array($feature->id, $tourFeatureIds) ? 'selected' : '' }}>
                                                         {{ $feature->en_feature }}
                                                     </option>
                                                 @endforeach
@@ -248,7 +244,7 @@
 
                                                 @foreach ($tags as $tag)
                                                     <option value="{{ $tag->id }}"
-                                                        {{ $tagsTour->contains(fn($sublist) => $sublist->tour_id == $tour->id && $sublist->tag_id == $tag->id) ? 'selected' : '' }}>
+                                                        {{ in_array($tag->id, $tourTagIds) ? 'selected' : '' }}>
                                                         {{ $tag->en_tag }}
                                                     </option>
                                                 @endforeach
@@ -395,10 +391,10 @@
                                             </div>
                                             <!--end::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
-                                                <label class="required form-label">Private Persons No</label>
+                                                <label class="form-label">Private Persons No</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input required type="number" min="1"
+                                                <input type="number" min="0"
                                                     name="private_number" class="form-control mb-2"
                                                     placeholder="private_number" value="{{ $tour->private_number }}" />
                                                 <!--end::Input-->
@@ -534,57 +530,7 @@
 
         });
     </script>
-     <script src='https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js'></script>
-
-
      <script>
-        $(function () {
-           $('input').on('change', function (event) {
-
-              var $element = $(event.target);
-              var $container = $element.closest('.example');
-
-              if (!$element.data('tagsinput'))
-                 return;
-
-              var val = $element.val();
-              if (val === null)
-                 val = "null";
-              var items = $element.tagsinput('items');
-
-              $('code', $('pre.val', $container)).html(($.isArray(val) ? JSON.stringify(val) : "\"" + val.replace('"', '\\"') + "\""));
-              $('code', $('pre.items', $container)).html(JSON.stringify($element.tagsinput('items')));
-
-
-           }).trigger('change');
-        });
-    //     $(document).ready(function() {
-    //         alert('ll')
-    //            var path = "{{ route('autocompleteKeywords') }}";
-
-    // $( "#keywords" ).autocomplete({
-    //     source: function( request, response ) {
-    //       $.ajax({
-    //         url: path,
-    //         type: 'GET',
-    //         dataType: "json",
-    //         data: {
-    //            search: request.term
-    //         },
-    //         success: function( data ) {
-    //            response( data );
-    //         }
-    //       });
-    //     },
-    //     select: function (event, ui) {
-    //        $('#keywords').val(ui.item.label);
-    //        console.log(ui.item);
-    //        return false;
-    //     }
-    //   });
-    // });
-
-
       // tinymce.init(options2);
       tinymce.init({
             selector: '#kt_docs_tinymce_basic',
@@ -628,5 +574,46 @@
             plugins: "advlist autolink link image lists charmap print preview code"
         });
      </script>
+
+    <script>
+        // Save feedback. Selects turned into select2 are hidden, so when a
+        // required one is empty the browser blocks the submit but can't show
+        // its message, and "Save Changes" looks dead. Name the field instead.
+        (function () {
+            var form = document.getElementById('kt_ecommerce_add_category_form');
+            var submitButton = document.getElementById('kt_ecommerce_add_category_submit');
+            if (!form || !submitButton) return;
+
+            var warned = false;
+            form.addEventListener('invalid', function (e) {
+                var field = e.target;
+                if (warned) return;
+                warned = true;
+                setTimeout(function () { warned = false; }, 0);
+
+                var group = field.closest('.fv-row') || field.parentElement;
+                var label = group && group.querySelector('label');
+                var name = label ? label.textContent.trim().replace(/\s+/g, ' ') : field.name;
+                var select2 = field.nextElementSibling && field.nextElementSibling.classList.contains('select2')
+                    ? field.nextElementSibling : null;
+
+                if (select2) {
+                    select2.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    Swal.fire({
+                        text: 'Please fill in: ' + name,
+                        icon: 'warning',
+                        buttonsStyling: false,
+                        confirmButtonText: 'OK',
+                        customClass: { confirmButton: 'btn btn-primary' }
+                    });
+                }
+            }, true);
+
+            form.addEventListener('submit', function () {
+                submitButton.setAttribute('data-kt-indicator', 'on');
+                submitButton.disabled = true;
+            });
+        })();
+    </script>
 
 @endsection

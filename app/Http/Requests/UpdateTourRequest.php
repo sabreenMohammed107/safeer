@@ -40,6 +40,9 @@ class UpdateTourRequest extends FormRequest
     {
         return [
             'order' => ['nullable', 'integer', 'min:0'],
+            // Optional: most existing tours have no value here, and making it
+            // required silently blocked saving them.
+            'private_number' => ['nullable', 'integer', 'min:0'],
         ];
     }
 }
