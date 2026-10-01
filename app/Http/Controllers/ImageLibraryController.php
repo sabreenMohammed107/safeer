@@ -19,9 +19,9 @@ class ImageLibraryController extends Controller
      * time, from `offset` = how many are already shown), and on search.
      *
      * Only lists files: no image decoding happens here (see thumb()), so a
-     * broken or huge upload can't make the list fail. The folder scan is
-     * cached briefly so paging and searching don't rescan public/uploads on
-     * every request; a new upload shows up within a minute.
+     * broken or huge upload can't make the list fail. The file list is cached
+     * until an upload folder changes (see ServerImageLibrary::cachedImages()),
+     * so opening the library doesn't rescan public/uploads each time.
      */
     public function index(Request $request)
     {
@@ -30,7 +30,7 @@ class ImageLibraryController extends Controller
             $limit = $offset === 0 ? self::FIRST_BATCH : self::MORE_BATCH;
             $term = mb_strtolower(trim((string) $request->query('q', '')));
 
-            $images = Cache::remember('server-image-library.v2', 60, fn () => ServerImageLibrary::images());
+            $images = ServerImageLibrary::cachedImages();
 
             if ($term !== '') {
                 $images = array_values(array_filter(

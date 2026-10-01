@@ -2,7 +2,9 @@
 
 namespace App\Support;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Symfony\Component\Finder\Finder;
 
 /**
  * The admin "choose from server" image library: lists reusable images under
@@ -36,8 +38,12 @@ class ServerImageLibrary
             return [];
         }
 
+        // Private folders (customer documents) are skipped while walking, not
+        // filtered afterwards, so they cost nothing however large they grow.
+        $files = Finder::create()->files()->in($root)->exclude(static::PRIVATE_FOLDERS)->ignoreDotFiles(true);
+
         $images = [];
-        foreach (File::allFiles($root) as $file) {
+        foreach ($files as $file) {
             $path = str_replace('\\', '/', $file->getRelativePathname());
 
             if (!static::isPickable($path)) {
@@ -66,6 +72,70 @@ class ServerImageLibrary
             unset($image['mtime']);
             return $image;
         }, $images);
+    }
+
+    /**
+     * images(), cached until something under public/uploads changes.
+     *
+     * Rescanning every file is slow on a big uploads folder, so the list is
+     * kept indefinitely and rebuilt only when the folders' fingerprint changes:
+     * a folder's mtime changes whenever a file is added to or removed from it,
+     * and checking a few dozen folder mtimes is near-instant. A daily rebuild
+     * also catches files replaced in place under the same name.
+     */
+    public static function cachedImages(): array
+    {
+        $cached = Cache::get('server-image-library.v3');
+
+        if (is_array($cached)
+            && time() - ($cached['built_at'] ?? 0) < 86400
+            && static::foldersFingerprint($cached['dirs']) === $cached['fingerprint']) {
+            return $cached['images'];
+        }
+
+        $images = static::images();
+        $dirs = static::watchedFolders($images);
+        Cache::forever('server-image-library.v3', [
+            'dirs' => $dirs,
+            'fingerprint' => static::foldersFingerprint($dirs),
+            'built_at' => time(),
+            'images' => $images,
+        ]);
+
+        return $images;
+    }
+
+    /**
+     * Folders whose mtime tells us the list may be stale: public/uploads, its
+     * top-level folders, and every folder that holds a library image. A new
+     * folder anywhere changes the mtime of its parent, which is one of these.
+     */
+    private static function watchedFolders(array $images): array
+    {
+        $root = public_path('uploads');
+        $dirs = [$root => true];
+        foreach (glob($root . '/*', GLOB_ONLYDIR) ?: [] as $dir) {
+            if (!in_array(basename($dir), static::PRIVATE_FOLDERS, true)) {
+                $dirs[$dir] = true;
+            }
+        }
+        foreach ($images as $image) {
+            $dirs[dirname($root . '/' . $image['path'])] = true;
+        }
+
+        return array_keys($dirs);
+    }
+
+    /** Hash of the given folders' mtimes. */
+    private static function foldersFingerprint(array $dirs): string
+    {
+        clearstatcache();
+        $parts = [];
+        foreach ($dirs as $dir) {
+            $parts[] = $dir . '=' . @filemtime($dir);
+        }
+
+        return md5(implode('|', $parts));
     }
 
     /**
