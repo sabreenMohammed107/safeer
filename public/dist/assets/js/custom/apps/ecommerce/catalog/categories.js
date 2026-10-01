@@ -9,14 +9,20 @@ var KTAppEcommerceCategories = function() {
     // Private functions
     var initDatatable = function() {
         // Init datatable --- more info on datatables: https://datatables.net/manual/
+        var columnDefs = [
+            { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
+        ];
+        // Column 3 (actions) only where it exists: on a 3-column table (e.g.
+        // newsletter) targeting it made DataTables crash after the first row.
+        var headerCells = table.tHead && table.tHead.rows[0] ? table.tHead.rows[0].cells.length : 0;
+        if (headerCells > 3) {
+            columnDefs.push({ orderable: false, targets: 3 }); // Disable ordering on column 3 (actions)
+        }
         datatable = $(table).DataTable({
             "info": false,
             'order': [],
             'pageLength': 10,
-            'columnDefs': [
-                { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                { orderable: false, targets: 3 }, // Disable ordering on column 3 (actions)
-            ]
+            'columnDefs': columnDefs
         });
 
         // Re-init functions on datatable re-draws

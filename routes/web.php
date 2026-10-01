@@ -318,6 +318,7 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
 
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
     Route::get('/image-library', [\App\Http\Controllers\ImageLibraryController::class, 'index'])->name('admin.image-library');
+    Route::get('/image-library/thumb', [\App\Http\Controllers\ImageLibraryController::class, 'thumb'])->name('admin.image-library.thumb');
 
     //cities
     Route::resource('cities', CityController::class);

@@ -16,7 +16,7 @@
 <script src="{{asset('dist/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 <!--end::Page Vendors Javascript-->
 <!--begin::Page Custom Javascript(used by this page)-->
-<script src="{{asset('dist/assets/js/custom/apps/ecommerce/catalog/categories.js')}}"></script>
+<script src="{{asset('dist/assets/js/custom/apps/ecommerce/catalog/categories.js')}}?v={{ filemtime(public_path('dist/assets/js/custom/apps/ecommerce/catalog/categories.js')) }}"></script>
 <script src="{{asset('dist/assets/js/custom/apps/projects/users/users.js')}}"></script>
 
 <script src="{{asset('dist/assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>

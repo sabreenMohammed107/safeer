@@ -55,7 +55,7 @@ class ServerImageLibrary
             $images[] = [
                 'path' => $path,
                 'name' => $file->getFilename(),
-                'url' => asset('uploads/' . $path),
+                'url' => static::publicUrl('uploads/' . $path),
                 'mtime' => $mtime,
             ];
         }
@@ -123,22 +123,77 @@ class ServerImageLibrary
      * they never show up in the library themselves. The name includes the
      * source's size and mtime, so a replaced image gets a fresh thumbnail.
      */
-    public static function thumbUrl(string $path, int $width = 240): string
+    public const THUMB_WIDTH = 240;
+
+    /**
+     * Site-relative URL ("/safeer/public/uploads/...") for a file under public/.
+     * Relative, so it works whether the admin is served over http or https
+     * (asset() can produce http:// links behind an https proxy).
+     */
+    public static function publicUrl(string $relative): string
+    {
+        static $base = null;
+        if ($base === null) {
+            $base = rtrim((string) parse_url(asset(''), PHP_URL_PATH), '/');
+        }
+
+        return $base . '/' . ltrim($relative, '/');
+    }
+
+    /**
+     * Where the thumbnail for a library image (path relative to public/uploads)
+     * lives, or null if the source is gone. Thumbnails sit in
+     * public/uploads-thumbs, outside public/uploads, so they never appear in the
+     * library themselves; the name includes the source's size and mtime so a
+     * replaced image gets a fresh one.
+     */
+    public static function thumbTarget(string $path): ?string
     {
         $source = public_path('uploads/' . $path);
-        $original = asset('uploads/' . $path);
         if (!is_file($source)) {
-            return $original;
+            return null;
         }
 
-        $name = md5($path . '|' . filesize($source) . '|' . filemtime($source) . '|' . $width) . '.webp';
-        $target = public_path('uploads-thumbs/' . $name);
+        $name = md5($path . '|' . filesize($source) . '|' . filemtime($source) . '|' . static::THUMB_WIDTH) . '.webp';
 
-        if (!is_file($target) && !static::makeThumb($source, $target, $width)) {
-            return $original;
+        return public_path('uploads-thumbs/' . $name);
+    }
+
+    /**
+     * URL for a library image's thumbnail: the static file once it exists,
+     * otherwise the route that creates it. Scheme and host are dropped (but
+     * not a subfolder like /safeer/public, which route(..., false) would lose).
+     */
+    public static function thumbSrc(string $path): string
+    {
+        return static::existingThumbUrl($path)
+            ?? preg_replace('#^https?://[^/]+#i', '', route('admin.image-library.thumb', ['path' => $path]));
+    }
+
+    /** URL of an already-generated thumbnail, or null if it doesn't exist yet. */
+    public static function existingThumbUrl(string $path): ?string
+    {
+        $target = static::thumbTarget($path);
+
+        return $target && is_file($target) ? static::publicUrl('uploads-thumbs/' . basename($target)) : null;
+    }
+
+    /**
+     * Create the thumbnail if needed and return its file path, or null if this
+     * image can't be thumbnailed (the caller then shows the original). Runs in
+     * its own small request per image, so one bad image can't break the list.
+     */
+    public static function ensureThumb(string $path): ?string
+    {
+        $target = static::thumbTarget($path);
+        if (!$target) {
+            return null;
+        }
+        if (is_file($target) || static::makeThumb(public_path('uploads/' . $path), $target, static::THUMB_WIDTH)) {
+            return $target;
         }
 
-        return asset('uploads-thumbs/' . $name);
+        return null;
     }
 
     private static function makeThumb(string $source, string $target, int $width): bool
@@ -151,8 +206,12 @@ class ServerImageLibrary
         if (!$info || empty($info[0]) || empty($info[1])) {
             return false;
         }
-        // Skip images too big to decode safely (~5 bytes per pixel in GD).
-        if ($info[0] * $info[1] > 40_000_000) {
+        // Running out of memory is a fatal error too, so skip images whose
+        // decoded size (~5 bytes per pixel in GD) wouldn't fit in what's left.
+        if (!static::fitsInMemory($info[0] * $info[1] * 5)) {
+            return false;
+        }
+        if (!function_exists('imagewebp')) {
             return false;
         }
         if ($info[2] === IMAGETYPE_WEBP && static::isAnimatedWebp($source)) {
@@ -188,6 +247,25 @@ class ServerImageLibrary
         } catch (\Throwable $e) {
             return false;
         }
+    }
+
+    private static function fitsInMemory(int $bytes): bool
+    {
+        $limit = trim((string) ini_get('memory_limit'));
+        if ($limit === '' || $limit === '-1') {
+            return true;
+        }
+        $value = (int) $limit;
+        switch (strtolower(substr($limit, -1))) {
+            case 'g': $value *= 1024;
+            // no break
+            case 'm': $value *= 1024;
+            // no break
+            case 'k': $value *= 1024;
+        }
+
+        // Keep ~16MB headroom for the rest of the request.
+        return memory_get_usage(true) + $bytes + 16 * 1024 * 1024 < $value;
     }
 
     /** Animated WebP: VP8X header with the animation flag set (GD can't read these). */

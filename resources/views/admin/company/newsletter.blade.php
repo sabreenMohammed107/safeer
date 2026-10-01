@@ -132,6 +132,23 @@
 
 @section('scripts')
     <script>
+        // The header checkbox only reaches rows on the current DataTables page;
+        // make it (un)check every row that matches the current search instead.
+        KTUtil.onDOMContentLoaded(function () {
+            var table = document.getElementById('kt_ecommerce_category_table');
+            var headerCheck = table.querySelector('thead [data-kt-check="true"]');
+            if (!headerCheck || !(window.jQuery && jQuery.fn.DataTable && jQuery.fn.DataTable.isDataTable(table))) return;
+
+            var dt = jQuery(table).DataTable();
+            headerCheck.addEventListener('change', function () {
+                var checked = headerCheck.checked;
+                dt.rows({ search: 'applied' }).nodes().toArray().forEach(function (row) {
+                    var box = row.querySelector('.newsletter-row-checkbox');
+                    if (box) box.checked = checked;
+                });
+            });
+        });
+
         document.getElementById('exportSelectedBtn').addEventListener('click', function () {
             // Rows on other DataTables pages are detached from the document,
             // so collect checkboxes from every row DataTables holds.

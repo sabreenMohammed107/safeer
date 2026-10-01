@@ -1,7 +1,7 @@
 {{--
     Shared "choose from server" library, rendered once per page by the first
     admin.partials.image-picker. Only the empty modal is rendered here: images
-    are fetched from ImageLibraryController in pages (newest first) when the
+    are fetched from ImageLibraryController in batches (newest first: 6, then 10 per "Load more") when the
     modal opens, on "Load more" / scrolling down, and on search.
     The modal is moved to <body> on load so it also works when the picker sits
     inside another modal.
@@ -62,7 +62,6 @@
         var uploadsBase = modalEl.dataset.uploads;
 
         // Paging state. `requestId` drops responses that a newer search overtook.
-        var page = 0;
         var hasMore = true;
         var busy = false;
         var term = '';
@@ -85,7 +84,6 @@
         // Fetch the next page (or the first page of a new search when `reset`).
         function loadPage(reset) {
             if (reset) {
-                page = 0;
                 hasMore = true;
                 grid.innerHTML = '';
             }
@@ -97,7 +95,9 @@
             statusEl.style.display = '';
             moreWrap.style.display = 'none';
 
-            var url = modalEl.dataset.url + '?page=' + (page + 1) + '&q=' + encodeURIComponent(term);
+            // offset = images already shown; the server sends 6 first, then 10 at a time.
+            var offset = grid.querySelectorAll('[data-role="item"]').length;
+            var url = modalEl.dataset.url + '?offset=' + offset + '&q=' + encodeURIComponent(term);
             fetch(url, {
                 headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' },
                 credentials: 'same-origin'
@@ -108,7 +108,6 @@
                 })
                 .then(function (data) {
                     if (myRequest !== requestId) return;
-                    page++;
                     hasMore = data.has_more;
                     loadedOnce = true;
                     grid.insertAdjacentHTML('beforeend', data.html);
@@ -131,7 +130,7 @@
 
         moreBtn.addEventListener('click', function () { loadPage(false); });
         statusEl.addEventListener('click', function (e) {
-            if (e.target.closest('[data-role="retry"]')) loadPage(page === 0);
+            if (e.target.closest('[data-role="retry"]')) loadPage(!loadedOnce);
         });
 
         // Load the next page when the user scrolls near the bottom of the grid.
