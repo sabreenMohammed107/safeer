@@ -154,6 +154,22 @@
 
     </div>
     <!--end::Input-->
+                            <!--begin::Input group-->
+                            <div class="mb-10 fv-row">
+                                <!--begin::Label-->
+                                <label class="form-label"> Offer Date</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" name="offer_date" id="offer_date"
+                                    class="form-control mb-2 @error('offer_date') is-invalid @enderror"
+                                    placeholder="YYYY-MM-DD" autocomplete="off"
+                                    value="{{ old('offer_date', optional($offer->offer_date)->format('Y-m-d')) }}" />
+                                <div class="text-muted fs-7">Leave empty to use the offer's creation date.</div>
+                                @error('offer_date')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <!--end::Input group-->
 
 
 
@@ -266,6 +282,8 @@
 @section('scripts')
 <script src="{{asset('dist/assets/plugins/custom/tinymce/tinymce.bundle.js')}}"></script>
     <script>
+        // Own instance (not type="date"): the layout's global flatpickr blocks past dates.
+        flatpickr('#offer_date', { dateFormat: 'Y-m-d', allowInput: true });
 
 tinymce.init({
     selector: '#kt_docs_tinymce_basic',

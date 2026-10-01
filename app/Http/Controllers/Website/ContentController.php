@@ -7,6 +7,7 @@ use App\Http\Controllers\Website\Concerns\Favouritable;
 use App\Mail\NewsLetterNotification;
 use App\Models\Blog;
 use App\Models\Blogs_category;
+use App\Models\City;
 use App\Models\Company;
 use App\Models\Company_branch;
 use App\Models\Contact;
@@ -135,17 +136,46 @@ $whyUss=Why_us::all();
  /**
   * offers
   */
-  public function offers()
+  /**
+   * Active offers narrowed by the optional `city_id` / `date` search filters,
+   * shared by the full page and its AJAX pagination/search endpoint.
+   */
+  private function filteredOffers(Request $request)
+  {
+      $offers = Offer::where('active','=',1);
+
+      if ($request->filled('city_id')) {
+          $offers->where('city_id', (int) $request->city_id);
+      }
+
+      // Ignore anything that isn't a real Y-m-d date (e.g. 2026-13-45).
+      $date = $request->input('date');
+      $parsed = is_string($date) ? \DateTime::createFromFormat('!Y-m-d', $date) : false;
+      if ($parsed && $parsed->format('Y-m-d') === $date) {
+          $offers->whereDate('offer_date', $date);
+      }
+
+      return $offers->orderBy("created_at", "Desc")->paginate(10)->withQueryString();
+  }
+
+  public function offers(Request $request)
   {
       $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
       $Company = Company::first();
-      $offers = Offer::where('active','=',1)->orderBy("created_at", "Desc")->paginate(10);
+      $offers = $this->filteredOffers($request);
       $latest = Offer::where('active','=',1)->take(5)->orderBy("created_at", "Desc")->get();
+      $cityColumn = app()->getLocale() === 'ar' ? 'ar_city' : 'en_city';
+      $Cities = City::whereHas('offers', function ($query) {
+              $query->where('active', 1);
+          })->orderBy($cityColumn)->get();
       return view("website.offers.offers",
           [
               "Company" => $Company,
               "offers" => $offers,
               "latest" => $latest,
+              "Cities" => $Cities,
+              "city_id" => $request->city_id,
+              "date" => $request->date,
               "BreadCrumb" => $BreadCrumb,
               "favOfferIds" => $this->favouriteOfferIds(),
           ]);
@@ -155,7 +185,7 @@ $whyUss=Why_us::all();
   {
 
       if ($request->ajax()) {
-        $offers = Offer::where('active','=',1)->orderBy("created_at", "Desc")->paginate(10);
+        $offers = $this->filteredOffers($request);
         return view("website.offers.offerList",
               [
 

@@ -39,7 +39,8 @@ class StoreOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            // Optional: Offer::saving() falls back to the created_at date.
+            'offer_date' => ['nullable', 'date_format:Y-m-d'],
         ];
     }
 }

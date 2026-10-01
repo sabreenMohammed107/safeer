@@ -104,7 +104,7 @@ All public routes are wrapped in a locale-prefixed group (`LaravelLocalization::
 | Add/remove favourite tour | `GET /favouriteTours/{id}`, `GET /removeFavouriteTours/{id}` | `ToursController@favourite` / `removeFavourite` |
 | Transfers | `GET/POST /transfers` | `SiteTransferController@all_transfer` / `transfer` |
 | Visa | `GET /visa`, `POST /Safer/BookVisa` | `VisaDataController@all_visa` / `bookVisas` |
-| Offers listing | `GET /offers` | `ContentController@offers` |
+| Offers listing (+ City/Date search: `?city_id=&date=Y-m-d`) | `GET /offers`, AJAX `GET /offers/fetch_data` | `ContentController@offers` / `fetch_data_offer` (both via `filteredOffers()`) |
 | Single offer | `GET /single-offer/{id}/{slug?}` | `ContentController@singleOffer` (route name `single-offer`) |
 | Blog listing | `GET /blogs` | `ContentController@blogs` |
 | Single blog | `GET /single-blog/{id}/{slug?}` | `ContentController@singleBlog` (route name `single-blog`) |
@@ -151,6 +151,7 @@ Plus non-resource admin endpoints: order-editing AJAX actions (`EditTourDetails`
 - **Newsletter**: subscribe form posts to `/sendNewsLetter`; admin can view subscribers at `/dashboard/newsletterEmails`; confirmation email template at `resources/views/emails/newsLetter.blade.php`.
 - **Bilingual EN/AR**: full locale-prefixed routing via `mcamara/laravel-localization`; separate RTL stylesheet `css/style-ar.css` for Arabic.
 - **Social login**: Google + Facebook via Socialite, alongside native email/password site registration.
+- **Offer date + public search**: `offers.offer_date` (nullable `date`, migration `2026_10_01_000001`) is set in the admin add/edit forms; if left empty, `Offer::booted()`'s `saving` hook fills it with the `created_at` date (on create and when cleared on edit). Admin forms use a plain text input with their own flatpickr instance, **not** `type="date"`, because `layout/footerscripts.blade.php` globally makes every date input block today and past dates. The public `/offers` page has a City + Date search bar (exact-day match on `offer_date`, active offers only); the "latest offers" sidebar intentionally ignores the filters. Page styling lives in the static `public/website_assets/css/offers.css` (cards, search bar, sidebar); don't reuse `hotel_details` or `#room_main` on that page — the first is the search-box style (negative top margin) and the second is a `column-reverse` flex wrapper that pins buttons to the bottom. Tests: `tests/Feature/OfferDateAndFilterTest.php`.
 - **Order emails**: `resources/views/emails/order.blade.php` sent on booking (hotels/tours/transfers/visa go through a shared `Orders`/`OrderDetails` domain).
 
 ### Known issues / technical debt to be aware of

@@ -1,0 +1,324 @@
+/* Offers listing page — search bar, offer cards, latest-offers sidebar.
+   Colours follow the site palette: #1C4482 primary, #210D3A dark, #68c2e5 accent. */
+
+/* ---------- Search bar ---------- */
+.offers_search .hotel_details .choices .form-select,
+.offers_search .hotel_details .choices .form-control {
+    height: 42px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+/* Clear the location/calendar icon (.hotel_details .choices i sits at left: 6px in both LTR and RTL). */
+.offers_search #offer_date {
+    padding-left: 28px;
+}
+
+.offers_search .hotel_details .choices i {
+    top: 13px;
+}
+
+/* Block-level so no line box shifts it; 36px = the h5 label's margin + height above the inputs. */
+.offers_search .search_actions .btn {
+    display: block;
+    width: 100%;
+    height: 42px;
+    margin-top: 36px;
+    border-radius: 8px;
+}
+
+/* ---------- Layout ---------- */
+.offers_results {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.offers_results__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.offers_results__head h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1C4482;
+}
+
+.offers_results__head span {
+    font-size: 14px;
+    color: #7e7e7e;
+}
+
+/* ---------- Offer card ---------- */
+.offer_card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(33, 13, 58, .08);
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.offer_card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(33, 13, 58, .14);
+}
+
+.offer_card__media {
+    position: relative;
+    display: block;
+    height: 220px;
+    overflow: hidden;
+    /* Shown behind the image, and on its own when the image fails to load. */
+    background: #eef2f8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23b5c3da' stroke-width='1.5'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.offer_card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+.offer_card:hover .offer_card__media img {
+    transform: scale(1.04);
+}
+
+.offer_card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 18px 20px 20px;
+}
+
+.offer_card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.offer_card__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1C4482;
+    background: #eef4fb;
+    border-radius: 999px;
+}
+
+.offer_card__chip i {
+    color: #68c2e5;
+}
+
+.offer_card__title {
+    margin-bottom: 8px;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-transform: capitalize;
+    text-align: start;
+}
+
+.offer_card__title a {
+    color: #210D3A;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.offer_card__title a:hover {
+    color: #1C4482;
+}
+
+.offer_card__text {
+    flex: 1;
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #6b6f7b;
+    text-align: start;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.offer_card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid #edf0f5;
+}
+
+.offer_card__price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1C4482;
+}
+
+.offer_card__link {
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    background: #1C4482;
+    border-radius: 8px;
+    transition: background .2s ease;
+}
+
+.offer_card__link:hover {
+    color: #fff;
+    background: #210D3A;
+}
+
+.offers_empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: #7e7e7e;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(33, 13, 58, .08);
+}
+
+.offers_empty i {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 36px;
+    color: #b5c3da;
+}
+
+/* ---------- Pagination ---------- */
+.offers_pagination .pagination {
+    justify-content: center;
+    gap: 6px;
+    margin: 30px 0 0;
+    padding: 0;
+}
+
+.offers_pagination .page-link {
+    min-width: 42px;
+    text-align: center;
+    color: #1C4482;
+    border: 1px solid #dfe5ee;
+    border-radius: 8px !important;
+}
+
+.offers_pagination .page-link.active,
+.offers_pagination .page-link:hover {
+    color: #fff;
+    background: #1C4482;
+    border-color: #1C4482;
+}
+
+/* ---------- Latest offers sidebar ---------- */
+.offers_sidebar {
+    position: sticky;
+    top: 100px;
+    padding: 22px 20px 6px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(33, 13, 58, .08);
+}
+
+.offers_sidebar h6 {
+    margin-bottom: 18px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #210D3A;
+}
+
+.offers_sidebar__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.offers_sidebar__item:last-child {
+    margin-bottom: 0;
+    border-bottom: 0;
+}
+
+.offers_sidebar__thumb {
+    flex-shrink: 0;
+    width: 84px;
+    height: 70px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #eef2f8;
+}
+
+.offers_sidebar__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.offers_sidebar__info {
+    min-width: 0;
+}
+
+.offers_sidebar__info a {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #210D3A;
+}
+
+.offers_sidebar__info a:hover {
+    color: #1C4482;
+}
+
+.offers_sidebar__info small {
+    display: block;
+    font-size: 12px;
+    color: #7e7e7e;
+}
+
+.offers_sidebar__info strong {
+    font-size: 14px;
+    color: #1C4482;
+}
+
+@media (max-width: 1199px) {
+    .offers_sidebar {
+        position: static;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Site CSS drops column padding on mobile, so a horizontal gutter would push cards off the edge. */
+    #table_data > .row {
+        --bs-gutter-x: 0;
+    }
+
+    .offers_search .search_actions .btn {
+        margin-top: 12px;
+    }
+
+    .offer_card__media {
+        height: 200px;
+    }
+}

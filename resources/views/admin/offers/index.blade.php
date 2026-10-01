@@ -88,6 +88,7 @@
                                 <th class="min-w-250px">city</th>
                                 <th class="min-w-150px">Sub Title</th>
                                 <th class="min-w-150px">cost </th>
+                                <th class="min-w-125px">date</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
                             <!--end::Table row-->
@@ -150,6 +151,9 @@
 
                                         </div>
 
+                                    </td>
+                                    <td data-order="{{ optional($row->offer_date)->format('Y-m-d') }}">
+                                        <span class="symbol-label">{{ optional($row->offer_date)->format('Y-m-d') }}</span>
                                     </td>
                                     <!--end::Type=-->
                                     <!--begin::Action=-->

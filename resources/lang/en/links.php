@@ -338,4 +338,10 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'reset_link_sent' => 'If an account exists for that email, a reset link has been sent.',
 'invalid_or_expired_reset_token' => 'Invalid or expired reset token.',
 'password_reset_success' => 'Password has been reset successfully.',
+'date' => 'Date',
+'all_cities' => 'All Cities',
+'no_offers_found' => 'No offers match your search.',
+'availableOffers' => 'Available Offers',
+'offers_count' => '{0} No offers|{1} 1 offer|[2,*] :count offers',
+'view_offer' => 'View Offer',
 ];
