@@ -1,8 +1,8 @@
 {{--
     Shared "choose from server" library, rendered once per page by the first
-    admin.partials.image-picker. Only the empty modal is rendered here: the
-    image grid (image-library-items) is fetched from ImageLibraryController the
-    first time the modal is opened, so pages don't scan public/uploads on load.
+    admin.partials.image-picker. Only the empty modal is rendered here: images
+    are fetched from ImageLibraryController in pages (newest first) when the
+    modal opens, on "Load more" / scrolling down, and on search.
     The modal is moved to <body> on load so it also works when the picker sits
     inside another modal.
 --}}
@@ -25,7 +25,11 @@
                     placeholder="Search by image name..." />
             </div>
             <div class="modal-body" data-role="body">
-                <div class="text-center py-10"><span class="spinner-border text-primary"></span></div>
+                <div class="row g-4" data-role="grid"></div>
+                <div data-role="status" class="text-center text-muted py-10"></div>
+                <div class="text-center pt-6" data-role="more-wrap" style="display: none;">
+                    <button type="button" class="btn btn-light-primary" data-role="more">Load more</button>
+                </div>
             </div>
             <div class="modal-footer" data-role="multi-footer" style="display: none;">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
@@ -47,13 +51,23 @@
 
         var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
         var body = modalEl.querySelector('[data-role="body"]');
+        var grid = modalEl.querySelector('[data-role="grid"]');
+        var statusEl = modalEl.querySelector('[data-role="status"]');
+        var moreWrap = modalEl.querySelector('[data-role="more-wrap"]');
+        var moreBtn = modalEl.querySelector('[data-role="more"]');
         var search = modalEl.querySelector('[data-role="search"]');
         var footer = modalEl.querySelector('[data-role="multi-footer"]');
         var countEl = modalEl.querySelector('[data-role="count"]');
         var totalEl = modalEl.querySelector('[data-role="total"]');
         var uploadsBase = modalEl.dataset.uploads;
 
-        var loading = null; // promise of the grid fetch; null until first open (or after a failure)
+        // Paging state. `requestId` drops responses that a newer search overtook.
+        var page = 0;
+        var hasMore = true;
+        var busy = false;
+        var term = '';
+        var requestId = 0;
+        var loadedOnce = false;
         var activePicker = null;
         var selected = [];
 
@@ -66,28 +80,65 @@
             return Array.prototype.slice.call(modalEl.querySelectorAll('[data-role="choose"]'));
         }
 
-        function loadLibrary() {
-            if (loading) return loading;
-            loading = fetch(modalEl.dataset.url, {
-                headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'text/html' },
+        var spinner = '<span class="spinner-border text-primary"></span>';
+
+        // Fetch the next page (or the first page of a new search when `reset`).
+        function loadPage(reset) {
+            if (reset) {
+                page = 0;
+                hasMore = true;
+                grid.innerHTML = '';
+            }
+            if (!hasMore || (busy && !reset)) return;
+
+            busy = true;
+            var myRequest = ++requestId;
+            statusEl.innerHTML = spinner;
+            statusEl.style.display = '';
+            moreWrap.style.display = 'none';
+
+            var url = modalEl.dataset.url + '?page=' + (page + 1) + '&q=' + encodeURIComponent(term);
+            fetch(url, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' },
                 credentials: 'same-origin'
             })
                 .then(function (response) {
                     if (!response.ok) throw new Error(response.status);
-                    return response.text();
+                    return response.json();
                 })
-                .then(function (html) {
-                    body.innerHTML = html;
-                    var grid = body.querySelector('[data-role="grid"]');
-                    totalEl.textContent = grid ? '(' + grid.dataset.total + ')' : '';
+                .then(function (data) {
+                    if (myRequest !== requestId) return;
+                    page++;
+                    hasMore = data.has_more;
+                    loadedOnce = true;
+                    grid.insertAdjacentHTML('beforeend', data.html);
+                    totalEl.textContent = '(' + data.total + ')';
+                    statusEl.innerHTML = data.total ? '' : (term ? 'No matching images.' : 'No images found in public/uploads.');
+                    statusEl.style.display = data.total ? 'none' : '';
+                    moreWrap.style.display = hasMore ? '' : 'none';
                     markSelected();
-                    applySearch();
                 })
                 .catch(function () {
-                    loading = null; // let the next open retry
-                    body.innerHTML = '<div class="text-center text-danger py-10">Could not load the images. Close and try again.</div>';
+                    if (myRequest !== requestId) return;
+                    statusEl.innerHTML = '<span class="text-danger">Could not load the images.</span> ' +
+                        '<button type="button" class="btn btn-sm btn-light ms-2" data-role="retry">Retry</button>';
+                    statusEl.style.display = '';
+                })
+                .then(function () {
+                    if (myRequest === requestId) busy = false;
                 });
-            return loading;
+        }
+
+        moreBtn.addEventListener('click', function () { loadPage(false); });
+        statusEl.addEventListener('click', function (e) {
+            if (e.target.closest('[data-role="retry"]')) loadPage(page === 0);
+        });
+
+        // Load the next page automatically when "Load more" scrolls into view.
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                if (entries[0].isIntersecting && modalEl.classList.contains('show')) loadPage(false);
+            }, { root: body, rootMargin: '200px' }).observe(moreWrap);
         }
 
         function isMultiple(picker) { return picker.dataset.multiple === '1'; }
@@ -141,16 +192,12 @@
             countEl.textContent = selected.length;
         }
 
+        var searchTimer = null;
         function applySearch() {
-            var term = search.value.trim().toLowerCase();
-            var visible = 0;
-            modalEl.querySelectorAll('[data-role="item"]').forEach(function (item) {
-                var match = item.dataset.search.indexOf(term) !== -1;
-                item.style.display = match ? '' : 'none';
-                if (match) visible++;
-            });
-            var empty = modalEl.querySelector('[data-role="empty"]');
-            if (empty) empty.style.display = visible ? 'none' : '';
+            var next = search.value.trim();
+            if (next === term && loadedOnce) return;
+            term = next;
+            loadPage(true);
         }
 
         // Open the library for the picker whose button was clicked.
@@ -161,11 +208,14 @@
             activePicker = button.closest('[data-image-picker]');
             selected = isMultiple(activePicker) ? libraryValues(activePicker) : [];
             footer.style.display = isMultiple(activePicker) ? '' : 'none';
-            search.value = '';
-            applySearch();
             markSelected();
             modal.show();
-            loadLibrary();
+            // First open loads the newest images; reopening keeps what was
+            // already loaded unless a search was left in the box.
+            if (!loadedOnce || search.value.trim() !== '') {
+                search.value = '';
+                applySearch();
+            }
         });
 
         // Single: pick, clear the upload, preview, close. Multiple: toggle.
@@ -193,7 +243,10 @@
         });
 
         search.addEventListener('keydown', function (e) { if (e.key === 'Enter') e.preventDefault(); });
-        search.addEventListener('input', applySearch);
+        search.addEventListener('input', function () {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(applySearch, 300);
+        });
 
         // Stack above a parent add/edit modal, and keep the parent scrollable after closing.
         modalEl.addEventListener('shown.bs.modal', function () {
