@@ -113,6 +113,93 @@ class ServerImageLibrary
         return $name;
     }
 
+    /**
+     * URL of a small WebP thumbnail for a library image (relative to
+     * public/uploads), created on first request and reused afterwards. The
+     * library grid shows these instead of the full-size originals. Falls back
+     * to the original if the thumbnail can't be made.
+     *
+     * Thumbnails live in public/uploads-thumbs, outside public/uploads, so
+     * they never show up in the library themselves. The name includes the
+     * source's size and mtime, so a replaced image gets a fresh thumbnail.
+     */
+    public static function thumbUrl(string $path, int $width = 240): string
+    {
+        $source = public_path('uploads/' . $path);
+        $original = asset('uploads/' . $path);
+        if (!is_file($source)) {
+            return $original;
+        }
+
+        $name = md5($path . '|' . filesize($source) . '|' . filemtime($source) . '|' . $width) . '.webp';
+        $target = public_path('uploads-thumbs/' . $name);
+
+        if (!is_file($target) && !static::makeThumb($source, $target, $width)) {
+            return $original;
+        }
+
+        return asset('uploads-thumbs/' . $name);
+    }
+
+    private static function makeThumb(string $source, string $target, int $width): bool
+    {
+        // GD decode errors are *fatal* (not catchable), so everything that can
+        // trip one is checked first. Many uploads have the wrong extension
+        // (PNG/JPEG renamed to .webp), so the decoder follows the real file
+        // type from its header, never the extension.
+        $info = @getimagesize($source);
+        if (!$info || empty($info[0]) || empty($info[1])) {
+            return false;
+        }
+        // Skip images too big to decode safely (~5 bytes per pixel in GD).
+        if ($info[0] * $info[1] > 40_000_000) {
+            return false;
+        }
+        if ($info[2] === IMAGETYPE_WEBP && static::isAnimatedWebp($source)) {
+            return false;
+        }
+
+        try {
+            $image = match ($info[2]) {
+                IMAGETYPE_JPEG => @imagecreatefromjpeg($source),
+                IMAGETYPE_PNG => @imagecreatefrompng($source),
+                IMAGETYPE_GIF => @imagecreatefromgif($source),
+                IMAGETYPE_WEBP => @imagecreatefromwebp($source),
+                default => false,
+            };
+            if (!$image) {
+                return false;
+            }
+
+            if (imagesx($image) > $width) {
+                $scaled = imagescale($image, $width);
+                imagedestroy($image);
+                $image = $scaled;
+            }
+            imagepalettetotruecolor($image);
+            imagealphablending($image, true);
+            imagesavealpha($image, true);
+
+            File::ensureDirectoryExists(dirname($target));
+            $ok = imagewebp($image, $target, 70);
+            imagedestroy($image);
+
+            return $ok;
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
+    /** Animated WebP: VP8X header with the animation flag set (GD can't read these). */
+    private static function isAnimatedWebp(string $source): bool
+    {
+        $header = (string) @file_get_contents($source, false, null, 0, 21);
+
+        return strlen($header) === 21
+            && substr($header, 12, 4) === 'VP8X'
+            && (ord($header[20]) & 0x02) === 0x02;
+    }
+
     public static function isPickable(string $path): bool
     {
         if ($path === '' || str_contains($path, '..')) {

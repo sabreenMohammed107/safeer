@@ -134,12 +134,19 @@
             if (e.target.closest('[data-role="retry"]')) loadPage(page === 0);
         });
 
-        // Load the next page automatically when "Load more" scrolls into view.
-        if ('IntersectionObserver' in window) {
-            new IntersectionObserver(function (entries) {
-                if (entries[0].isIntersecting && modalEl.classList.contains('show')) loadPage(false);
-            }, { root: body, rootMargin: '200px' }).observe(moreWrap);
-        }
+        // Load the next page when the user scrolls near the bottom of the grid.
+        body.addEventListener('scroll', function () {
+            if (body.scrollTop + body.clientHeight >= body.scrollHeight - 150) loadPage(false);
+        }, { passive: true });
+
+        // Preload the first page once the page is idle, so the grid is already
+        // there when "Choose from server" is clicked. The images themselves are
+        // lazy and the modal is hidden, so this costs only one small request.
+        window.addEventListener('load', function () {
+            var start = function () { if (!loadedOnce && !busy) applySearch(); };
+            if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2000 });
+            else setTimeout(start, 500);
+        });
 
         function isMultiple(picker) { return picker.dataset.multiple === '1'; }
 
@@ -212,7 +219,8 @@
             modal.show();
             // First open loads the newest images; reopening keeps what was
             // already loaded unless a search was left in the box.
-            if (!loadedOnce || search.value.trim() !== '') {
+            // (A preload already in flight is left to finish.)
+            if ((!loadedOnce && !busy) || search.value.trim() !== '') {
                 search.value = '';
                 applySearch();
             }
