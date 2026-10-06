@@ -17,8 +17,10 @@ use App\Models\Newsletter;
 use App\Models\Offer;
 use App\Models\Team;
 use App\Models\Why_us;
+use App\Notifications\WebsiteFormNotification;
 use App\Rules\NoUrl;
 use App\Rules\NotBotEmail;
+use App\Support\AdminNotifier;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Concat;
@@ -297,6 +299,8 @@ $whyUss=Why_us::all();
             ]);
         }
 
+        AdminNotifier::send(WebsiteFormNotification::forContact($contact));
+
         return back() ->withInput($request->input())->with('flash_success',Lang::get('links.contactMsg'));
     }
     public function reloadCaptcha()
@@ -423,6 +427,8 @@ $whyUss=Why_us::all();
                 'error' => $e->getMessage(),
             ]);
         }
+
+        AdminNotifier::send(WebsiteFormNotification::forNewsletter($letter));
 
         $message = Lang::get('links.newsletter_success');
 
