@@ -16,6 +16,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        // Sends the queued admin notification emails (jobs table) once a
+        // minute, so no long-running `queue:work` process is needed on the
+        // server — only the standard `schedule:run` cron entry.
+        $schedule->command('queue:work database --stop-when-empty --tries=3')
+            ->everyMinute()
+            ->withoutOverlapping();
     }
 
     /**

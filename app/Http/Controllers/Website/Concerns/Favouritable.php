@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Website\Concerns;
 
 use App\Models\Favorite_hotels_tour;
+use App\Notifications\AddedToFavoritesNotification;
+use App\Support\AdminNotifier;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 trait Favouritable
@@ -36,8 +38,22 @@ trait Favouritable
             return response()->json(['ok' => true, 'favourited' => false]);
         }
 
-        Favorite_hotels_tour::create([$column => $id, 'user_id' => $userId]);
+        $favourite = Favorite_hotels_tour::create([$column => $id, 'user_id' => $userId]);
+        $this->notifyAdminsOfFavourite($favourite, $column);
 
         return response()->json(['ok' => true, 'favourited' => true]);
+    }
+
+    /**
+     * @param string $column 'hotel_id' | 'tour_id' | 'transfer_id' | 'offer_id'
+     */
+    protected function notifyAdminsOfFavourite(Favorite_hotels_tour $favourite, string $column): void
+    {
+        // 'tour_id' -> tour() relation on Favorite_hotels_tour
+        $item = $favourite->{str_replace('_id', '', $column)};
+
+        if ($item) {
+            AdminNotifier::send(new AddedToFavoritesNotification($item, $favourite->user));
+        }
     }
 }

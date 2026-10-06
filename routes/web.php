@@ -317,6 +317,13 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
     Route::post('/change-password', [UserController::class, 'changePasswordSave'])->name('postChangePassword');
 
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+
+    //notifications
+    Route::get('/notifications', [\App\Http\Controllers\AdminNotificationController::class, 'index'])->name('admin.notifications.index');
+    Route::get('/notifications/poll', [\App\Http\Controllers\AdminNotificationController::class, 'poll'])->name('admin.notifications.poll');
+    Route::delete('/notifications/old', [\App\Http\Controllers\AdminNotificationController::class, 'destroyOld'])->name('admin.notifications.destroyOld');
+    Route::get('/notifications/{id}',[\App\Http\Controllers\AdminNotificationController::class, 'show'])->name('admin.notifications.show');
+    Route::post('/notifications/read-all', [\App\Http\Controllers\AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.readAll');
     Route::get('/image-library', [\App\Http\Controllers\ImageLibraryController::class, 'index'])->name('admin.image-library');
     Route::get('/image-library/thumb', [\App\Http\Controllers\ImageLibraryController::class, 'thumb'])->name('admin.image-library.thumb');
 

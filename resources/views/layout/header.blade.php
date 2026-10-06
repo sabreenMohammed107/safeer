@@ -818,6 +818,66 @@
                         @endforeach
 
                 </div> --}}
+                    @if (auth()->check() && auth()->user()->type === 'admin')
+                        @php
+                            [$unreadCount, $latestUnread] = \App\Http\Controllers\AdminNotificationController::bellData(auth()->user());
+                        @endphp
+                        <!--begin::Notifications-->
+                        <div class="d-flex align-items-center ms-2 ms-lg-3" id="admin-notifications"
+                            data-poll-url="{{ route('admin.notifications.poll') }}">
+                            <div class="btn btn-icon btn-active-light-primary position-relative w-35px h-35px"
+                                data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                <i class="bi bi-bell fs-2"></i>
+                                <span id="admin-notifications-badge"
+                                    class="position-absolute top-0 start-100 translate-middle badge badge-circle badge-danger {{ $unreadCount ? '' : 'd-none' }}">
+                                    {{ $unreadCount > 99 ? '99+' : $unreadCount }}
+                                </span>
+                            </div>
+                            <div class="menu menu-sub menu-sub-dropdown menu-column w-350px" data-kt-menu="true"
+                                id="admin-notifications-menu">
+                                @include('admin.notifications._menu')
+                            </div>
+                        </div>
+                        <script>
+                            // Keeps the bell badge + dropdown up to date without a page reload.
+                            (function () {
+                                var root = document.getElementById('admin-notifications');
+                                var badge = document.getElementById('admin-notifications-badge');
+                                var menu = document.getElementById('admin-notifications-menu');
+                                var lastCount = {{ (int) $unreadCount }};
+                                var POLL_MS = 15000;
+
+                                function refresh() {
+                                    if (document.hidden) return; // don't poll from background tabs
+
+                                    fetch(root.dataset.pollUrl, {
+                                        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                                        credentials: 'same-origin'
+                                    })
+                                        .then(function (r) { return r.ok ? r.json() : null; })
+                                        .then(function (data) {
+                                            if (!data) return;
+
+                                            badge.textContent = data.count > 99 ? '99+' : data.count;
+                                            badge.classList.toggle('d-none', data.count === 0);
+                                            menu.innerHTML = data.menu;
+
+                                            if (data.count > lastCount) {
+                                                badge.animate([{ transform: 'translate(-50%,-50%) scale(1.5)' }, { transform: 'translate(-50%,-50%) scale(1)' }], { duration: 400 });
+                                            }
+                                            lastCount = data.count;
+                                        })
+                                        .catch(function () { /* offline / logged out: try again next tick */ });
+                                }
+
+                                setInterval(refresh, POLL_MS);
+                                document.addEventListener('visibilitychange', function () {
+                                    if (!document.hidden) refresh();
+                                });
+                            })();
+                        </script>
+                        <!--end::Notifications-->
+                    @endif
                     <!--begin::User-->
                     <div class="d-flex align-items-center ms-2 ms-lg-3" id="kt_header_user_menu_toggle">
                         <!--begin::Menu wrapper-->
