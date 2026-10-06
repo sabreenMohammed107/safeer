@@ -9,7 +9,9 @@ use App\Models\Country;
 use App\Models\VisaLead;
 use App\Models\Visa_type;
 use App\Models\Nationality;
+use App\Notifications\WebsiteFormNotification;
 use App\Rules\NoUrl;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -296,7 +298,7 @@ echo $output;
             $personal = Storage::disk('public')->put('uploads/visa-leads/', $request->file('personal'));
         }
 
-        VisaLead::create([
+        $lead = VisaLead::create([
             'country_id' => $request->country,
             'visa_type_id' => $request->visa_type_id,
             'nationality_id' => $request->nation,
@@ -308,6 +310,8 @@ echo $output;
             'personal_image' => $personal ? basename($personal) : null,
             'status' => 'pending',
         ]);
+
+        AdminNotifier::send(WebsiteFormNotification::forVisaLead($lead));
 
         return redirect()->to(LaravelLocalization::localizeUrl('/visa'))->with("session-success", Lang::get('links.visa_guest_success'));
     }
