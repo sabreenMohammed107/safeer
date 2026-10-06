@@ -7,23 +7,27 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/hotel.css') }}">
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/booking-hotel.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    {{-- versioned: the server caches CSS for 7 days --}}
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/cart.css') }}?v={{ filemtime(public_path('website_assets/css/cart.css')) }}">
 @endsection
 
 @section('bottom-header')
     <x-website.header.general title="{{ __('links.cart') }} " :breadcrumb="$BreadCrumb" current="{{ __('links.preBook') }}" />
 @endsection
 @section('content')
+    @php
+        $isEn = LaravelLocalization::getCurrentLocale() === 'en';
+    @endphp
     @if ($RoomCost || count($ToursCost) || $TransferCost || count($VisasCost))
         @php
             $TotalCost = 0;
             $TotalToursFees = 0;
             $TotalTransferCost = 0;
             $TotalVisasCost = 0;
-        @endphp
-        @if ($RoomCost)
-            @php
+
+            /* ---- Hotel room (same formula as BookingController@MakeOrder) ---- */
+            if ($RoomCost) {
                 if ($RoomCost->room_cap == 1) {
                     $Type = __('links.single');
                     $Cost = $RoomCost->single_cost;
@@ -35,17 +39,13 @@
                     $Cost = $RoomCost->triple_cost;
                 }
 
-                $ChildrenCost = 0;
                 $FreeChildren = 0;
                 $PaidChildren = 0;
                 $ages = null;
                 if ($RoomCost->children_count) {
                     $ages = explode(',', $RoomCost->ages);
-                    $ChildrenCost = 0;
-                    $FreeChildren = 0;
-                    $PaidChildren = 0;
                     for ($i = 0; $i < $RoomCost->children_count; $i++) {
-                        if ($ages[$i] >= $RoomCost->child_free_age_from && $ages[$i] <= $RoomCost->child_free_age_to) {
+                        if (($ages[$i] ?? null) >= $RoomCost->child_free_age_from && ($ages[$i] ?? null) <= $RoomCost->child_free_age_to) {
                             $FreeChildren++;
                         } else {
                             $PaidChildren++;
@@ -53,1251 +53,686 @@
                     }
                 }
 
-                $TotalCost =
-                    $RoomCost->nights * ($RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost);
-            @endphp
-        @endif
-        @if (count($ToursCost) > 0)
-            @php
-                $TotalToursFees = 0;
-            @endphp
-        @endif
-        @if ($TransferCost)
-            @php
+                $RoomPerNight = (float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost;
+                $TotalCost = $RoomCost->nights * ($RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost);
+            }
+
+            /* ---- Tours: children older than 2 are paid ---- */
+            $TotalPaidPersons = [];
+            $TourTotalCost = [];
+            $TourSubtotal = [];
+            $TourAges = [];
+            foreach ($ToursCost as $index => $Tour) {
+                // `ages` can be NULL or shorter than children_count when a tour was added
+                // to the cart without picking ages; missing ages render blank and count as
+                // free, matching how MakeOrder prices them.
+                $TourAges[$index] = $Tour->ages ? explode(',', $Tour->ages) : [];
+                $TotalPaidPersons[$index] = $Tour->adults_count;
+                for ($i = 0; $i < $Tour->children_count; $i++) {
+                    if (($TourAges[$index][$i] ?? 0) > 2) {
+                        $TotalPaidPersons[$index]++;
+                    }
+                }
+                $TourTotalCost[$index] = $Tour->tour_person_cost * $TotalPaidPersons[$index];
+                $TotalToursFees += $TourTotalCost[$index];
+                // Private tours (type 1) are a flat price
+                $TourSubtotal[$index] = $Tour->tour_type_id == 1 ? $Tour->tour_person_cost : $TourTotalCost[$index];
+            }
+
+            if ($TransferCost) {
                 $TotalTransferCost = $TransferCost->person_price;
-            @endphp
-        @endif
-        @if (count($VisasCost) > 0)
-            @php
-                $TotalVisasCost = 0;
-            @endphp
-        @endif
-        {{-- <a href="www.google.com" class="delete_confirm">aaa</a> --}}
-        <!-- passenger details -->
-        <section class="passenger_section container">
-            <h5> {{ __('links.cartDetails') }} </h5>
-            <form action="{{ LaravelLocalization::getLocalizedURL($localVar, route('makeOrder')) }}" method="POST">
-                <div class="row mx-0">
-                    @if ($RoomCost)
-                        <div class="col-12">
-                            <h4 class="bg-info px-3 py-1 text-white">
-                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    Hotel Room Reservation Details
-                                @else
-                                    تفاصيل حجز غرفة الفندق
-                                @endif
-                            </h4>
-                        </div>
-                    @endif
-                    <div class="col-sm-12 col-md-6">
-                        <input type="hidden" name="tax_percentage" value="{{ $tax_percentage }}">
-                        @if ($RoomCost)
+            }
 
-                            <div class="passenger_info">
-                                @csrf
-                                <div class="row">
+            foreach ($VisasCost as $visa) {
+                $TotalVisasCost += $visa->cost;
+            }
 
-                                    <h6>
-                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                            Reservation Holder Details:
-                                        @else
-                                            تفاصيل مسئول الحجز:
-                                        @endif
-                                    </h6>
-                                    {{-- <div class="col-sm-12 col-md-6 col-xl-4">
-                                        <label class="form-label">
-                                            {{ __('links.salutation') }}
-                                        </label>
-                                        <input type="text" name="adultsSal[]" required class="form-control"
-                                            placeholder=" {{ __('links.mr') }}" aria-label="First name">
-                                    </div> --}}
-                                    <div class="col-sm-12 col-md-6 col-xl-8">
-                                        <label class="form-label"> {{ __('links.cName') }} </label>
+            /* ---- Order totals (unchanged from the previous template, including the
+                   private-tour branch that keys off the last tour in the cart) ---- */
+            $LastTour = $ToursCost->last();
+            if ($LastTour && $LastTour->tour_type_id == 1) {
+                $BeforeTax = $TotalCost + $LastTour->tour_person_cost + $TotalTransferCost + $TotalVisasCost;
+            } else {
+                $BeforeTax = $TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost;
+            }
+            $TaxRate = (float) $tax_percentage / 100;
+            $AfterTax = (float) $BeforeTax * (1 + $TaxRate);
 
-                                        <input type="text" name="adultsNames[]" required
-                                            value="{{ session()->get('SiteUser')['Name'] }}" class="form-control"
-                                            placeholder="{{ __('links.cName') }}">
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-xl-4">
-                                        <label class="form-label">{{ __('links.mobile') }}</label>
+            $ItemsCount = ($RoomCost ? 1 : 0) + count($ToursCost) + ($TransferCost ? 1 : 0) + count($VisasCost);
 
-                                        <input type="text" name="adultsMobile[]" required class="form-control"
-                                            placeholder="{{ __('links.mobile') }}">
-                                    </div>
-                                </div>
-                                @if ($RoomCost->adults_count - 1 > 0)
-                                    <h6>
-                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                            Adults Details:
-                                        @else
-                                            تفاصيل البالغين:
-                                        @endif
-                                    </h6>
-                                    @for ($j = 0; $j < $RoomCost->adults_count - 1; $j++)
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-6 col-xl-4">
-                                                <label class="form-label">{{ __('links.salutation') }}
-                                                    Salutation
-                                                </label>
-                                                <input type="text" name="adultsSal[]" required class="form-control"
-                                                    placeholder="{{ __('links.mr') }} " aria-label="First name">
-                                            </div>
-                                            <div class="col-sm-12 col-md-6 col-xl-4">
-                                                <label class="form-label">{{ __('links.cName') }} </label>
+            // Open the first card by default; the rest start collapsed
+            $FirstOpen = $RoomCost ? 'room' : (count($ToursCost) ? 'tour-0' : ($TransferCost ? 'transfer' : 'visa'));
+        @endphp
 
-                                                <input type="text" name="adultsNames[]" required class="form-control"
-                                                    placeholder="{{ __('links.cName') }} ">
-                                            </div>
-                                            <div class="col-sm-12 col-md-6 col-xl-4">
-                                                <label class="form-label">{{ __('links.mobile') }} </label>
+        <section class="sc container">
+            <div class="sc-header">
+                <h2 class="sc-header__title">{{ __('links.cartDetails') }}</h2>
+                <span class="sc-header__count">
+                    {{ $ItemsCount }} {{ $isEn ? ($ItemsCount == 1 ? 'item' : 'items') : 'عنصر' }}
+                </span>
+            </div>
 
-                                                <input type="text" name="adultsMobile[]" required class="form-control"
-                                                    placeholder="{{ __('links.mobile') }} ">
-                                            </div>
-                                        </div>
-                                    @endfor
-                                @endif
-                                @for ($i = 0; $i < $RoomCost->children_count; $i++)
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                <label class="form-label">Child Details (Age: {{ $ages[$i] }}):
-                                                </label>
-                                            @else
-                                                <label class="form-label">تفاصيل الاطفال (عمر : {{ $ages[$i] }}):
-                                                </label>
-                                            @endif
+            <form action="{{ LaravelLocalization::getLocalizedURL($localVar, route('makeOrder')) }}" method="POST"
+                id="sc-form">
+                @csrf
+                <input type="hidden" name="tax_percentage" value="{{ $tax_percentage }}">
 
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-6">
-                                            <label class="form-label">{{ __('links.cName') }}
-                                            </label>
-                                            <input type="text" class="form-control" required name="childrenNames[]"
-                                                placeholder="{{ __('links.cName') }} " aria-label="First name">
-                                            <input type="hidden" name="childrenAges[]" required
-                                                value="{{ $ages[$i] }}" />
-                                        </div>
-                                    </div>
-                                @endfor
-                                <div class="row">
+                <div class="row g-4">
+                    {{-- ============ LEFT: cart items ============ --}}
+                    <div class="col-lg-8">
+                        <div class="sc-items">
 
-                                    <div class="col-12">
-                                        <label class="form-label">{{ __('links.notes') }} </label>
-                                        <textarea class="form-control" name="{{ __('links.notes') }} " id="exampleFormControlTextarea1" rows="3"></textarea>
-                                    </div>
-
-                                    <input type="hidden" name="cart_id" value="{{ $RoomCost->id }}" />
-                                    <input type="hidden" name="hotel_id" value="{{ $RoomCost->hotel_id }}" />
-                                    <input type="hidden" name="from_date" value="{{ $RoomCost->from_date }}" />
-                                    <input type="hidden" name="to_date" value="{{ $RoomCost->to_date }}" />
-                                    <input type="hidden" name="nights" value="{{ $RoomCost->nights }}" />
-                                    <input type="hidden" name="adults_count" value="{{ $RoomCost->adults_count }}" />
-                                    <input type="hidden" name="children_count"
-                                        value="{{ $RoomCost->children_count }}" />
-                                    <input type="hidden" name="rooms_count" value="{{ $RoomCost->rooms_count }}" />
-                                    <input type="hidden" name="room_type" value="{{ $Type }}" />
-                                    <input type="hidden" name="room_view" value="{{ $RoomCost->en_room_type }}" />
-                                    <input type="hidden" name="food_bev_type" value="{{ $RoomCost->food_bev_type }}" />
-                                    <input type="hidden" name="room_cost" value="{{ $Cost }}" />
-                                    <input type="hidden" name="total_cost" value="{{ $TotalCost }}" />
-                                    <input type="hidden" name="paid_num" value="{{ $PaidChildren }}" />
-                                    <input type="hidden" name="room_id" value="{{ $RoomCost->room_type_cost_id }}" />
-                                    <input type="hidden" name="room_cap" value="{{ $RoomCost->room_cap }}" />
-                                    <input type="hidden" name="user_id" value="{{ $RoomCost->user_id }}" />
-                                    <input type="hidden" name="child_free_age_from"
-                                        value="{{ $RoomCost->child_free_age_from }}" />
-                                    <input type="hidden" name="child_free_age_to"
-                                        value="{{ $RoomCost->child_free_age_to }}" />
-                                    <input type="hidden" name="child_age_cost"
-                                        value="{{ $RoomCost->child_age_cost }}" />
-
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        @if ($RoomCost)
-                            <div class="passenger_info">
-                                @if ($RoomCost)
-                                    <p class="receipt-title">
-                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                            Hotel Reservation Receipt
-                                        @else
-                                            إيصال حجز الفندق
-                                        @endif
-                                    </p>
-                                    <div class="booking_info_card">
-                                        <div class="text-end mb-3">
-                                            <a class="del-hotel delete_trash" href="{{ url("/cart/$RoomCost->id") }}"><i
-                                                    class="fa-solid fa-trash"></i></a>
-                                        </div>
-                                        <div class="booking_info_card_info">
-                                            <div class="info_image">
-                                                <img src="{{ asset('uploads/hotels') }}/{{ $RoomCost->hotel_banner }}"
-                                                    loading="lazy" alt=" blogimage" />
-                                            </div>
-                                            <div class="info_title px-2">
-                                                <div class="card_info">
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        <h6> <a href="{{ url('/hotels/' . $RoomCost->hotel_id) }}"
-                                                                class="">{{ $RoomCost->hotel_enname }} –
-                                                                {{ $RoomCost->hotel_stars }} Stars</a></h6>
-                                                        <span> <i
-                                                                class="fa-solid fa-location-dot"></i>{{ $RoomCost->en_country }}
-                                                            <span>|</span> {{ $RoomCost->en_city }}</span>
-                                                    @else
-                                                        <h6> <a href="{{ url('/hotels/' . $RoomCost->hotel_id) }}"
-                                                                class="">{{ $RoomCost->hotel_arname ?? '' }} –
-                                                                {{ $RoomCost->hotel_stars }} Stars</a></h6>
-                                                        <span> <i
-                                                                class="fa-solid fa-location-dot"></i>{{ $RoomCost->ar_country ?? '' }}
-                                                            <span>|</span> {{ $RoomCost->ar_city ?? '' }}</span>
-                                                    @endif
-
+                            {{-- ---------- Hotel room ---------- --}}
+                            @if ($RoomCost)
+                                <x-website.cart.item id="sc-room" icon="fa-hotel" :open="$FirstOpen === 'room'"
+                                    :type="$isEn ? 'Hotel Reservation' : 'حجز فندق'"
+                                    :title="($isEn ? $RoomCost->hotel_enname : $RoomCost->hotel_arname ?? '') . ' – ' . $RoomCost->hotel_stars . ($isEn ? ' Stars' : ' نجوم')"
+                                    :meta="$RoomCost->rooms_count . ' × ' . $Type . ' · ' . $RoomCost->nights . ' ' . __('links.nights') . ' · ' . $RoomCost->from_date"
+                                    :price="money((float) $TotalCost)" :delete-url="url('/cart/' . $RoomCost->id)">
+                                    <div class="row g-4">
+                                        <div class="col-md-7 order-2 order-md-1">
+                                            <h6 class="sc-section-title">
+                                                {{ $isEn ? 'Reservation Holder' : 'مسئول الحجز' }}
+                                            </h6>
+                                            <div class="row g-3">
+                                                <div class="col-sm-7">
+                                                    <label class="form-label">{{ __('links.cName') }}</label>
+                                                    <input type="text" name="adultsNames[]" required
+                                                        value="{{ session()->get('SiteUser')['Name'] }}"
+                                                        class="form-control" placeholder="{{ __('links.cName') }}">
                                                 </div>
-                                                <div class="rating">
-                                                    @for ($i = 0; $i < $RoomCost->hotel_stars; $i++)
-                                                        <i class="fa-solid fa-star"></i>
-                                                    @endfor
-                                                    @for ($i = 5; $i > $RoomCost->hotel_stars; $i--)
-                                                        <i class="fa-regular fa-star"></i>
-                                                    @endfor
-
+                                                <div class="col-sm-5">
+                                                    <label class="form-label">{{ __('links.mobile') }}</label>
+                                                    <input type="text" name="adultsMobile[]" required class="form-control"
+                                                        placeholder="{{ __('links.mobile') }}">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="remain_info mb-3">
 
-                                            <h5>
-                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                    booking for {{ $RoomCost->nights }} nights
-                                                @else
-                                                    الحجز ل {{ $RoomCost->nights }} ليالي
-                                                @endif
-
-                                            </h5>
-                                            <div class="date">
-
-                                            </div>
-                                            <h5>{{ __('links.rooms') }} </h5>
-
-                                            <p class="mb-0 pb-0">
-                                                {{ $RoomCost->rooms_count }} X {{ $RoomCost->en_room_type }}
-                                                {{ $Type }}
-                                                ({{ $RoomCost->food_bev_type }})
-                                                <span class=" text-end">{{ $RoomCost->rooms_count }} X
-                                                    {{ money($Cost) }} <br> <span class="fw-bold">
-                                                        {{ money((float) $RoomCost->rooms_count * $Cost) }}</span></span>
-                                            </p>
-                                            <br>
-                                            <p class="mb-0 pb-0">
-                                                {{ $RoomCost->adults_count }} X {{ __('links.adult') }}
-                                            </p>
-                                            <br>
-                                            @if ($ages)
-                                                <p class="mb-0 pb-0">
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        {{ $FreeChildren }} X Free Childs (Age From
-                                                        {{ $RoomCost->child_free_age_from }} To
-                                                        {{ $RoomCost->child_free_age_to }}) <span
-                                                            class="">Free</span><br>
-                                                    @else
-                                                        {{ $FreeChildren }} X اطفال مجاني (Age From
-                                                        {{ $RoomCost->child_free_age_from }} الي
-                                                        {{ $RoomCost->child_free_age_to }}) <span
-                                                            class="">مجاني</span><br>
-                                                    @endif
-                                                </p>
-                                                <br>
-                                                <p class="mb-0 pb-0">
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        {{ $PaidChildren }} X Paid Childs (Age From
-                                                        {{ $RoomCost->child_age_from }} To {{ $RoomCost->child_age_to }})
-                                                        <span class=" text-end">{{ $PaidChildren }} X
-                                                            {{ money($RoomCost->child_age_cost) }}
-                                                            <br>
-                                                            <span
-                                                                class="fw-bold">{{ money($PaidChildren * $RoomCost->child_age_cost) }}</span></span><br>
-                                                    @else
-                                                        {{ $PaidChildren }} X الاطفال المدفوعة (Age From
-                                                        {{ $RoomCost->child_age_from }} الي {{ $RoomCost->child_age_to }})
-                                                        <span class=" text-end">{{ $PaidChildren }} X
-                                                            {{ money($RoomCost->child_age_cost) }}
-                                                            <br>
-                                                            <span
-                                                                class="fw-bold">{{ money($PaidChildren * $RoomCost->child_age_cost) }}</span></span><br>
-                                                    @endif
-                                                </p>
-
-                                                <br>
-                                            @endif
-                                            <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                                                <span
-                                                    class=" text-end fw-bold">{{ money((float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost) }}</span><br>
-                                            </p>
-                                            <br>
-                                            <p class="mb-0 pb-0">
-                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                    Booking for {{ $RoomCost->nights }} nights<span
-                                                        class=" text-end fw-bold">{{ $RoomCost->nights }} X
-                                                        {{ money((float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost) }}</span><br>
-                                                @else
-                                                    الحجز من {{ $RoomCost->nights }} ليالي<span
-                                                        class=" text-end fw-bold">{{ $RoomCost->nights }} X
-                                                        {{ money((float) $RoomCost->rooms_count * $Cost + $PaidChildren * $RoomCost->child_age_cost) }}</span><br>
-                                                @endif
-                                            </p>
-                                            <div class="grand_total">
-                                                <h6>
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        Sub-total
-                                                    @else
-                                                        المجموع الفرعي
-                                                    @endif
-                                                </h6>
-                                                <span class="h6"> {{ money((float) $TotalCost) }}</span>
-                                            </div>
-                                            <br>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-12 mb-4" style="border-bottom: 1px solid #d5d5d5">
-                        <hr />
-
-                    </div>
-                    <div class="col-12">
-                        @if (count($ToursCost) > 0)
-                            <h4 class="bg-info px-3 py-1 text-white">
-                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    Tours Reservation Details
-                                @else
-                                    تفاصيل حجز الجولات
-                                @endif
-                            </h4>
-                            <div class="row">
-                                @foreach ($ToursCost as $index => $Tour)
-                                    @php
-                                        $TotalPaidPersons[$index] = $Tour->adults_count;
-                                    @endphp
-                                    <div class="col-sm-12 col-md-6">
-                                        <h6 class="bg-light-info px-3 py-1">
-                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                {{ $Tour->en_name }}
-                                            @else
-                                                {{ $Tour->ar_name ?? '' }}
-                                            @endif <span
-                                                class="">{{ $Tour->tour_date }}</span>
-                                        </h6>
-                                        <div class="passenger_info">
-                                            @csrf
-                                            <div class="row">
-                                                <h6>
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        Reservation Holder Details:
-                                                    @else
-                                                        تفاصيل مسئول الحجز:
-                                                    @endif
-                                                </h6>
-                                                {{-- <div class="col-sm-12 col-md-6 col-xl-4">
-                                                    <label class="form-label">{{ __('links.salutation') }}
-                                                    </label>
-                                                    <input type="text" name="tour_adults_sal[{{ $index }}][]"
-                                                        required class="form-control"
-                                                        placeholder="{{ __('links.mr') }} " aria-label="First name">
-                                                </div> --}}
-                                                @if ($index > 0)
-                                                    <div class="col-12">
-                                                        <button type="button" onclick="copyData({{ $index - 1 }})"
-                                                            class="btn btn-outline-primary float-end mb-3">Copy Data from
-                                                            Above</button>
+                                            @if ($RoomCost->adults_count - 1 > 0)
+                                                <h6 class="sc-section-title">{{ $isEn ? 'Other Adults' : 'البالغين' }}</h6>
+                                                @for ($j = 0; $j < $RoomCost->adults_count - 1; $j++)
+                                                    <div class="row g-3 sc-person">
+                                                        <div class="col-sm-3">
+                                                            <label class="form-label">{{ __('links.salutation') }}</label>
+                                                            <input type="text" name="adultsSal[]" required
+                                                                class="form-control" placeholder="{{ __('links.mr') }}">
+                                                        </div>
+                                                        <div class="col-sm-5">
+                                                            <label class="form-label">{{ __('links.cName') }}</label>
+                                                            <input type="text" name="adultsNames[]" required
+                                                                class="form-control" placeholder="{{ __('links.cName') }}">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="form-label">{{ __('links.mobile') }}</label>
+                                                            <input type="text" name="adultsMobile[]" required
+                                                                class="form-control" placeholder="{{ __('links.mobile') }}">
+                                                        </div>
                                                     </div>
-                                                @endif
-                                                <div class="col-sm-12 col-md-6 col-xl-8">
-                                                    <label class="form-label">{{ __('links.cName') }} </label>
+                                                @endfor
+                                            @endif
 
+                                            @if ($RoomCost->children_count)
+                                                <h6 class="sc-section-title">{{ $isEn ? 'Children' : 'الأطفال' }}</h6>
+                                                <div class="row g-3">
+                                                    @for ($i = 0; $i < $RoomCost->children_count; $i++)
+                                                        <div class="col-sm-6">
+                                                            <label class="form-label">
+                                                                {{ __('links.cName') }}
+                                                                <span class="sc-muted">({{ $isEn ? 'Age' : 'العمر' }}: {{ $ages[$i] ?? '' }})</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" required
+                                                                name="childrenNames[]" placeholder="{{ __('links.cName') }}">
+                                                            <input type="hidden" name="childrenAges[]" required
+                                                                value="{{ $ages[$i] ?? '' }}" />
+                                                        </div>
+                                                    @endfor
+                                                </div>
+                                            @endif
+
+                                            <div class="mt-3">
+                                                <label class="form-label">{{ __('links.notes') }}</label>
+                                                <textarea class="form-control" name="{{ __('links.notes') }} " rows="2"></textarea>
+                                            </div>
+
+                                            <input type="hidden" name="cart_id" value="{{ $RoomCost->id }}" />
+                                            <input type="hidden" name="hotel_id" value="{{ $RoomCost->hotel_id }}" />
+                                            <input type="hidden" name="from_date" value="{{ $RoomCost->from_date }}" />
+                                            <input type="hidden" name="to_date" value="{{ $RoomCost->to_date }}" />
+                                            <input type="hidden" name="nights" value="{{ $RoomCost->nights }}" />
+                                            <input type="hidden" name="adults_count" value="{{ $RoomCost->adults_count }}" />
+                                            <input type="hidden" name="children_count" value="{{ $RoomCost->children_count }}" />
+                                            <input type="hidden" name="rooms_count" value="{{ $RoomCost->rooms_count }}" />
+                                            <input type="hidden" name="room_type" value="{{ $Type }}" />
+                                            <input type="hidden" name="room_view" value="{{ $RoomCost->en_room_type }}" />
+                                            <input type="hidden" name="food_bev_type" value="{{ $RoomCost->food_bev_type }}" />
+                                            <input type="hidden" name="room_cost" value="{{ $Cost }}" />
+                                            <input type="hidden" name="total_cost" value="{{ $TotalCost }}" />
+                                            <input type="hidden" name="paid_num" value="{{ $PaidChildren }}" />
+                                            <input type="hidden" name="room_id" value="{{ $RoomCost->room_type_cost_id }}" />
+                                            <input type="hidden" name="room_cap" value="{{ $RoomCost->room_cap }}" />
+                                            <input type="hidden" name="user_id" value="{{ $RoomCost->user_id }}" />
+                                            <input type="hidden" name="child_free_age_from" value="{{ $RoomCost->child_free_age_from }}" />
+                                            <input type="hidden" name="child_free_age_to" value="{{ $RoomCost->child_free_age_to }}" />
+                                            <input type="hidden" name="child_age_cost" value="{{ $RoomCost->child_age_cost }}" />
+                                        </div>
+
+                                        <div class="col-md-5 order-1 order-md-2">
+                                            <div class="sc-panel">
+                                                <div class="sc-media">
+                                                    <img src="{{ asset('uploads/hotels') }}/{{ $RoomCost->hotel_banner }}"
+                                                        loading="lazy" alt="">
+                                                    <div>
+                                                        <a href="{{ url('/hotels/' . $RoomCost->hotel_id) }}" class="sc-media__title">
+                                                            {{ $isEn ? $RoomCost->hotel_enname : $RoomCost->hotel_arname ?? '' }}
+                                                        </a>
+                                                        <div class="sc-stars">
+                                                            @for ($i = 0; $i < $RoomCost->hotel_stars; $i++)
+                                                                <i class="fa-solid fa-star"></i>
+                                                            @endfor
+                                                            @for ($i = 5; $i > $RoomCost->hotel_stars; $i--)
+                                                                <i class="fa-regular fa-star"></i>
+                                                            @endfor
+                                                        </div>
+                                                        <span class="sc-muted">
+                                                            <i class="fa-solid fa-location-dot"></i>
+                                                            {{ $isEn ? $RoomCost->en_city : $RoomCost->ar_city ?? '' }},
+                                                            {{ $isEn ? $RoomCost->en_country : $RoomCost->ar_country ?? '' }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <ul class="sc-lines">
+                                                    <li>
+                                                        <span>{{ $RoomCost->rooms_count }} × {{ $RoomCost->en_room_type }} {{ $Type }}
+                                                            <small class="sc-muted d-block">{{ $RoomCost->food_bev_type }}</small></span>
+                                                        <span>{{ money((float) $RoomCost->rooms_count * $Cost) }}</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>{{ $RoomCost->adults_count }} × {{ __('links.adult') }}</span>
+                                                        <span></span>
+                                                    </li>
+                                                    @if ($ages)
+                                                        <li>
+                                                            <span>{{ $FreeChildren }} × {{ $isEn ? 'Free children' : 'أطفال مجاني' }}
+                                                                <small class="sc-muted d-block">{{ $isEn ? 'Age' : 'العمر' }}
+                                                                    {{ $RoomCost->child_free_age_from }}–{{ $RoomCost->child_free_age_to }}</small></span>
+                                                            <span>{{ $isEn ? 'Free' : 'مجاني' }}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span>{{ $PaidChildren }} × {{ $isEn ? 'Paid children' : 'أطفال مدفوعة' }}
+                                                                <small class="sc-muted d-block">{{ $isEn ? 'Age' : 'العمر' }}
+                                                                    {{ $RoomCost->child_age_from }}–{{ $RoomCost->child_age_to }}</small></span>
+                                                            <span>{{ money($PaidChildren * $RoomCost->child_age_cost) }}</span>
+                                                        </li>
+                                                    @endif
+                                                    <li>
+                                                        <span>{{ $isEn ? 'Per night' : 'لليلة' }}</span>
+                                                        <span>{{ money($RoomPerNight) }}</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>{{ $RoomCost->nights }} {{ __('links.nights') }}
+                                                            <small class="sc-muted d-block">{{ $RoomCost->from_date }} → {{ $RoomCost->to_date }}</small></span>
+                                                        <span>× {{ $RoomCost->nights }}</span>
+                                                    </li>
+                                                    <li class="sc-lines__total">
+                                                        <span>{{ $isEn ? 'Sub-total' : 'المجموع الفرعي' }}</span>
+                                                        <span>{{ money((float) $TotalCost) }}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </x-website.cart.item>
+                            @endif
+
+                            {{-- ---------- Tours ---------- --}}
+                            @foreach ($ToursCost as $index => $Tour)
+                                <x-website.cart.item id="sc-tour-{{ $index }}" icon="fa-route"
+                                    :open="$FirstOpen === 'tour-' . $index"
+                                    :type="$isEn ? 'Tour Reservation' : 'حجز جولة'"
+                                    :title="$isEn ? $Tour->en_name : $Tour->ar_name ?? ''"
+                                    :meta="$Tour->tour_date . ' · ' . ($isEn ? $Tour->en_city : $Tour->ar_city ?? '') . ' · ' . ($Tour->tour_type_id == 1 ? ($isEn ? 'Private' : 'خاصة') : $Tour->adults_count . ' × ' . __('links.adult'))"
+                                    :price="money($TourSubtotal[$index])" :delete-url="url('/cart/' . $Tour->id)">
+                                    <div class="row g-4">
+                                        <div class="col-md-7 order-2 order-md-1">
+                                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                                                <h6 class="sc-section-title m-0">
+                                                    {{ $isEn ? 'Reservation Holder' : 'مسئول الحجز' }}
+                                                </h6>
+                                                @if ($index > 0)
+                                                    <button type="button" onclick="copyData({{ $index - 1 }})"
+                                                        class="sc-link-btn">
+                                                        <i class="fa-regular fa-copy"></i>
+                                                        {{ $isEn ? 'Copy from previous tour' : 'نسخ من الجولة السابقة' }}
+                                                    </button>
+                                                @endif
+                                            </div>
+                                            <div class="row g-3 mt-0">
+                                                <div class="col-sm-7">
+                                                    <label class="form-label">{{ __('links.cName') }}</label>
                                                     <input type="text" name="tour_adults_name[{{ $index }}][]"
                                                         value="{{ session()->get('SiteUser')['Name'] }}" required
                                                         class="form-control" id="holder-name-{{ $index }}"
-                                                        placeholder="{{ __('links.cName') }} ">
+                                                        placeholder="{{ __('links.cName') }}">
                                                 </div>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
-                                                    <label class="form-label">{{ __('links.mobile') }} </label>
-
-                                                    <input type="text"
-                                                        name="tour_adults_mobile[{{ $index }}][]" required
+                                                <div class="col-sm-5">
+                                                    <label class="form-label">{{ __('links.mobile') }}</label>
+                                                    <input type="text" name="tour_adults_mobile[{{ $index }}][]" required
                                                         class="form-control" id="holder-phone-{{ $index }}"
-                                                        placeholder="{{ __('links.mobile') }} ">
+                                                        placeholder="{{ __('links.mobile') }}">
                                                 </div>
-                                                <div class="col-sm-12 col-md-8">
-                                                    <label class="form-label">{{ __('links.email') }} </label>
-
-                                                    <input type="text"
-                                                        name="tour_adults_email[{{ $index }}][]" required
+                                                <div class="col-sm-6">
+                                                    <label class="form-label">{{ __('links.email') }}</label>
+                                                    <input type="text" name="tour_adults_email[{{ $index }}][]" required
                                                         class="form-control" id="holder-email-{{ $index }}"
                                                         value="{{ session()->get('SiteUser')['Email'] }}"
-                                                        placeholder="{{ __('links.email') }} ">
+                                                        placeholder="{{ __('links.email') }}">
                                                 </div>
-                                                <div class="col-sm-12 col-md-8">
+                                                <div class="col-sm-6">
                                                     <label class="form-label">{{ __('links.pickupP') }}</label>
-
-                                                    <input type="text" name="tour_pickup_point[{{ $index }}]"
-                                                        required class="form-control"
-                                                        id="holder-pickup-{{ $index }}"
+                                                    <input type="text" name="tour_pickup_point[{{ $index }}]" required
+                                                        class="form-control" id="holder-pickup-{{ $index }}"
                                                         placeholder="{{ __('links.pickupP') }}">
                                                 </div>
                                             </div>
-                                            {{-- <h6>
-                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                    Adults Details:
-                                                @else
-                                                    تفاصيل البالغين:
-                                                @endif
-                                            </h6> --}}
-                                            @for ($j = 0; $j < $Tour->adults_count - 1; $j++)
-                                                <div class="row">
-                                                    {{-- <div class="col-sm-12 col-md-6 col-xl-4">
-                                                        <label class="form-label">{{ __('links.salutation') }}
-                                                        </label>
-                                                        <input type="text"
-                                                            name="tour_adults_sal[{{ $index }}][]" required
-                                                            class="form-control" placeholder="{{ __('links.mr') }} MR"
-                                                            aria-label="First name">
-                                                    </div> --}}
-                                                    <div class="col-sm-12 col-md-6 col-xl-8">
-                                                        <label class="form-label">{{ __('links.cName') }} </label>
 
-                                                        <input type="text"
-                                                            name="tour_adults_name[{{ $index }}][]" required
-                                                            class="form-control" placeholder="{{ __('links.cName') }} ">
+                                            @if ($Tour->adults_count - 1 > 0)
+                                                <h6 class="sc-section-title">{{ $isEn ? 'Other Adults' : 'البالغين' }}</h6>
+                                                @for ($j = 0; $j < $Tour->adults_count - 1; $j++)
+                                                    <div class="row g-3 sc-person">
+                                                        <div class="col-sm-5">
+                                                            <label class="form-label">{{ __('links.cName') }}</label>
+                                                            <input type="text" name="tour_adults_name[{{ $index }}][]"
+                                                                required class="form-control"
+                                                                placeholder="{{ __('links.cName') }}">
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label class="form-label">{{ __('links.mobile') }}</label>
+                                                            <input type="text" name="tour_adults_mobile[{{ $index }}][]"
+                                                                required class="form-control"
+                                                                placeholder="{{ __('links.mobile') }}">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <label class="form-label">{{ __('links.email') }}</label>
+                                                            <input type="text" name="tour_adults_email[{{ $index }}][]"
+                                                                required class="form-control"
+                                                                placeholder="{{ __('links.email') }}">
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-12 col-md-6 col-xl-4">
-                                                        <label class="form-label">{{ __('links.mobile') }}</label>
+                                                @endfor
+                                            @endif
 
-                                                        <input type="text"
-                                                            name="tour_adults_mobile[{{ $index }}][]" required
-                                                            class="form-control"
-                                                            placeholder="{{ __('links.mobile') }} ">
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-8">
-                                                        <label class="form-label">{{ __('links.email') }} </label>
+                                            @if ($Tour->children_count)
+                                                <h6 class="sc-section-title">{{ $isEn ? 'Children' : 'الأطفال' }}</h6>
+                                                <div class="row g-3">
+                                                    @for ($i = 0; $i < $Tour->children_count; $i++)
+                                                        <div class="col-sm-6">
+                                                            <label class="form-label">
+                                                                {{ __('links.cName') }}
+                                                                @isset($TourAges[$index][$i])
+                                                                    <span class="sc-muted">({{ $isEn ? 'Age' : 'العمر' }}: {{ $TourAges[$index][$i] }})</span>
+                                                                @endisset
+                                                            </label>
+                                                            <input type="text" class="form-control" required
+                                                                name="tour_child_name[{{ $index }}][]"
+                                                                placeholder="{{ __('links.cName') }}">
+                                                            <input type="hidden" name="tour_child_age[{{ $index }}][]"
+                                                                required value="{{ $TourAges[$index][$i] ?? '' }}" />
+                                                        </div>
+                                                    @endfor
+                                                </div>
+                                            @endif
 
-                                                        <input type="text"
-                                                            name="tour_adults_email[{{ $index }}][]" required
-                                                            class="form-control" placeholder="{{ __('links.email') }} ">
+                                            <div class="mt-3">
+                                                <label class="form-label">{{ __('links.notes') }}</label>
+                                                <textarea class="form-control" name="tour_notes[{{ $index }}]" id="holder-notes-{{ $index }}" rows="2"></textarea>
+                                            </div>
+
+                                            <input type="hidden" name="tour_id[{{ $index }}]" value="{{ $Tour->tour_id }}" />
+                                            <input type="hidden" name="tour_date[{{ $index }}]" value="{{ $Tour->tour_date }}" />
+                                            <input type="hidden" name="tour_adults_count[{{ $index }}]" value="{{ $Tour->adults_count }}" />
+                                            <input type="hidden" name="tour_children_count[{{ $index }}]" value="{{ $Tour->children_count }}" />
+                                            <input type="hidden" name="tour_total_cost[{{ $index }}]" value="{{ $TourTotalCost[$index] }}" />
+                                            <input type="hidden" name="tour_cost[{{ $index }}]" value="{{ $Tour->tour_person_cost }}" />
+                                            <input type="hidden" name="tour_ages[{{ $index }}]" value="{{ $Tour->ages }}" />
+                                        </div>
+
+                                        <div class="col-md-5 order-1 order-md-2">
+                                            <div class="sc-panel">
+                                                <div class="sc-media">
+                                                    <img src="{{ asset('uploads/tours') }}/{{ $Tour->banner }}" loading="lazy" alt="">
+                                                    <div>
+                                                        <a href="{{ url('/tours/') }}" class="sc-media__title">
+                                                            {{ $isEn ? $Tour->en_name : $Tour->ar_name ?? '' }}
+                                                        </a>
+                                                        <span class="sc-muted d-block">
+                                                            <i class="fa-solid fa-location-dot"></i>
+                                                            {{ $isEn ? $Tour->en_city : $Tour->ar_city ?? '' }},
+                                                            {{ $isEn ? $Tour->en_country : $Tour->ar_country ?? '' }}
+                                                        </span>
+                                                        <span class="sc-muted d-block">
+                                                            <i class="fa-regular fa-calendar"></i> {{ $Tour->tour_date }}
+                                                        </span>
                                                     </div>
                                                 </div>
-                                            @endfor
-                                            @for ($i = 0; $i < $Tour->children_count; $i++)
-                                                @php
-                                                    if ($Tour->ages && explode(',', $Tour->ages)[$i] > 2) {
-                                                        $TotalPaidPersons[$index]++;
-                                                    }
-                                                @endphp
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                            <label class="form-label">Child Details (Age:
-                                                                {{ explode(',', $Tour->ages)[$i] }}):
-                                                            </label>
-                                                        @else
-                                                            <label class="form-label">تفاصيل الاطفال (العمر:
-                                                                {{ explode(',', $Tour->ages)[$i] }}):
-                                                            </label>
+                                                <ul class="sc-lines">
+                                                    @if ($Tour->tour_type_id == 1)
+                                                        <li>
+                                                            <span>{{ $isEn ? 'Private tour' : 'جولة خاصة' }}
+                                                                <small class="sc-muted d-block">{{ $Tour->private_number }}
+                                                                    {{ $isEn ? 'allowed number of people' : 'عدد الأشخاص المسموح' }}</small></span>
+                                                            <span></span>
+                                                        </li>
+                                                    @else
+                                                        <li>
+                                                            <span>{{ $Tour->adults_count }} × {{ __('links.adult') }}
+                                                                <small class="sc-muted d-block">{{ $Tour->adults_count }} × {{ money($Tour->tour_person_cost) }}</small></span>
+                                                            <span>{{ money($Tour->adults_count * $Tour->tour_person_cost) }}</span>
+                                                        </li>
+                                                        @if ($Tour->children_count)
+                                                            <li>
+                                                                <span>{{ $Tour->children_count - ($TotalPaidPersons[$index] - $Tour->adults_count) }}
+                                                                    × {{ $isEn ? 'Free children (< 2 years)' : 'أطفال مجاني (< سنتين)' }}</span>
+                                                                <span>{{ $isEn ? 'Free' : 'مجاني' }}</span>
+                                                            </li>
+                                                            <li>
+                                                                <span>{{ $TotalPaidPersons[$index] - $Tour->adults_count }}
+                                                                    × {{ $isEn ? 'Paid children' : 'أطفال مدفوعة' }}</span>
+                                                                <span>{{ money(($TotalPaidPersons[$index] - $Tour->adults_count) * $Tour->tour_person_cost) }}</span>
+                                                            </li>
                                                         @endif
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label">{{ __('links.cName') }}
-                                                        </label>
-                                                        <input type="text" class="form-control" required
-                                                            name="tour_child_name[{{ $index }}][]"
-                                                            placeholder="{{ __('links.cName') }} "
-                                                            aria-label="First name">
-                                                        <input type="hidden"
-                                                            name="tour_child_age[{{ $index }}][]" required
-                                                            value="{{ explode(',', $Tour->ages)[$i] }}" />
-                                                    </div>
-                                                </div>
-                                            @endfor
-                                            <div class="row">
-
-                                                <div class="col-12">
-                                                    <label class="form-label">{{ __('links.notes') }} </label>
-                                                    <textarea class="form-control" name="tour_notes[{{ $index }}]" id="holder-notes-{{ $index }}"
-                                                        rows="3"></textarea>
-                                                </div>
-                                                <input type="hidden" name="tour_id[{{ $index }}]"
-                                                    value="{{ $Tour->tour_id }}" />
-                                                <input type="hidden" name="tour_date[{{ $index }}]"
-                                                    value="{{ $Tour->tour_date }}" />
-                                                <input type="hidden" name="tour_adults_count[{{ $index }}]"
-                                                    value="{{ $Tour->adults_count }}" />
-                                                <input type="hidden" name="tour_children_count[{{ $index }}]"
-                                                    value="{{ $Tour->children_count }}" />
-                                                @php
-                                                    $TourTotalCost[$index] =
-                                                        $Tour->tour_person_cost * $TotalPaidPersons[$index];
-                                                    $TotalToursFees += $TourTotalCost[$index];
-                                                @endphp
-                                                <input type="hidden" name="tour_total_cost[{{ $index }}]"
-                                                    value="{{ $TourTotalCost[$index] }}" />
-                                                <input type="hidden" name="tour_cost[{{ $index }}]"
-                                                    value="{{ $Tour->tour_person_cost }}" />
-                                                <input type="hidden" name="tour_ages[{{ $index }}]"
-                                                    value="{{ $Tour->ages }}" />
+                                                    @endif
+                                                    <li class="sc-lines__total">
+                                                        <span>{{ $isEn ? 'Sub-total' : 'المجموع الفرعي' }}</span>
+                                                        <span>{{ money($TourSubtotal[$index]) }}</span>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
+                                </x-website.cart.item>
+                            @endforeach
 
-                                    <div class="col-sm-12 col-md-6">
-                                        <div class="passenger_info">
-                                            <p class="receipt-title">
-                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                    Tours Reservation Receipt
-                                                @else
-                                                    إيصال حجز الجولات
-                                                @endif
-                                            </p>
-                                            <div class="booking_info_card">
-                                                <div class="text-end mb-3"><a class="del-hotel delete_trash"
-                                                        href="{{ url("/cart/$Tour->id") }}"><i
-                                                            class="fa-solid fa-trash"></i></a></div>
-                                                <div class="booking_info_card_info">
-                                                    <div class="info_image">
-                                                        <img src="{{ asset('uploads/tours') }}/{{ $Tour->banner }}"
-                                                            alt=" blogimage" />
-                                                    </div>
-                                                    <div class="info_title px-2">
-                                                        <div class="card_info">
-                                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                <h6> <a href="{{ url('/tours/') }}"
-                                                                        class="">{{ $Tour->en_name }}</a></h6>
-                                                                <span> <i
-                                                                        class="fa-solid fa-location-dot"></i>{{ $Tour->en_country }}
-                                                                    <span>|</span> {{ $Tour->en_city }}</span>
-                                                            @else
-                                                                <h6> <a href="{{ url('/tours/') }}"
-                                                                        class="">{{ $Tour->ar_name ?? '' }}</a>
-                                                                </h6>
-                                                                <span> <i
-                                                                        class="fa-solid fa-location-dot"></i>{{ $Tour->ar_country ?? '' }}
-                                                                    <span>|</span> {{ $Tour->ar_city ?? '' }}</span>
-                                                            @endif
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @if (isset($Tour) && $Tour->tour_type_id == 1)
-                                                    <div class="remain_info mb-3">
-                                                        <div class="date">
-
-                                                        </div>
-                                                        <h5>{{ __('links.tours') }} </h5>
-                                                        <p class="mb-0 pb-0">
-                                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                {{ $Tour->private_number }}
-                                                                <span class="">
-                                                                    allowed number of people</span><br>
-                                                            @else
-                                                                {{ $Tour->private_number }}
-                                                                <span class="">
-                                                                    عدد الأشخاص المسموح</span><br>
-                                                            @endif
-                                                        </p>
-                                                        {{-- <p class="mb-0 pb-0">
-                                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                {{ $Tour->private_number  }}
-                                                                <span class="">
-                                                                     number of people</span><br>
-                                                                @else
-                                                                    {{ $Tour->private_number }}
-                                                                    <span class="">
-                                                                        عدد الأشخاص الحالي</span><br>
-                                                            @endif
-                                                        </p> --}}
-                                                        <div class="grand_total">
-                                                            <h6>
-                                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                    Sub-total
-                                                                @else
-                                                                    المجموع الفرعي
-                                                                @endif
-                                                            </h6>
-                                                            <span class="h6">
-                                                                {{ money($Tour->tour_person_cost) }}</span>
-                                                        </div>
-
-                                                        <br>
-                                                    </div>
-                                                @else
-                                                    <div class="remain_info mb-3">
-                                                        <div class="date">
-
-                                                        </div>
-                                                        <h5>{{ __('links.tours') }} </h5>
-
-                                                        <p class="mb-0 pb-0">
-                                                            {{ $Tour->adults_count }} X {{ __('links.adult') }} <span
-                                                                class=" text-end">{{ $Tour->adults_count }} X
-                                                                {{ money($Tour->tour_person_cost) }}<br><span
-                                                                    class="fw-bold">{{ money($Tour->adults_count * $Tour->tour_person_cost) }}</span></span>
-                                                        </p>
-                                                        <br>
-                                                        <p class="mb-0 pb-0">
-                                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                {{ $Tour->children_count - ($TotalPaidPersons[$index] - $Tour->adults_count) }}
-                                                                X Free Childs (< 2 years) <span class="">
-                                                                    Free</span><br>
-                                                                @else
-                                                                    {{ $Tour->children_count - ($TotalPaidPersons[$index] - $Tour->adults_count) }}
-                                                                    X اطفال مجاني (< سنتين) <span class="">
-                                                                        مجاني</span><br>
-                                                            @endif
-                                                        </p>
-                                                        <br>
-                                                        <p class="mb-0 pb-0">
-                                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                {{ $TotalPaidPersons[$index] - $Tour->adults_count }} X
-                                                                Paid
-                                                                Childs
-                                                                <span
-                                                                    class=" text-end">{{ $TotalPaidPersons[$index] - $Tour->adults_count }}
-                                                                    X {{ money($Tour->tour_person_cost) }} <br> <span
-                                                                        class="fw-bold text-end">{{ money(($TotalPaidPersons[$index] - $Tour->adults_count) * $Tour->tour_person_cost) }}</span></span><br>
-                                                            @else
-                                                                {{ $TotalPaidPersons[$index] - $Tour->adults_count }} X
-                                                                اطفال
-                                                                مدفوعة
-                                                                <span
-                                                                    class=" text-end">{{ $TotalPaidPersons[$index] - $Tour->adults_count }}
-                                                                    X {{ money($Tour->tour_person_cost) }} <br> <span
-                                                                        class="fw-bold text-end">{{ money(($TotalPaidPersons[$index] - $Tour->adults_count) * $Tour->tour_person_cost) }}</span></span><br>
-                                                            @endif
-                                                        </p>
-
-                                                        <br>
-                                                        <p class="mb-0 pb-0"
-                                                            style="border-top: 1px solid rgb(184, 184, 184)">
-                                                            <span
-                                                                class=" text-end fw-bold">{{ money($TotalPaidPersons[$index] * $Tour->tour_person_cost) }}</span><br>
-                                                        </p>
-                                                        <br>
-                                                        <div class="grand_total">
-                                                            <h6>
-                                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                    Sub-total
-                                                                @else
-                                                                    المجموع الفرعي
-                                                                @endif
-                                                            </h6>
-                                                            <span class="h6">
-                                                                {{ money($TotalPaidPersons[$index] * $Tour->tour_person_cost) }}</span>
-                                                        </div>
-
-                                                        <br>
-                                                    </div>
-                                                @endif
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mb-4" style="border-bottom: 1px solid #d5d5d5">
-                                        <hr />
-
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-12">
-                        @if ($TransferCost)
-                            <h4 class="bg-info px-3 py-1 text-white">
-                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    Transportation Reservation Details
-                                @else
-                                    تفاصيل حجز الإنتقالات
-                                @endif
-                            </h4>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="passenger_info">
-                                        @csrf
-                                        <div class="row my-2">
-                                            <h6 class="fw-bold">
-                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                    Vehicle Details:
-                                                @else
-                                                    تفاصيل السيارة:
-                                                @endif
+                            {{-- ---------- Transfer ---------- --}}
+                            @if ($TransferCost)
+                                @php
+                                    $FromLoc = $isEn ? $TransferCost->from_location_enname : $TransferCost->from_location_arname ?? '';
+                                    $ToLoc = $isEn ? $TransferCost->to_location_enname : $TransferCost->to_location_arname ?? '';
+                                    $CarModel = $isEn ? $TransferCost->model_enname : $TransferCost->model_arname ?? '';
+                                    $CarClass = $isEn ? $TransferCost->class_enname : $TransferCost->class_arname ?? '';
+                                @endphp
+                                <x-website.cart.item id="sc-transfer" icon="fa-car" :open="$FirstOpen === 'transfer'"
+                                    :type="$isEn ? 'Transportation' : 'انتقالات'"
+                                    :title="$FromLoc . ' → ' . $ToLoc"
+                                    :meta="$TransferCost->transfer_date . ' · ' . $CarModel . ' (' . $CarClass . ')'"
+                                    :price="money((float) $TransferCost->person_price)" price-class="t_rec"
+                                    :delete-url="url('/cart/' . $TransferCost->id)">
+                                    <div class="row g-4">
+                                        <div class="col-md-7 order-2 order-md-1">
+                                            <h6 class="sc-section-title">
+                                                {{ $isEn ? 'Reservation Holder' : 'مسئول الحجز' }}
                                             </h6>
-                                            <div class="col-md-4 mb-3">
-                                                <div class="img-holder"
-                                                    style="background-image: url('{{ asset('uploads/carModels') }}/{{ $TransferCost->image }}')">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                    <p class="mb-0">Car Model:
-                                                        <strong>{{ $TransferCost->model_enname }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">Car Capacity:
-                                                        <strong>{{ $TransferCost->capacity }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">Class Type:
-                                                        <strong>{{ $TransferCost->class_enname }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">Starting point (from):
-                                                        <strong>{{ $TransferCost->from_location_enname }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">Route Destination (to):
-                                                        <strong>{{ $TransferCost->to_location_enname }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">Transportation Fees:
-                                                        <strong>{{ money($TransferCost->person_price) }}</strong>
-                                                    </p>
-                                                @else
-                                                    <p class="mb-0">موديل السيارة:
-                                                        <strong>{{ $TransferCost->model_arname ?? '' }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">سعة السيارة:
-                                                        <strong>{{ $TransferCost->capacity }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">فئه السيارة:
-                                                        <strong>{{ $TransferCost->class_arname ?? '' }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">نقطه البداية (من):
-                                                        <strong>{{ $TransferCost->from_location_arname ?? '' }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">نقطة الوصول (الي):
-                                                        <strong>{{ $TransferCost->to_location_arname ?? '' }}</strong>
-                                                    </p>
-                                                    <p class="mb-0">تكلفة الرحلة:
-                                                        <strong>{{ money($TransferCost->person_price) }}</strong>
-                                                    </p>
-                                                @endif
-
-                                            </div>
-
-                                            <h6 class="fw-bold">
-                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                    Reservation Holder Details:
-                                                @else
-                                                    تفاصيل مسئول الحجز:
-                                                @endif
-                                            </h6>
-                                            <div class="row">
-                                                {{-- <div class="col-sm-12 col-md-6 col-xl-4">
-                                                    <label class="form-label">{{ __('links.salutation') }}
-                                                    </label>
-                                                    <input type="text" name="transferSal" class="form-control"
-                                                        required="required" placeholder="{{ __('links.mr') }}"
-                                                        aria-label="First name">
-                                                </div> --}}
-                                                <div class="col-sm-12 col-md-6 col-xl-8">
-                                                    <label class="form-label">{{ __('links.cName') }} </label>
-
+                                            <div class="row g-3">
+                                                <div class="col-sm-7">
+                                                    <label class="form-label">{{ __('links.cName') }}</label>
                                                     <input type="text" name="transferName"
                                                         value="{{ session()->get('SiteUser')['Name'] }}"
                                                         class="form-control" required="required"
                                                         placeholder="{{ __('links.cName') }}">
                                                 </div>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
-                                                    <label class="form-label">{{ __('links.mobile') }} </label>
-
+                                                <div class="col-sm-5">
+                                                    <label class="form-label">{{ __('links.mobile') }}</label>
                                                     <input type="text" name="transferMobile" class="form-control"
                                                         required="required" placeholder="{{ __('links.mobile') }}">
                                                 </div>
-                                                <div class="col-sm-12">
-                                                    <label class="form-label">{{ __('links.email') }} </label>
-
+                                                <div class="col-sm-6">
+                                                    <label class="form-label">{{ __('links.email') }}</label>
                                                     <input type="email" name="transferEmail"
                                                         value="{{ session()->get('SiteUser')['Email'] }}"
                                                         class="form-control" required="required"
                                                         placeholder="{{ __('links.email') }}">
                                                 </div>
-                                                <input type="hidden" name="transferJob" id="transferJob"
-                                                    value=" ">
-                                                {{-- <div class="col-sm-12">
-                                                    <label class="form-label">{{ __('links.job') }}</label>
-
-                                                    <input type="text" name="transferJob" value=" " class="form-control"
-                                                        placeholder="{{ __('links.job') }}">
-                                                </div> --}}
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-6">
                                                     <label class="form-label">{{ __('links.hotel') }}</label>
-
                                                     <input type="text" name="hotel_name" class="form-control"
                                                         required="required" placeholder="{{ __('links.hotel') }}">
                                                 </div>
-
                                             </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label class="form-label">{{ __('links.notes') }}</label>
-                                                    <textarea class="form-control" name="transferNotes" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <input type="hidden" name="transferJob" id="transferJob" value=" ">
+
+                                            <div class="sc-toggle-row">
+                                                <div class="form-check m-0">
+                                                    <input class="form-check-input" type="checkbox" name="default_holder"
+                                                        id="transHolderFlag">
+                                                    <label class="form-check-label" for="transHolderFlag">
+                                                        {{ $isEn ? 'Go & Return' : 'ذهاب & عودة' }}
+                                                    </label>
                                                 </div>
-                                                <input type="hidden" name="transfer_id"
-                                                    value="{{ $TransferCost->transfer_id }}" />
-                                                <input type="hidden" name="transfer_date"
-                                                    value="{{ $TransferCost->transfer_date }}" />
-                                                <input type="hidden" name="car_model"
-                                                    value="@if (LaravelLocalization::getCurrentLocale() === 'en') {{ $TransferCost->model_enname }}
-                                                    @else
-                                                    {{ $TransferCost->model_arname ?? '' }} @endif" />
-                                                <input type="hidden" name="car_class"
-                                                    value="@if (LaravelLocalization::getCurrentLocale() === 'en') {{ $TransferCost->class_enname }}
-
-                                                    @else
-                                                    {{ $TransferCost->class_arname ?? '' }} @endif" />
-                                                <input type="hidden" name="from_loc"
-                                                    value="@if (LaravelLocalization::getCurrentLocale() === 'en') {{ $TransferCost->from_location_enname }}
-
-                                                    @else
-                                                    {{ $TransferCost->from_location_arname ?? '' }} @endif" />
-                                                <input type="hidden" name="to_loc"
-                                                    value="@if (LaravelLocalization::getCurrentLocale() === 'en') {{ $TransferCost->to_location_enname }}
-
-                                                    @else
-                                                    {{ $TransferCost->to_location_arname ?? '' }} @endif" />
-
-                                                <input type="hidden" name="capacity"
-                                                    value="{{ $TransferCost->capacity }}" />
-                                                <input type="hidden" name="fees" id="t_price"
-                                                    value="{{ $TransferCost->person_price }}" />
-                                                <input type="hidden" name="image"
-                                                    value="{{ $TransferCost->image }}" />
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-check my-2">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="default_holder" id="transHolderFlag">
-                                                        <label class="form-check-label ps-2" for="transHolderFlag">
-                                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                Go & Return
-                                                            @else
-                                                                ذهاب & عودة
-                                                            @endif
-
-                                                        </label>
-                                                    </div>
-                                                    <div class="row trans-holder" style="display: none;">
-                                                        <div class="col-sm-12 col-md-8">
-                                                            <label class="mb-2">
-                                                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                    Return Date
-                                                                @else
-                                                                    تاريخ العودة
-                                                                @endif
-
-                                                            </label>
-                                                            <br />
-                                                            <div class="details px-1">
-                                                                <input type="text" id="transfer_date"
-                                                                    min="{{ $TransferCost->transfer_date }}"
-                                                                    placeholder="DD/MM/YYYY"
-                                                                    class="form-control transfer_date is_holder"
-                                                                    name="return" max="2025-12-31" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="trans-holder" style="display: none;">
+                                                    <label class="form-label" for="transfer_date">
+                                                        {{ $isEn ? 'Return Date' : 'تاريخ العودة' }}
+                                                    </label>
+                                                    <input type="text" id="transfer_date"
+                                                        min="{{ $TransferCost->transfer_date }}" placeholder="DD/MM/YYYY"
+                                                        class="form-control transfer_date is_holder" name="return"
+                                                        max="2025-12-31" autocomplete="off">
                                                 </div>
                                             </div>
+
+                                            <div class="mt-3">
+                                                <label class="form-label">{{ __('links.notes') }}</label>
+                                                <textarea class="form-control" name="transferNotes" rows="2"></textarea>
+                                            </div>
+
+                                            <input type="hidden" name="transfer_id" value="{{ $TransferCost->transfer_id }}" />
+                                            <input type="hidden" name="transfer_date" value="{{ $TransferCost->transfer_date }}" />
+                                            <input type="hidden" name="car_model" value="{{ $CarModel }}" />
+                                            <input type="hidden" name="car_class" value="{{ $CarClass }}" />
+                                            <input type="hidden" name="from_loc" value="{{ $FromLoc }}" />
+                                            <input type="hidden" name="to_loc" value="{{ $ToLoc }}" />
+                                            <input type="hidden" name="capacity" value="{{ $TransferCost->capacity }}" />
+                                            <input type="hidden" name="fees" id="t_price" value="{{ $TransferCost->person_price }}" />
+                                            <input type="hidden" name="image" value="{{ $TransferCost->image }}" />
                                         </div>
 
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="passenger_info">
-                                        <p class="receipt-title">
-                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                Transportation Receipt
-                                            @else
-                                                إيصال الإنتقال
-                                            @endif
-                                        </p>
-                                        <div class="booking_info_card">
-                                            {{-- onclick='confirmClick(event)' --}}
-                                            <div class="text-end mb-3"><a class="del-hotel delete_trash"
-                                                    href="{{ url("/cart/$TransferCost->id") }}"><i
-                                                        class="fa-solid fa-trash"></i></a></div>
-                                            <div class="remain_info mb-3">
-                                                <h5>
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        Vehicle
-                                                    @else
-                                                        تفاصيل الإنتقال
-                                                    @endif
-                                                </h5>
-
-                                                <p class="mb-0 pb-0">
-                                                    {{ __('links.from') }} : <span class="">
-                                                        {{ $TransferCost->from_location_enname }}</span>
-                                                </p>
-                                                <br />
-                                                <p class="mb-0 pb-0">
-                                                    {{ __('links.to') }} : <span class="">
-                                                        {{ $TransferCost->to_location_enname }}</span>
-                                                </p>
-                                                <br>
-                                                <p class="mb-0 pb-0">
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        Transportation Date :
-                                                    @else
-                                                        تاريخ الإنتقال:
-                                                    @endif <span class="">
-                                                        {{ $TransferCost->transfer_date }}</span>
-                                                </p>
-                                                <br>
-                                                <p class="mb-0 pb-0">
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        Transportation Fees
-                                                    @else
-                                                        رسوم الإنتقال
-                                                    @endif <span
-                                                        class=" t_rec">{{ money($TransferCost->person_price) }}</span><br>
-                                                </p>
-                                                <br>
-                                                <p class="mb-0 pb-0">
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        Capacity:
-                                                    @else
-                                                        السعة:
-                                                    @endif <span class="">
-                                                        {{ $TransferCost->capacity }}</span>
-                                                </p>
-
-                                                <br>
-                                                <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                        Total Fees
-                                                    @else
-                                                        المجموع الفرعي
-                                                    @endif <span
-                                                        class=" text-end fw-bold t_rec">{{ money((float) $TransferCost->person_price) }}</span><br>
-                                                </p>
-                                                <br>
-                                                <div class="grand_total">
-                                                    <h6>
-                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                            Sub-total
-                                                        @else
-                                                            المجموع الفرعي
-                                                        @endif
-                                                    </h6>
-                                                    <span class="h6 t_rec">
-                                                        {{ money((float) $TransferCost->person_price) }}</span>
+                                        <div class="col-md-5 order-1 order-md-2">
+                                            <div class="sc-panel">
+                                                <div class="sc-media">
+                                                    <img src="{{ asset('uploads/carModels') }}/{{ $TransferCost->image }}"
+                                                        loading="lazy" alt="" class="sc-media__img--contain">
+                                                    <div>
+                                                        <span class="sc-media__title">{{ $CarModel }}</span>
+                                                        <span class="sc-muted d-block">{{ $CarClass }}</span>
+                                                        <span class="sc-muted d-block">
+                                                            <i class="fa-solid fa-user-group"></i>
+                                                            {{ $isEn ? 'Capacity' : 'السعة' }}: {{ $TransferCost->capacity }}
+                                                        </span>
+                                                    </div>
                                                 </div>
-
-                                                <br>
+                                                <ul class="sc-lines">
+                                                    <li><span>{{ __('links.from') }}</span><span>{{ $FromLoc }}</span></li>
+                                                    <li><span>{{ __('links.to') }}</span><span>{{ $ToLoc }}</span></li>
+                                                    <li>
+                                                        <span>{{ $isEn ? 'Transportation Date' : 'تاريخ الإنتقال' }}</span>
+                                                        <span>{{ $TransferCost->transfer_date }}</span>
+                                                    </li>
+                                                    <li class="sc-lines__total">
+                                                        <span>{{ $isEn ? 'Sub-total' : 'المجموع الفرعي' }}</span>
+                                                        <span class="t_rec">{{ money((float) $TransferCost->person_price) }}</span>
+                                                    </li>
+                                                </ul>
                                             </div>
-
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 mb-4" style="border-bottom: 1px solid #d5d5d5">
-                                    <hr />
+                                </x-website.cart.item>
+                            @endif
 
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
-
+                            {{-- ---------- Visas (removed as a group by /cart/visa) ---------- --}}
                             @if (count($VisasCost) > 0)
-                                <div class="col-12">
-                                    <h4 class="bg-info px-3 py-1 text-white">
-                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                            Visa Applications Details
-                                        @else
-                                            تفاصيل طلبات التأشيرات
-                                        @endif
-                                    </h4>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-
-                                    @foreach ($VisasCost as $idx => $visa)
-                                        @php
-                                            $TotalVisasCost += $visa->cost;
-                                        @endphp
-                                        <h6 class="bg-light-info px-3 py-1">{{ $visa->visa_name }}</h6>
-                                        <div class="passenger_info">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-6 pe-5 pb-4">
-                                                    <label class="form-label">{{ __('links.passImage') }}
-                                                    </label>
-                                                    <br />
-                                                    <img style="width:100%;border-radius:10px;"
-                                                        src="{{ asset('uploads/visas/' . $visa->visa_passport_photo) }}" />
-
+                                @php
+                                    $VisaTitle = $GPVisasCost
+                                        ->map(function ($v) use ($isEn) {
+                                            return ($isEn ? $v->en_country : $v->ar_country) . ' – ' . ($isEn ? $v->en_type : $v->ar_type);
+                                        })
+                                        ->implode(', ');
+                                @endphp
+                                <x-website.cart.item id="sc-visa" icon="fa-passport" :open="$FirstOpen === 'visa'" :ready="true"
+                                    :type="($isEn ? 'Visa Applications' : 'طلبات التأشيرات') . ' (' . count($VisasCost) . ')'"
+                                    :title="$VisaTitle"
+                                    :meta="$VisasCost->pluck('visa_name')->implode(', ')"
+                                    :price="money($TotalVisasCost)" :delete-url="url('/cart/visa')"
+                                    :delete-message="$isEn ? 'Remove all visa applications from your cart?' : 'حذف جميع طلبات التأشيرات من سلتك؟'">
+                                    <div class="sc-applicants">
+                                        @foreach ($VisasCost as $idx => $visa)
+                                            <div class="sc-applicant">
+                                                <div class="sc-applicant__head">
+                                                    <div>
+                                                        <span class="sc-applicant__name">{{ $visa->visa_name }}</span>
+                                                        <span class="sc-muted d-block">
+                                                            {{ $isEn ? $visa->en_country : $visa->ar_country }} ·
+                                                            {{ $isEn ? $visa->en_type : $visa->ar_type }} ·
+                                                            {{ $isEn ? $visa->en_nationality : $visa->ar_nationality }}
+                                                        </span>
+                                                    </div>
+                                                    <span class="sc-applicant__fee">{{ money($visa->cost) }}</span>
                                                 </div>
-                                                <div class="col-sm-12 col-md-6 pe-5 pb-4">
-                                                    <label class="form-label">{{ __('links.persImage') }}
-                                                    </label>
-                                                    <br />
-                                                    <img style="width:100%;border-radius:10px;"
-                                                        src="{{ asset('uploads/visas/' . $visa->visa_personal_photo) }}" />
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
-                                                    <label class="form-label">{{ __('links.country') }}
-                                                    </label>
-                                                    <p class="fw-bold">
-                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                            {{ $visa->en_country }}
-                                                        @else
-                                                            {{ $visa->ar_country }}
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
-                                                    <label class="form-label">{{ __('links.vtype') }}
-                                                    </label>
-                                                    <p class="fw-bold">
-                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                            {{ $visa->en_type }}
-                                                        @else
-                                                            {{ $visa->ar_type }}
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
-                                                    <label class="form-label">{{ __('links.nationality') }} </label>
-
-                                                    <p class="fw-bold">
-                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                            {{ $visa->en_nationality }}
-                                                        @else
-                                                            {{ $visa->ar_nationality }}
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
-                                                    <label class="form-label">{{ __('links.fees') }} </label>
-
-                                                    <p class="fw-bold">{{ money($visa->cost) }}</p>
-                                                </div>
-                                                <div class="col-sm-12 col-md-6 col-xl-4">
-                                                    <label class="form-label">{{ __('links.mobile') }} </label>
-
-                                                    <p class="fw-bold">{{ $visa->visa_phone }}</p>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <label class="form-label">{{ __('links.email') }} </label>
-
-                                                    <p class="fw-bold">{{ $visa->visa_email }}</p>
+                                                <div class="sc-applicant__body">
+                                                    <dl class="sc-facts">
+                                                        <div>
+                                                            <dt>{{ __('links.mobile') }}</dt>
+                                                            <dd>{{ $visa->visa_phone }}</dd>
+                                                        </div>
+                                                        <div>
+                                                            <dt>{{ __('links.email') }}</dt>
+                                                            <dd>{{ $visa->visa_email }}</dd>
+                                                        </div>
+                                                    </dl>
+                                                    <div class="sc-docs">
+                                                        <a class="sc-doc" target="_blank" rel="noopener"
+                                                            href="{{ asset('uploads/visas/' . $visa->visa_passport_photo) }}">
+                                                            <img src="{{ asset('uploads/visas/' . $visa->visa_passport_photo) }}"
+                                                                loading="lazy" alt="">
+                                                            <span>{{ __('links.passImage') }}</span>
+                                                        </a>
+                                                        <a class="sc-doc" target="_blank" rel="noopener"
+                                                            href="{{ asset('uploads/visas/' . $visa->visa_personal_photo) }}">
+                                                            <img src="{{ asset('uploads/visas/' . $visa->visa_personal_photo) }}"
+                                                                loading="lazy" alt="">
+                                                            <span>{{ __('links.persImage') }}</span>
+                                                        </a>
+                                                    </div>
                                                 </div>
 
-                                                <input type="hidden" name="visa_id[{{ $idx }}]"
-                                                    value="{{ $visa->visa_id }}">
-                                                <input type="hidden" name="visa_name[{{ $idx }}]"
-                                                    value="{{ $visa->visa_name }}">
-                                                <input type="hidden" name="visa_email[{{ $idx }}]"
-                                                    value="{{ $visa->visa_email }}">
-                                                <input type="hidden" name="visa_phone[{{ $idx }}]"
-                                                    value="{{ $visa->visa_phone }}">
-                                                <input type="hidden" name="visa_cost[{{ $idx }}]"
-                                                    value="{{ $visa->cost }}">
-                                                <input type="hidden" name="visa_personal_photo[{{ $idx }}]"
-                                                    value="{{ $visa->visa_personal_photo }}">
-                                                <input type="hidden" name="visa_passport_photo[{{ $idx }}]"
-                                                    value="{{ $visa->visa_passport_photo }}">
-
+                                                <input type="hidden" name="visa_id[{{ $idx }}]" value="{{ $visa->visa_id }}">
+                                                <input type="hidden" name="visa_name[{{ $idx }}]" value="{{ $visa->visa_name }}">
+                                                <input type="hidden" name="visa_email[{{ $idx }}]" value="{{ $visa->visa_email }}">
+                                                <input type="hidden" name="visa_phone[{{ $idx }}]" value="{{ $visa->visa_phone }}">
+                                                <input type="hidden" name="visa_cost[{{ $idx }}]" value="{{ $visa->cost }}">
+                                                <input type="hidden" name="visa_personal_photo[{{ $idx }}]" value="{{ $visa->visa_personal_photo }}">
+                                                <input type="hidden" name="visa_passport_photo[{{ $idx }}]" value="{{ $visa->visa_passport_photo }}">
                                             </div>
-                                        </div>
-                                    @endforeach
-
-                                    <input type="hidden" name="cost" value="{{ $TotalVisasCost }}">
-
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="passenger_info">
-                                        <p class="receipt-title">
-                                            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                Visa Application Receipt
-                                            @else
-                                                ايصال التأشيرات
-                                            @endif
-                                        </p>
-                                        <div class="booking_info_card">
-                                            <div class="text-end mb-3"><a class="del-hotel delete_trash"
-                                                    href="{{ url('/cart/visa') }}"><i class="fa-solid fa-trash"></i></a>
-                                            </div>
-                                            <div class="remain_info mb-3">
-                                                <h5>{{ __('links.visa') }} </h5>
-                                                @foreach ($GPVisasCost as $_visa)
-                                                    <p class="mb-0 pb-0">
-                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                            {{ $_visa->en_type }}:
-                                                        @else
-                                                            {{ $_visa->ar_type }}:
-                                                        @endif <span
-                                                            class="">{{ $_visa->groupped_count }} X
-                                                            {{ money($_visa->sum_costs) }}<span></span>
-                                                    </p>
-                                                @endforeach
-
-                                                <br>
-                                                <p class="mb-0 pb-0" style="border-top: 1px solid rgb(184, 184, 184)">
-                                                    <span
-                                                        class=" text-end fw-bold">{{ money($TotalVisasCost) }}</span><br>
-                                                </p>
-                                                <br>
-                                                <div class="grand_total">
-                                                    <h6>
-                                                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                            Sub-total
-                                                        @else
-                                                            المجموع الفرعي
-                                                        @endif
-                                                    </h6>
-                                                    <span class="h6"> {{ money($TotalVisasCost) }}</span>
-                                                </div>
-
-                                                <br>
-                                            </div>
-
-                                        </div>
+                                        @endforeach
                                     </div>
-                                </div>
+                                    <input type="hidden" name="cost" value="{{ $TotalVisasCost }}">
+                                </x-website.cart.item>
                             @endif
                         </div>
-
-
-
                     </div>
-                    <div class="col-12">
-                        <div class="passenger_info">
 
+                    {{-- ============ RIGHT: sticky order summary ============ --}}
+                    <div class="col-lg-4">
+                        <aside class="sc-summary">
+                            <h3 class="sc-summary__title">{{ $isEn ? 'Order Summary' : 'ملخص الطلب' }}</h3>
 
-                            <p class="receipt-title">
-                                @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                    Total Fees
-                                @else
-                                    الرسوم الكلية
+                            <ul class="sc-summary__items">
+                                @if ($RoomCost)
+                                    <li>
+                                        <i class="fa-solid fa-hotel"></i>
+                                        <span>{{ $isEn ? $RoomCost->hotel_enname : $RoomCost->hotel_arname ?? '' }}
+                                            ({{ $RoomCost->nights }} {{ __('links.nights') }})</span>
+                                        <strong>{{ money((float) $TotalCost) }}</strong>
+                                    </li>
                                 @endif
+                                @foreach ($ToursCost as $index => $Tour)
+                                    <li>
+                                        <i class="fa-solid fa-route"></i>
+                                        <span>{{ $isEn ? $Tour->en_name : $Tour->ar_name ?? '' }}
+                                            @if ($Tour->tour_type_id != 1)
+                                                ({{ $TotalPaidPersons[$index] }} × {{ money($Tour->tour_person_cost) }})
+                                            @endif
+                                        </span>
+                                        <strong>{{ money($TourSubtotal[$index]) }}</strong>
+                                    </li>
+                                @endforeach
+                                @if ($TransferCost)
+                                    <li>
+                                        <i class="fa-solid fa-car"></i>
+                                        <span>{{ $FromLoc }} → {{ $ToLoc }}</span>
+                                        <strong class="t_rec">{{ money((float) $TransferCost->person_price) }}</strong>
+                                    </li>
+                                @endif
+                                @foreach ($GPVisasCost as $_visa)
+                                    <li>
+                                        <i class="fa-solid fa-passport"></i>
+                                        <span>{{ $isEn ? $_visa->en_type : $_visa->ar_type }}
+                                            ({{ $_visa->groupped_count }}×)</span>
+                                        <strong>{{ money($_visa->sum_costs) }}</strong>
+                                    </li>
+                                @endforeach
+                            </ul>
+
+                            <div class="sc-summary__totals">
+                                <div>
+                                    <span>{{ $isEn ? 'Subtotal (before VAT)' : 'المجموع قبل الضريبة' }}</span>
+                                    <span class="BeforeT_txt">{{ money($BeforeTax) }}</span>
+                                </div>
+                                <div>
+                                    <span>{{ $isEn ? 'VAT' : 'ضريبة القيمة المضافة' }} ({{ (float) $tax_percentage }}%)</span>
+                                    <span class="Tax_txt">{{ money((float) $BeforeTax * $TaxRate) }}</span>
+                                </div>
+                            </div>
+
+                            <div class="sc-summary__grand">
+                                <span>{{ $isEn ? 'Total Amount' : 'المجموع الإجمالي' }}</span>
+                                <span id="gt" class="AfterT_txt">{{ money($AfterTax) }}</span>
+                            </div>
+                            <input type="hidden" name="BeforeT" value="{{ number_format((float) $BeforeTax, 2, '.', '') }}" />
+
+                            <div class="form-check sc-terms">
+                                <input class="form-check-input terms" required type="checkbox" value=""
+                                    id="flexCheckChecked">
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    @if ($isEn)
+                                        I agree to all <a href="{{ LaravelLocalization::localizeUrl('/terms') }}"
+                                            target="_blank">Terms and Conditions</a> of Safer
+                                    @else
+                                        أوافق على جميع <a href="{{ LaravelLocalization::localizeUrl('/terms') }}"
+                                            target="_blank">بنود وشروط</a> Safer
+                                    @endif
+                                </label>
+                            </div>
+
+                            <button type="submit" class="sc-summary__submit" data-sc-submit>
+                                {{ $isEn ? 'Place Order' : 'استكمال الطلب' }}
+                            </button>
+                            <p class="sc-summary__note">
+                                <i class="fa-solid fa-circle-info"></i>
+                                {{ $isEn ? 'Total includes VAT. Complete each item\'s details before placing the order.' : 'المجموع شامل الضريبة. أكمل بيانات كل عنصر قبل استكمال الطلب.' }}
                             </p>
-                            <div class="remain_info">
-                                <p class="mb-0 pb-0">
-                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                        Before Tax
-                                    @else
-                                        قبل ضريبة القيمة المضافة
-                                    @endif
-
-                                    @if (isset($Tour) && $Tour->tour_type_id == 1)
-                                        <span
-                                            class="float-end text-end BeforeT_txt">{{ money($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) }}
-                                        </span>
-                                    @else
-                                        <span
-                                            class="float-end text-end BeforeT_txt">{{ money($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) }}
-                                        </span>
-                                    @endif
-                                    <br>
-                                </p>
-                                <br>
-                                <p class="mb-0 pb-0">
-                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                        After VAT
-                                    @else
-                                        بعد ضريبة القيمة المضافة
-                                    @endif
-                                    <span class="float-end text-end">
-                                        @if (isset($Tour) && $Tour->tour_type_id == 1)
-                                            <span
-                                                class="BeforeT_txt">{{ money($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) }}</span>
-                                            X {{ (float) $tax_percentage / 100 }} <br> <span
-                                                class="fw-bold AfterT_txt">{{ money((float) ($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}</span>
-                                    </span><br>
-                                    <input type="hidden" name="BeforeT"
-                                        value="{{ number_format((float) ($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost), 2, '.', '') }}" />
-                                @else
-                                    <span
-                                        class="BeforeT_txt">{{ money($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) }}</span>
-                                    X {{ (float) $tax_percentage / 100 }} <br> <span
-                                        class="fw-bold AfterT_txt">{{ money((float) ($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}</span></span><br>
-                                    <input type="hidden" name="BeforeT"
-                                        value="{{ number_format((float) ($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost), 2, '.', '') }}" />
-    @endif
-    </p>
-    <br />
-    </div>
-    <div class="grand_total final">
-        <h5>
-            @if (LaravelLocalization::getCurrentLocale() === 'en')
-                grand total
-            @else
-                المجموع الإجمالي
-            @endif
-        </h5>
-        <span id="gt" class="AfterT_txt">
-            @if (isset($Tour) && $Tour->tour_type_id == 1)
-                {{ money(($TotalCost + $Tour->tour_person_cost + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}
-        </span>
+                        </aside>
+                    </div>
+                </div>
+            </form>
+        </section>
     @else
-        {{ money(($TotalCost + $TotalToursFees + $TotalTransferCost + $TotalVisasCost) * (1 + (float) $tax_percentage / 100)) }}
-        </span>
-        @endif
-    </div>
-    </div>
-    </div>
-    <div class="col-12">
-        <div class="my-3 px-3">
-            <div class="row">
-
-                <div class="form-check mb-3">
-                    <input class="form-check-input terms" style="float:none" required type="checkbox" value=""
-                        id="flexCheckChecked">
-                    <label class="form-check-label" for="flexCheckChecked">
-                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            I agree to all <a href="{{ LaravelLocalization::localizeUrl('/terms') }}"
-                                target="_blank">Terms and
-                                Conditions</a> of Safer
-                        @else
-                            أوافق على جميع <a href="{{ LaravelLocalization::localizeUrl('/terms') }}" target="_blank">
-                                بنود وشروط
-                            </a> Safer
-                        @endif
-                    </label>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-info">
-                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            Place Order
-                        @else
-                            استكمال الطلب
-                        @endif
-                    </button>
-                </div>
-
+        <section class="sc container">
+            <div class="sc-empty">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <p>{{ $isEn ? 'Nothing is Added to cart' : 'لا شىء مضاف الى عربة التسوق' }}</p>
+                <a href="{{ LaravelLocalization::localizeUrl('/tours') }}" class="sc-summary__submit sc-empty__cta">
+                    {{ $isEn ? 'Browse tours' : 'تصفح الجولات' }}
+                </a>
             </div>
-        </div>
-    </div>
-    </div>
-
-    </form>
-
-    </section>
-@else
-    <div class="container bg-light-info text-center p-5">
-        @if (LaravelLocalization::getCurrentLocale() === 'en')
-            Nothing is Added to cart
-        @else
-            لا شىء مضاف الى عربة التسوق
-        @endif
-    </div>
+        </section>
     @endif
 @endsection
 
@@ -1312,97 +747,127 @@
                 holder_pickup: $("#holder-pickup-" + id).val(),
                 holder_notes: $("#holder-notes-" + id).val(),
             }
-            console.table(data);
             $("#holder-name-" + (id + 1)).val(data.holder_name);
             $("#holder-phone-" + (id + 1)).val(data.holder_mobile);
             $("#holder-email-" + (id + 1)).val(data.holder_email);
             $("#holder-pickup-" + (id + 1)).val(data.holder_pickup);
             $("#holder-notes-" + (id + 1)).val(data.holder_notes);
-
+            scRefreshAllStatuses();
         }
-        $(".delete_confirm").click(function() {
-            $.confirm({
-                title: 'Confirm!',
-                content: 'Simple confirm!',
-                buttons: {
-                    confirm: function() {
-                        $.alert('Confirmed!');
-                    },
-                    cancel: function() {
-                        $.alert('Canceled!');
-                    },
-                    somethingElse: {
-                        text: 'Something else',
-                        btnClass: 'btn-blue',
-                        keys: ['enter', 'shift'],
-                        action: function() {
-                            $.alert('Something else?');
-                        }
-                    }
-                }
+
+        // Cart item status badge: "Ready" once every required field in the card is valid
+        function scRefreshStatus(item) {
+            var badge = item.querySelector('[data-sc-status]');
+            if (!badge) return;
+            var fields = item.querySelectorAll('input[required], textarea[required], select[required]');
+            var ready = Array.prototype.every.call(fields, function(f) {
+                return f.validity.valid;
             });
-        })
+            badge.classList.toggle('sc-badge--ready', ready);
+            badge.classList.toggle('sc-badge--pending', !ready);
+            badge.textContent = ready ? badge.dataset.labelReady : badge.dataset.labelPending;
+        }
+
+        function scRefreshAllStatuses() {
+            document.querySelectorAll('[data-sc-item]').forEach(scRefreshStatus);
+        }
+
         $("#transHolderFlag").change(function() {
-            debugger;
             var price = $("#t_price").val();
             var before_price = $("[name='BeforeT']").val();
             var tax = "{{ $tax_percentage }}";
+            var before;
             $(".trans-holder").fadeToggle();
             if ($(".is_holder").attr('required')) {
                 $(".is_holder").removeAttr('required');
                 $(".t_rec").text('$' + price);
-                $(".BeforeT_txt").text('$' + (parseFloat(before_price)).toFixed(2));
-                $(".AfterT_txt").text('$' + ((parseFloat(before_price).toFixed(2)) * (1 + parseFloat(tax) / 100.0))
-                    .toFixed(2));
+                before = parseFloat(before_price);
             } else {
                 $(".is_holder").attr('required', 6);
                 $(".t_rec").text('$' + 2.0 * price);
-                $(".BeforeT_txt").text('$' + (parseFloat(before_price) + parseFloat(price)).toFixed(2));
-                $(".AfterT_txt").text('$' + ((parseFloat(before_price) + parseFloat(price)) * (1 + parseFloat(tax) /
-                    100.0)).toFixed(2));
-
+                before = parseFloat(before_price) + parseFloat(price);
             }
+            $(".BeforeT_txt").text('$' + before.toFixed(2));
+            $(".Tax_txt").text('$' + (before * parseFloat(tax) / 100.0).toFixed(2));
+            $(".AfterT_txt").text('$' + (before * (1 + parseFloat(tax) / 100.0)).toFixed(2));
+            scRefreshAllStatuses();
         });
     </script>
     <script>
         let localization = "{{ LaravelLocalization::getCurrentLocale() }}"
         $(document).ready(function() {
-            // $('.transfer_date').datepicker();
             var _minDate = "{{ $TransferCost ? $TransferCost->transfer_date : '' }}"
             flatpickr(".transfer_date", {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i:S",
                 minDate: _minDate,
                 defaultDate: new Date(_minDate ? _minDate : Date.now()),
+                onChange: scRefreshAllStatuses,
+            });
+
+            scRefreshAllStatuses();
+            $('#sc-form').on('input change', 'input, textarea, select', function() {
+                var item = this.closest('[data-sc-item]');
+                if (item) scRefreshStatus(item);
+            });
+
+            // Required fields can sit inside collapsed cards, where the browser cannot
+            // focus them. Expand any card holding an invalid field before validation runs.
+            $('[data-sc-submit]').on('click', function() {
+                var invalid = this.form.querySelectorAll('input:invalid, textarea:invalid, select:invalid');
+                invalid.forEach(function(field) {
+                    var panel = field.closest('.collapse');
+                    if (panel && !panel.classList.contains('show')) {
+                        panel.classList.add('show');
+                        var toggle = document.querySelector('[data-bs-target="#' + panel.id + '"]');
+                        if (toggle) {
+                            toggle.classList.remove('collapsed');
+                            toggle.setAttribute('aria-expanded', 'true');
+                        }
+                    }
+                });
             });
         });
+        // Remove-from-cart confirmation; on confirm, follows the link's href as before
         $(".delete_trash").click(function(e) {
             e.preventDefault();
             var elem = $(this);
-            console.log($(this).attr("href"));
-            var obj = $.confirm({
-                title: localization === "en" ? 'Are you sure?' : 'هل أنت متأكد؟',
-                content: localization === "en" ?
-                    'This is a confirmation regarding your action to delete a cart item.' :
-                    'هذا تأكيد بخصوص إجراءك لحذف عنصر من عربة التسوق.',
+            var isEn = localization === "en";
+            $.confirm({
+                theme: 'modern',
+                rtl: !isEn,
+                useBootstrap: false,
+                boxWidth: '360px',
+                backgroundDismiss: true,
+                escapeKey: 'cancel',
+                animation: 'scale',
+                closeAnimation: 'scale',
+                icon: 'fa-solid fa-trash-can',
+                title: isEn ? 'Remove item' : 'حذف العنصر',
+                content: elem.data('confirm') || (isEn ?
+                    'Are you sure you want to remove this item?' :
+                    'هل أنت متأكد من حذف هذا العنصر؟'),
+                onOpenBefore: function() {
+                    this.$el.addClass('sc-confirm');
+                },
+                // Safer default: Enter/Space on open cancels instead of deleting
+                onOpen: function() {
+                    this.$$cancel.trigger('focus');
+                },
                 buttons: {
+                    cancel: {
+                        text: isEn ? 'Cancel' : 'إلغاء',
+                        btnClass: 'sc-confirm__btn sc-confirm__btn--neutral',
+                    },
                     confirm: {
-                        text: localization === "en" ? 'Confirm' : 'تأكيد',
+                        text: isEn ? 'Yes, Remove' : 'نعم، احذف',
+                        btnClass: 'sc-confirm__btn sc-confirm__btn--danger',
                         action: function() {
                             window.location.href = elem.attr("href");
                         },
-                        btnClass: 'btn-blue',
                     },
-                    cancel: {
-                        text: localization === "en" ? 'Cancel' : 'إلغاء',
-                        action: function() {
-                            obj.close();
-                        },
-                    }
                 }
             });
-
-            obj.close();
         });
     </script>
 @endsection

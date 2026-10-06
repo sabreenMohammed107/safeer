@@ -1,0 +1,275 @@
+/* ==========================================================================
+   Profile → "My Order" tab (resources/views/website/partials/profile-orders.blade.php)
+   Uses logical properties so the Arabic (RTL) layout mirrors correctly.
+   ========================================================================== */
+
+.po {
+    --po-primary: var(--main-color, #1c4482);
+    --po-primary-soft: #eaf0f9;
+    --po-text: #1f2937;
+    --po-muted: #6b7280;
+    --po-border: #e3e8ef;
+    --po-panel: #f7f9fc;
+
+    color: var(--po-text);
+}
+
+.po .profile_heading {
+    margin-bottom: 20px;
+}
+
+.po-muted {
+    font-size: 13px;
+    color: var(--po-muted);
+}
+
+/* ---------- Order card ---------- */
+.po-order {
+    margin-bottom: 20px;
+    background: #fff;
+    border: 1px solid var(--po-border);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 4px 16px rgba(16, 24, 40, .06);
+    overflow: hidden;
+}
+
+.po-order__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding: 16px 20px;
+    background: var(--po-panel);
+    border-bottom: 1px solid var(--po-border);
+}
+
+.po-order__no {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--po-primary);
+}
+
+.po-order__total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.po-order__total strong {
+    font-size: 20px;
+    color: var(--po-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Items ---------- */
+.po-items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.po-item {
+    padding: 16px 20px;
+}
+
+.po-item + .po-item {
+    border-top: 1px solid var(--po-border);
+}
+
+.po-item__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.po-item__icon {
+    flex: 0 0 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--po-primary-soft);
+    color: var(--po-primary);
+    font-size: 16px;
+}
+
+.po-item__text {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.po-item__type {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--po-muted);
+}
+
+.po-item__title {
+    font-size: 16px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.po-item__aside {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.po-item__cost {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--po-primary);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* ---------- Facts grid ---------- */
+.po-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px 16px;
+    margin: 12px 0 0;
+    padding: 12px 14px;
+    padding-inline-start: 14px;
+    background: var(--po-panel);
+    border-radius: 10px;
+    margin-inline-start: 54px;
+}
+
+.po-facts dt {
+    margin-bottom: 2px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--po-muted);
+}
+
+.po-facts dd {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+/* ---------- Status badges (statuses table) ---------- */
+.po-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.po-badge--new { background: #e0ecff; color: #1d4ed8; }
+.po-badge--pending { background: #fff4d6; color: #8a5a00; }
+.po-badge--approved { background: #e3f4ea; color: #1e7a46; }
+.po-badge--done { background: #e8eaed; color: #374151; }
+.po-badge--cancelled { background: #fdecec; color: #b42318; }
+
+/* ---------- Order footer ---------- */
+.po-order__foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px 24px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--po-border);
+    font-size: 13px;
+    color: var(--po-muted);
+}
+
+.po-order__foot > div {
+    display: flex;
+    gap: 8px;
+}
+
+.po-order__foot > div span:last-child {
+    color: var(--po-text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Empty state ---------- */
+.po-empty {
+    padding: 40px 20px;
+    text-align: center;
+    background: var(--po-panel);
+    border-radius: 14px;
+}
+
+.po-empty > i {
+    font-size: 34px;
+    color: var(--po-primary);
+    opacity: .5;
+}
+
+.po-empty p {
+    margin: 12px 0 18px;
+    color: var(--po-muted);
+}
+
+.po-empty__cta {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 10px;
+    background: var(--po-primary);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.po-empty__cta:hover {
+    color: #fff;
+    filter: brightness(1.12);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 575.98px) {
+    .po-order__head,
+    .po-item,
+    .po-order__foot {
+        padding-inline: 14px;
+    }
+
+    .po-order__total {
+        align-items: flex-start;
+    }
+
+    .po-item__head {
+        flex-wrap: wrap;
+    }
+
+    .po-item__text {
+        flex-basis: calc(100% - 54px);
+    }
+
+    /* Status + cost drop below the title */
+    .po-item__aside {
+        flex: 1 1 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-inline-start: 54px;
+    }
+
+    .po-facts {
+        grid-template-columns: 1fr 1fr;
+        margin-inline-start: 0;
+    }
+
+    .po-order__foot {
+        justify-content: space-between;
+    }
+}
