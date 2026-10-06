@@ -17,6 +17,8 @@ use App\Models\Tour;
 use App\Models\TourDetails;
 use App\Models\TransferDetails;
 use App\Models\VisaDetails;
+use App\Notifications\NewOrderNotification;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang as Lang;
@@ -567,6 +569,9 @@ class BookingController extends Controller
                         'error' => $e->getMessage(),
                     ]);
                 }
+
+                // Dashboard bell + email to every admin account.
+                AdminNotifier::send(new NewOrderNotification($order, $cost));
             }
 
             // all good

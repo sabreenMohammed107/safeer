@@ -11,7 +11,9 @@ use App\Models\Favorite_hotels_tour;
 use App\Models\OrderDetails;
 use App\Models\Orders;
 use App\Models\SiteUser;
+use App\Notifications\AddedToFavoritesNotification;
 use App\Rules\NoUrl;
+use App\Support\AdminNotifier;
 use App\Rules\NotBotEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -146,7 +148,10 @@ class AuthController extends Controller
                 'hotel_id' => session()->get("AddFavHotel"),
                 'user_id' => session()->get("SiteUser")["ID"],
             ];
-            Favorite_hotels_tour::create($input);
+            $favourite = Favorite_hotels_tour::create($input);
+            if ($favourite->hotel) {
+                AdminNotifier::send(new AddedToFavoritesNotification($favourite->hotel, $favourite->user));
+            }
             session()->forget("AddFavHotel");
             $redirect_url = LaravelLocalization::localizeUrl('/hotels');
         } else if (session()->get("RemFavHotel")) {

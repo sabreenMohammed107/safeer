@@ -44,6 +44,15 @@ class SiteUser extends Model
 
 
 
+    /**
+     * "name" is empty for some accounts (e.g. older sign-ups that only filled
+     * first/last name), so fall back to those, then to the email.
+     */
+    public function getDisplayNameAttribute(): string
+    {
+        return $this->name ?: (trim("{$this->first_name} {$this->last_name}") ?: (string) $this->email);
+    }
+
     public function favorites()
     {
         return $this->belongsToMany(Hotel::class, 'favorite_hotels_tours','user_id','hotel_id');
