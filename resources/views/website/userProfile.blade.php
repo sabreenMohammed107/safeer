@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/visa-step-2.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/visa-step-3.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/my-profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/profile-orders.css') }}?v={{ filemtime(public_path('website_assets/css/profile-orders.css')) }}">
 @endsection
 
 @section('bottom-header')
@@ -175,14 +176,9 @@
                                 <div class="left_filter">
                                     <ul class="nav nav-pills " id="pills-tab" role="tablist">
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="pills-hotels-tab" data-bs-toggle="pill"
-                                                data-bs-target="#pills-hotels" type="button" role="tab"
-                                                aria-controls="pills-hotels" aria-selected="true">{{ __('links.hotels') }} </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="pills-trips-tab" data-bs-toggle="pill"
+                                            <button class="nav-link active" id="pills-trips-tab" data-bs-toggle="pill"
                                                 data-bs-target="#pills-trips" type="button" role="tab"
-                                                aria-controls="pills-trips" aria-selected="false">{{ __('links.tours') }}</button>
+                                                aria-controls="pills-trips" aria-selected="true">{{ __('links.tours') }}</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="pills-offers-tab" data-bs-toggle="pill"
@@ -196,80 +192,7 @@
                                 <div class="row mx-0">
                                     <div class="col-sm-12 p-0">
                                         <div class="tab-content" id="pills-tabContent">
-                                            <div class="tab-pane fade show active w-100" id="pills-hotels"
-                                                role="tabpanel" aria-labelledby="pills-hotels-tab" tabindex="0">
-                                                <div id="favHotelsList" class="fav-list" data-fav-empty-target="#favHotelsEmpty">
-                                                    @foreach ($favHotels as $fav)
-                                                        @if($fav->hotel)
-                                                        <div class="card-content" data-fav-row>
-                                                            <div class=" card setted_tour_cards ">
-                                                                <div class="card_image">
-                                                                    <div class="image_overlay">
-                                                                        <img src="{{ asset('uploads/hotels') }}/{{ $fav->hotel->hotel_banner ?? '' }}"
-                                                                            loading="lazy" width="350" height="210" alt=" blogimage">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card-body  setted_info">
-                                                                    <div class="card_info">
-                                                                        <h6> @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                                            {{ $fav->hotel->hotel_enname ?? '' }}
-
-                                                                            @else
-                                                                            {{ $fav->hotel->hotel_arname ?? '' }}
-                                                                            @endif –
-                                                                            {{ $fav->hotel->hotel_stars ?? ''}} Stars</h6>
-                                                                        <span>
-                                                                            <button type="button" class="fav-toggle-btn is-fav"
-                                                                                data-fav-type="hotel" data-fav-id="{{ $fav->hotel_id }}"
-                                                                                aria-label="{{ __('links.add_favorites') }}">
-                                                                                <i class="fa-solid fa-heart is-fav-icon"></i>
-                                                                            </button>
-                                                                        </span>
-                                                                    </div>
-                                                                    @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                                                    <span> <i class="fa-solid fa-location-dot"></i>
-                                                                        {{ $fav->hotel->city->country->en_country ?? '' }}
-                                                                        <span>|</span>
-                                                                        {{ $fav->hotel->city->en_city ?? '' }}</span>
-                                                                    <p>
-                                                                        {!! \Illuminate\Support\Str::limit($fav->hotel->hotel_enoverview ?? '', $limit = 200, $end = '') !!}
-
-                                                                    </p>
-                                                                    @else
-                                                                    <span> <i class="fa-solid fa-location-dot"></i>
-                                                                        {{ $fav->hotel->city->country->ar_country ?? '' }}
-                                                                        <span>|</span>
-                                                                        {{ $fav->hotel->city->ar_city ?? '' }}</span>
-                                                                    <p>
-                                                                        {!! \Illuminate\Support\Str::limit($fav->hotel->hotel_aroverview ?? '', $limit = 200, $end = '') !!}
-
-                                                                    </p>
-                                                                    @endif
-
-                                                                    <div class="price">
-                                                                        <div class="rating">
-
-                                                                            @for ($i = 0; $i < $fav->hotel->hotel_stars; $i++)
-                                                                                <i class="fa-solid fa-star"></i>
-                                                                            @endfor
-                                                                            @for ($i = 5; $i > $fav->hotel->hotel_stars; $i--)
-                                                                                <i class="fa-regular fa-star"></i>
-                                                                            @endfor
-
-                                                                            <span> ({{ $fav->hotel->totalreviews }} {{ __('links.review') }})
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        @endif
-                                                    @endforeach
-                                                </div>
-                                                @include('website.partials.favorite-empty', ['type' => 'hotels', 'id' => 'favHotelsEmpty', 'url' => '/hotels', 'hidden' => $favHotels->isNotEmpty()])
-                                            </div>
-                                            <div class="tab-pane fade w-100" id="pills-trips" role="tabpanel"
+                                            <div class="tab-pane fade show active w-100" id="pills-trips" role="tabpanel"
                                                 aria-labelledby="pills-trips-tab" tabindex="0">
                                                 <div id="favToursList" class="fav-list" data-fav-empty-target="#favToursEmpty">
                                                     @foreach ($favTours as $fav)
@@ -386,140 +309,7 @@
                     </div>
                     <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab"
                         tabindex="0">
-                        <div class="orders">
-                            <h6 class="profile_heading"><i class="fa-regular fa-file-lines"></i>{{ __('links.myOrder') }}  </h6>
-
-                            <div class="orders_info">
-                                <div class="passenger_info">
-                                    <div class="passenger_table">
-                                        <div class="row mx-0">
-                                            <table class="table">
-                                                <thead class="table-light">
-                                            {{-- <table class="table table-light table-striped">
-                                                <thead> --}}
-                                                    <tr>
-
-
-                                                      @if (LaravelLocalization::getCurrentLocale() === 'en')
-
-                                                      <th scope="col">Hotel Name</th>
-                                                      <th scope="col">Start Date / End Date</th>
-                                                      <th scope="col">Room Type</th>
-                                                      <th scope="col">Adults</th>
-                                                      <th scope="col">Children</th>
-                                                      <th scope="col">Room Count</th>
-                                                      <th scope="col">Total Order Cost</th>
-                                                      @else
-                                                      <th scope="col">اسم الفندق</th>
-                                                      <th scope="col">تاريخ البداية / تاريخ النهاية</th>
-                                                      <th scope="col">نوع الغرفة</th>
-                                                      <th scope="col">بالغين</th>
-                                                      <th scope="col">اطفال</th>
-                                                      <th scope="col">تكلفة الغرفة</th>
-                                                      <th scope="col">تكلفة الطلب</th>
-                                                      @endif
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                    @foreach ($orderData as $order)
-                                                    <tr>
-
-                                                        <td> @if (LaravelLocalization::getCurrentLocale() === 'en')
-                                                            {{$order->hotel->hotel_enname ?? ''}}
-
-                                                            @else
-                                                            {{$order->hotel->hotel_arname ?? ''}}
-                                                            @endif</td>
-                                                        <td>{{ $order->order->from_date }} / {{ $order->order->to_date }}</td>
-                                                        <td>{{ $order->room_type }}</td>
-                                                        <td>{{ $order->order->adults_count }}</td>
-                                                        <td>{{ $order->order->children_count }}</td>
-                                                        <td>{{ $order->order->rooms_count }}</td>
-                                                        <td>{{ money($order->total_cost) }}</td>
-                                                      </tr>
-                                                    @endforeach
-
-
-                                                  </tbody>
-                                              </table>
-                                            {{-- <div class=" col p-0 info_edit">
-                                                <div class="info">
-                                                    <span class="name main_row"> reservation no </span>
-                                                    <span class="name">222187597 </span>
-                                                    <span class="name">222187597 </span>
-                                                    <span class="name rejected">222187597 </span>
-                                                    <span class="name">222187597 </span>
-                                                    <span class="name">222187597 </span>
-                                                </div>
-                                            </div>
-                                            <div class=" col p-0 info_edit  ">
-                                                <div class="info">
-                                                    <span class="main_row"> Booking time </span>
-                                                    <span>04.09.2022</span>
-                                                    <span>04.09.2022</span>
-                                                    <span class="rejected">04.09.2022</span>
-                                                    <span>04.09.2022</span>
-                                                    <span>04.09.2022</span>
-                                                </div>
-                                            </div>
-                                            <div class=" col p-0 info_edit  ">
-                                                <div class="info">
-                                                    <span class="main_row"> check in </span>
-                                                    <span>04.09.2022</span>
-                                                    <span>04.09.2022</span>
-                                                    <span class="rejected">04.09.2022</span>
-                                                    <span>04.09.2022</span>
-                                                    <span>04.09.2022</span>
-                                                </div>
-                                            </div>
-                                            <div class=" col p-0 info_edit ">
-                                                <div class="info">
-                                                    <span class="main_row"> service </span>
-                                                    <span> Piya Sport Hotel </span>
-                                                    <span> Piya Sport Hotel </span>
-                                                    <span class="rejected"> Piya Sport Hotel </span>
-                                                    <span> Piya Sport Hotel </span>
-                                                    <span> Piya Sport Hotel </span>
-
-                                                </div>
-                                            </div>
-                                            <div class=" col p-0 info_edit ">
-                                                <div class="info">
-                                                    <span class="main_row"> Payment Type </span>
-                                                    <span> Credit Card</span>
-                                                    <span> Credit Card</span>
-                                                    <span class="rejected"> Credit Card</span>
-                                                    <span> Credit Card</span>
-                                                    <span> Credit Card</span>
-
-                                                </div>
-                                            </div>
-                                            <div class=" col p-0 info_edit ">
-                                                <div class="info">
-                                                    <span class="main_row"> status </span>
-                                                    <span> Confirmed</span>
-                                                    <span> Confirmed</span>
-                                                    <span class="rejected"> rejected</span>
-                                                    <span> Confirmed</span>
-                                                    <span> Confirmed</span>
-
-                                                </div>
-                                            </div>
-                                            <div class=" col p-0 info_edit ">
-                                                <div class="info">
-                                                    <span class="total main_row"> total </span>
-                                                    <span class="total"> 48,90 EUR</span>
-                                                    <span class="total"> 48,90 EUR</span>
-                                                    <span class="total rejected"> 48,90 EUR</span>
-                                                    <span class="total"> 48,90 EUR</span>
-                                                    <span class="total"> 48,90 EUR</span>
-                                                </div>
-                                            </div> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @include('website.partials.profile-orders')
                     </div>
                     <div class="tab-pane fade" id="v-pills-payment" role="tabpanel"
                         aria-labelledby="v-pills-payment-tab" tabindex="0">
@@ -718,8 +508,10 @@
 
         </div>
     </section>
+@endsection
 
-
+@section('adds_js')
+    {{-- Must run after the layout loads jQuery/Bootstrap (adds_js is yielded after them) --}}
     <script>
         $(function () {
             $('#v-pills-favorite').on('favourite:toggled', '.fav-toggle-btn', function (e, favourited) {
@@ -738,6 +530,16 @@
                     }
                 });
             });
+        });
+
+        // Deep link from the order success page: /safer/profile/{id}#orders opens the orders tab.
+        // Clicks the tab instead of calling bootstrap.Tab, because the layout also loads
+        // Bootstrap 4 JS, which replaces window.bootstrap with a Tab that ignores data-bs-target.
+        window.addEventListener('load', function () {
+            var tab = document.getElementById('v-pills-orders-tab');
+            if (location.hash === '#orders' && tab) {
+                tab.click();
+            }
         });
     </script>
     <!--  ending page  -->

@@ -270,10 +270,19 @@ class AuthController extends Controller
                 ->with(['offer.city'])->orderBy('id', 'DESC')->get()
             : collect();
 
-        $order = Orders::where('user_id', $id)->first();
-        if($order){
-            $orderData = OrderDetails::where('order_id', $order->id)->get();
-        }
+        // Every order the user has placed (the profile groups these by order, newest first).
+        // Relations used by the orders tab are eager-loaded to avoid per-item queries.
+        $orderData = OrderDetails::whereIn('order_id', Orders::where('user_id', $id)->select('id'))
+            ->with([
+                'order',
+                'status',
+                'room_details.hotel',
+                'tours_details.tour',
+                'transfer_details',
+                'visa_details.visa.type.country',
+                'visa_details.visa.country',
+            ])
+            ->get();
         $Company = Company::first();
         $BreadCrumb = [["url" => "/", "name" => "Home"]];
         return view("website.userProfile",
