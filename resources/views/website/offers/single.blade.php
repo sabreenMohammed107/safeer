@@ -53,14 +53,14 @@
                                             - {{ money($offer->cost) }}
 
                                         </p>
-                                    <p>
+                                    <div class="rich-content">
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                         {!! $offer->offer_enoverview ?? '' !!}
                                         @else
                                         {!! $offer->offer_aroverview ?? '' !!}
                                         @endif
-                                     </p>
+                                     </div>
 
                                   </div>
                               </div>

@@ -31,14 +31,14 @@
                                         @else
                                         {!! $blog->ar_title ?? '' !!}
                                         @endif  </h5>
-                                    <p>
+                                    <div class="rich-content">
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 
                                         {!! $blog->en_text ?? '' !!}
                                         @else
                                         {!! $blog->ar_text ?? '' !!}
                                         @endif
-                                     </p>
+                                     </div>
                                      </div>
                                   </div>
                               </div>
