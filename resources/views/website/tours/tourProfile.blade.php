@@ -365,13 +365,13 @@
                         نظرة عامة
                     @endif
                 </h6>
-                <p>
+                <div class="rich-content">
                     @if (LaravelLocalization::getCurrentLocale() === 'en')
                         {!! $Tour->en_overview !!}
                     @else
                         {!! $Tour->ar_overview !!}
                     @endif
-                </p>
+                </div>
 
 
             </div>
@@ -476,11 +476,13 @@
                             </h5>
                         @endif
 
-                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                            {!! $Tour->en_tours_details !!}
-                        @else
-                            {!! $Tour->ar_tours_details !!}
-                        @endif
+                        <div class="rich-content">
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                                {!! $Tour->en_tours_details !!}
+                            @else
+                                {!! $Tour->ar_tours_details !!}
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

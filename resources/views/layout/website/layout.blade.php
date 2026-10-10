@@ -103,6 +103,8 @@
     </noscript>
     {{-- Reusable Toast Notification system (newsletter form and any flash_success/flash_error redirect) --}}
     <link rel="stylesheet" href="{{ asset('/website_assets/css/toast.css') }}">
+    {{-- Responsive images + lightbox for admin editor output (.rich-content) --}}
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/rich-content.css') }}">
     {{--
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css"> --}}
@@ -594,6 +596,7 @@
     {{-- Reusable Toast Notification engine + Newsletter form AJAX submission --}}
     <script defer src="{{ asset('/website_assets/js/toast.js') }}"></script>
     <script defer src="{{ asset('/website_assets/js/newsletter-form.js') }}"></script>
+    <script defer src="{{ asset('/website_assets/js/rich-content.js') }}"></script>
     <script>
         $(document).ready(function() {
             $(".owl-carousel").owlCarousel({

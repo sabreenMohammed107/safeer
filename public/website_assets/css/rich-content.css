@@ -1,0 +1,137 @@
+/*
+ * Rich-text (editor) output + image lightbox.
+ *
+ * Add the `rich-content` class to any element that prints admin editor HTML
+ * with {!! !!} (tour overview/details, blog text, offer overview, policies...).
+ * It is deliberately NOT applied to `.hotel_details` in general, because that
+ * class also wraps search forms, cards and icons across the site.
+ *
+ * The !important rules beat the inline width/height attributes and styles that
+ * CKEditor / TinyMCE / Summernote write onto pasted images (e.g. width="800",
+ * style="width:1200px;height:700px").
+ */
+
+.rich-content {
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+.rich-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 10px auto;
+    border-radius: 8px;
+}
+
+/* Only images that open in the lightbox get the zoom cursor (see rich-content.js) */
+.rich-content img.rc-zoomable {
+    cursor: zoom-in;
+    transition: opacity 0.2s ease;
+}
+
+.rich-content img.rc-zoomable:hover {
+    opacity: 0.9;
+}
+
+.rich-content img.rc-zoomable:focus-visible {
+    outline: 3px solid #1c4482;
+    outline-offset: 3px;
+}
+
+/* Other editor embeds that commonly overflow on mobile */
+.rich-content iframe,
+.rich-content video,
+.rich-content embed,
+.rich-content object {
+    max-width: 100% !important;
+}
+
+.rich-content table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 767.98px) {
+
+    /* Floated images (editor "align left/right") leave unreadable text columns on phones */
+    .rich-content img {
+        float: none !important;
+        width: auto !important;
+    }
+}
+
+/* ---------- Lightbox ---------- */
+
+.rc-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 99990; /* above the WhatsApp widget / scroll-to-top, below toasts (99999) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 16px 16px;
+    background: rgba(10, 16, 35, 0.88);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.rc-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.rc-lightbox__img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+    transform: scale(0.96);
+    transition: transform 0.25s ease;
+    cursor: default;
+}
+
+.rc-lightbox.is-open .rc-lightbox__img {
+    transform: scale(1);
+}
+
+.rc-lightbox__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+[dir="rtl"] .rc-lightbox__close,
+.rc-lightbox[dir="rtl"] .rc-lightbox__close {
+    right: auto;
+    left: 12px;
+}
+
+.rc-lightbox__close:hover,
+.rc-lightbox__close:focus-visible {
+    background: rgba(255, 255, 255, 0.3);
+    outline: none;
+}
+
+body.rc-lightbox-open {
+    overflow: hidden;
+}

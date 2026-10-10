@@ -80,7 +80,7 @@
                                 style="border-bottom:1px solid #ddd">
                                 <i class="fa-solid fa-circle-arrow-right px-2"></i> <span>{{ $section['title'] }}</span>
                             </h2>
-                            <div class="px-2">{!! $section['html'] !!}</div>
+                            <div class="px-2 rich-content">{!! $section['html'] !!}</div>
                         </div>
                     @endforeach
                 @endif
