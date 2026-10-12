@@ -343,6 +343,7 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'date_to' => 'To Date',
 'all_cities' => 'All Cities',
 'no_offers_found' => 'No offers match your search.',
+'offers_coming_soon' => 'Stay tuned for our latest offers soon',
 'availableOffers' => 'Available Offers',
 'offers_count' => '{0} No offers|{1} 1 offer|[2,*] :count offers',
 'view_offer' => 'View Offer',

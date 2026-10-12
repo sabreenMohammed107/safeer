@@ -6,10 +6,14 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/blog.css') }}">
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/offers.css') }}">
 @endsection
 
 @section('bottom-header')
-    <x-website.header.general title="{{ __('links.offers') }}" :breadcrumb="$BreadCrumb" current="" />
+    @php
+        $offerTitle = LaravelLocalization::getCurrentLocale() === 'en' ? $offer->subtitle_en : $offer->subtitle_ar;
+    @endphp
+    <x-website.header.general :title="$offerTitle ?: __('links.offers')" :breadcrumb="$BreadCrumb" current="" />
 @endsection
 @section('content')
   <!-- searching for tors section -->
@@ -83,7 +87,7 @@
                         اخر العروض
                     @endif
                 </h6>
-                @foreach ($latest as $obj)
+                @forelse ($latest as $obj)
                     <div class="blog_details">
                         <a href="{{ LaravelLocalization::localizeUrl('/single-offer/' . $obj->id . '/' . $obj->slug) }}"
                             class="stretched-link">
@@ -113,7 +117,13 @@
                             <span> {{ money($obj->cost) }}</span>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    {{-- Every offer has expired --}}
+                    <p class="offers_sidebar__soon">
+                        <i class="fa-solid fa-bell"></i>
+                        {{ __('links.offers_coming_soon') }}
+                    </p>
+                @endforelse
 
 
             </div>

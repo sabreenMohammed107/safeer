@@ -92,7 +92,7 @@
                             اخر العروض
                         @endif
                     </h6>
-                    @foreach ($latest as $obj)
+                    @forelse ($latest as $obj)
                         <div class="offers_sidebar__item">
                             <div class="offers_sidebar__thumb">
                                 <img src="{{ asset('uploads/offers') }}/{{ $obj->image }}" loading="lazy" width="84"
@@ -117,7 +117,13 @@
                                 <strong>{{ money($obj->cost) }}</strong>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        {{-- Every offer has expired --}}
+                        <p class="offers_sidebar__soon">
+                            <i class="fa-solid fa-bell"></i>
+                            {{ __('links.offers_coming_soon') }}
+                        </p>
+                    @endforelse
                 </aside>
             </div>
         </div>

@@ -44,6 +44,19 @@ class Offer extends Model
         });
     }
 
+    /**
+     * Active offers that haven't expired yet: offer_date is the offer's last
+     * valid day, so it stays listed through today. Undated rows never expire.
+     */
+    public function scopeCurrent($query)
+    {
+        return $query->where('active', 1)
+            ->where(function ($query) {
+                $query->whereNull('offer_date')
+                    ->orWhereDate('offer_date', '>=', now()->toDateString());
+            });
+    }
+
     public function getSlugAttribute(): string
     {
 

@@ -3,11 +3,13 @@
 namespace Tests\Feature;
 
 use App\Models\City;
+use App\Models\Company;
 use App\Models\Offer;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Schema;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Tests\TestCase;
 
 /**
@@ -326,5 +328,108 @@ class OfferDateAndFilterTest extends TestCase
             ->assertDontSee('Dubai Ajax Offer')
             // Pagination links carry the active filters.
             ->assertSee('city_id=' . $cairo->id, false);
+    }
+
+    // --- Public: full list vs. "latest offers" sidebar ----------------------
+
+    /**
+     * The "latest offers" sidebar only.
+     */
+    private function latestSidebar(string $html): string
+    {
+        $sidebar = substr($html, strpos($html, 'class="offers_sidebar'));
+
+        return substr($sidebar, 0, strpos($sidebar, '</aside>'));
+    }
+
+    public function test_full_list_shows_every_active_offer_newest_first_expired_included()
+    {
+        $city = $this->makeCity('Order City');
+        Carbon::setTestNow('2026-09-01 10:00:00');
+        $this->makeOffer('Older Expired Offer', $city, '2026-09-05');
+        Carbon::setTestNow('2026-10-10 10:00:00');
+        $this->makeOffer('Newer Current Offer', $city, '2026-11-01');
+        Carbon::setTestNow('2026-10-12 12:00:00');
+
+        $grid = $this->resultsGrid('/offers');
+
+        $this->assertStringContainsString('Older Expired Offer', $grid);
+        $this->assertLessThan(
+            strpos($grid, 'Older Expired Offer'),
+            strpos($grid, 'Newer Current Offer')
+        );
+    }
+
+    public function test_latest_sidebar_hides_expired_offers_but_keeps_ones_ending_today()
+    {
+        Carbon::setTestNow('2026-10-12 12:00:00');
+        $city = $this->makeCity('Expiry City');
+        $this->makeOffer('Expired Offer', $city, '2026-10-11');
+        $this->makeOffer('Ends Today Offer', $city, '2026-10-12');
+        $this->makeOffer('Future Offer', $city, '2026-12-01');
+
+        $sidebar = $this->latestSidebar($this->get('/offers')->assertOk()->getContent());
+
+        $this->assertStringContainsString('Ends Today Offer', $sidebar);
+        $this->assertStringContainsString('Future Offer', $sidebar);
+        $this->assertStringNotContainsString('Expired Offer', $sidebar);
+        $this->assertStringNotContainsString(__('links.offers_coming_soon'), $sidebar);
+    }
+
+    public function test_latest_sidebar_shows_coming_soon_when_every_offer_has_expired()
+    {
+        Carbon::setTestNow('2026-10-12 12:00:00');
+        $offer = $this->makeOffer('Long Gone Offer', $this->makeCity('Expiry City'), '2026-09-01');
+
+        $html = $this->get('/offers')->assertOk()->getContent();
+        $sidebar = $this->latestSidebar($html);
+
+        $this->assertStringContainsString('Stay tuned for our latest offers soon', $sidebar);
+        $this->assertStringNotContainsString('Long Gone Offer', $sidebar);
+        // The full list (and its search bar) still shows it.
+        $this->assertStringContainsString('Long Gone Offer', $this->resultsGrid('/offers'));
+        $this->assertStringContainsString('id="offers_search_form"', $html);
+
+        // Same on the single-offer page's sidebar.
+        $this->get('/single-offer/' . $offer->id)
+            ->assertOk()
+            ->assertSee('Stay tuned for our latest offers soon');
+
+        // The locale prefix is fixed when routes register, so check Arabic by rendering directly.
+        LaravelLocalization::setLocale('ar');
+        $html = view('website.offers.single', [
+            'Company' => Company::first(),
+            'offer' => $offer,
+            'latest' => Offer::current()->get(),
+            'BreadCrumb' => [],
+        ])->render();
+        $this->assertStringContainsString('انتظر أحدث العروض قريباً', $html);
+    }
+
+    // --- Public: single offer ----------------------------------------------
+
+    public function test_single_offer_hero_shows_the_offer_title_in_the_current_language()
+    {
+        $offer = $this->makeOffer('Hero Title Offer', $this->makeCity('Hero City'), '2026-11-01', [
+            'subtitle_ar' => 'عرض العنوان',
+        ]);
+
+        $this->get('/single-offer/' . $offer->id)
+            ->assertOk()
+            ->assertSee('<h1> Hero Title Offer</h1>', false);
+
+        LaravelLocalization::setLocale('ar');
+        $html = view('website.offers.single', [
+            'Company' => Company::first(),
+            'offer' => $offer,
+            'latest' => collect(),
+            'BreadCrumb' => [],
+        ])->render();
+        $this->assertStringContainsString('<h1> عرض العنوان</h1>', $html);
+    }
+
+    public function test_unknown_single_offer_returns_404()
+    {
+        $this->get('/single-offer/999999999')->assertNotFound();
     }
 }

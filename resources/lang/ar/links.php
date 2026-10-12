@@ -353,6 +353,7 @@ return [
     'date_to' => 'إلى تاريخ',
     'all_cities' => 'كل المدن',
     'no_offers_found' => 'لا توجد عروض مطابقة لبحثك.',
+    'offers_coming_soon' => 'انتظر أحدث العروض قريباً',
     'availableOffers' => 'العروض المتاحة',
     'offers_count' => '{0} لا توجد عروض|{1} عرض واحد|{2} عرضان|[3,10] :count عروض|[11,*] :count عرض',
     'view_offer' => 'عرض التفاصيل',
