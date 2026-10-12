@@ -54,6 +54,9 @@ class OfferDateAndFilterTest extends TestCase
         return City::create(['en_city' => $name, 'ar_city' => $name]);
     }
 
+    /** A valid start/end pair — required by the admin add & edit forms. */
+    private const PERIOD = ['start_date' => '2026-10-01 09:00', 'end_date' => '2026-12-31 23:59'];
+
     private function makeOffer(string $title, City $city, ?string $date, array $extra = []): Offer
     {
         return Offer::create(array_merge([
@@ -93,7 +96,7 @@ class OfferDateAndFilterTest extends TestCase
             'subtitle_en' => 'Dated Offer',
             'city_id' => $city->id,
             'offer_date' => '2026-12-25',
-        ])->assertRedirect(route('offers.index'));
+        ] + self::PERIOD)->assertRedirect(route('offers.index'));
 
         $offer = Offer::where('subtitle_en', 'Dated Offer')->firstOrFail();
         $this->assertSame('2026-12-25', $offer->offer_date->toDateString());
@@ -109,7 +112,7 @@ class OfferDateAndFilterTest extends TestCase
             'subtitle_en' => 'Undated Offer',
             'city_id' => $city->id,
             'offer_date' => '', // empty field as submitted by the form
-        ])->assertRedirect(route('offers.index'));
+        ] + self::PERIOD)->assertRedirect(route('offers.index'));
 
         $offer = Offer::where('subtitle_en', 'Undated Offer')->firstOrFail();
         $this->assertSame('2026-10-01', $offer->offer_date->toDateString());
@@ -126,7 +129,7 @@ class OfferDateAndFilterTest extends TestCase
             'subtitle_en' => 'Editable Offer',
             'city_id' => $city->id,
             'offer_date' => '2027-01-15',
-        ])->assertRedirect(route('offers.index'));
+        ] + self::PERIOD)->assertRedirect(route('offers.index'));
 
         $this->assertSame('2027-01-15', $offer->fresh()->offer_date->toDateString());
     }
@@ -143,7 +146,7 @@ class OfferDateAndFilterTest extends TestCase
             'subtitle_en' => 'Cleared Offer',
             'city_id' => $city->id,
             'offer_date' => '',
-        ])->assertRedirect(route('offers.index'));
+        ] + self::PERIOD)->assertRedirect(route('offers.index'));
 
         // Falls back to the creation day, not "today".
         $this->assertSame('2026-09-20', $offer->fresh()->offer_date->toDateString());
@@ -158,7 +161,7 @@ class OfferDateAndFilterTest extends TestCase
             'subtitle_en' => 'Bad Date Offer',
             'city_id' => $city->id,
             'offer_date' => 'not-a-date',
-        ])->assertSessionHasErrors('offer_date');
+        ] + self::PERIOD)->assertSessionHasErrors('offer_date');
 
         $this->assertFalse(Offer::where('subtitle_en', 'Bad Date Offer')->exists());
     }
@@ -188,6 +191,112 @@ class OfferDateAndFilterTest extends TestCase
             ->assertOk()
             ->assertSee('<th class="min-w-125px">date</th>', false)
             ->assertSee('data-order="2026-11-07"', false);
+    }
+
+    // --- Admin: start_date / end_date ----------------------------------------
+
+    public function test_offers_table_has_start_and_end_date_columns()
+    {
+        $this->assertTrue(Schema::hasColumns('offers', ['start_date', 'end_date']));
+    }
+
+    public function test_admin_saves_the_offer_period()
+    {
+        $city = $this->makeCity('Admin City');
+        $admin = $this->makeAdmin('offer_period_admin1@example.com');
+
+        $this->actingAs($admin)->post(route('offers.store'), [
+            'subtitle_en' => 'Period Offer',
+            'city_id' => $city->id,
+            'start_date' => '2026-10-15 08:30',
+            'end_date' => '2026-10-20 22:00',
+        ])->assertRedirect(route('offers.index'));
+
+        $offer = Offer::where('subtitle_en', 'Period Offer')->firstOrFail();
+        $this->assertSame('2026-10-15 08:30:00', $offer->start_date->toDateTimeString());
+        $this->assertSame('2026-10-20 22:00:00', $offer->end_date->toDateTimeString());
+
+        $this->actingAs($admin)->put(route('offers.update', $offer->id), [
+            'subtitle_en' => 'Period Offer',
+            'city_id' => $city->id,
+            'start_date' => '2026-10-16 08:30',
+            'end_date' => '2026-10-25 22:00',
+        ])->assertRedirect(route('offers.index'));
+
+        $this->assertSame('2026-10-25 22:00:00', $offer->fresh()->end_date->toDateTimeString());
+    }
+
+    public function test_admin_requires_an_end_date_after_the_start_date()
+    {
+        $city = $this->makeCity('Admin City');
+        $offer = $this->makeOffer('Valid Period Offer', $city, null, $this->period('2026-10-01 00:00', '2026-10-31 00:00'));
+        $admin = $this->makeAdmin('offer_period_admin2@example.com');
+
+        foreach (['2026-10-10 10:00', '2026-10-09 10:00'] as $end) { // equal, then before
+            $this->actingAs($admin)->post(route('offers.store'), [
+                'subtitle_en' => 'Backwards Offer',
+                'city_id' => $city->id,
+                'start_date' => '2026-10-10 10:00',
+                'end_date' => $end,
+            ])->assertSessionHasErrors(['end_date' => 'The end date must be after the start date.']);
+
+            $this->actingAs($admin)->put(route('offers.update', $offer->id), [
+                'subtitle_en' => 'Valid Period Offer',
+                'city_id' => $city->id,
+                'start_date' => '2026-10-10 10:00',
+                'end_date' => $end,
+            ])->assertSessionHasErrors('end_date');
+        }
+
+        $this->actingAs($admin)->post(route('offers.store'), [
+            'subtitle_en' => 'Undated Period Offer',
+            'city_id' => $city->id,
+        ])->assertSessionHasErrors(['start_date', 'end_date']);
+
+        $this->assertFalse(Offer::whereIn('subtitle_en', ['Backwards Offer', 'Undated Period Offer'])->exists());
+        $this->assertSame('2026-10-31 00:00:00', $offer->fresh()->end_date->toDateTimeString());
+    }
+
+    public function test_admin_forms_render_the_period_fields()
+    {
+        $offer = $this->makeOffer('Period Form Offer', $this->makeCity('Admin City'), null,
+            $this->period('2026-10-05 09:30', '2026-11-20 18:00'));
+        $admin = $this->makeAdmin('offer_period_admin3@example.com');
+
+        $this->actingAs($admin)->get(route('offers.create'))
+            ->assertOk()
+            ->assertSee('name="start_date"', false)
+            ->assertSee('name="end_date"', false);
+
+        $this->actingAs($admin)->get(route('offers.edit', $offer->id))
+            ->assertOk()
+            ->assertSee('value="2026-10-05 09:30"', false)
+            ->assertSee('value="2026-11-20 18:00"', false);
+    }
+
+    public function test_admin_index_shows_each_offers_period_and_status()
+    {
+        Carbon::setTestNow('2026-10-12 12:00:00');
+        $city = $this->makeCity('Admin City');
+        $this->makeOffer('Running Admin Offer', $city, null, $this->period('2026-10-01 00:00', '2026-10-30 00:00'));
+        $this->makeOffer('Upcoming Admin Offer', $city, null, $this->period('2026-11-01 00:00', '2026-11-30 00:00'));
+        $this->makeOffer('Expired Admin Offer', $city, null, $this->period('2026-09-01 00:00', '2026-09-30 00:00'));
+        $admin = $this->makeAdmin('offer_period_admin4@example.com');
+
+        $html = $this->actingAs($admin)->get(route('offers.index'))->assertOk()->getContent();
+
+        $this->assertStringContainsString('<th class="min-w-125px">start</th>', $html);
+        $this->assertStringContainsString('<th class="min-w-125px">end</th>', $html);
+        $this->assertStringContainsString('2026-11-01 00:00', $html);
+        foreach ([
+            'Running Admin Offer' => 'badge-light-success offer-period-status">Active',
+            'Upcoming Admin Offer' => 'badge-light-warning offer-period-status">Not started',
+            'Expired Admin Offer' => 'badge-light-danger offer-period-status">Expired',
+        ] as $title => $badge) {
+            $row = substr($html, strpos($html, $title));
+            $row = substr($row, 0, strpos($row, '</tr>'));
+            $this->assertStringContainsString($badge, $row, $title);
+        }
     }
 
     // --- Public: City + Date filter ----------------------------------------
@@ -342,13 +451,18 @@ class OfferDateAndFilterTest extends TestCase
         return substr($sidebar, 0, strpos($sidebar, '</aside>'));
     }
 
+    private function period(string $start, string $end): array
+    {
+        return ['start_date' => $start, 'end_date' => $end];
+    }
+
     public function test_full_list_shows_every_active_offer_newest_first_expired_included()
     {
         $city = $this->makeCity('Order City');
         Carbon::setTestNow('2026-09-01 10:00:00');
-        $this->makeOffer('Older Expired Offer', $city, '2026-09-05');
+        $this->makeOffer('Older Expired Offer', $city, '2026-09-05', $this->period('2026-09-01 10:00', '2026-09-05 23:59'));
         Carbon::setTestNow('2026-10-10 10:00:00');
-        $this->makeOffer('Newer Current Offer', $city, '2026-11-01');
+        $this->makeOffer('Newer Current Offer', $city, '2026-11-01', $this->period('2026-10-10 10:00', '2026-11-01 23:59'));
         Carbon::setTestNow('2026-10-12 12:00:00');
 
         $grid = $this->resultsGrid('/offers');
@@ -360,26 +474,64 @@ class OfferDateAndFilterTest extends TestCase
         );
     }
 
-    public function test_latest_sidebar_hides_expired_offers_but_keeps_ones_ending_today()
+    public function test_latest_sidebar_only_shows_offers_running_now()
     {
         Carbon::setTestNow('2026-10-12 12:00:00');
         $city = $this->makeCity('Expiry City');
-        $this->makeOffer('Expired Offer', $city, '2026-10-11');
-        $this->makeOffer('Ends Today Offer', $city, '2026-10-12');
-        $this->makeOffer('Future Offer', $city, '2026-12-01');
+        $this->makeOffer('Expired Offer', $city, null, $this->period('2026-10-01 00:00', '2026-10-12 11:59'));
+        $this->makeOffer('Ends Soon Offer', $city, null, $this->period('2026-10-01 00:00', '2026-10-12 12:00'));
+        $this->makeOffer('Running Offer', $city, null, $this->period('2026-10-12 12:00', '2026-12-01 00:00'));
+        $this->makeOffer('Upcoming Offer', $city, null, $this->period('2026-10-12 12:01', '2026-12-01 00:00'));
 
         $sidebar = $this->latestSidebar($this->get('/offers')->assertOk()->getContent());
 
-        $this->assertStringContainsString('Ends Today Offer', $sidebar);
-        $this->assertStringContainsString('Future Offer', $sidebar);
+        $this->assertStringContainsString('Ends Soon Offer', $sidebar);
+        $this->assertStringContainsString('Running Offer', $sidebar);
         $this->assertStringNotContainsString('Expired Offer', $sidebar);
+        $this->assertStringNotContainsString('Upcoming Offer', $sidebar);
         $this->assertStringNotContainsString(__('links.offers_coming_soon'), $sidebar);
+    }
+
+    public function test_latest_sidebar_is_sorted_by_start_date_newest_first()
+    {
+        Carbon::setTestNow('2026-10-12 12:00:00');
+        $city = $this->makeCity('Order City');
+        // Created first but started most recently.
+        $this->makeOffer('Recently Started Offer', $city, null, $this->period('2026-10-11 00:00', '2026-12-01 00:00'));
+        $this->makeOffer('Long Running Offer', $city, null, $this->period('2026-09-01 00:00', '2026-12-01 00:00'));
+
+        $sidebar = $this->latestSidebar($this->get('/offers')->assertOk()->getContent());
+
+        $this->assertLessThan(
+            strpos($sidebar, 'Long Running Offer'),
+            strpos($sidebar, 'Recently Started Offer')
+        );
+    }
+
+    public function test_offer_cards_show_the_start_and_end_dates()
+    {
+        $this->makeOffer('Period Card Offer', $this->makeCity('Card City'), null,
+            $this->period('2026-10-05 09:30', '2026-11-20 18:00'));
+
+        $grid = $this->resultsGrid('/offers');
+
+        $this->assertStringContainsString('offer_card__dates', $grid);
+        $this->assertStringContainsString('<time datetime="2026-10-05">5 Oct 2026</time>', $grid);
+        $this->assertStringContainsString('<time datetime="2026-11-20">20 Nov 2026</time>', $grid);
+        // Date only — no time of day.
+        $this->assertStringNotContainsString('09:30', $grid);
+        $this->assertStringNotContainsString('18:00', $grid);
+
+        LaravelLocalization::setLocale('ar');
+        $offer = Offer::where('subtitle_en', 'Period Card Offer')->first();
+        $this->assertSame('5 أكتوبر 2026', $offer->periodDate('start_date'));
     }
 
     public function test_latest_sidebar_shows_coming_soon_when_every_offer_has_expired()
     {
         Carbon::setTestNow('2026-10-12 12:00:00');
-        $offer = $this->makeOffer('Long Gone Offer', $this->makeCity('Expiry City'), '2026-09-01');
+        $offer = $this->makeOffer('Long Gone Offer', $this->makeCity('Expiry City'), '2026-09-01',
+            $this->period('2026-08-01 00:00', '2026-09-01 23:59'));
 
         $html = $this->get('/offers')->assertOk()->getContent();
         $sidebar = $this->latestSidebar($html);
@@ -426,6 +578,20 @@ class OfferDateAndFilterTest extends TestCase
             'BreadCrumb' => [],
         ])->render();
         $this->assertStringContainsString('<h1> عرض العنوان</h1>', $html);
+    }
+
+    public function test_single_offer_page_shows_the_start_and_end_dates()
+    {
+        $offer = $this->makeOffer('Period Single Offer', $this->makeCity('Single City'), null,
+            $this->period('2026-10-05 09:30', '2026-11-20 18:00'));
+
+        $this->get('/single-offer/' . $offer->id)
+            ->assertOk()
+            ->assertSee('class="offer_period"', false)
+            ->assertSee('<time datetime="2026-10-05">5 October 2026</time>', false)
+            ->assertSee('<time datetime="2026-11-20">20 November 2026</time>', false)
+            ->assertDontSee('09:30')
+            ->assertDontSee('18:00');
     }
 
     public function test_unknown_single_offer_returns_404()

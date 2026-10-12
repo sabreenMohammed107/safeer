@@ -89,6 +89,9 @@
                                 <th class="min-w-150px">Sub Title</th>
                                 <th class="min-w-150px">cost </th>
                                 <th class="min-w-125px">date</th>
+                                <th class="min-w-125px">start</th>
+                                <th class="min-w-125px">end</th>
+                                <th class="min-w-100px">status</th>
                                 <th class="text-end min-w-70px">Actions</th>
                             </tr>
                             <!--end::Table row-->
@@ -154,6 +157,21 @@
                                     </td>
                                     <td data-order="{{ optional($row->offer_date)->format('Y-m-d') }}">
                                         <span class="symbol-label">{{ optional($row->offer_date)->format('Y-m-d') }}</span>
+                                    </td>
+                                    @foreach (['start_date', 'end_date'] as $periodField)
+                                        <td data-order="{{ optional($row->$periodField)->format('Y-m-d H:i:s') }}">
+                                            <span class="symbol-label">{{ optional($row->$periodField)->format(\App\Models\Offer::PERIOD_FORMAT) ?? '—' }}</span>
+                                        </td>
+                                    @endforeach
+                                    @php
+                                        $periodBadge = [
+                                            'active' => ['badge-light-success', 'Active'],
+                                            'upcoming' => ['badge-light-warning', 'Not started'],
+                                            'expired' => ['badge-light-danger', 'Expired'],
+                                        ][$row->period_status];
+                                    @endphp
+                                    <td data-order="{{ $row->period_status }}">
+                                        <span class="badge {{ $periodBadge[0] }} offer-period-status">{{ $periodBadge[1] }}</span>
                                     </td>
                                     <!--end::Type=-->
                                     <!--begin::Action=-->

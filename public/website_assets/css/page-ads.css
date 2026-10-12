@@ -1,0 +1,315 @@
+/*
+ * Admin-managed promotional banners (components/website/page-ad.blade.php).
+ *   .page_ad--poster  sidebar poster (offers, transport)
+ *   .page_ad--banner  wide feature banner (visa)
+ * Images are portrait 700x1000 (7:10).
+ */
+
+.page_ad {
+    --ad-navy: #1C4482;
+    --ad-sky: #68c2e5;
+    --ad-head: linear-gradient(135deg, #1C4482 0%, #2f6db5 100%);
+    position: relative;
+}
+
+.page_ad--transport {
+    --ad-head: linear-gradient(135deg, #1C4482 0%, #1f8fb8 100%);
+}
+
+/* ---------- Image frame + fade slider ---------- */
+.page_ad__frame {
+    position: relative;
+    aspect-ratio: 7 / 10;
+    overflow: hidden;
+    background: #eef4fb;
+    border-radius: 14px;
+}
+
+.page_ad__slide {
+    position: absolute;
+    inset: 0;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .7s ease, visibility .7s;
+}
+
+.page_ad__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.page_ad__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s ease;
+}
+
+a.page_ad__slide:hover img {
+    transform: scale(1.04);
+}
+
+a.page_ad__slide:focus-visible {
+    outline: 3px solid var(--ad-sky);
+    outline-offset: -3px;
+}
+
+.page_ad__ribbon {
+    position: absolute;
+    top: 14px;
+    inset-inline-start: 14px;
+    z-index: 2;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--ad-navy);
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(28, 68, 130, .35);
+    pointer-events: none;
+}
+
+.page_ad__dots {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+}
+
+.page_ad__dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    background: rgba(255, 255, 255, .6);
+    border: 0;
+    border-radius: 999px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+    cursor: pointer;
+    transition: width .3s ease, background .3s ease;
+}
+
+.page_ad__dot.is-active {
+    width: 24px;
+    background: #fff;
+}
+
+/* ---------- Sidebar poster (offers / transport) ---------- */
+.page_ad--poster {
+    margin: 24px 0 30px;
+    padding: 0 0 14px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(33, 13, 58, .08);
+    overflow: hidden;
+}
+
+.page_ad--poster .page_ad__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--ad-head);
+}
+
+.page_ad--poster .page_ad__head i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    color: var(--ad-navy);
+    background: #fff;
+    border-radius: 50%;
+}
+
+/* Transport: a dashed "road" under the heading */
+.page_ad--transport .page_ad__head {
+    position: relative;
+    padding-bottom: 18px;
+}
+
+.page_ad--transport .page_ad__head::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 8px;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .75) 0 10px, transparent 10px 18px);
+}
+
+.page_ad--poster .page_ad__media {
+    padding: 14px 14px 0;
+}
+
+@media (min-width: 1200px) {
+    /* Stay in view while scrolling long result lists. */
+    .page_ad--poster {
+        position: sticky;
+        top: 100px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .page_ad--poster {
+        max-width: 380px;
+        margin-inline: auto;
+    }
+}
+
+/* ---------- Wide feature banner (visa) ---------- */
+.page_ad--banner {
+    display: flex;
+    align-items: stretch;
+    margin: 10px auto 40px;
+    overflow: hidden;
+    background: var(--ad-head);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(28, 68, 130, .25);
+}
+
+.page_ad--banner .page_ad__copy {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: 40px 44px;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* Passport-stamp circles in the background */
+.page_ad--banner .page_ad__copy::before,
+.page_ad--banner .page_ad__copy::after {
+    content: "";
+    position: absolute;
+    border: 2px dashed rgba(255, 255, 255, .18);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.page_ad--banner .page_ad__copy::before {
+    width: 260px;
+    height: 260px;
+    bottom: -90px;
+    inset-inline-end: -60px;
+}
+
+.page_ad--banner .page_ad__copy::after {
+    width: 140px;
+    height: 140px;
+    top: -40px;
+    inset-inline-end: 140px;
+}
+
+.page_ad__badge {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 8px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ad-navy);
+    background: #fff;
+    border-radius: 999px;
+}
+
+.page_ad__badge i {
+    color: var(--ad-sky);
+}
+
+.page_ad__title {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.3;
+    color: #fff;
+}
+
+.page_ad__text {
+    max-width: 460px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, .85);
+}
+
+.page_ad__cta {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 10px;
+    margin-top: 6px;
+    padding: 12px 26px;
+    font-weight: 700;
+    color: var(--ad-navy);
+    text-decoration: none;
+    background: #fff;
+    border-radius: 10px;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.page_ad__cta:hover,
+.page_ad__cta:focus-visible {
+    color: var(--ad-navy);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
+}
+
+.page_ad--banner .page_ad__media {
+    flex: 0 0 300px;
+    padding: 20px;
+}
+
+/* The banner already has its "special offer" badge next to the title. */
+.page_ad--banner .page_ad__ribbon {
+    display: none;
+}
+
+.page_ad--banner .page_ad__frame {
+    border: 4px solid rgba(255, 255, 255, .9);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+}
+
+@media (max-width: 767px) {
+    .page_ad--banner {
+        flex-direction: column;
+        margin: 10px 16px 30px;
+    }
+
+    .page_ad--banner .page_ad__copy {
+        padding: 28px 24px 8px;
+    }
+
+    .page_ad__title {
+        font-size: 24px;
+    }
+
+    .page_ad--banner .page_ad__media {
+        flex-basis: auto;
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page_ad__slide,
+    .page_ad__slide img,
+    .page_ad__dot,
+    .page_ad__cta {
+        transition: none;
+    }
+}

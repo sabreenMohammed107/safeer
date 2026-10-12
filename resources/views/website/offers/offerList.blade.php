@@ -42,9 +42,22 @@
                                 {{ $isEn ? $offer->city->en_city : $offer->city->ar_city }}
                             </span>
                         @endif
-                        @if ($offer->offer_date)
+                        @if ($offer->start_date || $offer->end_date)
+                            <span class="offer_card__chip offer_card__dates" title="{{ __('links.offer_period') }}">
+                                <i class="fa-regular fa-calendar"></i>
+                                @if ($offer->start_date)
+                                    <time datetime="{{ $offer->start_date->toDateString() }}">{{ $offer->periodDate('start_date') }}</time>
+                                @endif
+                                @if ($offer->start_date && $offer->end_date)
+                                    <span class="offer_card__dates-sep" aria-hidden="true">–</span>
+                                @endif
+                                @if ($offer->end_date)
+                                    <time datetime="{{ $offer->end_date->toDateString() }}">{{ $offer->periodDate('end_date') }}</time>
+                                @endif
+                            </span>
+                        @elseif ($offer->offer_date)
                             <span class="offer_card__chip offer_date">
-                                <i class="fa-solid fa-calendar-days"></i> {{ $offer->offer_date->format('Y-m-d') }}
+                                <i class="fa-regular fa-calendar"></i> {{ $offer->offer_date->format('Y-m-d') }}
                             </span>
                         @endif
                     </div>

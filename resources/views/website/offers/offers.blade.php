@@ -125,6 +125,8 @@
                         </p>
                     @endforelse
                 </aside>
+
+                <x-website.page-ad page="offers" />
             </div>
         </div>
     </section>

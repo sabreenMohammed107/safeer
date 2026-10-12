@@ -504,6 +504,10 @@
         </section>
     </form>
 
+    <div class="container">
+        <x-website.page-ad page="visa" layout="banner" />
+    </div>
+
     <!-- booking section -->
     <section class="booking py-4">
 

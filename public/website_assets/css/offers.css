@@ -120,6 +120,118 @@
     color: #68c2e5;
 }
 
+/* Offer period on the cards: one chip, "5 Oct 2026 – 20 Nov 2026" */
+.offer_card__dates time {
+    white-space: nowrap;
+}
+
+.offer_card__dates-sep {
+    color: #68c2e5;
+}
+
+/* Offer period on the single-offer page: start —✈— end */
+.offer_period {
+    margin: 6px 0 24px;
+    padding: 18px 22px;
+    background: #fff;
+    border: 1px solid #e3ebf5;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(33, 13, 58, .06);
+}
+
+.offer_period__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1C4482;
+}
+
+/* Extra classes outrank the theme's `.hotels .hotels_card .hotel_card_info i` (grey icons). */
+.offer_period .offer_period__title i.fa-regular.fa-calendar {
+    color: #68c2e5;
+}
+
+.offer_period__range {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.offer_period__point {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 16px;
+    background: #eef4fb;
+    border-radius: 10px;
+}
+
+.offer_period__label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #7e7e7e;
+}
+
+.offer_period__point time {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1C4482;
+    white-space: nowrap;
+}
+
+/* Dashed route between the two dates with a plane in the middle. */
+.offer_period__line {
+    position: relative;
+    flex: 1;
+    min-width: 40px;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, #68c2e5 0 6px, transparent 6px 12px);
+}
+
+.offer_period .offer_period__line i.fa-solid.fa-plane {
+    color: #1C4482;
+}
+
+.offer_period__line i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0 8px;
+    font-size: 16px;
+    background: #fff;
+    transform: translate(-50%, -50%);
+}
+
+.offer_period__line.is-rtl i {
+    transform: translate(-50%, -50%) scaleX(-1);
+}
+
+@media (max-width: 575px) {
+    .offer_period__range {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .offer_period__line {
+        width: 2px;
+        height: 28px;
+        min-width: 0;
+        flex: none;
+        align-self: center;
+        background: repeating-linear-gradient(180deg, #68c2e5 0 6px, transparent 6px 12px);
+    }
+
+    .offer_period__line i,
+    .offer_period__line.is-rtl i {
+        padding: 6px 0;
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+}
+
 .offer_card__title {
     margin-bottom: 8px;
     font-size: 17px;

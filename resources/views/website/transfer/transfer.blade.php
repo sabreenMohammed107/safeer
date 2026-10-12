@@ -395,6 +395,10 @@
                     </div>
                 </div>
 
+                {{-- Desktop: under the filters. Smaller screens get it after the results instead. --}}
+                <div class="d-none d-xl-block">
+                    <x-website.page-ad page="transport" />
+                </div>
             </div>
 
             <div class="col-sm-12 col-xl-9">
@@ -459,6 +463,10 @@
 
 
 
+                </div>
+
+                <div class="d-xl-none">
+                    <x-website.page-ad page="transport" />
                 </div>
 
             </div>

@@ -57,6 +57,32 @@
                                             - {{ money($offer->cost) }}
 
                                         </p>
+                                    @if ($offer->start_date || $offer->end_date)
+                                        <section class="offer_period" aria-label="{{ __('links.offer_period') }}">
+                                            <h6 class="offer_period__title">
+                                                <i class="fa-regular fa-calendar"></i> {{ __('links.offer_period') }}
+                                            </h6>
+                                            <div class="offer_period__range">
+                                                @if ($offer->start_date)
+                                                    <div class="offer_period__point">
+                                                        <span class="offer_period__label">{{ __('links.offer_starts') }}</span>
+                                                        <time datetime="{{ $offer->start_date->toDateString() }}">{{ $offer->periodDate('start_date', 'j F Y') }}</time>
+                                                    </div>
+                                                @endif
+                                                @if ($offer->start_date && $offer->end_date)
+                                                    <div class="offer_period__line {{ app()->getLocale() === 'ar' ? 'is-rtl' : '' }}" aria-hidden="true">
+                                                        <i class="fa-solid fa-plane"></i>
+                                                    </div>
+                                                @endif
+                                                @if ($offer->end_date)
+                                                    <div class="offer_period__point">
+                                                        <span class="offer_period__label">{{ __('links.offer_ends') }}</span>
+                                                        <time datetime="{{ $offer->end_date->toDateString() }}">{{ $offer->periodDate('end_date', 'j F Y') }}</time>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </section>
+                                    @endif
                                     <div class="rich-content">
                                         @if (LaravelLocalization::getCurrentLocale() === 'en')
 

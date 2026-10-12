@@ -25,6 +25,7 @@ use App\Http\Controllers\CarModelController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\ToursTagController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\PageAdvertisementController;
 use App\Http\Controllers\VisaTypeController;
 use App\Http\Controllers\BestHotelController;
 use App\Http\Controllers\HotelsTagController;
@@ -388,6 +389,11 @@ Route::group(['middleware' => ['auth', 'user-access:admin'], 'prefix' => 'dashbo
 
     //tours
     Route::resource('offers', OfferController::class);
+
+    // Promotional banner of the offers / visa / transport pages (one per page: edit only)
+    Route::get('page-ads', [PageAdvertisementController::class, 'index'])->name('page-ads.index');
+    Route::get('page-ads/{page}/edit', [PageAdvertisementController::class, 'edit'])->name('page-ads.edit')->where('page', 'offers|visa|transport');
+    Route::put('page-ads/{page}', [PageAdvertisementController::class, 'update'])->name('page-ads.update')->where('page', 'offers|visa|transport');
 
     //
 

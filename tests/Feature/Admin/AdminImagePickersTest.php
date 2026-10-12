@@ -138,11 +138,11 @@ class AdminImagePickersTest extends TestCase
     /**
      * @dataProvider storeCases
      */
-    public function test_store_saves_a_library_pick_into_the_module_folder(string $route, string $field, string $model, string $column, string $folder)
+    public function test_store_saves_a_library_pick_into_the_module_folder(string $route, string $field, string $model, string $column, string $folder, array $required = [])
     {
         $before = $model::max('id') ?? 0;
 
-        $this->post(route($route), ['library_' . $field => self::PICK])->assertRedirect();
+        $this->post(route($route), ['library_' . $field => self::PICK] + $required)->assertRedirect();
 
         $row = $model::where('id', '>', $before)->latest('id')->firstOrFail();
         $this->assertSame('zz-lib-pick.png', $row->{$column});
@@ -151,14 +151,17 @@ class AdminImagePickersTest extends TestCase
 
     public function storeCases(): array
     {
+        // Fields the module's form request requires besides the image.
+        $offerPeriod = ['start_date' => '2026-10-01 09:00', 'end_date' => '2026-12-31 23:59'];
+
         return [
             'blogs' => ['blogs.store', 'image', Blog::class, 'image', 'blogs'],
             'car models' => ['car-models.store', 'image', Car_model::class, 'image', 'carModels'],
             'counter' => ['counter.store', 'image', Counter::class, 'image', 'counter'],
             'explore' => ['explore.store', 'image', Explore_city::class, 'image', 'explore'],
             'features (icon)' => ['features.store', 'icon', Feature::class, 'icon', 'features'],
-            'offers image' => ['offers.store', 'image', Offer::class, 'image', 'offers'],
-            'offers poster' => ['offers.store', 'poster_image', Offer::class, 'poster_image', 'offers'],
+            'offers image' => ['offers.store', 'image', Offer::class, 'image', 'offers', $offerPeriod],
+            'offers poster' => ['offers.store', 'poster_image', Offer::class, 'poster_image', 'offers', $offerPeriod],
             'tour galleries' => ['tour-galleries.store', 'img', Gallery::class, 'img', 'galleries'],
             'why us (image -> icon column)' => ['why-us.store', 'image', Why_us::class, 'icon', 'whyUs'],
         ];

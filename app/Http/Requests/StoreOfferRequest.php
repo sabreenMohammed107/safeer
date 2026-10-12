@@ -41,6 +41,15 @@ class StoreOfferRequest extends FormRequest
         return [
             // Optional: Offer::saving() falls back to the created_at date.
             'offer_date' => ['nullable', 'date_format:Y-m-d'],
+            'start_date' => ['required', 'date_format:Y-m-d H:i'],
+            'end_date' => ['required', 'date_format:Y-m-d H:i', 'after:start_date'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'end_date.after' => 'The end date must be after the start date.',
         ];
     }
 }
