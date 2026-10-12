@@ -170,6 +170,30 @@
                                 @enderror
                             </div>
                             <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="row mb-10">
+                                <div class="col-md-6 fv-row">
+                                    <label class="required form-label"> Start Date &amp; Time</label>
+                                    <input type="text" name="start_date" id="start_date" required
+                                        class="form-control mb-2 @error('start_date') is-invalid @enderror"
+                                        placeholder="YYYY-MM-DD HH:MM" autocomplete="off"
+                                        value="{{ old('start_date', optional($offer->start_date)->format(\App\Models\Offer::PERIOD_FORMAT)) }}" />
+                                    @error('start_date')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 fv-row">
+                                    <label class="required form-label"> End Date &amp; Time</label>
+                                    <input type="text" name="end_date" id="end_date" required
+                                        class="form-control mb-2 @error('end_date') is-invalid @enderror"
+                                        placeholder="YYYY-MM-DD HH:MM" autocomplete="off"
+                                        value="{{ old('end_date', optional($offer->end_date)->format(\App\Models\Offer::PERIOD_FORMAT)) }}" />
+                                    @error('end_date')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <!--end::Input group-->
 
 
 
@@ -287,6 +311,7 @@
         // it re-grab this field and blank any past offer date.
         document.addEventListener('DOMContentLoaded', function() {
             flatpickr('#offer_date', { dateFormat: 'Y-m-d', allowInput: true });
+            @include('admin.offers.partials.period-pickers')
         });
 
 tinymce.init({

@@ -180,12 +180,25 @@ $whyUss=Why_us::all();
       return $offers->orderBy("created_at", "Desc")->orderBy("id", "Desc")->paginate(10)->withQueryString();
   }
 
+  /**
+   * The "latest offers" sidebar: offers running right now, most recently
+   * started first.
+   */
+  private function latestOffers()
+  {
+      return Offer::current()
+          ->orderBy("start_date", "Desc")
+          ->orderBy("created_at", "Desc")
+          ->take(5)
+          ->get();
+  }
+
   public function offers(Request $request)
   {
       $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
       $Company = Company::first();
       $offers = $this->filteredOffers($request);
-      $latest = Offer::current()->take(5)->orderBy("created_at", "Desc")->get();
+      $latest = $this->latestOffers();
       $cityColumn = app()->getLocale() === 'ar' ? 'ar_city' : 'en_city';
       $Cities = City::whereHas('offers', function ($query) {
               $query->where('active', 1);
@@ -228,7 +241,7 @@ $whyUss=Why_us::all();
       ];
       $Company = Company::first();
       $offer = Offer::where('id', $id)->firstOrFail();
-      $latest = Offer::current()->take(5)->orderBy("created_at", "Desc")->get();
+      $latest = $this->latestOffers();
       return view("website.offers.single",
           [
               "Company" => $Company,

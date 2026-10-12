@@ -21,12 +21,19 @@ class Offer extends Model
         'poster',
         'poster_image',
         'offer_date',
+        'start_date',
+        'end_date',
 
     ];
 
     protected $casts = [
         'offer_date' => 'date',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
+
+    /** Display format for start_date / end_date, shared by admin and site. */
+    public const PERIOD_FORMAT = 'Y-m-d H:i';
 
     protected static function booted()
     {
@@ -45,16 +52,46 @@ class Offer extends Model
     }
 
     /**
-     * Active offers that haven't expired yet: offer_date is the offer's last
-     * valid day, so it stays listed through today. Undated rows never expire.
+     * Active offers running right now: start_date <= now <= end_date. A missing
+     * start/end leaves that side open (legacy rows the backfill couldn't date).
      */
     public function scopeCurrent($query)
     {
+        $now = now();
+
         return $query->where('active', 1)
-            ->where(function ($query) {
-                $query->whereNull('offer_date')
-                    ->orWhereDate('offer_date', '>=', now()->toDateString());
+            ->where(function ($query) use ($now) {
+                $query->whereNull('start_date')->orWhere('start_date', '<=', $now);
+            })
+            ->where(function ($query) use ($now) {
+                $query->whereNull('end_date')->orWhere('end_date', '>=', $now);
             });
+    }
+
+    /**
+     * start_date / end_date as a date only, with the month named in the
+     * site's current language (e.g. "5 Oct 2026" / "5 أكتوبر 2026").
+     */
+    public function periodDate(string $field, string $format = 'j M Y'): ?string
+    {
+        return $this->$field?->locale(app()->getLocale())->translatedFormat($format);
+    }
+
+    /**
+     * Where now falls in the offer's period: 'upcoming', 'expired' or 'active'.
+     */
+    public function getPeriodStatusAttribute(): string
+    {
+        $now = now();
+
+        if ($this->start_date && $this->start_date->gt($now)) {
+            return 'upcoming';
+        }
+        if ($this->end_date && $this->end_date->lt($now)) {
+            return 'expired';
+        }
+
+        return 'active';
     }
 
     public function getSlugAttribute(): string

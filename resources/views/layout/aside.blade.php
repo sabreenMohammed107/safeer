@@ -301,6 +301,14 @@
                                 </a>
                             </div>
                             <div class="menu-item">
+                                <a class="menu-link" href="{{ route('page-ads.index') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Page Ads</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
                                 <a class="menu-link" href="{{ route('best-hotel.index') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
