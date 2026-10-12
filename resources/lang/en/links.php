@@ -350,6 +350,10 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 // Page ads (promotional banners on the offers / visa / transport pages)
 'ad_badge' => 'Special offer',
 'ad_cta' => 'Discover the offer',
+'ad_from' => 'From',
+'ad_until' => 'Until',
+'ad_prev' => 'Previous',
+'ad_next' => 'Next',
 'ad_offers_title' => 'Featured deal',
 'ad_offers_text' => 'Hand-picked offers for your next trip.',
 'ad_visa_title' => 'Special visa offers',

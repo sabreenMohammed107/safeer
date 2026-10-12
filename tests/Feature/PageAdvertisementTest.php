@@ -300,20 +300,67 @@ class PageAdvertisementTest extends TestCase
         $this->assertStringNotContainsString('page_ad__cta', $ad);
     }
 
+    public function test_the_visa_slider_shows_one_poster_at_a_time_with_clear_controls()
+    {
+        $this->liveAd('visa', ['images' => ['1', '2', '3', '4'], 'media_type' => 'slider']);
+
+        $ad = $this->adMarkup($this->get('/visa')->assertOk()->getContent(), 'visa');
+
+        $this->assertStringContainsString('page_ad--multi', $ad);
+        $this->assertSame(1, substr_count($ad, 'class="page_ad__frame"'));
+        $this->assertStringContainsString('data-ad-carousel', $ad);
+        $this->assertSame(4, substr_count($ad, 'data-ad-slide'));
+        $this->assertStringContainsString('data-ad-prev', $ad);
+        $this->assertStringContainsString('data-ad-next', $ad);
+        $this->assertStringContainsString('<span data-ad-current>1</span> / 4', $ad);
+        $this->assertSame(4, substr_count($ad, 'data-ad-dot='));
+        // Whole image shown over a blurred copy of itself, never cropped.
+        $this->assertStringContainsString("--ad-img: url('", $ad);
+
+        // A single image: no carousel, no controls.
+        PageAdvertisement::forPage('visa')->update(['media_type' => 'image']);
+        $ad = $this->adMarkup($this->get('/visa')->assertOk()->getContent(), 'visa');
+        $this->assertStringContainsString('page_ad--single', $ad);
+        $this->assertSame(1, substr_count($ad, 'data-ad-slide'));
+        $this->assertStringNotContainsString('data-ad-carousel', $ad);
+        $this->assertStringNotContainsString('data-ad-prev', $ad);
+        $this->assertStringNotContainsString('data-ad-current', $ad);
+    }
+
+    public function test_the_visa_banner_describes_the_linked_offer()
+    {
+        $offer = $this->makeOffer('Istanbul 6 Days Visa Deal');
+        $offer->update(['cost' => 505, 'end_date' => '2026-12-31 23:59:00']);
+        $this->liveAd('visa', ['offer_id' => $offer->id]);
+
+        $ad = $this->adMarkup($this->get('/visa')->assertOk()->getContent(), 'visa');
+
+        $this->assertStringContainsString('<h3 class="page_ad__title">Istanbul 6 Days Visa Deal</h3>', $ad);
+        $this->assertStringContainsString(money(505), $ad);
+        $this->assertStringContainsString('31 Dec 2026', $ad);
+
+        // Without an offer it falls back to the page's own heading.
+        PageAdvertisement::forPage('visa')->update(['offer_id' => null]);
+        $ad = $this->adMarkup($this->get('/visa')->assertOk()->getContent(), 'visa');
+        $this->assertStringContainsString('<h3 class="page_ad__title">' . __('links.ad_visa_title') . '</h3>', $ad);
+        $this->assertStringNotContainsString('page_ad__facts', $ad);
+    }
+
     public function test_a_slider_renders_every_image_with_dots()
     {
         $this->liveAd('offers', ['images' => ['1', '2', '3'], 'media_type' => 'slider']);
 
         $ad = $this->adMarkup($this->get('/offers')->assertOk()->getContent(), 'offers');
 
-        $this->assertStringContainsString('data-ad-slider', $ad);
-        $this->assertSame(3, substr_count($ad, 'class="page_ad__slide'));
+        $this->assertStringContainsString('data-ad-carousel', $ad);
+        $this->assertSame(3, substr_count($ad, 'data-ad-slide'));
         $this->assertSame(3, substr_count($ad, 'data-ad-dot='));
+        $this->assertStringContainsString('<span data-ad-current>1</span> / 3', $ad);
 
         // As a single image, only the first one shows and there's no slider.
         PageAdvertisement::forPage('offers')->update(['media_type' => 'image']);
         $ad = $this->adMarkup($this->get('/offers')->assertOk()->getContent(), 'offers');
-        $this->assertSame(1, substr_count($ad, 'class="page_ad__slide'));
-        $this->assertStringNotContainsString('data-ad-slider', $ad);
+        $this->assertSame(1, substr_count($ad, 'data-ad-slide'));
+        $this->assertStringNotContainsString('data-ad-carousel', $ad);
     }
 }

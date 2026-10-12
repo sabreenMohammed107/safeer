@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('/website_assets/css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/tours.css') }}">
     <link rel="stylesheet" href="{{ asset('/website_assets/css/blog.css') }}">
-    <link rel="stylesheet" href="{{ asset('/website_assets/css/offers.css') }}">
+    <link rel="stylesheet" href="{{ asset('/website_assets/css/offers.css') }}?v={{ filemtime(public_path('website_assets/css/offers.css')) }}">
 @endsection
 
 @section('bottom-header')
