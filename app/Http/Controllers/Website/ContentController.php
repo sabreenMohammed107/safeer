@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Lang as Lang;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Validator;
 class ContentController extends Controller
 {
@@ -151,9 +152,10 @@ $whyUss=Why_us::all();
   }
 
   /**
-   * Active offers narrowed by the optional `city_id` and `date_from` / `date_to`
-   * period filters (inclusive; either end may be left open), shared by the
-   * full page and its AJAX pagination/search endpoint.
+   * All active offers (expired ones included — only the "latest" sidebar hides
+   * those) narrowed by the optional `city_id` and `date_from` / `date_to` period
+   * filters (inclusive; either end may be left open), newest first — shared by
+   * the full page and its AJAX endpoint.
    */
   private function filteredOffers(Request $request)
   {
@@ -175,7 +177,7 @@ $whyUss=Why_us::all();
           $offers->whereDate('offer_date', '<=', $to);
       }
 
-      return $offers->orderBy("created_at", "Desc")->paginate(10)->withQueryString();
+      return $offers->orderBy("created_at", "Desc")->orderBy("id", "Desc")->paginate(10)->withQueryString();
   }
 
   public function offers(Request $request)
@@ -183,7 +185,7 @@ $whyUss=Why_us::all();
       $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
       $Company = Company::first();
       $offers = $this->filteredOffers($request);
-      $latest = Offer::where('active','=',1)->take(5)->orderBy("created_at", "Desc")->get();
+      $latest = Offer::current()->take(5)->orderBy("created_at", "Desc")->get();
       $cityColumn = app()->getLocale() === 'ar' ? 'ar_city' : 'en_city';
       $Cities = City::whereHas('offers', function ($query) {
               $query->where('active', 1);
@@ -220,10 +222,13 @@ $whyUss=Why_us::all();
 
   public function singleOffer($id)
   {
-      $BreadCrumb = [["url" => "/", "name" => Lang::get('links.home')]];
+      $BreadCrumb = [
+          ["url" => "/", "name" => Lang::get('links.home')],
+          ["url" => LaravelLocalization::localizeUrl('/offers'), "name" => Lang::get('links.offers')],
+      ];
       $Company = Company::first();
-      $offer = Offer::where('id', $id)->first();
-      $latest = Offer::where('active','=',1)->take(5)->orderBy("created_at", "Desc")->get();
+      $offer = Offer::where('id', $id)->firstOrFail();
+      $latest = Offer::current()->take(5)->orderBy("created_at", "Desc")->get();
       return view("website.offers.single",
           [
               "Company" => $Company,

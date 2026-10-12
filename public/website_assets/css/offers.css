@@ -200,6 +200,22 @@
     color: #b5c3da;
 }
 
+/* "Latest offers" sidebar when every offer has expired */
+.offers_sidebar__soon {
+    margin: 0;
+    padding: 24px 8px;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.6;
+    color: #1C4482;
+}
+
+.offers_sidebar__soon i {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 26px;
+}
+
 /* ---------- Pagination ---------- */
 .offers_pagination .pagination {
     justify-content: center;
