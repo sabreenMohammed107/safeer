@@ -131,6 +131,20 @@ class FacebookLoginTest extends TestCase
         $this->assertNull(session('SiteUser'));
     }
 
+    public function test_an_error_from_facebook_is_logged_and_never_exchanged_for_a_token()
+    {
+        // e.g. "Can't load URL: the domain isn't included in the app's domains"
+        Socialite::shouldReceive('driver')->never();
+        \Illuminate\Support\Facades\Log::shouldReceive('error')->once()
+            ->with('Facebook OAuth callback: Facebook returned an error', Mockery::on(fn ($context) => $context['error_code'] === '1349048'));
+
+        $this->get('/auth/facebook/callback?error_code=1349048&error_message=Can%27t+load+URL')
+            ->assertRedirect(url('/safer/login'))
+            ->assertSessionHas('session-warning', __('links.facebook_login_failed'));
+
+        $this->assertNull(session('SiteUser'));
+    }
+
     public function test_a_failed_or_expired_callback_returns_to_login_without_logging_in()
     {
         foreach ([new InvalidStateException(), new \RuntimeException('Facebook is down')] as $error) {

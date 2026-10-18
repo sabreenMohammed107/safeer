@@ -27,9 +27,20 @@ class FaceBookController extends Controller
     public function callbackFromFacebook()
     {
         // The visitor pressed "Cancel" on Facebook's consent screen.
-        if (request()->filled('error')) {
+        if (request()->input('error') === 'access_denied') {
             return redirect()->to(LaravelLocalization::localizeUrl('/safer/login'))
                 ->with('session-warning', __('links.facebook_login_cancelled'));
+        }
+
+        // Facebook refused the login itself (e.g. the domain or redirect URI isn't
+        // allowed in the app's settings) — log its reason; there's no code to exchange.
+        if (request()->hasAny(['error', 'error_code'])) {
+            Log::error('Facebook OAuth callback: Facebook returned an error', request()->only([
+                'error', 'error_code', 'error_reason', 'error_description', 'error_message',
+            ]));
+
+            return redirect()->to(LaravelLocalization::localizeUrl('/safer/login'))
+                ->with('session-warning', __('links.facebook_login_failed'));
         }
 
         try {
