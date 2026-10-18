@@ -347,6 +347,8 @@ PREMIER UPVC comes in a different color based on the market and customer needs f
 'offer_period' => 'Offer period',
 'offer_starts' => 'Starts',
 'offer_ends' => 'Ends',
+'facebook_login_cancelled' => 'Facebook login was cancelled.',
+'facebook_login_failed' => 'Facebook login failed, please try again.',
 // Page ads (promotional banners on the offers / visa / transport pages)
 'ad_badge' => 'Special offer',
 'ad_cta' => 'Discover the offer',

@@ -255,11 +255,12 @@ Route::post('/password/update', [AuthController::class, 'updatePassword'])
      * fast login using social media
      */
     //
-    // Facebook
-    Route::prefix('facebook')->name('facebook.')->group(function () {
-        Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');
-        Route::get('callback', [FaceBookController::class, 'callbackFromFacebook'])->name('callback');
-    });
+    // Facebook (FACEBOOK_REDIRECT_URI must point at /auth/facebook/callback)
+    Route::get('auth/facebook', [FaceBookController::class, 'loginUsingFacebook'])->name('facebook.login');
+    Route::get('auth/facebook/callback', [FaceBookController::class, 'callbackFromFacebook'])->name('facebook.callback');
+    // Old paths, kept so links / an app still configured with them keep working.
+    Route::get('facebook/auth', [FaceBookController::class, 'loginUsingFacebook']);
+    Route::get('facebook/callback', [FaceBookController::class, 'callbackFromFacebook']);
  // Google
 Route::prefix('auth')->name('google.')->group(function () {
     Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');

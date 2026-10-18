@@ -34,7 +34,9 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'), //USE FROM FACEBOOK DEVELOPER ACCOUNT
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'), //USE FROM FACEBOOK DEVELOPER ACCOUNT
-        'redirect' => env('FACEBOOK_REDIRECT_URL', 'https://safer.travel/facebook/callback/')
+        // Must exactly match a "Valid OAuth Redirect URI" in the Facebook app (Facebook Login > Settings).
+        // FACEBOOK_REDIRECT_URL is the old name, still read so existing .env files keep working.
+        'redirect' => env('FACEBOOK_REDIRECT_URI', env('FACEBOOK_REDIRECT_URL', 'https://safer.travel/auth/facebook/callback'))
     ],
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'), //USE FROM Google DEVELOPER ACCOUNT

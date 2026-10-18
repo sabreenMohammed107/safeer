@@ -116,19 +116,17 @@
 
                 </span>
                 <section class="sign_socail">
-                    {{-- <button class="btn">
-                    <img src="{{ asset('/website_assets/images/signin-up/socail-logins/facebook.webp')}}" alt="facebook logo">
+                    <button class="btn">
+                      <img src="{{ asset('/website_assets/images/signin-up/socail-logins/facebook.webp')}}" alt="facebook logo">
+
                         <a href="{{ route('facebook.login') }}" class="btn btn-facebook btn-user btn-block">
-                        @if (LaravelLocalization::getCurrentLocale() === 'en')
-                        Login with Facebook
-                        @else
-                      تسجيل الدخول بالفيس بوك
-
-
-                        @endif
-
+                            @if (LaravelLocalization::getCurrentLocale() === 'en')
+                            Login with Facebook
+                            @else
+                          تسجيل الدخول بفيسبوك
+                            @endif
                         </a>
-                    </button> --}}
+                    </button>
 
                     <button class="btn">
                       <img src="{{ asset('/website_assets/images/signin-up/socail-logins/google.webp')}}" alt="google logo">
